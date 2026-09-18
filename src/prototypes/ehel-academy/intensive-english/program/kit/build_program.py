@@ -128,6 +128,113 @@ def recorded_clips(d):
     return sorted(found)
 
 
+# --- narration -----------------------------------------------------------------
+# The builder decides what is recorded: it writes one manifest per level
+# (kit/narration/<level>.json). The narrator reads it to know what to record and
+# in which voice, and tools/lib/ehel-intensive-narration.js reads it so the media
+# uploader serves each clip from its level's folder AND the prune tools do not
+# delete clips no live level claims. A clip is named by cyrb53 of its displayed
+# text, as everywhere in this course; a conversation line is named by its text
+# AND its voice (" #alice"), because the same words can be said by either speaker
+# and a clip keeps one voice.
+PH_SOURCE = re.compile(r"^Ph (\d+)$")
+
+
+def narration_items(level, les, d):
+    items = []
+
+    def add(category, text, delivery="standard", key=None, **extra):
+        text = re.sub(r"\s+", " ", str(text or "")).strip()
+        if not text:
+            return None
+        k = key or clip_key(text)
+        items.append(dict(key=k, text=text, delivery=delivery, category=category, **{a: b for a, b in extra.items() if b is not None}))
+        return k
+
+    def dialogue(rows):
+        who, keys = [], []
+        for name, text in rows:
+            if name not in who:
+                who.append(name)
+            voice = "standard" if who.index(name) % 2 == 0 else "alice"
+            keys.append(add("dialogue", text, voice, key=clip_key(re.sub(r"\s+", " ", text).strip() + " #" + voice)))
+        return keys
+
+    if level.get("kind") == "literacy":
+        # the LAST Phonics unit: a lesson that spans units 14 and 18 is voiced
+        # the way unit 18 is, one way throughout, not sounds then spelled letters
+        phs = [int(m.group(1)) for m in (PH_SOURCE.match(s) for s in d.get("sources") or []) if m]
+        first_ph = max(phs) if phs else None
+        add("about", d["about"]["text"], phonicsUnit=first_ph)
+        for c in d["unitLecture"]["chapters"]:
+            m = PH_SOURCE.match(c.get("source") or "")
+            add("lecture", " ".join(lines_of(c["text"])), phonicsUnit=int(m.group(1)) if m else None, speech=c.get("speech"))
+        for g, t, call, path in lit_steps(d):
+            for it in block_items(at_path(d, path)):
+                if call in ("P.reader", "P.note"):
+                    add("reading", it.get("text"), phonicsUnit=first_ph)
+                elif isinstance(it, str) and len(it) >= MIN_CHARS and call in ("P.readWords", "P.tricky", "P.copyWords", "P.readAloud", "P.dictation"):
+                    add("word", it, phonicsUnit=first_ph)
+        return items, {}
+
+    add("about", d["about"]["text"])
+    for c in d["unitLecture"]["chapters"]:
+        add("lecture", " ".join(lines_of(c["text"])))
+    li = d["listen"]
+    add("warmup", li["warmup"]["prompt"])
+    for p in li["phrases"]:
+        add("phrase", p["text"])
+    for sec in ("listen", "readWrite"):
+        for w in d[sec]["words"]["items"]:
+            if len(w["w"]) >= MIN_CHARS:
+                add("word", w["w"], "alice")
+            add("wordSentence", w["example"], "alice")
+    for t in li["sound"]["groups"] + li["sound"]["lines"]:
+        add("sound", t)
+    for t in li["sayIt"]["lines"]:
+        add("sayIt", t)
+    for r in d["grammar"]["rules"]:
+        # the card's lines have no full stops of their own; said as one run they
+        # merge ("... they are I'm a nurse"), so the spoken form ends each line
+        said = " ".join(l.strip() if re.search(r"[.!?:]$", l.strip()) else l.strip() + "." for l in r["rule"])
+        add("rule", r["title"] + ". " + " ".join(r["rule"]), speech=r["title"] + ". " + said)
+    for t in d["task"]["prepare"]["phrases"]:
+        add("phrase", t)
+    keys = {"conversation": dialogue(li["conversation"]["lines"]), "model": dialogue(d["task"]["model"]["lines"])}
+    return items, keys
+
+
+def lines_of(text):
+    return [l for l in str(text or "").split("\n") if l.strip()]
+
+
+def write_manifest(level, per_lesson):
+    """kit/narration/<level>.json: every clip the level's pages can play, once."""
+    seen, items = set(), []
+    for label, its in per_lesson:
+        for it in its:
+            if it["key"] in seen:
+                continue
+            seen.add(it["key"])
+            items.append(dict(it, lesson=label))
+    doc = {
+        "_about": "Written by build_program.py: every recorded clip the %s pages can play. Read by the narrator "
+                  "(tools/generate-ehel-intensive-programme-audio.js) and by tools/lib/ehel-intensive-narration.js "
+                  "(media folder g%02d; keeps the prune tools off these clips). Do not hand-edit." % (level["name"], COURSE_NUMBER[level["id"]]),
+        "level": level["id"], "courseKey": course_key(level["id"]), "mediaGrade": COURSE_NUMBER[level["id"]],
+        "items": items,
+    }
+    os.makedirs(NARRATION, exist_ok=True)
+    with io.open(os.path.join(NARRATION, level["id"] + ".json"), "w", encoding="utf-8", newline="\n") as fh:
+        json.dump(doc, fh, ensure_ascii=False, indent=1)
+        fh.write("\n")
+    return len(items)
+
+
+def on_disk(keys):
+    return sorted(k for k in set(keys) if os.path.isfile(os.path.join(TTS, k + ".mp3")))
+
+
 def at_path(d, path):
     v = d
     for k in path.split("."):
@@ -197,6 +304,29 @@ def check_literacy(level, les, d):
             else:
                 need(isinstance(it, str) or (isinstance(it, dict) and it.get("w")), "%s: a word is a string or {w, spoken}" % where)
     return e
+
+
+# --- the platform ---------------------------------------------------------------
+# Each level is its own Moodle course. Moodle launches only keys shaped
+# ehel-<slug>-lNN (progress_gatewaylib.php), so the programme takes an unused
+# block of two-digit numbers rather than a new key shape, which would need the
+# PHP changed and deployed first. The same number names the level's media
+# folder, media/intensive-english/gNN, which the uploader already understands.
+# The live course keeps l00-l03 (and lph); nothing here touches them.
+COURSE_NUMBER = {"letters": 10, "starter": 11, "level-1": 12, "level-2": 13, "level-3": 14, "level-4": 15}  # level-5: 16, when built
+BRIDGE_UNIT = {"A": 13, "B": 14}      # after Letters & Sounds' twelve lessons
+REMOTE = "Ehel Primary/app/intensive-english/programme/%s"
+MEDIA_PROD = "../../../../media/intensive-english/g%02d/audio/tts"   # from app/intensive-english/programme/<level>/
+MIN_CHARS = 8         # tools/lib/ehel-narration-hash.js: a shorter word is spoken by the runtime voice
+NARRATION = os.path.join(HERE, "narration")
+
+
+def course_key(level_id):
+    return "ehel-intensive-eng-l%02d" % COURSE_NUMBER[level_id]
+
+
+def unit_number(les):
+    return BRIDGE_UNIT[les["number"]] if isinstance(les["number"], str) else les["number"]
 
 
 def load(path):
@@ -391,6 +521,7 @@ PAGE = """<!doctype html>
   <div class="pg-top">
     <a class="back" href="index.html">&#9664; %(levelName)s</a>
     <div class="tools">
+      <div class="top-actions"></div>
       <button type="button" class="pg-btn" id="menu-toggle" aria-controls="menu" aria-expanded="false">&#9776; Menu</button>
       <button type="button" class="pg-btn" id="toolbox-toggle" aria-haspopup="dialog">Toolbox</button>
     </div>
@@ -407,6 +538,7 @@ PAGE = """<!doctype html>
       <div class="pg-toolbox"><h2>Toolbox</h2><div id="menu-tools"></div></div>
     </nav>
     <div class="pg-deck">
+      <div class="wrap pg-notices"></div>
       <nav class="dots" id="dots" aria-hidden="true"></nav>
       <main class="deck" id="deck" tabindex="-1">
 %(slides)s      </main>
@@ -451,8 +583,11 @@ PAGE = """<!doctype html>
 
 %(bootstrap)s
   window.__ehelPainting = false;
-  const start = /^#step-(\\d+)$/.exec(location.hash);
-  show(start ? Math.min(Number(start[1]) - 1, slides.length - 1) : 0, false);
+  /* ?step=N (the level page's Continue link) or #step-N. A launched page's
+     links carry ?pwsToken&pwsEndpoint, and the carry script appends them after
+     everything in an href, so a #fragment there would swallow them. */
+  const want = new URLSearchParams(location.search).get("step") || (/^#step-(\\d+)$/.exec(location.hash) || [])[1];
+  show(want ? Math.min(Math.max(Number(want) - 1, 0), slides.length - 1) : 0, false);
 })();
 </script>
 """
@@ -477,7 +612,13 @@ def build_lesson(level, pi, part, les, d, nxt):
         "teacher": (d.get("teacher") or {}).get("liveClass"),
         "earlier": earlier_lessons(level, les, d),
     })
-    return write_page(level, les, d, G, S, data)
+    narr, keys = narration_items(level, les, d)
+    data["listen"] = dict(d["listen"], conversation=dict(d["listen"]["conversation"], clipKeys=keys["conversation"]))
+    data["task"] = dict(d["task"], model=dict(d["task"]["model"], clipKeys=keys["model"]))
+    data.update(platform_fields(level, les, [it["key"] for it in narr]))
+    page = write_page(level, les, d, G, S, data)
+    page["narration"] = narr
+    return page
 
 
 def build_literacy(level, pi, part, les, d, nxt, chart):
@@ -490,11 +631,24 @@ def build_literacy(level, pi, part, les, d, nxt, chart):
     data.update({
         "kind": "literacy", "file": lesson_file(les), "label": lesson_label(les), "hub": "index.html", "levelShort": level["tab"],
         "levelName": level["name"], "days": "1", "timeNote": LIT_TIME, "dayPlan": LIT_DAY_PLAN, "next": nxt,
-        "media": MEDIA_DEV, "clips": recorded_clips(d),
         # a bridge is for readers of another language: it shows the whole chart
         "chart": [c for c in chart if not isinstance(les["number"], int) or c["lesson"] <= les["number"]],
     })
-    return write_page(level, les, d, G, S, data)
+    narr, _ = narration_items(level, les, d)
+    # + any string the Phonics level already recorded (its short readers)
+    data.update(platform_fields(level, les, [it["key"] for it in narr] + recorded_clips(d)))
+    page = write_page(level, les, d, G, S, data)
+    page["narration"] = narr
+    return page
+
+
+def platform_fields(level, les, keys):
+    return {
+        "courseKey": course_key(level["id"]), "unit": unit_number(les),
+        "mediaDev": MEDIA_DEV, "mediaProd": MEDIA_PROD % COURSE_NUMBER[level["id"]],
+        # only clips that EXIST are ever requested (see program.js :: clipFor)
+        "clips": on_disk(keys),
+    }
 
 
 def write_page(level, les, d, G, S, data):
@@ -521,7 +675,8 @@ def write_page(level, les, d, G, S, data):
     with io.open(os.path.join(folder, lesson_file(les)), "w", encoding="utf-8", newline="\n") as fh:
         fh.write(page)
     groups_idx = [[k for k, s in enumerate(S) if s["g"] == gi] for gi in range(1, len(G))]
-    return {"n": les["number"], "file": lesson_file(les), "groups": groups_idx}
+    return {"n": les["number"], "file": lesson_file(les), "groups": groups_idx, "label": lesson_label(les),
+            "unit": unit_number(les), "title": d["title"]}
 
 
 HUB = """<!doctype html>
@@ -540,12 +695,22 @@ HUB = """<!doctype html>
 <script>
 (function () {
   const HUB = %(hub)s;
+  /* Launched from Moodle, each level is its own course: the launch token names
+     THIS course, so a page of another level would report into the wrong one
+     (the gateway refuses it). The level tabs and the course home are for
+     browsing the build, and only then. style.display, not the hidden
+     attribute: .hub-tabs sets display, and a display rule beats [hidden]. */
+  if (new URLSearchParams(location.search).get("pwsToken")) {
+    document.querySelectorAll(".hub-tabs, .pg-top .back").forEach((e) => { e.style.display = "none"; });
+  }
   const get = (k) => { try { return JSON.parse(localStorage.getItem(k) || "null"); } catch (_) { return null; } };
   const last = HUB.level ? get("iep:" + HUB.level + ":last") : null;
   const c = document.getElementById("continue");
   if (c && last && last.file) {
     c.hidden = false;
-    c.href = last.file + "#step-" + (Number(last.step) + 1);
+    // ?step, not #step: the carry script appends the launch parameters after
+    // everything in an href, and a fragment would swallow them
+    c.href = last.file + "?step=" + (Number(last.step) + 1);
     c.innerHTML = "<small>Continue</small><b>" + String(last.label || "Lesson " + last.lesson).replace(/</g, "&lt;") + " · " + String(last.title).replace(/</g, "&lt;") + "</b><br>" + String(last.stepTitle || "").replace(/</g, "&lt;");
   }
   (HUB.lessons || []).forEach((l) => {
@@ -570,6 +735,50 @@ def tabs_html(current, prefix):
 
 def esc(s):
     return (str(s).replace("&", "&amp;").replace("<", "&lt;").replace(">", "&gt;").replace('"', "&quot;"))
+
+
+# The shared lesson-app pipeline (../../../mathematics/lesson-app-tools, README
+# order), the steps that apply to these pages. A build rewrites every page from
+# scratch, so it rewires every time: a page built and not wired would lose its
+# launch parameters, progress, class controls and Wehel, silently. Not run:
+# add-header-bars and add-lesson-search (they need the lesson kit's .wrap
+# layout; these pages have their own header and menu), the four Maths content
+# tools, wire-accessibility and wire-quiet-notice (they refuse on the live
+# Intensive pages too), self-host-fonts (skipped there too), and add-page-
+# doctype-lang (the page already has both).
+PIPELINE = os.path.join(ACADEMY, "mathematics", "lesson-app-tools")
+WIRING = ["wire-navigation", "wire-platform-controls", "preload-platform", "wire-progress"]
+
+
+def wire(level_id):
+    folder = os.path.join(OUT, level_id)
+    for tool in WIRING:
+        r = subprocess.run([sys.executable, os.path.join(PIPELINE, tool + ".py"), "--app", folder],
+                           stdout=subprocess.PIPE, stderr=subprocess.STDOUT, env=dict(os.environ, PYTHONIOENCODING="utf-8"))
+        out = r.stdout.decode("utf-8", "replace")
+        if r.returncode != 0:
+            sys.exit("  %s: %s FAILED\n%s" % (level_id, tool, out))
+    return len(WIRING)
+
+
+def write_app_config(level, built):
+    """The level folder described for the shared lesson-app pipeline
+    (../../mathematics/lesson-app-tools): wiring, progress and deploy read it."""
+    cfg = {
+        "_comment": "Written by program/kit/build_program.py; do not hand-edit. The %s of the restructured Intensive English "
+                    "programme, as Moodle course %s. Units are the lesson numbers (the Letters & Sounds bridges are u13 and "
+                    "u14). grade is the programme's level number, which Wehel reads as the learner's level." % (level["name"], course_key(level["id"])),
+        "level": level["number"], "grade": level["number"], "gradeLabel": level["tab"].split(" · ")[0],
+        "subject": "intensive-english", "subjectLabel": "Intensive English", "brandLine": "Intensive English",
+        "courseKey": course_key(level["id"]), "progressUnitPrefix": "u",
+        "fromParam": "iep-" + level["id"], "backLabel": level["name"], "hub": "index.html",
+        "headerBars": False, "stickers": False,
+        "remote": REMOTE % level["id"],
+        "lessons": [{"unit": b["unit"], "file": b["file"], "title": b["title"]} for b in sorted(built, key=lambda b: b["unit"])],
+    }
+    with io.open(os.path.join(OUT, level["id"], "app.config.json"), "w", encoding="utf-8", newline="\n") as fh:
+        json.dump(cfg, fh, ensure_ascii=False, indent=1)
+        fh.write("\n")
 
 
 def build_hub(level, built):
@@ -699,6 +908,12 @@ def main():
         print("  built %s · %s · %s" % (level["id"], lesson_label(les), lesson_file(les)))
     for lid in ORDER:
         build_hub(LEVELS[lid], built.get(lid, []))
+        if built.get(lid):
+            n = write_manifest(LEVELS[lid], [(b["label"], b["narration"]) for b in built[lid]])
+            write_app_config(LEVELS[lid], built[lid])
+            wired = 0 if "--no-wire" in sys.argv[1:] else wire(lid)
+            print("  %s: narration manifest %d clips, app.config.json -> %s, %s" % (
+                lid, n, course_key(lid), "wired (%d tools)" % wired if wired else "NOT wired (--no-wire)"))
     # numbered lessons only: the Letters & Sounds bridges are extra, not "of 12"
     build_home({k: sum(1 for b in v if isinstance(b["n"], int)) for k, v in built.items()})
     print("wrote %s" % os.path.relpath(OUT, ACADEMY))

@@ -70,15 +70,41 @@ Three things that are not obvious:
 - **The lectures were corrected, so their recordings no longer play.** Every Phonics lecture said "This is Unit N" and some sent the learner to "Book B" or "the Intro level". `make_letters.py :: LECTURE_EDITS` corrects them line by line and refuses any line that still names an old unit, book or level. A clip is named by its exact text, so a corrected lecture is read by the device voice until it is narrated again. The short readers are unchanged and still play their recordings.
 - **Only clips that exist are requested.** The builder lists them (`LESSON.clips`, by the same cyrb53 name the page computes). On the CDN, a 404 on a media path is cached for a year and cannot be purged, so asking for a clip that is not there would block it from ever being added under its name.
 
+## The platform
+
+Each level is its own Moodle course (owner, 2026-09-18: new course keys, and the live course left as it is for its learners):
+
+| Level | Course key | Media folder | Wehel level |
+| --- | --- | --- | --- |
+| Letters & Sounds | `ehel-intensive-eng-l10` | `g10` | -1 |
+| Starter | `ehel-intensive-eng-l11` | `g11` | 0 |
+| Level 1 | `ehel-intensive-eng-l12` | `g12` | 1 |
+| Level 2 | `ehel-intensive-eng-l13` | `g13` | 2 |
+| Level 3 | `ehel-intensive-eng-l14` | `g14` | 3 |
+| Level 4 | `ehel-intensive-eng-l15` | `g15` | 4 |
+
+- **Why these keys:** Moodle launches only keys shaped `ehel-<slug>-lNN` (`progress_gatewaylib.php`). Any other shape would need the PHP changed and deployed first.
+- **Units:** they are the lesson numbers, u01–u12. The Letters & Sounds bridges are u13 and u14.
+- **Wiring:** the build writes `app.config.json` into every level folder and then runs the shared pipeline (`../../../mathematics/lesson-app-tools`): wire-navigation, wire-platform-controls, preload-platform, wire-progress. **Every build rewires**, because a page built and not wired silently loses its launch parameters, progress, class controls and Wehel.
+- **Tools that are not run,** and why:
+  - add-header-bars and add-lesson-search need the lesson kit's layout.
+  - The others are the ones the live Intensive build skips too.
+- **Four details the wiring needs:**
+  - The level page's Continue link uses `?step=N`, not `#step-N`. The carry script appends the launch parameters after everything in a link, and a fragment would swallow them.
+  - Links made at run time carry the parameters themselves (`program.js :: withParams`).
+  - The summary slide is ticked without `finish()`, because the progress wiring counts every `finish()` and completes a lesson at all steps but one.
+  - Launched from Moodle, a level page hides its level tabs and course-home link. Each level is its own course, and the gateway refuses another course's progress.
+
 ## Voice
 
-No narration has been recorded for the program yet. Every line goes to the device voice through `voice.js`. The one exception is Letters & Sounds, whose short readers play the Phonics level's recordings from `../../media/audio/tts` in a local build. No page makes a paid TTS call, so any local port can drive it.
-
-`voice.js` only uses the paid endpoint on port 4287 or when the page has a `pwsEndpoint` launch parameter. Conversations play as one SSML utterance, with a pause and a pitch change between speakers.
-
-## Pictures
-
-A word card's picture comes from the shared map (`shell/subjects/word-pictures.js`, by the level's `pictureKey`), which also serves the live course and is not edited from here. `pictures.json` holds this program's corrections per level; an empty string removes a picture. A picture is removed when it shows another sense ("back" drew a return arrow, "letter" an envelope), or when two words in one set or one level would share a glyph and so teach neither. Audit every level's words before its lessons ship.
+- **What gets narrated:** the build writes `narration/<level>.json`, every clip its pages can play. The narrator is `tools/generate-ehel-intensive-programme-audio.js`.
+- **The narrator is dry by default.** Without `--pay` it sends and bills nothing, and an unknown option (even `--help`) stops it. Emit the scripts with `--emit-scripts` and read them before paying.
+- **Voices:** as in the live course, words and example sentences are Alice and everything else is the standard voice. In a conversation the speakers alternate between the two, and each line is its own clip, named by its text and its voice.
+- **Playback:** a whole lecture or conversation plays its clips in order, but only when every clip exists. Otherwise the device voice takes the whole thing, so no conversation changes voice halfway.
+- **Letters & Sounds:** sent through the Phonics speech table (`tools/lib/ehel-phonics-speech.js`), unit by unit, so letters are voiced as sounds. Bridge A has a hand-written spoken form.
+- **Clip lookup:** only clips that exist are requested (`LESSON.clips`).
+  - Local builds use `media/audio/tts`.
+  - Deployed pages use `media/intensive-english/g10–g15`, claimed in `tools/lib/ehel-intensive-narration.js`. That same claim is what the uploader, the audio check and the prune tools read. **Upload the media BEFORE the pages:** a page asks only for clips it lists, and on the CDN a 404 on a media path is cached for a year.
 
 ## Status (2026-09-18)
 

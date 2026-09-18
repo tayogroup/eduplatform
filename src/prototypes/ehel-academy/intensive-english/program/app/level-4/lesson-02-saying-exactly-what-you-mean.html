@@ -2,6 +2,24 @@
 <html lang="en-GB">
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="modulepreload" href="./learner-controls.js">
+<link rel="modulepreload" href="./wehel.js">
+<link rel="modulepreload" href="./course-shell.js">
+<link rel="modulepreload" href="./seb-session.js">
+<script>
+  /* preconnect to whichever platform the launch names: DNS and TLS happen
+     while the page parses, instead of in front of the first POST */
+  (function () {
+    try {
+      var ep = new URLSearchParams(location.search).get("pwsEndpoint");
+      if (!ep) return;
+      var origin = new URL(ep, location.href).origin;
+      var l = document.createElement("link");
+      l.rel = "preconnect"; l.href = origin; l.crossOrigin = "anonymous";
+      document.head.appendChild(l);
+    } catch (e) { /* a malformed pwsEndpoint must not stop the lesson loading */ }
+  })();
+</script>
 <title>Saying exactly what you mean · Level 4 · Ehel Intensive English</title>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700&family=Inter:wght@400;600;700;800&display=swap">
 <style>
@@ -1049,6 +1067,175 @@ a.lcard:hover { border-color: var(--teal); }
    intensive.css gives it a fixed pale background and no text colour, so in
    dark mode it inherited the light ink and could not be read. */
 .reading.document, .reading.document p, .reading.document b, .reading.document strong { color: #1B2A2F; }
+
+  /* --- the way back to the hub, drawn only when the learner arrived from it;
+         see lesson-app-tools/wire-navigation.py --- */
+  .lesson-back {
+    display: inline-flex; align-items: center; gap: 8px;
+    margin: 0 0 14px;
+    padding: 9px 17px 9px 13px;
+    border-radius: 999px;
+    background: var(--card);
+    border: 1px solid var(--line);
+    color: var(--ink);
+    font-family: "Inter", "Segoe UI", sans-serif;
+    font-size: 14px; font-weight: 700;
+    text-decoration: none;
+  }
+  .lesson-back:hover, .lesson-back:focus-visible { border-color: var(--teal); }
+
+  /* WIRE-CSS-START -- owned by lesson-app-tools/wire-platform-controls.py.
+     Everything to WIRE-CSS-END is REPLACED on a re-run: this tool used to skip
+     a page it had already wired, so three separate changes to this block --
+     the panel surfaces, the dark theme, the canned prompts -- reached nothing
+     already built, and each needed its own carry-across tool afterwards. */
+  /* --- a home for the class controls, and the tutor dock;
+         see lesson-app-tools/wire-platform-controls.py --- */
+  .hero-right { display: flex; flex-direction: column; align-items: flex-end; gap: 8px; max-width: 55%; }
+  .top-actions { display: flex; flex-wrap: wrap; gap: 8px; justify-content: flex-end; }
+  /* The session bar (seb-session.js) is a fixed pill at right:16 bottom:16
+     with a z-index above everything, so in focus mode it lands squarely on
+     top of Ask Wehel. Lift both above it when it is there, and only then.
+     --seb-lift is MEASURED from the bar below, because the bar's contents wrap
+     and it is half again as tall on a narrow screen as on a wide one; the
+     fallback is only for the instant before the first measurement. */
+  body:has(#seb-session-bar) .w-dock,
+  body:has(#seb-session-bar) .w-drawer { bottom: var(--seb-lift, 78px); }
+  /* AND THE SAME LIFT IN FOCUS MODE. The rule above is specificity (1,1,1)
+     (:has() takes the specificity of its most specific argument, and
+     #seb-session-bar is an id); the plain `.w-dock, .w-drawer` rule further
+     down that spends --wehel-foot-lift is (0,1,0), so with a session bar on
+     screen the footer lift was being thrown away entirely, not merely
+     outranked, and the dock sat back on top of Next - the exact bug fixed
+     below, returning in the one launch mode (focus mode: live class, exam)
+     that also happens to carry a session bar. Composes the two offsets
+     instead of letting one replace the other, and sits after the rule above
+     so it wins on source order at equal specificity. Found and fixed by a
+     peer session porting this to Grade 2 - see 81c06f0940. */
+  body:has(#seb-session-bar) .w-dock,
+  body:has(#seb-session-bar) .w-drawer {
+    bottom: calc(var(--seb-lift, 78px) + var(--wehel-foot-lift, 0px)); }
+  .w-dock { position: fixed; right: 14px; bottom: 14px; z-index: 70; display: inline-flex;
+    align-items: center; gap: 8px; border: none; border-radius: 999px; cursor: pointer;
+    background: var(--plum); color: var(--plum-ink, #fff); font: inherit; font-size: 16px; font-weight: 700;
+    padding: 12px 18px; box-shadow: var(--shadow); }
+  .w-dock[hidden] { display: none; }
+  .w-drawer { position: fixed; right: 14px; bottom: 14px; z-index: 71; width: min(420px, calc(100vw - 28px));
+    height: min(620px, calc(100vh - 28px)); background: var(--card); border: 1px solid var(--line);
+    border-radius: 18px; box-shadow: var(--shadow); display: flex; flex-direction: column; overflow: hidden; }
+  .w-drawer[hidden] { display: none; }
+  .w-drawer-head { display: flex; align-items: center; gap: 10px; padding: 12px 14px;
+    border-bottom: 1px solid var(--line); font-weight: 800; }
+  .w-drawer-head button { margin-left: auto; border: 1px solid var(--line); background: var(--cell);
+    color: var(--ink); border-radius: 999px; width: 34px; height: 34px; font-size: 17px; cursor: pointer; }
+  .w-drawer-body { flex: 1 1 auto; min-height: 0; overflow: auto; }
+  .w-toast { position: fixed; left: 50%; bottom: 88px; transform: translateX(-50%); z-index: 90;
+    background: var(--ink); color: var(--ground); padding: 10px 16px; border-radius: 999px;
+    font-weight: 700; font-size: 15px; box-shadow: var(--shadow); }
+
+  /* The dock's resting spot (bottom:14) can land on the Back/Next footer when
+     a step is short enough that .foot is the last thing on screen -- routine
+     on a phone or tablet, where the viewport is short relative to the deck --
+     and reaches the same collision on a step long enough to NEED scrolling,
+     at the scroll position where .foot comes into view, because .foot is the
+     last thing in the document and the dock's footprint is fixed to the
+     viewport rather than to a point in the page. A trailing padding-bottom on
+     .wrap fixes neither case: .foot's position is set by the content ABOVE
+     it, so padding added after it never moves it, which is what the first
+     attempt at this got wrong (verified in the browser -- the overlap
+     survived it unchanged, in the fits-without-scrolling case this comment
+     first shipped for). Lift the dock clear instead, exactly as it already
+     lifts above the session bar below, but tracked on scroll as well as
+     resize -- see the script -- because unlike the session bar, .foot is
+     ordinary content and its distance from the viewport's bottom edge is a
+     function of scroll position, not a constant once measured. */
+  .w-dock, .w-drawer { bottom: calc(14px + var(--wehel-foot-lift, 0px)); }
+
+  /* WEHEL-THEME-START -- the tutor PANEL, dressed in this page's palette.
+     The dock and the drawer above already use --card/--line/--ink, so before
+     this the drawer was a dark card containing a white sheet: shell/wehel.js
+     ships a light panel (--w-bg #fff, --w-ink #17324d) and these pages are
+     always dark -- the bare `:root` in their theme selector makes the dark
+     block unconditional, so there is no light case to preserve here.
+     wehel.js now NAMES its surfaces instead of repeating literals, every
+     default being the value it already had, so this block is the whole of the
+     change a page needs and the five shell subjects that also load the tutor
+     are untouched. Mapped by ROLE, not by hue: panel takes --card, anything
+     raised off it takes --cell, so the bubbles, prompt buttons, compose row
+     and timer stay readable against the panel rather than against the page. */
+  /* DOUBLED selector, and that is load-bearing: wehel.js injects PANEL_STYLE
+     with document.head.appendChild at mount, so its own `.wehel-panel{...}`
+     always comes after this stylesheet. At equal specificity the later rule
+     wins, so the single-class version of this block lost every declaration to
+     it and the panel stayed white -- which only rendering it showed. */
+  .wehel-panel.wehel-panel {
+    --w-bg: var(--card); --w-surface: var(--card); --w-ink: var(--ink);
+    --w-line: var(--line);
+    --w-teal: var(--teal); --w-teal-2: #2AA79B; --w-teal-soft: var(--teal-soft);
+    --w-bubble: var(--cell);
+    --w-prompt-bg: var(--cell); --w-prompt-line: var(--line);
+    /* NOT var(--teal) here. The page's teal on the prompt buttons' --cell
+       ground measures 4.28:1, under the 4.5 floor -- the one surface in the
+       panel that failed when this was measured rather than eyeballed. This
+       lighter teal is 6.27:1 on the same ground. It is a literal because the
+       palette has no light-teal token: --teal-soft is a dark fill (#143A4A),
+       and --good (#4FD1A0) is the green that means "correct" in this build,
+       which a row of suggestions must not borrow. */
+    --w-prompt-ink: #7FE0D6;
+    /* the strip along the top of the panel -- timer, Full screen, voice picker */
+    --w-row-a: rgba(255, 255, 255, 0.07); --w-row-b: rgba(255, 255, 255, 0.03);
+    --w-low-line: rgba(244, 201, 93, 0.55);
+    --w-compose-bg: var(--cell);
+    --w-timer-bg: var(--cell); --w-timer-track: var(--cell);
+    /* the learner's own turn: plum, the page's third accent, so a child can
+       tell their words from Wehel's at a glance without reading the label */
+    --w-user-a: rgba(183, 139, 209, 0.30); --w-user-b: rgba(183, 139, 209, 0.16);
+    --w-user-ink: var(--ink);
+    --w-user-avatar-a: var(--plum); --w-user-avatar-b: #8E5AA8;
+    /* time nearly up: the page's gold, not the light build's cream */
+    --w-warm: var(--gold); --w-low-ink: var(--gold);
+    --w-low-fill: rgba(244, 201, 93, 0.32); --w-low-track: rgba(244, 201, 93, 0.12);
+  }
+  .wehel-panel.wehel-panel .ai-compose input::placeholder { color: var(--muted); }
+
+  /* THE CLASS CHAT, same treatment and a different scope. learner-controls.js
+     draws that panel with INLINE styles -- deliberately, so a cosmetic rule in
+     course-ui.css cannot make five other subjects' app tiers stale -- and an
+     inline style cannot be overridden by a stylesheet. It reads --lc-* through
+     var() instead, so this retints it; and the panel is appended to <body>
+     rather than to the drawer, so these live at :root and not on a class.
+
+     The bug this fixes is not only the tint. Every bubble set a background and
+     NO colour, so the text inherited the page's --ink -- white -- and a child
+     read white on #f2f4f6. The compose input was the same, so typing was
+     invisible. The defaults in learner-controls.js are course-ui.css's own
+     --ink (#17324d), which is exactly what the light subjects inherit today. */
+  :root {
+    --lc-panel-bg: var(--card); --lc-panel-line: var(--line);
+    --lc-head-a: rgba(53, 191, 178, 0.22); --lc-head-b: rgba(53, 191, 178, 0.07);
+    --lc-head-ink: var(--ink); --lc-head-sub: var(--muted);
+    --lc-form-bg: var(--cell); --lc-form-line: var(--line);
+    --lc-field-bg: var(--cell); --lc-field-ink: var(--ink);
+    --lc-them-bg: var(--cell); --lc-them-ink: var(--ink);
+    /* the learner's own turn in plum, the same signal the tutor panel uses */
+    --lc-mine-bg: rgba(183, 139, 209, 0.30); --lc-mine-ink: var(--ink);
+    /* "only your teacher sees this" keeps its amber, restated for a dark ground */
+    --lc-private-bg: rgba(244, 201, 93, 0.18); --lc-private-line: rgba(244, 201, 93, 0.45);
+    --lc-private-ink: var(--gold);
+  }
+  /* WEHEL-THEME-END */
+  /* WIRE-CSS-END */
+
+  /* --- said on the learner's own screen when their work is not reaching the
+         school; see lesson-app-tools/wire-progress.py --- */
+  .progress-notice {
+    margin: 0 0 12px; padding: 10px 14px;
+    border-radius: 12px;
+    background: var(--bad-soft); border: 1px solid var(--bad);
+    color: var(--ink);
+    font-family: "Inter", "Segoe UI", sans-serif;
+    font-size: 14px; font-weight: 600;
+  }
 </style>
 
 <a class="skip" href="#deck">Skip to the lesson</a>
@@ -1056,6 +1243,7 @@ a.lcard:hover { border-color: var(--teal); }
   <div class="pg-top">
     <a class="back" href="index.html">&#9664; Level 4 — Advanced</a>
     <div class="tools">
+      <div class="top-actions"></div>
       <button type="button" class="pg-btn" id="menu-toggle" aria-controls="menu" aria-expanded="false">&#9776; Menu</button>
       <button type="button" class="pg-btn" id="toolbox-toggle" aria-haspopup="dialog">Toolbox</button>
     </div>
@@ -1072,6 +1260,7 @@ a.lcard:hover { border-color: var(--teal); }
       <div class="pg-toolbox"><h2>Toolbox</h2><div id="menu-tools"></div></div>
     </nav>
     <div class="pg-deck">
+      <div class="wrap pg-notices"></div>
       <nav class="dots" id="dots" aria-hidden="true"></nav>
       <main class="deck" id="deck" tabindex="-1">
         <section class="slide" data-say="What this lesson is about"><div id="s0"></div></section>
@@ -1284,6 +1473,22 @@ a.lcard:hover { border-color: var(--teal); }
      ],
      "why": "Ana says: In practice, they just phone us instead."
     }
+   ],
+   "clipKeys": [
+    "860cd744dac94",
+    "243dc74d88f57",
+    "36dba5d49cc15",
+    "61d1906dc386",
+    "14b7c7d0a55810",
+    "18dbc8a4303fd",
+    "bbd6a03a99f23",
+    "1290644e969475",
+    "7588715993465",
+    "af5e8f7bbad29",
+    "d2c005b4c7e85",
+    "1fe322bc5534e0",
+    "1db9d5b55cfe3",
+    "ea2b0f3683265"
    ]
   },
   "phrases": [
@@ -1849,6 +2054,21 @@ a.lcard:hover { border-color: var(--teal); }
     "Did you give one clear example?",
     "When an answer was vague, did you say it again with What I mean is…?",
     "Did you check that your listener was following?"
+   ],
+   "clipKeys": [
+    "6fc748ffffacf",
+    "114d8aacb6287c",
+    "1825b499b58cc6",
+    "1f78dccba7cd97",
+    "a2e23551da56b",
+    "364a4dd245d7c",
+    "1b4917b7d793ea",
+    "365f6f0598e58",
+    "179998728c1abd",
+    "138e7d77e94ad5",
+    "e0941dbdb9206",
+    "128d55ac0cecbd",
+    "cd9fd34416ee2"
    ]
   },
   "canDo": [
@@ -2015,6 +2235,16 @@ a.lcard:hover { border-color: var(--teal); }
    "lesson": 1,
    "title": "Conversations that flow"
   }
+ ],
+ "courseKey": "ehel-intensive-eng-l15",
+ "unit": 2,
+ "mediaDev": "../../../media/audio/tts",
+ "mediaProd": "../../../../media/intensive-english/g15/audio/tts",
+ "clips": [
+  "1130b4087c4468",
+  "125f522fd1e240",
+  "184a9d5f9c87d2",
+  "4b5c151356c3"
  ]
 };
   const GROUPS = [{"key": "start", "name": "Start"}, {"key": "listen", "name": "Section 1 · Listen & speak"}, {"key": "grammar", "name": "Section 2 · Grammar in use"}, {"key": "readWrite", "name": "Section 3 · Read & write"}, {"key": "task", "name": "Section 4 · Real-life task"}, {"key": "reading", "name": "Section 5 · Reading & comprehension"}, {"key": "review", "name": "Review & check"}];
@@ -2821,7 +3051,34 @@ a.lcard:hover { border-color: var(--teal); }
     if (cur === slides.length - 1) paintStickers();
     if (speak) say(slides[cur].dataset.say);
     window.scrollTo({ top: 0, behavior: "smooth" });
+    if (window.__ehelAt) { try { window.__ehelAt(cur); } catch (_) {} }
   }
+  /* RESUME ON REOPEN. The stored record already knew which steps were
+     done and where the learner was; until this hook every reopened
+     lesson drew an empty dot rail and step 1. Called once, after the
+     progress document hydrates, and only if the learner has not already
+     moved off step 1 on their own - hydrate is asynchronous and a child
+     who tapped Next is not to be yanked back. show() is looked up by
+     name at call time, so every wrapper the build or the pipeline puts
+     around it (the header bar\x27s percentage, a step\x27s arrival line)
+     runs exactly as it does for a tap on a dot. */
+  /* WHO HAS STARTED. Recorded from real input, not inferred from done[0]:
+     a step that finishes when it is DRAWN marks itself done at load, before
+     the record arrives, and read as the learner having touched the page it
+     kept every reopened English lesson on step 1 (measured 2026-09-11). */
+  let ehelInteracted = false;
+  ["pointerdown", "keydown", "touchstart"].forEach((t) => document.addEventListener(t,
+    () => { ehelInteracted = true; }, { capture: true, passive: true, once: true }));
+  window.__ehelRestore = function (doneIdx, resumeIdx) {
+    const untouched = cur === 0 && !ehelInteracted;
+    let changed = false;
+    for (const i of doneIdx || []) { if (i >= 0 && i < done.length - 1 && !done[i]) { done[i] = true; changed = true; } }
+    if (changed) paintDots();
+    const target = Number.isInteger(resumeIdx) && resumeIdx > 0 && resumeIdx < slides.length
+      ? resumeIdx : done.findIndex((d, i) => !d && i < done.length - 1);
+    if (untouched && target > 0) show(target, false);
+    else if (changed) show(cur, false);
+  };
   $("next").addEventListener("click", () => show(cur + 1, true));
   $("back").addEventListener("click", () => show(cur - 1, true));
   $("dots").addEventListener("click", (e) => { const b = e.target.closest("button"); if (b) show(Number(b.dataset.i), true); });
@@ -2835,7 +3092,7 @@ a.lcard:hover { border-color: var(--teal); }
      2.13s into "Words: home and classroom"). The tick and the dots still land
      on the step the child actually finished; only the voice asks whether that
      step is still the one showing, the way playHere() already does for clips. */
-  function finish(i, msg) { if (!done[i]) { done[i] = true; paintDots(); } if (msg && cur === i) say(msg); }
+  function finish(i, msg) { if (!done[i]) { done[i] = true; paintDots(); } if (window.__ehelStep) { try { window.__ehelStep(i, done); } catch (_) {} } if (msg && cur === i) say(msg); }
 
   /* Hand a score to the progress client, if this page has one.
      NAMING THE PIPELINE TOOL HERE BREAKS THE BUILD, which is why this comment
@@ -3001,11 +3258,16 @@ a.lcard:hover { border-color: var(--teal); }
     return (4294967296 * (2097151 & h2) + (h1 >>> 0)).toString(16);
   }
   const CLIPS = new Set(LESSON.clips || []);
+  /* Where the clips are: the local tts folder when the build is opened on this
+     machine, the level's CDN folder (media/intensive-english/gNN) once it is
+     deployed. The same rule as lesson-kit/lib/intensive.js. */
+  const LOCAL = !location.hostname || /^(localhost|127\.0\.0\.1)$/.test(location.hostname);
+  const MEDIA = LOCAL ? LESSON.mediaDev : LESSON.mediaProd;
   const player = new Audio();
   player.preload = "none";
+  const clipUrl = (key) => (MEDIA && CLIPS.has(key) ? MEDIA + "/" + key + ".mp3" : "");
   function clipFor(text) {
-    const key = cyrb53(String(text || "").replace(/\s+/g, " ").trim());
-    return LESSON.media && CLIPS.has(key) ? LESSON.media + "/" + key + ".mp3" : "";
+    return clipUrl(cyrb53(String(text || "").replace(/\s+/g, " ").trim()));
   }
   function playClip(text, spoken) {
     if (window.__ehelPainting) return;
@@ -3013,10 +3275,40 @@ a.lcard:hover { border-color: var(--teal); }
     const fallback = spoken || text;
     if (!url) { say(fallback); return; }
     try { VOICE.stop && VOICE.stop(); } catch (_) { /* mid-sentence */ }
+    player.onended = null;
     player.onerror = () => say(fallback);
     player.src = url;
     const p = player.play();
     if (p && p.catch) p.catch(() => say(fallback));
+  }
+  /* Several recordings, one after another: the chapters of the whole lecture, or
+     the lines of a conversation in two voices. Only when EVERY clip exists; a
+     gap in the middle would switch voices mid-conversation, so the caller's
+     `fallback` (the device voice) takes the whole thing instead. */
+  function playSequence(keys, fallback, gapMs) {
+    if (window.__ehelPainting) return;
+    const urls = keys.map(clipUrl);
+    if (!urls.length || urls.some((u) => !u)) { fallback(); return; }
+    try { VOICE.stop && VOICE.stop(); } catch (_) { /* mid-sentence */ }
+    let at = 0;
+    const next = () => {
+      if (at >= urls.length) { player.onended = null; return; }
+      player.src = urls[at++];
+      const p = player.play();
+      if (p && p.catch) p.catch(() => { player.onended = null; fallback(); });
+    };
+    player.onerror = () => { player.onended = null; fallback(); };
+    player.onended = () => setTimeout(next, gapMs || 0);
+    next();
+  }
+  const keyOf = (text) => cyrb53(String(text || "").replace(/\s+/g, " ").trim());
+  /* A link made after the page loaded misses the carry script, which runs once
+     at load: give it the launch parameters itself (everything but from/step). */
+  function withParams(href) {
+    const q = new URLSearchParams(location.search);
+    q.delete("from"); q.delete("step");
+    const s = q.toString();
+    return s ? href + (href.indexOf("?") < 0 ? "?" : "&") + s : href;
   }
   /* A conversation as one utterance: a pause between speakers, and each speaker
      at their own pitch, so a single device voice still sounds like two or three
@@ -3176,13 +3468,16 @@ a.lcard:hover { border-color: var(--teal); }
     const el = $(id), ch = LESSON.unitLecture.chapters;
     const all = ch.map((c) => c.title + ". " + lines(c.text).join(" ")).join(" ");
     const names = LESSON.sectionNames || {};
-    const whole = ch.length > 1 && ch.every((c) => c.for);   // a literacy chapter is one recording each
+    const whole = ch.length > 1;
     el.innerHTML = stepHead(i) + "<h2>Unit lecture</h2>" +
       '<p class="lead">Your teacher walks you through the whole lesson. Listen first, then read along.</p>' +
-      (whole ? '<div class="actions">' + listenBtn(all, "Listen to the whole lecture") + "</div>" : "") +
+      (whole ? '<div class="actions"><button type="button" class="big small ghost" id="' + id + '-all">&#9654; Listen to the whole lecture</button></div>' : "") +
       '<div class="chapters">' + ch.map((c, n) => '<div class="chapter"><span class="for">' + esc(names[c.for] || "") + "</span><h3>" + (n + 1) + ". " + esc(c.title) + "</h3>" +
         '<div class="actions">' + listenBtn(lines(c.text).join(" "), "Listen") + "</div>" + para(c.text) + "</div>").join("") + "</div>";
     wireListen(el);
+    /* the chapters' own recordings, in order: the whole lecture is never
+       recorded as one clip, so nothing is paid for twice */
+    if (whole) $(id + "-all").addEventListener("click", () => playSequence(ch.map((c) => keyOf(lines(c.text).join(" "))), () => say(all), 600));
     doneButton(i, el, "I have listened");
   };
 
@@ -3200,7 +3495,7 @@ a.lcard:hover { border-color: var(--teal); }
       $(id + "-fb").textContent = w.note;
       finish(i, "");
     }));
-    ONSHOW[i] = () => { if (cur === i) say(w.prompt); };
+    ONSHOW[i] = () => { if (cur === i) playClip(w.prompt); };
   };
 
   P.conversation = function (i, id) {
@@ -3211,7 +3506,7 @@ a.lcard:hover { border-color: var(--teal); }
       '<div class="actions"><button type="button" class="big small" id="' + id + '-play">&#9654; Listen to the conversation</button>' +
       '<button type="button" class="big small ghost" id="' + id + '-show" aria-expanded="false">Show the words</button></div>' +
       '<div id="' + id + '-words" hidden>' + dialogueHTML(c.lines) + "</div>";
-    $(id + "-play").addEventListener("click", () => say(dialogueSSML(c.lines)));
+    $(id + "-play").addEventListener("click", () => playSequence(c.clipKeys || [], () => say(dialogueSSML(c.lines)), 350));
     $(id + "-show").addEventListener("click", (e) => {
       const box = $(id + "-words");
       box.hidden = !box.hidden;
@@ -3386,7 +3681,7 @@ a.lcard:hover { border-color: var(--teal); }
       '<div class="actions"><button type="button" class="big small" id="' + id + '-play">&#9654; Listen: ' + esc(m.title) + "</button></div>" +
       dialogueHTML(m.lines) +
       '<div class="criteria"><h4>Check</h4><ul class="checklist">' + m.compare.map((c) => '<li><label><input type="checkbox"><span>' + esc(c) + "</span></label></li>").join("") + "</ul></div>";
-    $(id + "-play").addEventListener("click", () => say(dialogueSSML(m.lines)));
+    $(id + "-play").addEventListener("click", () => playSequence(m.clipKeys || [], () => say(dialogueSSML(m.lines)), 350));
     finishOnArrival(i);
   };
   function rateList(el, items, k) {
@@ -3480,8 +3775,14 @@ a.lcard:hover { border-color: var(--teal); }
     el.dataset.painted = "1";
     el.innerHTML = stepHead(STEPS.length - 1) + "<h2>What I can do now</h2>" + '<p class="lead">' + (LESSON.task ? "Look at the list again. What has moved since the can-do check?" : "How sure are you now? Choose for each one.") + "</p>";
     rateList(el, (LESSON.task || LESSON).canDo, "self");
-    el.insertAdjacentHTML("beforeend", '<p class="tip">Next: ' + esc(LESSON.next || "back to the level page") + '</p><div class="actions"><a class="big small ghost" style="display:inline-grid;place-items:center;text-decoration:none" href="' + esc(LESSON.hub) + '">Back to ' + esc(LESSON.levelShort) + "</a></div>");
-    finish(STEPS.length - 1, "");
+    el.insertAdjacentHTML("beforeend", '<p class="tip">Next: ' + esc(LESSON.next || "back to the level page") + '</p><div class="actions"><a class="big small ghost" style="display:inline-grid;place-items:center;text-decoration:none" href="' + esc(withParams(LESSON.hub)) + '">Back to ' + esc(LESSON.levelShort) + "</a></div>");
+    /* Ticked in the menu, but NOT through finish(): the platform's progress
+       wiring counts every finish() as a lesson step, and the lesson counts as
+       complete at "all steps but one". The summary is not a step. */
+    const last = STEPS.length - 1;
+    done[last] = true;
+    store.set("done", done.map((d, k) => (d ? k : -1)).filter((k) => k >= 0));
+    paintMenu();
   }
 
   /* ================= Letters & Sounds ==================================
@@ -3914,7 +4215,430 @@ a.lcard:hover { border-color: var(--teal); }
   P.wordReview(26, "s26");
   P.quiz(27, "s27");
   window.__ehelPainting = false;
-  const start = /^#step-(\d+)$/.exec(location.hash);
-  show(start ? Math.min(Number(start[1]) - 1, slides.length - 1) : 0, false);
+  /* ?step=N (the level page's Continue link) or #step-N. A launched page's
+     links carry ?pwsToken&pwsEndpoint, and the carry script appends them after
+     everything in an href, so a #fragment there would swallow them. */
+  const want = new URLSearchParams(location.search).get("step") || (/^#step-(\d+)$/.exec(location.hash) || [])[1];
+  show(want ? Math.min(Math.max(Number(want) - 1, 0), slides.length - 1) : 0, false);
 })();
+</script>
+
+<script>
+  /* wire-navigation.py :: back
+     Only when ?from=iep-level-4: a lesson opened on its own has nowhere to go back to. */
+  (function () {
+    if (new URLSearchParams(location.search).get("from") !== "iep-level-4") return;
+    var wrap = document.querySelector(".wrap");
+    if (!wrap) return;
+    var back = document.createElement("a");
+    back.className = "lesson-back";
+    back.href = "index.html";
+    back.innerHTML = '<span aria-hidden="true">\u2190</span> Level 4 — Advanced';
+    wrap.insertBefore(back, wrap.firstChild);
+  })();
+</script>
+
+<script>
+  /* wire-navigation.py :: carry
+     Keep ?pwsToken and ?pwsEndpoint alive on every in-app link. Without BOTH,
+     the class controls and Wehel do not mount at all - they guard on them and
+     return, so the symptom is silence rather than an error. Applied to every
+     same-directory link so a control added later cannot reintroduce the gap.
+     Done at run time because the values are only known then. */
+  (function () {
+    var q = new URLSearchParams(location.search);
+    q.delete("from");
+    if (!q.toString()) return;
+    document.querySelectorAll("a[href]").forEach(function (a) {
+      var href = a.getAttribute("href");
+      if (!href || /^(https?:|mailto:|tel:|#)/i.test(href)) return;   // in-app only
+      var base = href.split("?")[0];
+      var own = new URLSearchParams(href.split("?")[1] || "");
+      q.forEach(function (v, k) { if (!own.has(k)) own.set(k, v); });
+      a.setAttribute("href", base + "?" + own.toString());
+    });
+  })();
+</script>
+
+<!-- WIRE-JS-START -->
+<script type="module">
+  /* The platform controls - see lesson-app-tools/wire-platform-controls.py.
+     learner-controls.js holds the SAME singletons the shell mounts. */
+  import { mountLearnerControls } from "./learner-controls.js";
+  import { mountWehelChat, stopBrowserSpeech } from "./wehel.js";
+  import { escapeHtml } from "./course-shell.js";
+  /* Focus mode and the session bar. Imported for its side effect - it mounts
+     itself, and mounts NOTHING unless the launch carries focusMode=1 or an
+     exitUrl, which is why an ordinary launch and every local run see no
+     change. It is what writes course_focus_break / course_left_early, so
+     without it the live group board's away state can never fire for a learner
+     in this build. */
+  import "./seb-session.js";
+
+  const q = new URLSearchParams(location.search);
+  const launchToken = (q.get("pwsToken") || "").replace(/[^A-Za-z0-9._-]/g, "");
+  const launchEndpoint = (q.get("pwsEndpoint") || "").trim();
+
+  let toastEl = null;
+  function toast(message) {
+    if (toastEl) toastEl.remove();
+    toastEl = document.createElement("div");
+    toastEl.className = "w-toast";
+    toastEl.textContent = message;
+    document.body.appendChild(toastEl);
+    setTimeout(() => { if (toastEl) { toastEl.remove(); toastEl = null; } }, 3200);
+  }
+
+  /* 1. Class chat, Hand up and the Join class pill. They place themselves into
+        .top-actions and mount ONLY when the server says a teacher is watching,
+        so nothing appears to a child working alone. */
+  try {
+    mountLearnerControls({
+      token: q.get("pwsToken") || "", launchToken, launchEndpoint,
+      progressUnit: "u02",
+    });
+  } catch (e) { console.error("learner controls:", e); }
+
+  /* How far Ask Wehel has to sit above the session bar - see --seb-lift in the
+     stylesheet. Measured rather than assumed: the bar wraps, so its height is
+     a property of the screen. Re-measured on resize because its clock changes
+     width every second and its buttons re-flow. */
+  (function () {
+    const seb = document.getElementById("seb-session-bar");
+    if (!seb) return;                       /* no focus mode, nothing to avoid */
+    const lift = () => document.documentElement.style
+      .setProperty("--seb-lift", (seb.offsetHeight + 30) + "px");
+    lift();
+    try { new ResizeObserver(lift).observe(seb); } catch (e) { addEventListener("resize", lift); }
+  })();
+
+  /* How far the dock has to lift to clear the Back/Next footer - see
+     --wehel-foot-lift in the stylesheet. Unlike the session bar above, .foot
+     is ordinary content rather than a second fixed element, so its distance
+     from the viewport's bottom edge is a function of SCROLL POSITION, not a
+     constant a page-load measurement can capture once - a step long enough to
+     need scrolling reaches the same collision the moment .foot is scrolled
+     into view. Re-measured on scroll (rAF-throttled to at most once a frame,
+     so it costs nothing while the page is still) as well as on resize. */
+  (function () {
+    const foot = document.querySelector(".foot");
+    if (!foot) return;
+    const lift = () => {
+      const overlap = window.innerHeight - foot.getBoundingClientRect().top;
+      document.documentElement.style
+        .setProperty("--wehel-foot-lift", (overlap > 0 ? overlap + 14 : 0) + "px");
+    };
+    let queued = false;
+    const onScroll = () => {
+      if (queued) return;
+      queued = true;
+      requestAnimationFrame(() => { queued = false; lift(); });
+    };
+    lift();
+    addEventListener("scroll", onScroll, { passive: true });
+    try { new ResizeObserver(lift).observe(foot); } catch (e) { addEventListener("resize", lift); }
+  })();
+
+  /* 2. Wehel. Mounted on first open, not on load: the panel asks the server for
+        the day's allowance, and a lesson nobody opens the tutor on should not
+        spend a request. */
+  if (launchToken) {
+    const dock = document.createElement("button");
+    dock.type = "button"; dock.className = "w-dock"; dock.textContent = "\u{1F4AC} Ask Wehel";
+    const drawer = document.createElement("div");
+    drawer.className = "w-drawer"; drawer.hidden = true;
+    drawer.innerHTML = '<div class="w-drawer-head">Wehel Tutor<button type="button" aria-label="Close">\u00d7</button></div><div class="w-drawer-body"></div>';
+    let panel = null;
+    function open() {
+      drawer.hidden = false; dock.hidden = true;
+      if (panel) return;
+      try {
+        panel = mountWehelChat({
+          container: drawer.querySelector(".w-drawer-body"),
+          meta: {
+            subject: "intensive-english", subjectLabel: "Intensive English", grade: 4,
+            unitNo: 2, unitTitle: "Saying exactly what you mean",
+            learnerCategory: q.get("category") || "",
+          },
+          store: {},
+          ui: { escapeHtml, toast },
+          tutorLabel: "Wehel Tutor",
+          placeholder: "Ask about Saying exactly what you mean\u2026",
+          /* The chips a young learner presses, written as the sentence they
+             would have said. Four, because a row a six-year-old scans has to
+             be short and a fifth makes the other four less likely to be read.
+
+             "Give me a hint" is the one that carries a teaching stance: it
+             says "not the answer" in the message itself, so pressing it cannot
+             turn the tutor into an answer machine even before the prompt file
+             has its say.
+
+             True of every app this tool wires - Grade 1 English and the four
+             Mathematics builds - which is why none of them names a word, a
+             sentence or a number. */
+          quickPrompts: [
+            { label: "I do not understand", message: "I do not understand this step. Please explain it again in a simpler way, with a small example." },
+            { label: "Give me a hint", message: "Give me a hint for this step, not the answer, so I can try it myself." },
+            { label: "Make it easier", message: "This is too hard for me right now. Break it into a smaller, easier step and start me there." },
+            { label: "Quiz me", message: "Quiz me on this lesson, one question at a time." },
+          ],
+        });
+      } catch (e) {
+        console.error("wehel:", e);
+        drawer.hidden = true; dock.hidden = false;
+        toast("Wehel is not available on this page.");
+      }
+    }
+    function close() { drawer.hidden = true; dock.hidden = false; }
+    dock.addEventListener("click", open);
+    drawer.querySelector("button").addEventListener("click", close);
+    document.addEventListener("keydown", (e) => { if (e.key === "Escape" && !drawer.hidden) close(); });
+    document.body.append(dock, drawer);
+
+    /* ONE VOICE BETWEEN THE LESSON AND THE TUTOR. Wehel reads its replies
+       aloud by default and knew nothing of the lesson's voice, so a reply
+       could play over a line the lesson was reading. The lesson stops the
+       tutor when it starts a line (__ehelTutorQuiet), and the lesson stops
+       when the tutor starts reading - which the drawer shows as a Stop
+       button, .voice-button.is-playing. Only the moment that button APPEARS
+       counts: the panel repaints often, and repainting a reply already being
+       read must not cut off a line the lesson has just begun. */
+    window.__ehelTutorQuiet = stopBrowserSpeech;
+    let tutorReading = false;
+    new MutationObserver(() => {
+      const now = !!drawer.querySelector(".voice-button.is-playing");
+      if (now && !tutorReading && window.__ehelVoiceStop) window.__ehelVoiceStop();
+      tutorReading = now;
+    }).observe(drawer, { subtree: true, childList: true, attributes: true, attributeFilter: ["class"] });
+  }
+</script>
+<!-- WIRE-JS-END -->
+
+<script type="module">
+  /* Progress reporting - see lesson-app-tools/wire-progress.py, especially
+     THE UNIT PROBLEM for why this writes lNN and not uNN. */
+  import { createProgressClient } from "./progress-client.js";
+
+  const q = new URLSearchParams(location.search);
+  const endpoint = (q.get("pwsEndpoint") || "").trim();
+  const token = (q.get("pwsToken") || "").replace(/[^A-Za-z0-9._-]/g, "");
+
+  const COURSE = "ehel-intensive-eng-l15";
+  const UNIT = "u02";
+  const STUDENT = q.get("studentid") || "local";
+
+  /* Without a launch endpoint the backend is "local": everything still
+     reduces into localStorage so resume works, and nothing is sent. That is
+     the same rule the shell follows, and it is why opening a lesson as a file
+     or an artifact costs nothing and reports nothing. */
+  const ws = createProgressClient({
+    course: COURSE, student: STUDENT,
+    backend: endpoint ? "remote" : "local",
+    endpoint: endpoint || undefined,
+    token: token || undefined,
+    /* A blocked or expired write path is INVISIBLE otherwise - the throw is
+       caught, the events queue, and the learner is told nothing while their
+       work stops reaching the school. Said on the learner's own screen
+       because the server cannot tell a blocked learner from a closed tab. */
+    onAuthLost: () => notice("Your session has expired. Your work is saved on this device \u2014 open the lesson again from your class page."),
+    onDeliveryFailing: () => notice(navigator.onLine
+      ? "Your work is saved here, but it is not reaching your school right now."
+      : "You are offline. Your work is saved here and will be sent when you are back."),
+    onDeliveryRecovered: () => clearNotice(),
+  });
+
+  const emit = (e) => { try { ws.emit(e); } catch (_) { /* never break the lesson */ } };
+
+  let noticeEl = null;
+  function notice(text) {
+    if (!noticeEl) {
+      noticeEl = document.createElement("p");
+      noticeEl.className = "progress-notice";
+      noticeEl.setAttribute("role", "status");
+      document.querySelector(".wrap")?.prepend(noticeEl);
+    }
+    noticeEl.textContent = text;
+  }
+  function clearNotice() { if (noticeEl) { noticeEl.remove(); noticeEl = null; } }
+
+  const slides = [...document.querySelectorAll(".slide")];
+  /* The lesson's own arithmetic: show() prints "Step n of slides.length - 1",
+     so the last slide is the sticker shelf and not a step. Read from the
+     lesson rather than counted here, so the two cannot disagree. */
+  const STEPS = Math.max(1, slides.length - 1);
+  const sectionId = (i) => "step-" + String(i + 1).padStart(2, "0");
+  const labelOf = (i) => (slides[i]?.querySelector("h2")?.textContent || "").trim() || sectionId(i);
+
+  const doneIds = new Set();
+  let unitSent = false;
+
+  /* WHERE the learner is, which is not what sectionsDone says: a learner
+     stuck twenty minutes into the next step is exactly the one a supervising
+     teacher needs to see. `resumeLabel` rides beside the id because a board
+     printing "step-04" shows a teacher a word that appears nowhere on the
+     child's screen. */
+  /* Activity-level participation, {section: {answered, total}}, and the words
+     the learner has shown they know. Both ride on progress.summary because the
+     reducer keeps them there and nowhere else; both are whole-map
+     last-write-wins, so every summary sends everything known so far rather
+     than a delta that could strand a count.
+
+     The server caps `attempted` at 20 sections and requires
+     ^[a-z0-9][a-z0-9_-]{0,39}$ - no dots, no slashes - so ids are kept in that
+     shape here rather than being rejected silently there. */
+  const attempted = {};
+  const known = new Set();
+  let lastAt = 0;
+
+  /* WHAT THE RECORD ALREADY HOLDS FOR THIS UNIT, read once at load.
+
+     Both maps above are REPLACED by the reducer, not merged, and both start
+     empty on every page load - so without this the first participation event
+     of a new session deletes every section reported in an earlier one. A child
+     who read four books on Monday and answered one question on Tuesday would
+     have Monday erased by Tuesday's first tick.
+
+     It is kept SEPARATE from the live maps rather than copied into them,
+     because hydrate is asynchronous and a report can fire before it lands.
+     Merged at send time, an early report sends a partial map and the next one
+     repairs it; a seed would simply have missed the window. If hydrate cannot
+     be reached at all the baseline stays empty, which is the behaviour without
+     it. */
+  let baseAttempted = {};
+  let baseKnown = [];
+  /* step-NN -> the slide's 0-based index; anything else -> -1 */
+  const indexOf = (id) => {
+    const m = /^step-(\d{2})$/.exec(String(id || ""));
+    return m ? Number(m[1]) - 1 : -1;
+  };
+  (async () => {
+    try {
+      const doc = await ws.hydrate();
+      const u = doc && doc.units && doc.units[UNIT];
+      if (!u) return;
+      if (u.attempted && typeof u.attempted === "object") baseAttempted = u.attempted;
+      if (Array.isArray(u.knownWords)) baseKnown = u.knownWords;
+      /* RESUME. The sections the record says are done are done - seeded into
+         doneIds too, so unit.completed still fires on the day the LAST step
+         is finished even if the first seven were finished last week - and
+         the deck is told to tick them and open where the learner was. Without
+         this a child who closed the tab reopened to an empty dot rail and
+         step 1, while the school's record said otherwise; measured on the
+         Science build on 2026-09-10, and true of every build this tool wires. */
+      const doneIdx = (Array.isArray(u.sectionsDone) ? u.sectionsDone : []).map(indexOf).filter((i) => i >= 0);
+      for (const i of doneIdx) doneIds.add(sectionId(i));
+      const resumeIdx = indexOf(u.resume);
+      if (window.__ehelRestore && (doneIdx.length || resumeIdx > 0)) {
+        try { window.__ehelRestore(doneIdx, resumeIdx); } catch (_) { /* never break the lesson */ }
+      }
+    } catch (_) { /* never break the lesson */ }
+  })();
+
+
+  function report(i) {
+    lastAt = i;
+    const ev = {
+      type: "progress.summary", unit: UNIT,
+      sectionsDone: [...doneIds],
+      resume: sectionId(i), resumeLabel: labelOf(i),
+      xp: doneIds.size,
+    };
+    /* This session's answers WIN over the stored ones for the same section -
+       a child who re-does a step is telling us something newer. */
+    const allAttempted = { ...baseAttempted, ...attempted };
+    const allKnown = new Set([...baseKnown, ...known]);
+    if (Object.keys(allAttempted).length) ev.attempted = allAttempted;
+    if (allKnown.size) ev.knownWords = [...allKnown];
+    emit(ev);
+    try { ws.flush?.(); } catch (_) { /* never break the lesson */ }
+  }
+
+  window.__ehelStep = function (i, done) {
+    const id = sectionId(i);
+    if (!doneIds.has(id)) {
+      doneIds.add(id);
+      emit({ type: "section.completed", unit: UNIT, section: id, title: labelOf(i) });
+    }
+    if (!unitSent && doneIds.size >= STEPS) {
+      unitSent = true;
+      emit({ type: "unit.completed", unit: UNIT, sectionsDone: [...doneIds], total: STEPS });
+    }
+    report(i);
+  };
+  window.__ehelAt = function (i) { lastAt = i; report(i); };
+
+  /* A SCORE, where a step actually produces one.
+     checkpoint.result is the only event the reducer turns into something a
+     teacher or a parent can read as a mark - the portal's quiz tables and the
+     gradebook are both fed from it - and nothing here emitted it, so every
+     scored step reported that it was DONE and never how it went.
+
+     ADDITIVE ON PURPOSE. A lesson that never calls this behaves exactly as it
+     did, which is what makes it safe in a tool three builds share.
+
+     ONLY WHERE THERE IS A REAL DENOMINATOR. `total` must be the number of
+     questions asked; a step that cannot say how many it asked must not call
+     this, because a score with an invented denominator is a mark nobody
+     measured. Play is deliberately excluded for the same reason the rollup
+     drops the Quran app's `games` star counts: a game is for practising. */
+  window.__ehelScore = function (i, right, total, sub, subTitle) {
+    const n = Number(total) || 0;
+    const got = Math.max(0, Math.min(Number(right) || 0, n));
+    if (!n) return;
+    /* `sub` gives ONE ACTIVITY INSIDE A STEP its own row - a single game out
+       of the twelve, say. The reducer keys checkpoints by this string and does
+       not validate it, so it is normalised here: lower case, hyphens only, and
+       short enough to read in a portal table. */
+    const key = sub
+      ? sectionId(i) + "-" + String(sub).toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "").slice(0, 28)
+      : sectionId(i);
+    emit({
+      type: "checkpoint.result", unit: UNIT, section: key,
+      title: subTitle ? labelOf(i) + ": " + subTitle : labelOf(i),
+      score: Math.round((got / n) * 100), correct: got, total: n,
+    });
+    try { ws.flush?.(); } catch (_) { /* never break the lesson */ }
+  };
+
+  /* PARTICIPATION where there is no score to give. "8 of 12 activities
+     ticked" is a real fact about a learner and is not a mark; sending it as a
+     checkpoint would put a percentage on work nobody assessed, which is the
+     thing the rollup already refuses to do for the Quran app's game stars. */
+  window.__ehelAttempt = function (i, answered, total, noun) {
+    const n = Number(total) || 0;
+    if (!n) return;
+    /* WHAT THIS IS CALLED, and what the two numbers count. The section id is a
+       POSITION here - `step-08` - and the same position is a different
+       activity in each app sharing this pipeline, so no reader of the stored
+       document can name it. `labelOf(i)` is the caption the learner is looking
+       at, the same one resumeLabel carries for the same reason: a surface
+       printing the id names a section nobody can find.
+
+       The noun is passed by the call site because only it knows: books, words,
+       rules, seconds. Both are optional and the server bounds them. */
+    attempted[sectionId(i)] = {
+      answered: Math.max(0, Math.min(Number(answered) || 0, n)),
+      total: n,
+      label: labelOf(i),
+      ...(noun ? { noun: String(noun) } : {}),
+    };
+    report(i);
+  };
+
+  /* Words the learner has shown they know, by tapping the right one when it
+     was said or pictured. A set, so hearing the same word in two steps counts
+     once, and the summary sends the whole list because the reducer replaces
+     rather than merges. */
+  window.__ehelKnown = function (words) {
+    const list = Array.isArray(words) ? words : [words];
+    let added = false;
+    for (const w of list) {
+      const t = String(w || "").trim().toLowerCase();
+      if (t && !known.has(t)) { known.add(t); added = true; }
+    }
+    // `cur` belongs to the deck's IIFE and this block is a separate module,
+    // so it is not in scope here - reading it would throw. The last position
+    // the deck told us about is, and that is the honest answer anyway.
+    if (added) report(lastAt);
+  };
 </script>

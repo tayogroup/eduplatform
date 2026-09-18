@@ -1075,12 +1075,22 @@ a.lcard:hover { border-color: var(--teal); }
 <script>
 (function () {
   const HUB = {"level": "level-5", "lessons": []};
+  /* Launched from Moodle, each level is its own course: the launch token names
+     THIS course, so a page of another level would report into the wrong one
+     (the gateway refuses it). The level tabs and the course home are for
+     browsing the build, and only then. style.display, not the hidden
+     attribute: .hub-tabs sets display, and a display rule beats [hidden]. */
+  if (new URLSearchParams(location.search).get("pwsToken")) {
+    document.querySelectorAll(".hub-tabs, .pg-top .back").forEach((e) => { e.style.display = "none"; });
+  }
   const get = (k) => { try { return JSON.parse(localStorage.getItem(k) || "null"); } catch (_) { return null; } };
   const last = HUB.level ? get("iep:" + HUB.level + ":last") : null;
   const c = document.getElementById("continue");
   if (c && last && last.file) {
     c.hidden = false;
-    c.href = last.file + "#step-" + (Number(last.step) + 1);
+    // ?step, not #step: the carry script appends the launch parameters after
+    // everything in an href, and a fragment would swallow them
+    c.href = last.file + "?step=" + (Number(last.step) + 1);
     c.innerHTML = "<small>Continue</small><b>" + String(last.label || "Lesson " + last.lesson).replace(/</g, "&lt;") + " · " + String(last.title).replace(/</g, "&lt;") + "</b><br>" + String(last.stepTitle || "").replace(/</g, "&lt;");
   }
   (HUB.lessons || []).forEach((l) => {

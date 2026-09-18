@@ -361,7 +361,29 @@ function hashGradeMap(courseRoot, categories = CATEGORIES) {
       map.get(key).add(level);
     }
   }
+  // The restructured programme (program/, owner 2026-09-18) is not a level-N
+  // folder, so the loop above never sees it. Its builder writes one manifest per
+  // level naming every clip its pages can play and the media folder they are
+  // served from (g10-g15, the number of the level's Moodle course key). Claimed
+  // here so the uploader sends them there, the audio check expects them, and the
+  // prune tools do not delete clips no live level claims.
+  for (const { grade, keys } of programmeClaims(courseRoot)) {
+    for (const key of keys) {
+      if (!map.has(key)) map.set(key, new Set());
+      map.get(key).add(grade);
+    }
+  }
   return map;
 }
 
-module.exports = { cyrb53, clean, MIN_CHARS, CATEGORIES, textsForUnit, speechForUnit, clipsForUnit, appSlideTexts, appSlideClips, sectionIntroClips, hashesForLevel, hashGradeMap };
+function programmeClaims(courseRoot) {
+  const dir = path.join(courseRoot, "program", "kit", "narration");
+  if (!fs.existsSync(dir)) return [];
+  return fs.readdirSync(dir).filter((f) => f.endsWith(".json")).sort().map((f) => {
+    const doc = JSON.parse(fs.readFileSync(path.join(dir, f), "utf8"));
+    if (!Number.isInteger(doc.mediaGrade)) throw new Error(`${f}: mediaGrade missing`);
+    return { grade: doc.mediaGrade, keys: doc.items.map((it) => it.key) };
+  });
+}
+
+module.exports = { cyrb53, clean, MIN_CHARS, CATEGORIES, textsForUnit, speechForUnit, clipsForUnit, appSlideTexts, appSlideClips, sectionIntroClips, hashesForLevel, hashGradeMap, programmeClaims };

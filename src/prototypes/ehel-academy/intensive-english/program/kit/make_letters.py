@@ -151,7 +151,7 @@ def build(n, lesson, units=None):
     for k in units:
         u, groups = unit(k)
         functions += u["unit"].get("functions") or []
-        lectures.append({"title": u["unit"]["unitTitle"], "text": retarget("Ph", k, u["visual"]["lectureScript"], n, not lectures)})
+        lectures.append({"title": u["unit"]["unitTitle"], "text": retarget("Ph", k, u["visual"]["lectureScript"], n, not lectures), "source": "Ph %d" % k})
         for title, items in groups:
             tl = title.lower()
             if "tricky" in tl or "cannot" in tl or "commonest" in tl:
@@ -248,7 +248,7 @@ def listen_pick(q, target, a, wrong, why, pics, verb="rhymes with"):
 
 def lecture_of(tag, n, lesson, first, title):
     u, _ = unit(n, IN if tag == "In" else PH)
-    return {"title": title, "text": retarget(tag, n, u["visual"]["lectureScript"], lesson, first)}
+    return {"title": title, "text": retarget(tag, n, u["visual"]["lectureScript"], lesson, first), "source": "%s %d" % (tag, n)}
 
 
 def hand_1(les):
@@ -462,6 +462,26 @@ BRIDGE_A_LECTURE = [
         "It is not the u of Somali. It is short, and the mouth is open.",
         "English does not write a long vowel with two of the same letter.",
         "In Somali, aa is a long a. English does not use aa.",
+        "English has other ways to write a long sound. Bridge B shows them."]),
+     "source": "new",
+     # What is SENT to the voice. A lone letter is read as its name, which is right
+     # for "the name of b" and wrong for "the sound of b"; the text needs both.
+     "speech": " ".join([
+        "This is Bridge A. You can read already.",
+        "You read Somali, or another language with these letters.",
+        "That helps a lot. The letters are the same.",
+        "But English gives some letters different sounds.",
+        "This lesson shows you the differences.",
+        "First, a letter has a name and a sound.",
+        "The letter b has the name bee, and the sound buh.",
+        "When you read a new word, say the sounds, not the names.",
+        "Now the five vowels: a, e, i, o, u.",
+        "In a short English word, a vowel has a short sound.",
+        "Listen: bag. bed. sit. box. bus.",
+        "Listen carefully to the uh sound in bus, cup and sun.",
+        "It is not the Somali oo sound. It is short, and the mouth is open.",
+        "English does not write a long vowel with two of the same letter.",
+        "In Somali, double a is a long ah. English does not use double a.",
         "English has other ways to write a long sound. Bridge B shows them."])},
     {"title": "c, x and q, and two letters with one sound", "text": "\n".join([
         "Now three letters that are very different.",
@@ -476,6 +496,21 @@ BRIDGE_A_LECTURE = [
         "t and h make th. Put your tongue between your teeth.",
         "English has two th sounds. This. Thin.",
         "Last, dh. Somali uses it. English does not.",
+        "Read slowly. Say the sounds. Then say the word."]),
+     "source": "new",
+     "speech": " ".join([
+        "Now three letters that are very different.",
+        "In Somali, c and x are sounds from the throat.",
+        "In English, the letter c says kuh. Cup. Cat.",
+        "But before e, i or y, the letter c says sss. City.",
+        "In English, the letter x says ks. Box. Six.",
+        "In English, q comes with u, and together they say kwah. Quick. Quiz.",
+        "Next, two letters can make one sound.",
+        "s and h make shh, as in Somali. Shop. Fish.",
+        "c and h make chuh. Chin. Chip.",
+        "t and h make th, as in thin. Put your tongue between your teeth.",
+        "English has two th sounds. This. Thin.",
+        "Last, d h. Somali uses it. English does not.",
         "Read slowly. Say the sounds. Then say the word."])},
 ]
 
@@ -526,8 +561,8 @@ def bridge_b(br):
                       "Read the long o sound: oa, o_e, ow", "Choose a spelling when you write a word"],
         },
         "unitLecture": {"chapters": [
-            {"title": "The long vowels", "text": retarget("Ph", 13, unit(13)[0]["visual"]["lectureScript"], "Bridge B", True)},
-            {"title": "One sound, more than one spelling", "text": retarget("Ph", 15, unit(15)[0]["visual"]["lectureScript"], "Bridge B", False)}]},
+            {"title": "The long vowels", "text": retarget("Ph", 13, unit(13)[0]["visual"]["lectureScript"], "Bridge B", True), "source": "Ph 13"},
+            {"title": "One sound, more than one spelling", "text": retarget("Ph", 15, unit(15)[0]["visual"]["lectureScript"], "Bridge B", False), "source": "Ph 15"}]},
         "hear": {
             "sounds": [tile("ai", "Long a, as in rain."), tile("a_e", "Long a, as in name."), tile("ay", "Long a, as in day. At the end of a word."),
                        tile("ee", "Long e, as in feet."), tile("ea", "Long e, as in eat."),

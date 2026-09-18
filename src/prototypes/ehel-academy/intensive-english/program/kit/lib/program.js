@@ -47,11 +47,16 @@
     return (4294967296 * (2097151 & h2) + (h1 >>> 0)).toString(16);
   }
   const CLIPS = new Set(LESSON.clips || []);
+  /* Where the clips are: the local tts folder when the build is opened on this
+     machine, the level's CDN folder (media/intensive-english/gNN) once it is
+     deployed. The same rule as lesson-kit/lib/intensive.js. */
+  const LOCAL = !location.hostname || /^(localhost|127\.0\.0\.1)$/.test(location.hostname);
+  const MEDIA = LOCAL ? LESSON.mediaDev : LESSON.mediaProd;
   const player = new Audio();
   player.preload = "none";
+  const clipUrl = (key) => (MEDIA && CLIPS.has(key) ? MEDIA + "/" + key + ".mp3" : "");
   function clipFor(text) {
-    const key = cyrb53(String(text || "").replace(/\s+/g, " ").trim());
-    return LESSON.media && CLIPS.has(key) ? LESSON.media + "/" + key + ".mp3" : "";
+    return clipUrl(cyrb53(String(text || "").replace(/\s+/g, " ").trim()));
   }
   function playClip(text, spoken) {
     if (window.__ehelPainting) return;
@@ -59,10 +64,40 @@
     const fallback = spoken || text;
     if (!url) { say(fallback); return; }
     try { VOICE.stop && VOICE.stop(); } catch (_) { /* mid-sentence */ }
+    player.onended = null;
     player.onerror = () => say(fallback);
     player.src = url;
     const p = player.play();
     if (p && p.catch) p.catch(() => say(fallback));
+  }
+  /* Several recordings, one after another: the chapters of the whole lecture, or
+     the lines of a conversation in two voices. Only when EVERY clip exists; a
+     gap in the middle would switch voices mid-conversation, so the caller's
+     `fallback` (the device voice) takes the whole thing instead. */
+  function playSequence(keys, fallback, gapMs) {
+    if (window.__ehelPainting) return;
+    const urls = keys.map(clipUrl);
+    if (!urls.length || urls.some((u) => !u)) { fallback(); return; }
+    try { VOICE.stop && VOICE.stop(); } catch (_) { /* mid-sentence */ }
+    let at = 0;
+    const next = () => {
+      if (at >= urls.length) { player.onended = null; return; }
+      player.src = urls[at++];
+      const p = player.play();
+      if (p && p.catch) p.catch(() => { player.onended = null; fallback(); });
+    };
+    player.onerror = () => { player.onended = null; fallback(); };
+    player.onended = () => setTimeout(next, gapMs || 0);
+    next();
+  }
+  const keyOf = (text) => cyrb53(String(text || "").replace(/\s+/g, " ").trim());
+  /* A link made after the page loaded misses the carry script, which runs once
+     at load: give it the launch parameters itself (everything but from/step). */
+  function withParams(href) {
+    const q = new URLSearchParams(location.search);
+    q.delete("from"); q.delete("step");
+    const s = q.toString();
+    return s ? href + (href.indexOf("?") < 0 ? "?" : "&") + s : href;
   }
   /* A conversation as one utterance: a pause between speakers, and each speaker
      at their own pitch, so a single device voice still sounds like two or three
@@ -222,13 +257,16 @@
     const el = $(id), ch = LESSON.unitLecture.chapters;
     const all = ch.map((c) => c.title + ". " + lines(c.text).join(" ")).join(" ");
     const names = LESSON.sectionNames || {};
-    const whole = ch.length > 1 && ch.every((c) => c.for);   // a literacy chapter is one recording each
+    const whole = ch.length > 1;
     el.innerHTML = stepHead(i) + "<h2>Unit lecture</h2>" +
       '<p class="lead">Your teacher walks you through the whole lesson. Listen first, then read along.</p>' +
-      (whole ? '<div class="actions">' + listenBtn(all, "Listen to the whole lecture") + "</div>" : "") +
+      (whole ? '<div class="actions"><button type="button" class="big small ghost" id="' + id + '-all">&#9654; Listen to the whole lecture</button></div>' : "") +
       '<div class="chapters">' + ch.map((c, n) => '<div class="chapter"><span class="for">' + esc(names[c.for] || "") + "</span><h3>" + (n + 1) + ". " + esc(c.title) + "</h3>" +
         '<div class="actions">' + listenBtn(lines(c.text).join(" "), "Listen") + "</div>" + para(c.text) + "</div>").join("") + "</div>";
     wireListen(el);
+    /* the chapters' own recordings, in order: the whole lecture is never
+       recorded as one clip, so nothing is paid for twice */
+    if (whole) $(id + "-all").addEventListener("click", () => playSequence(ch.map((c) => keyOf(lines(c.text).join(" "))), () => say(all), 600));
     doneButton(i, el, "I have listened");
   };
 
@@ -246,7 +284,7 @@
       $(id + "-fb").textContent = w.note;
       finish(i, "");
     }));
-    ONSHOW[i] = () => { if (cur === i) say(w.prompt); };
+    ONSHOW[i] = () => { if (cur === i) playClip(w.prompt); };
   };
 
   P.conversation = function (i, id) {
@@ -257,7 +295,7 @@
       '<div class="actions"><button type="button" class="big small" id="' + id + '-play">&#9654; Listen to the conversation</button>' +
       '<button type="button" class="big small ghost" id="' + id + '-show" aria-expanded="false">Show the words</button></div>' +
       '<div id="' + id + '-words" hidden>' + dialogueHTML(c.lines) + "</div>";
-    $(id + "-play").addEventListener("click", () => say(dialogueSSML(c.lines)));
+    $(id + "-play").addEventListener("click", () => playSequence(c.clipKeys || [], () => say(dialogueSSML(c.lines)), 350));
     $(id + "-show").addEventListener("click", (e) => {
       const box = $(id + "-words");
       box.hidden = !box.hidden;
@@ -432,7 +470,7 @@
       '<div class="actions"><button type="button" class="big small" id="' + id + '-play">&#9654; Listen: ' + esc(m.title) + "</button></div>" +
       dialogueHTML(m.lines) +
       '<div class="criteria"><h4>Check</h4><ul class="checklist">' + m.compare.map((c) => '<li><label><input type="checkbox"><span>' + esc(c) + "</span></label></li>").join("") + "</ul></div>";
-    $(id + "-play").addEventListener("click", () => say(dialogueSSML(m.lines)));
+    $(id + "-play").addEventListener("click", () => playSequence(m.clipKeys || [], () => say(dialogueSSML(m.lines)), 350));
     finishOnArrival(i);
   };
   function rateList(el, items, k) {
@@ -526,8 +564,14 @@
     el.dataset.painted = "1";
     el.innerHTML = stepHead(STEPS.length - 1) + "<h2>What I can do now</h2>" + '<p class="lead">' + (LESSON.task ? "Look at the list again. What has moved since the can-do check?" : "How sure are you now? Choose for each one.") + "</p>";
     rateList(el, (LESSON.task || LESSON).canDo, "self");
-    el.insertAdjacentHTML("beforeend", '<p class="tip">Next: ' + esc(LESSON.next || "back to the level page") + '</p><div class="actions"><a class="big small ghost" style="display:inline-grid;place-items:center;text-decoration:none" href="' + esc(LESSON.hub) + '">Back to ' + esc(LESSON.levelShort) + "</a></div>");
-    finish(STEPS.length - 1, "");
+    el.insertAdjacentHTML("beforeend", '<p class="tip">Next: ' + esc(LESSON.next || "back to the level page") + '</p><div class="actions"><a class="big small ghost" style="display:inline-grid;place-items:center;text-decoration:none" href="' + esc(withParams(LESSON.hub)) + '">Back to ' + esc(LESSON.levelShort) + "</a></div>");
+    /* Ticked in the menu, but NOT through finish(): the platform's progress
+       wiring counts every finish() as a lesson step, and the lesson counts as
+       complete at "all steps but one". The summary is not a step. */
+    const last = STEPS.length - 1;
+    done[last] = true;
+    store.set("done", done.map((d, k) => (d ? k : -1)).filter((k) => k >= 0));
+    paintMenu();
   }
 
   /* ================= Letters & Sounds ==================================

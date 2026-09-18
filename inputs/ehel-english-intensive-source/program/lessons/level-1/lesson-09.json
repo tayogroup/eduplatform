@@ -66,16 +66,16 @@
     ["Shop assistant", "Sorry, only in grey. What size are you?"],
     ["Samir", "Large, I think. Can I try it on?"],
     ["Shop assistant", "Of course. The changing room is over there."],
-    ["Samir", "It's too small. The arms aren't long enough."],
+    ["Samir", "It's too small. The sleeves aren't long enough."],
     ["Shop assistant", "Try this one. It's the next size."],
     ["Samir", "Yes, this one is better. I'll take it."],
-    ["Shop assistant", "Great. Keep your receipt. You can return it in 28 days."],
+    ["Shop assistant", "Great. Keep your receipt. You can return it within 28 days."],
     ["Samir", "Thanks very much."]
    ],
    "questions": [
     {"q": "Why does Samir need a jacket?", "a": "for work", "wrong": ["for a party", "for the weekend"], "why": "Samir says: I need a jacket for work."},
     {"q": "How much is the grey jacket?", "a": "£45", "wrong": ["£60", "£40"], "why": "The assistant says: The grey one is forty-five."},
-    {"q": "What is the problem when Samir tries on the first jacket?", "a": "It's too small.", "wrong": ["It's too expensive.", "It's too long."], "why": "Samir says: It's too small. The arms aren't long enough."}
+    {"q": "What is the problem when Samir tries on the first jacket?", "a": "It's too small.", "wrong": ["It's too expensive.", "It's too long."], "why": "Samir says: It's too small. The sleeves aren't long enough."}
    ]
   },
   "phrases": [
@@ -84,7 +84,7 @@
    {"text": "What size are you?", "use": "Asking about size."},
    {"text": "Can I try it on?", "use": "Asking to put clothes on in the shop."},
    {"text": "It's too small.", "use": "Saying the size is not right."},
-   {"text": "The arms aren't long enough.", "use": "Saying what is wrong with it."},
+   {"text": "The sleeves aren't long enough.", "use": "Saying what is wrong with it."},
    {"text": "Keep your receipt.", "use": "You need it to take something back."}
   ],
   "words": {
@@ -93,7 +93,7 @@
     {"w": "jacket", "pos": "noun", "meaning": "A short coat. You wear it over a shirt or a T-shirt.", "example": "I need a jacket for work."},
     {"w": "jeans", "pos": "noun", "meaning": "Strong blue trousers for every day. The word always ends in s.", "example": "I wear jeans at the weekend."},
     {"w": "skirt", "pos": "noun", "meaning": "Clothes for a woman. It goes from the middle of her body down over her legs.", "example": "She wears a long black skirt to work."},
-    {"w": "T-shirt", "pos": "noun", "meaning": "A light shirt with short arms. You put it on over your head.", "example": "I need a white T-shirt."},
+    {"w": "T-shirt", "pos": "noun", "meaning": "A light shirt with short sleeves. You put it on over your head.", "example": "I need a white T-shirt."},
     {"w": "boots", "pos": "noun", "meaning": "Big, strong shoes. They cover your foot and part of your leg.", "example": "I wear boots when it rains."},
     {"w": "socks", "pos": "noun", "meaning": "You wear them on your feet, inside your shoes.", "example": "A pair of black socks, please."},
     {"w": "pair", "pos": "noun", "meaning": "Two things that go together. Shoes and socks come in pairs.", "example": "I need a new pair of boots."},
@@ -117,7 +117,7 @@
     "Yes, please. I need a jacket for work.",
     "So the grey one is cheaper. Have you got it in blue?",
     "Large, I think. Can I try it on?",
-    "It's too small. The arms aren't long enough.",
+    "It's too small. The sleeves aren't long enough.",
     "Yes, this one is better. I'll take it."
    ]
   }
@@ -125,7 +125,7 @@
  "grammar": {
   "spot": {
    "instructions": "Look at these sentences from the conversation. Two compare jackets. Two say something is not right.",
-   "examples": ["So the grey one is cheaper.", "Yes, this one is better.", "It's too small.", "The arms aren't long enough."],
+   "examples": ["So the grey one is cheaper.", "Yes, this one is better.", "It's too small.", "The sleeves aren't long enough."],
    "question": "Which words compare two jackets? Which words say something is not right? Where do too and enough go?",
    "answer": "Cheaper and better compare two things. Too small and not long enough say something is not right. Too goes before small. Enough goes after long."
   },
@@ -175,16 +175,16 @@
    "title": "Returns and exchanges",
    "type": "Shop notice",
    "document": true,
-   "body": "PRACTICE: this shop is not real.\n\nNORTHGATE CLOTHING\nRETURNS AND EXCHANGES\n\nIs something wrong? No problem!\nYou can return or exchange clothes in 28 days.\nPlease bring:\n· your receipt\n· the clothes, with the labels on them\nPlease do not wash or wear the clothes first.\n\nWITH A RECEIPT\nYou can have your money back. Or you can exchange the clothes for a different size or colour.\n\nNO RECEIPT?\nYou can exchange the clothes. We can't give you your money back.\n\nSALE CLOTHES\nYou can exchange sale clothes in 14 days. You can't have your money back.\n\nWe can't take back socks.\nQuestions? Please ask at the till."
+   "body": "PRACTICE: this shop is not real.\n\nNORTHGATE CLOTHING\nRETURNS AND EXCHANGES\n\nIs something wrong? No problem!\nYou can return or exchange clothes within 28 days.\nPlease bring:\n· your receipt\n· the clothes, with the labels on them\nPlease do not wash or wear the clothes first.\n\nWITH A RECEIPT\nYou can have your money back. Or you can exchange the clothes for a different size or colour.\n\nNO RECEIPT?\nYou can exchange the clothes. We can't give you your money back.\n\nSALE CLOTHES\nYou can exchange sale clothes within 14 days. You can't have your money back.\n\nWe can't take back socks.\nQuestions? Please ask at the till."
   },
   "gist": [
    {"q": "What is this notice about?", "a": "taking clothes back to the shop", "wrong": ["new clothes in the shop", "jobs in the shop"], "why": "It says RETURNS AND EXCHANGES."},
-   {"q": "Can you take clothes back to this shop?", "a": "Yes, in 28 days.", "wrong": ["No, never.", "Yes, any time."], "why": "The notice says: You can return or exchange clothes in 28 days."}
+   {"q": "Can you take clothes back to this shop?", "a": "Yes, within 28 days.", "wrong": ["No, never.", "Yes, any time."], "why": "The notice says: You can return or exchange clothes within 28 days."}
   ],
   "detail": [
    {"q": "You haven't got the receipt. What can you do?", "a": "exchange the clothes", "wrong": ["get your money back", "nothing"], "why": "No receipt? You can exchange the clothes, but you can't have your money back."},
-   {"q": "You bought a skirt in the sale. What can you do?", "a": "exchange it in 14 days", "wrong": ["get your money back", "exchange it in 28 days"], "why": "Sale clothes: you can exchange them in 14 days. No money back."},
-   {"q": "What must you bring?", "a": "the receipt and the clothes, with the labels on them", "wrong": ["only the clothes", "your bank card"], "why": "Please bring your receipt and the clothes, with the labels on them."},
+   {"q": "You bought a skirt in the sale. What can you do?", "a": "exchange it within 14 days", "wrong": ["get your money back", "exchange it within 28 days"], "why": "Sale clothes: you can exchange them within 14 days. No money back."},
+   {"q": "What must you bring?", "a": "the receipt and the clothes, with the labels on them", "wrong": ["only the receipt", "your bank card"], "why": "Please bring your receipt and the clothes, with the labels on them."},
    {"q": "Which of these can't you take back?", "a": "socks", "wrong": ["jeans", "a jacket"], "why": "The notice says: We can't take back socks."}
   ],
   "words": {

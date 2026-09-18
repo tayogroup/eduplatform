@@ -1022,6 +1022,14 @@
       <p class="fb" id="fbT" role="status" aria-live="polite"></p>
       <p class="score" id="scT"></p>
     </section>
+    <!-- 10  Story problems  (Cambridge Stage 3 word-problem shape) -->
+    <section class="slide" data-twm="specialising" data-say="Read the story, then work out the answer." data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>This one is a story.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>Read it carefully, and work out what it is asking.</s><s>The maths is the same maths you have just been using.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>Have a go.</s></mstts:express-as>'>
+      <div class="slide-head"><span class="n">10</span><h2>Story problems</h2></div>
+      <div class="say"><button type="button" class="speak" aria-label="Read it to me">&#128266;</button><span id="sayWpG3"></span></div>
+      <div id="wpG3"></div>
+      <div class="choices" id="chWpG3"></div>
+      <p class="fb" id="fbWpG3" role="status" aria-live="polite"></p>
+    </section>
     <section class="slide" data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>Nothing new here.</s><s>Every question uses something from this lesson.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>If it is a shape, count the sides.</s><s>If it is a measurement, check the unit first.</s><s>If it is a time, count on.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>Read it, think, then tap.</s></mstts:express-as>' data-say="Time to show what you know. Tap the answer.">
       <div class="slide-head"><span class="n">✓</span><h2>Show what you know</h2></div>
       <div class="say"><button type="button" class="speak" aria-label="Read it to me">🔊</button><span id="say17">Tap the answer.</span></div>
@@ -2472,7 +2480,7 @@
       $("q17").textContent = ""; $("ch17").innerHTML = "";
       $("fb17").className = "fb good"; $("fb17").textContent = "Finished! " + got17 + " out of " + order17.length + ".";
       $("sc17").textContent = "";
-      if (got17 >= 6) finish(9, "You have finished the check.");
+      if (got17 >= 6) finish(10, "You have finished the check.");
       else retryCheck($("fb17"), $("ch17"), got17, order17.length, 6, function () { qi = 0; got17 = 0; order17 = shuffle(QS); round17(); });
       return;
     }
@@ -2499,7 +2507,7 @@
   const STICKERS = [
     ["🔺", "Naming flat shapes"], ["⬡", "Regular or irregular"], ["🦋", "Lines of symmetry"], ["↔️", "Mirror it"],
     ["📦", "Solid shapes"], ["🚧", "Perimeter"], ["🔲", "Area"], ["✏️", "Draw it yourself"],
-    ["📝", "Try this one"], ["✅", "Show what I know"], ["\ud83e\udd14", "How do you know"]
+    ["📝", "Try this one"], ["📖", "Story problems"], ["✅", "Show what I know"], ["\ud83e\udd14", "How do you know"]
   ];
 
   function paintStickers() {
@@ -2734,6 +2742,40 @@
       }
     });
     paint();
+  })();
+
+  /* ==== ehel-g3-story: a story problem, one per lesson ====
+     Written in the same idiom as add-differentiation.py's tiered step, so
+     nothing later needs renumbering: the slot is read from the DOM, not
+     hardcoded. ONE question, no tiers - Grade 1 and 2's own word-problem
+     banks are single questions too. */
+  (function () {
+    const host = document.getElementById("wpG3");
+    if (!host) return;
+    const SLOT = [...document.querySelectorAll(".slide")].indexOf(host.closest(".slide"));
+    const esc = (t) => String(t).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/"/g, "&quot;");
+    const IT = { q: "Zara draws 3 triangles, 2 squares and 1 hexagon on her paper. How many shapes does Zara draw in total?", why: "3 add 2 add 1 is 6 shapes altogether.", opts: [{ t: "6", ok: true }, { t: "5", ok: false }, { t: "3", ok: false }] };
+    let live = true;
+    document.getElementById("sayWpG3").textContent = IT.q;
+    document.getElementById("chWpG3").innerHTML = shuffle(IT.opts.slice())
+      .map((o) => '<button type="button" class="choice word" data-ok="' + (o.ok ? 1 : 0)
+        + '">' + esc(o.t) + "</button>").join("");
+    document.getElementById("chWpG3").addEventListener("click", (e) => {
+      const b = e.target.closest(".choice");
+      if (!b || !live) return;
+      live = false;
+      const ok = b.dataset.ok === "1";
+      [...document.getElementById("chWpG3").querySelectorAll(".choice")].forEach((x) => {
+        x.disabled = true;
+        if (x.dataset.ok === "1") x.classList.add("right");
+      });
+      if (!ok) b.classList.add("wrong");
+      const fb = document.getElementById("fbWpG3");
+      fb.className = "fb " + (ok ? "good" : "");
+      fb.textContent = (ok ? cheer() + " " : "Not quite. ") + IT.why;
+      say(ok ? cheer() : IT.why);
+      finish(SLOT, "Story problems teach the same maths in a real situation.");
+    });
   })();
 
   show(0, false);
@@ -3597,4 +3639,7 @@
 <style>/* ehel-spiral - see add-spiral-warmup.py */
   .eh-spiral { margin-top: 16px; padding-top: 14px; border-top: 2px dashed var(--line); }
   .eh-spiral .eh-spiral-ch { margin-top: 12px; }
+</style>
+<style>/* ehel-g3-story - see add-story-problems.py */
+  #fbWpG3 { margin-top: 4px; }
 </style>

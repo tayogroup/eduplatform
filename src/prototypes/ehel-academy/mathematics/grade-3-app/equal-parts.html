@@ -1048,6 +1048,14 @@
       <p class="fb" id="fbT" role="status" aria-live="polite"></p>
       <p class="score" id="scT"></p>
     </section>
+    <!-- 12  Story problems  (Cambridge Stage 3 word-problem shape) -->
+    <section class="slide" data-twm="specialising" data-say="Read the story, then work out the answer." data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>This one is a story.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>Read it carefully, and work out what it is asking.</s><s>The maths is the same maths you have just been using.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>Have a go.</s></mstts:express-as>'>
+      <div class="slide-head"><span class="n">12</span><h2>Story problems</h2></div>
+      <div class="say"><button type="button" class="speak" aria-label="Read it to me">&#128266;</button><span id="sayWpG3"></span></div>
+      <div id="wpG3"></div>
+      <div class="choices" id="chWpG3"></div>
+      <p class="fb" id="fbWpG3" role="status" aria-live="polite"></p>
+    </section>
     <section class="slide" data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>Nothing new here.</s><s>Every question uses something from this lesson.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>If it asks for a fraction of a number, divide by the bottom then multiply by the top.</s><s>If it asks which is bigger, look at which number is the same first.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>Read it, think, then tap.</s></mstts:express-as>' data-say="Time to show what you know. Tap the answer.">
       <div class="slide-head"><span class="n">✓</span><h2>Show what you know</h2></div>
       <div class="say"><button type="button" class="speak" aria-label="Read it to me">🔊</button><span id="say10">Tap the answer.</span></div>
@@ -2508,7 +2516,7 @@
       $("q10").textContent = ""; $("ch10").innerHTML = "";
       $("fb10").className = "fb good"; $("fb10").textContent = "Finished! " + got10 + " out of " + order10.length + ".";
       $("sc10").textContent = "";
-      if (got10 >= 8) finish(11, "You have finished the check.");
+      if (got10 >= 8) finish(12, "You have finished the check.");
       else retryCheck($("fb10"), $("ch10"), got10, order10.length, 8, function () { qi = 0; got10 = 0; order10 = shuffle(QS); round10(); });
       return;
     }
@@ -2535,8 +2543,8 @@
   const STICKERS = [
     ["✂️", "Equal parts"], ["🥧", "All the parts make one"], ["🔷", "Same fraction, different shape"], ["🍬", "A fraction of a group"],
     ["➗", "The line means divide"], ["🔢", "A fraction of a number"], ["⚖️", "The same, in different pieces"], ["➕", "Adding pieces"],
-    ["📏", "Which is bigger"], ["🔍", "Spot the mistake"], ["📝", "Try this one"], ["✅", "Show what I know"],
-    ["\ud83e\udd14", "How do you know"]
+    ["📏", "Which is bigger"], ["🔍", "Spot the mistake"], ["📝", "Try this one"], ["📖", "Story problems"],
+    ["✅", "Show what I know"], ["\ud83e\udd14", "How do you know"]
   ];
   function paintStickers() {
     $("stickers").innerHTML = STICKERS.map((s, i) => '<div class="sticker' + (done[i] ? " got" : "") + '"><span class="ic">' + s[0] + "</span>" + s[1] + (done[i] ? "" : '<br><small style="color:var(--muted);font-weight:400">not yet</small>') + "</div>").join("");
@@ -2827,6 +2835,40 @@
       }
     });
     paint();
+  })();
+
+  /* ==== ehel-g3-story: a story problem, one per lesson ====
+     Written in the same idiom as add-differentiation.py's tiered step, so
+     nothing later needs renumbering: the slot is read from the DOM, not
+     hardcoded. ONE question, no tiers - Grade 1 and 2's own word-problem
+     banks are single questions too. */
+  (function () {
+    const host = document.getElementById("wpG3");
+    if (!host) return;
+    const SLOT = [...document.querySelectorAll(".slide")].indexOf(host.closest(".slide"));
+    const esc = (t) => String(t).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/"/g, "&quot;");
+    const IT = { q: "Viti has 15 sweets. She gives one third of them to her brother. How many sweets does Viti give her brother?", why: "15 shared into 3 equal thirds is 5 sweets in each third.", opts: [{ t: "5", ok: true }, { t: "3", ok: false }, { t: "10", ok: false }] };
+    let live = true;
+    document.getElementById("sayWpG3").textContent = IT.q;
+    document.getElementById("chWpG3").innerHTML = shuffle(IT.opts.slice())
+      .map((o) => '<button type="button" class="choice word" data-ok="' + (o.ok ? 1 : 0)
+        + '">' + esc(o.t) + "</button>").join("");
+    document.getElementById("chWpG3").addEventListener("click", (e) => {
+      const b = e.target.closest(".choice");
+      if (!b || !live) return;
+      live = false;
+      const ok = b.dataset.ok === "1";
+      [...document.getElementById("chWpG3").querySelectorAll(".choice")].forEach((x) => {
+        x.disabled = true;
+        if (x.dataset.ok === "1") x.classList.add("right");
+      });
+      if (!ok) b.classList.add("wrong");
+      const fb = document.getElementById("fbWpG3");
+      fb.className = "fb " + (ok ? "good" : "");
+      fb.textContent = (ok ? cheer() + " " : "Not quite. ") + IT.why;
+      say(ok ? cheer() : IT.why);
+      finish(SLOT, "Story problems teach the same maths in a real situation.");
+    });
   })();
 
   show(0, false);
@@ -3698,4 +3740,7 @@
 <style>/* ehel-spiral - see add-spiral-warmup.py */
   .eh-spiral { margin-top: 16px; padding-top: 14px; border-top: 2px dashed var(--line); }
   .eh-spiral .eh-spiral-ch { margin-top: 12px; }
+</style>
+<style>/* ehel-g3-story - see add-story-problems.py */
+  #fbWpG3 { margin-top: 4px; }
 </style>

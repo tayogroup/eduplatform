@@ -631,6 +631,17 @@ const CONCEPT_INSERTS = {
     conceptId: "concept-3-animals-with-backbones-and-without",
     after: "It is made of many small bones and it holds your body up.",
     text: "\n\nYour backbone is only part of a much bigger frame called your skeleton, and every bone in your body is part of it: your skull, your ribs, and the long bones in your arms and legs are all bones too.\n\nYour skeleton does two more jobs besides holding you up. It grows as you grow, so your skeleton at ten years old is bigger than it was at five, and it keeps growing until you are an adult. It also protects the soft parts inside you: your skull is a hard case around your brain, and your ribs curve around your chest to guard your heart and lungs.\n\nBones cannot move by themselves. Muscles are attached to your bones, and a muscle moves a bone by contracting, which means it pulls tight and gets shorter. Feel the front of your upper arm while you bend your elbow, and you can feel a muscle bunch up as it shortens. A muscle can only pull, never push, so muscles work in pairs: one muscle contracts to bend your arm while the other relaxes, and then that second muscle contracts in turn to straighten your arm again.",
+  }, {
+    // 4Bs.04: "some animals have an exoskeleton" was cited on this concept's own
+    // invertebrate list without the word, or the inside/outside contrast, ever
+    // appearing — checked with a plain grep before writing this, zero hits
+    // outside the citation. The backbone insert above has just spent a
+    // paragraph on the inside skeleton, which is exactly the contrast an
+    // exoskeleton needs to land against, so this continues it rather than
+    // opening a new topic.
+    conceptId: "concept-3-animals-with-backbones-and-without",
+    after: "An ant, a spider, a snail, a butterfly, and an earthworm are all invertebrates.",
+    text: " Some invertebrates, though, are not soft all over. An ant, a beetle and a spider each wear their skeleton on the OUTSIDE, as a hard case around a soft body, instead of carrying bones on the inside the way you do. A skeleton worn like this is called an exoskeleton - \"exo\" means outside. It protects the animal and gives its muscles something to pull against, the same jobs your inside skeleton does, just built the other way round. An exoskeleton cannot grow the way your bones do, which is why an insect must shed its old case and grow a new, bigger one as it gets larger. A snail and an earthworm have no skeleton of either kind, inside or out - proof that a backbone is not the only way, and not even the only invertebrate way, to hold an animal up.",
   }],
   // The Grade 4 sound gap, and it was never as empty as the gap record said.
   // I recorded it as "no Year 4 pack contains a sound unit… the only sound
@@ -649,6 +660,16 @@ const CONCEPT_INSERTS = {
     conceptId: "concept-2-the-many-forms-of-energy",
     after: "it can easily be changed into light, heat, sound, or movement.",
     text: "\n\nOf all those forms, sound is worth a closer look, because how it behaves is easy to test for yourself.\n\nSound needs matter to carry it, and air is only the usual choice. It travels through solids and liquids too, and faster: press your ear to a wooden door while somebody taps the far side and the tap comes through surprisingly clearly, because the particles of a solid are packed close together and pass the shaking along quickly. Swimmers hear sounds underwater for the same reason. Other materials do the opposite. Thick cloth, a woollen blanket, a mattress, a wall of mud brick — these soak the vibrations up instead of passing them on, which is why a room with hangings on the walls sounds softer and why heavy curtains dull the noise of the street. Where quiet matters, people choose materials that stop sound on purpose.\n\nLoudness and pitch are two different things, and they are easy to muddle. Loudness is how strong the vibration is, and it is measured in decibels with a sound level meter: a whisper is around 30 decibels, ordinary talking about 60, and a generator close by can pass 90, which is why people working beside one wear ear protection. Pitch is something else entirely — how high or low the note sounds — and it depends on how fast the vibration is. Fast vibrations give a high note, slow ones a low note. High and low sounds can each be loud or soft, which is why a child can whisper a high note and a man can shout a low one.\n\nYou can change pitch yourself. Pluck a tight string and it sounds higher than a loose one; shorten the string and it rises again, which is exactly what a player does pressing a string against the neck of an oud. Blow across the top of a bottle holding a little water and the note is low; add more water and it climbs, because the column of air left to vibrate is shorter. Every instrument, from a drum to a flute, is a way of controlling how fast something vibrates.",
+  }],
+  // 4Cp.02: "some solids can behave like liquids (e.g. powders)" was cited on
+  // the states-of-matter concept, and the word "powder" never appeared —
+  // checked before writing this. The solid section already ends on "the whole
+  // object moves as one piece", which is exactly the claim a powder breaks, so
+  // the insert answers it on the spot rather than opening a new concept.
+  "4-3": [{
+    conceptId: "concept-4-the-three-states-of-matter",
+    after: "Examples of solids all around you include wood, metal, glass, rock, ice, plastic, bone and dried beans.",
+    text: " Flour, sand and sugar are solids too, and they seem to break that rule: tip a bag of flour and it pours, almost like a liquid. It has not stopped being a solid. Each separate grain is still a hard, rigid solid with its particles locked in place — pick one grain out and it will not flow at all. What pours is the huge number of separate grains sliding and tumbling over one another, the way a crowd of people can flow through a doorway even though every single person in it is solid. A powder is really a great many tiny solids acting together, not one liquid.",
   }],
   // Grade 7 Unit 3 is called Forces and Energy. Two of its outcomes promise
   // energy — naming the forms, and describing transfers and dissipation — and
@@ -791,6 +812,20 @@ const CONCEPT_INSERTS = {
     conceptId: "concept-2-voltage-the-push-behind-the-current",
     after: "That is why a torch that needs more power holds several cells stacked end to end.",
     text: "\n\nA cell is only a store, though, and the energy inside it had to come from somewhere — so did the electricity in a wall socket. Some of the resources we draw that energy from are renewable, which means nature replaces them about as fast as we use them: sunlight caught by a solar panel, wind turning a turbine, and the rise and fall of the tide. Plants count as renewable too, which is why bioplastics can be made from them instead of from oil. Other resources are non-renewable. Coal, oil and natural gas took many millions of years to form underground, and once they are burned they are gone for good. The difference matters to a whole country, not just to a science lesson: building on renewable resources means the lights still come on long after the coal would have run out.",
+  }],
+  // 2Cp.01-03: "properties of materials" was cited on the states-of-matter
+  // concept in the Changing Materials unit, and the word "property" appeared
+  // nowhere in it — checked before writing this. The concept already sorts
+  // solid, liquid and gas by exactly the behaviour a property IS (keeps its
+  // shape, flows, spreads out), so the insert names that behaviour as a
+  // property rather than opening a new topic, then adds the purpose and
+  // testing halves 2Cp.02 and 2Cp.03 need, using materials already in the
+  // unit (rice, clay, cloth from concept-2-a-force-can-change-a-shape) so
+  // nothing here needs a new example bought in from outside the unit.
+  "2-3": [{
+    conceptId: "concept-1-solids-liquids-and-gases",
+    after: "In a gas, the tiny parts are far apart and zooming around quickly, like children running freely all over a big open field, never holding hands at all.",
+    text: "\n\nKeeping a shape, flowing, or spreading out to fill a space - these are all PROPERTIES of a material, which just means things you can notice and describe about it. Hardness, colour, whether it lets water through, and whether it dissolves are properties too. Every material has its own set of properties, and no two materials have exactly the same set.\n\nThis matters because people choose a material for a job by matching its properties to what the job needs. A cooking pot is made of metal because metal stays solid and carries heat well, even over a fire; a rain cover is made of plastic because plastic is a solid that keeps its shape AND does not let water through. Using rice or sand for a rain cover would be a poor choice, because their properties are wrong for that job, however good they are for other jobs.\n\nYou do not have to guess a property - you can test for it. To find out whether a material lets water through, pour water onto it and watch. To find out whether it dissolves, stir a little into water and see whether it disappears. To find out whether it is hard, try to press a mark into it with your fingernail. Testing is simply a fair way of finding out a property for certain, instead of just guessing from how a material looks.",
   }],
 };
 

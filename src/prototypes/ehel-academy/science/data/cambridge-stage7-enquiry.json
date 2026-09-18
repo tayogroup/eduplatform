@@ -4,8 +4,8 @@
   "curriculumCode": "0893",
   "stage": 7,
   "source": "Authored 2026-09-17 against Cambridge Lower Secondary Science 0893 Stage 7, anchored to the investigations in Grade 7 units 1-9. No Teacher's Resource was supplied for this stage.",
-  "minimumCovered": 14,
-  "_minimumCovered": "One prompt per unclaimed Stage 7 TWS/SIC objective. Coverage is a number that only goes up.",
+  "minimumCovered": 15,
+  "_minimumCovered": "One prompt per unclaimed Stage 7 TWS/SIC objective, plus one added 2026-09-18 for an objective that was cited but never actually asked of a learner (7TWSa.03 - Unit 7's decay investigation asked for a conclusion but never for its limitations). Coverage is a number that only goes up.",
   "prompts": [
     {
       "id": "7-enq-1", "unit": 1, "codes": ["7SIC.04"], "outcomeId": "lo01", "difficulty": "Challenge",
@@ -90,6 +90,12 @@
       "prompt": "A village is offered either a connection to the national grid or its own solar panels and batteries. Evaluate the issue using science, and say what evidence would decide it.",
       "keyIdeas": ["Weigh both sides rather than choosing one", "Solar: no fuel, but storage and nothing at night", "The deciding evidence: demand, sunshine hours, distance to the grid"],
       "modelAnswer": "Both have a real case. The grid supplies power at any hour and carries a heavy load, but the village is far from it and the line would be long, costly and easily broken. Solar needs no fuel and no line, but generates only in daylight, so it leans on batteries, and batteries wear out and limit how much can be drawn at once. The evidence that would decide it: how much power the village actually needs and when, how many hours of strong sunshine it gets in its cloudiest month, and the distance to the nearest grid line. Evaluating an issue means naming what would change your mind, not picking a side first."
+    },
+    {
+      "id": "7-enq-15", "unit": 7, "codes": ["7TWSa.03"], "outcomeId": "lo04", "difficulty": "Challenge",
+      "prompt": "In 'Does Moisture Affect Decay?' you concluded that the moist bread decayed faster. A full conclusion also says what your investigation CANNOT tell you. Name one limitation of your conclusion.",
+      "keyIdeas": ["Only one slice of each kind was tested, from one loaf", "It only tested bread - other foods might decay differently", "A limitation says where a conclusion stops applying; it does not make the conclusion wrong"],
+      "modelAnswer": "My conclusion is limited because I only tested one moist slice and one dry slice from a single loaf, so one unusual slice could have thrown off the result - testing several slices of each would make me more confident. It is also limited to bread: rice, meat or fruit might decay differently, because they are different foods for microorganisms to grow on. Naming a limitation does not mean the conclusion is wrong - it means saying exactly how far the evidence actually reaches."
     }
   ]
 }

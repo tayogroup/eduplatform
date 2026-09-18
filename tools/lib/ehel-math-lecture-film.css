@@ -240,3 +240,119 @@ body {
 
 /* ---- area: alternate rows shaded, so the rows can be counted --------------- */
 .fillA.alt { opacity: 0.5; }
+
+/* ==== the animation pass, 2026-09-18 ========================================
+   Everything below serves a scene that now MOVES as it is narrated (see the
+   renderer's header). Still no transitions: every changing value is written
+   inline, per frame, by the renderer. Colours are the tokens above, and the
+   three things a solid is made of each keep one: faces gold, edges coral,
+   corners plum, echoed by the side panel's row labels. */
+
+/* solids, and the title's cube: turned and drawn see-through */
+.sf { fill: var(--teal); stroke: none; }
+.sf.back { fill-opacity: 0.06; }
+.se { fill: none; stroke: var(--teal); stroke-width: 2.4; stroke-linecap: round; stroke-linejoin: round; }
+.se.hid { stroke: var(--muted); stroke-width: 1.6; stroke-dasharray: 5 5; opacity: 0.7; }
+.hl-face { fill: var(--gold); }
+.hl-edge { stroke: var(--accent); stroke-width: 5.5; stroke-linecap: round; }
+.hl-edge.hid { stroke-width: 3.5; stroke-dasharray: 6 5; }
+.hl-vert { fill: var(--plum); stroke: var(--ground); stroke-width: 1.5; }
+.hl-curved { fill: var(--gold); }
+.stripe { stroke: var(--ink); stroke-width: 1.6; opacity: 0.5; }
+.stripe.gold { stroke: var(--gold); stroke-width: 3; }
+.wrow.k-face b { color: var(--gold); }
+.wrow.k-edge b { color: var(--accent); }
+.wrow.k-vert b { color: var(--plum); }
+.wrow.k-curve b { color: var(--gold); }
+
+/* nets: card that folds */
+.nets .figure { width: 520px; height: 420px; }
+.nf-card { fill: var(--card); }
+.nf { stroke: var(--teal); stroke-width: 2.2; stroke-linejoin: round; }
+.nf.out { fill: var(--teal); }
+.nf.in { fill: var(--teal); }
+.nnum { fill: var(--ink); font-family: "Inter", sans-serif; font-weight: 700; text-anchor: middle; dominant-baseline: central; }
+.nhinge { stroke: var(--gold); stroke-width: 5; stroke-dasharray: 9 6; stroke-linecap: round; }
+.nopen { fill: none; stroke: var(--bad); stroke-width: 4; stroke-dasharray: 10 6; stroke-linejoin: round; }
+.nlabel { fill: var(--bad); font-family: "Inter", sans-serif; font-weight: 700; font-size: 22px; text-anchor: middle;
+  paint-order: stroke; stroke: var(--ground); stroke-width: 5px; }
+.altcap { font-family: "Inter", sans-serif; font-size: 12px; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: var(--muted); margin-top: 6px; }
+.altnets { display: flex; gap: 22px; }
+.alt { display: flex; align-items: center; gap: 10px; }
+.alt svg { width: 120px; height: auto; display: block; }
+.alt svg rect { fill: var(--teal-soft); stroke: var(--teal); stroke-width: 2; }
+.okmark { color: var(--good); font-size: 26px; font-weight: 700; }
+
+/* symmetry: a fold that lands, or does not */
+.symmetry .shape.fold { fill: var(--teal); fill-opacity: 0.5; }
+.symmetry .shape.fold.over { fill: var(--teal); fill-opacity: 0.3; stroke-dasharray: 6 4; }
+.foldok { fill: var(--good); stroke: none; }
+.foldmiss { fill: var(--bad); stroke: none; }
+.symmetry .mirror.ghost { stroke: var(--muted); stroke-width: 2; opacity: 0.45; }
+.symmetry .mirror.trial { stroke: var(--muted); }
+.nope { fill: var(--bad); font-family: "Inter", sans-serif; font-weight: 700; font-size: 30px; text-anchor: middle; }
+
+/* angles: a turn, measured against its yardsticks */
+.angles .figure { width: 480px; height: 300px; }
+.angles .ghost { stroke: var(--muted); stroke-width: 2.5; stroke-dasharray: 8 7; }
+.angles .ghostwedge { fill: none; stroke: var(--muted); stroke-width: 1.5; stroke-dasharray: 4 5; }
+.angles .turnarc { fill: none; stroke: var(--gold); stroke-width: 3; stroke-linecap: round; }
+.angles .turndot { fill: var(--gold); }
+.angles .halflab { fill: var(--gold); font-family: "Inter", sans-serif; font-weight: 700; font-size: 26px; text-anchor: middle; }
+.angles .armhl { stroke: var(--gold); stroke-width: 8; stroke-linecap: round; opacity: 0.8; }
+.angles .deg { text-anchor: middle; }
+
+/* tessellation */
+.tessellate .hyp { stroke: var(--gold); stroke-width: 6; stroke-linecap: round; }
+.outline { fill: none; stroke: var(--gold); stroke-width: 4; stroke-linejoin: round; }
+.tessellate .legs { stroke: var(--gold); stroke-width: 5; stroke-linecap: round; }
+.eqtick { stroke: var(--ink); stroke-width: 3; stroke-linecap: round; }
+.tessellate .pt { fill: var(--gold); }
+.tessellate .tileedge { fill: none; stroke: var(--gold); stroke-width: 2.5; stroke-linejoin: round; }
+.tessellate .gap { fill: var(--bad); }
+
+/* grids: counting, rows, brackets, a walk round the edge */
+.cellnum { fill: #04141B; font-family: "Inter", sans-serif; font-weight: 700; text-anchor: middle; }
+.rowband { fill: var(--gold); }
+.dim { stroke: var(--ink); stroke-width: 2.5; stroke-linecap: round; }
+.dimlab { fill: var(--ink); font-family: "Inter", sans-serif; font-weight: 700; font-size: 19px; text-anchor: middle; }
+.gridborder.faint { stroke: var(--muted); stroke-width: 2; opacity: 0.45; }
+.insideflash { fill: var(--teal); }
+.nogo { fill: var(--bad); font-family: "Inter", sans-serif; font-weight: 700; font-size: 24px; text-anchor: middle; }
+.trace { fill: none; stroke: var(--gold); stroke-width: 6; stroke-linecap: round; stroke-linejoin: round; }
+.post { fill: var(--ink); }
+.walker { fill: var(--gold); stroke: var(--ground); stroke-width: 2; }
+.side-on { stroke: var(--accent); stroke-width: 8; stroke-linecap: round; }
+.lpath { fill: none; stroke: var(--accent); stroke-width: 8; stroke-linecap: round; stroke-linejoin: round; }
+.lpath.two { stroke: var(--plum); }
+.sumlab { fill: var(--accent); font-family: "Inter", sans-serif; font-weight: 700; font-size: 22px; text-anchor: middle; }
+.sumlab.big { fill: var(--ink); font-size: 28px; }
+.cut { stroke: var(--gold); stroke-width: 4; stroke-dasharray: 8 6; stroke-linecap: round; }
+.areanum { fill: var(--ink); font-family: "Inter", sans-serif; font-weight: 700; font-size: 30px; text-anchor: middle;
+  paint-order: stroke; stroke: rgba(4, 20, 27, 0.55); stroke-width: 4px; }
+.areanum.big { font-size: 26px; fill: var(--gold); }
+.halfnum { fill: #2A0805; font-family: "Inter", sans-serif; font-weight: 700; text-anchor: middle; }
+
+/* the scale: built mark by mark, the water along it */
+.scale .water { fill: var(--blue); opacity: 0.35; }
+.scale .gapband { fill: var(--gold); opacity: 0.12; }
+.scale .small.here { stroke: var(--gold); stroke-width: 2.5; }
+.scale .qlab { fill: var(--gold); font-family: "Inter", sans-serif; font-weight: 700; font-size: 20px; text-anchor: middle; }
+.scale .quarter { fill: var(--gold); }
+
+/* reflection */
+.reflect .ghost { fill: none; stroke: var(--gold); stroke-width: 2.5; stroke-dasharray: 5 4; }
+.flipar { stroke: var(--ink); stroke-width: 3.5; stroke-linecap: round; }
+.fliphead { fill: var(--ink); }
+.reflect .mline.glowline { stroke: var(--gold); stroke-width: 9; stroke-dasharray: none; }
+
+/* the title motif's moving parts */
+.tmotif .marm { stroke: var(--ink); stroke-width: 3; stroke-linecap: round; }
+.tmotif .lit { fill: var(--gold); opacity: 0.85; }
+.tmotif .wall { fill: none; stroke: var(--gold); stroke-width: 4; }
+
+/* the grid scenes count single squares and write numbers in them, so they get
+   a bigger box than the generic 340: at 340 a square rendered about 32px and
+   its number was too small to read */
+.area .figure, .perimeter .figure, .compound .figure { width: 540px; height: 390px; }
+.irregular .figure { width: 430px; height: 400px; }

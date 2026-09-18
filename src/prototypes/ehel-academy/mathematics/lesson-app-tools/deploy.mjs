@@ -132,7 +132,14 @@ const K = key();
  * before its index answers every query with "the lesson list could not be
  * loaded". Not fatal the way a missing module is - the lesson itself works -
  * but the miss is edge-cacheable on a path that did not exist before. */
-const data = (r) => r.endsWith(".js") || r.endsWith(".json");
+/* ...and so does MEDIA (2026-09-18), where the reason is at its strongest. A
+ * re-rendered lecture film gets a NEW, content-derived name, because this CDN
+ * perma-caches a stable media path (tools/version-lecture-video.js). So its
+ * first request is always for a path that has never existed. Media used to go
+ * AFTER the pages: extraPages sits last in plan order and did not count as
+ * data. A page live before its 17MB film lands lets one learner cache that
+ * path's 404 at an edge node for up to a year. */
+const data = (r) => /\.(js|json|mp4|vtt|jpe?g|png)$/.test(r);
 const putOrder = [
   ...plan.filter((f) => data(f.remote)),
   ...plan.filter((f) => !data(f.remote) && f.remote !== "index.html"),

@@ -1,7 +1,9 @@
 # The unit lecture film
 
-`shape-and-measures.mp4` (poster `.jpg`, captions `.vtt`) does not exist yet —
-building it is free up to the point of buying narration. Built by
+The film is `shape-and-measures.5a6a619a.mp4`, with poster
+`shape-and-measures.29644ff7.jpg` and captions `shape-and-measures.vtt`. The
+film and poster are named by their contents; see "New names for a new render".
+Built by
 [`tools/create-ehel-math-unit-lecture.js`](../../../../../../tools/create-ehel-math-unit-lecture.js)
 from `shape-and-measures.json`, the storyboard beside it. Modelled on Science's
 Bones and Muscles film (`science/grade-4-app/lecture-video/`), which is worth
@@ -16,19 +18,24 @@ node $T --app ... --slug ... --calibrate                                        
 node $T --app ... --slug ...                                                                             # narrate, render, mux
 ```
 
-**State, 2026-09-18 (after the fix pass below):** storyboard at 13 scenes, 38
-beats, 4,532 characters, all **10** of the lesson's objectives covered by a
-teaching scene. **No ElevenLabs narration has ever been bought for this film,
-and the lesson page does not show one.** A 5:14 `--draft` render (the free
-Windows SAPI voice, made at 01:46) was wired into the page, and it was pulled
-the same day. It predated every fix below and still said the two false
-sentences, and because `deploy.mjs` reads the working tree, the next Grade 4
-Maths deploy from this checkout would have shipped it. None of it was ever
-committed or deployed. The render and the wiring were moved, not deleted, to
-`.cache/ehel-lecture-draft-renders/maths-g4-shape-and-measures/`. That folder
-is gitignored and exists only on the machine that made them, and the wiring is
-there as `page-wiring.patch`. The wiring goes back only once a real film exists;
-see "How the film reaches the page".
+**State, 2026-09-18, end of day:** storyboard at 13 scenes, 38 beats, 4,532
+characters, all **10** of the lesson's objectives covered by a teaching
+scene. **The film is narrated, rendered and live.**
+
+- **11:39:** another session bought the 38 clips.
+- **12:17:** it committed a 5:53 film, wired as described below
+  (`a4964756fb`).
+- **12:19:** it deployed the film (storage timestamp 09:19 UTC).
+
+That first render read as a slideshow, so the animation pass (below)
+re-rendered it the same evening from the SAME clips, with nothing re-bought.
+The new render ships under new, content-named files, because this CDN never
+lets a re-render reach learners under its old name.
+
+Earlier the same day, a 5:14 `--draft` render (the free Windows SAPI voice)
+was wired into the page before the fix pass. It was pulled before anything
+was committed or deployed, and it is parked on the machine that made it, in
+`.cache/ehel-lecture-draft-renders/maths-g4-shape-and-measures/`.
 
 ## Why this could not be "run the Science tool against a different app"
 
@@ -66,9 +73,11 @@ checks that; flagged, not built.
 warns "the distance all the way round the outside, not the space inside," and
 the first cut of the perimeter scene reused the area scene's filled-rectangle
 renderer with different numbers — visually identical to the area scene one
-chapter earlier, undermining the sentence it sits under. `gridScene()` now
-takes a `border` field (a rect outline, gold, no fill) as well as `fillA`; the
-perimeter scene uses `border`, area and compound use `fillA`/`fillB`.
+chapter earlier, undermining the sentence it sits under. The perimeter
+scene now draws the storyboard's `border` field as an outline and never fills
+it; area and compound use `fillA`/`fillB`. Since the animation pass each of
+the three has its own renderer (`sceneArea`, `scenePerimeter`,
+`sceneCompound`), and the shared `gridScene()` is gone.
 
 **The irregular-shape outline and its whole/part colouring must come from the
 SAME shape, or the lesson lies about its own picture.** The first cut hand-
@@ -141,9 +150,10 @@ pre-wiring state, stripping real, deployed functionality. That run was not
 committed; `git checkout --` restored all eight files before anything else
 was touched.
 
-**None of this wiring is in place now (2026-09-18).** It pointed at the stale
-`--draft` render, so it was removed from every tracked file it had touched. It
-goes back only after a real render, and that takes three edits:
+**The wiring is in place.** It was pulled once, because it pointed at a stale
+`--draft` render. Once the film was really narrated, `a4964756fb` put it back
+exactly as below. Since the animation pass, the film and its poster go by
+content-named files; see "New names for a new render". There are three edits:
 
 - **`shape-extra.css`**: the `.lecture-film` rules below. `build-lessons.py`
   inlines `<css>-extra.css` into the page's `<style>`, so this is the real source
@@ -154,12 +164,13 @@ goes back only after a real render, and that takes three edits:
   mentioned this file.
 - **`shape-and-measures.html`**: the same rules, plus the block below. The block
   goes directly after the hero `</header>`, above the deck.
-- **`app.config.json :: extraPages`**: add `lecture-video/shape-and-measures.mp4`,
-  `.vtt` and `.jpg` after `lesson-search.json`.
+- **`app.config.json :: extraPages`**: add the film, its captions and its poster after
+  `lesson-search.json`, by their current names: `shape-and-measures.5a6a619a.mp4`,
+  `shape-and-measures.vtt` and `shape-and-measures.29644ff7.jpg`.
 
 ```html
 <div class="lecture-film">
-  <video controls playsinline preload="metadata" poster="lecture-video/shape-and-measures.jpg" src="lecture-video/shape-and-measures.mp4">
+  <video controls playsinline preload="metadata" poster="lecture-video/shape-and-measures.29644ff7.jpg" src="lecture-video/shape-and-measures.5a6a619a.mp4">
     <track kind="captions" srclang="en" label="English" src="lecture-video/shape-and-measures.vtt">
   </video>
   <p class="lec-note">Watch the lesson, then go through it a part at a time below.</p>
@@ -289,10 +300,105 @@ them only by citation again. The lesson's own title offers the obvious seam:
 **Measures** (area, perimeter, compound, irregular, scale), as two films of
 about three minutes each. That is an owner's call, not taken here.
 
+## The animation pass, 2026-09-18
+
+The owner watched the first render and asked for more animation, like Bones
+and Muscles. That render changed a scene's picture at each beat boundary and
+then held it still while the voice went on, for up to fourteen seconds. Every
+scene now moves while it is being described:
+
+| scene | what moves |
+| --- | --- |
+| solids | the solid sways in three-quarter view, and its faces, edges and corners light as they are COUNTED, with the count running in the panel; the pyramid tips up to show its base; the cylinder tips over to show its bottom circle |
+| nets | the cube opens out flat and closes again, hinge by hinge; the six squares are numbered and fold up with the numbers on; the strip rolls into a tube, then stands on end to show "no top" and "no bottom" |
+| symmetry | the shape folds along each line and lands on itself, in green; the parallelogram is folded twice and fails twice, in red |
+| reflection | every square crosses the line at the same speed, so the near squares land first: a flip, not a slide. Brackets show "the same distance", arrows show the foot turned round, and in the edge case both halves flap like wings |
+| angles | the arm turns; a dashed right angle and a dashed straight line are the yardsticks; the estimate shows ½ and no number; angle A's arms stretch while its turn stays the same |
+| tessellation | the second triangle slides in along the long side; six triangles swing in round a point; the hexagon spreads into a floor; the circles are re-packed and their gaps light up |
+| area | the squares are counted 1 to 15; the rows light in turn; the length and width brackets are drawn as they are said |
+| perimeter | a walker goes round the edge; the fence goes in a metre at a time as each side is said, with the sum running; the short way turns a length and a width over onto the other two sides |
+| compound | the L is split along a cut, each part is measured, and the parts are put back together |
+| irregular | the leaf draws itself onto the grid; the whole squares are counted, then the part squares, each marked ½ |
+| scale | the scale is built mark by mark; the water rises; three quarter-steps are counted out, 25, 50, 75 |
+| recap | each card lights as its topic is named |
+
+**Timed to the words, not the beat.** Bones and Muscles lights a bone when its
+beat starts. That is too coarse here, because "Six faces … Twelve edges, and
+eight vertices" is one clip. So each beat may name phrases in `art.at`, and
+the renderer's `cue()` places each one in time by where it falls in the
+sentence. Characters are spoken at a near-steady rate, and punctuation adds a
+pause. The renderer checks every phrase against its beat's narration when it
+loads, so rewording a line stops the render with the beat named, instead of
+quietly mistiming the picture. A cue map is `art`, which the clip cache does
+not hash, so adding one costs nothing.
+
+**Four things were wrong in the live film, not just static:**
+- The 130° obtuse arm ran off the left edge of its own picture. Only a stub of
+  the angle the beat is about was ever on screen.
+- The square's ⟋ diagonal sat 5px off the true diagonal. Nothing showed it
+  until the square had to fold along it and land on itself.
+- The recap lit all eight cards in its first half-second and then held them
+  for eighteen.
+- The estimate beat printed "45°" beside "about half a right angle", which
+  makes estimating look like reading a number. It now shows ½ against a
+  dashed right angle, and no number. The other angles keep their degree
+  labels: whether the film shows degrees at all is still an owner's call (see
+  above).
+
+**Checked by looking, at every cue, before rendering.** `--preview` takes one
+still per beat, and one still cannot show motion. So a sampler took 205
+frames, one at each cue, into a contact sheet per scene. The sheets caught
+six faults, all fixed before the render:
+- **The solid's turntable came round face-on during "Twelve edges".** It now
+  sways within a three-quarter view.
+- **The triangle's fold outlasted its 3.7-second beat.**
+- **A "no gaps" glow behind the hexagons lit the empty corners too**, which
+  read as gaps. The tile edges light instead.
+- **The grids were too small to read the counting numbers.**
+- **The perimeter's "then double it" swung through the middle of the
+  garden.** The length-and-width pair turned about the centre, so it crossed
+  the inside and poked out past the edge. It is now drawn again along the
+  other two sides.
+- **The compound shape's total crowded the small square.**
+
+A render that has STARTED will not pick up a fix: the tool inlines the
+renderer into its page when it begins. One render was stopped and restarted
+for the last two faults.
+
+**It cost nothing.** The narration did not change, so all 38 clips came from
+the cache. The render also ran with a deliberately invalid ElevenLabs key, so
+a clip that somehow was not cached would have stopped it with a 401 rather
+than bought it.
+
+### New names for a new render
+
+The first render is live at `lecture-video/shape-and-measures.mp4`. Bunny
+serves that stable path from Perma-Cache, and re-uploading it in place does
+not reach learners: different edge nodes keep different old copies
+(`tools/version-lecture-video.js` records the English case that proved it).
+So the new film and its poster are named by their contents,
+`shape-and-measures.<first 8 hex of sha1>.mp4` and `.jpg`, and the page and
+`extraPages` point at those. A path nothing has ever asked for cannot be
+stale. The old files stay on storage for any cached page that still asks for
+them. **Every future re-render needs the same treatment.** The tool writes the
+fixed name, so rename the output before wiring it.
+
 ## Deploying it
 
-Not done, and not requested. Once narrated and rendered, the three files
-belong in `Ehel Primary/app/mathematics/grade-4-lessons/lecture-video/`
-alongside the lesson, via the same `lesson-app-tools/deploy.mjs` path Science
-uses. No deploy-tooling change is needed, but `extraPages` has to list them
-again first (see "How the film reaches the page").
+The files live in `Ehel Primary/app/mathematics/grade-4-lessons/lecture-video/`
+beside the lesson. They go up through `lesson-app-tools/deploy.mjs`, the same
+path Science uses, and only if `extraPages` lists them. The first render went
+out on 2026-09-18 at 12:19.
+
+**`deploy.mjs` uploads media before any page, and that order is
+load-bearing.** A page that goes live pointing at a film storage does not hold
+yet lets a learner's request cache a 404 for that path, for up to a year (see
+`version-lecture-video.js --salt`), and a content-named film is always such a
+path at first.
+
+The tool did NOT do this until the animation pass. Its `data()` counted only
+`.js` and `.json` as things to send ahead of the pages, and `extraPages` sits
+last in the plan. So the first render's deploy put the page live and then
+sent the 17MB film after it. Whether anyone opened the page in that window is
+not known. Never upload a page by hand ahead of its film, and before
+`--upload`, read the plan: it is the working tree that ships.

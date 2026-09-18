@@ -1,0 +1,174 @@
+{
+  "_comment": "Storyboard for the Shape and Measures unit lecture video (Grade 4 Mathematics, Cambridge 0096 Stage 4). One BEAT is one narration clip and one drawing state: the animation is timed from the measured length of each clip. Rendered by tools/create-ehel-math-unit-lecture.js. Unlike the Science film, nothing here is lifted from the lesson's own code - c-shape-slides.js has no pure, DOM-free drawing functions to slice out, so tools/lib/ehel-math-lecture-scenes.js redraws the same solids, angles, grids and scales fresh, matching the lesson's own numbers. See lecture-video/README.md.",
+  "slug": "shape-and-measures",
+  "lesson": 6,
+  "grade": 4,
+  "stage": 4,
+  "title": "Shape and Measures",
+  "subtitle": "Grade 4 Mathematics",
+  "objectives": [
+    ["4Gg.05", "Identify 2D faces of 3D shapes, and describe their properties."],
+    ["4Gg.06", "Match nets to their corresponding 3D shapes."],
+    ["4Gg.07", "Identify all horizontal, vertical and diagonal lines of symmetry on 2D shapes and patterns."],
+    ["4Gp.03", "Reflect 2D shapes in a horizontal or vertical mirror line, including where the mirror line is the edge of the shape, on square grids."],
+    ["4Gg.08", "Estimate, compare and classify angles, using geometric vocabulary including acute, right and obtuse."],
+    ["4Gg.01", "Investigate what shapes can be made if two or more shapes are combined, and analyse their properties, including reference to tessellation."],
+    ["4Gg.03", "Draw rectangles and squares on square grids, and measure their perimeter and area. Derive and use formulae to calculate areas and perimeters of rectangles and squares."],
+    ["4Gg.02", "Estimate and measure perimeter and area of 2D shapes, understanding that two areas can be added together to calculate the area of a compound shape."],
+    ["4Gg.04", "Estimate the area of irregular shapes on a square grid (whole and part squares)."],
+    ["4Gg.09", "Use knowledge of fractions to read and interpret a measuring scale."]
+  ],
+  "scenes": [
+    {
+      "id": "title",
+      "kind": "title",
+      "codes": [],
+      "beats": [
+        {"say": "Look around this room. Every wall is a rectangle, and every corner is an angle.", "art": {}},
+        {"say": "Today you will take solids apart, fold flat shapes back up, and measure every shape you find.", "art": {}}
+      ]
+    },
+    {
+      "id": "solids",
+      "kind": "solids",
+      "heading": "The faces of a solid",
+      "codes": ["4Gg.05"],
+      "beats": [
+        {"say": "Every solid is built from flat faces, the edges where two faces meet, and the vertices where edges meet.", "art": {"solid": null}},
+        {"say": "A cube. Six faces, all identical squares. Twelve edges, and eight vertices.", "art": {"solid": "cube"}},
+        {"say": "A square-based pyramid. One square face on the bottom, and four triangles leaning up to a point. Five faces in all.", "art": {"solid": "pyramid"}},
+        {"say": "A cylinder is different. Two flat circles, top and bottom, joined by one curved surface that is not flat at all.", "art": {"solid": "cylinder"}}
+      ]
+    },
+    {
+      "id": "nets",
+      "kind": "nets",
+      "heading": "Fold it up: nets",
+      "codes": ["4Gg.06"],
+      "beats": [
+        {"say": "A net is a solid opened out flat. Fold every edge, and it closes back up into the solid again.", "art": {"folded": 0}},
+        {"say": "Six squares in a cross fold up into a cube. Every solid has more than one net that works.", "art": {"folded": 1}},
+        {"say": "But not every six squares will do. Six in a straight line only roll up into a tube, with nothing left over to make the top or the bottom. That is not a net of a cube.", "art": {"net": "strip"}}
+      ]
+    },
+    {
+      "id": "symmetry",
+      "kind": "symmetry",
+      "heading": "Every line of symmetry",
+      "codes": ["4Gg.07"],
+      "beats": [
+        {"say": "A line of symmetry is a fold that makes both halves match exactly. Find all of them, not just the first one you spot.", "art": {"shape": "square", "lines": []}},
+        {"say": "A square has four: up and down, side to side, and both diagonals.", "art": {"shape": "square", "lines": ["H", "V", "D1", "D2"]}},
+        {"say": "This triangle has only one, straight up the middle.", "art": {"shape": "triangle", "lines": ["V"]}},
+        {"say": "And a parallelogram, even though it looks even, has none at all. No fold ever makes its halves match.", "art": {"shape": "parallelogram", "lines": []}}
+      ]
+    },
+    {
+      "id": "reflect",
+      "kind": "reflect",
+      "heading": "Reflect it in a mirror line",
+      "codes": ["4Gp.03"],
+      "beats": [
+        {"say": "A reflection is what you see in a mirror. Every square goes straight across the mirror line, and lands the same distance away on the other side.", "art": {"cols": 11, "rows": 8, "axis": "v", "m": 5, "cells": [[1, 2], [1, 3], [1, 4], [2, 4]], "show": false, "rowsData": [{"k": "Mirror line", "v": "vertical"}, {"k": "Each square", "v": "goes <b>straight across</b>"}]}},
+        {"say": "This shape is two squares from the mirror line, so its reflection is two squares from the line on the other side. And look: it is flipped, facing the other way.", "art": {"show": true, "rowsData": [{"k": "Shape", "v": "2 squares from the line"}, {"k": "Reflection", "v": "2 squares on the other side", "total": true}, {"k": "Which way?", "v": "flipped, facing the other way"}]}},
+        {"say": "When the mirror line is the edge of the shape, the reflection touches it. The shape and its reflection meet along the line, like the two wings of a butterfly.", "art": {"cells": [[4, 2], [4, 3], [4, 4], [3, 4]], "show": true, "rowsData": [{"k": "Mirror line", "v": "the <b>edge</b> of the shape"}, {"k": "Reflection", "v": "touches it, along the line", "total": true}]}},
+        {"say": "A horizontal mirror line works in just the same way. Every square goes straight down, the same distance on the other side.", "art": {"axis": "h", "m": 4, "cells": [[4, 1], [5, 1], [6, 1], [4, 2]], "show": true, "rowsData": [{"k": "Mirror line", "v": "horizontal"}, {"k": "Each square", "v": "goes <b>straight down</b>", "total": true}]}}
+      ]
+    },
+    {
+      "id": "angles",
+      "kind": "angles",
+      "heading": "Acute, right or obtuse?",
+      "codes": ["4Gg.08"],
+      "beats": [
+        {"say": "An angle is the amount of turn between two lines. A right angle is a square corner, exactly ninety degrees.", "art": {"deg": 90}},
+        {"say": "Smaller than a right angle is acute.", "art": {"deg": 35}},
+        {"say": "Bigger than a right angle, but still less than a straight line, is obtuse.", "art": {"deg": 130}},
+        {"say": "To estimate an angle, compare it with a right angle. This one is about half a right angle, so it is acute.", "art": {"deg": 45, "estimate": "about half a right angle"}},
+        {"say": "Now compare these two. Angle A has the longer lines, but angle B is the bigger angle, because an angle is the amount of turn, not the length of its lines.", "art": {"compare": {"a": {"deg": 35, "L": 210}, "b": {"deg": 110, "L": 105}}}}
+      ]
+    },
+    {
+      "id": "tessellate",
+      "kind": "tessellate",
+      "heading": "Putting shapes together",
+      "codes": ["4Gg.01"],
+      "beats": [
+        {"say": "Put two identical right-angled triangles together along their longest side, and they make a rectangle. When their two shorter sides are the same length, as these are, that rectangle is a square.", "art": {"pattern": "triangles"}},
+        {"say": "Six equilateral triangles, with every side the same length, fit together round a point to make a regular hexagon. And hexagons tile a floor with no gaps and no overlaps. That is tessellation.", "art": {"pattern": "hexagon"}},
+        {"say": "Circles never tessellate. Pack them however you like, there are always gaps left over.", "art": {"pattern": "circles"}}
+      ]
+    },
+    {
+      "id": "area",
+      "kind": "area",
+      "heading": "Area without counting",
+      "codes": ["4Gg.02", "4Gg.03"],
+      "beats": [
+        {"say": "Area is how many squares cover a shape. Count them one at a time, and this rectangle is fifteen squares.", "art": {"cols": 9, "rows": 5, "fillA": {"x": 0, "y": 0, "w": 5, "h": 3}, "rowsData": [{"k": "Count them", "v": "<b>15</b> squares inside"}]}},
+        {"say": "Now look at the rows. There are five squares in each row, and three rows. Five times three is fifteen, the same as counting them all. That is why the area of a rectangle is its length times its width.", "art": {"showRows": true, "rowsData": [{"k": "Count them", "v": "15 squares"}, {"k": "The short way", "v": "length × width = 5 × 3 = <b>15</b>", "total": true}]}}
+      ]
+    },
+    {
+      "id": "perimeter",
+      "kind": "perimeter",
+      "heading": "All the way round",
+      "codes": ["4Gg.02", "4Gg.03"],
+      "beats": [
+        {"say": "Perimeter is different. It is the distance all the way round the outside, not the space inside.", "art": {"cols": 9, "rows": 6, "border": {"x": 0, "y": 0, "w": 6, "h": 4}, "rowsData": [{"k": "All the way round", "v": "add every side, not the space inside"}]}},
+        {"say": "Hodan puts a fence around a garden six metres long and four metres wide. Six, add four, add six, add four: twenty metres of fence.", "art": {"rowsData": [{"k": "6 + 4 + 6 + 4", "v": "walk all four sides = <b>20</b> metres", "total": true}]}},
+        {"say": "A rectangle has two lengths and two widths, so there is a short way too. Add the length and the width, then double it. Six and four make ten, and double ten is twenty.", "art": {"rowsData": [{"k": "6 + 4 + 6 + 4", "v": "walk all four sides"}, {"k": "The short way", "v": "2 × (6 + 4) = <b>20</b> metres", "total": true}]}}
+      ]
+    },
+    {
+      "id": "compound",
+      "kind": "compound",
+      "heading": "Two rectangles, one area",
+      "codes": ["4Gg.02"],
+      "beats": [
+        {"say": "Some shapes are not one rectangle. Split an L shape into two rectangles you already know how to measure.", "art": {"cols": 9, "rows": 7, "fillA": {"x": 0, "y": 0, "w": 5, "h": 3}, "fillB": {"x": 0, "y": 3, "w": 2, "h": 2}, "rowsData": [{"k": "Split it up", "v": "an L shape is two rectangles joined"}]}},
+        {"say": "A five by three rectangle is fifteen squares. A two by two square is four more. Add the areas: nineteen squares in all.", "art": {"rowsData": [{"k": "The big one", "v": "5 × 3 = <b>15</b>"}, {"k": "The small one", "v": "2 × 2 = <b>4</b>"}, {"k": "Add the areas", "v": "15 + 4 = <b>19</b> squares", "total": true}]}}
+      ]
+    },
+    {
+      "id": "irregular",
+      "kind": "irregular",
+      "heading": "An odd shape on a grid",
+      "codes": ["4Gg.04"],
+      "beats": [
+        {"say": "A leaf is not a rectangle at all, so lay it on a grid instead. Count every square that is completely inside.", "art": {"reveal": "whole"}},
+        {"say": "Nine whole squares. Twelve more are only partly covered, so count each of those as about a half: six more. About fifteen squares in all - an estimate, not an exact count.", "art": {"reveal": "all"}}
+      ]
+    },
+    {
+      "id": "scale",
+      "kind": "scale",
+      "heading": "Reading between the marks",
+      "codes": ["4Gg.09"],
+      "beats": [
+        {"say": "A measuring jug is marked every hundred millilitres, with three small marks between each pair, splitting the gap into quarters.", "art": {"step": 100, "sub": 4, "marks": 5, "unit": "ml", "pos": 8}},
+        {"say": "The water sits three quarters of the way past two hundred. Three quarters of a hundred is seventy five, so it reads two hundred and seventy five millilitres.", "art": {"pos": 11}}
+      ]
+    },
+    {
+      "id": "recap",
+      "kind": "recap",
+      "heading": "What you now know",
+      "codes": ["4Gg.05", "4Gg.06", "4Gg.07", "4Gp.03", "4Gg.08", "4Gg.01", "4Gg.02", "4Gg.03", "4Gg.04", "4Gg.09"],
+      "beats": [
+        {"say": "Solids and their nets. Every line of symmetry a shape has. Acute, right and obtuse. Shapes that tessellate, and shapes that leave gaps.", "art": {"lit": 8}},
+        {"say": "Area by counting or by the formula, perimeter all the way round, an estimate on a grid, and a scale read between the marks.", "art": {"lit": 8, "sign": true}}
+      ]
+    }
+  ],
+  "recap": [
+    ["🎲", "Solids", "faces, edges, vertices"],
+    ["📦", "Nets", "fold flat into 3D"],
+    ["🦋", "Symmetry & reflection", "every line, and flip across a mirror"],
+    ["📐", "Angles", "acute, right, obtuse"],
+    ["🔷", "Tessellation", "fits with no gaps"],
+    ["📏", "Area & perimeter", "count, or use the formula"],
+    ["🍃", "Estimating", "whole squares plus half the part squares"],
+    ["🪣", "Reading a scale", "the fraction of the gap"]
+  ]
+}

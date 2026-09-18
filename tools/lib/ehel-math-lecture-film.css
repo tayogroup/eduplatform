@@ -1,0 +1,242 @@
+/* The 1280x720 stage for the Grade 4 Mathematics unit lecture video.
+ *
+ * DARK, AND FOR THE SAME REASON AS THE SCIENCE FILM: every colour below is
+ * the "Wehel design language" token the lesson itself renders in - measured
+ * from mathematics/grade-4-app/g4-lesson.css's forced dark block (:root,
+ * :root:not([data-theme="light"]), :root[data-theme="dark"] { --ground:
+ * #0B1D2C; ... }), which is byte-for-byte the same palette
+ * science/lesson-kit/lib/lesson.css uses. Nothing here is copied from the
+ * science film's CSS file even though the numbers match - both are reading
+ * the same underlying design system independently.
+ *
+ * NOTHING HERE TRANSITIONS OR ANIMATES. Every moving value is written inline
+ * by the scene renderer as a pure function of t.
+ */
+
+:root {
+  --ground: #0B1D2C; --card: #112A3D; --cell: #17384F; --line: #214560;
+  --ink: #FFFFFF; --muted: #93AABE;
+  --accent: #E9744F; --accent-soft: rgba(233, 116, 79, 0.18);
+  --teal: #35BFB2; --teal-soft: #143A4A;
+  --plum: #B78BD1; --gold: #F4C95D;
+  --good: #4FD1A0; --good-soft: rgba(79, 209, 160, 0.18);
+  --bad: #F0806F;
+  --blue: #6E9DE8;
+  --hue: #35BFB2;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html, body { width: 1280px; height: 720px; overflow: hidden; }
+
+body {
+  background: var(--ground);
+  color: var(--ink);
+  font-family: "Atkinson Hyperlegible", "Segoe UI", Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+}
+
+#film {
+  position: relative;
+  width: 1280px; height: 720px;
+  display: flex; flex-direction: column;
+  background:
+    radial-gradient(1100px 620px at 82% -14%, color-mix(in srgb, var(--hue) 26%, transparent), transparent 60%),
+    radial-gradient(820px 520px at -6% 108%, rgba(233, 116, 79, 0.16), transparent 58%),
+    var(--ground);
+}
+#film::after {
+  content: ""; position: absolute; inset: 0; pointer-events: none;
+  background: radial-gradient(120% 92% at 50% 42%, transparent 52%, rgba(0, 0, 0, 0.45) 100%);
+}
+
+/* ---- chrome ------------------------------------------------------------ */
+.bar {
+  position: relative; z-index: 2;
+  flex: 0 0 auto; height: 58px;
+  display: flex; align-items: center; gap: 13px;
+  padding: 0 44px;
+}
+.bar .mark {
+  width: 30px; height: 30px; border-radius: 9px;
+  background: var(--hue); color: #04141B;
+  font-family: "Inter", sans-serif; font-weight: 700; font-size: 17px;
+  display: grid; place-items: center;
+}
+.bar .brand { font-family: "Inter", sans-serif; font-weight: 700; font-size: 14px; letter-spacing: 0.01em; color: var(--ink); }
+.bar .brand b { font-weight: 400; color: var(--muted); margin-left: 8px; }
+.bar .brand b::before { content: "\00B7"; margin-right: 8px; }
+.bar .unit { margin-left: auto; font-family: "Inter", sans-serif; font-weight: 700; font-size: 12px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--muted); }
+.rail { position: absolute; left: 0; right: 0; bottom: 0; height: 3px; z-index: 3; background: rgba(255, 255, 255, 0.10); }
+.rail i { display: block; height: 3px; background: var(--hue); }
+
+/* ---- the stage ----------------------------------------------------------- */
+.stage { position: relative; z-index: 2; flex: 1 1 auto; padding: 4px 56px 0; display: flex; flex-direction: column; min-height: 0; }
+.kicker { display: flex; align-items: center; gap: 12px; margin-bottom: 6px; flex: 0 0 auto; }
+.kicker .dot { width: 9px; height: 9px; border-radius: 50%; background: var(--hue); flex: 0 0 auto; }
+.kicker .codes { display: flex; gap: 6px; margin-left: auto; }
+.kicker .codes span {
+  font-family: "Inter", sans-serif; font-size: 11px; font-weight: 700; letter-spacing: 0.06em; color: var(--muted);
+  border: 1px solid var(--line); border-radius: 999px; padding: 3px 9px;
+}
+.sceneh { font-family: "Inter", sans-serif; font-weight: 700; font-size: 40px; letter-spacing: -0.026em; line-height: 1.04; margin-bottom: 14px; flex: 0 0 auto; }
+.eyebrow { font-family: "Inter", sans-serif; font-size: 11.5px; font-weight: 700; letter-spacing: 0.16em; text-transform: uppercase; color: var(--hue); }
+
+/* ---- the spoken line ------------------------------------------------------ */
+.band { position: relative; z-index: 2; flex: 0 0 auto; min-height: 118px; display: flex; align-items: center; padding: 10px 56px 22px; }
+.band p { position: relative; max-width: 1010px; padding-left: 20px; font-size: 27px; line-height: 1.30; font-weight: 700; color: var(--ink); text-shadow: 0 2px 14px rgba(0, 0, 0, 0.55); }
+.band p::before { content: ""; position: absolute; left: 0; top: 4px; bottom: 4px; width: 5px; border-radius: 3px; background: var(--hue); }
+
+/* ---- generic "figure + side panel" layout, shared by most scenes --------- */
+.solids, .symmetry, .reflect, .angles, .tessellate, .nets, .area, .perimeter, .compound, .irregular, .scale {
+  flex: 1 1 auto; display: flex; align-items: center; gap: 56px; min-height: 0;
+}
+.figure { flex: 0 0 auto; height: 400px; width: 340px; display: grid; place-items: center; }
+.figure svg { height: 100%; width: auto; max-width: 100%; display: block; }
+.sside { flex: 1 1 auto; display: flex; flex-direction: column; gap: 14px; min-width: 0; }
+
+.glow { position: relative; }
+.glow::before {
+  content: ""; position: absolute; inset: -6% -14%;
+  background: radial-gradient(56% 50% at 50% 48%, color-mix(in srgb, var(--hue) 20%, transparent), transparent 70%);
+  filter: blur(10px);
+}
+.glow > svg, .glow > div { position: relative; }
+
+/* solid / net faces, and the title motif's cube */
+.solidfig .f1, .tmotif .f1 { fill: var(--teal); }
+.solidfig .f2, .tmotif .f2 { fill: var(--teal-soft); stroke: var(--teal); stroke-width: 2; }
+.solidfig .f3, .tmotif .f3 { fill: var(--accent-soft); stroke: var(--accent); stroke-width: 2; }
+.tmotif .wedge { fill: var(--plum); opacity: 0.85; }
+.tmotif .sq { fill: none; stroke: var(--ink); stroke-width: 3; }
+.tmotif .cell { fill: none; stroke: var(--gold); stroke-width: 2; opacity: 0.85; }
+
+/* ---- scene: title -------------------------------------------------------- */
+.title { flex: 1 1 auto; display: flex; align-items: center; gap: 62px; padding-left: 26px; }
+.title .tfig { flex: 0 0 auto; width: 300px; display: grid; place-items: center; }
+.title .tfig svg { height: 420px; width: auto; }
+.title h1 { font-family: "Inter", sans-serif; font-weight: 700; font-size: 78px; letter-spacing: -0.032em; line-height: 0.98; margin: 12px 0 20px; }
+.title .tsub { font-size: 25px; line-height: 1.45; color: var(--muted); max-width: 30em; }
+
+/* ---- scenes: solids / symmetry — figure + checklist ----------------------- */
+.blist { list-style: none; }
+.blist li { display: flex; align-items: center; gap: 15px; font-size: 24px; font-weight: 700; padding: 3px 0; color: var(--muted); }
+.blist.tight li { font-size: 21px; }
+.blist li .tick {
+  width: 32px; height: 32px; flex: 0 0 auto; border-radius: 50%; display: grid; place-items: center;
+  font-family: "Inter", sans-serif; font-size: 14px; font-weight: 700; background: rgba(255, 255, 255, 0.06); color: var(--muted);
+}
+.blist li.had { color: var(--ink); }
+.blist li.had .tick { background: var(--good-soft); color: var(--good); }
+.blist li.now { font-size: 30px; color: var(--gold); }
+.blist li.now .tick { background: var(--gold); color: #2A1F05; }
+.scount { margin-top: 10px; font-family: "Inter", sans-serif; font-weight: 700; font-size: 12px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--muted); }
+
+.symmetry .shape { fill: var(--teal-soft); stroke: var(--teal); stroke-width: 3; }
+.symmetry .mirror { stroke: var(--gold); stroke-width: 3.5; stroke-dasharray: 9 6; }
+
+/* ---- scene: nets ----------------------------------------------------------- */
+.nets .netfig rect { fill: var(--teal-soft); stroke: var(--teal); stroke-width: 2.5; }
+.nets .arrow { flex: 0 0 auto; font-size: 54px; color: var(--hue); font-weight: 700; }
+
+/* ---- scene: angles ---------------------------------------------------------- */
+.angles .wedge { fill: color-mix(in srgb, var(--hue) 30%, transparent); }
+.angles .arm { stroke: var(--muted); stroke-width: 3; }
+.angles .arm.now { stroke: var(--gold); stroke-width: 4; }
+.angles .sq { fill: none; stroke: var(--ink); stroke-width: 3; }
+.angles .deg { fill: var(--ink); font-family: "Inter", sans-serif; font-weight: 700; font-size: 30px; }
+.badge {
+  align-self: flex-start; text-transform: uppercase; letter-spacing: 0.1em;
+  background: var(--hue); color: #04141B; border-radius: 999px; padding: 10px 22px;
+  font-family: "Inter", sans-serif; font-weight: 700; font-size: 20px;
+}
+.badge.no { background: var(--bad); color: #2A0805; }
+
+/* ---- scene: tessellate ------------------------------------------------------- */
+.tessellate .t1 { fill: var(--teal); opacity: 0.9; }
+.tessellate .t2 { fill: var(--teal-soft); stroke: var(--teal); stroke-width: 2; }
+
+/* ---- scenes: area / perimeter / compound / irregular — a grid ----------------- */
+.cell { fill: var(--card); stroke: var(--line); stroke-width: 1; }
+.fillA { fill: var(--teal); opacity: 0.82; }
+.fillB { fill: var(--accent); opacity: 0.55; }
+.gridborder { fill: none; stroke: var(--gold); stroke-width: 5; stroke-linejoin: round; }
+.blobline { fill: none; stroke: var(--gold); stroke-width: 3; stroke-linejoin: round; }
+
+/* the label/value strip echoing the lesson's own "working" panel */
+.work { display: flex; flex-direction: column; gap: 9px; }
+.wrow { display: flex; align-items: baseline; justify-content: space-between; gap: 18px; padding: 10px 16px; border-radius: 12px; background: rgba(255, 255, 255, 0.04); }
+.wrow b { font-family: "Inter", sans-serif; font-weight: 700; font-size: 15px; color: var(--muted); letter-spacing: 0.02em; white-space: nowrap; }
+.wrow span { font-size: 19px; text-align: right; }
+.wrow.total { background: color-mix(in srgb, var(--hue) 16%, transparent); border: 1px solid color-mix(in srgb, var(--hue) 55%, transparent); }
+.wrow.total span { font-size: 22px; font-weight: 700; }
+
+/* ---- scene: scale -------------------------------------------------------------- */
+.scale .figure { width: 780px; }
+.scale .axis { stroke: var(--muted); stroke-width: 2; }
+.scale .big { stroke: var(--ink); stroke-width: 3; }
+.scale .small { stroke: var(--muted); stroke-width: 1.5; }
+.scale .lab { fill: var(--muted); font-family: "Inter", sans-serif; font-size: 20px; text-anchor: middle; }
+.scale .ptr { fill: var(--gold); }
+.scale .val { fill: var(--gold); font-family: "Inter", sans-serif; font-weight: 700; font-size: 30px; text-anchor: middle; }
+
+/* ---- scene: recap ---------------------------------------------------------------- */
+.rows { flex: 1 1 auto; display: grid; gap: 16px; align-content: center; min-height: 0; grid-template-columns: 1fr 1fr 1fr 1fr; }
+.rows .card { background: rgba(255, 255, 255, 0.045); border: 1px solid rgba(255, 255, 255, 0.10); border-radius: 20px; padding: 22px 18px; display: flex; flex-direction: column; align-items: flex-start; gap: 8px; min-height: 178px; }
+.rows .card.on { background: color-mix(in srgb, var(--hue) 14%, transparent); border-color: color-mix(in srgb, var(--hue) 62%, transparent); }
+.rows .card .ic { font-size: 40px; margin-bottom: auto; }
+.rows .card b { font-family: "Inter", sans-serif; font-size: 19px; font-weight: 700; }
+.rows .card i { font-style: normal; font-size: 14px; color: var(--muted); }
+.rows.recap { grid-template-rows: 1fr 1fr; }
+.signoff { grid-column: 1 / -1; text-align: center; font-family: "Inter", sans-serif; font-weight: 700; font-size: 32px; color: var(--hue); }
+
+/* ---- the title card and the end card --------------------------------------------- */
+.card-slide {
+  position: absolute; inset: 0; z-index: 4; display: grid; place-items: center;
+  background: radial-gradient(900px 560px at 50% 18%, color-mix(in srgb, var(--hue) 20%, transparent), transparent 62%), var(--ground);
+  text-align: center;
+}
+.card-slide .cs-fig { position: absolute; inset: 0; display: grid; place-items: center; pointer-events: none; }
+.card-slide .cs-fig svg { height: 480px; width: auto; }
+.card-slide .cs-in { position: relative; width: 880px; }
+.cs-mark { width: 56px; height: 56px; border-radius: 17px; margin: 0 auto 20px; background: var(--hue); color: #04141B; font-family: "Inter", sans-serif; font-weight: 700; font-size: 30px; display: grid; place-items: center; }
+.cs-mark.sm { width: 26px; height: 26px; border-radius: 8px; font-size: 15px; margin: 0 10px 0 0; display: inline-grid; vertical-align: -7px; }
+.card-slide h1 { font-family: "Inter", sans-serif; font-weight: 700; font-size: 72px; letter-spacing: -0.032em; line-height: 1.0; margin: 12px 0 0; }
+.cs-rule { width: 200px; height: 3px; border-radius: 2px; margin: 26px auto; background: var(--hue); transform-origin: 50% 50%; }
+.cs-by { font-size: 22px; color: var(--ink); font-weight: 700; letter-spacing: 0.005em; }
+.cs-sub { font-size: 17px; color: var(--muted); letter-spacing: 0.06em; margin-top: 10px; }
+.cs-cap { font-family: "Inter", sans-serif; font-size: 12px; font-weight: 700; letter-spacing: 0.18em; text-transform: uppercase; color: var(--muted); }
+.cs-codes { display: flex; flex-wrap: wrap; gap: 9px; justify-content: center; margin: 18px 0 30px; }
+.cs-codes span {
+  font-family: "Inter", sans-serif; font-size: 15px; font-weight: 700; color: var(--ink);
+  border: 1px solid color-mix(in srgb, var(--hue) 45%, transparent); background: color-mix(in srgb, var(--hue) 12%, transparent);
+  border-radius: 999px; padding: 7px 15px;
+}
+.cs-sign { font-family: "Inter", sans-serif; font-size: 16px; font-weight: 700; color: var(--muted); }
+
+/* ---- scene: reflect (4Gp.03) ----------------------------------------------
+   The shape is teal and its image is gold, so "which one is the reflection"
+   never has to be worked out from position alone. The mirror line is drawn
+   LAST and in ink, because in the edge case the shape and its image meet
+   exactly on it and a line drawn underneath would vanish between them. */
+.reflect .figure { width: 470px; height: 380px; }
+.reflect .obj { fill: var(--teal); }
+.reflect .img { fill: var(--gold); }
+.reflect .link { stroke: var(--muted); stroke-width: 2.2; stroke-dasharray: 3 5; stroke-linecap: round; }
+.reflect .mline { stroke: var(--ink); stroke-width: 4; stroke-dasharray: 11 7; stroke-linecap: round; }
+
+/* ---- nets: the strip that will not fold --------------------------------------
+   wider and shorter than the cross net's box, or six squares in a row would
+   render as a thin line in the middle of a tall empty figure */
+.nets .figure.strip { width: 440px; height: 200px; }
+
+/* ---- angles: two side by side for COMPARE --------------------------------- */
+.angles.compare { gap: 34px; }
+.angles.compare .cmpfig { flex: 0 0 auto; display: flex; flex-direction: column; align-items: center; gap: 8px; }
+.angles.compare .figure { width: 260px; height: 300px; }
+.angles.compare .cmptag {
+  font-family: "Inter", sans-serif; font-weight: 700; font-size: 26px; color: var(--muted);
+}
+.angles.compare .cmpfig.big .cmptag { color: var(--gold); }
+
+/* ---- area: alternate rows shaded, so the rows can be counted --------------- */
+.fillA.alt { opacity: 0.5; }

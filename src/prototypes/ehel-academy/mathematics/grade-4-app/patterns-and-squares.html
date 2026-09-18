@@ -1147,6 +1147,7 @@
       <div class="stage">
         <div class="stickers" id="stickers"></div>
       <div id="selfcheck"></div>
+      <div id="vocab"></div>
         <div class="bigbtns"><button type="button" class="big small ghost" id="again">Play again</button></div>
       </div>
     </section>
@@ -3104,6 +3105,24 @@
     });
   })();
 
+
+  /* ==== ehel-g4-vocabulary: Math Words for this lesson ====
+     Same insertion pattern as add-self-check.py: an empty host div on
+     the sticker-shelf slide, populated by this script, never scored. */
+  (function () {
+    const VOCAB = [{ w: "odd number", d: "A whole number that leaves 1 left over when split into pairs - 1, 3, 5, 7..." }, { w: "even number", d: "A whole number that splits into pairs exactly, with none left over - 2, 4, 6, 8..." }, { w: "square number", d: "The result of multiplying a whole number by itself - 4 x 4 = 16, so 16 is a square number." }, { w: "sequence", d: "A list of numbers or shapes that follow a rule, one after another." }, { w: "rule", d: "The instruction that says how to get from one term in a sequence to the next." }];
+    const host = document.getElementById("vocab");
+    if (!host) return;
+    const esc = (t) => String(t).replace(/&/g, "&amp;").replace(/</g, "&lt;")
+      .replace(/"/g, "&quot;");
+    host.innerHTML = '<p class="vc-head">Math Words</p>'
+      + '<p class="vc-sub">Words from this lesson, explained in one line each.</p>'
+      + '<dl class="vc-list">'
+      + VOCAB.map((it) => '<div class="vc-row"><dt>' + esc(it.w) + '</dt><dd>'
+        + esc(it.d) + "</dd></div>").join("")
+      + "</dl>";
+  })();
+
   show(0, false);
   quiet -= 1;   /* the first draw is over: say() speaks from here on */
 
@@ -3999,4 +4018,13 @@
 </style>
 <style>/* ehel-g4-story - see add-story-problems.py */
   #fbWpG4 { margin-top: 4px; }
+</style>
+<style>/* ehel-g4-vocabulary - see add-vocabulary.py */
+  #vocab { margin: 18px auto 0; max-width: 46ch; text-align: left; }
+  .vc-head { font-size: 17px; font-weight: 700; margin: 0 0 4px; }
+  .vc-sub { font-size: 13.5px; color: var(--muted, #666); margin: 0 0 12px; line-height: 1.5; }
+  .vc-list { margin: 0; }
+  .vc-row { padding: 9px 0; border-top: 1px solid var(--line, #ddd); }
+  .vc-row dt { margin: 0 0 3px; font-size: 15px; font-weight: 700; }
+  .vc-row dd { margin: 0; font-size: 14px; line-height: 1.45; color: var(--ink, #222); }
 </style>

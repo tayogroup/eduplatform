@@ -941,6 +941,7 @@
       <div class="eh-warm" id="ehWarm"><p class="eh-warm-h">Warm up</p><div class="eh-warm-say"><button type="button" class="speak" aria-label="Read it to me">&#128266;</button><span class="eh-warm-q"></span></div><div class="choices eh-warm-ch"></div><p class="fb" role="status" aria-live="polite"></p></div>
       <div class="slide-head"><span class="n">1</span><h2>What would answer it?</h2></div>
       <div class="say"><button type="button" class="speak" aria-label="Read it to me">🔊</button><span id="say1">Pick a question, then decide what to collect. Some answers are <b>groups you can name</b>. Some are <b>numbers you can count</b>.</span></div>
+      <details class="kit"><summary>For the grown-up: what to have to hand</summary><p>Paper for a Venn or Carroll diagram, and a coin or spinner for a chance experiment. Sorting real answers into two overlapping circles is what makes a Venn diagram mean something, rather than a shape already filled in.</p></details>
       <div class="stage">
         <div class="chips" id="pickQ"></div>
         <div class="qcard" id="qcard"></div>
@@ -2062,6 +2063,77 @@
       fb.className = "fb" + (ok ? " good" : ""); fb.textContent = msg; say(msg);
     });
   })();
+
+  /* ---- ehel-spiral: the warm-up's second question, drawn from lessons already
+     FINISHED - see add-spiral-warmup.py. Not a step: no sticker, no dot, no
+     score, no finish(). */
+  const SPIRAL = [
+    { from: "l01", q: "What is the 5 worth in 5,240?", opts: [5000, 500, 50], a: 5000, why: "The 5 is in the thousands column, so it is worth 5000." },
+    { from: "l01", q: "Which is colder: -3 degrees or -8 degrees?", opts: ["-8 degrees", "-3 degrees", "they are the same"], a: "-8 degrees", why: "The further a negative number is from zero, the colder it is - -8 is further from zero than -3." },
+    { from: "l01", q: "Which is bigger: 4,082 or 4,820?", opts: [4082, 4820, 4028], a: 4820, why: "Compare the hundreds: 8 hundreds is more than 0 hundreds, so 4,820 is bigger." },
+    { from: "l02", q: "Is 15 odd or even?", opts: ["odd", "even", "both"], a: "odd", why: "15 counters make 7 pairs and 1 left over, so 15 is odd." },
+    { from: "l02", q: "What is 4 squared - 4 times 4?", opts: [16, 8, 44], a: 16, why: "4 rows of 4 make a square of 16." },
+    { from: "l02", q: "You add two odd numbers together. Is the answer always odd or always even?", opts: ["always even", "always odd", "it depends"], a: "always even", why: "Two odd numbers always pair up completely with nothing left over, so the answer is always even." },
+    { from: "l03", q: "You estimate 396 add 205 by rounding to the nearest hundred. What is your estimate?", opts: [600, 500, 700], a: 600, why: "396 rounds to 400 and 205 rounds to 200, and 400 add 200 is 600." },
+    { from: "l03", q: "Which pair of numbers multiplies to make 12, using 3?", opts: ["3 and 4", "3 and 9", "3 and 12"], a: "3 and 4", why: "3 times 4 is 12, so 3 and 4 are a factor pair of 12." },
+    { from: "l03", q: "What is 48 divided by 6?", opts: [8, 6, 42], a: 8, why: "6 times 8 is 48, so 48 divided by 6 is 8." },
+    { from: "l04", q: "Which is bigger: three eighths or one half?", opts: ["one half", "three eighths", "they are equal"], a: "one half", why: "One half is the same as four eighths, and four eighths is more than three eighths." },
+    { from: "l04", q: "What is a quarter of 20?", opts: [5, 4, 10], a: 5, why: "20 shared into 4 equal groups is 5 in each group." },
+    { from: "l04", q: "What is 50% of a number the same as?", opts: ["half of it", "a quarter of it", "all of it"], a: "half of it", why: "50 out of 100 is the same amount as one half." },
+    { from: "l05", q: "What is 15:00 in 12-hour time?", opts: ["3 o'clock", "5 o'clock", "1 o'clock"], a: "3 o'clock", why: "15:00 is 12 hours plus 3 more, which is 3 o'clock in the afternoon." },
+    { from: "l05", q: "A bus leaves at 09:40 and the journey takes 25 minutes. What time does it arrive?", opts: ["10:05", "09:65", "10:15"], a: "10:05", why: "40 minutes plus 25 minutes is 65 minutes, which is 1 hour and 5 minutes, so it arrives at 10:05." },
+    { from: "l05", q: "Which is longer: 90 minutes, or 1 hour and a half?", opts: ["they are the same", "90 minutes", "1 hour and a half"], a: "they are the same", why: "90 minutes is 60 minutes plus 30 more, which is exactly 1 hour and a half." },
+    { from: "l06", q: "An angle is smaller than a right angle. What is it called?", opts: ["acute", "obtuse", "reflex"], a: "acute", why: "An angle smaller than a right angle is called acute." },
+    { from: "l06", q: "A rectangle is 4 cm by 5 cm. What is its area?", opts: [20, 18, 9], a: 20, why: "Area is length times width: 4 times 5 is 20 square centimetres." },
+    { from: "l06", q: "A shape has one line of symmetry. If you fold it exactly on that line, what happens to the two halves?", opts: ["they match exactly", "they overlap unevenly", "nothing happens"], a: "they match exactly", why: "A line of symmetry is exactly where a shape folds so both halves match." },
+    { from: "l07", q: "To reach the point (3, 2) from the start, which do you do first?", opts: ["go along 3, then up 2", "go up 2, then along 3", "go along 2, then up 3"], a: "go along 3, then up 2", why: "A coordinate is always read along first, then up." },
+    { from: "l07", q: "You face east and turn to face south. Which way did you turn?", opts: ["a quarter turn clockwise", "a quarter turn anticlockwise", "a half turn"], a: "a quarter turn clockwise", why: "East to south is one quarter turn in the clockwise direction." },
+    { from: "l07", q: "A shape is reflected in a mirror line that touches one of its edges. What happens to that edge?", opts: ["it stays exactly where it is", "it moves to the opposite side", "it disappears"], a: "it stays exactly where it is", why: "An edge sitting exactly on the mirror line does not move, because it is its own reflection." },
+    { from: "l08", q: "A Venn diagram has a circle for red and a circle for square. Where does a red square go?", opts: ["in both circles, where they overlap", "in the red circle only", "outside both circles"], a: "in both circles, where they overlap", why: "A red square is red and a square, so it belongs where the two circles cross." },
+    { from: "l08", q: "Which is more likely: picking a red counter from a bag of 8 red and 2 blue, or a fair coin landing tails?", opts: ["the red counter", "the coin landing tails", "they are the same"], a: "the red counter", why: "8 out of 10 counters are red, which is more likely than a fair coin's 1 out of 2 chance." },
+    { from: "l08", q: "An event is described as impossible. What is the chance it happens?", opts: ["no chance at all", "a small chance", "a certain chance"], a: "no chance at all", why: "Impossible means it cannot happen, so there is no chance at all." }
+  ];
+  const SPIRAL_TITLES = { l01: "Big Numbers and Below Zero", l02: "Patterns and Square Numbers", l03: "Ways to Calculate", l04: "Parts of a Whole", l05: "Telling the Time", l06: "Shape and Measures", l07: "Where Things Are", l08: "Asking, Sorting and Chance" };
+  /* Called from the page's hydrate block with the whole course record. Until it
+     answers there is no spiral question, which is also what a child on their
+     first lesson correctly sees. */
+  window.__ehelSpiral = function (units, here) {
+    const w = document.getElementById("ehWarm");
+    if (!w || w.querySelector(".eh-spiral")) return;          /* once only */
+    const pool = SPIRAL.filter(function (it) {
+      const u = units && units[it.from];
+      return it.from !== here && u && u.completed === true;
+    });
+    if (!pool.length) return;
+    const it = pool[Math.floor(Math.random() * pool.length)];
+    const box = document.createElement("div");
+    box.className = "eh-spiral";
+    box.innerHTML = '<p class="eh-warm-h">And one from before</p>'
+      + '<div class="eh-warm-say"><button type="button" class="speak" aria-label="Read it to me">&#128266;</button>'
+      + '<span class="eh-spiral-q"></span></div>'
+      + '<div class="choices eh-spiral-ch"></div>'
+      + '<p class="fb" role="status" aria-live="polite"></p>';
+    box.querySelector(".eh-spiral-q").textContent = it.q;
+    /* bound here, not by the page-wide .speak wiring, which ran at load */
+    box.querySelector(".speak").addEventListener("click", function () { say(it.q); });
+    const ch = box.querySelector(".eh-spiral-ch"), fb = box.querySelector(".fb");
+    ch.innerHTML = shuffle(it.opts.slice()).map(function (o) {
+      return '<button type="button" class="choice" data-v="' + o + '">' + o + "</button>";
+    }).join("");
+    ch.addEventListener("click", function (e) {
+      const b = e.target.closest(".choice"); if (!b || b.disabled) return;
+      const ok = String(b.dataset.v) === String(it.a);
+      ch.querySelectorAll(".choice").forEach(function (c) {
+        c.disabled = true;
+        if (String(c.dataset.v) === String(it.a)) c.classList.add("right");
+      });
+      if (!ok) b.classList.add("wrong");
+      const msg = (ok ? cheer() + " " : "Good try. ") + it.why
+        + " That was in " + SPIRAL_TITLES[it.from] + ".";
+      fb.className = "fb" + (ok ? " good" : ""); fb.textContent = msg; say(msg);
+    });
+    w.appendChild(box);
+  };
   function finish(i, msg) { if (!done[i]) { done[i] = true; paintDots(); } if (window.__ehelStep) { try { window.__ehelStep(i, done); } catch (_) {} } if (msg) say(msg); }
   /* A round started on a timer belongs to the step it was set on. If the child
      has moved on by the time it fires - the usual thing after a right answer -
@@ -3442,6 +3514,10 @@
     try {
       const doc = await ws.hydrate();
       const u = doc && doc.units && doc.units[UNIT];
+      /* ehel-spiral: the whole record, not this unit - a child at the top of
+         a later lesson with earlier ones behind them has no `u` yet. */
+      try { if (window.__ehelSpiral) window.__ehelSpiral(doc && doc.units, UNIT); }
+      catch (_) { /* never break the lesson */ }
       if (!u) return;
       if (u.attempted && typeof u.attempted === "object") baseAttempted = u.attempted;
       if (Array.isArray(u.knownWords)) baseKnown = u.knownWords;
@@ -3674,4 +3750,23 @@
 <style>/* ehel-g4-tiers - see add-differentiation.py */
   #scG4 { font-size: 12px; letter-spacing: .05em; text-transform: uppercase;
     color: var(--muted, #666); }
+</style>
+
+<style>/* ehel-materials-note - see add-materials-note.py */
+  .kit { margin: 10px 0 0; border: 1px dashed var(--line); border-radius: 12px;
+    padding: 0 14px; background: transparent; }
+  .kit[open] { padding-bottom: 12px; }
+  .kit > summary { cursor: pointer; list-style: none; padding: 9px 0; min-height: 44px;
+    display: flex; align-items: center; gap: 8px;
+    font-family: "Inter", "Segoe UI", sans-serif; font-size: 14px; font-weight: 700;
+    color: var(--muted); }
+  .kit > summary::-webkit-details-marker { display: none; }
+  .kit > summary::after { content: "+"; margin-left: auto; font-size: 18px; }
+  .kit[open] > summary::after { content: "\2013"; }
+  .kit p { margin: 0; font-size: 15px; line-height: 1.5; color: var(--ink); }
+</style>
+
+<style>/* ehel-spiral - see add-spiral-warmup.py */
+  .eh-spiral { margin-top: 16px; padding-top: 14px; border-top: 2px dashed var(--line); }
+  .eh-spiral .eh-spiral-ch { margin-top: 12px; }
 </style>

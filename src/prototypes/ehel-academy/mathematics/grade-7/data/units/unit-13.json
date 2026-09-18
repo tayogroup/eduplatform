@@ -343,6 +343,7 @@
       "id": "we02",
       "outcomeId": "lo02",
       "difficulty": "Basic",
+      "twm": "convincing",
       "title": "Marbles in a bag",
       "prompt": "A bag holds 5 red, 2 blue and 3 green marbles. One is drawn at random. Find P(red) and P(not red).",
       "solution": "Total marbles = 5 + 2 + 3 = 10. P(red) = 5/10 = 1/2 = 0.5 = 50%. For the complement, P(not red) = 1 − 1/2 = 1/2. You can check directly: 'not red' means blue or green = 2 + 3 = 5 out of 10 = 1/2. Both methods agree."
@@ -351,6 +352,7 @@
       "id": "we03",
       "outcomeId": "lo03",
       "difficulty": "Basic",
+      "twm": "characterising",
       "title": "Mutually exclusive events",
       "prompt": "A fair die is rolled. Find the probability of rolling a 1 or a 4.",
       "solution": "'Rolling a 1' and 'rolling a 4' cannot both happen on one roll, so they are mutually exclusive and we may add. P(1) = 1/6 and P(4) = 1/6, so P(1 or 4) = 1/6 + 1/6 = 2/6 = 1/3."
@@ -367,6 +369,7 @@
       "id": "we05",
       "outcomeId": "lo05",
       "difficulty": "Intermediate",
+      "twm": "critiquing",
       "title": "Experimental probability",
       "prompt": "Hassan spins a spinner 40 times. It lands on 'star' 16 times. Find the experimental probability of landing on a star, and compare it with a theoretical value of 1/4 for a fair spinner.",
       "solution": "Experimental probability = 16/40 = 2/5 = 0.4 = 40%. The theoretical value is 1/4 = 0.25 = 25%. The experimental result (40%) is noticeably higher than 25%, but 40 spins is not very many. To decide whether the spinner is really biased, Hassan should spin it many more times and see whether the relative frequency settles near 25% or stays high."
@@ -375,6 +378,7 @@
       "id": "we06",
       "outcomeId": "lo06",
       "difficulty": "Intermediate",
+      "twm": "critiquing",
       "title": "Using the complement to save work",
       "prompt": "A spinner has 10 equal sectors numbered 1 to 10. Find the probability of not landing on a multiple of 5.",
       "solution": "The multiples of 5 from 1 to 10 are 5 and 10, so P(multiple of 5) = 2/10 = 1/5. Using the complement rule, P(not a multiple of 5) = 1 − 1/5 = 4/5 = 0.8 = 80%. This was quicker than listing the eight other numbers."
@@ -383,6 +387,7 @@
       "id": "we07",
       "outcomeId": "lo07",
       "difficulty": "Intermediate",
+      "twm": "characterising",
       "title": "Total of two dice",
       "prompt": "Two fair dice are rolled and the scores are added. Find P(total of 7).",
       "solution": "There are 6 × 6 = 36 equally likely outcomes. The pairs giving a total of 7 are (1,6), (2,5), (3,4), (4,3), (5,2) and (6,1) — that is 6 favourable outcomes. So P(total of 7) = 6/36 = 1/6. This is why 7 is the most common total when rolling two dice."
@@ -391,6 +396,7 @@
       "id": "we08",
       "outcomeId": "lo05",
       "difficulty": "Intermediate",
+      "twm": "convincing",
       "title": "Reasoning backwards",
       "prompt": "In a bag of red and yellow sweets, the probability of drawing a red is 3/5. There are 20 sweets in total. How many are red, and how many are yellow?",
       "solution": "P(red) = 3/5 means 3 out of every 5 sweets are red. Of 20 sweets, red = 3/5 × 20 = 12. Yellow = 20 − 12 = 8. Check: P(yellow) = 8/20 = 2/5, and 3/5 + 2/5 = 1, as it must."

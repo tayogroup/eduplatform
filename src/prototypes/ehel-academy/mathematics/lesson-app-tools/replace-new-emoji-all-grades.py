@@ -137,7 +137,10 @@ EDITS = {
     ],
     G2 + "count-it-chart-it.html": [
         ('["\U0001F9F1", "Block graphs"]', '["\U0001F4CA", "Block graphs"]'),
-        ('["\U0001F9F1", "Reading a block graph"]', '["\U0001F50D", "Reading a block graph"]'),
+        # retargeted 2026-09-18: this sticker was moved off "magnifying glass" to
+        # "eye" so it no longer shares a glyph with the same shelf's "Spot the
+        # mistake" - see the sticker-shelf fix committed the same day
+        ('["\U0001F9F1", "Reading a block graph"]', '["\U0001F441️", "Reading a block graph"]'),
     ],
     # ------------------------------------------------------------ Grade 3 (src)
     G3 + "l1-content.js": [

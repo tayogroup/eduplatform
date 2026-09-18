@@ -49,7 +49,18 @@ function defaultUnitForLevel(level) {
 
 const routeParams = new URLSearchParams(location.search);
 const requestedLevel = Number(routeParams.get("level") || document.documentElement.dataset.level || 1);
-const levelNumber = requestedLevel >= 1 && requestedLevel <= 5 ? requestedLevel : 1;
+// The floor is Phonics, -1; Intro is 0. It was 1 from 2026-08-01, when the
+// course was Levels 1-5, and survived both levels added below it — while
+// course-app.js reads the same parameter with NO clamp. So a learner on Phonics
+// got Phonics' content folder (g-1) read as Level 1: Level 1's dictionary file
+// name, a 404, and a course that never loaded — and, had it loaded, Level 1's
+// on-device progress key (STORAGE_KEY below) and picture map. Found on the live
+// v432 page, which is also what showed the level -1 branches of pictureKey and
+// courseKey had never run.
+const levelNumber = requestedLevel >= -1 && requestedLevel <= 5 ? requestedLevel : 1;
+// A learner-facing name. The two levels below Level 1 have names of their own,
+// and "Level -1" is not one; Levels 1 and up read exactly as they always did.
+const levelName = (n) => (n === -1 ? "Phonics" : n === 0 ? "Intro" : `Level ${n}`);
 const defaultUnit = defaultUnitForLevel(levelNumber);
 const requestedUnit = Number(routeParams.get("unit") ?? defaultUnit);
 // Unit -1 is the Prerequisite unit: a placement exam over the previous level
@@ -107,9 +118,9 @@ function bind(ctx) {
   if (isPrereqUnit) {
     placement = createPlacementUnit({
       storageKey: `ehel-intensive-l${levelNumber}-placement-exam-v1`,
-      stageLabel: `Level ${levelNumber}`,
+      stageLabel: levelName(levelNumber),
       stageWord: "Level",
-      frameworkLabel: `Intensive English Level ${levelNumber}`,
+      frameworkLabel: `Intensive English ${levelName(levelNumber)}`,
       deps: () => ({ $, $$, escapeHtml, icon, pageHeader, toast, navigate, complete, emitProgress: ctx.emitProgress }),
       exam: () => placementExam,
       hrefForUnit: (level, unit, route = "overview") => {
@@ -799,7 +810,7 @@ const config = {
     placement: () => (isPrereqUnit ? placement.renderExam() : navigate("overview")),
     "year-plan": () => (isPrereqUnit ? renderStudyPlan({
       deps: () => ({ $, $$, escapeHtml, icon, pageHeader, navigate }),
-      stageLabel: `Level ${levelNumber}`,
+      stageLabel: levelName(levelNumber),
       subjectLabel: "Intensive English",
       planName: "Level Study Plan",
       units: () => manifest.units.filter((unit) => !String(unit.status).startsWith("Planned")),
@@ -824,7 +835,7 @@ const config = {
     }) : navigate("overview")),
     "unit-plan": () => (isPrereqUnit ? navigate("overview") : renderUnitStudyPlan({
       deps: () => ({ $, $$, escapeHtml, icon, pageHeader, navigate, exitFocusMode, pathNav }),
-      stageLabel: `Level ${levelNumber}`,
+      stageLabel: levelName(levelNumber),
       unitNumber: course.unit.unitNo,
       unitTitle: course.unit.unitTitle,
       units: () => manifest.units.filter((unit) => !String(unit.status).startsWith("Planned")),

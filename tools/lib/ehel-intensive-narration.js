@@ -15,6 +15,7 @@ const { levelDir, levels: intensiveLevels } = require("./ehel-intensive-levels")
 
 const { cyrb53, clean, MIN_CHARS } = require("./ehel-narration-hash");
 const { speakableFrames, speakableWords } = require("./ehel-tts");
+const { speakablePhonics, phonicsWordCard } = require("./ehel-phonics-speech");
 
 // `slideLabels` is the odd one and says so: the other six are per-unit text the
 // SHELL speaks through voiceButton(), while slideLabels belongs to the
@@ -87,18 +88,41 @@ function speechForUnit(unit, category) {
   }
 }
 
+// The Phonics level's grapheme WORD CARDS (`s`, `ng`, `igh`), keyed by the
+// displayed headword, with the spoken form each card is recorded as.
+function phonicsCards(unit) {
+  const cards = new Map();
+  for (const d of unit.dictionaryLinks || []) {
+    if (!/^letters?$/.test(d.partOfSpeech || "")) continue;
+    const spoken = phonicsWordCard(d.displayWord, d.exampleSentence);
+    if (spoken) cards.set(clean(d.displayWord), spoken);
+  }
+  return cards;
+}
+
 function clipsForUnit(unit, categories = CATEGORIES) {
   const out = [];
+  // The Phonics level (-1) is the one place a lowercase letter is voiced as its
+  // SOUND and never its name: `c.` would otherwise be recorded as "see" in
+  // the level whose first rule is not to say it. lib/ehel-phonics-speech.js
+  // holds the measured spellings; everywhere else, text passes through as-is.
+  const phonics = ((unit || {}).unit || {}).levelId === "lph";
   for (const category of categories) {
     const speech = speechForUnit(unit, category);
+    // A single grapheme's card is under the floor, so it would fall through to
+    // the LIVE voice — which says the letter name, on the one card whose job
+    // is the sound. The app looks for a recorded clip whatever the length
+    // (course-app.js :: defaultStaticVoiceUrl), so these are recorded.
+    const cards = phonics && category === "words" ? phonicsCards(unit) : null;
     for (const [index, raw] of textsForUnit(unit, category).entries()) {
       const text = clean(raw);
+      const card = cards ? cards.get(text) : undefined;
       // `source` is what is recorded: the spoken form where one is authored,
       // otherwise the displayed text itself.
-      const source = speech[index] ? clean(speech[index]) : text;
+      const source = card || (speech[index] ? clean(speech[index]) : text);
       // Below the floor the request is not worth making; the UI speaks these
       // through the runtime voice instead.
-      if (!text || text.length < MIN_CHARS) continue;
+      if (!text || (text.length < MIN_CHARS && !card)) continue;
       // The clip is looked up by cyrb53 of the DISPLAYED text (staticVoiceKey
       // in shell/course-app.js knows nothing of this transform), so `hash`
       // stays on `text`, unchanged. `spoken` is what actually goes to
@@ -109,7 +133,11 @@ function clipsForUnit(unit, categories = CATEGORIES) {
       // both levels — almost entirely "speaking" drills pairing full
       // sentences or minimal pairs with "/" — that carried a literal slash
       // into the recording with no transform at all.
-      out.push({ category, text, source, spoken: speakableWords(speakableFrames(source)), hash: cyrb53(text) });
+      // Units 15-20 teach SPELLINGS of sounds already known, so a grapheme in a
+      // sentence there is said by its letters; 1-14 teach the sounds themselves.
+      const base = phonics && !card
+        ? speakablePhonics(source, { spelling: Number(unit.unit.unitNo) >= 15 }) : source;
+      out.push({ category, text, source, spoken: speakableWords(speakableFrames(base)), hash: cyrb53(text) });
     }
   }
   return out;
@@ -246,15 +274,23 @@ function sectionIntroClips(courseRoot, level) {
   }
 
   const out = new Map();
-  for (const texts of sectionIntroTexts(contexts)) {
+  // Index-aligned with `contexts` (sectionIntroTexts maps them in order), so the
+  // Phonics level can say its unit titles as SOUNDS: these intros open on the
+  // unit's title and overview ("ng nk th sh ch. New sounds: ng, nk, ..."), and
+  // without the transform the voice spelled them out by letter NAME, one line
+  // above "Say the sound, not the letter name."
+  const phonics = Number(level) === -1;
+  for (const [index, texts] of sectionIntroTexts(contexts).entries()) {
+    const spelling = Number(contexts[index].unitNo) >= 15;
     for (const raw of texts) {
       const text = clean(raw);
       if (text.length < MIN_CHARS || out.has(cyrb53(text))) continue;
+      const base = phonics ? speakablePhonics(text, { spelling }) : text;
       out.set(cyrb53(text), {
         category: "sectionIntros",
         text,
         source: text,
-        spoken: speakableWords(speakableFrames(text)),
+        spoken: speakableWords(speakableFrames(base)),
         hash: cyrb53(text),
       });
     }

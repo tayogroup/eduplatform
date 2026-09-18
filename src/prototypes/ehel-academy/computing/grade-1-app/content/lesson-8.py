@@ -317,6 +317,19 @@ LESSON["lecture"] = LESSON["lecture"] + [
          "and it makes phone calls. All four are computers."),
 ]
 
+# The unit lecture film (2026-09-18, owner: "do the same" as the Grade 4
+# Maths film). It plays in this lesson's own Unit lecture step, above the parts,
+# so no step moves. Made by tools/create-ehel-computing-unit-lecture.js from
+# lecture-video/computers-everywhere.json; see lecture-video/README.md. The
+# names are content hashes, so a re-render gets new ones and must be re-listed
+# here and in app.config.json extraPages.
+LESSON["video"] = {
+    "src": "lecture-video/computers-everywhere.16b93198.mp4",
+    "captions": "lecture-video/computers-everywhere.8d4a4942.vtt",
+    "poster": "lecture-video/computers-everywhere.c2a3425a.jpg",
+    "note": "About three minutes. Watch it through, then go back over it a part at a time below.",
+}
+
 LESSON["words"] = LESSON["words"] + [
     word("desktop", "\U0001F5A5\ufe0f", "A computer that stays on a desk. You cannot carry it around.",
          ["The desktop computer has a tower under the desk.", "A desktop is bigger than a laptop."]),

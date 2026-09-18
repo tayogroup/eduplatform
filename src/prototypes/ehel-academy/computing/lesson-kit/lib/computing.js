@@ -4174,16 +4174,40 @@
     ONLEAVE[o.finish] = () => finish(o.finish);
   }
 
-  /* ---- the unit lecture: the lesson told in parts, by the voice ---- */
+  /* ---- the unit lecture: the lesson told in parts, by the voice ----
+     A lesson with a film (LESSON["video"], see _shell.py) shows it above the
+     parts, as the Science kit's lecture() does: the film is the lecture, and
+     the parts are the way back through it. Without one, every line below
+     draws and reports exactly what it always did. */
   function lecture(o) {
     const el = o.el;
     const parts = o.parts || [];
-    let k = 0, furthest = 0;
+    const film = o.video || null;
+    let k = 0, furthest = 0, watched = false;
     const id = el.stage + "l";
+
+    /* The film is painted ONCE and then left alone: paint() rewrites the
+       stage on every Next part, and a <video> inside that markup would be torn
+       out and rebuilt mid-play. preload="none" because the deck paints every
+       slide at load, and a child who never reaches this step should not
+       download the film. The caption track is offered, not default: the film
+       already draws the spoken sentence into its own picture. */
+    function filmHtml() {
+      return '<div class="lec-film">' +
+        '<video id="' + id + 'v" controls playsinline preload="none"' +
+        (film.poster ? ' poster="' + esc(film.poster) + '"' : "") +
+        ' src="' + esc(film.src) + '">' +
+        (film.captions ? '<track kind="captions" srclang="en" label="English" src="' + esc(film.captions) + '">' : "") +
+        "</video>" +
+        '<p class="lec-note">' + esc(film.note || "Watch the lesson, then go through it a part at a time below.") + "</p>" +
+        "</div>";
+    }
+
     function paint() {
       const p = parts[k];
       $(el.stage).className = "stagewide";
       $(el.stage).innerHTML =
+        (film ? filmHtml() : "") +
         '<div class="lec">' +
         '<p class="phase">Part ' + (k + 1) + " of " + parts.length + "</p>" +
         picHtml(p.pic, "pic lecpic") +
@@ -4194,25 +4218,76 @@
         (k > 0 ? '<button type="button" class="big small ghost" id="' + id + 'back">&#9664; Last part</button>' : "") +
         '<button type="button" class="big small" id="' + id + 'next">' + (k + 1 < parts.length ? "Next part &#9654;" : "I heard it all &#10003;") + "</button>" +
         "</div>" +
-        '<p class="lec-note">Read aloud by the lesson\'s voice. There is no video for this lesson yet.</p>' +
+        (film ? "" : '<p class="lec-note">Read aloud by the lesson\'s voice. There is no video for this lesson yet.</p>') +
         "</div>";
       furthest = Math.max(furthest, k + 1);
-      reportAttempt(o.finish, furthest, parts.length, "parts");
-      $(el.score).textContent = furthest + " of " + parts.length + " parts heard";
-      $(id + "hear").addEventListener("click", () => say(p.title + ". " + p.say));
-      if (k > 0) $(id + "back").addEventListener("click", () => { k--; paint(); sayHere(o.finish, parts[k].title + ". " + parts[k].say); });
+      report();
+      $(id + "hear").addEventListener("click", () => { quiet(); say(p.title + ". " + p.say); });
+      if (k > 0) $(id + "back").addEventListener("click", () => { k--; repaint(); quiet(); sayHere(o.finish, parts[k].title + ". " + parts[k].say); });
       $(id + "next").addEventListener("click", () => {
-        if (k + 1 < parts.length) { k++; paint(); sayHere(o.finish, parts[k].title + ". " + parts[k].say); }
-        else {
-          $(el.fb).className = "fb good"; $(el.fb).textContent = o.done;
-          reportAttempt(o.finish, parts.length, parts.length, "parts");
-          finish(o.finish, o.done);
-        }
+        if (k + 1 < parts.length) { k++; repaint(); quiet(); sayHere(o.finish, parts[k].title + ". " + parts[k].say); }
+        else done();
       });
+      if (film) wireFilm();
     }
+
+    /* A part read aloud pauses the film, as the film starting stops the
+       lesson's voice (wireFilm): the two are the same voice, and without this
+       pressing Next part mid-film had both talking at once (found by playing
+       the film in the page, 2026-09-18). Nothing, without a film. */
+    function quiet() {
+      if (!film) return;
+      const v = $(id + "v");
+      if (v && !v.paused) v.pause();
+    }
+
+    /* Moving a part must not restart the film, so with a film on screen the
+       <video> element is lifted out, the stage redrawn, and the same element
+       put back in place of the fresh one. */
+    function repaint() {
+      if (!film) return paint();
+      const v = $(id + "v");
+      if (v && v.parentNode) v.parentNode.removeChild(v);
+      paint();
+      const fresh = $(id + "v");
+      if (v && fresh && fresh.parentNode) fresh.parentNode.replaceChild(v, fresh);
+    }
+
+    function report() {
+      reportAttempt(o.finish, watched ? parts.length : furthest, parts.length, "parts");
+      $(el.score).textContent = watched
+        ? "Film watched · " + furthest + " of " + parts.length + " parts read"
+        : furthest + " of " + parts.length + " parts heard";
+    }
+
+    function done() {
+      $(el.fb).className = "fb good"; $(el.fb).textContent = o.done;
+      reportAttempt(o.finish, parts.length, parts.length, "parts");
+      finish(o.finish, o.done);
+    }
+
+    function wireFilm() {
+      const v = $(id + "v");
+      if (!v || v.dataset.wired) return;
+      v.dataset.wired = "1";
+      /* the lesson's voice and the film's voice are the same person, so the
+         lesson's stops when the film starts */
+      v.addEventListener("play", () => { try { VOICE.stop(); } catch (_) { /* nothing */ } });
+      /* watching it through IS the step; the parts stay below to go back over */
+      v.addEventListener("ended", () => { watched = true; report(); done(); });
+    }
+
     if (!parts.length) return;
     paint();
-    ONSHOW[o.finish] = () => afterVoice(() => sayHere(o.finish, parts[k].title + ". " + parts[k].say));
+    if (film) {
+      /* show() only swaps which slide is visible, so a film left playing
+         would go on talking under the next step. Nothing is said on arrival
+         either: the child is about to press play, and a voice reading part
+         one over the opening seconds is the collision wireFilm() prevents. */
+      ONLEAVE[o.finish] = () => { const v = $(id + "v"); if (v && !v.paused) v.pause(); };
+    } else {
+      ONSHOW[o.finish] = () => afterVoice(() => sayHere(o.finish, parts[k].title + ". " + parts[k].say));
+    }
   }
 
   /* ---- the computing words: hear each one, then show you know them ---- */

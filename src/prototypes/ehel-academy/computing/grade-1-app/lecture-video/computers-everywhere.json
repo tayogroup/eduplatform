@@ -1,0 +1,145 @@
+{
+  "_comment": "Storyboard for the Grade 1 Computing unit lecture film, Lesson 8 Computers Everywhere. Rendered by tools/create-ehel-computing-unit-lecture.js with the scenes in tools/lib/ehel-computing-lecture-scenes.js. Every beat is one narration clip; art.at names the phrases a picture waits for, and the scenes refuse to load if a phrase is not in its beat's say. Written for a Grade 1 child: short sentences, the lesson's own words (program, app, input, output, control, robot), the lesson's own examples (Grandma's call, the lions, the six programs, the eight devices, the hidden computers, the robots and the bicycle). Read README.md in this folder before rendering without --dry, --preview or --draft: a real render buys narration.",
+  "slug": "computers-everywhere",
+  "lesson": 8,
+  "grade": 1,
+  "stage": 1,
+  "title": "Computers Everywhere",
+  "subtitle": "Grade 1 Computing",
+  "framework": "Cambridge Primary Computing 0059",
+  "objectives": [
+    ["1CS.01", "Know that there are a range of computer systems with different functions, including communication, entertainment, creativity, research and for controlling other technology."],
+    ["1CS.02", "Know that computers can run many different programs, including games, apps and document creation tools."],
+    ["1CS.03", "Know that information and data can be input to computers in many different ways."],
+    ["1CS.04", "Know that computers can output information in many different ways."],
+    ["1CS.05", "Know that there are many everyday devices that use computers to control what they do."],
+    ["1CS.06", "Identify what robots are and where they may be found in the real world."]
+  ],
+  "scenes": [
+    {
+      "id": "title", "kind": "title", "codes": [],
+      "beats": [
+        { "say": "Look around you. Computers are everywhere.",
+          "art": { "at": { "look": "Look around you", "every": "everywhere" } } },
+        { "say": "Some are easy to see. Some are hiding inside other things.",
+          "art": { "at": { "see": "easy to see", "hide": "hiding inside" } } }
+      ]
+    },
+    {
+      "id": "kinds", "kind": "kinds", "heading": "What is a computer?", "codes": ["1CS.01"],
+      "beats": [
+        { "say": "A computer is a machine that runs programs. Computers come in lots of sizes.",
+          "art": { "at": { "machine": "a machine", "programs": "runs programs", "sizes": "lots of sizes" } } },
+        { "say": "A desktop, a laptop, a tablet and a smartphone. All four are computers.",
+          "art": { "at": { "desktop": "A desktop", "laptop": "a laptop", "tablet": "a tablet", "phone": "a smartphone", "all": "All four" } } }
+      ]
+    },
+    {
+      "id": "jobs", "kind": "jobs", "heading": "What are computers for?", "codes": ["1CS.01"],
+      "beats": [
+        { "say": "People use computers for lots of different jobs. Here are five.",
+          "art": { "job": -1, "at": { "jobs": "different jobs", "five": "Here are five" } } },
+        { "say": "Talking to Grandma far away. That is communication.",
+          "art": { "job": 0, "at": { "act": "Talking to Grandma", "word": "communication" } } },
+        { "say": "Watching a film, or playing a game. That is entertainment.",
+          "art": { "job": 1, "at": { "act": "Watching a film", "game": "playing a game", "word": "entertainment" } } },
+        { "say": "Drawing a picture, or making music. That is creativity.",
+          "art": { "job": 2, "at": { "act": "Drawing a picture", "music": "making music", "word": "creativity" } } },
+        { "say": "Finding out about lions. That is research.",
+          "art": { "job": 3, "at": { "act": "about lions", "word": "research" } } },
+        { "say": "And controlling other machines, like a washing machine. That is control.",
+          "art": { "job": 4, "at": { "act": "a washing machine", "word": "control." } } }
+      ]
+    },
+    {
+      "id": "apps", "kind": "apps", "heading": "One computer, many programs", "codes": ["1CS.02"],
+      "beats": [
+        { "say": "One tablet can run lots of different programs. A program on a tablet is called an app.",
+          "art": { "at": { "run": "lots of different programs", "app": "called an app" } } },
+        { "say": "Open Paint, and you can draw.",
+          "art": { "app": "paint", "at": { "open": "Open Paint", "act": "you can draw" } } },
+        { "say": "Open the ball game, and you can play.",
+          "art": { "app": "game", "at": { "open": "Open the ball game", "act": "you can play" } } },
+        { "say": "Open Writing, and you can type a story.",
+          "art": { "app": "write", "at": { "open": "Open Writing", "act": "type a story" } } },
+        { "say": "Videos plays films. Call rings Grandma. Search finds things out.",
+          "art": { "apps": ["video", "call", "search"], "at": { "video": "Videos plays", "call": "Call rings", "search": "Search finds" } } },
+        { "say": "Six programs, and just one computer. A computer can run many programs.",
+          "art": { "all": true, "at": { "six": "Six programs", "one": "just one computer", "many": "run many programs" } } }
+      ]
+    },
+    {
+      "id": "inputs", "kind": "io", "heading": "Information goes in", "codes": ["1CS.03"],
+      "beats": [
+        { "say": "A computer needs information to work with. It goes in through an input.",
+          "art": { "side": "in", "at": { "info": "information", "input": "an input" } } },
+        { "say": "A keyboard puts letters in. A mouse puts in your pointing and clicking.",
+          "art": { "at": { "keyboard": "A keyboard", "mouse": "A mouse", "click": "clicking" } } },
+        { "say": "A microphone puts your voice in. A camera puts a picture in.",
+          "art": { "at": { "mic": "A microphone", "camera": "A camera" } } },
+        { "say": "When you tap a touchscreen, your tap goes in too.",
+          "art": { "at": { "touch": "tap a touchscreen", "goes": "goes in too" } } }
+      ]
+    },
+    {
+      "id": "outputs", "kind": "io", "heading": "Information comes out", "codes": ["1CS.04"],
+      "beats": [
+        { "say": "Then the computer gives information out, through an output.",
+          "art": { "side": "out", "at": { "out": "gives information out", "output": "an output" } } },
+        { "say": "A screen shows words and pictures. A speaker plays sounds.",
+          "art": { "at": { "screen": "A screen", "speaker": "A speaker" } } },
+        { "say": "A printer puts them on paper. Lights can flash to tell you something.",
+          "art": { "at": { "printer": "A printer", "lights": "Lights can flash" } } },
+        { "say": "A touchscreen is both. Your tap goes in, and the picture comes out.",
+          "art": { "at": { "both": "is both", "tapin": "Your tap goes in", "picout": "the picture comes out" } } }
+      ]
+    },
+    {
+      "id": "hidden", "kind": "hidden", "heading": "Computers hiding inside", "codes": ["1CS.05"],
+      "beats": [
+        { "say": "A computer does not have to look like a computer. Lots of everyday machines have a small one hiding inside.",
+          "art": { "focus": "intro", "at": { "look": "look like a computer", "hiding": "hiding inside" } } },
+        { "say": "A washing machine has one. It controls the wash: fill, wash, spin.",
+          "art": { "focus": "washer", "at": { "has": "has one", "fill": "fill,", "wash": "wash, spin", "spin": "spin." } } },
+        { "say": "Traffic lights have one. It decides when each light changes.",
+          "art": { "focus": "lights", "at": { "has": "have one", "decides": "decides", "change": "changes" } } },
+        { "say": "A microwave, a car, a watch and a TV have one too.",
+          "art": { "focus": "four", "at": { "microwave": "A microwave", "car": "a car", "watch": "a watch", "tv": "a TV" } } },
+        { "say": "A spoon, a book and a candle have none. Nothing inside them decides what they do.",
+          "art": { "focus": "none", "at": { "spoon": "A spoon", "book": "a book", "candle": "a candle", "none": "have none", "nothing": "Nothing inside" } } }
+      ]
+    },
+    {
+      "id": "robots", "kind": "robots", "heading": "Robots", "codes": ["1CS.06"],
+      "beats": [
+        { "say": "A robot is a machine with a computer inside. Its program makes it move and do a job.",
+          "art": { "focus": "robot", "at": { "machine": "a machine", "computer": "a computer inside", "program": "Its program", "move": "move and do a job" } } },
+        { "say": "In a factory, a robot arm builds cars.",
+          "art": { "focus": "arm", "at": { "factory": "In a factory", "builds": "builds cars" } } },
+        { "say": "At home, a robot vacuum cleans the floor, then goes back to charge.",
+          "art": { "focus": "vacuum", "at": { "home": "At home", "cleans": "cleans the floor", "charge": "goes back to charge" } } },
+        { "say": "On Mars, a rover drives about and takes pictures.",
+          "art": { "focus": "rover", "at": { "mars": "On Mars", "drives": "drives about", "pictures": "takes pictures" } } },
+        { "say": "Robots also work in hospitals and warehouses, and even under the sea.",
+          "art": { "focus": "more", "at": { "hospital": "hospitals", "warehouse": "warehouses", "sea": "under the sea" } } },
+        { "say": "Most robots do not look like people at all.",
+          "art": { "focus": "shapes", "at": { "most": "Most robots", "people": "look like people" } } },
+        { "say": "A bicycle moves too, but it is not a robot. It moves because you pedal it.",
+          "art": { "focus": "bike", "at": { "bike": "A bicycle", "not": "not a robot", "pedal": "you pedal it" } } }
+      ]
+    },
+    {
+      "id": "recap", "kind": "recap", "heading": "What you now know", "codes": ["1CS.01", "1CS.02", "1CS.03", "1CS.04", "1CS.05", "1CS.06"],
+      "beats": [
+        { "say": "So now you know. Computers do lots of jobs, and one computer can run many programs.",
+          "art": { "at": { "jobs": "lots of jobs", "programs": "many programs" } } },
+        { "say": "Information goes in, and it comes out. And computers hide inside everyday things.",
+          "art": { "at": { "in": "goes in", "out": "comes out", "hide": "hide inside" } } },
+        { "say": "A robot has a computer inside that makes it move.",
+          "art": { "at": { "robot": "A robot" } } },
+        { "say": "Now go and find the computers around you.",
+          "art": { "at": { "go": "go and find" } } }
+      ]
+    }
+  ]
+}

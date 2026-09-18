@@ -24,7 +24,7 @@ subject's own. If the Mathematics engine changes, re-copy `voice.js` and
 | `_rules.py` | the things the kit computes rather than trusts — Robo's Bee-Bot rules, the table arithmetic, the repeat expansion (`REPEATS`, `expand_program`; the builder refuses to run if `computing.js` disagrees about what `repeat2`/`3`/`4` mean), the race sums, and at Stage 3 the machine rules (`rule_output`), the numbered walk (`walk_end`), the 1 = a code (`code_word`, `decode_code`), the row filter (`filter_rows`), tidy-program equivalence (`same_effect`), the repeated run (`repeat_run`) and the spreadsheet state (`sheet_cells`), and at Stage 4 the loop unroll (`expand_loop`), the loop-algorithm walk (`flatten_algo`, forever loops go round `FOREVER_CYCLES` = 2 then stop), the sub-routine walk (`sub_expand`), the branch (`branch_run`), the best algorithm for a purpose (`best_algo`), the sort (`sort_rows`), the Caesar shift (`caesar_shift`) and the Pigpen grid (`pigpen_index`) — each mirrored name for name in `computing.js`; imported by the builder AND the gate so they cannot disagree |
 | `_kit.py` | `step()`, `explain()`, `q()`, `opt()`, `s()`, `choice()`, and `part()`, `word()`, `home()` — the vocabulary the content is written in. Since 2026-09-16 also `cando()` (one "I can…" claim for the self-check), `world()` + `place()` (Computing world's Did-you-know fact and its real places), `label_ct()` (which computational-thinking move a step is, from `CT_MOVES`) and `tier()` (the support and extension banks), and `talk()` (the two prompts a grown-up runs OUT LOUD, either side of the lesson, printed on the teachers' page and nowhere else) |
 | `_shell.py` | the unit shell: the seven steps drawn AROUND every lesson (overview, lecture, words, games, home, world, resources), and the games derived from the lesson's own content; used by both builders so the hub and the page agree. A lesson's optional `LESSON["recap"]` (one line from the lesson before) and `LESSON["warmup"]` (1 to 3 `q()` items) ride on the overview |
-| `drive-lessons.mjs --app <dir>` | plays every step of every lesson to the end in Chromium from the page's own data and sweeps every step at 375 px; exit 0 only when every lesson ends at 100% with no errors. `--record` does the same on a copy of the DEPLOYED layout at the depth it is served from (`app/computing/<dir>/` under the config's `remote`: the hub as `index.html`, the five platform modules beside the pages, imports flattened, as `deploy.mjs` writes them, and the header crest at `app/shared/`) and then requires every step in the stored record, `completed` set, nothing ticked on a fresh open, and a reload after moving to step 4 to open step 4. `--only N` for one lesson |
+| `drive-lessons.mjs --app <dir>` | plays every step of every lesson to the end in Chromium from the page's own data and sweeps every step at 375 px; exit 0 only when every lesson ends at 100% with no errors. `--record` does the same on a copy of the DEPLOYED layout at the depth it is served from (`app/computing/<dir>/` under the config's `remote`: the hub as `index.html`, the five platform modules beside the pages, imports flattened, and every `extraPages` file (the search index, a lesson's film), as `deploy.mjs` writes them, and the header crest at `app/shared/`) and then requires every step in the stored record, `completed` set, nothing ticked on a fresh open, and a reload after moving to step 4 to open step 4. `--only N` for one lesson |
 | `rebuild.sh` | the whole chain in the one order that works, for one grade. `T=<a git archive HEAD export of mathematics/lesson-app-tools> sh ../lesson-kit/rebuild.sh` builds against the COMMITTED shared tools — several sessions edit them at once |
 | `lib/lesson.css` | the Mathematics design system, verbatim via the Science kit's copy |
 | `lib/computing.css` | this kit's own styles; no new hue |
@@ -90,6 +90,20 @@ codes the builder accepts and which the gate demands.
 | `questions` / `quiz` | `sequence` | the Mathematics build's own, with pictures. A step may carry `support` and `extension` banks (`tier()`) — Cambridge's "Go further" and "Challenge yourself!". Support arrives on the first wrong core answer and narrows the task; extension is offered after the core bank to a child who finished with at most one slip. **Neither is scored and `finish()` still fires at the end of the CORE bank**, which is what makes them position-safe on a live grade |
 | `world` (shell) | `computingWorld` | the "Did you know?" fact, two to four tappable places where this computing is at work, and one thing to go and look at (`world()`). It said "not built yet" in all 47 lessons until 2026-09-16. A lesson that authors no `world` still gets the placeholder |
 | `overview` … `resources` (shell) | as in Science | the unit shell |
+
+**A lesson may carry a film** (`LESSON["video"]`: `src`, `captions`, `poster`,
+`note`), since 2026-09-18, ported from the Science kit. `_shell.py` puts it on
+the lesson's existing Unit lecture step, so no step moves; `lecture()` draws it
+once above the parts, keeps the same `<video>` while the child moves between
+parts, ticks the step when the film ends, stops the lesson's voice when it
+plays, pauses it when a part is read aloud (Science's lecture() lacks that
+last one; without it "Next part" mid-film has two voices talking), and pauses
+it on `ONLEAVE`. Without the key every line of `lecture()`
+draws and reports what it always did. `build-lessons.py` refuses a film whose
+files are not on disk or not in `extraPages`, and refuses any file named
+`.draft.` (the free OS voice). The film itself is made by
+`tools/create-ehel-computing-unit-lecture.js`; see
+`../grade-1-app/lecture-video/README.md`, the first one.
 
 Scenes: `dress`, `sandwich`, `teeth`, `handwash`, `tower`, `plant`, `catfeed`,
 `tea`, `bed`, and Stage 3's own `smoothie`, `kite`, `cake`, `present` (each

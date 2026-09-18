@@ -1,0 +1,148 @@
+/* The 1280x720 stage for the Computing unit lecture films.
+ *
+ * DARK, like the science and maths films. Every token below is the one the
+ * Computing lesson pages themselves render in: computing/lesson-kit/lib/
+ * lesson.css forces the Wehel design language's dark block (:root,
+ * :root:not([data-theme="light"]), :root[data-theme="dark"] { --ground:
+ * #0B1D2C; ... }), the same palette the science and maths builds use. The
+ * machines are drawn in the colours of the kit's own hardware drawings
+ * (computing.js FIGURES: a #2B5673 body, #93AABE edges, a #0B1D2C screen,
+ * #B9C8D6 for light plastic), so a tablet in the film is the tablet in the
+ * lesson.
+ *
+ * NOTHING HERE TRANSITIONS OR ANIMATES. Every moving value is written inline
+ * by the scene renderer as a pure function of t.
+ */
+
+:root {
+  --ground: #0B1D2C; --card: #112A3D; --cell: #17384F; --line: #214560;
+  --ink: #FFFFFF; --muted: #93AABE;
+  --accent: #E9744F; --accent-soft: rgba(233, 116, 79, 0.18);
+  --teal: #35BFB2; --teal-soft: #143A4A;
+  --plum: #B78BD1; --gold: #F4C95D;
+  --good: #4FD1A0; --good-soft: rgba(79, 209, 160, 0.18);
+  --bad: #F0806F;
+  --blue: #6E9DE8;
+  --hue: #35BFB2;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html, body { width: 1280px; height: 720px; overflow: hidden; }
+
+body {
+  background: var(--ground);
+  color: var(--ink);
+  font-family: "Atkinson Hyperlegible", "Segoe UI", Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+}
+
+#film {
+  position: relative;
+  width: 1280px; height: 720px;
+  display: flex; flex-direction: column;
+  background:
+    radial-gradient(1100px 620px at 82% -14%, color-mix(in srgb, var(--hue) 26%, transparent), transparent 60%),
+    radial-gradient(820px 520px at -6% 108%, rgba(233, 116, 79, 0.16), transparent 58%),
+    var(--ground);
+}
+#film::after {
+  content: ""; position: absolute; inset: 0; pointer-events: none;
+  background: radial-gradient(120% 92% at 50% 42%, transparent 52%, rgba(0, 0, 0, 0.45) 100%);
+}
+
+/* ---- chrome ------------------------------------------------------------ */
+.bar {
+  position: relative; z-index: 2;
+  flex: 0 0 auto; height: 58px;
+  display: flex; align-items: center; gap: 13px;
+  padding: 0 44px;
+}
+.bar .mark {
+  width: 30px; height: 30px; border-radius: 9px;
+  background: var(--hue); color: #04141B;
+  font-family: "Inter", sans-serif; font-weight: 700; font-size: 17px;
+  display: grid; place-items: center;
+}
+.bar .brand { font-family: "Inter", sans-serif; font-weight: 700; font-size: 14px; letter-spacing: 0.01em; color: var(--ink); }
+.bar .brand b { font-weight: 400; color: var(--muted); margin-left: 8px; }
+.bar .brand b::before { content: "\00B7"; margin-right: 8px; }
+.bar .unit { margin-left: auto; font-family: "Inter", sans-serif; font-weight: 700; font-size: 12px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--muted); }
+.rail { position: absolute; left: 0; right: 0; bottom: 0; height: 3px; z-index: 3; background: rgba(255, 255, 255, 0.10); }
+.rail i { display: block; height: 3px; background: var(--hue); }
+
+/* ---- the stage ----------------------------------------------------------- */
+.stage { position: relative; z-index: 2; flex: 1 1 auto; padding: 4px 56px 0; display: flex; flex-direction: column; min-height: 0; }
+.kicker { display: flex; align-items: center; gap: 12px; margin-bottom: 6px; flex: 0 0 auto; }
+.kicker .dot { width: 9px; height: 9px; border-radius: 50%; background: var(--hue); flex: 0 0 auto; }
+.kicker .codes { display: flex; gap: 6px; margin-left: auto; }
+.kicker .codes span {
+  font-family: "Inter", sans-serif; font-size: 11px; font-weight: 700; letter-spacing: 0.06em; color: var(--muted);
+  border: 1px solid var(--line); border-radius: 999px; padding: 3px 9px;
+}
+.sceneh { font-family: "Inter", sans-serif; font-weight: 700; font-size: 40px; letter-spacing: -0.026em; line-height: 1.04; margin-bottom: 8px; flex: 0 0 auto; }
+.eyebrow { font-family: "Inter", sans-serif; font-size: 11.5px; font-weight: 700; letter-spacing: 0.16em; text-transform: uppercase; color: var(--hue); }
+
+/* one drawing per scene, in one coordinate space: 1168 x 440 */
+.scene { flex: 1 1 auto; display: flex; align-items: center; justify-content: center; min-height: 0; }
+.scene svg.sf { width: 1168px; height: 440px; display: block; overflow: visible; }
+
+/* ---- the spoken line ------------------------------------------------------ */
+.band { position: relative; z-index: 2; flex: 0 0 auto; min-height: 118px; display: flex; align-items: center; padding: 10px 56px 22px; }
+.band p { position: relative; max-width: 1060px; padding-left: 20px; font-size: 29px; line-height: 1.30; font-weight: 700; color: var(--ink); text-shadow: 0 2px 14px rgba(0, 0, 0, 0.55); }
+.band p::before { content: ""; position: absolute; left: 0; top: 4px; bottom: 4px; width: 5px; border-radius: 3px; background: var(--hue); }
+
+/* ---- SVG type -------------------------------------------------------------- */
+.sf text { font-family: "Inter", sans-serif; font-weight: 700; }
+.lab { font-size: 22px; fill: var(--ink); }
+.lab.big { font-size: 30px; }
+.lab.huge { font-size: 44px; letter-spacing: -0.02em; }
+.lab.mid { font-size: 19px; }
+.lab.small { font-size: 16px; }
+.lab.tiny { font-size: 13px; }
+.lab.muted { fill: var(--muted); }
+.lab.hue { fill: var(--hue); }
+.lab.gold { fill: var(--gold); }
+.lab.good { fill: var(--good); }
+.lab.bad { fill: var(--bad); }
+.lab.dark { fill: #142B3E; }
+.lab.caps { letter-spacing: 0.14em; text-transform: uppercase; }
+.readable { font-family: "Atkinson Hyperlegible", "Segoe UI", sans-serif !important; }
+
+/* ---- scene: title -------------------------------------------------------- */
+.title { flex: 1 1 auto; display: flex; align-items: center; gap: 56px; padding-left: 20px; }
+.title .tfig { flex: 0 0 auto; width: 440px; display: grid; place-items: center; }
+.title .tfig svg { width: 440px; height: 440px; }
+.title h1 { font-family: "Inter", sans-serif; font-weight: 700; font-size: 80px; letter-spacing: -0.032em; line-height: 0.98; margin: 12px 0 20px; }
+.title .tsub { font-size: 25px; line-height: 1.45; color: var(--muted); max-width: 28em; }
+
+.glow { position: relative; }
+.glow::before {
+  content: ""; position: absolute; inset: -6% -14%;
+  background: radial-gradient(56% 50% at 50% 48%, color-mix(in srgb, var(--hue) 20%, transparent), transparent 70%);
+  filter: blur(10px);
+}
+.glow > svg, .glow > div { position: relative; }
+
+/* ---- the title card and the end card ------------------------------------- */
+.card-slide {
+  position: absolute; inset: 0; z-index: 4; display: grid; place-items: center;
+  background: radial-gradient(900px 560px at 50% 18%, color-mix(in srgb, var(--hue) 20%, transparent), transparent 62%), var(--ground);
+  text-align: center;
+}
+.card-slide .cs-fig { position: absolute; inset: 0; display: grid; place-items: center; pointer-events: none; }
+.card-slide .cs-fig svg { width: 520px; height: 520px; }
+.card-slide .cs-in { position: relative; width: 880px; }
+.cs-mark { width: 56px; height: 56px; border-radius: 17px; margin: 0 auto 20px; background: var(--hue); color: #04141B; font-family: "Inter", sans-serif; font-weight: 700; font-size: 30px; display: grid; place-items: center; }
+.cs-mark.sm { width: 26px; height: 26px; border-radius: 8px; font-size: 15px; margin: 0 10px 0 0; display: inline-grid; vertical-align: -7px; }
+.card-slide h1 { font-family: "Inter", sans-serif; font-weight: 700; font-size: 72px; letter-spacing: -0.032em; line-height: 1.0; margin: 12px 0 0; }
+.cs-rule { width: 200px; height: 3px; border-radius: 2px; margin: 26px auto; background: var(--hue); transform-origin: 50% 50%; }
+.cs-by { font-size: 22px; color: var(--ink); font-weight: 700; letter-spacing: 0.005em; }
+.cs-sub { font-size: 17px; color: var(--muted); letter-spacing: 0.06em; margin-top: 10px; }
+.cs-cap { font-family: "Inter", sans-serif; font-size: 12px; font-weight: 700; letter-spacing: 0.18em; text-transform: uppercase; color: var(--muted); }
+.cs-codes { display: flex; flex-wrap: wrap; gap: 9px; justify-content: center; margin: 18px 0 30px; }
+.cs-codes span {
+  font-family: "Inter", sans-serif; font-size: 15px; font-weight: 700; color: var(--ink);
+  border: 1px solid color-mix(in srgb, var(--hue) 45%, transparent); background: color-mix(in srgb, var(--hue) 12%, transparent);
+  border-radius: 999px; padding: 7px 15px;
+}
+.cs-sign { font-family: "Inter", sans-serif; font-size: 16px; font-weight: 700; color: var(--muted); }

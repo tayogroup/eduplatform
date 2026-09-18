@@ -128,6 +128,17 @@ function buildReplica() {
       if (fs.existsSync(src) && !fs.existsSync(dst)) { fs.mkdirSync(path.dirname(dst), { recursive: true }); fs.copyFileSync(src, dst); }
     }
   }
+  /* ...and every app.config.json extraPages file, which deploy.mjs uploads
+     beside the pages: the search index, and a lesson's lecture film, its
+     captions and its poster. The replica left them out until the first film
+     (2026-09-18), and the poster then 404'd here while it would load live. */
+  for (const rel of cfg.extraPages || []) {
+    const src = path.join(APP, ...rel.split("/"));
+    if (!fs.existsSync(src)) die("extraPages names " + rel + ", which is not in the app; the replica would not be the deployed layout");
+    const dst = path.join(out, ...rel.split("/"));
+    fs.mkdirSync(path.dirname(dst), { recursive: true });
+    fs.copyFileSync(src, dst);
+  }
   for (const m of MODULES) {
     const src = path.join(EH, m);
     if (!fs.existsSync(src)) die("module " + m + " not found; the replica would not be the deployed layout");
@@ -139,7 +150,8 @@ function buildReplica() {
 async function serveReplica() {
   const { dir, sub } = buildReplica();
   const TYPES = { ".html": "text/html; charset=utf-8", ".js": "text/javascript; charset=utf-8", ".css": "text/css; charset=utf-8",
-    ".png": "image/png", ".svg": "image/svg+xml", ".json": "application/json", ".woff2": "font/woff2", ".mp3": "audio/mpeg" };
+    ".png": "image/png", ".svg": "image/svg+xml", ".json": "application/json", ".woff2": "font/woff2", ".mp3": "audio/mpeg",
+    ".jpg": "image/jpeg", ".mp4": "video/mp4", ".vtt": "text/vtt; charset=utf-8" };
   const server = http.createServer((req, res) => {
     const u = decodeURIComponent(new URL(req.url, "http://x").pathname);
     const f = path.join(dir, u.endsWith("/") ? u + "index.html" : u);

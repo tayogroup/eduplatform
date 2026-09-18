@@ -65,7 +65,7 @@ shell):
 | 5 Bugs and Debugging | 15 | 6 | runs buggy programs, finds the block, fixes it, runs again |
 | 6 Data Detectives | 16 | 4 | asks the right app; fills a form; records a week of weather; reads the table; the sorting machine |
 | 7 Networks and the Internet | 16 | 4 | wires and un-wires a network; sends things across it; spots what is joined to the internet; switches it off |
-| 8 Computers Everywhere | 17 | 6 | six programs on one tablet; picks the program for a job; inputs and outputs; hidden computers; robots |
+| 8 Computers Everywhere | 17 | 6 | six programs on one tablet; picks the program for a job; inputs and outputs; hidden computers; robots; and a three-minute animated lecture film in its Unit lecture step ([lecture-video/README.md](lecture-video/README.md)) |
 
 Eighteen step kinds, one renderer each in `lib/computing.js` — the kit README
 has the table. The computing-shaped ones are the machines that only do what

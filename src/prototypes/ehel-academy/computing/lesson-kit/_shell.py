@@ -154,6 +154,18 @@ def expand(n, lesson, code_text, finder, cfg):
                {"parts": lecture},
                "That is the whole lesson in " + str(len(lecture)) + " parts. Now do it yourself.")
 
+    # A lesson MAY carry a film (LESSON["video"]), exactly as in the Science
+    # kit. Almost none do, so the key is added only where one exists: a lesson
+    # without it serialises exactly the data it always did, and lecture() in
+    # computing.js keeps its old behaviour. The film goes INTO this step, which
+    # every lesson already has, so no step moves and a saved record still
+    # lines up with the dots.
+    film = lesson.get("video")
+    if film:
+        lec["data"]["video"] = film
+        lec["ask"] = "Watch the lesson. Then go back through it a part at a time below."
+        lec["done"] = "You have watched the whole lesson. Now do it yourself."
+
     wds = step("words", "Computing words", "\U0001F524", "Computing words", codes,
                "Tap each word to hear what it means and how to use it. Then show you know them.",
                explain(

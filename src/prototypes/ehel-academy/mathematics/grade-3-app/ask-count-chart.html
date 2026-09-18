@@ -1082,6 +1082,7 @@
       <div class="stage">
         <div class="stickers" id="stickers"></div>
       <div id="selfcheck"></div>
+      <div id="vocab"></div>
         <p class="fb" id="fb11" role="status" aria-live="polite"></p>
         <div class="bigbtns"><button type="button" class="big small teal" id="restart">Play again</button></div>
       </div>
@@ -2863,6 +2864,24 @@
     });
   })();
 
+
+  /* ==== ehel-g3-vocabulary: Math Words for this lesson ====
+     Same insertion pattern as add-self-check.py: an empty host div on
+     the sticker-shelf slide, populated by this script, never scored. */
+  (function () {
+    const VOCAB = [{ w: "tally chart", d: "A way of counting things as they happen, using one mark for each one and a mark laid across every fifth one." }, { w: "pictogram", d: "A chart that uses pictures to show amounts, where a key says how much each picture is worth." }, { w: "bar chart", d: "A chart that shows amounts as bars - the taller the bar, the bigger the amount." }, { w: "Venn diagram", d: "Two overlapping circles that sort things by which of two properties they have - the middle holds things with both." }, { w: "Carroll diagram", d: "A grid that sorts things into boxes using two yes/no questions, one across the top and one down the side." }, { w: "key", d: "The part of a pictogram that says how much one picture stands for." }];
+    const host = document.getElementById("vocab");
+    if (!host) return;
+    const esc = (t) => String(t).replace(/&/g, "&amp;").replace(/</g, "&lt;")
+      .replace(/"/g, "&quot;");
+    host.innerHTML = '<p class="vc-head">Math Words</p>'
+      + '<p class="vc-sub">Words from this lesson, explained in one line each.</p>'
+      + '<dl class="vc-list">'
+      + VOCAB.map((it) => '<div class="vc-row"><dt>' + esc(it.w) + '</dt><dd>'
+        + esc(it.d) + "</dd></div>").join("")
+      + "</dl>";
+  })();
+
   show(0, false);
   quiet -= 1;   /* the first draw is over: say() speaks from here on */
 
@@ -3727,4 +3746,13 @@
 </style>
 <style>/* ehel-g3-story - see add-story-problems.py */
   #fbWpG3 { margin-top: 4px; }
+</style>
+<style>/* ehel-g3-vocabulary - see add-vocabulary.py */
+  #vocab { margin: 18px auto 0; max-width: 46ch; text-align: left; }
+  .vc-head { font-size: 17px; font-weight: 700; margin: 0 0 4px; }
+  .vc-sub { font-size: 13.5px; color: var(--muted, #666); margin: 0 0 12px; line-height: 1.5; }
+  .vc-list { margin: 0; }
+  .vc-row { padding: 9px 0; border-top: 1px solid var(--line, #ddd); }
+  .vc-row dt { margin: 0 0 3px; font-size: 15px; font-weight: 700; }
+  .vc-row dd { margin: 0; font-size: 14px; line-height: 1.45; color: var(--ink, #222); }
 </style>

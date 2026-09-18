@@ -82,16 +82,22 @@ A word card's picture comes from the shared map (`shell/subjects/word-pictures.j
 
 ## Status (2026-09-18)
 
-- **Built:**
-  - Letters & Sounds: 12 lessons and Bridge A and B.
-  - Starter: all 10 lessons.
-  - Level 1: all 12 lessons, including the pilot (Lesson 8).
-  - Every page was loaded and finished its set-up. The pilot, a Starter lesson and a two-document Level 1 lesson were driven at phone size.
-- **Written by agents from a brief:** Starter and Level 1. Each lesson passes `--check`, and an audit covering the word plan, length bands, item counts, UK spelling and typed-answer length. Starter 2 and 9 and Level 1 Lessons 3 and 11 were also read through.
-- **In preparation:** Levels 2, 3 and 4. Level 5 is an outline only.
+- **Built, all 72 lessons:**
+  - Letters & Sounds: 12 lessons, plus Bridge A and B
+  - Starter: 10 lessons
+  - Levels 1–4: 12 lessons each
+  - Level 5 is an outline only; the owner made it optional and later.
+- **How they were written:** agents wrote them from one brief (`author_brief.md`, kept with the session's scratch files), the pilot and a source pack per lesson.
+- **How they were checked:** every lesson passes `--check`. It also passes an audit: the reconciled word plan, the level's length bands, item counts, UK spelling and typed-answer length. The audit was mutation-tested and caught 13 of 13 planted faults.
+- **Review:**
+  - A reviewer read every question in each level: two right answers, wrong keys, contradictions, level, register. Its fixes are separate commits.
+  - Starter 2 and 9, Level 1 Lessons 3 and 11, and Level 3 Lesson 1 were also read through by the session that built the kit.
+- **Browser:** every page loads and finishes its set-up.
+- **Pictures:** audited per level (see Pictures above).
 - **Not done:**
   - narration, including re-recording the Letters & Sounds lectures (their text was corrected)
   - the shared platform wiring (launch parameters, progress to Moodle, class controls, Wehel)
   - new course keys, mapping old unit ids to new lesson ids, the catalogue
+  - the Section 5 books, which the owner will supply
   - deploy and routing
 - The live course is untouched.

@@ -577,7 +577,7 @@ def build_hub(level, built):
     weeks = sched["weeks"]
     facts = ["%s" % level["cefr"], "%d lessons" % sum(len(p["lessons"]) for p in level["parts"])]
     if isinstance(weeks, list):
-        facts.append("weeks %d–%d of the program" % tuple(weeks))
+        facts.append("weeks %d–%d of the programme" % tuple(weeks))
     else:
         facts.append(weeks)
     if sched.get("daysPerLesson"):
@@ -699,7 +699,8 @@ def main():
         print("  built %s · %s · %s" % (level["id"], lesson_label(les), lesson_file(les)))
     for lid in ORDER:
         build_hub(LEVELS[lid], built.get(lid, []))
-    build_home({k: len(v) for k, v in built.items()})
+    # numbered lessons only: the Letters & Sounds bridges are extra, not "of 12"
+    build_home({k: sum(1 for b in v if isinstance(b["n"], int)) for k, v in built.items()})
     print("wrote %s" % os.path.relpath(OUT, ACADEMY))
 
 

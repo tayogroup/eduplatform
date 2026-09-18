@@ -51,22 +51,61 @@ one 📚 = 2 books, row shows 4 symbols"), so the glyphs printed on the page are
 key, not the quantity. And count code points, not `.length` — an emoji is a
 surrogate pair, so seven buttons measure as fourteen.
 
-### The Cambridge Mathematics framework, and the 0096 hole
+### The Cambridge Mathematics frameworks: 0096 and 0862 are both here
 
-`cambridge-mathematics-0862.json` is extracted from Cambridge's published PDF by
-`extract-cambridge-mathematics-framework.py` and covers Stages 7-9. Stages 7-8
-units declare 0862, so those match.
+Both are extracted from Cambridge's published PDFs by
+`extract-cambridge-mathematics-framework.py`, and `check:math-cambridge` loads
+every `src/curriculum/cambridge-mathematics-*.json` it finds:
 
-**Stages 1-6 declare 0096 and that framework is not published here.** The only
-Primary maths framework available is 0845, a different and superseded edition;
-extracting it and labelling it 0096 would assert an alignment nobody checked. So
-Stages 1-6 have no framework, and `check:math-cambridge` says so rather than
-passing quietly.
+- **`cambridge-mathematics-0096.json`**: Primary, Stages 1-6, 288 objectives,
+  from the 2020 PDF. It has been here since 2026-09-07 (`519f4cfa83`), and its
+  Stage 4 agreed code for code with a hand extraction (46 of 46). Two gaps in it
+  are real curriculum facts, not extraction damage: Nm (Money) stops after
+  Stage 3, and Sp (Probability) starts at Stage 2.
+- **`cambridge-mathematics-0862.json`**: Lower Secondary, Stages 7-9.
 
-**All 133 units map zero objectives.** The gate records that as a ceiling that
-may fall but not rise, checks stage↔code agreement (1-6 Primary, 7-8 Lower
-Secondary), and validates any code that does appear — so the first mapping
-authored is checked the moment it lands.
+**This section called 0096 "the hole" until 2026-09-18, eleven days after the
+file landed.** Before 2026-09-07 that was true, and the reason still holds. The
+only Primary maths document then was 0845, a different and superseded edition,
+and labelling it 0096 would have asserted an alignment nobody checked. Nobody
+updated the note when 0096 arrived. The Grade 4 lecture-film session then took
+it at its word and recorded its objective wording as unverifiable, when all ten
+texts matched 0096 verbatim.
+
+**What the gate checks.** For each shell-course unit (`grade-N/data/units/`):
+
+- that its stage matches its folder;
+- that the framework matches the stage (0096 at 1-6, 0862 at 7-8);
+- that every claimed objective code exists in that framework at that stage;
+- that the objective TEXT stored beside each code still matches the framework's.
+
+The standalone lesson apps (`grade-N-app/`) make their own objective claims, and
+this gate does not read them.
+
+It holds the count of units with no mapping to `MAXIMUM_UNMAPPED`, a ceiling
+that may fall but not rise. **Read the ceiling in the gate, not here.** This
+section used to say "all 133 units map zero objectives", and that was stale 110
+minutes after it was written on 2026-08-12. The Stage 7-8 mapping landed that
+night and moved the ceiling to 101, and nothing updated this line. At HEAD on
+2026-09-18:
+
+- **Stages 7-8** carry a mapping against 0862. It is a proposal marked
+  `reviewed: false` that needs curriculum sign-off before it is shown as
+  alignment to anyone.
+- **Stages 1-6** carry none. That is now authoring work, not a missing document.
+
+**Do not build a gate that scores coverage by vocabulary.** It was built, and
+deleted in `519f4cfa83` because it failed its control:
+
+- It passed two objectives that were genuinely absent, because their other
+  words appear elsewhere in the course.
+- Tightened until it caught one of them, it raised 7 false alarms on good
+  content.
+
+A lesson teaches in child-facing words. The course covers 4Ss.03 with "what is
+the same about the books, and what is different", which shares no distinctive
+word with the objective's "similarities and variations". The full account is in
+`grade-4-app/README.md`.
 
 Two extraction traps worth keeping:
 

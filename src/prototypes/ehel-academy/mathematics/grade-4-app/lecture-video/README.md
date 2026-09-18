@@ -18,13 +18,17 @@ node $T --app ... --slug ...                                                    
 
 **State, 2026-09-18 (after the fix pass below):** storyboard at 13 scenes, 38
 beats, 4,532 characters, all **10** of the lesson's objectives covered by a
-teaching scene. **No ElevenLabs narration has ever been bought for this film.**
-A render DOES exist beside this file — 5:14, made at 01:46 with `--draft`, the
-free Windows SAPI voice — and it is now stale: it predates every fix below and
-still says the two false sentences. It is a draft, not the film. Do not deploy
-it, and note that `deploy.mjs` reads the working tree, so a Grade 4 Maths
-deploy from a checkout holding it WOULD ship it: `app.config.json` already
-lists all three files and the page already carries the player.
+teaching scene. **No ElevenLabs narration has ever been bought for this film,
+and the lesson page does not show one.** A 5:14 `--draft` render (the free
+Windows SAPI voice, made at 01:46) was wired into the page, and it was pulled
+the same day. It predated every fix below and still said the two false
+sentences, and because `deploy.mjs` reads the working tree, the next Grade 4
+Maths deploy from this checkout would have shipped it. None of it was ever
+committed or deployed. The render and the wiring were moved, not deleted, to
+`.cache/ehel-lecture-draft-renders/maths-g4-shape-and-measures/`. That folder
+is gitignored and exists only on the machine that made them, and the wiring is
+there as `page-wiring.patch`. The wiring goes back only once a real film exists;
+see "How the film reaches the page".
 
 ## Why this could not be "run the Science tool against a different app"
 
@@ -137,10 +141,48 @@ pre-wiring state, stripping real, deployed functionality. That run was not
 committed; `git checkout --` restored all eight files before anything else
 was touched.
 
-So the film is wired in as a plain `<video controls playsinline preload
+**None of this wiring is in place now (2026-09-18).** It pointed at the stale
+`--draft` render, so it was removed from every tracked file it had touched. It
+goes back only after a real render, and that takes three edits:
+
+- **`shape-extra.css`**: the `.lecture-film` rules below. `build-lessons.py`
+  inlines `<css>-extra.css` into the page's `<style>`, so this is the real source
+  of the CSS half, and that half DOES survive a rebuild. It is shared, like
+  `shape-body.html` below: `LESSONS` gives both `shape` and `where` the `shape`
+  CSS, so the rules also reach `where-things-are.html`. They do nothing there,
+  because that page has no `.lecture-film`. The first account, below, never
+  mentioned this file.
+- **`shape-and-measures.html`**: the same rules, plus the block below. The block
+  goes directly after the hero `</header>`, above the deck.
+- **`app.config.json :: extraPages`**: add `lecture-video/shape-and-measures.mp4`,
+  `.vtt` and `.jpg` after `lesson-search.json`.
+
+```html
+<div class="lecture-film">
+  <video controls playsinline preload="metadata" poster="lecture-video/shape-and-measures.jpg" src="lecture-video/shape-and-measures.mp4">
+    <track kind="captions" srclang="en" label="English" src="lecture-video/shape-and-measures.vtt">
+  </video>
+  <p class="lec-note">Watch the lesson, then go through it a part at a time below.</p>
+</div>
+```
+
+```css
+.lecture-film { margin: 0 0 16px; }
+.lecture-film video { width: 100%; display: block; border-radius: 20px; background: #000;
+  box-shadow: var(--shadow); aspect-ratio: 16 / 9; }
+.lecture-film .lec-note { margin: 8px 2px 0; font-size: 13px; color: var(--muted); }
+```
+
+**Watch for this before re-wiring: `--draft` writes the same three filenames as
+a real render.** Once the wiring is back, a free draft run puts a robot-voiced
+film straight into what a deploy sends. Wire only after the real render, and
+play the file before deploying it.
+
+So the film was first wired in as a plain `<video controls playsinline preload
 ="metadata">` block with a `<track kind="captions">`, sitting above the deck,
 never inside a step — no watched state, no "I heard it all" gating, just a
-player. It was added in **two places that must be kept in sync by hand**:
+player. That first account follows. Its traps still apply, and it is where the
+places that must be kept in sync by hand are explained:
 
 - `c-shape-body.html` — the gitignored, disposable intermediate. Editing it
   directly was tried first and reverted (`python compose-lessons.py`
@@ -155,15 +197,14 @@ player. It was added in **two places that must be kept in sync by hand**:
   properly needs `compose-lessons.py` taught to gate the block by lesson key,
   which is a real change to a shared tool and was out of scope for adding one
   film. Flagged, not done.
-- `shape-and-measures.html` (the committed, deployable output) was hand-
-  patched directly with the identical markup and CSS, so the live artifact
-  and the source agree even though the intermediate build step cannot
-  currently reproduce that agreement on its own. **A future full rebuild of
+- `shape-and-measures.html` (the tracked, deployable output) was hand-
+  patched directly with the identical markup and CSS. That patch was never
+  committed and never deployed, and it has been removed (see above). **A future full rebuild of
   this lesson (compose → build → wire) will silently drop the video block**
   until `shape-body.html`/`compose-lessons.py` are updated as above — check
   for the `<div class="lecture-film">` block after any such rebuild.
 
-`app.config.json :: extraPages` lists the three film files so a deploy
+`app.config.json :: extraPages` must list the three film files so a deploy
 carries them, mirroring Science's gate — but **Maths' `build-lessons.py` has
 no equivalent refusal** for a lesson naming a film that is not on disk and
 listed (Science's does, in `lesson-kit/build-lessons.py`). Nothing here
@@ -253,4 +294,5 @@ about three minutes each. That is an owner's call, not taken here.
 Not done, and not requested. Once narrated and rendered, the three files
 belong in `Ehel Primary/app/mathematics/grade-4-lessons/lecture-video/`
 alongside the lesson, via the same `lesson-app-tools/deploy.mjs` path Science
-uses — no deploy-tooling change needed, `extraPages` already lists them.
+uses. No deploy-tooling change is needed, but `extraPages` has to list them
+again first (see "How the film reaches the page").

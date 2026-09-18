@@ -568,7 +568,7 @@ learned is below, and arrives when you are actually working in that area.
 | Science | `…/science/CLAUDE.md` | answer keys vs the booklet; the Cambridge objective gate; reviewed scripts; narration; the unit lecture films and the tool that renders them |
 | Computing | `…/computing/CLAUDE.md` | booklet answer keys; Stages 1-4 deck-only; reviewed scripts; narration; the word-picture map |
 | Global Perspectives | `…/global-perspectives/CLAUDE.md` | the two pack shapes; the unauthored Stages; assigned objective codes; reviewed scripts; narration; which subjects' clips git actually holds; the measured CDN cache-control table |
-| Mathematics | `…/mathematics/CLAUDE.md` | why `build:math` needs `--force`; answers checked by arithmetic; the 0096 framework hole |
+| Mathematics | `…/mathematics/CLAUDE.md` | why `build:math` needs `--force`; answers checked by arithmetic; the 0096 and 0862 frameworks and what `check:math-cambridge` does and does not prove |
 | Intensive English | `…/intensive-english/CLAUDE.md` | both levels on Cambridge 0057, live; the standalone lesson build and the ~17 pipeline steps `build-lessons.py` does NOT run; the Interchange enhancement pass (connected speech, survival lexis, `functions`, the quiz's second answer mode); why the course ENDS at B1 and what single file blocks Level 3 |
 | Moodle plugins | `src/moodle/CLAUDE.md` | the live group board, activity ring, hand-raise and live-class flag; the classroom chat and its screenshot; the v331 poisoning; endpoint CORS contracts; the md5-is-the-only-proof deploy loop; the PHP gate and the p→q corruption |
 | Portal pages | `src/portal/CLAUDE.md` | the portal deploy channel and the route allowlist gate |

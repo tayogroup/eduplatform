@@ -1,7 +1,16 @@
 // Build Ehel Academy Mathematics runtime packages for every stage from the
 // extracted content model. Generalized from build-ehel-grade2-math-runtime.js;
 // grade 2 remains the untouched reference implementation.
-// Usage: node tools/build-ehel-math-runtime.js [grade ...]   (default: 1 3 4 5 6 7 8)
+// Usage: node tools/build-ehel-math-runtime.js [grade ...]   (default: 1 3 4 6 7 8)
+//
+// Grade 5 is deliberately excluded from the default list, 2026-09-18. Its
+// shell course is archived at mathematics/_archive-grade-5-shell-course/ (see
+// that directory's README) - the routed, live Grade 5 build is the standalone
+// app at mathematics/grade-5-app/. Passing "5" explicitly still writes a FRESH
+// build to mathematics/grade-5/ from the content model alone, the same way it
+// always has - that is a new, unrepaired copy sitting next to the archive, not
+// a rebuild of the archived one. Move the archive back first if that is not
+// what is wanted.
 
 const fs = require("fs");
 const path = require("path");
@@ -30,7 +39,7 @@ const argv = process.argv.slice(2);
 const FORCE = argv.includes("--force");
 const grades = argv.filter((value) => /^\d+$/.test(value)).length
   ? argv.filter((value) => /^\d+$/.test(value)).map(Number)
-  : [1, 3, 4, 5, 6, 7, 8];
+  : [1, 3, 4, 6, 7, 8];
 
 // Roughly twenty repair-ehel-math-* tools edit the built units IN PLACE — answer
 // ordinals, truncated explainers, duplicate titles, exploration pairing. None of

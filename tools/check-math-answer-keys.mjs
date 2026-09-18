@@ -29,7 +29,17 @@ const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
 const MATH = path.join(ROOT, "src", "prototypes", "ehel-academy", "mathematics");
 // Coverage may not fall. A pattern that stops matching removes questions from
 // the comparison silently, and the gate would still print a tick.
-const MINIMUM_CHECKED = 109;
+//
+// Dropped from 109 to 85 on 2026-09-18, not a broken pattern: Grade 5's shell
+// course (mathematics/grade-5/data/units/, 18 units) was archived to
+// mathematics/_archive-grade-5-shell-course/ that day - the owner's decision
+// to keep the routed 6-lesson app as Grade 5's one live build and stop the
+// unrouted shell course looking like unshipped work. This loop skips any
+// grade-N/data/units directory that no longer exists (line below), so the 24
+// missing questions are exactly Grade 5's, confirmed against
+// check:math-cambridge's unit count over the same commit (133 -> 115, also
+// exactly 18). No other grade's questions moved.
+const MINIMUM_CHECKED = 85;
 
 // A bare "/" is a fraction here far more often than a division sign ("1/5 of
 // 25"), so it is never treated as an operator.

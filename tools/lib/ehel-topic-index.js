@@ -328,9 +328,27 @@ function readGamesPack(dataDir, unitNumber) {
   try { return JSON.parse(fs.readFileSync(file, "utf8")); } catch { return null; }
 }
 
+// Mathematics Grade 5's own shell course (course-manifest.json, units/,
+// grade-capstone.json) was archived 2026-09-18 to
+// mathematics/_archive-grade-5-shell-course/data/ - the routed, live Grade 5
+// build is the standalone app, and nothing reads that content as a course
+// page any more. But this grade's topic-index.json and tutor-lessons/ stay
+// live at the normal grade-5/data/ path (shell/get-help.js's cross-grade
+// tutoring topic search reads them regardless of which build a grade's own
+// learners are routed to), so this index still needs to be provably derived
+// from something - hence a duplicate course-manifest.json in the archive
+// alongside the units it always pointed at. Without this override the index
+// could still be READ but never RE-VERIFIED, which is a worse failure mode
+// than a visible one: a stale index would pass silently forever.
+const CONTENT_DIR_OVERRIDE = {
+  "mathematics:5": (ehelRoot) =>
+    path.join(ehelRoot, "mathematics", "_archive-grade-5-shell-course", "data"),
+};
+
 function buildGradeIndex(ehelRoot, subject, stage) {
   const cfg = SUBJECTS[subject];
-  const dataDir = path.join(ehelRoot, subject, cfg.dir(stage), "data");
+  const override = CONTENT_DIR_OVERRIDE[`${subject}:${stage}`];
+  const dataDir = override ? override(ehelRoot) : path.join(ehelRoot, subject, cfg.dir(stage), "data");
   const manifestPath = path.join(dataDir, "course-manifest.json");
   if (!fs.existsSync(manifestPath)) return null;
   const manifest = JSON.parse(fs.readFileSync(manifestPath, "utf8"));

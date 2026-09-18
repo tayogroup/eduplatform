@@ -88,6 +88,9 @@ const require = createRequire(import.meta.url);
 // The media manifest's shape is owned by tools/lib/upload-manifest.js. Reading
 // it directly here is what broke this check when the format gained hashes.
 const { readManifestPaths } = require("./lib/upload-manifest.js");
+// Intensive English's level folders, discovered from their manifests: Phonics
+// is -1 in `level-phonics`, a name no `level-\d+` pattern can match.
+const { levels: intensiveLevels } = require("./lib/ehel-intensive-levels.js");
 // The same definition the uploader follows, so this cannot grade it against a
 // different rule. See lib/content-tier.js.
 const { isAuthoringArtefact } = require("./lib/content-tier.js");
@@ -457,8 +460,17 @@ for (const subject of subjects) {
   // sitting in the content manifest. A check that reports "0 in sync, 0 stale"
   // and calls it agreement is worse than one that is absent, because it is
   // counted as covered.
-  for (const gradeDir of fs.readdirSync(root).filter((n) => /^(?:grade|level)-\d+$/.test(n))) {
-    const g = Number(gradeDir.split("-")[1]);
+  //
+  // The same failure came back for one level on 2026-09-18: Phonics is level -1
+  // in `level-phonics`, which no number pattern matches, so its 22 content files
+  // were compared nowhere and the run printed "0 never uploaded" over a folder
+  // it never opened — the day that folder was first uploaded. Intensive
+  // English's levels now come from the shared module the uploader uses, so the
+  // two walk the same folders by construction.
+  const stageDirs = subject === "intensive-english"
+    ? intensiveLevels(root).map((level) => [level.dir, level.number])
+    : fs.readdirSync(root).filter((n) => /^(?:grade|level)-\d+$/.test(n)).map((n) => [n, Number(n.split("-")[1])]);
+  for (const [gradeDir, g] of stageDirs) {
     const dataDir = path.join(root, gradeDir, "data");
     if (!fs.existsSync(dataDir)) continue;
     const walk = (dir, rel) => {

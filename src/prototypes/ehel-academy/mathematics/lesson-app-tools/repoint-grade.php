@@ -134,11 +134,19 @@ $SUBJECTS = [
     // Intro (grade 0) was added later the same day and the table grew DOWNWARDS
     // instead. It is Pre-A1, below Cambridge 0057 Stage 1, and claims no 0057
     // objective -- 0057 has no stage under 1 and all of Stage 1 is already
-    // placed in Level 1. So this row is the floor exactly as 3 is the ceiling,
-    // and the table is now complete in both directions.
+    // placed in Level 1.
+    //
+    // Phonics (grade -1) went below Intro on 2026-09-18, for adults who cannot
+    // yet read the Latin alphabet, so Intro is no longer the floor: -1 is. Its
+    // course key is `lph`, NOT `l-1` -- config.courseKey in the shell and
+    // generate-ehel-catalog.js both write ehel-intensive-eng-lph, because
+    // `l-1` reads as Level 1 one row above `l01` in an operator's course list.
+    // `--grade -1` reaches this row: the parser casts with (int), and PHP keys
+    // an array by a negative int as readily as by any other.
     'intensive-english' => [
         'entry' => RP_HOST . 'Ehel%20Primary/app/intensive-english/index.html',
         'targets' => [
+            -1 => ['ehel-intensive-eng-lph', RP_HOST . 'Ehel%20Primary/app/intensive-english/level-phonics-v2/index.html'],
             0 => ['ehel-intensive-eng-l00', RP_HOST . 'Ehel%20Primary/app/intensive-english/level-0-v2/index.html'],
             1 => ['ehel-intensive-eng-l01', RP_HOST . 'Ehel%20Primary/app/intensive-english/level-1-v2/index.html'],
             2 => ['ehel-intensive-eng-l02', RP_HOST . 'Ehel%20Primary/app/intensive-english/level-2-v2/index.html'],

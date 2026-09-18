@@ -448,6 +448,9 @@
       <div id="lsout" class="lsearch-out" role="status" aria-live="polite"></div>
     </div>
   <nav class="steps-nav" aria-label="Steps in this lesson">
+    <a href="#opener-about"><b>🔎</b> What this lesson is about</a>
+    <a href="#opener-lecture"><b>🎥</b> Unit lecture</a>
+    <a href="#opener-words"><b>🗣️</b> Math words</a>
     <a href="#s21"><b>21</b> Rounding</a>
     <a href="#s22"><b>22</b> Below zero</a>
     <a href="#s23"><b>23</b> Decimals</a>
@@ -457,6 +460,40 @@
     <a href="#s27"><b>27</b> Part to part, part to whole</a>
     <a href="#selfcheck"><b>&#10003;</b> What I can do</a>
   </nav>
+  <!-- ehel-g5-lesson-opener: what this lesson is about - static, no finish() exists to
+       gate a button on, so nothing here needs to be clicked. -->
+  <section class="step" id="opener-about">
+    <div class="step-head"><span class="step-num">About</span><h2>What this lesson is about</h2></div>
+    <p class="intro">By the end of this lesson you will be able to&hellip;</p>
+    <ul class="opener-list">
+      <li>Explain the values of repeated digits in a number, including decimals.</li>
+      <li>Decompose numbers into their place value parts, including decimals.</li>
+      <li>Multiply and divide whole numbers by 10, 100 and 1000.</li>
+      <li>Position positive and negative numbers around zero.</li>
+      <li>Round numbers with one decimal place to the nearest whole number.</li>
+    </ul>
+  </section>
+
+  <!-- ehel-g5-lesson-opener: unit lecture - no video and no voice exist on this build,
+       so this is a short static walkthrough in named parts rather than
+       Grade 4's narrated click-through. -->
+  <section class="step" id="opener-lecture">
+    <div class="step-head"><span class="step-num">Lecture</span><h2>Unit lecture</h2></div>
+    <p class="intro">The whole lesson, in three parts.</p>
+      <div class="opener-part"><p class="opener-phase">Part 1 of 3</p><h3>Place value with decimals</h3><p>Place value carries on past the decimal point - the first digit after it is tenths, the next is hundredths, each worth ten times less than the one before.</p></div>
+      <div class="opener-part"><p class="opener-phase">Part 2 of 3</p><h3>Negative numbers and rounding</h3><p>Negative numbers sit to the left of zero on a number line. Rounding a decimal means finding which whole number, or which tenth, it is nearer to.</p></div>
+      <div class="opener-part"><p class="opener-phase">Part 3 of 3</p><h3>Fractions, percentages and ratio</h3><p>A fraction, a percentage and a ratio can all describe the same relationship between two amounts, just written in different ways.</p></div>
+  </section>
+
+  <!-- ehel-g5-lesson-opener: math words - the one opener step built fully interactive,
+       matching Grade 4's tap-card-then-quiz shape, minus say()/finish()
+       which do not exist on this build. -->
+  <section class="step" id="opener-words">
+    <div class="step-head"><span class="step-num">Words</span><h2>Math words</h2></div>
+    <p class="intro">Tap each word to see what it means and how to use it. Then show you know them.</p>
+    <div id="openerWords"></div>
+  </section>
+
   <!-- STEP 21 -->
   <section class="step" id="s21" data-twm="critiquing improving">
     <div class="step-head"><span class="step-num">Step 21</span><h2>Rounding</h2></div>
@@ -1633,4 +1670,125 @@
   .tiers .tier b { display: block; font-size: 12px; letter-spacing: .05em;
     text-transform: uppercase; color: var(--teal); margin: 0 0 3px; }
   .tiers .tier p { margin: 0; font-size: 15px; line-height: 1.5; color: var(--ink); }
+</style>
+
+<script>
+/* ehel-g5-lesson-opener: Math words for past-the-whole-numbers - a tap-card grid, a reveal panel, then a closing
+   matching quiz once every word has been opened. Own local esc() AND own
+   local shuffle(): every existing <script> on this page is its own IIFE
+   (checked directly - this file alone has four, none sharing scope with
+   any other), so shuffle(), though it exists elsewhere on the page, is
+   not reachable from here any more than esc() is - confirmed the hard
+   way, by a live ReferenceError the first time this ran in a browser.
+   No say(), no finish(): this build has neither, and the section being
+   scrolled into view is what marks it seen. */
+(function () {
+  const WORDS = [{ w: "decimal", pic: "🔢", meaning: "A number written with a decimal point, such as 3.7, where the digits after the point are tenths, hundredths and so on.", uses: ["3.7 is a decimal."] }, { w: "negative number", pic: "❄️", meaning: "A number below zero, written with a minus sign, such as -5.", uses: ["The temperature dropped to a negative number."] }, { w: "percentage", pic: "💯", meaning: "A number out of 100, written with a % sign.", uses: ["25% means 25 out of every 100."] }, { w: "fraction", pic: "🍕", meaning: "A part of a whole, written as one number over another.", uses: ["3/4 is a fraction."] }, { w: "ratio", pic: "⚖️", meaning: "A way of comparing two amounts, showing how many times one contains the other.", uses: ["The ratio of red to blue counters is 3 to 2."] }];
+  const host = document.getElementById("openerWords");
+  if (!host) return;
+  const esc = (t) => String(t).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/"/g, "&quot;");
+  const shuffle = (arr) => { const a = arr.slice(); for (let i = a.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [a[i], a[j]] = [a[j], a[i]]; } return a; };
+  const heard = new Set();
+  let open = -1;
+  function paintGrid() {
+    host.innerHTML = '<div class="ow-grid" id="owGrid">' + WORDS.map((w, k) =>
+      '<button type="button" class="ow-card' + (heard.has(k) ? ' heard' : '') + '" data-k="' + k + '">' +
+      '<span class="ow-pic" aria-hidden="true">' + w.pic + '</span>' + esc(w.w) + '</button>').join('') + '</div>' +
+      '<div class="ow-panel" id="owPanel"' + (open < 0 ? ' hidden' : '') + '></div>' +
+      '<div class="ow-go" id="owGo" style="' + (heard.size === WORDS.length ? '' : 'display:none') + '">' +
+      '<button type="button" class="ow-btn" id="owQuizGo">Show I know them &#9654;</button></div>';
+    if (open >= 0) paintPanel();
+    document.getElementById("owGrid").addEventListener("click", (e) => {
+      const b = e.target.closest(".ow-card"); if (!b) return;
+      open = Number(b.dataset.k); heard.add(open);
+      paintGrid();
+    });
+    if (heard.size === WORDS.length) {
+      const goBtn = document.getElementById("owQuizGo");
+      if (goBtn) goBtn.addEventListener("click", () => quiz());
+    }
+  }
+  function paintPanel() {
+    const w = WORDS[open];
+    const p = document.getElementById("owPanel");
+    p.hidden = false;
+    p.innerHTML = '<div class="ow-panel-head"><span class="ow-panel-pic" aria-hidden="true">' + w.pic + '</span>' +
+      '<div><p class="ow-panel-word">' + esc(w.w) + '</p><p class="ow-panel-meaning">' + esc(w.meaning) + '</p></div></div>' +
+      '<p class="ow-uses-h">Use it</p><ul class="ow-uses">' + w.uses.map((u) => '<li>' + esc(u) + '</li>').join('') + '</ul>';
+  }
+  function quiz() {
+    const order = shuffle(WORDS.map((_, k) => k));
+    let i = 0, right = 0, lock = false;
+    function draw() {
+      lock = false;
+      const k = order[i], w = WORDS[k];
+      const others = shuffle(WORDS.map((_, j) => j).filter((j) => j !== k)).slice(0, Math.min(2, WORDS.length - 1));
+      const opts = shuffle([k].concat(others));
+      host.innerHTML = '<p class="intro">Which word means: <b>' + esc(w.meaning) + '</b></p>' +
+        '<div class="ow-quiz-opts" id="owChoices">' + opts.map((j) =>
+          '<button type="button" class="ow-quiz-btn" data-ok="' + (j === k ? 1 : 0) + '">' +
+          '<span class="ow-quiz-pic" aria-hidden="true">' + WORDS[j].pic + '</span>' + esc(WORDS[j].w) + '</button>').join('') + '</div>' +
+        '<p class="ow-fb" id="owFb"></p>';
+      document.getElementById("owChoices").addEventListener("click", (e) => {
+        const b = e.target.closest(".ow-quiz-btn"); if (!b || lock) return;
+        lock = true;
+        const ok = b.dataset.ok === "1";
+        document.getElementById("owChoices").querySelectorAll(".ow-quiz-btn").forEach((c) => {
+          c.disabled = true; if (c.dataset.ok === "1") c.classList.add("right");
+        });
+        if (!ok) b.classList.add("wrong"); else right++;
+        const fb = document.getElementById("owFb");
+        fb.className = "ow-fb" + (ok ? " good" : "");
+        fb.textContent = ok ? "That's it! " + w.w + "." : "That word is " + w.w + ". " + w.meaning;
+        i++;
+        setTimeout(() => {
+          if (i >= WORDS.length) {
+            host.innerHTML = '<p class="intro">You know ' + right + ' of ' + WORDS.length + ' math words.</p>';
+          } else draw();
+        }, 2200);
+      });
+    }
+    draw();
+  }
+  paintGrid();
+})();
+</script>
+
+<style>/* ehel-g5-lesson-opener - see add-lesson-opener.py */
+  .opener-list { margin: 10px 0 0; padding-left: 22px; display: flex; flex-direction: column; gap: 9px;
+    font-size: 15.5px; line-height: 1.5; color: var(--ink); }
+  .opener-part { margin-top: 14px; padding-top: 14px; border-top: 1px solid var(--line); }
+  .opener-part:first-of-type { margin-top: 10px; padding-top: 0; border-top: none; }
+  .opener-phase { margin: 0 0 3px; color: var(--teal); font-weight: 700; font-size: 12px;
+    letter-spacing: .08em; text-transform: uppercase; }
+  .opener-part h3 { margin: 0 0 5px; font-size: 17px; }
+  .opener-part p:last-child { margin: 0; font-size: 15.5px; line-height: 1.5; color: var(--ink); }
+  .ow-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(120px, 1fr)); gap: 10px;
+    margin-top: 10px; }
+  .ow-card { display: flex; flex-direction: column; align-items: center; gap: 5px; padding: 12px 8px 10px;
+    border-radius: 14px; border: 2px solid var(--line); background: var(--card); color: var(--ink);
+    font-weight: 700; font-size: 15px; line-height: 1.2; font: inherit; cursor: pointer; }
+  .ow-card .ow-pic { font-size: clamp(34px, 7vw, 46px); line-height: 1.1; }
+  .ow-card.heard { border-color: var(--teal); background: var(--teal-soft); }
+  .ow-panel { margin-top: 12px; padding: 14px 16px; border-radius: 16px; border: 2px solid var(--teal);
+    background: var(--card); text-align: left; }
+  .ow-panel-head { display: flex; align-items: center; gap: 14px; }
+  .ow-panel-pic { font-size: 34px; }
+  .ow-panel-word { margin: 0; font-weight: 700; font-size: 22px; color: var(--ink); }
+  .ow-panel-meaning { margin: 4px 0 0; font-size: 15.5px; line-height: 1.45; color: var(--ink); }
+  .ow-uses-h { margin: 10px 0 3px; color: var(--teal); font-weight: 700; font-size: 11.5px;
+    letter-spacing: .08em; text-transform: uppercase; }
+  .ow-uses { margin: 0; padding-left: 18px; font-size: 14.5px; font-style: italic; color: var(--ink); }
+  .ow-go { margin-top: 12px; }
+  .ow-btn { font: inherit; font-size: 14px; font-weight: 700; padding: 9px 16px; border-radius: 12px;
+    border: 1px solid var(--line); background: var(--card); color: var(--ink); cursor: pointer; }
+  .ow-quiz-opts { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 10px; }
+  .ow-quiz-btn { min-width: 100px; padding: 10px 14px; border-radius: 14px; border: 2px solid var(--line);
+    background: var(--card); color: var(--ink); font-weight: 700; font: inherit; cursor: pointer; }
+  .ow-quiz-btn .ow-quiz-pic { display: block; font-size: 32px; line-height: 1.1; }
+  .ow-quiz-btn.right { background: var(--good-soft); border-color: var(--good); }
+  .ow-quiz-btn.wrong { background: var(--bad-soft); border-color: var(--bad); }
+  .ow-quiz-btn:disabled { cursor: default; }
+  .ow-fb { margin: 10px 0 0; font-size: 14.5px; color: var(--muted); }
+  .ow-fb.good { color: var(--good); font-weight: 700; }
 </style>

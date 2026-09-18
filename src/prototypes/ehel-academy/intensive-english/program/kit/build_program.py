@@ -165,7 +165,9 @@ def narration_items(level, les, d):
         # the way unit 18 is, one way throughout, not sounds then spelled letters
         phs = [int(m.group(1)) for m in (PH_SOURCE.match(s) for s in d.get("sources") or []) if m]
         first_ph = max(phs) if phs else None
-        add("about", d["about"]["text"], phonicsUnit=first_ph)
+        # a lesson's own spoken form needs no sound table: it names no lone sound
+        sp = d["about"].get("speech")
+        add("about", d["about"]["text"], phonicsUnit=None if sp else first_ph, speech=sp)
         for c in d["unitLecture"]["chapters"]:
             m = PH_SOURCE.match(c.get("source") or "")
             add("lecture", " ".join(lines_of(c["text"])), phonicsUnit=int(m.group(1)) if m else None, speech=c.get("speech"))
@@ -823,7 +825,7 @@ def build_hub(level, built):
     body.append('<p class="hub-note">%s</p>' % esc(level["ends"]))
     css = read(os.path.join(OLDLIB, "lesson.css")) + "\n" + read(os.path.join(OLDLIB, "intensive.css")) + "\n" + read(os.path.join(LIB, "program.css"))
     html = HUB % {"title": esc(level["name"]), "css": css, "top": '<div class="pg-top"><a class="back" href="../index.html">&#9664; Intensive English</a></div>', "tabs": tabs_html(level["id"], "../"),
-                  "body": "\n".join(body), "hub": json.dumps({"level": level["id"], "lessons": built})}
+                  "body": "\n".join(body), "hub": json.dumps({"level": level["id"], "lessons": [{k: b[k] for k in ("n", "file", "groups")} for b in built]})}
     folder = os.path.join(OUT, level["id"])
     os.makedirs(folder, exist_ok=True)
     with io.open(os.path.join(folder, "index.html"), "w", encoding="utf-8", newline="\n") as fh:

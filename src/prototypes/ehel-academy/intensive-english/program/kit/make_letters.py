@@ -48,6 +48,7 @@ SOUND = {
     "ou": "ow", "oi": "oy", "oy": "oy", "ear": "ear", "eer": "ear", "air": "air", "are": "air",
 }
 MAP = {2: [2, 3], 3: [4, 5], 4: [6, 7], 5: [8, 9, 10], 7: [11], 8: [12], 9: [13], 10: [14, 18], 11: [15, 16, 17]}
+NUMBER_WORDS = {n: w for n, w in enumerate("zero one two three four five six seven eight nine ten eleven twelve thirteen fourteen fifteen".split())}
 IN = os.path.join(ACADEMY, "intensive-english", "level-0", "data", "units")
 L1 = os.path.join(ACADEMY, "intensive-english", "level-1", "data", "units")
 
@@ -209,6 +210,12 @@ def build(n, lesson, units=None):
         "about": {
             "text": "In this lesson you learn %s. You hear each sound, you write its letters, and then you read words and a short text with them." % (
                 "the sounds " + ", ".join(letters) if letters else "new sounds"),
+            # What the voice says. A list of lone sounds is where a voice goes
+            # wrong (the Phonics level measured it: a lone short i has no
+            # spelling that survives), and this is the lesson's first sentence.
+            # The page shows the list; the lecture teaches each sound properly.
+            "speech": "In this lesson you learn %s. You hear each sound, you write its letters, and then you read words and a short text with them." % (
+                "%s new sounds, and how to write them" % NUMBER_WORDS.get(len(letters), str(len(letters))) if letters else "new sounds"),
             "goals": functions[:5],
         },
         "unitLecture": {"chapters": lectures},
@@ -224,6 +231,12 @@ def build(n, lesson, units=None):
         ],
         "_readers": readers,
     }
+    if n == 11:  # new spellings of sounds the learner already has
+        data["about"]["speech"] = ("In this lesson you learn new ways to write sounds you already know. "
+                                   "You hear each sound, you write its letters, and then you read words and a short text with them.")
+    if n == 7:   # pairs of consonants, not new sounds
+        data["about"]["speech"] = ("In this lesson you read words that start or end with two consonants, like stop and jump. "
+                                   "You hear each sound, you write its letters, and then you read words and a short text with them.")
     return data
 
 

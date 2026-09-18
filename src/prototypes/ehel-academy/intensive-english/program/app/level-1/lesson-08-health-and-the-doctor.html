@@ -3001,12 +3001,16 @@ a.lcard:hover { border-color: var(--teal); }
     const p = player.play();
     if (p && p.catch) p.catch(() => say(fallback));
   }
-  /* A conversation as one utterance: a pause between speakers, and the second
-     speaker a little lower, so a single device voice still sounds like two. */
+  /* A conversation as one utterance: a pause between speakers, and each speaker
+     at their own pitch, so a single device voice still sounds like two or three
+     people (a task model can have a colleague AND a receptionist). */
+  const PITCHES = ["+6%", "-10%", "+16%", "-18%"];
   function dialogueSSML(rows) {
-    const first = rows.length ? rows[0][0] : "";
-    return rows.map(([who, text]) => '<prosody pitch="' + (who === first ? "+6%" : "-10%") + '">' + VOICE.esc(text) + "</prosody>")
-      .join('<break time="650ms"/>');
+    const who = [];
+    return rows.map(([name, text]) => {
+      if (who.indexOf(name) < 0) who.push(name);
+      return '<prosody pitch="' + PITCHES[who.indexOf(name) % PITCHES.length] + '">' + VOICE.esc(text) + "</prosody>";
+    }).join('<break time="650ms"/>');
   }
   const listenBtn = (text, label) =>
     '<button type="button" class="big small ghost listen" data-say="' + esc(text) + '">&#9654; ' + esc(label || "Listen") + "</button>";
@@ -3290,10 +3294,14 @@ a.lcard:hover { border-color: var(--teal); }
   /* ================= Section 3 · Read & write ========================== */
   /* A plan line can name two texts ("a price list and a receipt") and the format
      has one body, so writers join them with a divider line (---, - - - -). Each
-     part is its own card, the way the learner meets them in life. */
+     part is its own card, the way the learner meets them in life. An article
+     next to a form is not paper: `documentParts` ([false, true]) says which
+     parts are documents, and without it every part follows `document`. */
   const docHTML = (t) => '<p class="eyebrow">' + esc(t.type) + "</p><h3>" + esc(t.title) + "</h3>" +
-    String(t.body || "").split(/\n\s*(?:[-–—=_*~]\s*){3,}\n/).map((part) =>
-      '<div class="reading' + (t.document ? " document" : "") + '">' + para(part) + "</div>").join("");
+    String(t.body || "").split(/\n\s*(?:[-–—=_*~]\s*){3,}\n/).map((part, k) => {
+      const paper = t.documentParts && t.documentParts[k] !== undefined ? t.documentParts[k] : t.document;
+      return '<div class="reading' + (paper ? " document" : "") + '">' + para(part) + "</div>";
+    }).join("");
   P.readGist = function (i, id) {
     const el = $(id), rw = LESSON.readWrite;
     el.innerHTML = stepHead(i) + "<h2>Read for the main idea</h2>" +

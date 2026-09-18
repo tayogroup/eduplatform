@@ -5,6 +5,24 @@
   Cross-cutting rules stay in the root CLAUDE.md.
 -->
 
+## The restructured program is being built in `program/` (owner, 2026-09-18)
+
+The owner replaced the course's design on 2026-09-18.
+
+- **Audience:** working adults and general learners.
+- **Design principle:** general-purpose language learning. The Cambridge objective contract described below no longer decides what goes into a lesson.
+- **Levels:** Letters & Sounds (for non-readers), Starter, Levels 1–3 in 9 months, then Level 4 (B2) in 2 more. Level 5 (Business Communication) is optional and later.
+- **Pace:** 2 hours a day with a live class of about 30 minutes.
+- **Names:** a level is made of **lessons**, not units. A lesson opens with "What this lesson is about" and "Unit lecture", then five sections and Review & check.
+
+The plan is `inputs/ehel-english-intensive-source/program/program-plan.json`. The kit, with its rules and status, is `program/kit/README.md`:
+
+```bash
+python program/kit/build_program.py --check   # then without --check to build program/app
+```
+
+Everything below describes the LIVE course, which stays as it is until the new program is ready to replace it. Build the new program only in `program/`. Nothing there touches `level-N/` or `level-N-app/`.
+
 ## Intensive English Level 1 is built on Cambridge 0057 (2026-09-11)
 
 ```bash

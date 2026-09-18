@@ -1,0 +1,295 @@
+{
+ "schema": "ehel-intensive-lesson/1",
+ "level": "level-1",
+ "lesson": 8,
+ "title": "Health and the doctor",
+ "cando": "say what is wrong, make an appointment and read a medicine label",
+ "cefr": "A1",
+ "status": "pilot",
+ "sources": ["L1 12", "L1 3", "Lg 7"],
+ "about": {
+  "text": "In this lesson you are ill and you need help. You say what is wrong at a chemist, you phone a clinic to make an appointment, and you read a medicine label so you know how much to take.",
+  "goals": [
+   "Say what is wrong: I've got a headache. My back hurts. I feel ill.",
+   "Understand advice with should: You should rest.",
+   "Read a medicine label: how much, how often, and what not to do.",
+   "Write a short note to take to the doctor.",
+   "Make an appointment on the phone."
+  ]
+ },
+ "unitLecture": {
+  "chapters": [
+   {
+    "for": "listen",
+    "title": "At the chemist",
+    "text": "In this lesson you are ill, and you need help.\nFirst, you go to a chemist. A chemist sells medicine and gives advice. You do not need an appointment.\nThe chemist asks: What's the matter?\nYou say what is wrong.\nAt the end, people often say: I hope you feel better soon."
+   },
+   {
+    "for": "grammar",
+    "title": "Three ways to say what is wrong",
+    "text": "There are three ways to say what is wrong.\nOne: I've got, and the problem. I've got a headache. I've got a cough.\nTwo: my, the part of your body, and hurts. My back hurts. My throat hurts.\nThree: I feel, and how you feel. I feel ill. I feel tired.\nTo give advice, use should. You should rest. You should see a doctor.\nDo not say should to. Say: you should rest."
+   },
+   {
+    "for": "readWrite",
+    "title": "A medicine label",
+    "text": "Next, you read a medicine label.\nA label answers four questions. How much? How often? How much in one day? And what must you not do?\nRead it slowly. The numbers are important.\nThen you write a short note for the doctor: what is wrong, when it started, and one question."
+   },
+   {
+    "for": "task",
+    "title": "Making an appointment",
+    "text": "Then you phone a clinic and make an appointment.\nSay: I'd like to make an appointment, please.\nThe receptionist asks your name, your problem and a time.\nSay the time back to check it: Four o'clock? Yes, that's fine."
+   },
+   {
+    "for": "reading",
+    "title": "The book",
+    "text": "Last, you read a short story about a visit to the doctor.\nRead it once for the story. Then read it again and answer the questions."
+   }
+  ]
+ },
+ "listen": {
+  "warmup": {
+   "picture": "🤒",
+   "prompt": "You feel ill. Where do you go first?",
+   "choices": ["a chemist", "a doctor", "a hospital"],
+   "note": "There is no wrong answer. For a small problem, many people go to a chemist first. It is quick, and you do not need an appointment."
+  },
+  "conversation": {
+   "title": "At the chemist",
+   "setting": "Ana does not feel well. She goes to the chemist near her home.",
+   "lines": [
+    ["Chemist", "Hello. Can I help you?"],
+    ["Ana", "Yes, please. I don't feel well."],
+    ["Chemist", "I'm sorry to hear that. What's the matter?"],
+    ["Ana", "I've got a sore throat, and my head hurts."],
+    ["Chemist", "Have you got a temperature?"],
+    ["Ana", "No, I haven't. But I feel very tired."],
+    ["Chemist", "When did it start?"],
+    ["Ana", "On Monday."],
+    ["Chemist", "OK. Take these tablets. One tablet, three times a day, after food."],
+    ["Ana", "One tablet, three times a day, after food. Thank you."],
+    ["Chemist", "You should rest and drink a lot of water. If you don't feel better in three days, see a doctor."],
+    ["Ana", "OK. Thank you very much."],
+    ["Chemist", "You're welcome. I hope you feel better soon."]
+   ],
+   "questions": [
+    {"q": "What is wrong with Ana?", "a": "a sore throat and a headache", "wrong": ["a pain in her back", "a cough and a temperature"], "why": "Ana says: I've got a sore throat, and my head hurts."},
+    {"q": "How often does Ana take the tablets?", "a": "three times a day", "wrong": ["once a day", "every hour"], "why": "The chemist says: One tablet, three times a day, after food."},
+    {"q": "When should Ana see a doctor?", "a": "if she doesn't feel better in three days", "wrong": ["today", "after one day"], "why": "The chemist says: If you don't feel better in three days, see a doctor."}
+   ]
+  },
+  "phrases": [
+   {"text": "What's the matter?", "use": "Asking what is wrong."},
+   {"text": "I don't feel well.", "use": "Saying you are ill."},
+   {"text": "I've got a sore throat.", "use": "Saying the problem."},
+   {"text": "My head hurts.", "use": "Saying where it hurts."},
+   {"text": "When did it start?", "use": "Asking when a problem started."},
+   {"text": "I'm sorry to hear that.", "use": "When somebody tells you bad news."},
+   {"text": "I hope you feel better soon.", "use": "Saying goodbye to somebody who is ill."}
+  ],
+  "words": {
+   "title": "The body and feeling ill",
+   "items": [
+    {"w": "head", "pos": "noun", "meaning": "The top part of your body, above your neck.", "example": "My head hurts."},
+    {"w": "throat", "pos": "noun", "meaning": "The inside of your neck. Food and drink go down it.", "example": "I've got a sore throat."},
+    {"w": "back", "pos": "noun", "meaning": "The part of your body behind you, from your neck to your legs.", "example": "My back hurts when I sit."},
+    {"w": "stomach", "pos": "noun", "meaning": "The part of your body where your food goes.", "example": "I've got a pain in my stomach."},
+    {"w": "tooth", "pos": "noun", "meaning": "One of the hard white things in your mouth. Two or more: teeth.", "example": "My tooth hurts."},
+    {"w": "chest", "pos": "noun", "meaning": "The front of your body, between your neck and your stomach.", "example": "My chest hurts when I cough."},
+    {"w": "ill", "pos": "adjective", "meaning": "Not well.", "example": "I feel ill today."},
+    {"w": "pain", "pos": "noun", "meaning": "The feeling when part of your body hurts.", "example": "I've got a pain in my back."},
+    {"w": "headache", "pos": "noun", "meaning": "A pain in your head.", "example": "I've got a headache."},
+    {"w": "cough", "pos": "noun", "meaning": "A loud sound from your throat when you are ill.", "example": "I've got a bad cough."},
+    {"w": "temperature", "pos": "noun", "meaning": "How hot your body is. A high one means you are ill.", "example": "Have you got a temperature?"},
+    {"w": "sore", "pos": "adjective", "meaning": "It hurts when you touch it or use it.", "example": "I've got a sore throat."}
+   ]
+  },
+  "sound": {
+   "title": "hurt and heart",
+   "explain": "These two words sound different. Hurt has the sound in her and bird. Heart has the sound in car and park. Listen, then say each group.",
+   "groups": ["hurt · her · bird", "heart · car · park"],
+   "lines": ["My head hurts.", "My back hurts.", "The doctor listened to my heart."]
+  },
+  "sayIt": {
+   "instructions": "Say Ana's lines. Record yourself, then listen back. Is your voice clear?",
+   "lines": [
+    "Yes, please. I don't feel well.",
+    "I've got a sore throat, and my head hurts.",
+    "No, I haven't. But I feel very tired.",
+    "One tablet, three times a day, after food. Thank you."
+   ]
+  }
+ },
+ "grammar": {
+  "spot": {
+   "instructions": "Look at these sentences from the conversation. Each one says what is wrong in a different way. The last one gives advice.",
+   "examples": ["I've got a sore throat.", "My head hurts.", "I feel very tired.", "You should rest."],
+   "question": "Which sentence names the problem? Which names a part of the body? Which says how Ana feels? Which gives advice?",
+   "answer": "I've got + the problem: a sore throat. My + a part of the body + hurts: my head hurts. I feel + how you are: very tired. You should + a verb gives advice: you should rest."
+  },
+  "rules": [
+   {
+    "title": "Three ways to say what is wrong",
+    "rule": [
+     "I've got + a problem: I've got a headache. I've got a cough.",
+     "My + part of the body + hurts: My back hurts. My feet hurt.",
+     "I feel + how you are: I feel ill. I feel tired.",
+     "Ask: What's the matter? Have you got a temperature?"
+    ],
+    "mistake": "Not: My head is hurt. Say: My head hurts."
+   },
+   {
+    "title": "Advice with should",
+    "rule": [
+     "You should + a verb: You should rest. You should see a doctor.",
+     "Not: You should to rest. Not: She shoulds rest.",
+     "No: You shouldn't go to work today.",
+     "Question: Should I take it after food?"
+    ],
+    "mistake": "Not: You should to drink water. Say: You should drink water."
+   }
+  ],
+  "practice": [
+   {"q": "I've got a ___ .", "options": ["headache", "head", "hurts"], "a": "headache", "why": "I've got + a problem: a headache."},
+   {"q": "My back ___ .", "options": ["hurts", "pain", "sore"], "a": "hurts", "why": "My + part of the body + hurts."},
+   {"q": "My feet ___ .", "options": ["hurt", "hurts", "pain"], "a": "hurt", "why": "Two feet, so hurt, with no s."},
+   {"q": "I feel ___ .", "options": ["ill", "a ill", "illness"], "a": "ill", "why": "I feel + how you are: ill."},
+   {"q": "You ___ see a doctor.", "options": ["should", "should to", "shoulds"], "a": "should", "why": "should + a verb, with no to."},
+   {"q": "You ___ go to work today. Stay at home.", "options": ["shouldn't", "should", "don't should"], "a": "shouldn't", "why": "shouldn't = should not."},
+   {"q": "___ I take the tablets after food?", "options": ["Should", "Do should", "Am"], "a": "Should", "why": "A question with should: Should I …?"},
+   {"q": "She's got a sore ___ . She can't eat.", "options": ["throat", "feel", "should"], "a": "throat", "why": "A sore throat hurts when you eat.", "mode": "type"},
+   {"q": "Have you got a ___ ? Your head is very hot.", "options": ["temperature", "hurt", "feel"], "a": "temperature", "why": "A high temperature: your body is very hot."},
+   {"q": "What's the ___ ? I've got a cough.", "options": ["matter", "hurt", "feel"], "a": "matter", "why": "What's the matter? asks what is wrong.", "mode": "type"}
+  ],
+  "yourTurn": {
+   "prompt": "Your friend says: “I've got a bad cough, and I feel very tired.” Give your friend three pieces of advice. Use should and shouldn't.",
+   "starters": ["You should …", "You shouldn't …", "I hope you …"],
+   "model": "You should rest. You should drink hot water with honey. You shouldn't go to work today. I hope you feel better soon."
+  }
+ },
+ "readWrite": {
+  "text": {
+   "title": "A medicine label",
+   "type": "Medicine label",
+   "document": true,
+   "body": "PRACTICE LABEL: this medicine does not exist\n\nPARALEX 500 mg tablets\nFor headache, toothache and other pain\n24 tablets\n\nHOW MUCH AND HOW OFTEN\nAdults and children over 12:\n1 or 2 tablets every 4 to 6 hours.\nDo not take more than 8 tablets in 24 hours.\nNot for children under 12.\n\nHOW TO TAKE\nTake with water, after food.\n\nWARNINGS\nDo not take for more than 3 days.\nThen see a doctor.\nDo not drink alcohol with this medicine.\n\nKeep away from children.\nUse by: 09/2027"
+  },
+  "gist": [
+   {"q": "What is this medicine for?", "a": "pain, like a headache or toothache", "wrong": ["a cough", "sleeping"], "why": "The label says: For headache, toothache and other pain."},
+   {"q": "Who can take it?", "a": "adults and children over 12", "wrong": ["only children", "everyone"], "why": "Adults and children over 12. Not for children under 12."}
+  ],
+  "detail": [
+   {"q": "How many tablets can you take at one time?", "a": "1 or 2", "wrong": ["8", "24"], "why": "1 or 2 tablets every 4 to 6 hours."},
+   {"q": "How often can you take them?", "a": "every 4 to 6 hours", "wrong": ["every hour", "once a day"], "why": "1 or 2 tablets every 4 to 6 hours."},
+   {"q": "What is the most you can take in one day?", "a": "8 tablets", "wrong": ["2 tablets", "24 tablets"], "why": "Do not take more than 8 tablets in 24 hours."},
+   {"q": "You still have a headache after 3 days. What should you do?", "a": "see a doctor", "wrong": ["take 3 more tablets", "drink alcohol"], "why": "Do not take for more than 3 days. Then see a doctor."}
+  ],
+  "words": {
+   "title": "At the clinic and the chemist",
+   "items": [
+    {"w": "appointment", "pos": "noun", "meaning": "A time to see a doctor. You ask for it first.", "example": "I'd like to make an appointment."},
+    {"w": "doctor", "pos": "noun", "meaning": "A person who helps people who are ill.", "example": "You should see a doctor."},
+    {"w": "receptionist", "pos": "noun", "meaning": "The person at the front desk. They answer the phone.", "example": "The receptionist gave me a time."},
+    {"w": "chemist", "pos": "noun", "meaning": "A shop that sells medicine. The person there can give you advice.", "example": "Ask the chemist."},
+    {"w": "medicine", "pos": "noun", "meaning": "You take it when you are ill.", "example": "Take the medicine after food."},
+    {"w": "tablet", "pos": "noun", "meaning": "A small, hard piece of medicine. You swallow it with water.", "example": "Take one tablet three times a day."},
+    {"w": "prescription", "pos": "noun", "meaning": "A paper from a doctor. You take it to the chemist to get medicine.", "example": "The doctor gave me a prescription."},
+    {"w": "rest", "pos": "verb", "meaning": "To stop working and stay still, so you feel better.", "example": "You should rest."}
+   ]
+  },
+  "model": {
+   "title": "A note for the doctor",
+   "body": "What is wrong: My back hurts. I've got a pain in my lower back.\nWhen it started: On Monday, at work.\nBetter or worse: It is worse in the morning. It is better when I rest.\nMy question: Is it serious?"
+  },
+  "write": {
+   "task": "Write a note to take to the doctor. It can be real or made up. Write four lines, like the model: what is wrong, when it started, what makes it better or worse, and one question.",
+   "starter": "What is wrong: I've got …",
+   "checklist": [
+    "I said what is wrong: I've got …, my … hurts, or I feel …",
+    "I said when it started: on Monday, two days ago …",
+    "I wrote one question, with a question mark.",
+    "Every sentence starts with a capital letter."
+   ]
+  }
+ },
+ "task": {
+  "card": {
+   "title": "Make an appointment",
+   "situation": "You've got a bad cough and a temperature. It started on Saturday. You want to see a doctor today or tomorrow.",
+   "goal": "Phone the clinic. Give your name, say what is wrong, and agree a time."
+  },
+  "prepare": {
+   "phrases": [
+    "Hello. I'd like to make an appointment, please.",
+    "My name is … . That's H-A-S-S-A-N.",
+    "I've got a bad cough and a temperature.",
+    "It started on Saturday.",
+    "Have you got anything today?",
+    "Four o'clock? Yes, that's fine."
+   ],
+   "notes": "Write what you will say: your name, your problem, when it started, and the best time for you."
+  },
+  "doIt": {
+   "liveClass": "In the live class, your teacher is the receptionist. Phone the clinic and make your appointment. Then change roles.",
+   "wehel": "You are a receptionist at a doctor's clinic. I am ill and I want an appointment. Ask my name, my problem and when I can come. Offer me two times. Use simple English."
+  },
+  "model": {
+   "title": "The call",
+   "lines": [
+    ["Receptionist", "Good morning, Park Road Clinic. How can I help?"],
+    ["You", "Hello. I'd like to make an appointment, please."],
+    ["Receptionist", "Of course. What's your name?"],
+    ["You", "Samir Hassan."],
+    ["Receptionist", "Can you spell your family name, please?"],
+    ["You", "H-A-S-S-A-N."],
+    ["Receptionist", "Thank you. What's the problem?"],
+    ["You", "I've got a bad cough and a temperature."],
+    ["Receptionist", "When did it start?"],
+    ["You", "On Saturday."],
+    ["Receptionist", "The doctor can see you today at four o'clock. Is that OK?"],
+    ["You", "Four o'clock? Yes, that's fine. Thank you."],
+    ["Receptionist", "You're welcome. Goodbye."]
+   ],
+   "compare": [
+    "Did you say: I'd like to make an appointment, please?",
+    "Did you spell your name clearly?",
+    "Did you say what is wrong and when it started?",
+    "Did you say the time back to check it?"
+   ]
+  },
+  "canDo": [
+   "I can say what is wrong when I am ill.",
+   "I can understand advice with should.",
+   "I can read a medicine label.",
+   "I can write a short note for the doctor.",
+   "I can make an appointment on the phone."
+  ]
+ },
+ "reading": {
+  "placeholder": true,
+  "before": "Look at the title and the first picture. Who is ill? What do you think happens?",
+  "talk": "Did the people in the story do the right thing? What do you do when you are ill? Write two or three sentences, or say them to Wehel."
+ },
+ "review": {
+  "earlierLessons": [5, 6, 7],
+  "quiz": [
+   {"q": "My throat ___ . I can't eat.", "options": ["hurts", "hurt", "pain"], "a": "hurts", "why": "My throat is one part, so hurts, with s.", "from": "this lesson"},
+   {"q": "I've got a ___ . My head hurts.", "options": ["headache", "toothache", "cough"], "a": "headache", "why": "A headache is a pain in your head.", "from": "this lesson"},
+   {"q": "You ___ go to work. You're ill.", "options": ["shouldn't", "should", "don't"], "a": "shouldn't", "why": "Advice not to do something: shouldn't.", "from": "this lesson"},
+   {"q": "I'd like to make an ___ , please.", "options": ["appointment", "medicine", "doctor"], "a": "appointment", "why": "You make an appointment to see a doctor.", "from": "this lesson", "mode": "type"},
+   {"q": "Take 1 tablet every 6 hours. How many tablets is that in one day?", "options": ["4", "6", "1"], "a": "4", "why": "A day has 24 hours, and 24 ÷ 6 = 4.", "from": "this lesson"},
+   {"q": "Somebody says: I've got the flu. What do you say?", "options": ["I'm sorry to hear that.", "Well done!", "See you soon."], "a": "I'm sorry to hear that.", "why": "We say this when somebody tells us bad news.", "from": "this lesson"},
+   {"q": "The paper from a doctor for your medicine is a ___ .", "options": ["prescription", "receipt", "label"], "a": "prescription", "why": "You take a prescription to the chemist.", "from": "this lesson"},
+   {"q": "How much ___ these apples?", "options": ["are", "is", "be"], "a": "are", "why": "Apples is more than one, so are.", "from": "Lesson 5"},
+   {"q": "She ___ work at nine o'clock.", "options": ["starts", "start", "starting"], "a": "starts", "why": "She + verb + s: she starts.", "from": "Lesson 6"},
+   {"q": "Can I have a ___ of milk, please?", "options": ["bottle", "slice", "piece"], "a": "bottle", "why": "Milk comes in a bottle.", "from": "Lesson 7"}
+  ]
+ },
+ "teacher": {
+  "liveClass": [
+   "Day 1: practise the chemist conversation in pairs, then change the problem: a cough, a stomach ache, a sore tooth.",
+   "Day 2: advice circle. Each learner says a problem, and the others give advice with should and shouldn't.",
+   "Day 3: the phone call. You are the receptionist. Each learner makes an appointment; change the names and the times.",
+   "Day 4: talk about the book, answer questions, and let two learners read their notes for the doctor aloud."
+  ]
+ }
+}

@@ -168,20 +168,79 @@ content-named files; see "New names for a new render". There are three edits:
   `lesson-search.json`, by their current names: `shape-and-measures.5a6a619a.mp4`,
   `shape-and-measures.vtt` and `shape-and-measures.29644ff7.jpg`.
 
+**The film is a one-line bar until it is opened.** The owner reported on
+2026-09-18 that "the video is covering all the unit sections", and the
+measurement agreed. Open above the deck, the 16:9 player filled the first
+screen. Choosing a step from the Menu changes the slide without scrolling to
+it, so in a 768px window the chosen step started at 718px, below the fold,
+every time. Now the film sits in a `<details>` bar. It plays when opened, and
+the small script in the block closes and pauses it as soon as the deck's
+active slide changes. Measured after the change, the chosen step's heading
+sits at 315px, and the film is closed and paused. The script is part of the
+block, so it goes back with it after any rebuild.
+
 ```html
-<div class="lecture-film">
-  <video controls playsinline preload="metadata" poster="lecture-video/shape-and-measures.29644ff7.jpg" src="lecture-video/shape-and-measures.5a6a619a.mp4">
+<details class="lecture-film" id="lectureFilm">
+  <summary>
+    <img class="lf-thumb" src="lecture-video/shape-and-measures.29644ff7.jpg" alt="" width="104" height="58">
+    <span class="lf-text"><b>Watch the lesson film</b><span>The whole lesson in about six minutes</span></span>
+    <span class="lf-go"><span class="play">&#9654; Watch</span><span class="shut">&#10005; Close</span></span>
+  </summary>
+  <video controls playsinline preload="none" poster="lecture-video/shape-and-measures.29644ff7.jpg" src="lecture-video/shape-and-measures.5a6a619a.mp4">
     <track kind="captions" srclang="en" label="English" src="lecture-video/shape-and-measures.vtt">
   </video>
   <p class="lec-note">Watch the lesson, then go through it a part at a time below.</p>
-</div>
+</details>
+<script>
+/* The film is a one-line bar until it is opened, and it gets out of the way
+   by itself: it plays when opened, and closes and pauses as soon as the
+   learner moves to a step. Left open above the deck, a 16:9 player pushed
+   every step below the fold - and choosing a step from the Menu changes the
+   slide without scrolling to it, so the learner saw the film and not the
+   step they had asked for. */
+document.addEventListener("DOMContentLoaded", function () {
+  var box = document.getElementById("lectureFilm"), deck = document.getElementById("deck");
+  if (!box) return;
+  var film = box.querySelector("video");
+  box.addEventListener("toggle", function () {
+    if (!box.open) { film.pause(); return; }
+    var p = film.play();
+    if (p && p.catch) p.catch(function () {});
+  });
+  if (!deck || !window.MutationObserver) return;
+  new MutationObserver(function (changes) {
+    if (!box.open) return;
+    for (var k = 0; k < changes.length; k++) {
+      var el = changes[k].target;
+      if (el.classList && el.classList.contains("slide") && el.classList.contains("active") &&
+          (changes[k].oldValue || "").split(/\s+/).indexOf("active") < 0) { box.open = false; return; }
+    }
+  }).observe(deck, { subtree: true, attributes: true, attributeFilter: ["class"], attributeOldValue: true });
+});
+</script>
 ```
 
 ```css
 .lecture-film { margin: 0 0 16px; }
+.lecture-film > summary { display: flex; align-items: center; gap: 14px; padding: 10px 12px;
+  cursor: pointer; list-style: none; border-radius: 16px; background: var(--card); box-shadow: var(--shadow); }
+.lecture-film > summary::-webkit-details-marker { display: none; }
+.lecture-film .lf-thumb { width: 104px; height: 58px; object-fit: cover; border-radius: 10px; flex: 0 0 auto; display: block; }
+.lecture-film .lf-text { flex: 1 1 auto; min-width: 0; display: flex; flex-direction: column; gap: 2px; }
+.lecture-film .lf-text b { font-size: 17px; color: var(--ink); }
+.lecture-film .lf-text span { font-size: 13px; color: var(--muted); }
+.lecture-film .lf-go { flex: 0 0 auto; padding: 9px 16px; border-radius: 999px; background: var(--teal);
+  color: #04141B; font-weight: 700; font-size: 14px; white-space: nowrap; }
+.lecture-film .lf-go .shut, .lecture-film[open] .lf-go .play { display: none; }
+.lecture-film[open] .lf-go .shut { display: inline; }
+.lecture-film[open] > summary { margin-bottom: 10px; }
 .lecture-film video { width: 100%; display: block; border-radius: 20px; background: #000;
   box-shadow: var(--shadow); aspect-ratio: 16 / 9; }
 .lecture-film .lec-note { margin: 8px 2px 0; font-size: 13px; color: var(--muted); }
+@media (max-width: 480px) {
+  .lecture-film .lf-text span { display: none; }
+  .lecture-film .lf-thumb { width: 72px; height: 40px; }
+}
 ```
 
 **Watch for this before re-wiring: `--draft` writes the same three filenames as

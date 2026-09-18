@@ -558,10 +558,28 @@
 
   <div class="eh-quiet" id="ehQuiet" role="status" aria-live="polite" hidden><span class="eh-quiet-msg"></span><button type="button" class="eh-quiet-ok">OK</button></div>
   <div class="deck" id="deck" role="main">
+    <!-- STEP 0a: what this lesson is about -->
+    <section class="slide" data-say="By the end of this lesson you will be able to: Compare two lengths and say which is longer; measure with the same unit every time; measure a length in whole centimetres with a ruler; choose the right unit for what i am measuring; estimate the mass of an object before measuring it; read scales marked in twos, fives and tens.">
+      <div class="slide-head"><span class="n">1</span><h2>What this lesson is about</h2></div>
+      <div class="say"><button type="button" class="speak" aria-label="Read it to me">&#128266;</button><span id="askOvw">By the end of this lesson you will be able to: Compare two lengths and say which is longer; measure with the same unit every time; measure a length in whole centimetres with a ruler; choose the right unit for what i am measuring; estimate the mass of an object before measuring it; read scales marked in twos, fives and tens.</span></div>
+      <div class="stage" id="stageOvw"></div>
+    </section>
+    <!-- STEP 0b: unit lecture -->
+    <section class="slide" data-say="Watch the lesson told in parts, by the voice.">
+      <div class="slide-head"><span class="n">2</span><h2>Unit lecture</h2></div>
+      <div class="say"><button type="button" class="speak" aria-label="Read it to me">&#128266;</button><span id="askLec">Watch the lesson told in parts, by the voice.</span></div>
+      <div class="stage" id="stageLec"></div>
+    </section>
+    <!-- STEP 0c: math words -->
+    <section class="slide" data-say="Tap each word to hear what it means and how to use it. Then show you know them.">
+      <div class="slide-head"><span class="n">3</span><h2>Math words</h2></div>
+      <div class="say"><button type="button" class="speak" aria-label="Read it to me">&#128266;</button><span id="askMw">Tap each word to hear what it means and how to use it. Then show you know them.</span></div>
+      <div class="stage" id="stageMw"></div>
+    </section>
     <!-- 1 compare lengths -->
     <section class="slide" data-say="Which one is longer? Look at where each one ends. They all start in the same place." data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>To compare lengths, start them all in the same place and look at where each one ends.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>The pencil and the crayon start at the same line.</s><s>The pencil ends further along, so the pencil is longer.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="empathetic" styledegree="1.3"><prosody rate="-6%"><s>A thing is not longer just because it is fatter.</s><s>Only the length along it matters.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>Look along to the end of each one, then tap the one you are asked for.</s></mstts:express-as>'>
       <div class="eh-warm" id="ehWarm"><p class="eh-warm-h">Warm up</p><div class="eh-warm-say"><button type="button" class="speak" aria-label="Read it to me">&#128266;</button><span class="eh-warm-q"></span></div><div class="choices eh-warm-ch"></div><p class="fb" role="status" aria-live="polite"></p></div>
-      <div class="slide-head"><span class="n">1</span><h2>Longer and shorter</h2></div>
+      <div class="slide-head"><span class="n">4</span><h2>Longer and shorter</h2></div>
       <div class="say"><button type="button" class="speak" aria-label="Read it to me">🔊</button><span id="say1">They all start in the <b>same place</b>, so look at where each one <b>ends</b>.</span></div>
       <details class="kit"><summary>For the grown-up: what to have to hand</summary><p>A ruler marked in centimetres, kitchen scales, a measuring jug and two or three containers to fill. This lesson is about reading real scales, so read real ones.</p></details>
       <div class="stage">
@@ -573,7 +591,7 @@
 
     <!-- 2 measure with cubes -->
     <section class="slide" data-say="Measure with cubes. Lay them along the pencil and count them. Every cube must be the same size." data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>You can measure a length by counting cubes laid along it.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>The pencil is as long as 7 cubes in a line, so the pencil is 7 cubes long.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="empathetic" styledegree="1.3"><prosody rate="-6%"><s>Every cube must be the same size, with no gaps between them.</s><s>Cubes of different sizes give a number that means nothing.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>Add cubes until the row is as long as the object, then count them.</s></mstts:express-as>'>
-      <div class="slide-head"><span class="n">2</span><h2>Measure with cubes</h2></div>
+      <div class="slide-head"><span class="n">5</span><h2>Measure with cubes</h2></div>
       <div class="say"><button type="button" class="speak" aria-label="Read it to me">🔊</button><span id="say2">Lay cubes along it and <b>count</b> them. Every cube must be the <b>same size</b>.</span></div>
       <div class="stage">
         <div class="cubebar" id="bar2"></div>
@@ -586,7 +604,7 @@
 
     <!-- 3 the ruler -->
     <section class="slide" data-say="A ruler measures in centimetres. Start at zero, and read the number where the object ends." data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>A ruler measures in centimetres, starting from zero.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>The object starts at 0 and ends at the 8.</s><s>So it is 8 centimetres long.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="empathetic" styledegree="1.3"><prosody rate="-6%"><s>Start at zero, not at the very end of the ruler, and not at 1.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>Find where the object ends and read the number there.</s></mstts:express-as>'>
-      <div class="slide-head"><span class="n">3</span><h2>Reading a ruler</h2></div>
+      <div class="slide-head"><span class="n">6</span><h2>Reading a ruler</h2></div>
       <div class="say"><button type="button" class="speak" aria-label="Read it to me">🔊</button><span id="say3">Start at <b>0</b>. Read the number where it <b>ends</b>. How many centimetres?</span></div>
       <div class="stage">
         <svg class="ruler" id="ruler3" viewBox="0 0 620 150" role="img" aria-label="A ruler with an object on it"></svg>
@@ -598,7 +616,7 @@
 
     <!-- 4 which unit -->
     <section class="slide" data-twm="characterising classifying" data-say="Which unit would you use? Centimetres for small things, metres for big things like a room." data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>Pick the unit that fits the size of the thing you are measuring.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>A pencil is a few centimetres long, so centimetres fit.</s><s>A classroom is a few metres long, so metres fit.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="empathetic" styledegree="1.3"><prosody rate="-6%"><s>Measuring a room in centimetres gives a huge number, and measuring a pencil in metres gives almost nothing.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>Picture the thing, then choose centimetres for small things or metres for big ones.</s></mstts:express-as>'>
-      <div class="slide-head"><span class="n">4</span><h2>Which unit?</h2></div>
+      <div class="slide-head"><span class="n">7</span><h2>Which unit?</h2></div>
       <div class="say"><button type="button" class="speak" aria-label="Read it to me">🔊</button><span id="say4">Pick the unit that makes sense.</span></div>
       <div class="stage">
         <p class="fb" id="q4" style="font-size:44px"></p>
@@ -613,7 +631,7 @@
 
     <!-- 5 balance -->
     <section class="slide" data-say="A balance tips down on the heavier side. Add weights until it balances, then you know the mass." data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>A balance tips down on the heavier side.</s><s>When it is level, both sides weigh the same.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>The apple side is down, so the apple is heavier.</s><s>Add a 100 gram weight, then a 200 gram weight.</s><s>When the beam is level, the apple weighs 300 grams.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="empathetic" styledegree="1.3"><prosody rate="-6%"><s>If the weights side goes down, you have added too much.</s><s>Take the weights off and try a smaller one.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>Add one weight at a time and watch which way the beam tips.</s></mstts:express-as>'>
-      <div class="slide-head"><span class="n">5</span><h2>Balance the scales</h2></div>
+      <div class="slide-head"><span class="n">8</span><h2>Balance the scales</h2></div>
       <div class="say"><button type="button" class="speak" aria-label="Read it to me">🔊</button><span id="say5">The balance tips down on the <b>heavier</b> side. Add weights until it is <b>level</b>.</span></div>
       <div class="stage">
         <svg class="balance" id="bal5" viewBox="0 0 320 200" role="img" aria-label="A balance scale"></svg>
@@ -626,7 +644,7 @@
 
     <!-- 6 kitchen scale -->
     <section class="slide" data-say="Read the kitchen scale. Each mark is one hundred grams. Read the number the needle points to." data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>A kitchen scale has a needle that points to the mass in grams.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>Each mark is 100 grams.</s><s>If the needle points at the fourth mark after zero, the mass is 400 grams.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="empathetic" styledegree="1.3"><prosody rate="-6%"><s>Count the marks from zero, and count each mark as 100, not as 1.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>Put your finger on zero and count the marks round to the needle in hundreds.</s></mstts:express-as>'>
-      <div class="slide-head"><span class="n">6</span><h2>Reading a kitchen scale</h2></div>
+      <div class="slide-head"><span class="n">9</span><h2>Reading a kitchen scale</h2></div>
       <div class="say"><button type="button" class="speak" aria-label="Read it to me">🔊</button><span id="say6">Each mark is <b>100 g</b>. What does the needle say?</span></div>
       <div class="stage">
         <svg class="dial" id="dial6" viewBox="0 0 220 220" role="img" aria-label="A kitchen scale"></svg>
@@ -638,7 +656,7 @@
 
     <!-- 7 jug -->
     <section class="slide" data-say="A measuring jug shows how much liquid. Each mark is one hundred millilitres." data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>A measuring jug shows how much liquid is inside, in millilitres.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>Each mark is 100 millilitres.</s><s>Pour in three times and the level reaches the third mark, which is 300 millilitres.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="empathetic" styledegree="1.3"><prosody rate="-6%"><s>Read the level where the top of the water is flat, straight across from the mark.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>Pour some in, then count the marks up from the bottom.</s></mstts:express-as>'>
-      <div class="slide-head"><span class="n">7</span><h2>Reading a jug</h2></div>
+      <div class="slide-head"><span class="n">10</span><h2>Reading a jug</h2></div>
       <div class="say"><button type="button" class="speak" aria-label="Read it to me">🔊</button><span id="say7">Each mark is <b>100 ml</b>. Pour, then read the level.</span></div>
       <div class="stage">
         <div class="bigbtns" style="align-items:center">
@@ -658,7 +676,7 @@
 
     <!-- 8 how long -->
     <section class="slide" data-say="Which holds more? Fill each one with cups of water and count the cups. The one that takes more cups holds more." data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>To find which container holds more, fill each one with cups of water and count the cups.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>The jug takes 6 cups and the bottle takes 4.</s><s>The jug took more cups, so the jug holds more.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="empathetic" styledegree="1.3"><prosody rate="-6%"><s>A tall thin container can hold less than a short wide one.</s><s>Count the cups, do not judge by how tall it is.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>Press Fill them with cups and count each cup as it goes in.</s></mstts:express-as>'>
-      <div class="slide-head"><span class="n">8</span><h2>Which holds more?</h2></div>
+      <div class="slide-head"><span class="n">11</span><h2>Which holds more?</h2></div>
       <div class="say"><button type="button" class="speak" aria-label="Read it to me">🔊</button><span id="say8">Fill them with <b>cups</b> of water and count. The one that takes <b>more cups</b> holds more.</span></div>
       <div class="stage">
         <div class="clockpair" id="clocks8"></div>
@@ -671,7 +689,7 @@
 
     <!-- 9 estimate, then measure (was a calendar step - Half Past, Quarter To owns the calendar) -->
     <section class="slide" data-say="Guess first, then measure. A good guess is close to the real length." data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>An estimate is a sensible guess.</s><s>Then you measure to find out.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>The ribbon looks about as long as your hand, so a guess of about 15 centimetres is sensible.</s><s>Then the ruler shows the real length.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="empathetic" styledegree="1.3"><prosody rate="-6%"><s>A good estimate does not have to be exact.</s><s>It just needs to be close.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>Look at the ribbon, make your guess, then see how close you were.</s></mstts:express-as>'>
-      <div class="slide-head"><span class="n">9</span><h2>Estimate, then measure</h2></div>
+      <div class="slide-head"><span class="n">12</span><h2>Estimate, then measure</h2></div>
       <div class="say"><button type="button" class="speak" aria-label="Read it to me">🔊</button><span id="say9">Look at the ribbon. <b>Guess</b> how long it is, then the ruler will <b>measure</b> it.</span></div>
       <div class="stage">
         <svg class="rib9" id="cal9" viewBox="0 0 340 110" role="img" aria-label="A ribbon to measure"></svg>
@@ -685,7 +703,7 @@
 
     <!-- 10 draw a line -->
     <section class="slide" data-say="Now you draw the line. Tap the ruler where your line should end." data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>Now you draw a line of an exact length.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>To draw a line 6 centimetres long, start at 0 and stop at the 6.</s><s>The line in between is 6 centimetres long.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="empathetic" styledegree="1.3"><prosody rate="-6%"><s>Do not start at 1.</s><s>Every line starts at 0.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>Tap the ruler at the number where your line should end.</s></mstts:express-as>'>
-      <div class="slide-head"><span class="n">10</span><h2>Draw a line yourself</h2></div>
+      <div class="slide-head"><span class="n">13</span><h2>Draw a line yourself</h2></div>
       <div class="say"><button type="button" class="speak" aria-label="Read it to me">&#128266;</button><span id="sayD">Tap the ruler where your line should <b>end</b>. Start is already at 0.</span></div>
       <div class="stage">
         <p class="fb" id="qD" style="font-size:20px"></p>
@@ -699,7 +717,7 @@
 
     <!-- 11 between the marks -->
     <section class="slide" data-say="A measuring scale is a number line. Some marks have no number on them, so you work them out." data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>A measuring scale is a number line, and some of its marks have no number written on them.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>The marks say 30 and 40, with one small mark halfway between.</s><s>The ribbon ends at that small mark, so it is 35 centimetres long.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="empathetic" styledegree="1.3"><prosody rate="-6%"><s>Work out what the small mark is worth before you read the arrow.</s><s>Here the halfway mark is worth 5 more.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>Find the numbered mark just before the arrow, then decide what the small mark adds.</s></mstts:express-as>'>
-      <div class="slide-head"><span class="n">11</span><h2>Between the marks</h2></div>
+      <div class="slide-head"><span class="n">14</span><h2>Between the marks</h2></div>
       <div class="say"><button type="button" class="speak" aria-label="Read it to me">&#128266;</button><span id="sayV">A scale is a <b>number line</b>. Not every mark has a number. What is the arrow pointing to?</span></div>
       <div class="stage">
         <svg class="mstrip" id="stripV" viewBox="0 0 620 130" role="img" aria-label="A measuring scale with an arrow"></svg>
@@ -713,7 +731,7 @@
     <!-- 12 check -->
     <!-- 12  2Gg.03  Spot the mistake -->
     <section class="slide" data-twm="critiquing improving" data-say="Read what each child says. Work it out yourself. Then tap what went wrong." data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>Before comparing measurements, check the unit is the same.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>Musa says the book is longer, as it took more cubes.</s><s>The pencil was measured in paperclips.</s><s>Different units, so the numbers do not compare.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="empathetic" styledegree="1.3"><prosody rate="-6%"><s>Comparing the numbers is the right instinct.</s><s>It works once both count the same unit.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>Read the first one. Check what each was measured with.</s></mstts:express-as>'>
-      <div class="slide-head"><span class="n">12</span><h2>Spot the mistake</h2></div>
+      <div class="slide-head"><span class="n">15</span><h2>Spot the mistake</h2></div>
       <div class="say"><button type="button" class="speak" aria-label="Read it to me">&#128266;</button><span id="sm12say">Read what each child says, work it out yourself, then tap what went wrong.</span></div>
       <div class="stage" id="sm12st"></div>
       <div class="choices" id="sm12ch"></div>
@@ -723,7 +741,7 @@
     </section>
     <!-- 13  2Gg.03  Story problems -->
     <section class="slide" data-say="Read the story. Work out the answer. Then tap it." data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>A measuring story gives two amounts and compares them.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>A pencil is 9 centimetres and a crayon is 6.</s><s>How much longer asks for the difference.</s><s>9 take away 6 is 3 centimetres longer.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="empathetic" styledegree="1.3"><prosody rate="-6%"><s>How much longer and how long altogether sound alike.</s><s>Longer than means take away, altogether means add.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>Read the first story. Difference, or total?</s></mstts:express-as>'>
-      <div class="slide-head"><span class="n">13</span><h2>Story problems</h2></div>
+      <div class="slide-head"><span class="n">16</span><h2>Story problems</h2></div>
       <div class="say"><button type="button" class="speak" aria-label="Read it to me">&#128266;</button><span id="sp13say">Read the story, work out the answer, then tap it.</span></div>
       <div class="stage" id="sp13st"></div>
       <div class="choices" id="sp13ch"></div>
@@ -733,7 +751,7 @@
     </section>
     <!-- 14  2Gg.03  Will it always work? -->
     <section class="slide" data-twm="specialising generalising" data-say="Somebody has an idea. Test it on each example, then say whether it always works." data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>Some ideas about size hold every time, and some do not.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>Ali says a bigger object is always heavier.</s><s>A stone is smaller than a balloon.</s><s>It is also much heavier, so size does not decide.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="empathetic" styledegree="1.3"><prosody rate="-6%"><s>Bigger things often are heavier, so this feels true.</s><s>Often is not always.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>Test the idea on each example, then decide.</s></mstts:express-as>'>
-      <div class="slide-head"><span class="n">14</span><h2>Will it always work?</h2></div>
+      <div class="slide-head"><span class="n">17</span><h2>Will it always work?</h2></div>
       <div class="say"><button type="button" class="speak" aria-label="Read it to me">&#128266;</button><span id="at14say">Test the idea on each example. Then say whether it always works.</span></div>
       <div class="stage" id="at14st"></div>
       <div class="choices" id="at14ch"></div>
@@ -743,7 +761,7 @@
     </section>
     <!-- 15  2Gg.03  Make up a problem -->
     <section class="slide" data-twm="specialising generalising" data-say="Here is a number sentence. Build a story that matches it, then solve it." data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>A measuring story matches a number sentence like any other story.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>Look at 9 take away 6.</s><s>Take away means the ribbon ends up shorter.</s><s>Cuts off 6 centimetres makes it shorter by exactly 6.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="empathetic" styledegree="1.3"><prosody rate="-6%"><s>Measuring it twice changes nothing at all.</s><s>Something has to actually happen to the ribbon.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>Pick who has the ribbon, then what they do to it.</s></mstts:express-as>'>
-      <div class="slide-head"><span class="n">15</span><h2>Make up a problem</h2></div>
+      <div class="slide-head"><span class="n">18</span><h2>Make up a problem</h2></div>
       <div class="say"><button type="button" class="speak" aria-label="Read it to me">&#128266;</button><span id="pb15say">Here is a number sentence. Build a story that matches it, then solve it.</span></div>
       <div class="stage" id="pb15st"></div>
       <div class="choices" id="pb15ch"></div>
@@ -782,7 +800,6 @@
         <div class="stickers" id="stickers"></div>
         <p class="fb" id="fb11" role="status" aria-live="polite"></p>
         <div class="sc-wrap" id="selfcheck"></div>
-      <div id="vocab"></div>
         <div class="bigbtns"><button type="button" class="big small teal" id="restart">Play again</button></div>
       </div>
     </section>
@@ -2182,7 +2199,7 @@
   let r1 = 0, right1 = 0, lock1 = false, set1 = []; const ROUNDS1 = 5;
   function round1() {
     lock1 = false; $("fb1").textContent = ""; $("fb1").className = "fb";
-    if (r1 >= ROUNDS1) { $("things1").innerHTML = ""; $("fb1").className = "fb good"; $("fb1").textContent = "You compared " + right1 + " of " + ROUNDS1 + "!"; finish(0, "You can compare lengths."); return; }
+    if (r1 >= ROUNDS1) { $("things1").innerHTML = ""; $("fb1").className = "fb good"; $("fb1").textContent = "You compared " + right1 + " of " + ROUNDS1 + "!"; finish(3, "You can compare lengths."); return; }
     const n = r1 < 2 ? 2 : 3, picks = shuffle(ITEMS1).slice(0, n), lens = shuffle([90, 62, 38].slice(0, n));
     set1 = picks.map((p, i) => ({ ic: p[0], name: p[1], len: lens[i] }));
     const wantLong = r1 % 2 === 0;
@@ -2232,7 +2249,7 @@
     laid2 = quiz2; odd2 = false; paint2();
     $("fb2").className = "fb " + (ok ? "good" : "bad"); $("fb2").textContent = (ok ? cheer() + " " : "") + "It is " + quiz2 + " cubes long.";
     say((ok ? cheer() + " " : "") + "It is " + quiz2 + " cubes long");
-    if (right2 >= 3) finish(1, "You can measure with cubes!"); later(ask2, 2200);
+    if (right2 >= 3) finish(4, "You can measure with cubes!"); later(ask2, 2200);
   });
   ask2();
 
@@ -2248,7 +2265,7 @@
   }
   function round3() {
     lock3 = false; $("fb3").textContent = ""; $("fb3").className = "fb";
-    if (r3 >= ROUNDS3) { $("ruler3").innerHTML = ""; $("ch3").innerHTML = ""; $("fb3").className = "fb good"; $("fb3").textContent = "You read " + right3 + " of " + ROUNDS3 + "!"; finish(2, "You can read a ruler."); return; }
+    if (r3 >= ROUNDS3) { $("ruler3").innerHTML = ""; $("ch3").innerHTML = ""; $("fb3").className = "fb good"; $("fb3").textContent = "You read " + right3 + " of " + ROUNDS3 + "!"; finish(5, "You can read a ruler."); return; }
     const fromZero = r3 < 3, len = rnd(3, 9), start = fromZero ? 0 : rnd(1, 5);
     q3 = { start, end: start + len, len, fromZero };
     $("score3").textContent = "Measure " + (r3 + 1) + " of " + ROUNDS3;
@@ -2283,7 +2300,7 @@
   const UNAME = { cm: "centimetres", m: "metres", g: "grams", kg: "kilograms", ml: "millilitres", l: "litres" };
   function round4() {
     lock4 = false; $("fb4").textContent = ""; $("fb4").className = "fb";
-    if (r4 >= ROUNDS4) { $("q4").textContent = ""; $("qtext4").textContent = ""; $("ch4").innerHTML = ""; $("fb4").className = "fb good"; $("fb4").textContent = "You chose " + right4 + " of " + ROUNDS4 + " units!"; finish(3, "You can choose the right unit."); return; }
+    if (r4 >= ROUNDS4) { $("q4").textContent = ""; $("qtext4").textContent = ""; $("ch4").innerHTML = ""; $("fb4").className = "fb good"; $("fb4").textContent = "You chose " + right4 + " of " + ROUNDS4 + " units!"; finish(6, "You can choose the right unit."); return; }
     const U = units4[r4]; $("score4").textContent = "Question " + (r4 + 1) + " of " + ROUNDS4;
     $("q4").textContent = U.ic; $("qtext4").textContent = "How would you measure " + U.t + "?"; $("say4").textContent = "How would you measure " + U.t + "?";
     const pair = ["cm", "m"].includes(U.a) ? ["cm", "m"] : ["g", "kg"].includes(U.a) ? ["g", "kg"] : ["ml", "l"];
@@ -2322,7 +2339,7 @@
   }
   function round5() {
     $("next5").hidden = true; on5 = [];
-    if (r5 >= ROUNDS5) { $("bal5").innerHTML = ""; $("weights5").innerHTML = ""; $("fb5").className = "fb good"; $("fb5").textContent = "You balanced all " + ROUNDS5 + "!"; finish(4, "You can balance the scales."); return; }
+    if (r5 >= ROUNDS5) { $("bal5").innerHTML = ""; $("weights5").innerHTML = ""; $("fb5").className = "fb good"; $("fb5").textContent = "You balanced all " + ROUNDS5 + "!"; finish(7, "You can balance the scales."); return; }
     const o = OBJ5[rnd(0, OBJ5.length - 1)]; obj5 = { ic: o[0], name: o[1], m: o[2] };
     $("score5").textContent = "Thing " + (r5 + 1) + " of " + ROUNDS5;
     $("say5").innerHTML = "Balance the <b>" + obj5.name + "</b> " + obj5.ic + ". Add weights until the beam is <b>level</b>.";
@@ -2346,7 +2363,7 @@
   }
   function round6() {
     lock6 = false; $("fb6").textContent = ""; $("fb6").className = "fb";
-    if (r6 >= ROUNDS6) { $("dial6").innerHTML = ""; $("ch6").innerHTML = ""; $("fb6").className = "fb good"; $("fb6").textContent = "You read " + right6 + " of " + ROUNDS6 + "!"; finish(5, "You can read a kitchen scale."); return; }
+    if (r6 >= ROUNDS6) { $("dial6").innerHTML = ""; $("ch6").innerHTML = ""; $("fb6").className = "fb good"; $("fb6").textContent = "You read " + right6 + " of " + ROUNDS6 + "!"; finish(8, "You can read a kitchen scale."); return; }
     g6 = rnd(1, 9) * 100; drawDial(g6);
     $("score6").textContent = "Reading " + (r6 + 1) + " of " + ROUNDS6;
     const asKg = false; /* 1000 g = 1 kg is Stage 3's Gg.06 */
@@ -2391,7 +2408,7 @@
   }
   function checkPour() {
     if (!quiz7 || quiz7.task !== "pour") return;
-    if (ml7 === quiz7.target) { right7++; $("fb7").className = "fb good"; $("fb7").textContent = cheer() + " " + quiz7.target + " ml poured."; say(cheer()); if (right7 >= 3) finish(6, "You can measure liquid!"); later(ask7, 2000); quiz7 = null; }
+    if (ml7 === quiz7.target) { right7++; $("fb7").className = "fb good"; $("fb7").textContent = cheer() + " " + quiz7.target + " ml poured."; say(cheer()); if (right7 >= 3) finish(9, "You can measure liquid!"); later(ask7, 2000); quiz7 = null; }
   }
   ["pour7", "tip7", "empty7"].forEach((id) => $(id).addEventListener("click", () => setTimeout(checkPour, 0)));
   $("ch7").addEventListener("click", (e) => {
@@ -2400,7 +2417,7 @@
     if (!ok) b.classList.add("wrong"); else right7++;
     const why = "The water reaches the " + quiz7.a + " ml mark.";
     $("fb7").className = "fb " + (ok ? "good" : "bad"); $("fb7").textContent = (ok ? cheer() + " " : "") + why; say((ok ? cheer() + " " : "") + why);
-    if (right7 >= 3) finish(6, "You can measure liquid!"); later(ask7, 2200);
+    if (right7 >= 3) finish(9, "You can measure liquid!"); later(ask7, 2200);
   });
   drawJug(); ask7();
 
@@ -2417,7 +2434,7 @@
   }
   function round8() {
     lock8 = false; $("fb8").textContent = ""; $("fb8").className = "fb"; $("ch8").innerHTML = "";
-    if (r8 >= ROUNDS8) { $("clocks8").innerHTML = ""; $("fill8").hidden = true; $("fb8").className = "fb good"; $("fb8").textContent = "You compared " + right8 + " of " + ROUNDS8 + " pairs!"; finish(7, "You can find which holds more."); return; }
+    if (r8 >= ROUNDS8) { $("clocks8").innerHTML = ""; $("fill8").hidden = true; $("fb8").className = "fb good"; $("fb8").textContent = "You compared " + right8 + " of " + ROUNDS8 + " pairs!"; finish(10, "You can find which holds more."); return; }
     let a, b; do { [a, b] = shuffle(JARS8).slice(0, 2); } while (a[1] === b[1]);
     q8 = { a, b, more: a[1] > b[1] ? a : b, diff: Math.abs(a[1] - b[1]), filled: false };
     $("score8").textContent = "Pair " + (r8 + 1) + " of " + ROUNDS8;
@@ -2458,7 +2475,7 @@
   }
   function round9() {
     lock9 = false; $("fb9").textContent = ""; $("fb9").className = "fb";
-    if (r9 >= ROUNDS9) { $("cal9").innerHTML = ""; $("calname9").textContent = ""; $("ch9").innerHTML = ""; $("fb9").className = "fb good"; $("fb9").textContent = "You made " + right9 + " good guesses out of " + ROUNDS9 + "!"; finish(8, "You can estimate, then measure."); return; }
+    if (r9 >= ROUNDS9) { $("cal9").innerHTML = ""; $("calname9").textContent = ""; $("ch9").innerHTML = ""; $("fb9").className = "fb good"; $("fb9").textContent = "You made " + right9 + " good guesses out of " + ROUNDS9 + "!"; finish(11, "You can estimate, then measure."); return; }
     len9 = rnd(3, 15); est9 = Math.max(2, len9 + [-1, 0, 1][rnd(0, 2)]);
     const far = [est9 + 7 <= 16 ? est9 + 7 : est9 - 7, est9 >= 9 ? est9 - 6 : est9 + 5].filter((v, i, a) => v > 0 && v !== est9 && a.indexOf(v) === i);
     $("score9").textContent = "Ribbon " + (r9 + 1) + " of " + ROUNDS9;
@@ -2506,7 +2523,7 @@
       $("rulerD").innerHTML = ""; $("qD").textContent = ""; $("readD").textContent = "";
       ["doneD", "clearD"].forEach((i) => { $(i).hidden = true; });
       $("fbD").className = "fb good"; $("fbD").textContent = "You drew " + rightD + " of " + GOALS.length + " lines exactly right!";
-      $("scoreD").textContent = ""; finish(9, "You can draw a line to the length you are asked for."); return;
+      $("scoreD").textContent = ""; finish(12, "You can draw a line to the length you are asked for."); return;
     }
     const q = "Draw a line exactly " + GOALS[rD] + " cm long.";
     $("qD").textContent = q; $("sayD").textContent = q;
@@ -2568,7 +2585,7 @@
     if (rV >= SCALES.length) {
       $("stripV").innerHTML = ""; $("qV").textContent = ""; $("chV").innerHTML = "";
       $("fbV").className = "fb good"; $("fbV").textContent = "You read " + rightV + " of " + SCALES.length + "!";
-      $("scoreV").textContent = ""; finish(10, "You can read a scale, even between the numbers."); return;
+      $("scoreV").textContent = ""; finish(13, "You can read a scale, even between the numbers."); return;
     }
     qV = SCALES[rV];
     $("scoreV").textContent = "Scale " + (rV + 1) + " of " + SCALES.length;
@@ -2621,7 +2638,7 @@
   let c10 = 0, right10 = 0, lock10 = false;
   function round10() {
     lock10 = false; $("fb10").textContent = ""; $("fb10").className = "fb";
-    if (c10 >= CHECK.length) { $("q10").textContent = ""; $("ch10").innerHTML = ""; $("fb10").className = "fb good"; $("fb10").innerHTML = "You got <b>" + right10 + "</b> out of " + CHECK.length + "!"; $("score10").textContent = right10 === CHECK.length ? "Every single one!" : right10 >= Math.ceil(CHECK.length * 0.75) ? "Nearly all of them!" : "Look back at the steps if you like, then have another go."; if (right10 >= Math.ceil(CHECK.length * 0.75)) { finish(15, "You got " + right10 + " out of " + CHECK.length + "."); return; }
+    if (c10 >= CHECK.length) { $("q10").textContent = ""; $("ch10").innerHTML = ""; $("fb10").className = "fb good"; $("fb10").innerHTML = "You got <b>" + right10 + "</b> out of " + CHECK.length + "!"; $("score10").textContent = right10 === CHECK.length ? "Every single one!" : right10 >= Math.ceil(CHECK.length * 0.75) ? "Nearly all of them!" : "Look back at the steps if you like, then have another go."; if (right10 >= Math.ceil(CHECK.length * 0.75)) { finish(18, "You got " + right10 + " out of " + CHECK.length + "."); return; }
       retryCheck($("fb10"), $("ch10"), right10, CHECK.length, function () { c10 = 0; right10 = 0; round10(); }); return; }
     const q = CHECK[c10]; $("score10").textContent = "Question " + (c10 + 1) + " of " + CHECK.length; $("q10").textContent = q.q; $("say10").textContent = q.q;
     $("ch10").innerHTML = shuffle(q.opts).map((o) => '<button type="button" class="choice' + (typeof o === "string" ? " word" : "") + '" data-v="' + o + '">' + o + "</button>").join("");
@@ -2687,7 +2704,7 @@
   scPaint();
 
   /* ---- 13: stickers ---- */
-  const STICKERS = [["📏", "Longer and shorter"], ["🎲", "Measure with cubes"], ["📐", "Reading a ruler"], ["🏷️", "Choosing the unit"], ["⚖️", "Balancing scales"], ["🍎", "Reading a kitchen scale"], ["🥤", "Reading a jug"], ["🥛", "Which holds more"], ["🎯", "Estimate, then measure"], ["➖", "Drawing a line"], ["📍", "Between the marks"], ["🔍", "Spot the mistake"], ["📖", "Story problems"], ["🔁", "Will it always work?"], ["✏️", "Make up a problem"], ["✅", "Show what I know"], ["\ud83e\udd14", "How do you know"]];
+  const STICKERS = [["🔎", "What this lesson is about"], ["🎥", "Unit lecture"], ["📣", "Math words"], ["📏", "Longer and shorter"], ["🎲", "Measure with cubes"], ["📐", "Reading a ruler"], ["🏷️", "Choosing the unit"], ["⚖️", "Balancing scales"], ["🍎", "Reading a kitchen scale"], ["🥤", "Reading a jug"], ["🥛", "Which holds more"], ["🎯", "Estimate, then measure"], ["➖", "Drawing a line"], ["📍", "Between the marks"], ["🔍", "Spot the mistake"], ["📖", "Story problems"], ["🔁", "Will it always work?"], ["✏️", "Make up a problem"], ["✅", "Show what I know"], ["\ud83e\udd14", "How do you know"]];
   function paintStickers() {
     $("stickers").innerHTML = STICKERS.map((s, i) => '<div class="sticker' + (done[i] ? " got" : "") + '"><span class="ic">' + s[0] + "</span>" + s[1] + (done[i] ? "" : '<br><small style="color:var(--muted);font-weight:400">not yet</small>') + "</div>").join("");
     const got = done.slice(0, STICKERS.length).filter(Boolean).length;
@@ -2804,23 +2821,125 @@
   })();
 
 
-  /* ==== ehel-vocabulary: Math Words for this lesson ====
-     Same insertion pattern as add-self-check.py: an empty host div on
-     the sticker-shelf slide, populated by this script, never scored. */
-  (function () {
-    const VOCAB = [{ w: "length", d: "How long something is, measured from one end to the other." }, { w: "centimetre", d: "A small unit for measuring length, marked on a ruler." }, { w: "unit", d: "The thing you use to measure with, like a cube, a centimetre or a cup." }, { w: "balance", d: "A tool with two sides that tips down on the heavier side, used to compare mass." }, { w: "mass", d: "How heavy something is." }, { w: "capacity", d: "How much a container can hold." }];
-    const host = document.getElementById("vocab");
-    if (!host) return;
-    const esc = (t) => String(t).replace(/&/g, "&amp;").replace(/</g, "&lt;")
-      .replace(/"/g, "&quot;");
-    host.innerHTML = '<p class="vc-head">Math Words</p>'
-      + '<p class="vc-sub">Words from this lesson, explained in one line each.</p>'
-      + '<dl class="vc-list">'
-      + VOCAB.map((it) => '<div class="vc-row"><dt>' + esc(it.w) + '</dt><dd>'
-        + esc(it.d) + "</dd></div>").join("")
-      + "</dl>";
-  })();
+  /* ==== ehel-g2-lesson-opener: three shared step functions, ported from Grade 4's own
+     add-lesson-opener.py in the same idiom - data-say for arrival
+     narration (show() already speaks it), plain finish(i, msg), no
+     ONSHOW/ONLEAVE/reportAttempt. esc() IS OWN, not shared, matching
+     every add-*.py tool in this build - see Grade 4's own docstring for
+     the ReferenceError this avoids. ==== */
+  const esc = (t) => String(t).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/"/g, "&quot;");
+  function lessonAbout(o) {
+    document.getElementById(o.stage).innerHTML =
+      '<div class="ovw"><h3 class="ovw-h">By the end of this lesson you will be able to&hellip;</h3>' +
+      '<ol class="ovw-list">' + o.about.map((t) => '<li>' + esc(t) + '</li>').join('') + '</ol>' +
+      '<div class="bigbtns"><button type="button" class="big small" id="' + o.stage + 'go">Got it, let\'s begin &#10003;</button></div></div>';
+    document.getElementById(o.stage + 'go').addEventListener('click', () => {
+      document.getElementById(o.stage + 'go').disabled = true;
+      finish(o.finish, o.done);
+    });
+  }
 
+  function lessonLecture(o) {
+    const parts = o.parts || [];
+    let k = 0;
+    const id = o.stage + 'l';
+    function paint() {
+      const p = parts[k];
+      document.getElementById(o.stage).innerHTML =
+        '<div class="lec"><p class="phase">Part ' + (k + 1) + ' of ' + parts.length + '</p>' +
+        '<h3 class="lec-h">' + esc(p.title) + '</h3><p class="lec-p">' + esc(p.say) + '</p>' +
+        '<div class="bigbtns">' +
+        '<button type="button" class="big small teal" id="' + id + 'hear">&#128266; Listen</button>' +
+        (k > 0 ? '<button type="button" class="big small ghost" id="' + id + 'back">&#9664; Last part</button>' : '') +
+        '<button type="button" class="big small" id="' + id + 'next">' + (k + 1 < parts.length ? 'Next part &#9654;' : 'I heard it all &#10003;') + '</button>' +
+        '</div><p class="lec-note">Read aloud by the lesson\'s voice. There is no video for this lesson yet.</p></div>';
+      document.getElementById(id + 'hear').addEventListener('click', () => say(p.title + '. ' + p.say));
+      if (k > 0) document.getElementById(id + 'back').addEventListener('click', () => { k--; paint(); say(parts[k].title + '. ' + parts[k].say); });
+      document.getElementById(id + 'next').addEventListener('click', () => {
+        if (k + 1 < parts.length) { k++; paint(); say(parts[k].title + '. ' + parts[k].say); }
+        else { finish(o.finish, o.done); }
+      });
+    }
+    if (!parts.length) return;
+    paint();
+  }
+
+  function lessonWords(o) {
+    const items = o.words || [];
+    const heard = new Set();
+    let open = -1;
+    const id = o.stage + 'w';
+    function paintGrid() {
+      document.getElementById(o.stage).innerHTML =
+        '<div class="cardsgrid" id="' + id + 'g">' + items.map((w, k) =>
+          '<button type="button" class="tapcard' + (heard.has(k) ? ' heard' : '') + '" data-k="' + k + '">' +
+          '<span class="cpic" aria-hidden="true">' + w.pic + '</span>' + esc(w.w) + '</button>').join('') + '</div>' +
+        '<div class="wordpanel" id="' + id + 'p"' + (open < 0 ? ' hidden' : '') + '></div>' +
+        '<div class="bigbtns" id="' + id + 'go" style="' + (heard.size === items.length ? '' : 'display:none') + '">' +
+        '<button type="button" class="big small" id="' + id + 'quiz">Show I know them &#9654;</button></div>';
+      if (open >= 0) paintPanel();
+      document.getElementById(id + 'g').addEventListener('click', (e) => {
+        const b = e.target.closest('.tapcard'); if (!b) return;
+        open = Number(b.dataset.k); heard.add(open);
+        paintGrid();
+        const w = items[open];
+        say(w.w + '. ' + w.meaning + ' ' + (w.uses[0] || ''));
+      });
+      if (heard.size === items.length) {
+        const goBtn = document.getElementById(id + 'quiz');
+        if (goBtn) goBtn.addEventListener('click', () => check());
+      }
+    }
+    function paintPanel() {
+      const w = items[open];
+      const p = document.getElementById(id + 'p');
+      p.hidden = false;
+      p.innerHTML = '<div class="wp-head"><span class="wp-pic" aria-hidden="true">' + w.pic + '</span>' +
+        '<div><p class="wp-word">' + esc(w.w) + '</p><p class="wp-meaning">' + esc(w.meaning) + '</p></div></div>' +
+        '<p class="wp-uses-h">Use it</p><ul class="wp-uses">' + (w.uses || []).map((u) => '<li>' + esc(u) + '</li>').join('') + '</ul>' +
+        '<div class="bigbtns"><button type="button" class="big small teal" id="' + id + 'h">&#128266; Hear it again</button></div>';
+      document.getElementById(id + 'h').addEventListener('click', () => say(w.w + '. ' + w.meaning + ' ' + (w.uses || []).join(' ')));
+    }
+    function check() {
+      const order = shuffle(items.map((_, k) => k));
+      let i = 0, right = 0, lock = false;
+      function draw() {
+        lock = false;
+        const k = order[i], w = items[k];
+        const others = shuffle(items.map((_, j) => j).filter((j) => j !== k)).slice(0, Math.min(2, items.length - 1));
+        const opts = shuffle([k].concat(others));
+        document.getElementById(o.stage).innerHTML =
+          '<div class="mw"><p class="lec-p">Which word means: <b>' + esc(w.meaning) + '</b></p>' +
+          '<div class="wordbtns" id="' + id + 'ch">' + opts.map((j) =>
+            '<button type="button" class="wordbtn" data-ok="' + (j === k ? 1 : 0) + '">' +
+            '<span class="wbpic" aria-hidden="true">' + items[j].pic + '</span>' + esc(items[j].w) + '</button>').join('') + '</div>' +
+          '<p class="lec-note" id="' + id + 'fb"></p></div>';
+        say('Which word means: ' + w.meaning);
+        document.getElementById(id + 'ch').addEventListener('click', (e) => {
+          const b = e.target.closest('.wordbtn'); if (!b || lock) return;
+          lock = true;
+          const ok = b.dataset.ok === '1';
+          document.getElementById(id + 'ch').querySelectorAll('.wordbtn').forEach((c) => { c.disabled = true; if (c.dataset.ok === '1') c.classList.add('right'); });
+          if (!ok) b.classList.add('wrong'); else right++;
+          const msg = ok ? cheer() + ' ' + w.w + '.' : 'That word is ' + w.w + '. ' + w.meaning;
+          document.getElementById(id + 'fb').textContent = msg; say(msg);
+          i++;
+          setTimeout(() => {
+            if (i >= items.length) {
+              document.getElementById(o.stage).innerHTML = '<div class="mw"><p class="lec-p">You know ' + right + ' of ' + items.length + ' math words.</p></div>';
+              finish(o.finish, o.done);
+            } else draw();
+          }, 2200);
+        });
+      }
+      draw();
+    }
+    paintGrid();
+  }
+
+  lessonAbout({ stage: 'stageOvw', about: ["Compare two lengths and say which is longer.", "Measure with the same unit every time.", "Measure a length in whole centimetres with a ruler.", "Choose the right unit for what I am measuring.", "Estimate the mass of an object before measuring it.", "Read scales marked in twos, fives and tens."], finish: 0, done: "Let's begin." });
+  lessonLecture({ stage: 'stageLec', parts: [{ title: "Measuring length", say: "Line up the end of the ruler with the start of what you are measuring, and use the same unit all the way along, or the measurement will not mean anything." }, { title: "Choosing a unit", say: "Small things are measured in small units like centimetres, and big things need bigger units - the right unit makes the number sensible." }, { title: "Mass and capacity", say: "Mass is how heavy something is, found on a balance or a scale. Capacity is how much a container can hold, found by filling it up." }], finish: 1, done: "You have heard the whole lesson. Now do it yourself." });
+  lessonWords({ stage: 'stageMw', words: [{ w: "length", pic: "↔️", meaning: "How long something is, measured from one end to the other.", uses: ["Compare the length of two pencils."] }, { w: "centimetre", pic: "📏", meaning: "A small unit for measuring length, marked on a ruler.", uses: ["Measure the pencil in centimetres."] }, { w: "unit", pic: "1️⃣", meaning: "The thing you use to measure with, like a cube, a centimetre or a cup.", uses: ["Choose the right unit to measure the table."] }, { w: "balance", pic: "⚖️", meaning: "A tool with two sides that tips down on the heavier side, used to compare mass.", uses: ["Use the balance to compare two objects."] }, { w: "mass", pic: "🐘", meaning: "How heavy something is.", uses: ["Estimate the mass of the book before weighing it."] }, { w: "capacity", pic: "🥤", meaning: "How much a container can hold.", uses: ["Which jug has the bigger capacity?"] }], finish: 2, done: "You know the math words of this lesson." });
   show(0, false);
   quiet -= 1;   /* the first draw is over: say() speaks from here on */
 
@@ -3603,12 +3722,45 @@
     max-width: 30ch; padding: 10px 12px; border-radius: 10px;
     background: var(--cell, var(--card)); border: 1px solid var(--line, #ddd); }
 </style>
-<style>/* ehel-vocabulary - see add-vocabulary.py */
-  #vocab { margin: 18px auto 0; max-width: 46ch; text-align: left; }
-  .vc-head { font-size: 17px; font-weight: 700; margin: 0 0 4px; }
-  .vc-sub { font-size: 13.5px; color: var(--muted, #666); margin: 0 0 12px; line-height: 1.5; }
-  .vc-list { margin: 0; }
-  .vc-row { padding: 9px 0; border-top: 1px solid var(--line, #ddd); }
-  .vc-row dt { margin: 0 0 3px; font-size: 15px; font-weight: 700; }
-  .vc-row dd { margin: 0; font-size: 14px; line-height: 1.45; color: var(--ink, #222); }
+
+<style>/* ehel-g2-lesson-opener - see add-lesson-opener.py */
+  .ovw { width: 100%; max-width: 34em; margin: 0 auto; text-align: center; }
+  .ovw-h { font-size: 19px; margin: 0 0 12px; }
+  .ovw-list { margin: 0; padding-left: 26px; display: flex; flex-direction: column; gap: 11px;
+    font-size: 19px; text-align: left; }
+  .ovw-list li::marker { color: var(--teal); font-weight: 800; }
+  .lec, .mw { width: 100%; max-width: 36em; margin: 0 auto; display: flex; flex-direction: column;
+    align-items: center; gap: 10px; text-align: center; }
+  .phase { color: var(--teal); font-weight: 800; font-size: 12.5px; letter-spacing: .1em;
+    text-transform: uppercase; }
+  .lec-h { font-weight: 800; font-size: clamp(21px, 4vw, 26px); margin: 0; }
+  .lec-p { margin: 0; font-size: 19px; line-height: 1.55; max-width: 34em; }
+  .lec-note { margin: 4px 0 0; color: var(--muted); font-size: 13.5px; }
+  .cardsgrid { display: grid; grid-template-columns: repeat(auto-fit, minmax(128px, 1fr)); gap: 12px;
+    width: 100%; max-width: 640px; }
+  .tapcard { display: flex; flex-direction: column; align-items: center; gap: 6px; padding: 14px 8px 12px;
+    border-radius: 18px; border: 3px solid var(--line); background: var(--card); color: var(--ink);
+    font-weight: 800; font-size: 17px; line-height: 1.2; transition: transform 120ms ease, border-color 120ms ease; }
+  .tapcard .cpic { font-size: clamp(40px, 8vw, 56px); line-height: 1.1; }
+  .tapcard:active { transform: scale(0.96); }
+  .tapcard.heard { border-color: var(--teal); background: var(--teal-soft); }
+  .tapcard.heard::after { content: "\2713"; color: var(--good); font-size: 15px; }
+  .wordpanel { width: 100%; max-width: 560px; padding: 16px 18px; border-radius: 20px;
+    border: 3px solid var(--teal); background: var(--card); text-align: left; }
+  .wp-head { display: flex; align-items: center; gap: 16px; }
+  .wp-pic { font-size: 40px; }
+  .wp-word { margin: 0; font-weight: 800; font-size: 28px; }
+  .wp-meaning { margin: 4px 0 0; font-size: 17.5px; line-height: 1.45; }
+  .wp-uses-h { margin: 12px 0 4px; color: var(--teal); font-weight: 800; font-size: 12.5px;
+    letter-spacing: .1em; text-transform: uppercase; }
+  .wp-uses { margin: 0 0 10px; padding-left: 20px; display: flex; flex-direction: column; gap: 5px;
+    font-size: 16.5px; font-style: italic; }
+  .wordbtns { display: flex; gap: 12px; flex-wrap: wrap; justify-content: center; }
+  .wordbtn { min-width: 118px; padding: 12px 18px; border-radius: 18px; border: 3px solid var(--line);
+    background: var(--card); color: var(--ink); font-weight: 800; cursor: pointer; }
+  .wordbtn .wbpic { display: block; font-size: 40px; line-height: 1.15; }
+  .wordbtn:active { transform: scale(0.96); }
+  .wordbtn.right { background: var(--good-soft); border-color: var(--good); }
+  .wordbtn.wrong { background: var(--bad-soft); border-color: var(--bad); }
+  .wordbtn:disabled { cursor: default; }
 </style>

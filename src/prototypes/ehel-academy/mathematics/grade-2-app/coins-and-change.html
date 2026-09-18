@@ -500,10 +500,28 @@
 
   <div class="eh-quiet" id="ehQuiet" role="status" aria-live="polite" hidden><span class="eh-quiet-msg"></span><button type="button" class="eh-quiet-ok">OK</button></div>
   <div class="deck" id="deck" role="main">
+    <!-- STEP 0a: what this lesson is about -->
+    <section class="slide" data-say="By the end of this lesson you will be able to: Sort coins and make sets of different values; count what is in a purse and say what it is worth; combine coins to make different values; pay an amount using the fewest pieces; work out how much more is needed; compare values and put coins in order of value.">
+      <div class="slide-head"><span class="n">1</span><h2>What this lesson is about</h2></div>
+      <div class="say"><button type="button" class="speak" aria-label="Read it to me">&#128266;</button><span id="askOvw">By the end of this lesson you will be able to: Sort coins and make sets of different values; count what is in a purse and say what it is worth; combine coins to make different values; pay an amount using the fewest pieces; work out how much more is needed; compare values and put coins in order of value.</span></div>
+      <div class="stage" id="stageOvw"></div>
+    </section>
+    <!-- STEP 0b: unit lecture -->
+    <section class="slide" data-say="Watch the lesson told in parts, by the voice.">
+      <div class="slide-head"><span class="n">2</span><h2>Unit lecture</h2></div>
+      <div class="say"><button type="button" class="speak" aria-label="Read it to me">&#128266;</button><span id="askLec">Watch the lesson told in parts, by the voice.</span></div>
+      <div class="stage" id="stageLec"></div>
+    </section>
+    <!-- STEP 0c: math words -->
+    <section class="slide" data-say="Tap each word to hear what it means and how to use it. Then show you know them.">
+      <div class="slide-head"><span class="n">3</span><h2>Math words</h2></div>
+      <div class="say"><button type="button" class="speak" aria-label="Read it to me">&#128266;</button><span id="askMw">Tap each word to hear what it means and how to use it. Then show you know them.</span></div>
+      <div class="stage" id="stageMw"></div>
+    </section>
     <!-- 1 know your money -->
     <section class="slide" data-twm="characterising classifying" data-say="This is our money. Round gold ones are coins. Flat ones are notes. Tap one to hear what it is worth." data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>Money comes as coins and notes, and each one is worth a different number of shillings.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>A 10 shilling coin is worth ten single shillings.</s><s>A 50 shilling note is worth fifty.</s><s>The number printed on it tells you what it is worth.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="empathetic" styledegree="1.3"><prosody rate="-6%"><s>A big coin is not always worth more than a small one.</s><s>Read the number on it, not its size.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>Tap each coin and note and listen to what it is worth.</s></mstts:express-as>'>
       <div class="eh-warm" id="ehWarm"><p class="eh-warm-h">Warm up</p><div class="eh-warm-say"><button type="button" class="speak" aria-label="Read it to me">&#128266;</button><span class="eh-warm-q"></span></div><div class="choices eh-warm-ch"></div><p class="fb" role="status" aria-live="polite"></p></div>
-      <div class="slide-head"><span class="n">1</span><h2>Know your money</h2></div>
+      <div class="slide-head"><span class="n">4</span><h2>Know your money</h2></div>
       <div class="say"><button type="button" class="speak" aria-label="Read it to me">🔊</button><span id="say1">Round gold ones are <b>coins</b>. Flat ones are <b>notes</b>. Tap one to hear what it is worth.</span></div>
       <details class="kit"><summary>For the grown-up: what to have to hand</summary><p>A handful of real coins and a note or two, and something with a price on it. Counting real money, biggest coin first, is this whole lesson done for real.</p></details>
       <div class="stage">
@@ -518,7 +536,7 @@
 
     <!-- 2 count the purse -->
     <section class="slide" data-say="To count money, always start with the biggest and count on. Tap the biggest one first." data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>To count money, start with the biggest and count on.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>A 50 note, a 20 coin and a 5 coin.</s><s>Start at 50, count on 20 to 70, then 5 more to 75.</s><s>That is 75 shillings.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="empathetic" styledegree="1.3"><prosody rate="-6%"><s>Counting the pieces is not counting the money.</s><s>Three coins can be worth much more than three shillings.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>Tap the biggest one first, then keep counting on.</s></mstts:express-as>'>
-      <div class="slide-head"><span class="n">2</span><h2>Count what is in the purse</h2></div>
+      <div class="slide-head"><span class="n">5</span><h2>Count what is in the purse</h2></div>
       <div class="say"><button type="button" class="speak" aria-label="Read it to me">🔊</button><span id="say2">Start with the <b>biggest</b>, then count on. Tap them in order, biggest first.</span></div>
       <div class="stage">
         <div class="coins" id="money2"></div>
@@ -530,7 +548,7 @@
 
     <!-- 3 make this amount -->
     <section class="slide" data-say="Now make an amount. Tap coins and notes until the purse holds exactly the right money." data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>Now you choose the money to make an amount exactly.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>To make 35 shillings, take a 20, then a 10, then a 5.</s><s>Say 20, 30, 35 as you go.</s><s>Exactly right.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="empathetic" styledegree="1.3"><prosody rate="-6%"><s>If you go past the amount, press Undo and take the last piece back out.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>Keep a running total in your head as you tap each piece.</s></mstts:express-as>'>
-      <div class="slide-head"><span class="n">3</span><h2>Make this exact amount</h2></div>
+      <div class="slide-head"><span class="n">6</span><h2>Make this exact amount</h2></div>
       <div class="say"><button type="button" class="speak" aria-label="Read it to me">🔊</button><span id="say3">Tap money into the purse until it holds <b>exactly</b> the amount.</span></div>
       <div class="stage">
         <div class="tag" id="target3"></div>
@@ -545,7 +563,7 @@
 
     <!-- 4 fewest coins -->
     <section class="slide" data-say="Same amount, but now use as few coins and notes as you can. Take the biggest that fits, every time." data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>The same amount can be made with lots of pieces or just a few.</s><s>Take the biggest that fits, every time.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>70 shillings.</s><s>A 50 fits, and leaves 20.</s><s>A 20 fits, and leaves nothing.</s><s>That is two pieces.</s><s>Seven 10 shilling coins also make 70, but that is seven pieces.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="empathetic" styledegree="1.3"><prosody rate="-6%"><s>Starting with small coins still reaches the amount, but it takes far more pieces.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>Ask yourself which is the biggest piece that still fits, and tap that one.</s></mstts:express-as>'>
-      <div class="slide-head"><span class="n">4</span><h2>The fewest pieces</h2></div>
+      <div class="slide-head"><span class="n">7</span><h2>The fewest pieces</h2></div>
       <div class="say"><button type="button" class="speak" aria-label="Read it to me">🔊</button><span id="say4">Make it again with as <b>few</b> pieces as you can. Take the <b>biggest that fits</b>, every time.</span></div>
       <div class="stage">
         <div class="tag" id="target4"></div>
@@ -560,7 +578,7 @@
 
     <!-- 5 shopping -->
     <section class="slide" data-say="At the shop you add the prices together to find the total." data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>The total is all the prices added together.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>A pencil for 20 shillings and a banana for 11.</s><s>20 add 11 is 31, so the total is 31 shillings.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="empathetic" styledegree="1.3"><prosody rate="-6%"><s>Add every price in the basket.</s><s>It is easy to add two prices and forget the third.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>Add the first two prices, then add the next one to that answer.</s></mstts:express-as>'>
-      <div class="slide-head"><span class="n">5</span><h2>What does it all cost?</h2></div>
+      <div class="slide-head"><span class="n">8</span><h2>What does it all cost?</h2></div>
       <div class="say"><button type="button" class="speak" aria-label="Read it to me">🔊</button><span id="say5">Add the prices together. What is the <b>total</b>?</span></div>
       <div class="stage">
         <div class="basket" id="basket5"></div>
@@ -573,7 +591,7 @@
 
     <!-- 6 change -->
     <section class="slide" data-say="You have some money, but not enough. Count on from what you have up to the price. The hops show how much more you need." data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>When you do not have enough money, count on from what you have up to the price.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>You have 35 shillings and the price is 50.</s><s>Hop 5 to reach 40, then hop 10 to reach 50.</s><s>5 and 10 make 15, so you need 15 shillings more.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="empathetic" styledegree="1.3"><prosody rate="-6%"><s>Stop exactly on the price.</s><s>A hop that jumps past it counts too much.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>Use the biggest hop that does not jump past the price.</s></mstts:express-as>'>
-      <div class="slide-head"><span class="n">6</span><h2>How much more?</h2></div>
+      <div class="slide-head"><span class="n">9</span><h2>How much more?</h2></div>
       <div class="say"><button type="button" class="speak" aria-label="Read it to me">🔊</button><span id="say6">Count <b>on</b> from what you have up to the price. The hops show how much <b>more</b> you need.</span></div>
       <div class="stage">
         <p class="fb" id="q6" style="font-size:20px"></p>
@@ -587,7 +605,7 @@
 
     <!-- 7 shillings and cents -->
     <section class="slide" data-say="Money has its own way of writing. Forty-five shillings can be written 45 sh, or KSh 45. Both mean the same." data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>Money has its own way of being written, with the number and the letters sh or KSh.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>45 sh and KSh 45 both mean forty-five shillings.</s><s>The letters say it is money.</s><s>The number says how much.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="empathetic" styledegree="1.3"><prosody rate="-6%"><s>KSh goes in front of the number and sh goes after it, but the amount is exactly the same.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>Read the number first, then find the one that means the same amount.</s></mstts:express-as>'>
-      <div class="slide-head"><span class="n">7</span><h2>Writing money</h2></div>
+      <div class="slide-head"><span class="n">10</span><h2>Writing money</h2></div>
       <div class="say"><button type="button" class="speak" aria-label="Read it to me">🔊</button><span id="say7"><b>45 sh</b> and <b>KSh 45</b> both mean forty-five shillings. Tap the one that matches.</span></div>
       <div class="stage">
         <div class="swap"><span class="box" id="from7"></span><span class="eq">=</span><span class="box" id="to7">?</span></div>
@@ -599,7 +617,7 @@
 
     <!-- 8 best value -->
     <section class="slide" data-say="Two purses. Add up what is in each one, then choose the one worth more." data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>To compare two purses, find the total in each one, then compare the totals.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>One purse has two 20 shilling coins, which is 40.</s><s>The other has two 10s and a 5, which is 25.</s><s>40 is more than 25.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="empathetic" styledegree="1.3"><prosody rate="-6%"><s>The purse with more coins is not always worth more.</s><s>Count the money, not the coins.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>Count one purse, remember its total, then count the other one.</s></mstts:express-as>'>
-      <div class="slide-head"><span class="n">8</span><h2>Which purse is worth more?</h2></div>
+      <div class="slide-head"><span class="n">11</span><h2>Which purse is worth more?</h2></div>
       <div class="say"><button type="button" class="speak" aria-label="Read it to me">🔊</button><span id="say8">Two purses. Add up what is in each one, then choose the one worth <b>more</b>.</span></div>
       <div class="stage">
         <p class="fb" id="q8" style="font-size:20px"></p>
@@ -612,7 +630,7 @@
 
     <!-- 9 saving and spending -->
     <section class="slide" data-say="Money you keep is saving. Money you hand over is spending. Both are just adding and taking away." data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>Saving adds money to what you have.</s><s>Spending takes money away.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>Musa has 30 shillings and saves 20 more.</s><s>30 add 20 is 50.</s><s>Then he spends 15.</s><s>50 take away 15 is 35.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="empathetic" styledegree="1.3"><prosody rate="-6%"><s>Read carefully whether the money comes in or goes out before you decide to add or take away.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>Ask yourself, is this saving or spending?</s><s>Then add or take away.</s></mstts:express-as>'>
-      <div class="slide-head"><span class="n">9</span><h2>Saving and spending</h2></div>
+      <div class="slide-head"><span class="n">12</span><h2>Saving and spending</h2></div>
       <div class="say"><button type="button" class="speak" aria-label="Read it to me">🔊</button><span id="say9">Saving <b>adds</b> up. Spending <b>takes</b> away. Work it out.</span></div>
       <div class="stage">
         <p class="fb" id="q9" style="font-size:20px"></p>
@@ -626,7 +644,7 @@
     <!-- 10 check -->
     <!-- 10  2Nm.01  Spot the mistake -->
     <section class="slide" data-twm="critiquing improving" data-say="Read what each child says. Work it out yourself. Then tap what went wrong." data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>Checking a money answer means checking value, not how many coins.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>Hodan counts eight 10 shilling coins and three 1 shilling coins.</s><s>She says 11 shillings, which counts the pieces.</s><s>Eight tens is 80, and 3 more is 83 shillings.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="empathetic" styledegree="1.3"><prosody rate="-6%"><s>Counting the coins is a sensible move.</s><s>It just does not tell you what they are worth.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>Read the first one. Work out the real amount first.</s></mstts:express-as>'>
-      <div class="slide-head"><span class="n">10</span><h2>Spot the mistake</h2></div>
+      <div class="slide-head"><span class="n">13</span><h2>Spot the mistake</h2></div>
       <div class="say"><button type="button" class="speak" aria-label="Read it to me">&#128266;</button><span id="sm10say">Read what each child says, work it out yourself, then tap what went wrong.</span></div>
       <div class="stage" id="sm10st"></div>
       <div class="choices" id="sm10ch"></div>
@@ -636,7 +654,7 @@
     </section>
     <!-- 11  2Nm.02  Story problems -->
     <section class="slide" data-say="Read the story. Work out the answer. Then tap it." data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>A money story hides a sum like any other story problem.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>Ali buys a pencil for 25 shillings and a rubber for 15.</s><s>Altogether means add.</s><s>The tens make 30 and the ones 10, so 40 shillings.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="empathetic" styledegree="1.3"><prosody rate="-6%"><s>Spends and buys mean add.</s><s>Has left and change mean take away.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>Read the first story. Decide the sum before you work it.</s></mstts:express-as>'>
-      <div class="slide-head"><span class="n">11</span><h2>Story problems</h2></div>
+      <div class="slide-head"><span class="n">14</span><h2>Story problems</h2></div>
       <div class="say"><button type="button" class="speak" aria-label="Read it to me">&#128266;</button><span id="sp11say">Read the story, work out the answer, then tap it.</span></div>
       <div class="stage" id="sp11st"></div>
       <div class="choices" id="sp11ch"></div>
@@ -646,7 +664,7 @@
     </section>
     <!-- 12  2Nm.02  Will it always work? -->
     <section class="slide" data-twm="specialising generalising" data-say="Somebody has an idea. Test it on each example, then say whether it always works." data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>Some ideas about money hold every time, and some only look true.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>Ali says more coins always means more money.</s><s>Five 1 shilling coins is five pieces and 5 shillings.</s><s>One 20 shilling coin is one piece, worth four times that.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="empathetic" styledegree="1.3"><prosody rate="-6%"><s>More pieces feels like more, and with sweets it would be.</s><s>Each coin carries its own value.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>Test the idea on each example, then decide.</s></mstts:express-as>'>
-      <div class="slide-head"><span class="n">12</span><h2>Will it always work?</h2></div>
+      <div class="slide-head"><span class="n">15</span><h2>Will it always work?</h2></div>
       <div class="say"><button type="button" class="speak" aria-label="Read it to me">&#128266;</button><span id="at12say">Test the idea on each example. Then say whether it always works.</span></div>
       <div class="stage" id="at12st"></div>
       <div class="choices" id="at12ch"></div>
@@ -656,7 +674,7 @@
     </section>
     <!-- 13  2Nm.02  Make up a problem -->
     <section class="slide" data-twm="specialising generalising" data-say="Here is a number sentence. Build a story that matches it, then solve it." data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>A money story has to match its number sentence, just like any other.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>Look at 25 add 15.</s><s>Add means more money at the end, not less.</s><s>Is given 15 more adds. Spends 15 takes away.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="empathetic" styledegree="1.3"><prosody rate="-6%"><s>Spends and buys sound like doing something, so they feel like adding.</s><s>They take money away.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>Pick who has the money, then what happens to it.</s></mstts:express-as>'>
-      <div class="slide-head"><span class="n">13</span><h2>Make up a problem</h2></div>
+      <div class="slide-head"><span class="n">16</span><h2>Make up a problem</h2></div>
       <div class="say"><button type="button" class="speak" aria-label="Read it to me">&#128266;</button><span id="pb13say">Here is a number sentence. Build a story that matches it, then solve it.</span></div>
       <div class="stage" id="pb13st"></div>
       <div class="choices" id="pb13ch"></div>
@@ -695,7 +713,6 @@
         <div class="stickers" id="stickers"></div>
         <p class="fb" id="fb11" role="status" aria-live="polite"></p>
         <div class="sc-wrap" id="selfcheck"></div>
-      <div id="vocab"></div>
         <div class="bigbtns"><button type="button" class="big small teal" id="restart">Play again</button></div>
       </div>
     </section>
@@ -2107,7 +2124,7 @@
   function round1() {
     lock1 = false;
     $("money1").querySelectorAll(".coin").forEach((c) => { c.classList.remove("right", "wrong"); c.disabled = false; });
-    if (t1 >= ASK1.length) { $("say1").innerHTML = "You know them all. Tap any one to hear it again."; $("fb1").className = "fb good"; $("fb1").textContent = "You found " + right1 + " of " + ASK1.length + "!"; $("score1").textContent = ""; finish(0, "You know your coins and notes."); return; }
+    if (t1 >= ASK1.length) { $("say1").innerHTML = "You know them all. Tap any one to hear it again."; $("fb1").className = "fb good"; $("fb1").textContent = "You found " + right1 + " of " + ASK1.length + "!"; $("score1").textContent = ""; finish(3, "You know your coins and notes."); return; }
     $("score1").textContent = "Task " + (t1 + 1) + " of " + ASK1.length;
     $("say1").innerHTML = "Tap the <b>" + nameOf(ASK1[t1]) + "</b>.";
     say("Tap the " + nameOf(ASK1[t1]));
@@ -2131,7 +2148,7 @@
   let p2 = 0, right2 = 0, order2 = [], running2 = 0;
   function round2() {
     $("fb2").textContent = ""; $("fb2").className = "fb";
-    if (p2 >= 3) { $("money2").innerHTML = ""; $("work2").innerHTML = ""; $("fb2").className = "fb good"; $("fb2").textContent = "You counted all 3 purses!"; $("score2").textContent = ""; finish(1, "You can count a purse."); return; }
+    if (p2 >= 3) { $("money2").innerHTML = ""; $("work2").innerHTML = ""; $("fb2").className = "fb good"; $("fb2").textContent = "You counted all 3 purses!"; $("score2").textContent = ""; finish(4, "You can count a purse."); return; }
     order2 = []; running2 = 0;
     $("score2").textContent = "Purse " + (p2 + 1) + " of 3";
     const set = PURSES[p2];
@@ -2222,7 +2239,7 @@
   let b5 = 0, right5 = 0, lock5 = false, basket5 = [], total5 = 0;
   function round5() {
     lock5 = false; $("fb5").textContent = ""; $("fb5").className = "fb"; $("work5").innerHTML = "";
-    if (b5 >= 4) { $("basket5").innerHTML = ""; $("ch5").innerHTML = ""; $("fb5").className = "fb good"; $("fb5").textContent = "You added up " + right5 + " of 4 baskets!"; $("score5").textContent = ""; finish(4, "You can total a basket."); return; }
+    if (b5 >= 4) { $("basket5").innerHTML = ""; $("ch5").innerHTML = ""; $("fb5").className = "fb good"; $("fb5").textContent = "You added up " + right5 + " of 4 baskets!"; $("score5").textContent = ""; finish(7, "You can total a basket."); return; }
     do { basket5 = shuffle(ITEMS).slice(0, b5 < 2 ? 2 : 3); } while (!noCarry(basket5));
     total5 = basket5.reduce((a, it) => a + it[2], 0);
     $("score5").textContent = "Basket " + (b5 + 1) + " of 4";
@@ -2270,7 +2287,7 @@
   }
   function round6() {
     $("fb6").textContent = ""; $("fb6").className = "fb"; $("next6").hidden = true;
-    if (c6 >= CHANGE.length) { $("q6").textContent = ""; $("line6").innerHTML = ""; $("now6").textContent = ""; HOPS.map((h) => h[0]).concat(["undo6"]).forEach((id) => { $(id).hidden = true; }); $("fb6").className = "fb good"; $("fb6").textContent = "You found how much more " + right6 + " times!"; $("score6").textContent = ""; finish(5, "You can find how much more you need."); return; }
+    if (c6 >= CHANGE.length) { $("q6").textContent = ""; $("line6").innerHTML = ""; $("now6").textContent = ""; HOPS.map((h) => h[0]).concat(["undo6"]).forEach((id) => { $(id).hidden = true; }); $("fb6").className = "fb good"; $("fb6").textContent = "You found how much more " + right6 + " times!"; $("score6").textContent = ""; finish(8, "You can find how much more you need."); return; }
     const [price, paid] = CHANGE[c6]; at6 = price; hops6 = [];
     $("score6").textContent = "Shop " + (c6 + 1) + " of " + CHANGE.length;
     const q = "You have " + sh(price) + ". It costs " + sh(paid) + ". Count on to " + sh(paid) + ".";
@@ -2306,7 +2323,7 @@
   function round7() {
     lock7 = false; $("fb7").textContent = ""; $("fb7").className = "fb"; $("to7").textContent = "?";
     if (c7 === 0) list7 = shuffle(AMOUNTS7).slice(0, 5);
-    if (c7 >= list7.length) { $("from7").textContent = ""; $("to7").textContent = ""; $("ch7").innerHTML = ""; $("fb7").className = "fb good"; $("fb7").textContent = "You matched " + right7 + " of " + list7.length + "!"; $("score7").textContent = ""; finish(6, "You can read and write money."); return; }
+    if (c7 >= list7.length) { $("from7").textContent = ""; $("to7").textContent = ""; $("ch7").innerHTML = ""; $("fb7").className = "fb good"; $("fb7").textContent = "You matched " + right7 + " of " + list7.length + "!"; $("score7").textContent = ""; finish(9, "You can read and write money."); return; }
     const n = list7[c7], kind = c7 % 3;
     if (kind === 0) q7 = { from: words7(n) + " shillings", a: sh(n), opts: [sh(n), sh(swap7(n)), sh(n * 10 > 100 ? n + 5 : n * 10)] };
     else if (kind === 1) q7 = { from: "KSh " + n, a: sh(n), opts: [sh(n), sh(swap7(n)), sh(n + 5)] };
@@ -2349,7 +2366,7 @@
   function round8() {
     lock8 = false; $("fb8").textContent = ""; $("fb8").className = "fb"; $("work8").innerHTML = "";
     if (d8 === 0) list8 = shuffle(PURSE_PAIRS).slice(0, 4);
-    if (d8 >= list8.length) { $("q8").textContent = ""; $("offers8").innerHTML = ""; $("fb8").className = "fb good"; $("fb8").textContent = "You compared " + right8 + " purses out of " + list8.length + " correctly!"; $("score8").textContent = ""; finish(7, "You can compare two handfuls of money."); return; }
+    if (d8 >= list8.length) { $("q8").textContent = ""; $("offers8").innerHTML = ""; $("fb8").className = "fb good"; $("fb8").textContent = "You compared " + right8 + " purses out of " + list8.length + " correctly!"; $("score8").textContent = ""; finish(10, "You can compare two handfuls of money."); return; }
     deal8 = list8[d8];
     $("score8").textContent = "Purse " + (d8 + 1) + " of " + list8.length;
     const q = "Which purse is worth more?";
@@ -2397,7 +2414,7 @@
 
   function round9() {
     lock9 = false; $("fb9").textContent = ""; $("fb9").className = "fb"; $("work9").innerHTML = "";
-    if (s9 >= 4) { $("q9").textContent = ""; $("ch9").innerHTML = ""; $("fb9").className = "fb good"; $("fb9").textContent = "You solved " + right9 + " of 4!"; $("score9").textContent = ""; finish(8, "You can save up and spend well."); return; }
+    if (s9 >= 4) { $("q9").textContent = ""; $("ch9").innerHTML = ""; $("fb9").className = "fb good"; $("fb9").textContent = "You solved " + right9 + " of 4!"; $("score9").textContent = ""; finish(11, "You can save up and spend well."); return; }
     q9 = make9(s9);
     $("score9").textContent = "Problem " + (s9 + 1) + " of 4";
     $("q9").textContent = q9.q; $("say9").textContent = q9.q;
@@ -2443,7 +2460,7 @@
   let c10 = 0, right10 = 0, lock10 = false;
   function round10() {
     lock10 = false; $("fb10").textContent = ""; $("fb10").className = "fb";
-    if (c10 >= CHECK.length) { $("q10").textContent = ""; $("ch10").innerHTML = ""; $("fb10").className = "fb good"; $("fb10").innerHTML = "You got <b>" + right10 + "</b> out of " + CHECK.length + "!"; $("score10").textContent = right10 === CHECK.length ? "Every single one!" : right10 >= Math.ceil(CHECK.length * 0.75) ? "Nearly all of them!" : "Look back at the steps if you like, then have another go."; if (right10 >= Math.ceil(CHECK.length * 0.75)) { finish(13, "You got " + right10 + " out of " + CHECK.length + "."); return; }
+    if (c10 >= CHECK.length) { $("q10").textContent = ""; $("ch10").innerHTML = ""; $("fb10").className = "fb good"; $("fb10").innerHTML = "You got <b>" + right10 + "</b> out of " + CHECK.length + "!"; $("score10").textContent = right10 === CHECK.length ? "Every single one!" : right10 >= Math.ceil(CHECK.length * 0.75) ? "Nearly all of them!" : "Look back at the steps if you like, then have another go."; if (right10 >= Math.ceil(CHECK.length * 0.75)) { finish(16, "You got " + right10 + " out of " + CHECK.length + "."); return; }
       retryCheck($("fb10"), $("ch10"), right10, CHECK.length, function () { c10 = 0; right10 = 0; round10(); }); return; }
     const q = CHECK[c10]; $("score10").textContent = "Question " + (c10 + 1) + " of " + CHECK.length; $("q10").textContent = q.q; $("say10").textContent = q.q;
     choices($("ch10"), q.opts, true); say(q.q);
@@ -2508,7 +2525,7 @@
   scPaint();
 
   /* ---- 11: stickers ---- */
-  const STICKERS = [["💰", "Coins and notes"], ["👛", "Counting a purse"], ["🎯", "Making an amount"], ["✨", "The fewest pieces"], ["🛒", "Shop totals"], ["➕", "How much more"], ["✍️", "Writing money"], ["⚖️", "Which purse is worth more"], ["🏦", "Saving and spending"], ["🔍", "Spot the mistake"], ["📖", "Story problems"], ["🔁", "Will it always work?"], ["✏️", "Make up a problem"], ["✅", "Show what I know"], ["\ud83e\udd14", "How do you know"]];
+  const STICKERS = [["🔎", "What this lesson is about"], ["🎥", "Unit lecture"], ["📣", "Math words"], ["💰", "Coins and notes"], ["👛", "Counting a purse"], ["🎯", "Making an amount"], ["✨", "The fewest pieces"], ["🛒", "Shop totals"], ["➕", "How much more"], ["✍️", "Writing money"], ["⚖️", "Which purse is worth more"], ["🏦", "Saving and spending"], ["🔍", "Spot the mistake"], ["📖", "Story problems"], ["🔁", "Will it always work?"], ["✏️", "Make up a problem"], ["✅", "Show what I know"], ["\ud83e\udd14", "How do you know"]];
   function paintStickers() {
     $("stickers").innerHTML = STICKERS.map((s, i) => '<div class="sticker' + (done[i] ? " got" : "") + '"><span class="ic">' + s[0] + "</span>" + s[1] + (done[i] ? "" : '<br><small style="color:var(--muted);font-weight:400">not yet</small>') + "</div>").join("");
     const got = done.slice(0, STICKERS.length).filter(Boolean).length;
@@ -2626,23 +2643,125 @@
   })();
 
 
-  /* ==== ehel-vocabulary: Math Words for this lesson ====
-     Same insertion pattern as add-self-check.py: an empty host div on
-     the sticker-shelf slide, populated by this script, never scored. */
-  (function () {
-    const VOCAB = [{ w: "coin", d: "A round piece of money, like a 5 or 10 shilling coin." }, { w: "note", d: "A flat piece of paper money, worth more than most coins." }, { w: "value", d: "How much something is worth in money." }, { w: "total", d: "The whole amount when you add prices or coins together." }, { w: "shilling", d: "The unit of money used in this lesson, written KSh or sh." }, { w: "saving", d: "Keeping money instead of spending it, so the amount goes up." }];
-    const host = document.getElementById("vocab");
-    if (!host) return;
-    const esc = (t) => String(t).replace(/&/g, "&amp;").replace(/</g, "&lt;")
-      .replace(/"/g, "&quot;");
-    host.innerHTML = '<p class="vc-head">Math Words</p>'
-      + '<p class="vc-sub">Words from this lesson, explained in one line each.</p>'
-      + '<dl class="vc-list">'
-      + VOCAB.map((it) => '<div class="vc-row"><dt>' + esc(it.w) + '</dt><dd>'
-        + esc(it.d) + "</dd></div>").join("")
-      + "</dl>";
-  })();
+  /* ==== ehel-g2-lesson-opener: three shared step functions, ported from Grade 4's own
+     add-lesson-opener.py in the same idiom - data-say for arrival
+     narration (show() already speaks it), plain finish(i, msg), no
+     ONSHOW/ONLEAVE/reportAttempt. esc() IS OWN, not shared, matching
+     every add-*.py tool in this build - see Grade 4's own docstring for
+     the ReferenceError this avoids. ==== */
+  const esc = (t) => String(t).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/"/g, "&quot;");
+  function lessonAbout(o) {
+    document.getElementById(o.stage).innerHTML =
+      '<div class="ovw"><h3 class="ovw-h">By the end of this lesson you will be able to&hellip;</h3>' +
+      '<ol class="ovw-list">' + o.about.map((t) => '<li>' + esc(t) + '</li>').join('') + '</ol>' +
+      '<div class="bigbtns"><button type="button" class="big small" id="' + o.stage + 'go">Got it, let\'s begin &#10003;</button></div></div>';
+    document.getElementById(o.stage + 'go').addEventListener('click', () => {
+      document.getElementById(o.stage + 'go').disabled = true;
+      finish(o.finish, o.done);
+    });
+  }
 
+  function lessonLecture(o) {
+    const parts = o.parts || [];
+    let k = 0;
+    const id = o.stage + 'l';
+    function paint() {
+      const p = parts[k];
+      document.getElementById(o.stage).innerHTML =
+        '<div class="lec"><p class="phase">Part ' + (k + 1) + ' of ' + parts.length + '</p>' +
+        '<h3 class="lec-h">' + esc(p.title) + '</h3><p class="lec-p">' + esc(p.say) + '</p>' +
+        '<div class="bigbtns">' +
+        '<button type="button" class="big small teal" id="' + id + 'hear">&#128266; Listen</button>' +
+        (k > 0 ? '<button type="button" class="big small ghost" id="' + id + 'back">&#9664; Last part</button>' : '') +
+        '<button type="button" class="big small" id="' + id + 'next">' + (k + 1 < parts.length ? 'Next part &#9654;' : 'I heard it all &#10003;') + '</button>' +
+        '</div><p class="lec-note">Read aloud by the lesson\'s voice. There is no video for this lesson yet.</p></div>';
+      document.getElementById(id + 'hear').addEventListener('click', () => say(p.title + '. ' + p.say));
+      if (k > 0) document.getElementById(id + 'back').addEventListener('click', () => { k--; paint(); say(parts[k].title + '. ' + parts[k].say); });
+      document.getElementById(id + 'next').addEventListener('click', () => {
+        if (k + 1 < parts.length) { k++; paint(); say(parts[k].title + '. ' + parts[k].say); }
+        else { finish(o.finish, o.done); }
+      });
+    }
+    if (!parts.length) return;
+    paint();
+  }
+
+  function lessonWords(o) {
+    const items = o.words || [];
+    const heard = new Set();
+    let open = -1;
+    const id = o.stage + 'w';
+    function paintGrid() {
+      document.getElementById(o.stage).innerHTML =
+        '<div class="cardsgrid" id="' + id + 'g">' + items.map((w, k) =>
+          '<button type="button" class="tapcard' + (heard.has(k) ? ' heard' : '') + '" data-k="' + k + '">' +
+          '<span class="cpic" aria-hidden="true">' + w.pic + '</span>' + esc(w.w) + '</button>').join('') + '</div>' +
+        '<div class="wordpanel" id="' + id + 'p"' + (open < 0 ? ' hidden' : '') + '></div>' +
+        '<div class="bigbtns" id="' + id + 'go" style="' + (heard.size === items.length ? '' : 'display:none') + '">' +
+        '<button type="button" class="big small" id="' + id + 'quiz">Show I know them &#9654;</button></div>';
+      if (open >= 0) paintPanel();
+      document.getElementById(id + 'g').addEventListener('click', (e) => {
+        const b = e.target.closest('.tapcard'); if (!b) return;
+        open = Number(b.dataset.k); heard.add(open);
+        paintGrid();
+        const w = items[open];
+        say(w.w + '. ' + w.meaning + ' ' + (w.uses[0] || ''));
+      });
+      if (heard.size === items.length) {
+        const goBtn = document.getElementById(id + 'quiz');
+        if (goBtn) goBtn.addEventListener('click', () => check());
+      }
+    }
+    function paintPanel() {
+      const w = items[open];
+      const p = document.getElementById(id + 'p');
+      p.hidden = false;
+      p.innerHTML = '<div class="wp-head"><span class="wp-pic" aria-hidden="true">' + w.pic + '</span>' +
+        '<div><p class="wp-word">' + esc(w.w) + '</p><p class="wp-meaning">' + esc(w.meaning) + '</p></div></div>' +
+        '<p class="wp-uses-h">Use it</p><ul class="wp-uses">' + (w.uses || []).map((u) => '<li>' + esc(u) + '</li>').join('') + '</ul>' +
+        '<div class="bigbtns"><button type="button" class="big small teal" id="' + id + 'h">&#128266; Hear it again</button></div>';
+      document.getElementById(id + 'h').addEventListener('click', () => say(w.w + '. ' + w.meaning + ' ' + (w.uses || []).join(' ')));
+    }
+    function check() {
+      const order = shuffle(items.map((_, k) => k));
+      let i = 0, right = 0, lock = false;
+      function draw() {
+        lock = false;
+        const k = order[i], w = items[k];
+        const others = shuffle(items.map((_, j) => j).filter((j) => j !== k)).slice(0, Math.min(2, items.length - 1));
+        const opts = shuffle([k].concat(others));
+        document.getElementById(o.stage).innerHTML =
+          '<div class="mw"><p class="lec-p">Which word means: <b>' + esc(w.meaning) + '</b></p>' +
+          '<div class="wordbtns" id="' + id + 'ch">' + opts.map((j) =>
+            '<button type="button" class="wordbtn" data-ok="' + (j === k ? 1 : 0) + '">' +
+            '<span class="wbpic" aria-hidden="true">' + items[j].pic + '</span>' + esc(items[j].w) + '</button>').join('') + '</div>' +
+          '<p class="lec-note" id="' + id + 'fb"></p></div>';
+        say('Which word means: ' + w.meaning);
+        document.getElementById(id + 'ch').addEventListener('click', (e) => {
+          const b = e.target.closest('.wordbtn'); if (!b || lock) return;
+          lock = true;
+          const ok = b.dataset.ok === '1';
+          document.getElementById(id + 'ch').querySelectorAll('.wordbtn').forEach((c) => { c.disabled = true; if (c.dataset.ok === '1') c.classList.add('right'); });
+          if (!ok) b.classList.add('wrong'); else right++;
+          const msg = ok ? cheer() + ' ' + w.w + '.' : 'That word is ' + w.w + '. ' + w.meaning;
+          document.getElementById(id + 'fb').textContent = msg; say(msg);
+          i++;
+          setTimeout(() => {
+            if (i >= items.length) {
+              document.getElementById(o.stage).innerHTML = '<div class="mw"><p class="lec-p">You know ' + right + ' of ' + items.length + ' math words.</p></div>';
+              finish(o.finish, o.done);
+            } else draw();
+          }, 2200);
+        });
+      }
+      draw();
+    }
+    paintGrid();
+  }
+
+  lessonAbout({ stage: 'stageOvw', about: ["Sort coins and make sets of different values.", "Count what is in a purse and say what it is worth.", "Combine coins to make different values.", "Pay an amount using the fewest pieces.", "Work out how much more is needed.", "Compare values and put coins in order of value."], finish: 0, done: "Let's begin." });
+  lessonLecture({ stage: 'stageLec', parts: [{ title: "Coins and notes", say: "Coins and notes are worth different amounts - counting money means starting with the biggest value and counting on from there." }, { title: "Making an amount", say: "The same amount of money can be made with different coins - the fewest pieces is usually the biggest coins first, then the smaller ones to finish exactly." }, { title: "How much more", say: "To find how much more is needed, work out the gap between what you have and what you need." }], finish: 1, done: "You have heard the whole lesson. Now do it yourself." });
+  lessonWords({ stage: 'stageMw', words: [{ w: "coin", pic: "💰", meaning: "A round piece of money, like a 5 or 10 shilling coin.", uses: ["Sort the coins by value."] }, { w: "note", pic: "💵", meaning: "A flat piece of paper money, worth more than most coins.", uses: ["A note is worth more than most coins."] }, { w: "value", pic: "🏷️", meaning: "How much something is worth in money.", uses: ["Compare the value of two coins."] }, { w: "total", pic: "🔢", meaning: "The whole amount when you add prices or coins together.", uses: ["Add the coins to find the total."] }, { w: "shilling", pic: "👛", meaning: "The unit of money used in this lesson, written KSh or sh.", uses: ["Count how many shillings are in the purse."] }, { w: "saving", pic: "🏦", meaning: "Keeping money instead of spending it, so the amount goes up.", uses: ["Saving a little each week adds up."] }], finish: 2, done: "You know the math words of this lesson." });
   show(0, false);
   quiet -= 1;   /* the first draw is over: say() speaks from here on */
 
@@ -3425,12 +3544,45 @@
     max-width: 30ch; padding: 10px 12px; border-radius: 10px;
     background: var(--cell, var(--card)); border: 1px solid var(--line, #ddd); }
 </style>
-<style>/* ehel-vocabulary - see add-vocabulary.py */
-  #vocab { margin: 18px auto 0; max-width: 46ch; text-align: left; }
-  .vc-head { font-size: 17px; font-weight: 700; margin: 0 0 4px; }
-  .vc-sub { font-size: 13.5px; color: var(--muted, #666); margin: 0 0 12px; line-height: 1.5; }
-  .vc-list { margin: 0; }
-  .vc-row { padding: 9px 0; border-top: 1px solid var(--line, #ddd); }
-  .vc-row dt { margin: 0 0 3px; font-size: 15px; font-weight: 700; }
-  .vc-row dd { margin: 0; font-size: 14px; line-height: 1.45; color: var(--ink, #222); }
+
+<style>/* ehel-g2-lesson-opener - see add-lesson-opener.py */
+  .ovw { width: 100%; max-width: 34em; margin: 0 auto; text-align: center; }
+  .ovw-h { font-size: 19px; margin: 0 0 12px; }
+  .ovw-list { margin: 0; padding-left: 26px; display: flex; flex-direction: column; gap: 11px;
+    font-size: 19px; text-align: left; }
+  .ovw-list li::marker { color: var(--teal); font-weight: 800; }
+  .lec, .mw { width: 100%; max-width: 36em; margin: 0 auto; display: flex; flex-direction: column;
+    align-items: center; gap: 10px; text-align: center; }
+  .phase { color: var(--teal); font-weight: 800; font-size: 12.5px; letter-spacing: .1em;
+    text-transform: uppercase; }
+  .lec-h { font-weight: 800; font-size: clamp(21px, 4vw, 26px); margin: 0; }
+  .lec-p { margin: 0; font-size: 19px; line-height: 1.55; max-width: 34em; }
+  .lec-note { margin: 4px 0 0; color: var(--muted); font-size: 13.5px; }
+  .cardsgrid { display: grid; grid-template-columns: repeat(auto-fit, minmax(128px, 1fr)); gap: 12px;
+    width: 100%; max-width: 640px; }
+  .tapcard { display: flex; flex-direction: column; align-items: center; gap: 6px; padding: 14px 8px 12px;
+    border-radius: 18px; border: 3px solid var(--line); background: var(--card); color: var(--ink);
+    font-weight: 800; font-size: 17px; line-height: 1.2; transition: transform 120ms ease, border-color 120ms ease; }
+  .tapcard .cpic { font-size: clamp(40px, 8vw, 56px); line-height: 1.1; }
+  .tapcard:active { transform: scale(0.96); }
+  .tapcard.heard { border-color: var(--teal); background: var(--teal-soft); }
+  .tapcard.heard::after { content: "\2713"; color: var(--good); font-size: 15px; }
+  .wordpanel { width: 100%; max-width: 560px; padding: 16px 18px; border-radius: 20px;
+    border: 3px solid var(--teal); background: var(--card); text-align: left; }
+  .wp-head { display: flex; align-items: center; gap: 16px; }
+  .wp-pic { font-size: 40px; }
+  .wp-word { margin: 0; font-weight: 800; font-size: 28px; }
+  .wp-meaning { margin: 4px 0 0; font-size: 17.5px; line-height: 1.45; }
+  .wp-uses-h { margin: 12px 0 4px; color: var(--teal); font-weight: 800; font-size: 12.5px;
+    letter-spacing: .1em; text-transform: uppercase; }
+  .wp-uses { margin: 0 0 10px; padding-left: 20px; display: flex; flex-direction: column; gap: 5px;
+    font-size: 16.5px; font-style: italic; }
+  .wordbtns { display: flex; gap: 12px; flex-wrap: wrap; justify-content: center; }
+  .wordbtn { min-width: 118px; padding: 12px 18px; border-radius: 18px; border: 3px solid var(--line);
+    background: var(--card); color: var(--ink); font-weight: 800; cursor: pointer; }
+  .wordbtn .wbpic { display: block; font-size: 40px; line-height: 1.15; }
+  .wordbtn:active { transform: scale(0.96); }
+  .wordbtn.right { background: var(--good-soft); border-color: var(--good); }
+  .wordbtn.wrong { background: var(--bad-soft); border-color: var(--bad); }
+  .wordbtn:disabled { cursor: default; }
 </style>

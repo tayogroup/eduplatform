@@ -494,10 +494,28 @@
   <div class="eh-quiet" id="ehQuiet" role="status" aria-live="polite" hidden><span class="eh-quiet-msg"></span><button type="button" class="eh-quiet-ok">OK</button></div>
   <div class="deck" id="deck" role="main">
 
+    <!-- STEP 0a: what this lesson is about -->
+    <section class="slide" data-say="By the end of this lesson you will be able to: Say where something is, using position words; tell my left from my right, and someone else's; follow directions to get somewhere; give directions for someone else to follow; complete a symmetrical picture by drawing the other half.">
+      <div class="slide-head"><span class="n">1</span><h2>What this lesson is about</h2></div>
+      <div class="say"><button type="button" class="speak" aria-label="Read it to me">&#128266;</button><span id="askOvw">By the end of this lesson you will be able to: Say where something is, using position words; tell my left from my right, and someone else's; follow directions to get somewhere; give directions for someone else to follow; complete a symmetrical picture by drawing the other half.</span></div>
+      <div class="stage" id="stageOvw"></div>
+    </section>
+    <!-- STEP 0b: unit lecture -->
+    <section class="slide" data-say="Watch the lesson told in parts, by the voice.">
+      <div class="slide-head"><span class="n">2</span><h2>Unit lecture</h2></div>
+      <div class="say"><button type="button" class="speak" aria-label="Read it to me">&#128266;</button><span id="askLec">Watch the lesson told in parts, by the voice.</span></div>
+      <div class="stage" id="stageLec"></div>
+    </section>
+    <!-- STEP 0c: math words -->
+    <section class="slide" data-say="Tap each word to hear what it means and how to use it. Then show you know them.">
+      <div class="slide-head"><span class="n">3</span><h2>Math words</h2></div>
+      <div class="say"><button type="button" class="speak" aria-label="Read it to me">&#128266;</button><span id="askMw">Tap each word to hear what it means and how to use it. Then show you know them.</span></div>
+      <div class="stage" id="stageMw"></div>
+    </section>
     <!-- 1 position words -->
     <section class="slide" data-twm="characterising classifying" data-say="Before any grid, you can say where something is in words. Above, below, next to, between." data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>You can say exactly where something is with position words.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>The bird is above the tree.</s><s>The dog is below the table.</s><s>The ball is next to the box.</s><s>The cat is between the two chairs.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="empathetic" styledegree="1.3"><prosody rate="-6%"><s>Between needs two things, one on each side of it.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>Find the thing, then say the word that tells where it is.</s></mstts:express-as>'>
       <div class="eh-warm" id="ehWarm"><p class="eh-warm-h">Warm up</p><div class="eh-warm-say"><button type="button" class="speak" aria-label="Read it to me">&#128266;</button><span class="eh-warm-q"></span></div><div class="choices eh-warm-ch"></div><p class="fb" role="status" aria-live="polite"></p></div>
-      <div class="slide-head"><span class="n">1</span><h2>Saying where</h2></div>
+      <div class="slide-head"><span class="n">4</span><h2>Saying where</h2></div>
       <div class="say"><button type="button" class="speak" aria-label="Read it to me">&#128266;</button><span id="say0">Before any grid you can say where something is in <b>words</b>: above, below, next to, between.</span></div>
       <details class="kit"><summary>For the grown-up: what to have to hand</summary><p>Room to walk in, and a small mirror if you have one. Directions and turns are learned by standing up and making them, not by watching somebody else.</p></details>
       <div class="stage">
@@ -512,7 +530,7 @@
 
     <!-- 2 turning from where you face -->
     <section class="slide" data-say="Left and right depend on which way you are facing. Turn with the robot, not with the page." data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>Left and right depend on which way you are facing.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>When the robot faces up the page, its left is your left.</s><s>When it faces down the page, its left is on your right.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="empathetic" styledegree="1.3"><prosody rate="-6%"><s>Do not use the left of the page.</s><s>Turn with the robot and use its left.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>Turn your own body to face the same way as the robot, then decide.</s></mstts:express-as>'>
-      <div class="slide-head"><span class="n">2</span><h2>Whose left is it?</h2></div>
+      <div class="slide-head"><span class="n">5</span><h2>Whose left is it?</h2></div>
       <div class="say"><button type="button" class="speak" aria-label="Read it to me">🔊</button><span id="say3">Left and right depend on the way <b>you are facing</b>. Turn with the robot.</span></div>
       <div class="stage">
         <div class="facing">
@@ -528,7 +546,7 @@
 
     <!-- 3 follow a route -->
     <section class="slide" data-say="Now drive the robot. Forward goes the way it is facing, so turn first and then go." data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>A route is a list of moves: turn left, turn right and go forward.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>The flag is two squares up and one square to the right.</s><s>Face up, go forward two, turn right, and go forward one.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="empathetic" styledegree="1.3"><prosody rate="-6%"><s>Forward always means the way the robot is facing.</s><s>Turn first, then go.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>Plan your first two moves before you press anything.</s></mstts:express-as>'>
-      <div class="slide-head"><span class="n">3</span><h2>Drive it to the flag</h2></div>
+      <div class="slide-head"><span class="n">6</span><h2>Drive it to the flag</h2></div>
       <div class="say"><button type="button" class="speak" aria-label="Read it to me">🔊</button><span id="say5"><b>Forward</b> goes the way the robot faces. Turn first, then go.</span></div>
       <div class="stage">
         <div class="map" id="map5"></div>
@@ -541,7 +559,7 @@
 
     <!-- 4 describe a route -->
     <section class="slide" data-say="Now read a route somebody else walked, and say it in words." data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>Now you read a route somebody else walked, and say it in words.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>The trail goes forward three squares, turns right, and goes forward two more to the flag.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="empathetic" styledegree="1.3"><prosody rate="-6%"><s>Say each turn as the walker would turn, not as the page looks.</s><s>A right turn is the walker turning to their right.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>Put your finger on the star and follow the trail one square at a time.</s></mstts:express-as>'>
-      <div class="slide-head"><span class="n">4</span><h2>Say the route</h2></div>
+      <div class="slide-head"><span class="n">7</span><h2>Say the route</h2></div>
       <div class="say"><button type="button" class="speak" aria-label="Read it to me">🔊</button><span id="say6">Follow the purple trail from the star to the flag. Which set of directions is it?</span></div>
       <div class="stage">
         <div class="map" id="map6"></div>
@@ -553,7 +571,7 @@
 
     <!-- 5 reflection -->
     <section class="slide" data-say="A mirror line flips a shape over. The reflection is the same distance from the line, on the other side." data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>A mirror line flips a shape over to the other side.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>A dot 2 squares from the line lands 2 squares away on the other side.</s><s>A dot that touches the line stays touching it.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="empathetic" styledegree="1.3"><prosody rate="-6%"><s>The reflection is not just slid across.</s><s>It is the same distance from the line, on the other side.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>Count the squares from the dot to the line, then count the same number on the other side.</s></mstts:express-as>'>
-      <div class="slide-head"><span class="n">5</span><h2>Over the mirror line</h2></div>
+      <div class="slide-head"><span class="n">8</span><h2>Over the mirror line</h2></div>
       <div class="say"><button type="button" class="speak" aria-label="Read it to me">🔊</button><span id="say7">A reflection is the <b>same distance</b> from the line, on the <b>other side</b>. Tap where it lands.</span></div>
       <div class="stage">
         <div class="map" id="map7"></div>
@@ -566,7 +584,7 @@
     <!-- 6 check -->
     <!-- 6  2Gp.01  Spot the mistake -->
     <section class="slide" data-twm="critiquing improving" data-say="Read what each child says. Work it out yourself. Then tap what went wrong." data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>A direction depends on which way you are facing.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>Ali says left is the same side for everybody.</s><s>Face a friend and you both point left.</s><s>You point at opposite walls.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="empathetic" styledegree="1.3"><prosody rate="-6%"><s>Left feels fixed because your own left never moves.</s><s>It moves for anyone facing you.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>Read the first one. Work out which way they face.</s></mstts:express-as>'>
-      <div class="slide-head"><span class="n">6</span><h2>Spot the mistake</h2></div>
+      <div class="slide-head"><span class="n">9</span><h2>Spot the mistake</h2></div>
       <div class="say"><button type="button" class="speak" aria-label="Read it to me">&#128266;</button><span id="sm6say">Read what each child says, work it out yourself, then tap what went wrong.</span></div>
       <div class="stage" id="sm6st"></div>
       <div class="choices" id="sm6ch"></div>
@@ -576,7 +594,7 @@
     </section>
     <!-- 7  2Gp.01  Story problems -->
     <section class="slide" data-say="Read the story. Work out the answer. Then tap it." data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>A movement story asks you to follow moves and count.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>Musa walks 3 squares, turns, then walks 2 more.</s><s>A turn changes the way he faces, not where he is.</s><s>So he walked 3 and 2, which is 5 squares.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="empathetic" styledegree="1.3"><prosody rate="-6%"><s>Turns are easy to count as moves by mistake.</s><s>Count only steps that take you somewhere.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>Read the first story. Follow the moves one at a time.</s></mstts:express-as>'>
-      <div class="slide-head"><span class="n">7</span><h2>Story problems</h2></div>
+      <div class="slide-head"><span class="n">10</span><h2>Story problems</h2></div>
       <div class="say"><button type="button" class="speak" aria-label="Read it to me">&#128266;</button><span id="sp7say">Read the story, work out the answer, then tap it.</span></div>
       <div class="stage" id="sp7st"></div>
       <div class="choices" id="sp7ch"></div>
@@ -586,7 +604,7 @@
     </section>
     <!-- 8  2Gp.01  Will it always work? -->
     <section class="slide" data-twm="specialising generalising" data-say="Somebody has an idea. Test it on each example, then say whether it always works." data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>Some things about turning hold every time.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>Musa says four quarter turns bring you back.</s><s>Face the door and make four quarter turns.</s><s>You face the door again, wherever you started.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="empathetic" styledegree="1.3"><prosody rate="-6%"><s>Four quarters make one whole, for turns as for shapes.</s><s>So the starting point does not matter.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>Test the idea on each example, then decide.</s></mstts:express-as>'>
-      <div class="slide-head"><span class="n">8</span><h2>Will it always work?</h2></div>
+      <div class="slide-head"><span class="n">11</span><h2>Will it always work?</h2></div>
       <div class="say"><button type="button" class="speak" aria-label="Read it to me">&#128266;</button><span id="at8say">Test the idea on each example. Then say whether it always works.</span></div>
       <div class="stage" id="at8st"></div>
       <div class="choices" id="at8ch"></div>
@@ -596,7 +614,7 @@
     </section>
     <!-- 9  2Gp.01  Make up a problem -->
     <section class="slide" data-twm="specialising generalising" data-say="Here is a number sentence. Build a story that matches it, then solve it." data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>A story about moving still has to match its number sentence.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>Look at 3 add 2.</s><s>Add means the journey gets longer.</s><s>Walks 2 more steps adds to it. Turning does not move you anywhere.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="empathetic" styledegree="1.3"><prosody rate="-6%"><s>A turn feels like a move, so it is easy to count one.</s><s>Only steps that take you somewhere count.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>Pick who is walking, then what they do next.</s></mstts:express-as>'>
-      <div class="slide-head"><span class="n">9</span><h2>Make up a problem</h2></div>
+      <div class="slide-head"><span class="n">12</span><h2>Make up a problem</h2></div>
       <div class="say"><button type="button" class="speak" aria-label="Read it to me">&#128266;</button><span id="pb9say">Here is a number sentence. Build a story that matches it, then solve it.</span></div>
       <div class="stage" id="pb9st"></div>
       <div class="choices" id="pb9ch"></div>
@@ -635,7 +653,6 @@
         <div class="stickers" id="stickers"></div>
         <p class="fb" id="fb11" role="status" aria-live="polite"></p>
         <div class="sc-wrap" id="selfcheck"></div>
-      <div id="vocab"></div>
         <div class="bigbtns"><button type="button" class="big small teal" id="restart">Play again</button></div>
       </div>
     </section>
@@ -2070,7 +2087,7 @@
   let r0 = 0, right0 = 0, lock0 = false, q0 = null, grid0 = []; const ROUNDS0 = 6;
   function round0() {
     lock0 = false; $("fb0").textContent = ""; $("fb0").className = "fb";
-    if (r0 >= ROUNDS0) { $("map0").innerHTML = ""; $("q0").textContent = ""; $("fb0").className = "fb good"; $("fb0").textContent = "You found " + right0 + " of " + ROUNDS0 + "!"; $("score0").textContent = ""; finish(0, "You can say where something is."); return; }
+    if (r0 >= ROUNDS0) { $("map0").innerHTML = ""; $("q0").textContent = ""; $("fb0").className = "fb good"; $("fb0").textContent = "You found " + right0 + " of " + ROUNDS0 + "!"; $("score0").textContent = ""; finish(3, "You can say where something is."); return; }
     grid0 = shuffle(SCENE).slice(0, 9);
     // a 3 by 3 scene, drawn with rows counting DOWN so "above" is the row above
     let h = "";
@@ -2112,7 +2129,7 @@
   function paintBot3() { $("bot3").textContent = ARROW[face3]; $("comp3").innerHTML = compassHtml(ARROW[face3]); }
   function round3() {
     lock3 = false; $("fb3").textContent = ""; $("fb3").className = "fb";
-    if (r3 >= ROUNDS3) { $("ch3").innerHTML = ""; ["try3l", "try3r"].forEach((i) => { $(i).hidden = true; }); $("fb3").className = "fb good"; $("fb3").textContent = "You turned it right " + right3 + " times out of " + ROUNDS3 + "!"; $("score3").textContent = ""; finish(1, "You know whose left is whose."); return; }
+    if (r3 >= ROUNDS3) { $("ch3").innerHTML = ""; ["try3l", "try3r"].forEach((i) => { $(i).hidden = true; }); $("fb3").className = "fb good"; $("fb3").textContent = "You turned it right " + right3 + " times out of " + ROUNDS3 + "!"; $("score3").textContent = ""; finish(4, "You know whose left is whose."); return; }
     const left = r3 % 2 === 0;
     let want; do { want = rnd(0, 3); } while (want === last3);
     last3 = want; face3 = (want + (left ? 1 : 3)) % 4;
@@ -2156,7 +2173,7 @@
   }
   function round5() {
     $("fb5").textContent = ""; $("fb5").className = "fb"; $("next5").hidden = true;
-    if (m5 >= MAPS5.length) { $("map5").innerHTML = ""; $("run5").innerHTML = ""; ["l5", "f5", "r5", "reset5"].forEach((i) => { $(i).hidden = true; }); $("fb5").className = "fb good"; $("fb5").textContent = "You drove it to all " + MAPS5.length + " flags!"; $("score5").textContent = ""; finish(2, "You can follow a route."); return; }
+    if (m5 >= MAPS5.length) { $("map5").innerHTML = ""; $("run5").innerHTML = ""; ["l5", "f5", "r5", "reset5"].forEach((i) => { $(i).hidden = true; }); $("fb5").className = "fb good"; $("fb5").textContent = "You drove it to all " + MAPS5.length + " flags!"; $("score5").textContent = ""; finish(5, "You can follow a route."); return; }
     const g = MAPS5[m5]; bot5 = { c: g.c, r: g.r, f: g.f }; trail5 = []; moves5 = [];
     $("score5").textContent = "Map " + (m5 + 1) + " of " + MAPS5.length;
     ["l5", "f5", "r5"].forEach((i) => { $(i).disabled = false; });
@@ -2190,7 +2207,7 @@
   const legWords = (leg) => sq(leg.n) + " towards " + DIRS[leg.d];
   function round6() {
     lock6 = false; $("fb6").textContent = ""; $("fb6").className = "fb";
-    if (r6 >= ROUNDS6) { $("map6").innerHTML = ""; $("ch6").innerHTML = ""; $("fb6").className = "fb good"; $("fb6").textContent = "You read " + right6 + " of " + ROUNDS6 + " routes!"; $("score6").textContent = ""; finish(3, "You can describe a route."); return; }
+    if (r6 >= ROUNDS6) { $("map6").innerHTML = ""; $("ch6").innerHTML = ""; $("fb6").className = "fb good"; $("fb6").textContent = "You read " + right6 + " of " + ROUNDS6 + " routes!"; $("score6").textContent = ""; finish(6, "You can describe a route."); return; }
     let c = rnd(0, 1), r = rnd(1, 2), legs = [], path = [{ c, r }];
     const first = rnd(0, 1) === 0 ? 1 : 0; // start east or north
     for (let k = 0; k < 2; k++) {
@@ -2274,7 +2291,7 @@
   }
   function round7() {
     lock7 = false; $("fb7").textContent = ""; $("fb7").className = "fb"; $("work7").innerHTML = "";
-    if (r7 >= ROUNDS7) { $("map7").innerHTML = ""; $("fb7").className = "fb good"; $("fb7").textContent = "You reflected " + right7 + " of " + ROUNDS7 + " shapes!"; $("score7").textContent = ""; finish(4, "You can reflect a shape."); return; }
+    if (r7 >= ROUNDS7) { $("map7").innerHTML = ""; $("fb7").className = "fb good"; $("fb7").textContent = "You reflected " + right7 + " of " + ROUNDS7 + " shapes!"; $("score7").textContent = ""; finish(7, "You can reflect a shape."); return; }
     const M = MIRRORS[r7 % MIRRORS.length];
     const shape = shapeFor(M.key);
     const image = shape.map((c) => M.map(c[0], c[1]));
@@ -2348,7 +2365,7 @@
   let c10 = 0, right10 = 0, lock10 = false;
   function round10() {
     lock10 = false; $("fb10").textContent = ""; $("fb10").className = "fb";
-    if (c10 >= CHECK.length) { $("q10").textContent = ""; $("ch10").innerHTML = ""; $("fb10").className = "fb good"; $("fb10").innerHTML = "You got <b>" + right10 + "</b> out of " + CHECK.length + "!"; $("score10").textContent = right10 === CHECK.length ? "Every single one!" : right10 >= Math.ceil(CHECK.length * 0.75) ? "Nearly all of them!" : "Look back at the steps if you like, then have another go."; if (right10 >= Math.ceil(CHECK.length * 0.75)) { finish(9, "You got " + right10 + " out of " + CHECK.length + "."); return; }
+    if (c10 >= CHECK.length) { $("q10").textContent = ""; $("ch10").innerHTML = ""; $("fb10").className = "fb good"; $("fb10").innerHTML = "You got <b>" + right10 + "</b> out of " + CHECK.length + "!"; $("score10").textContent = right10 === CHECK.length ? "Every single one!" : right10 >= Math.ceil(CHECK.length * 0.75) ? "Nearly all of them!" : "Look back at the steps if you like, then have another go."; if (right10 >= Math.ceil(CHECK.length * 0.75)) { finish(12, "You got " + right10 + " out of " + CHECK.length + "."); return; }
       retryCheck($("fb10"), $("ch10"), right10, CHECK.length, function () { c10 = 0; right10 = 0; round10(); }); return; }
     const q = CHECK[c10]; $("score10").textContent = "Question " + (c10 + 1) + " of " + CHECK.length; $("q10").textContent = q.q; $("say10").textContent = q.q;
     choices($("ch10"), q.opts, true); say(q.q);
@@ -2412,7 +2429,7 @@
   scPaint();
 
   /* ---- 11: stickers ---- */
-  const STICKERS = [["👀", "Saying where"], ["🤖", "Whose left"], ["🚩", "Following a route"], ["🗣️", "Saying a route"], ["🦋", "Reflection"], ["🔍", "Spot the mistake"], ["📖", "Story problems"], ["🔁", "Will it always work?"], ["✏️", "Make up a problem"], ["✅", "Show what I know"], ["\ud83e\udd14", "How do you know"]];
+  const STICKERS = [["🔎", "What this lesson is about"], ["🎥", "Unit lecture"], ["📣", "Math words"], ["👀", "Saying where"], ["🤖", "Whose left"], ["🚩", "Following a route"], ["🗣️", "Saying a route"], ["🦋", "Reflection"], ["🔍", "Spot the mistake"], ["📖", "Story problems"], ["🔁", "Will it always work?"], ["✏️", "Make up a problem"], ["✅", "Show what I know"], ["\ud83e\udd14", "How do you know"]];
   function paintStickers() {
     $("stickers").innerHTML = STICKERS.map((s, i) => '<div class="sticker' + (done[i] ? " got" : "") + '"><span class="ic">' + s[0] + "</span>" + s[1] + (done[i] ? "" : '<br><small style="color:var(--muted);font-weight:400">not yet</small>') + "</div>").join("");
     const got = done.slice(0, STICKERS.length).filter(Boolean).length;
@@ -2529,23 +2546,125 @@
   })();
 
 
-  /* ==== ehel-vocabulary: Math Words for this lesson ====
-     Same insertion pattern as add-self-check.py: an empty host div on
-     the sticker-shelf slide, populated by this script, never scored. */
-  (function () {
-    const VOCAB = [{ w: "position", d: "Where something is, such as above, below or between other things." }, { w: "direction", d: "The way something is facing or moving, like left, right or forward." }, { w: "forward", d: "Moving the way you are facing, straight ahead." }, { w: "reflection", d: "A mirror image of a shape, flipped over a line." }, { w: "mirror line", d: "The line a reflection is flipped across - both sides are the same distance from it." }];
-    const host = document.getElementById("vocab");
-    if (!host) return;
-    const esc = (t) => String(t).replace(/&/g, "&amp;").replace(/</g, "&lt;")
-      .replace(/"/g, "&quot;");
-    host.innerHTML = '<p class="vc-head">Math Words</p>'
-      + '<p class="vc-sub">Words from this lesson, explained in one line each.</p>'
-      + '<dl class="vc-list">'
-      + VOCAB.map((it) => '<div class="vc-row"><dt>' + esc(it.w) + '</dt><dd>'
-        + esc(it.d) + "</dd></div>").join("")
-      + "</dl>";
-  })();
+  /* ==== ehel-g2-lesson-opener: three shared step functions, ported from Grade 4's own
+     add-lesson-opener.py in the same idiom - data-say for arrival
+     narration (show() already speaks it), plain finish(i, msg), no
+     ONSHOW/ONLEAVE/reportAttempt. esc() IS OWN, not shared, matching
+     every add-*.py tool in this build - see Grade 4's own docstring for
+     the ReferenceError this avoids. ==== */
+  const esc = (t) => String(t).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/"/g, "&quot;");
+  function lessonAbout(o) {
+    document.getElementById(o.stage).innerHTML =
+      '<div class="ovw"><h3 class="ovw-h">By the end of this lesson you will be able to&hellip;</h3>' +
+      '<ol class="ovw-list">' + o.about.map((t) => '<li>' + esc(t) + '</li>').join('') + '</ol>' +
+      '<div class="bigbtns"><button type="button" class="big small" id="' + o.stage + 'go">Got it, let\'s begin &#10003;</button></div></div>';
+    document.getElementById(o.stage + 'go').addEventListener('click', () => {
+      document.getElementById(o.stage + 'go').disabled = true;
+      finish(o.finish, o.done);
+    });
+  }
 
+  function lessonLecture(o) {
+    const parts = o.parts || [];
+    let k = 0;
+    const id = o.stage + 'l';
+    function paint() {
+      const p = parts[k];
+      document.getElementById(o.stage).innerHTML =
+        '<div class="lec"><p class="phase">Part ' + (k + 1) + ' of ' + parts.length + '</p>' +
+        '<h3 class="lec-h">' + esc(p.title) + '</h3><p class="lec-p">' + esc(p.say) + '</p>' +
+        '<div class="bigbtns">' +
+        '<button type="button" class="big small teal" id="' + id + 'hear">&#128266; Listen</button>' +
+        (k > 0 ? '<button type="button" class="big small ghost" id="' + id + 'back">&#9664; Last part</button>' : '') +
+        '<button type="button" class="big small" id="' + id + 'next">' + (k + 1 < parts.length ? 'Next part &#9654;' : 'I heard it all &#10003;') + '</button>' +
+        '</div><p class="lec-note">Read aloud by the lesson\'s voice. There is no video for this lesson yet.</p></div>';
+      document.getElementById(id + 'hear').addEventListener('click', () => say(p.title + '. ' + p.say));
+      if (k > 0) document.getElementById(id + 'back').addEventListener('click', () => { k--; paint(); say(parts[k].title + '. ' + parts[k].say); });
+      document.getElementById(id + 'next').addEventListener('click', () => {
+        if (k + 1 < parts.length) { k++; paint(); say(parts[k].title + '. ' + parts[k].say); }
+        else { finish(o.finish, o.done); }
+      });
+    }
+    if (!parts.length) return;
+    paint();
+  }
+
+  function lessonWords(o) {
+    const items = o.words || [];
+    const heard = new Set();
+    let open = -1;
+    const id = o.stage + 'w';
+    function paintGrid() {
+      document.getElementById(o.stage).innerHTML =
+        '<div class="cardsgrid" id="' + id + 'g">' + items.map((w, k) =>
+          '<button type="button" class="tapcard' + (heard.has(k) ? ' heard' : '') + '" data-k="' + k + '">' +
+          '<span class="cpic" aria-hidden="true">' + w.pic + '</span>' + esc(w.w) + '</button>').join('') + '</div>' +
+        '<div class="wordpanel" id="' + id + 'p"' + (open < 0 ? ' hidden' : '') + '></div>' +
+        '<div class="bigbtns" id="' + id + 'go" style="' + (heard.size === items.length ? '' : 'display:none') + '">' +
+        '<button type="button" class="big small" id="' + id + 'quiz">Show I know them &#9654;</button></div>';
+      if (open >= 0) paintPanel();
+      document.getElementById(id + 'g').addEventListener('click', (e) => {
+        const b = e.target.closest('.tapcard'); if (!b) return;
+        open = Number(b.dataset.k); heard.add(open);
+        paintGrid();
+        const w = items[open];
+        say(w.w + '. ' + w.meaning + ' ' + (w.uses[0] || ''));
+      });
+      if (heard.size === items.length) {
+        const goBtn = document.getElementById(id + 'quiz');
+        if (goBtn) goBtn.addEventListener('click', () => check());
+      }
+    }
+    function paintPanel() {
+      const w = items[open];
+      const p = document.getElementById(id + 'p');
+      p.hidden = false;
+      p.innerHTML = '<div class="wp-head"><span class="wp-pic" aria-hidden="true">' + w.pic + '</span>' +
+        '<div><p class="wp-word">' + esc(w.w) + '</p><p class="wp-meaning">' + esc(w.meaning) + '</p></div></div>' +
+        '<p class="wp-uses-h">Use it</p><ul class="wp-uses">' + (w.uses || []).map((u) => '<li>' + esc(u) + '</li>').join('') + '</ul>' +
+        '<div class="bigbtns"><button type="button" class="big small teal" id="' + id + 'h">&#128266; Hear it again</button></div>';
+      document.getElementById(id + 'h').addEventListener('click', () => say(w.w + '. ' + w.meaning + ' ' + (w.uses || []).join(' ')));
+    }
+    function check() {
+      const order = shuffle(items.map((_, k) => k));
+      let i = 0, right = 0, lock = false;
+      function draw() {
+        lock = false;
+        const k = order[i], w = items[k];
+        const others = shuffle(items.map((_, j) => j).filter((j) => j !== k)).slice(0, Math.min(2, items.length - 1));
+        const opts = shuffle([k].concat(others));
+        document.getElementById(o.stage).innerHTML =
+          '<div class="mw"><p class="lec-p">Which word means: <b>' + esc(w.meaning) + '</b></p>' +
+          '<div class="wordbtns" id="' + id + 'ch">' + opts.map((j) =>
+            '<button type="button" class="wordbtn" data-ok="' + (j === k ? 1 : 0) + '">' +
+            '<span class="wbpic" aria-hidden="true">' + items[j].pic + '</span>' + esc(items[j].w) + '</button>').join('') + '</div>' +
+          '<p class="lec-note" id="' + id + 'fb"></p></div>';
+        say('Which word means: ' + w.meaning);
+        document.getElementById(id + 'ch').addEventListener('click', (e) => {
+          const b = e.target.closest('.wordbtn'); if (!b || lock) return;
+          lock = true;
+          const ok = b.dataset.ok === '1';
+          document.getElementById(id + 'ch').querySelectorAll('.wordbtn').forEach((c) => { c.disabled = true; if (c.dataset.ok === '1') c.classList.add('right'); });
+          if (!ok) b.classList.add('wrong'); else right++;
+          const msg = ok ? cheer() + ' ' + w.w + '.' : 'That word is ' + w.w + '. ' + w.meaning;
+          document.getElementById(id + 'fb').textContent = msg; say(msg);
+          i++;
+          setTimeout(() => {
+            if (i >= items.length) {
+              document.getElementById(o.stage).innerHTML = '<div class="mw"><p class="lec-p">You know ' + right + ' of ' + items.length + ' math words.</p></div>';
+              finish(o.finish, o.done);
+            } else draw();
+          }, 2200);
+        });
+      }
+      draw();
+    }
+    paintGrid();
+  }
+
+  lessonAbout({ stage: 'stageOvw', about: ["Say where something is, using position words.", "Tell my left from my right, and someone else's.", "Follow directions to get somewhere.", "Give directions for someone else to follow.", "Complete a symmetrical picture by drawing the other half."], finish: 0, done: "Let's begin." });
+  lessonLecture({ stage: 'stageLec', parts: [{ title: "Position words", say: "Position words like above, below and between say exactly where something is compared to something else." }, { title: "Giving and following directions", say: "A direction like forward or a quarter turn only works if it is said from the mover's own point of view, not the watcher's." }, { title: "Reflection", say: "A reflection is a mirror image, flipped across a line - every point ends up exactly as far from the mirror line as it started, just on the other side." }], finish: 1, done: "You have heard the whole lesson. Now do it yourself." });
+  lessonWords({ stage: 'stageMw', words: [{ w: "position", pic: "📍", meaning: "Where something is, such as above, below or between other things.", uses: ["Say the position of the cat in the picture."] }, { w: "direction", pic: "➡️", meaning: "The way something is facing or moving, like left, right or forward.", uses: ["Give a direction to get to the flag."] }, { w: "forward", pic: "⬆️", meaning: "Moving the way you are facing, straight ahead.", uses: ["Move three steps forward."] }, { w: "reflection", pic: "🦋", meaning: "A mirror image of a shape, flipped over a line.", uses: ["Draw the reflection of the shape."] }, { w: "mirror line", pic: "📏", meaning: "The line a reflection is flipped across - both sides are the same distance from it.", uses: ["Draw the mirror line down the middle."] }], finish: 2, done: "You know the math words of this lesson." });
   show(0, false);
   quiet -= 1;   /* the first draw is over: say() speaks from here on */
 
@@ -3328,12 +3447,45 @@
     max-width: 30ch; padding: 10px 12px; border-radius: 10px;
     background: var(--cell, var(--card)); border: 1px solid var(--line, #ddd); }
 </style>
-<style>/* ehel-vocabulary - see add-vocabulary.py */
-  #vocab { margin: 18px auto 0; max-width: 46ch; text-align: left; }
-  .vc-head { font-size: 17px; font-weight: 700; margin: 0 0 4px; }
-  .vc-sub { font-size: 13.5px; color: var(--muted, #666); margin: 0 0 12px; line-height: 1.5; }
-  .vc-list { margin: 0; }
-  .vc-row { padding: 9px 0; border-top: 1px solid var(--line, #ddd); }
-  .vc-row dt { margin: 0 0 3px; font-size: 15px; font-weight: 700; }
-  .vc-row dd { margin: 0; font-size: 14px; line-height: 1.45; color: var(--ink, #222); }
+
+<style>/* ehel-g2-lesson-opener - see add-lesson-opener.py */
+  .ovw { width: 100%; max-width: 34em; margin: 0 auto; text-align: center; }
+  .ovw-h { font-size: 19px; margin: 0 0 12px; }
+  .ovw-list { margin: 0; padding-left: 26px; display: flex; flex-direction: column; gap: 11px;
+    font-size: 19px; text-align: left; }
+  .ovw-list li::marker { color: var(--teal); font-weight: 800; }
+  .lec, .mw { width: 100%; max-width: 36em; margin: 0 auto; display: flex; flex-direction: column;
+    align-items: center; gap: 10px; text-align: center; }
+  .phase { color: var(--teal); font-weight: 800; font-size: 12.5px; letter-spacing: .1em;
+    text-transform: uppercase; }
+  .lec-h { font-weight: 800; font-size: clamp(21px, 4vw, 26px); margin: 0; }
+  .lec-p { margin: 0; font-size: 19px; line-height: 1.55; max-width: 34em; }
+  .lec-note { margin: 4px 0 0; color: var(--muted); font-size: 13.5px; }
+  .cardsgrid { display: grid; grid-template-columns: repeat(auto-fit, minmax(128px, 1fr)); gap: 12px;
+    width: 100%; max-width: 640px; }
+  .tapcard { display: flex; flex-direction: column; align-items: center; gap: 6px; padding: 14px 8px 12px;
+    border-radius: 18px; border: 3px solid var(--line); background: var(--card); color: var(--ink);
+    font-weight: 800; font-size: 17px; line-height: 1.2; transition: transform 120ms ease, border-color 120ms ease; }
+  .tapcard .cpic { font-size: clamp(40px, 8vw, 56px); line-height: 1.1; }
+  .tapcard:active { transform: scale(0.96); }
+  .tapcard.heard { border-color: var(--teal); background: var(--teal-soft); }
+  .tapcard.heard::after { content: "\2713"; color: var(--good); font-size: 15px; }
+  .wordpanel { width: 100%; max-width: 560px; padding: 16px 18px; border-radius: 20px;
+    border: 3px solid var(--teal); background: var(--card); text-align: left; }
+  .wp-head { display: flex; align-items: center; gap: 16px; }
+  .wp-pic { font-size: 40px; }
+  .wp-word { margin: 0; font-weight: 800; font-size: 28px; }
+  .wp-meaning { margin: 4px 0 0; font-size: 17.5px; line-height: 1.45; }
+  .wp-uses-h { margin: 12px 0 4px; color: var(--teal); font-weight: 800; font-size: 12.5px;
+    letter-spacing: .1em; text-transform: uppercase; }
+  .wp-uses { margin: 0 0 10px; padding-left: 20px; display: flex; flex-direction: column; gap: 5px;
+    font-size: 16.5px; font-style: italic; }
+  .wordbtns { display: flex; gap: 12px; flex-wrap: wrap; justify-content: center; }
+  .wordbtn { min-width: 118px; padding: 12px 18px; border-radius: 18px; border: 3px solid var(--line);
+    background: var(--card); color: var(--ink); font-weight: 800; cursor: pointer; }
+  .wordbtn .wbpic { display: block; font-size: 40px; line-height: 1.15; }
+  .wordbtn:active { transform: scale(0.96); }
+  .wordbtn.right { background: var(--good-soft); border-color: var(--good); }
+  .wordbtn.wrong { background: var(--bad-soft); border-color: var(--bad); }
+  .wordbtn:disabled { cursor: default; }
 </style>

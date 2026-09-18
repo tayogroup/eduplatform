@@ -516,10 +516,28 @@
 
   <div class="eh-quiet" id="ehQuiet" role="status" aria-live="polite" hidden><span class="eh-quiet-msg"></span><button type="button" class="eh-quiet-ok">OK</button></div>
   <div class="deck" id="deck" role="main">
+    <!-- STEP 0a: what this lesson is about -->
+    <section class="slide" data-say="By the end of this lesson you will be able to: Find the part of a pattern that repeats; say what comes next in a pattern; mend a pattern that has a mistake in it; count on in steps of 2, 5 and 10; say how much a pattern goes up by each time; count back in steps from any number up to 100.">
+      <div class="slide-head"><span class="n">1</span><h2>What this lesson is about</h2></div>
+      <div class="say"><button type="button" class="speak" aria-label="Read it to me">&#128266;</button><span id="askOvw">By the end of this lesson you will be able to: Find the part of a pattern that repeats; say what comes next in a pattern; mend a pattern that has a mistake in it; count on in steps of 2, 5 and 10; say how much a pattern goes up by each time; count back in steps from any number up to 100.</span></div>
+      <div class="stage" id="stageOvw"></div>
+    </section>
+    <!-- STEP 0b: unit lecture -->
+    <section class="slide" data-say="Watch the lesson told in parts, by the voice.">
+      <div class="slide-head"><span class="n">2</span><h2>Unit lecture</h2></div>
+      <div class="say"><button type="button" class="speak" aria-label="Read it to me">&#128266;</button><span id="askLec">Watch the lesson told in parts, by the voice.</span></div>
+      <div class="stage" id="stageLec"></div>
+    </section>
+    <!-- STEP 0c: math words -->
+    <section class="slide" data-say="Tap each word to hear what it means and how to use it. Then show you know them.">
+      <div class="slide-head"><span class="n">3</span><h2>Math words</h2></div>
+      <div class="say"><button type="button" class="speak" aria-label="Read it to me">&#128266;</button><span id="askMw">Tap each word to hear what it means and how to use it. Then show you know them.</span></div>
+      <div class="stage" id="stageMw"></div>
+    </section>
     <!-- 1 the part that repeats -->
     <section class="slide" data-twm="characterising classifying" data-say="A repeating pattern has a part that repeats. Find the part that repeats, and you know the whole pattern." data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>A repeating pattern has a part that repeats, again and again.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>Circle, square, circle, square.</s><s>The part that repeats is circle, square.</s><s>The orange box shows it.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="empathetic" styledegree="1.3"><prosody rate="-6%"><s>The part that repeats must show up whole each time.</s><s>Circle, circle, square is a part of three shapes, not two.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>Tap a shape and see where the orange box says the repeat begins.</s></mstts:express-as>'>
       <div class="eh-warm" id="ehWarm"><p class="eh-warm-h">Warm up</p><div class="eh-warm-say"><button type="button" class="speak" aria-label="Read it to me">&#128266;</button><span class="eh-warm-q"></span></div><div class="choices eh-warm-ch"></div><p class="fb" role="status" aria-live="polite"></p></div>
-      <div class="slide-head"><span class="n">1</span><h2>The part that repeats</h2></div>
+      <div class="slide-head"><span class="n">4</span><h2>The part that repeats</h2></div>
       <div class="say"><button type="button" class="speak" aria-label="Read it to me">🔊</button><span id="say1">A repeating pattern has a <b>part that repeats</b>. The orange box shows it. Pick a pattern and tap any shape.</span></div>
       <details class="kit"><summary>For the grown-up: what to have to hand</summary><p>Two or three kinds of small object to lay out in a line - spoons and forks, or bottle tops in two colours - and a hundred square if you have one. A pattern a child makes and says aloud is worth more than one they tap.</p></details>
       <div class="stage">
@@ -534,7 +552,7 @@
 
     <!-- 2 what comes next -->
     <section class="slide" data-say="What comes next? Find the part that repeats, then tap the shape that comes next." data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>Once you find the part that repeats, you can tell what comes next.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>Red, blue, blue, red, blue, blue, red.</s><s>The part that repeats is red, blue, blue.</s><s>After red comes blue.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="empathetic" styledegree="1.3"><prosody rate="-6%"><s>Do not just copy the last shape.</s><s>Look at the whole part that repeats.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>Say the pattern out loud, and let your voice tell you what comes next.</s></mstts:express-as>'>
-      <div class="slide-head"><span class="n">2</span><h2>What comes next?</h2></div>
+      <div class="slide-head"><span class="n">5</span><h2>What comes next?</h2></div>
       <div class="say"><button type="button" class="speak" aria-label="Read it to me">🔊</button><span id="say2">Find the part that repeats, then tap the shape that comes <b>next</b>.</span></div>
       <div class="stage">
         <div class="strip" id="strip2"></div>
@@ -546,7 +564,7 @@
 
     <!-- 3 mend the pattern -->
     <section class="slide" data-say="One shape has fallen out of the middle. Which shape mends the pattern?" data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>When a shape is missing, the part that repeats tells you what goes in the gap.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>Star, moon, star, moon, gap, moon.</s><s>Every other shape is a star, so the gap needs a star.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="empathetic" styledegree="1.3"><prosody rate="-6%"><s>Check the shapes on both sides of the gap, not only the one just before it.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>Say the pattern from the start, and say what fits the gap.</s></mstts:express-as>'>
-      <div class="slide-head"><span class="n">3</span><h2>Mend the pattern</h2></div>
+      <div class="slide-head"><span class="n">6</span><h2>Mend the pattern</h2></div>
       <div class="say"><button type="button" class="speak" aria-label="Read it to me">🔊</button><span id="say3">One shape has fallen out of the <b>middle</b>. Which shape mends the pattern?</span></div>
       <div class="stage">
         <div class="strip" id="strip3"></div>
@@ -558,7 +576,7 @@
 
     <!-- 4 make your own -->
     <section class="slide" data-say="Make your own repeating pattern. Tap the shapes to add them. I will tell you what repeats." data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>Now you make your own repeating pattern.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>Choose a part, like triangle, triangle, circle.</s><s>Put it down twice: triangle, triangle, circle, triangle, triangle, circle.</s><s>That is a repeating pattern.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="empathetic" styledegree="1.3"><prosody rate="-6%"><s>If the part changes each time, it is not a repeating pattern.</s><s>Keep the part exactly the same.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>Build at least eight shapes, so your part shows up twice or more.</s></mstts:express-as>'>
-      <div class="slide-head"><span class="n">4</span><h2>Make your own</h2></div>
+      <div class="slide-head"><span class="n">7</span><h2>Make your own</h2></div>
       <div class="say"><button type="button" class="speak" aria-label="Read it to me">🔊</button><span id="say4">Tap shapes to build a pattern of at least <b>8</b>. Make the part that repeats show up <b>twice</b> or more.</span></div>
       <div class="stage">
         <div class="bigbtns palette" id="pal4"></div>
@@ -570,7 +588,7 @@
 
     <!-- 5 growing staircase -->
     <section class="slide" data-say="Count on in steps. Pick a start and a step, then keep counting on: in ones, twos, fives or tens." data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>Counting on in steps means adding the same amount each time.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>Start at 3 and count on in twos: 3, 5, 7, 9, 11.</s><s>Start at 20 and count on in fives: 20, 25, 30, 35.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="empathetic" styledegree="1.3"><prosody rate="-6%"><s>Keep the same step all the way.</s><s>Do not switch from twos to ones halfway through.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>Say the start number, then add the step in your head each time.</s></mstts:express-as>'>
-      <div class="slide-head"><span class="n">5</span><h2>Counting on in steps</h2></div>
+      <div class="slide-head"><span class="n">8</span><h2>Counting on in steps</h2></div>
       <div class="say"><button type="button" class="speak" aria-label="Read it to me">🔊</button><span id="say5">Count <b>on</b> from the start number, the same step each time.</span></div>
       <div class="stage">
         <div class="seq" id="stairs5"></div>
@@ -582,7 +600,7 @@
 
     <!-- 6 the step rule -->
     <section class="slide" data-say="A number pattern goes up by the same amount each time. How does this one go up?" data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>A number pattern goes up by the same amount each time.</s><s>That amount is the step.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>15, 20, 25, 30.</s><s>From 15 to 20 is 5, and from 20 to 25 is 5 again.</s><s>It goes up in fives.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="empathetic" styledegree="1.3"><prosody rate="-6%"><s>Check more than one jump.</s><s>One jump on its own can trick you.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>Work out two jumps and see if they match.</s></mstts:express-as>'>
-      <div class="slide-head"><span class="n">6</span><h2>How does it go up?</h2></div>
+      <div class="slide-head"><span class="n">9</span><h2>How does it go up?</h2></div>
       <div class="say"><button type="button" class="speak" aria-label="Read it to me">🔊</button><span id="say6">Look at the jumps between the numbers. Does it go up in <b>ones, twos, fives or tens</b>?</span></div>
       <div class="stage">
         <div class="seq" id="seq6"></div>
@@ -594,7 +612,7 @@
 
     <!-- 7 missing number -->
     <section class="slide" data-say="A number is missing from the pattern. Work out how it goes up, then fill the gap." data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>When a number is missing, work out the step, then fill the gap.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>10, 20, gap, 40.</s><s>It goes up in tens, so the gap is 30.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="empathetic" styledegree="1.3"><prosody rate="-6%"><s>The gap is not always at the end.</s><s>Count on from the number just before it.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>Find the step from two numbers that sit next to each other, then use it.</s></mstts:express-as>'>
-      <div class="slide-head"><span class="n">7</span><h2>The missing number</h2></div>
+      <div class="slide-head"><span class="n">10</span><h2>The missing number</h2></div>
       <div class="say"><button type="button" class="speak" aria-label="Read it to me">🔊</button><span id="say7">Work out how it goes up, then fill the <b>gap</b>.</span></div>
       <div class="stage">
         <div class="seq" id="seq7"></div>
@@ -606,7 +624,7 @@
 
     <!-- 8 predict far ahead -->
     <section class="slide" data-say="Count back in steps. Start high, and take the same step away each time." data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>Counting back in steps means taking away the same amount each time.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>Start at 50 and count back in tens: 50, 40, 30, 20.</s><s>Start at 19 and count back in twos: 19, 17, 15, 13.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="empathetic" styledegree="1.3"><prosody rate="-6%"><s>Counting back makes the numbers smaller every time.</s><s>If a number gets bigger, you went the wrong way.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>Say the start number, then take away the step each time.</s></mstts:express-as>'>
-      <div class="slide-head"><span class="n">8</span><h2>Counting back in steps</h2></div>
+      <div class="slide-head"><span class="n">11</span><h2>Counting back in steps</h2></div>
       <div class="say"><button type="button" class="speak" aria-label="Read it to me">🔊</button><span id="say8">Count <b>back</b> from the start number, the same step each time.</span></div>
       <div class="stage">
         <div class="seq" id="stairs8"></div>
@@ -618,7 +636,7 @@
 
     <!-- 9 shrinking -->
     <section class="slide" data-say="Patterns hide in the hundred square. The coloured numbers go up by the same amount. Tap the next one." data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>The hundred square hides number patterns.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>The coloured numbers 5, 15, 25 and 35 go straight down one column.</s><s>Each one is ten more, so the next is 45.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="empathetic" styledegree="1.3"><prosody rate="-6%"><s>Going down one row adds ten.</s><s>Going along one square adds one.</s><s>Do not mix them up.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>Work out how much the coloured numbers go up by, then tap the next one.</s></mstts:express-as>'>
-      <div class="slide-head"><span class="n">9</span><h2>Hundred square patterns</h2></div>
+      <div class="slide-head"><span class="n">12</span><h2>Hundred square patterns</h2></div>
       <div class="say"><button type="button" class="speak" aria-label="Read it to me">🔊</button><span id="say9">The coloured numbers make a pattern. Tap the number that comes <b>next</b>.</span></div>
       <div class="stage">
         <div class="h100" id="stairs9"></div>
@@ -631,7 +649,7 @@
     <!-- 10 check -->
     <!-- 10  2Nc.04  Spot the mistake -->
     <section class="slide" data-twm="critiquing improving" data-say="Read what each child says. Work it out yourself. Then tap what went wrong." data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>To check a counting pattern, check every jump.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>Musa counts in fives: 5, 10, 15, 25, 30.</s><s>The jumps go 5, 5, 10, 5.</s><s>20 is missing, so one jump is twice as big.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="empathetic" styledegree="1.3"><prosody rate="-6%"><s>The list still rises and still ends in the right place.</s><s>That is why this is easy to read straight past.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>Read the first one. Check each jump in turn.</s></mstts:express-as>'>
-      <div class="slide-head"><span class="n">10</span><h2>Spot the mistake</h2></div>
+      <div class="slide-head"><span class="n">13</span><h2>Spot the mistake</h2></div>
       <div class="say"><button type="button" class="speak" aria-label="Read it to me">&#128266;</button><span id="sm10say">Read what each child says, work it out yourself, then tap what went wrong.</span></div>
       <div class="stage" id="sm10st"></div>
       <div class="choices" id="sm10ch"></div>
@@ -641,7 +659,7 @@
     </section>
     <!-- 11  2Nc.04  Story problems -->
     <section class="slide" data-say="Read the story. Work out the answer. Then tap it." data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>A pattern story asks you to count on, not to do one sum.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>Musa saves 5 shillings a week for 4 weeks.</s><s>Count on in fives, once per week.</s><s>5, 10, 15, 20, so he has 20 shillings.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="empathetic" styledegree="1.3"><prosody rate="-6%"><s>Count the jumps, not the numbers you say.</s><s>Four weeks means four jumps.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>Read the first story. Find the jump, then count on.</s></mstts:express-as>'>
-      <div class="slide-head"><span class="n">11</span><h2>Story problems</h2></div>
+      <div class="slide-head"><span class="n">14</span><h2>Story problems</h2></div>
       <div class="say"><button type="button" class="speak" aria-label="Read it to me">&#128266;</button><span id="sp11say">Read the story, work out the answer, then tap it.</span></div>
       <div class="stage" id="sp11st"></div>
       <div class="choices" id="sp11ch"></div>
@@ -651,7 +669,7 @@
     </section>
     <!-- 12  2Nc.04  Will it always work? -->
     <section class="slide" data-twm="specialising generalising" data-say="Somebody has an idea. Test it on each example, then say whether it always works." data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>Some patterns grow by the same amount, and some do not.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>Hodan says a growing pattern always steps up equally.</s><s>5, 10, 15, 20 does, going up by 5.</s><s>But 1, 3, 6, 10 goes up by 2, then 3, then 4.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="empathetic" styledegree="1.3"><prosody rate="-6%"><s>Equal steps is one kind of pattern, not the only kind.</s><s>A pattern needs a rule you can carry on.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>Test the idea on each example, then decide.</s></mstts:express-as>'>
-      <div class="slide-head"><span class="n">12</span><h2>Will it always work?</h2></div>
+      <div class="slide-head"><span class="n">15</span><h2>Will it always work?</h2></div>
       <div class="say"><button type="button" class="speak" aria-label="Read it to me">&#128266;</button><span id="at12say">Test the idea on each example. Then say whether it always works.</span></div>
       <div class="stage" id="at12st"></div>
       <div class="choices" id="at12ch"></div>
@@ -661,7 +679,7 @@
     </section>
     <!-- 13  2Nc.04  Make up a problem -->
     <section class="slide" data-twm="specialising generalising" data-say="Here is a number sentence. Build a story that matches it, then solve it." data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>A pattern story repeats the same step, and says how many times.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>Look at 5 four times.</s><s>The same amount arrives again and again.</s><s>Keeps saving for 4 weeks repeats it four times.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="empathetic" styledegree="1.3"><prosody rate="-6%"><s>Saving for one week only uses the right number the wrong number of times.</s><s>How many times is part of the sentence too.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>Pick who is saving, then how the saving repeats.</s></mstts:express-as>'>
-      <div class="slide-head"><span class="n">13</span><h2>Make up a problem</h2></div>
+      <div class="slide-head"><span class="n">16</span><h2>Make up a problem</h2></div>
       <div class="say"><button type="button" class="speak" aria-label="Read it to me">&#128266;</button><span id="pb13say">Here is a number sentence. Build a story that matches it, then solve it.</span></div>
       <div class="stage" id="pb13st"></div>
       <div class="choices" id="pb13ch"></div>
@@ -701,7 +719,6 @@
         <div class="stickers" id="stickers"></div>
         <p class="fb" id="fb11" role="status" aria-live="polite"></p>
         <div class="sc-wrap" id="selfcheck"></div>
-      <div id="vocab"></div>
         <div class="bigbtns"><button type="button" class="big small teal" id="restart">Play again</button></div>
       </div>
     </section>
@@ -2113,7 +2130,7 @@
     $("fb1").className = "fb"; $("fb1").innerHTML = 'The part that repeats is <span class="core-box">' + U.map(tile).join("") + "</span> — " + UNITS[u1].name + ", " + U.length + " shapes long.";
     $("note1").textContent = tapped1.size >= 3 ? "You have explored " + tapped1.size + " patterns." : "Tap the shapes, and try every pattern.";
   }
-  $("kinds1").addEventListener("click", (e) => { const b = e.target.closest("[data-i]"); if (!b) return; u1 = Number(b.dataset.i); tapped1.add(u1); paint1(); say(UNITS[u1].name + ". The part that repeats is " + UNITS[u1].u.map((k) => KINDS[k].name).join(", ")); if (tapped1.size >= 3) finish(0, "You know how to find the part that repeats!"); });
+  $("kinds1").addEventListener("click", (e) => { const b = e.target.closest("[data-i]"); if (!b) return; u1 = Number(b.dataset.i); tapped1.add(u1); paint1(); say(UNITS[u1].name + ". The part that repeats is " + UNITS[u1].u.map((k) => KINDS[k].name).join(", ")); if (tapped1.size >= 3) finish(3, "You know how to find the part that repeats!"); });
   $("strip1").addEventListener("click", (e) => { const b = e.target.closest(".slot"); if (!b) return; const i = Number(b.dataset.i), U = UNITS[u1].u; say("Shape " + (i + 1) + " is " + KINDS[U[i % U.length]].name + ". It is number " + ((i % U.length) + 1) + " in the part that repeats."); $("note1").textContent = "Shape " + (i + 1) + " is number " + ((i % U.length) + 1) + " of the " + U.length + " in the part that repeats."; });
   tapped1.add(0); paint1();
 
@@ -2121,7 +2138,7 @@
   let r2 = 0, right2 = 0, lock2 = false, U2 = null, len2 = 0; const ROUNDS2 = 5;
   function round2() {
     lock2 = false; $("fb2").textContent = ""; $("fb2").className = "fb";
-    if (r2 >= ROUNDS2) { $("strip2").innerHTML = ""; $("ch2").innerHTML = ""; $("fb2").className = "fb good"; $("fb2").textContent = "You continued " + right2 + " of " + ROUNDS2 + " patterns!"; finish(1, "You can continue a repeating pattern."); return; }
+    if (r2 >= ROUNDS2) { $("strip2").innerHTML = ""; $("ch2").innerHTML = ""; $("fb2").className = "fb good"; $("fb2").textContent = "You continued " + right2 + " of " + ROUNDS2 + " patterns!"; finish(4, "You can continue a repeating pattern."); return; }
     U2 = UNITS[rnd(0, UNITS.length - 1)].u; len2 = U2.length * 2 + rnd(0, U2.length - 1);
     $("score2").textContent = "Pattern " + (r2 + 1) + " of " + ROUNDS2;
     $("strip2").innerHTML = Array.from({ length: len2 }, (_, i) => '<span class="slot">' + tile(U2[i % U2.length]) + "</span>").join("") + '<span class="slot gap"><span class="tile q">?</span></span>';
@@ -2145,7 +2162,7 @@
   let r3 = 0, right3 = 0, lock3 = false, U3 = null, gap3 = 0; const ROUNDS3 = 4;
   function round3() {
     lock3 = false; $("fb3").textContent = ""; $("fb3").className = "fb";
-    if (r3 >= ROUNDS3) { $("strip3").innerHTML = ""; $("ch3").innerHTML = ""; $("fb3").className = "fb good"; $("fb3").textContent = "You mended " + right3 + " of " + ROUNDS3 + " patterns!"; finish(2, "You can mend a broken pattern."); return; }
+    if (r3 >= ROUNDS3) { $("strip3").innerHTML = ""; $("ch3").innerHTML = ""; $("fb3").className = "fb good"; $("fb3").textContent = "You mended " + right3 + " of " + ROUNDS3 + " patterns!"; finish(5, "You can mend a broken pattern."); return; }
     U3 = UNITS[rnd(0, UNITS.length - 1)].u; const len = U3.length * 3; gap3 = rnd(U3.length, len - 2);
     $("score3").textContent = "Pattern " + (r3 + 1) + " of " + ROUNDS3;
     $("strip3").innerHTML = Array.from({ length: len }, (_, i) => i === gap3 ? '<span class="slot gap"><span class="tile q">?</span></span>' : '<span class="slot">' + tile(U3[i % U3.length]) + "</span>").join("");
@@ -2177,7 +2194,7 @@
     if (!L) { $("fb4").className = "fb bad"; $("fb4").textContent = "That is not repeating yet. Make the same part come round again."; return; }
     if (!full) { $("fb4").className = "fb"; $("fb4").innerHTML = 'The part that repeats is <span class="core-box">' + own4.slice(0, L).map(tile).join("") + "</span>. " + (own4.length < 8 ? "Add " + (8 - own4.length) + " more." : "Make it come round twice."); return; }
     $("fb4").className = "fb good"; $("fb4").innerHTML = cheer() + ' Your pattern repeats every <b>' + L + "</b>: " + own4.slice(0, L).map((k) => LETTER[k]).join("") + ", " + Math.floor(own4.length / L) + " times" + (own4.length % L ? " and a bit" : "") + ".";
-    finish(3, "Your pattern repeats every " + L + ". Brilliant!");
+    finish(6, "Your pattern repeats every " + L + ". Brilliant!");
   }
   $("pal4").addEventListener("click", (e) => { const b = e.target.closest("[data-k]"); if (!b || own4.length >= 16) return; own4.push(b.dataset.k); paint4(); say(KINDS[b.dataset.k].name); });
   $("undo4").addEventListener("click", () => { own4.pop(); paint4(); });
@@ -2194,7 +2211,7 @@
   let r5 = 0, right5 = 0, lock5 = false, s5 = null; const ROUNDS5 = 5;
   function round5() {
     lock5 = false; $("fb5").textContent = ""; $("fb5").className = "fb";
-    if (r5 >= ROUNDS5) { $("stairs5").innerHTML = ""; $("ch5").innerHTML = ""; $("fb5").className = "fb good"; $("fb5").textContent = "You counted on " + right5 + " of " + ROUNDS5 + " times!"; finish(4, "You can count on in steps from any number."); return; }
+    if (r5 >= ROUNDS5) { $("stairs5").innerHTML = ""; $("ch5").innerHTML = ""; $("fb5").className = "fb good"; $("fb5").textContent = "You counted on " + right5 + " of " + ROUNDS5 + " times!"; finish(7, "You can count on in steps from any number."); return; }
     const step = STEPS[r5 % 4], start = step === 10 ? rnd(3, 49) : step === 5 ? rnd(2, 60) : rnd(11, 80), arr = counts(start, step, 4), ans = start + 4 * step;
     s5 = { step, arr, ans };
     $("score5").textContent = "Count " + (r5 + 1) + " of " + ROUNDS5;
@@ -2222,7 +2239,7 @@
   }
   function round6() {
     lock6 = false; $("fb6").textContent = ""; $("fb6").className = "fb";
-    if (r6 >= ROUNDS6) { $("seq6").innerHTML = ""; $("ch6").innerHTML = ""; $("fb6").className = "fb good"; $("fb6").textContent = "You found " + right6 + " of " + ROUNDS6 + " patterns!"; finish(5, "You can say how a number pattern goes up."); return; }
+    if (r6 >= ROUNDS6) { $("seq6").innerHTML = ""; $("ch6").innerHTML = ""; $("fb6").className = "fb good"; $("fb6").textContent = "You found " + right6 + " of " + ROUNDS6 + " patterns!"; finish(8, "You can say how a number pattern goes up."); return; }
     const step = STEPS[rnd(0, 3)], start = rnd(1, 40);
     seq6 = { step, arr: counts(start, step, 5) };
     $("score6").textContent = "Pattern " + (r6 + 1) + " of " + ROUNDS6;
@@ -2246,7 +2263,7 @@
   let r7 = 0, right7 = 0, lock7 = false, seq7 = null; const ROUNDS7 = 4;
   function round7() {
     lock7 = false; $("fb7").textContent = ""; $("fb7").className = "fb";
-    if (r7 >= ROUNDS7) { $("seq7").innerHTML = ""; $("ch7").innerHTML = ""; $("fb7").className = "fb good"; $("fb7").textContent = "You found " + right7 + " of " + ROUNDS7 + " missing numbers!"; finish(6, "You can find a missing number in a pattern."); return; }
+    if (r7 >= ROUNDS7) { $("seq7").innerHTML = ""; $("ch7").innerHTML = ""; $("fb7").className = "fb good"; $("fb7").textContent = "You found " + right7 + " of " + ROUNDS7 + " missing numbers!"; finish(9, "You can find a missing number in a pattern."); return; }
     const step = STEPS[rnd(0, 3)], start = rnd(1, step === 10 ? 40 : 60), full = counts(start, step, 6), gap = rnd(1, 5);
     seq7 = { step, full, gap, arr: full.map((v, i) => (i === gap ? null : v)) };
     $("score7").textContent = "Pattern " + (r7 + 1) + " of " + ROUNDS7;
@@ -2272,7 +2289,7 @@
   let r8 = 0, right8 = 0, lock8 = false, s8 = null; const ROUNDS8 = 5;
   function round8() {
     lock8 = false; $("fb8").textContent = ""; $("fb8").className = "fb";
-    if (r8 >= ROUNDS8) { $("stairs8").innerHTML = ""; $("ch8").innerHTML = ""; $("fb8").className = "fb good"; $("fb8").textContent = "You counted back " + right8 + " of " + ROUNDS8 + " times!"; finish(7, "You can count back in steps from any number."); return; }
+    if (r8 >= ROUNDS8) { $("stairs8").innerHTML = ""; $("ch8").innerHTML = ""; $("fb8").className = "fb good"; $("fb8").textContent = "You counted back " + right8 + " of " + ROUNDS8 + " times!"; finish(10, "You can count back in steps from any number."); return; }
     const step = STEPS[(r8 + 2) % 4], start = step === 10 ? rnd(55, 100) : step === 5 ? rnd(40, 100) : rnd(30, 100), arr = [start, start - step, start - 2 * step, start - 3 * step], ans = start - 4 * step;
     s8 = { step, arr, ans };
     $("score8").textContent = "Count " + (r8 + 1) + " of " + ROUNDS8;
@@ -2299,7 +2316,7 @@
   let r9 = 0, right9 = 0, lock9 = false, s9 = null; const ROUNDS9 = 4;
   function round9() {
     lock9 = false; $("fb9").textContent = ""; $("fb9").className = "fb";
-    if (r9 >= ROUNDS9) { $("stairs9").innerHTML = ""; $("seq9").textContent = ""; $("fb9").className = "fb good"; $("fb9").textContent = "You found " + right9 + " of " + ROUNDS9 + " next numbers!"; finish(8, "You can find patterns on the hundred square."); return; }
+    if (r9 >= ROUNDS9) { $("stairs9").innerHTML = ""; $("seq9").textContent = ""; $("fb9").className = "fb good"; $("fb9").textContent = "You found " + right9 + " of " + ROUNDS9 + " next numbers!"; finish(11, "You can find patterns on the hundred square."); return; }
     const step = [10, 5, 2, 10][r9], start = step === 10 ? rnd(1, 9) : step === 5 ? rnd(1, 4) : rnd(1, 10), shown = counts(start, step, 4), ans = start + 4 * step;
     s9 = { step, shown, ans };
     $("score9").textContent = "Pattern " + (r9 + 1) + " of " + ROUNDS9;
@@ -2347,7 +2364,7 @@
   let c10 = 0, right10 = 0, lock10 = false;
   function round10() {
     lock10 = false; $("fb10").textContent = ""; $("fb10").className = "fb";
-    if (c10 >= CHECK.length) { $("q10").textContent = ""; $("ch10").innerHTML = ""; $("fb10").className = "fb good"; $("fb10").innerHTML = "You got <b>" + right10 + "</b> out of " + CHECK.length + "!"; $("score10").textContent = right10 === CHECK.length ? "Every single one!" : right10 >= Math.ceil(CHECK.length * 0.75) ? "Nearly all of them!" : "Look back at the steps if you like, then have another go."; if (right10 >= Math.ceil(CHECK.length * 0.75)) { finish(13, "You got " + right10 + " out of " + CHECK.length + "."); return; }
+    if (c10 >= CHECK.length) { $("q10").textContent = ""; $("ch10").innerHTML = ""; $("fb10").className = "fb good"; $("fb10").innerHTML = "You got <b>" + right10 + "</b> out of " + CHECK.length + "!"; $("score10").textContent = right10 === CHECK.length ? "Every single one!" : right10 >= Math.ceil(CHECK.length * 0.75) ? "Nearly all of them!" : "Look back at the steps if you like, then have another go."; if (right10 >= Math.ceil(CHECK.length * 0.75)) { finish(16, "You got " + right10 + " out of " + CHECK.length + "."); return; }
       retryCheck($("fb10"), $("ch10"), right10, CHECK.length, function () { c10 = 0; right10 = 0; round10(); }); return; }
     const q = CHECK[c10]; $("score10").textContent = "Question " + (c10 + 1) + " of " + CHECK.length; $("q10").textContent = q.q; $("say10").textContent = q.q;
     $("ch10").innerHTML = shuffle(q.opts).map((o) => '<button type="button" class="choice' + (typeof o === "string" ? " word" : "") + '" data-v="' + o + '">' + o + "</button>").join("");
@@ -2413,7 +2430,7 @@
   scPaint();
 
   /* ---- 11: stickers ---- */
-  const STICKERS = [["✂️", "The part that repeats"], ["➡️", "What comes next"], ["🔧", "Mend the pattern"], ["🎨", "Make your own"], ["👣", "Counting on in steps"], ["📈", "How it goes up"], ["❓", "The missing number"], ["⏪", "Counting back"], ["💯", "Hundred square patterns"], ["🔍", "Spot the mistake"], ["📖", "Story problems"], ["🔁", "Will it always work?"], ["✏️", "Make up a problem"], ["✅", "Show what I know"], ["\ud83e\udd14", "How do you know"]];
+  const STICKERS = [["🔎", "What this lesson is about"], ["🎥", "Unit lecture"], ["📣", "Math words"], ["✂️", "The part that repeats"], ["➡️", "What comes next"], ["🔧", "Mend the pattern"], ["🎨", "Make your own"], ["👣", "Counting on in steps"], ["📈", "How it goes up"], ["❓", "The missing number"], ["⏪", "Counting back"], ["💯", "Hundred square patterns"], ["🔍", "Spot the mistake"], ["📖", "Story problems"], ["🔁", "Will it always work?"], ["✏️", "Make up a problem"], ["✅", "Show what I know"], ["\ud83e\udd14", "How do you know"]];
   function paintStickers() {
     $("stickers").innerHTML = STICKERS.map((s, i) => '<div class="sticker' + (done[i] ? " got" : "") + '"><span class="ic">' + s[0] + "</span>" + s[1] + (done[i] ? "" : '<br><small style="color:var(--muted);font-weight:400">not yet</small>') + "</div>").join("");
     const got = done.slice(0, STICKERS.length).filter(Boolean).length;
@@ -2530,23 +2547,125 @@
   })();
 
 
-  /* ==== ehel-vocabulary: Math Words for this lesson ====
-     Same insertion pattern as add-self-check.py: an empty host div on
-     the sticker-shelf slide, populated by this script, never scored. */
-  (function () {
-    const VOCAB = [{ w: "pattern", d: "Shapes or numbers arranged in a way that follows a rule." }, { w: "repeat", d: "The part of a pattern that happens again and again." }, { w: "sequence", d: "A list of numbers that follow one after another, in order." }, { w: "rule", d: "The idea that tells you how a pattern changes each time." }, { w: "step", d: "How much a sequence of numbers goes up or down by each time." }];
-    const host = document.getElementById("vocab");
-    if (!host) return;
-    const esc = (t) => String(t).replace(/&/g, "&amp;").replace(/</g, "&lt;")
-      .replace(/"/g, "&quot;");
-    host.innerHTML = '<p class="vc-head">Math Words</p>'
-      + '<p class="vc-sub">Words from this lesson, explained in one line each.</p>'
-      + '<dl class="vc-list">'
-      + VOCAB.map((it) => '<div class="vc-row"><dt>' + esc(it.w) + '</dt><dd>'
-        + esc(it.d) + "</dd></div>").join("")
-      + "</dl>";
-  })();
+  /* ==== ehel-g2-lesson-opener: three shared step functions, ported from Grade 4's own
+     add-lesson-opener.py in the same idiom - data-say for arrival
+     narration (show() already speaks it), plain finish(i, msg), no
+     ONSHOW/ONLEAVE/reportAttempt. esc() IS OWN, not shared, matching
+     every add-*.py tool in this build - see Grade 4's own docstring for
+     the ReferenceError this avoids. ==== */
+  const esc = (t) => String(t).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/"/g, "&quot;");
+  function lessonAbout(o) {
+    document.getElementById(o.stage).innerHTML =
+      '<div class="ovw"><h3 class="ovw-h">By the end of this lesson you will be able to&hellip;</h3>' +
+      '<ol class="ovw-list">' + o.about.map((t) => '<li>' + esc(t) + '</li>').join('') + '</ol>' +
+      '<div class="bigbtns"><button type="button" class="big small" id="' + o.stage + 'go">Got it, let\'s begin &#10003;</button></div></div>';
+    document.getElementById(o.stage + 'go').addEventListener('click', () => {
+      document.getElementById(o.stage + 'go').disabled = true;
+      finish(o.finish, o.done);
+    });
+  }
 
+  function lessonLecture(o) {
+    const parts = o.parts || [];
+    let k = 0;
+    const id = o.stage + 'l';
+    function paint() {
+      const p = parts[k];
+      document.getElementById(o.stage).innerHTML =
+        '<div class="lec"><p class="phase">Part ' + (k + 1) + ' of ' + parts.length + '</p>' +
+        '<h3 class="lec-h">' + esc(p.title) + '</h3><p class="lec-p">' + esc(p.say) + '</p>' +
+        '<div class="bigbtns">' +
+        '<button type="button" class="big small teal" id="' + id + 'hear">&#128266; Listen</button>' +
+        (k > 0 ? '<button type="button" class="big small ghost" id="' + id + 'back">&#9664; Last part</button>' : '') +
+        '<button type="button" class="big small" id="' + id + 'next">' + (k + 1 < parts.length ? 'Next part &#9654;' : 'I heard it all &#10003;') + '</button>' +
+        '</div><p class="lec-note">Read aloud by the lesson\'s voice. There is no video for this lesson yet.</p></div>';
+      document.getElementById(id + 'hear').addEventListener('click', () => say(p.title + '. ' + p.say));
+      if (k > 0) document.getElementById(id + 'back').addEventListener('click', () => { k--; paint(); say(parts[k].title + '. ' + parts[k].say); });
+      document.getElementById(id + 'next').addEventListener('click', () => {
+        if (k + 1 < parts.length) { k++; paint(); say(parts[k].title + '. ' + parts[k].say); }
+        else { finish(o.finish, o.done); }
+      });
+    }
+    if (!parts.length) return;
+    paint();
+  }
+
+  function lessonWords(o) {
+    const items = o.words || [];
+    const heard = new Set();
+    let open = -1;
+    const id = o.stage + 'w';
+    function paintGrid() {
+      document.getElementById(o.stage).innerHTML =
+        '<div class="cardsgrid" id="' + id + 'g">' + items.map((w, k) =>
+          '<button type="button" class="tapcard' + (heard.has(k) ? ' heard' : '') + '" data-k="' + k + '">' +
+          '<span class="cpic" aria-hidden="true">' + w.pic + '</span>' + esc(w.w) + '</button>').join('') + '</div>' +
+        '<div class="wordpanel" id="' + id + 'p"' + (open < 0 ? ' hidden' : '') + '></div>' +
+        '<div class="bigbtns" id="' + id + 'go" style="' + (heard.size === items.length ? '' : 'display:none') + '">' +
+        '<button type="button" class="big small" id="' + id + 'quiz">Show I know them &#9654;</button></div>';
+      if (open >= 0) paintPanel();
+      document.getElementById(id + 'g').addEventListener('click', (e) => {
+        const b = e.target.closest('.tapcard'); if (!b) return;
+        open = Number(b.dataset.k); heard.add(open);
+        paintGrid();
+        const w = items[open];
+        say(w.w + '. ' + w.meaning + ' ' + (w.uses[0] || ''));
+      });
+      if (heard.size === items.length) {
+        const goBtn = document.getElementById(id + 'quiz');
+        if (goBtn) goBtn.addEventListener('click', () => check());
+      }
+    }
+    function paintPanel() {
+      const w = items[open];
+      const p = document.getElementById(id + 'p');
+      p.hidden = false;
+      p.innerHTML = '<div class="wp-head"><span class="wp-pic" aria-hidden="true">' + w.pic + '</span>' +
+        '<div><p class="wp-word">' + esc(w.w) + '</p><p class="wp-meaning">' + esc(w.meaning) + '</p></div></div>' +
+        '<p class="wp-uses-h">Use it</p><ul class="wp-uses">' + (w.uses || []).map((u) => '<li>' + esc(u) + '</li>').join('') + '</ul>' +
+        '<div class="bigbtns"><button type="button" class="big small teal" id="' + id + 'h">&#128266; Hear it again</button></div>';
+      document.getElementById(id + 'h').addEventListener('click', () => say(w.w + '. ' + w.meaning + ' ' + (w.uses || []).join(' ')));
+    }
+    function check() {
+      const order = shuffle(items.map((_, k) => k));
+      let i = 0, right = 0, lock = false;
+      function draw() {
+        lock = false;
+        const k = order[i], w = items[k];
+        const others = shuffle(items.map((_, j) => j).filter((j) => j !== k)).slice(0, Math.min(2, items.length - 1));
+        const opts = shuffle([k].concat(others));
+        document.getElementById(o.stage).innerHTML =
+          '<div class="mw"><p class="lec-p">Which word means: <b>' + esc(w.meaning) + '</b></p>' +
+          '<div class="wordbtns" id="' + id + 'ch">' + opts.map((j) =>
+            '<button type="button" class="wordbtn" data-ok="' + (j === k ? 1 : 0) + '">' +
+            '<span class="wbpic" aria-hidden="true">' + items[j].pic + '</span>' + esc(items[j].w) + '</button>').join('') + '</div>' +
+          '<p class="lec-note" id="' + id + 'fb"></p></div>';
+        say('Which word means: ' + w.meaning);
+        document.getElementById(id + 'ch').addEventListener('click', (e) => {
+          const b = e.target.closest('.wordbtn'); if (!b || lock) return;
+          lock = true;
+          const ok = b.dataset.ok === '1';
+          document.getElementById(id + 'ch').querySelectorAll('.wordbtn').forEach((c) => { c.disabled = true; if (c.dataset.ok === '1') c.classList.add('right'); });
+          if (!ok) b.classList.add('wrong'); else right++;
+          const msg = ok ? cheer() + ' ' + w.w + '.' : 'That word is ' + w.w + '. ' + w.meaning;
+          document.getElementById(id + 'fb').textContent = msg; say(msg);
+          i++;
+          setTimeout(() => {
+            if (i >= items.length) {
+              document.getElementById(o.stage).innerHTML = '<div class="mw"><p class="lec-p">You know ' + right + ' of ' + items.length + ' math words.</p></div>';
+              finish(o.finish, o.done);
+            } else draw();
+          }, 2200);
+        });
+      }
+      draw();
+    }
+    paintGrid();
+  }
+
+  lessonAbout({ stage: 'stageOvw', about: ["Find the part of a pattern that repeats.", "Say what comes next in a pattern.", "Mend a pattern that has a mistake in it.", "Count on in steps of 2, 5 and 10.", "Say how much a pattern goes up by each time.", "Count back in steps from any number up to 100."], finish: 0, done: "Let's begin." });
+  lessonLecture({ stage: 'stageLec', parts: [{ title: "Repeating patterns", say: "Find the smallest part of a pattern that repeats, and you can say what comes next, however long the pattern runs on." }, { title: "Growing patterns", say: "A growing pattern goes up by the same amount every time - spot that amount, and you can predict every term without drawing it out." }, { title: "Counting on and back in steps", say: "Counting on in steps of 2, 5 or 10 gets you to a big number fast - and counting back in the same steps gets you back again." }], finish: 1, done: "You have heard the whole lesson. Now do it yourself." });
+  lessonWords({ stage: 'stageMw', words: [{ w: "pattern", pic: "📿", meaning: "Shapes or numbers arranged in a way that follows a rule.", uses: ["Spot the pattern: red, blue, red, blue."] }, { w: "repeat", pic: "🔁", meaning: "The part of a pattern that happens again and again.", uses: ["The part that repeats is red, blue."] }, { w: "sequence", pic: "➡️", meaning: "A list of numbers that follow one after another, in order.", uses: ["5, 10, 15, 20 is a sequence."] }, { w: "rule", pic: "📏", meaning: "The idea that tells you how a pattern changes each time.", uses: ["The rule for this sequence is add 5 each time."] }, { w: "step", pic: "👣", meaning: "How much a sequence of numbers goes up or down by each time.", uses: ["Count on in steps of 5."] }], finish: 2, done: "You know the math words of this lesson." });
   show(0, false);
   quiet -= 1;   /* the first draw is over: say() speaks from here on */
 
@@ -3329,12 +3448,45 @@
     max-width: 30ch; padding: 10px 12px; border-radius: 10px;
     background: var(--cell, var(--card)); border: 1px solid var(--line, #ddd); }
 </style>
-<style>/* ehel-vocabulary - see add-vocabulary.py */
-  #vocab { margin: 18px auto 0; max-width: 46ch; text-align: left; }
-  .vc-head { font-size: 17px; font-weight: 700; margin: 0 0 4px; }
-  .vc-sub { font-size: 13.5px; color: var(--muted, #666); margin: 0 0 12px; line-height: 1.5; }
-  .vc-list { margin: 0; }
-  .vc-row { padding: 9px 0; border-top: 1px solid var(--line, #ddd); }
-  .vc-row dt { margin: 0 0 3px; font-size: 15px; font-weight: 700; }
-  .vc-row dd { margin: 0; font-size: 14px; line-height: 1.45; color: var(--ink, #222); }
+
+<style>/* ehel-g2-lesson-opener - see add-lesson-opener.py */
+  .ovw { width: 100%; max-width: 34em; margin: 0 auto; text-align: center; }
+  .ovw-h { font-size: 19px; margin: 0 0 12px; }
+  .ovw-list { margin: 0; padding-left: 26px; display: flex; flex-direction: column; gap: 11px;
+    font-size: 19px; text-align: left; }
+  .ovw-list li::marker { color: var(--teal); font-weight: 800; }
+  .lec, .mw { width: 100%; max-width: 36em; margin: 0 auto; display: flex; flex-direction: column;
+    align-items: center; gap: 10px; text-align: center; }
+  .phase { color: var(--teal); font-weight: 800; font-size: 12.5px; letter-spacing: .1em;
+    text-transform: uppercase; }
+  .lec-h { font-weight: 800; font-size: clamp(21px, 4vw, 26px); margin: 0; }
+  .lec-p { margin: 0; font-size: 19px; line-height: 1.55; max-width: 34em; }
+  .lec-note { margin: 4px 0 0; color: var(--muted); font-size: 13.5px; }
+  .cardsgrid { display: grid; grid-template-columns: repeat(auto-fit, minmax(128px, 1fr)); gap: 12px;
+    width: 100%; max-width: 640px; }
+  .tapcard { display: flex; flex-direction: column; align-items: center; gap: 6px; padding: 14px 8px 12px;
+    border-radius: 18px; border: 3px solid var(--line); background: var(--card); color: var(--ink);
+    font-weight: 800; font-size: 17px; line-height: 1.2; transition: transform 120ms ease, border-color 120ms ease; }
+  .tapcard .cpic { font-size: clamp(40px, 8vw, 56px); line-height: 1.1; }
+  .tapcard:active { transform: scale(0.96); }
+  .tapcard.heard { border-color: var(--teal); background: var(--teal-soft); }
+  .tapcard.heard::after { content: "\2713"; color: var(--good); font-size: 15px; }
+  .wordpanel { width: 100%; max-width: 560px; padding: 16px 18px; border-radius: 20px;
+    border: 3px solid var(--teal); background: var(--card); text-align: left; }
+  .wp-head { display: flex; align-items: center; gap: 16px; }
+  .wp-pic { font-size: 40px; }
+  .wp-word { margin: 0; font-weight: 800; font-size: 28px; }
+  .wp-meaning { margin: 4px 0 0; font-size: 17.5px; line-height: 1.45; }
+  .wp-uses-h { margin: 12px 0 4px; color: var(--teal); font-weight: 800; font-size: 12.5px;
+    letter-spacing: .1em; text-transform: uppercase; }
+  .wp-uses { margin: 0 0 10px; padding-left: 20px; display: flex; flex-direction: column; gap: 5px;
+    font-size: 16.5px; font-style: italic; }
+  .wordbtns { display: flex; gap: 12px; flex-wrap: wrap; justify-content: center; }
+  .wordbtn { min-width: 118px; padding: 12px 18px; border-radius: 18px; border: 3px solid var(--line);
+    background: var(--card); color: var(--ink); font-weight: 800; cursor: pointer; }
+  .wordbtn .wbpic { display: block; font-size: 40px; line-height: 1.15; }
+  .wordbtn:active { transform: scale(0.96); }
+  .wordbtn.right { background: var(--good-soft); border-color: var(--good); }
+  .wordbtn.wrong { background: var(--bad-soft); border-color: var(--bad); }
+  .wordbtn:disabled { cursor: default; }
 </style>

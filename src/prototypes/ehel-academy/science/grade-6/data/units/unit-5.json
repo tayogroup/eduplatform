@@ -1,6 +1,6 @@
 {
   "schemaVersion": "Ehel Science Runtime v1.0",
-  "generatedAt": "2026-09-18T08:42:40.186Z",
+  "generatedAt": "2026-09-18T09:38:38.135Z",
   "stage": {
     "id": "s06",
     "label": "Stage 6"
@@ -393,7 +393,7 @@
       "id": "we07",
       "outcomeId": "lo07",
       "difficulty": "Intermediate",
-      "title": "Two identical bulbs joined one after another in a",
+      "title": "Comparing Bulb Brightness in Series",
       "prompt": "Two identical bulbs joined one after another in a single loop will each be: (a) brighter than one bulb (b) the same (c) dimmer than one bulb (d) off",
       "solution": "(c) dimmer than one bulb — two bulbs in series share the same push, so each gets less."
     },
@@ -649,13 +649,13 @@
       {
         "term": "Cell",
         "meaning": "One long thin line beside one short thick line (+ is the long line).",
-        "example": "Draw and read simple circuit diagrams using the correct symbols for a cell, bulb, wire, and switch.",
+        "example": "A single AA battery is one cell, giving about 1.5 volts.",
         "letter": "C"
       },
       {
         "term": "Battery",
         "meaning": "Two or more cell symbols in a row.",
-        "example": "The small battery teaches you everything you need to understand, safely.",
+        "example": "Two torch cells stacked end to end make a small battery.",
         "letter": "B"
       },
       {
@@ -685,7 +685,7 @@
       {
         "term": "Battery",
         "meaning": "Two or more cells joined for more push (voltage).",
-        "example": "The small battery teaches you everything you need to understand, safely.",
+        "example": "A car battery is made of several cells joined together for a much bigger push.",
         "letter": "B"
       },
       {
@@ -697,7 +697,7 @@
       {
         "term": "Switch",
         "meaning": "A part that opens or closes the loop to stop or start current.",
-        "example": "Draw and read simple circuit diagrams using the correct symbols for a cell, bulb, wire, and switch.",
+        "example": "Flicking the switch closes the loop and the bulb lights up.",
         "letter": "S"
       },
       {
@@ -709,7 +709,7 @@
       {
         "term": "Ion",
         "meaning": "A charged particle (e.g. from dissolved salt) that carries current in water.",
-        "example": "",
+        "example": "Dissolved salt splits into ions that let salty water conduct electricity.",
         "letter": "I"
       }
     ],
@@ -942,9 +942,9 @@
       "responseMode": "text",
       "prompt": "In your own words, explain the difference between a conductor and an insulator.",
       "keyIdeas": [
-        "Part",
-        "Cell",
-        "Battery"
+        "Conductor: lets current flow, free electrons",
+        "Insulator: blocks current",
+        "Metals vs plastic, rubber"
       ],
       "modelAnswer": "A conductor lets electric current flow through it easily because it has free electrons (e.g. metals). An insulator does not let current flow because its electrons are tightly bound (e.g. plastic, rubber)."
     },
@@ -955,9 +955,9 @@
       "responseMode": "text",
       "prompt": "Why must a circuit be a complete loop? What happens if there is a break?",
       "keyIdeas": [
-        "Cell",
-        "Battery",
-        "Wire"
+        "Unbroken path needed",
+        "From cell, through parts, back",
+        "A break stops current everywhere"
       ],
       "modelAnswer": "A circuit must be a complete loop so current has an unbroken path from the cell, through the parts, and back. If there is a break, the current stops everywhere and the bulb goes dark."
     },
@@ -968,9 +968,9 @@
       "responseMode": "text",
       "prompt": "Explain why adding more cells in series makes a bulb brighter.",
       "keyIdeas": [
-        "Battery",
-        "Wire",
-        "Bulb / lamp"
+        "Each cell adds more voltage",
+        "More push drives more current",
+        "Bulb glows brighter"
       ],
       "modelAnswer": "Each cell adds more voltage (push). More push drives more current through the bulb, so it glows brighter. (Too many cells can blow the bulb.)"
     },
@@ -981,9 +981,9 @@
       "responseMode": "text",
       "prompt": "Explain why adding more bulbs in series makes each bulb dimmer.",
       "keyIdeas": [
-        "Wire",
-        "Bulb / lamp",
-        "Open switch"
+        "Bulbs share the battery's push",
+        "Each gets a smaller share",
+        "Each bulb is dimmer"
       ],
       "modelAnswer": "Bulbs in series must share the battery's push. With two bulbs, each gets only about half the share, so each is dimmer than a single bulb would be."
     },
@@ -994,9 +994,9 @@
       "responseMode": "text",
       "prompt": "Why do line workers wear rubber gloves and boots?",
       "keyIdeas": [
-        "Bulb / lamp",
-        "Open switch",
-        "Closed switch"
+        "Rubber is a good insulator",
+        "Blocks electricity to the ground",
+        "Prevents shock"
       ],
       "modelAnswer": "Rubber is a good insulator, so gloves and boots block electricity from flowing through the worker's body to the ground, preventing shock."
     },
@@ -1007,9 +1007,9 @@
       "responseMode": "text",
       "prompt": "Give two reasons you must never touch a switch with wet hands.",
       "keyIdeas": [
-        "Open switch",
-        "Closed switch",
-        "Battery"
+        "Wet skin conducts far better",
+        "Water may contain ions",
+        "Gives electricity an easy path through you"
       ],
       "modelAnswer": "Wet skin conducts far better than dry skin, and water may contain ions. Touching a switch with wet hands gives electricity an easy path through you, risking a dangerous shock."
     },

@@ -1,6 +1,6 @@
 {
   "schemaVersion": "Ehel Science Runtime v1.0",
-  "generatedAt": "2026-09-18T08:42:40.776Z",
+  "generatedAt": "2026-09-18T09:38:38.599Z",
   "stage": {
     "id": "s08",
     "label": "Stage 8"
@@ -370,7 +370,7 @@
       "id": "we06",
       "outcomeId": "lo06",
       "difficulty": "Intermediate",
-      "title": "An electric current is",
+      "title": "Defining Electric Current",
       "prompt": "An electric current is: (a) a store of charge (b) the flow of electric charge (c) a kind of magnet (d) a type of voltage",
       "solution": "(b) the flow of electric charge — that is the definition of a current."
     },
@@ -378,7 +378,7 @@
       "id": "we07",
       "outcomeId": "lo07",
       "difficulty": "Intermediate",
-      "title": "Current is measured in",
+      "title": "The Unit for Current",
       "prompt": "Current is measured in: (a) volts (b) ohms (c) amperes (d) watts",
       "solution": "(c) amperes — current is measured in amps (A); volts measure voltage and ohms measure resistance."
     },
@@ -386,7 +386,7 @@
       "id": "we08",
       "outcomeId": "lo08",
       "difficulty": "Intermediate",
-      "title": "The push that drives current round a circuit is",
+      "title": "Naming Voltage",
       "prompt": "The push that drives current round a circuit is called: (a) resistance (b) voltage (c) current (d) charge",
       "solution": "(b) voltage — voltage (potential difference) is the push from the cell."
     }
@@ -626,19 +626,19 @@
       {
         "term": "Voltage",
         "meaning": "The push from a cell that drives the current; measured in volts (V).",
-        "example": "Year 8 — Unit 9 — Lesson — Current, Voltage, Resistance, Circuits, Magnets and Electromagnets",
+        "example": "A single AA cell provides a voltage of about 1.5 volts.",
         "letter": "V"
       },
       {
         "term": "Resistance",
         "meaning": "How much a component slows the current; measured in ohms.",
-        "example": "Year 8 — Unit 9 — Lesson — Current, Voltage, Resistance, Circuits, Magnets and Electromagnets",
+        "example": "A long, thin wire has more resistance than a short, thick one.",
         "letter": "R"
       },
       {
         "term": "Cell",
         "meaning": "A single source of voltage using stored chemical energy (about 1.5 V).",
-        "example": "Draw and recognise simple circuit diagrams using the correct symbols for a cell, battery, bulb, switch, ammeter and voltmeter.",
+        "example": "Two AA cells joined together push current around a circuit with more force than one alone.",
         "letter": "C"
       },
       {
@@ -680,13 +680,13 @@
       {
         "term": "Ammeter",
         "meaning": "Measures current in amps; connected in series.",
-        "example": "Draw and recognise simple circuit diagrams using the correct symbols for a cell, battery, bulb, switch, ammeter and voltmeter.",
+        "example": "Connect an ammeter in series in the circuit to read the current flowing through it.",
         "letter": "A"
       },
       {
         "term": "Voltmeter",
         "meaning": "Measures voltage in volts; connected in parallel (across a component).",
-        "example": "Draw and recognise simple circuit diagrams using the correct symbols for a cell, battery, bulb, switch, ammeter and voltmeter.",
+        "example": "Connect a voltmeter across a bulb to measure the voltage drop across it.",
         "letter": "V"
       }
     ],
@@ -919,9 +919,9 @@
       "responseMode": "text",
       "prompt": "Explain what an electric current is and why a circuit must be a complete loop.",
       "keyIdeas": [
-        "Electric current",
-        "Voltage (potential difference)",
-        "Resistance"
+        "Flow of electric charge",
+        "Needs an unbroken path",
+        "Any gap stops the current"
       ],
       "modelAnswer": "An electric current is the flow of electric charge around a circuit. The circuit must be a complete loop because charge can only flow if there is an unbroken path from one end of the cell, through the components, and back to the other end; any gap stops the current everywhere."
     },
@@ -932,9 +932,9 @@
       "responseMode": "text",
       "prompt": "Explain the difference between voltage and current using the water-in-a-pipe picture.",
       "keyIdeas": [
-        "Voltage (potential difference)",
-        "Resistance",
-        "Cell"
+        "Voltage: the push, like a pump",
+        "Current: the flow, like the water",
+        "Cell provides the push"
       ],
       "modelAnswer": "Voltage is the push, like a pump driving water round a loop of pipe. Current is the flow, like the water actually moving. The cell provides the voltage that pushes the current (the charge) round the circuit."
     },
@@ -945,9 +945,9 @@
       "responseMode": "text",
       "prompt": "What is resistance? Name two things that increase the resistance of a wire.",
       "keyIdeas": [
-        "Resistance",
-        "Cell",
-        "Battery"
+        "Slows down the current",
+        "Longer wire increases it",
+        "Thinner wire increases it"
       ],
       "modelAnswer": "Resistance is how much a component slows down the current. Resistance is increased by making a wire longer and by making it thinner (and some materials resist more than others)."
     },
@@ -958,9 +958,9 @@
       "responseMode": "text",
       "prompt": "State the rule that links voltage, current and resistance.",
       "keyIdeas": [
-        "Cell",
-        "Battery",
-        "Circuit"
+        "Voltage = current x resistance",
+        "More resistance, less current",
+        "More voltage, more current"
       ],
       "modelAnswer": "Voltage = current x resistance. For a fixed voltage, more resistance means less current; more voltage (same resistance) means more current."
     },
@@ -971,9 +971,9 @@
       "responseMode": "text",
       "prompt": "Describe how current and voltage behave in a series circuit.",
       "keyIdeas": [
-        "Battery",
-        "Circuit",
-        "Conductor"
+        "Same current everywhere",
+        "Voltage shared between components",
+        "Bulbs are dimmer"
       ],
       "modelAnswer": "In a series circuit the current is the same everywhere (one path), and the voltage is shared between the components, so bulbs are dimmer than one bulb alone."
     },
@@ -984,9 +984,9 @@
       "responseMode": "text",
       "prompt": "Describe how current and voltage behave in a parallel circuit.",
       "keyIdeas": [
-        "Circuit",
-        "Conductor",
-        "Insulator"
+        "Each branch gets full voltage",
+        "Bulbs are bright",
+        "One branch can fail without stopping others"
       ],
       "modelAnswer": "In a parallel circuit each branch gets the full voltage, so bulbs are bright, and each branch has its own loop, so one branch can fail without stopping the others."
     },

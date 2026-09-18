@@ -1,6 +1,6 @@
 {
   "schemaVersion": "Ehel Science Runtime v1.0",
-  "generatedAt": "2026-09-18T08:42:40.354Z",
+  "generatedAt": "2026-09-18T09:38:38.269Z",
   "stage": {
     "id": "s07",
     "label": "Stage 7"
@@ -334,7 +334,7 @@
       "id": "we02",
       "outcomeId": "lo02",
       "difficulty": "Intermediate",
-      "title": "1",
+      "title": "Testing Vinegar with Universal Indicator",
       "prompt": "Question: Amina tests some vinegar with universal indicator and it turns orange. Roughly what is the pH, and is the vinegar acidic, neutral or alkaline?",
       "solution": "Step 1 — Recall the colour code. Universal indicator turns red at the strongest acids (around pH 1) and moves through orange and yellow for weaker acids (about pH 3 to 6).\n\nStep 2 — Match the colour. Orange sits between red and yellow, so it points to a weakly acidic liquid, about pH 3 to 4.\n\nAnswer: The vinegar has a pH of roughly 3 to 4, so it is acidic — which fits, because vinegar tastes sour.\n\nWorked Example 2"
     },
@@ -342,7 +342,7 @@
       "id": "we03",
       "outcomeId": "lo03",
       "difficulty": "Intermediate",
-      "title": "2",
+      "title": "Testing Soapy Water with Universal Indicator",
       "prompt": "Question: Yusuf tests soapy water and universal indicator turns blue. What is the approximate pH, and how should he describe the liquid?",
       "solution": "Step 1 — Recall the code. Green is neutral (pH 7); blue means weakly alkaline (around pH 8 to 10); purple means strongly alkaline (pH 13 to 14).\n\nStep 2 — Match. Blue is above green but not as far as purple, so the liquid is weakly alkaline, about pH 9.\n\nAnswer: The soapy water is about pH 9 and is a weak alkali — which fits its slippery, soapy feel.\n\nWorked Example 3"
     },
@@ -350,7 +350,7 @@
       "id": "we04",
       "outcomeId": "lo04",
       "difficulty": "Intermediate",
-      "title": "3",
+      "title": "Neutralising an Acid with an Alkali",
       "prompt": "Question: Khadija slowly adds baking soda (a mild alkali) to some lemon juice (an acid), testing the pH as she goes. It starts at pH 2 and rises to pH 5, then pH 7. What is happening, and what is this process called?",
       "solution": "Step 1 — Notice the direction. The pH is rising from a low, acidic number towards 7. Adding an alkali is cancelling out the acid.\n\nStep 2 — Name it. Moving an acid up towards pH 7 by adding an alkali is neutralisation. At pH 7 the mixture is neutral.\n\nAnswer: The alkali is neutralising the acid; when it reaches pH 7 the liquid is neutral.\n\nReading Comprehension — The Rusty Roof of Berbera"
     },
@@ -604,19 +604,19 @@
       {
         "term": "Material",
         "meaning": "The substance an object is made from.",
-        "example": "A property is simply a feature of a material and how it behaves.",
+        "example": "Steel is the material a bicycle frame is usually made from.",
         "letter": "M"
       },
       {
         "term": "Property",
         "meaning": "A feature of a material and how it behaves.",
-        "example": "A property is simply a feature of a material and how it behaves.",
+        "example": "Being an excellent conductor of electricity is one property of copper.",
         "letter": "P"
       },
       {
         "term": "Metal",
         "meaning": "Element that is shiny, strong, conducts heat and electricity; on the left of the Periodic Table.",
-        "example": "Define an alloy and use simple particle ideas to explain why an alloy is harder than the pure metal it comes from.",
+        "example": "Copper is a metal often used for electrical wiring because it conducts so well.",
         "letter": "M"
       },
       {
@@ -652,7 +652,7 @@
       {
         "term": "Insulator",
         "meaning": "Does not let heat or electricity through.",
-        "example": "",
+        "example": "Rubber is an insulator, which is why electrical cables are coated in it.",
         "letter": "I"
       },
       {
@@ -670,7 +670,7 @@
       {
         "term": "Alloy",
         "meaning": "A mixture of a metal with other elements (e.g. steel, brass, bronze).",
-        "example": "Define an alloy and use simple particle ideas to explain why an alloy is harder than the pure metal it comes from.",
+        "example": "Bronze is an alloy of copper and tin, harder than either metal alone.",
         "letter": "A"
       }
     ],
@@ -903,9 +903,9 @@
       "responseMode": "text",
       "prompt": "List four properties that most metals share.",
       "keyIdeas": [
-        "Material",
-        "Property",
-        "Metal"
+        "Shiny when polished",
+        "Malleable and ductile",
+        "Conduct heat and electricity"
       ],
       "modelAnswer": "Any four of: shiny when polished; strong and do not shatter; malleable; ductile; conduct heat; conduct electricity; sonorous; high melting point; some are magnetic."
     },
@@ -916,9 +916,9 @@
       "responseMode": "text",
       "prompt": "What do the words malleable and ductile mean?",
       "keyIdeas": [
-        "Property",
-        "Metal",
-        "Non-metal"
+        "Malleable: hammered into shape",
+        "Without breaking",
+        "Ductile: drawn into thin wires"
       ],
       "modelAnswer": "Malleable means it can be hammered or pressed into shape without breaking. Ductile means it can be drawn out into thin wires."
     },
@@ -929,9 +929,9 @@
       "responseMode": "text",
       "prompt": "Name three non-metals and give one use for each.",
       "keyIdeas": [
-        "Metal",
-        "Non-metal",
-        "Malleable"
+        "Oxygen for breathing",
+        "Carbon for cooking",
+        "Chlorine for cleaning water"
       ],
       "modelAnswer": "Any three, for example: oxygen - breathing/hospitals; carbon - cooking/purifying water; chlorine - killing germs in water; helium - filling balloons; sulfur - hardening rubber; silicon - computer chips."
     },
@@ -942,9 +942,9 @@
       "responseMode": "text",
       "prompt": "Explain, using particles, why an alloy is harder than the pure metal it is made from.",
       "keyIdeas": [
-        "Non-metal",
-        "Malleable",
-        "Ductile"
+        "Pure metal atoms same size, neat rows",
+        "Layers slide easily, soft",
+        "Alloy's different-sized atoms disrupt rows"
       ],
       "modelAnswer": "In a pure metal the atoms are all the same size and lie in neat rows, so layers slide over each other easily, making it soft. In an alloy, different-sized atoms disrupt the neat rows so the layers can no longer slide easily; this makes the alloy harder and stronger."
     },
@@ -955,9 +955,9 @@
       "responseMode": "text",
       "prompt": "Describe how you would separate salt from salty water at home.",
       "keyIdeas": [
-        "Malleable",
-        "Ductile",
-        "Sonorous"
+        "Pour into a shallow dish",
+        "Leave in warm, sunny place",
+        "Water evaporates, salt left behind"
       ],
       "modelAnswer": "Pour the salty water into a shallow dish and leave it in a warm, sunny place. The water evaporates (turns to a gas and escapes) and the salt is left behind in the dish. This is called evaporation."
     },
@@ -968,9 +968,9 @@
       "responseMode": "text",
       "prompt": "Give one household acid and one household alkali, and say how each one tastes or feels.",
       "keyIdeas": [
-        "Ductile",
-        "Sonorous",
-        "Conductor"
+        "Acid: lemon juice, tastes sour",
+        "Alkali: soapy water, feels slippery",
+        "Taste or feel tells you which"
       ],
       "modelAnswer": "Acid example: lemon or lime juice, or vinegar - it tastes sour. Alkali example: soapy water or baking soda solution - it feels soapy or slippery."
     },

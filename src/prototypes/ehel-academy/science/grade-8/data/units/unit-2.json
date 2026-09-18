@@ -1,6 +1,6 @@
 {
   "schemaVersion": "Ehel Science Runtime v1.0",
-  "generatedAt": "2026-09-18T08:42:40.557Z",
+  "generatedAt": "2026-09-18T09:38:38.426Z",
   "stage": {
     "id": "s08",
     "label": "Stage 8"
@@ -288,7 +288,7 @@
       "id": "we02",
       "outcomeId": "lo02",
       "difficulty": "Basic",
-      "title": "The male sex cell is called the",
+      "title": "Naming the Male Sex Cell",
       "prompt": "The male sex cell is called the: (a) egg cell (b) sperm cell (c) zygote (d) embryo",
       "solution": "(b) sperm cell. The sperm cell is the male sex cell, made in the testes; the egg cell is the female sex cell."
     },
@@ -296,7 +296,7 @@
       "id": "we03",
       "outcomeId": "lo03",
       "difficulty": "Basic",
-      "title": "Egg cells are made and released by the",
+      "title": "Where Egg Cells Are Made",
       "prompt": "Egg cells are made and released by the: (a) uterus (b) oviducts (c) ovaries (d) cervix",
       "solution": "(c) ovaries. The ovaries store and release egg cells and make the hormone oestrogen."
     },
@@ -320,7 +320,7 @@
       "id": "we06",
       "outcomeId": "lo06",
       "difficulty": "Intermediate",
-      "title": "The main male hormone is",
+      "title": "Naming the Main Male Hormone",
       "prompt": "The main male hormone is: (a) oestrogen (b) testosterone (c) insulin (d) adrenaline",
       "solution": "(b) testosterone. Testosterone is the main male hormone, made in the testes; oestrogen is the main female hormone."
     },
@@ -336,7 +336,7 @@
       "id": "we08",
       "outcomeId": "lo08",
       "difficulty": "Intermediate",
-      "title": "Fertilisation is the joining of the nucleus of a",
+      "title": "Defining Fertilisation",
       "prompt": "Fertilisation is the joining of the nucleus of a sperm cell with the nucleus of: (a) an egg cell (b) the uterus lining (c) the placenta (d) a red blood cell",
       "solution": "(a) an egg cell. Fertilisation is the joining of the nucleus of a sperm cell with the nucleus of an egg cell."
     }
@@ -569,14 +569,14 @@
     "vocabulary": [
       {
         "term": "Puberty age range",
-        "meaning": "About 11 to 16 years",
-        "example": "",
+        "meaning": "About 11 to 16 years.",
+        "example": "Puberty's age range varies a lot: one child might start at 10, another not until 14.",
         "letter": "P"
       },
       {
         "term": "Menstrual cycle length",
-        "meaning": "About 28 days",
-        "example": "",
+        "meaning": "About 28 days.",
+        "example": "A menstrual cycle length of about 28 days means most people have roughly 13 cycles in a year.",
         "letter": "M"
       },
       {
@@ -587,14 +587,14 @@
       },
       {
         "term": "Embryo stage",
-        "meaning": "Weeks 1 to 8",
-        "example": "",
+        "meaning": "Weeks 1 to 8.",
+        "example": "During the embryo stage, in the first eight weeks, the major organs begin to form.",
         "letter": "E"
       },
       {
         "term": "Fetus stage",
-        "meaning": "Week 8 to birth",
-        "example": "",
+        "meaning": "Week 8 to birth.",
+        "example": "By the fetus stage, the developing baby already has all its major organs and is mostly growing bigger.",
         "letter": "F"
       },
       {
@@ -873,9 +873,9 @@
       "responseMode": "text",
       "prompt": "Name the male and female sex cells, and state where each one is made.",
       "keyIdeas": [
-        "Puberty age range",
-        "Menstrual cycle length",
-        "Ovulation"
+        "Sperm cell, made in the testes",
+        "Egg cell, made in the ovaries",
+        "Male vs female sex cells"
       ],
       "modelAnswer": "The male sex cell is the sperm cell, made in the testes. The female sex cell is the egg cell (ovum), made in (and released from) the ovaries."
     },
@@ -886,9 +886,9 @@
       "responseMode": "text",
       "prompt": "State two jobs of the ovaries.",
       "keyIdeas": [
-        "Menstrual cycle length",
-        "Ovulation",
-        "Embryo stage"
+        "Store and release egg cells",
+        "Make the hormone oestrogen",
+        "Two jobs at once"
       ],
       "modelAnswer": "The ovaries (1) store and release egg cells, and (2) make the female hormone oestrogen. (Either two of these.)"
     },
@@ -899,9 +899,9 @@
       "responseMode": "text",
       "prompt": "Give two changes of puberty that happen to both boys and girls.",
       "keyIdeas": [
-        "Ovulation",
-        "Embryo stage",
-        "Fetus stage"
+        "A growth spurt",
+        "Underarm hair",
+        "More sweat and body odour"
       ],
       "modelAnswer": "Accept any two shared changes, such as: a growth spurt, underarm hair, more sweat and body odour, oilier skin, or emotional changes."
     },
@@ -912,9 +912,9 @@
       "responseMode": "text",
       "prompt": "Explain what happens during menstruation and why it is a normal, healthy process.",
       "keyIdeas": [
-        "Embryo stage",
-        "Fetus stage",
-        "Gestation (pregnancy)"
+        "Uterus lining breaks down",
+        "Leaves the body monthly",
+        "A normal, healthy process"
       ],
       "modelAnswer": "During menstruation the thickened lining of the uterus, no longer needed because no baby is developing, breaks down and leaves the body through the vagina. It is a normal, healthy monthly sign that the female body is working well - not an illness."
     },
@@ -925,9 +925,9 @@
       "responseMode": "text",
       "prompt": "Define fertilisation precisely, using the word 'nucleus'.",
       "keyIdeas": [
-        "Fetus stage",
-        "Gestation (pregnancy)",
-        "Oviduct"
+        "Joining of sperm nucleus",
+        "And egg cell nucleus",
+        "Forms a single new cell"
       ],
       "modelAnswer": "Fertilisation is the joining (fusion) of the nucleus of a sperm cell with the nucleus of an egg cell, forming a single new cell."
     },
@@ -938,9 +938,9 @@
       "responseMode": "text",
       "prompt": "Put these stages in the correct order and name what changes at each: fetus, zygote, embryo.",
       "keyIdeas": [
-        "Gestation (pregnancy)",
-        "Oviduct",
-        "Uterus (womb)"
+        "Zygote: the single cell first",
+        "Embryo: first eight weeks",
+        "Fetus: from eight weeks to birth"
       ],
       "modelAnswer": "Correct order: zygote (the single cell at fertilisation), then embryo (first eight weeks, main parts forming), then fetus (from eight weeks until birth, clearly human and growing)."
     },

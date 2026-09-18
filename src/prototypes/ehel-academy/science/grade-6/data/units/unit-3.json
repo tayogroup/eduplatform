@@ -1,6 +1,6 @@
 {
   "schemaVersion": "Ehel Science Runtime v1.0",
-  "generatedAt": "2026-09-18T08:42:40.113Z",
+  "generatedAt": "2026-09-18T09:38:38.082Z",
   "stage": {
     "id": "s06",
     "label": "Stage 6"
@@ -433,7 +433,7 @@
       "id": "we05",
       "outcomeId": "lo05",
       "difficulty": "Intermediate",
-      "title": "In a cup of sweet shaah, the sugar is the",
+      "title": "Identifying the Solute in Sweet Tea",
       "prompt": "In a cup of sweet shaah, the sugar is the: (a) solvent (b) solute (c) solution (d) mixture",
       "solution": "(b) Solute. The solute is the solid that dissolves — here, the sugar."
     },
@@ -441,7 +441,7 @@
       "id": "we06",
       "outcomeId": "lo06",
       "difficulty": "Intermediate",
-      "title": "In salt water, the water is the",
+      "title": "Identifying the Solvent in Salt Water",
       "prompt": "In salt water, the water is the: (a) solute (b) solvent (c) solid (d) filter",
       "solution": "(b) Solvent. The solvent is the liquid that does the dissolving — here, the water."
     },
@@ -698,25 +698,25 @@
       {
         "term": "Reversible change",
         "meaning": "A change that can be undone to get the original material back.",
-        "example": "Tell the difference between a reversible change and an irreversible change, and give clear examples of each from your own life.",
+        "example": "Freezing water into ice is a reversible change, since melting it turns it back to water.",
         "letter": "R"
       },
       {
         "term": "Irreversible change",
         "meaning": "A change that cannot be undone; a new material is usually made.",
-        "example": "Tell the difference between a reversible change and an irreversible change, and give clear examples of each from your own life.",
+        "example": "Burning paper to ash is an irreversible change; you cannot turn the ash back into paper.",
         "letter": "I"
       },
       {
         "term": "Physical change",
         "meaning": "A change of shape or state with no new material made.",
-        "example": "Explain the difference between a physical change and a chemical change, and describe the evidence that a new material has been made.",
+        "example": "Cutting a sheet of paper into pieces is a physical change; it is still paper.",
         "letter": "P"
       },
       {
         "term": "Chemical change",
         "meaning": "A change that makes one or more new materials.",
-        "example": "Explain the difference between a physical change and a chemical change, and describe the evidence that a new material has been made.",
+        "example": "Rusting iron is a chemical change that turns the metal into a new, flaky orange substance.",
         "letter": "C"
       },
       {
@@ -728,19 +728,19 @@
       {
         "term": "Solution",
         "meaning": "A mixture where a solid has dissolved evenly and cannot be seen.",
-        "example": "When a solute spreads out completely into a solvent to make a solution.",
+        "example": "Stirring sugar into tea until it disappears makes a sugar solution.",
         "letter": "S"
       },
       {
         "term": "Solute",
         "meaning": "The solid that dissolves.",
-        "example": "When a solute spreads out completely into a solvent to make a solution.",
+        "example": "Salt is the solute that disappears when stirred into water.",
         "letter": "S"
       },
       {
         "term": "Solvent",
         "meaning": "The liquid that does the dissolving.",
-        "example": "When a solute spreads out completely into a solvent to make a solution.",
+        "example": "Water is the solvent in a cup of sweetened tea.",
         "letter": "S"
       },
       {
@@ -758,13 +758,13 @@
       {
         "term": "Filtration",
         "meaning": "Separating an undissolved solid from a liquid using a filter.",
-        "example": "Evaporation gets a dissolved solid back; filtration only catches undissolved solids.",
+        "example": "Filtration through a paper filter separates tea leaves from the liquid tea.",
         "letter": "F"
       },
       {
         "term": "Evaporation",
         "meaning": "A liquid turning to gas, leaving a dissolved solid behind.",
-        "example": "Evaporation gets a dissolved solid back; filtration only catches undissolved solids.",
+        "example": "Evaporation of seawater in shallow pans is how salt is collected on the coast.",
         "letter": "E"
       }
     ],
@@ -1005,9 +1005,9 @@
       "responseMode": "text",
       "prompt": "What is the difference between a reversible and an irreversible change?",
       "keyIdeas": [
-        "Reversible change",
-        "Irreversible change",
-        "Physical change"
+        "Reversible: can get the original back",
+        "Irreversible: cannot be undone",
+        "Melting ice vs baking bread"
       ],
       "modelAnswer": "A reversible change can be undone so you get the original material back (like melting ice), while an irreversible change cannot be undone and usually makes a new material (like baking bread)."
     },
@@ -1018,9 +1018,9 @@
       "responseMode": "text",
       "prompt": "Name three clues that tell you a chemical change has happened.",
       "keyIdeas": [
-        "Irreversible change",
-        "Physical change",
-        "Chemical change"
+        "A colour change",
+        "A gas being made",
+        "Heat or light given out"
       ],
       "modelAnswer": "Any three of: a colour change, a gas being made, heat or light given out, a new smell, or a change that will not reverse."
     },
@@ -1031,9 +1031,9 @@
       "responseMode": "text",
       "prompt": "Explain why rusting is an irreversible change.",
       "keyIdeas": [
-        "Physical change",
-        "Chemical change",
-        "Mixture"
+        "Iron joins with oxygen and water",
+        "Makes a new material, iron oxide",
+        "Cannot turn back into iron"
       ],
       "modelAnswer": "Rusting is irreversible because the iron joins with oxygen and water to make a new material, iron oxide, which has different properties and cannot be turned back into iron."
     },
@@ -1044,9 +1044,9 @@
       "responseMode": "text",
       "prompt": "What is the difference between a mixture and a solution?",
       "keyIdeas": [
-        "Chemical change",
-        "Mixture",
-        "Solution"
+        "Mixture: any materials jumbled together",
+        "Solution: a solid dissolved evenly",
+        "In a liquid, cannot be seen"
       ],
       "modelAnswer": "A mixture is any two or more materials jumbled together; a solution is a special mixture where a solid has dissolved evenly into a liquid so it cannot be seen."
     },
@@ -1057,9 +1057,9 @@
       "responseMode": "text",
       "prompt": "Name the solute, solvent, and solution when you stir salt into water.",
       "keyIdeas": [
-        "Mixture",
-        "Solution",
-        "Solute"
+        "Solute: the salt",
+        "Solvent: the water",
+        "Solution: the salt water together"
       ],
       "modelAnswer": "The solute is the salt, the solvent is the water, and the solution is the salt water they make together."
     },
@@ -1070,9 +1070,9 @@
       "responseMode": "text",
       "prompt": "List the three things that make a solid dissolve faster.",
       "keyIdeas": [
-        "Solution",
-        "Solute",
-        "Solvent"
+        "Heating the liquid",
+        "Stirring it",
+        "Breaking into smaller pieces"
       ],
       "modelAnswer": "Heating the liquid, stirring it, and breaking the solid into smaller pieces."
     },

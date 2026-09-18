@@ -1,6 +1,6 @@
 {
   "schemaVersion": "Ehel Science Runtime v1.0",
-  "generatedAt": "2026-09-18T08:42:39.743Z",
+  "generatedAt": "2026-09-18T09:38:37.843Z",
   "stage": {
     "id": "s04",
     "label": "Stage 4"
@@ -362,7 +362,7 @@
       "id": "we05",
       "outcomeId": "lo05",
       "difficulty": "Intermediate",
-      "title": "Light travels in",
+      "title": "How Light Travels",
       "prompt": "Light travels in: (a) curved paths; (b) straight lines; (c) circles; (d) zig-zags on its own.",
       "solution": "4: (b) Light travels in straight lines. This is why shadows form."
     },
@@ -609,33 +609,33 @@
     ],
     "vocabulary": [
       {
-        "term": "Group",
-        "meaning": "What happens to light",
-        "example": "",
-        "letter": "G"
+        "term": "Shadow",
+        "meaning": "A dark area formed when an opaque object blocks light.",
+        "example": "A tree casts a long shadow across the playground in the late afternoon.",
+        "letter": "S"
       },
       {
         "term": "Transparent",
-        "meaning": "All light passes through",
-        "example": "Sort materials into transparent, translucent, and opaque by how they let light through.",
+        "meaning": "All light passes through.",
+        "example": "You can see fish clearly through the transparent glass of an aquarium.",
         "letter": "T"
       },
       {
         "term": "Translucent",
-        "meaning": "Some light passes, scattered",
-        "example": "Sort materials into transparent, translucent, and opaque by how they let light through.",
+        "meaning": "Some light passes, scattered.",
+        "example": "Frosted bathroom glass is translucent, letting light in without showing a clear picture.",
         "letter": "T"
       },
       {
         "term": "Opaque",
-        "meaning": "No light passes; makes shadows",
-        "example": "Sort materials into transparent, translucent, and opaque by how they let light through.",
+        "meaning": "No light passes; makes shadows.",
+        "example": "A brick wall is opaque and blocks light completely, casting a sharp shadow.",
         "letter": "O"
       },
       {
         "term": "Artificial light source",
         "meaning": "A light source made by people (torch, bulb, candle, phone).",
-        "example": "",
+        "example": "A phone screen is an artificial light source you can read by in the dark.",
         "letter": "A"
       },
       {
@@ -910,9 +910,9 @@
       "responseMode": "text",
       "prompt": "Explain why you cannot see anything in a completely dark room.",
       "keyIdeas": [
-        "Group",
-        "Transparent",
-        "Translucent"
+        "No light to reflect off objects",
+        "Nothing enters your eyes",
+        "Objects are still there, just unseen"
       ],
       "modelAnswer": "In complete darkness there is no light to reflect off objects into your eyes, so you see nothing. Objects are still there, but without light there is no seeing."
     },
@@ -923,9 +923,9 @@
       "responseMode": "text",
       "prompt": "What is the difference between a light source and a reflector? Give one example of each.",
       "keyIdeas": [
-        "Transparent",
-        "Translucent",
-        "Opaque"
+        "Source: makes its own light",
+        "Reflector: bounces back light",
+        "Sun vs Moon"
       ],
       "modelAnswer": "A light source makes its own light (for example, the Sun or a torch). A reflector only bounces back light that came from somewhere else (for example, the Moon or a mirror)."
     },
@@ -936,9 +936,9 @@
       "responseMode": "text",
       "prompt": "Explain, in three steps, how you are able to see a goat standing in a field.",
       "keyIdeas": [
-        "Translucent",
-        "Opaque",
-        "Artificial light source"
+        "Light travels to the goat",
+        "Reflects off the goat",
+        "Enters your eyes"
       ],
       "modelAnswer": "Step 1: light from a source (like the Sun) travels to the goat. Step 2: the light reflects off the goat. Step 3: the reflected light enters your eyes, so you see the goat."
     },
@@ -949,9 +949,9 @@
       "responseMode": "text",
       "prompt": "Why does an opaque object make a shadow?",
       "keyIdeas": [
-        "Opaque",
-        "Artificial light source",
-        "Reflection"
+        "Does not let light through",
+        "Blocks the straight-travelling light",
+        "Dark space behind is the shadow"
       ],
       "modelAnswer": "An opaque object does not let light through, so it blocks the straight-travelling light. The space behind it stays dark, and that dark area is the shadow."
     },
@@ -962,9 +962,9 @@
       "responseMode": "text",
       "prompt": "Why can you see your face clearly in still water but not in choppy water?",
       "keyIdeas": [
-        "Artificial light source",
-        "Reflection",
-        "Ray"
+        "Still water is smooth",
+        "Reflects light in order",
+        "Choppy water scatters the light"
       ],
       "modelAnswer": "Still water is smooth, so it reflects light in an orderly way and gives a clear image. Choppy water is rough, so it scatters the light in all directions and the picture breaks up."
     },
@@ -975,9 +975,9 @@
       "responseMode": "text",
       "prompt": "Name the three groups we sort materials into by how they let light through, and give one example of each.",
       "keyIdeas": [
-        "Reflection",
-        "Ray",
-        "Shadow"
+        "Transparent: clear glass, water",
+        "Translucent: thin curtain",
+        "Opaque: wood, metal"
       ],
       "modelAnswer": "Transparent (clear glass, water), translucent (thin curtain, frosted glass), and opaque (wood, metal)."
     },

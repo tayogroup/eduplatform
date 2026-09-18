@@ -1,6 +1,6 @@
 {
   "schemaVersion": "Ehel Science Runtime v1.0",
-  "generatedAt": "2026-09-18T08:42:39.894Z",
+  "generatedAt": "2026-09-18T09:38:37.913Z",
   "stage": {
     "id": "s05",
     "label": "Stage 5"
@@ -362,7 +362,7 @@
       "id": "we02",
       "outcomeId": "lo02",
       "difficulty": "Basic",
-      "title": "The main job of colourful petals is to",
+      "title": "The Job of Colourful Petals",
       "prompt": "The main job of colourful petals is to: (a) protect the bud (b) attract pollinators (c) make seeds (d) store water",
       "solution": "b) attract pollinators. Bright petals advertise the flower to bees, butterflies and birds."
     },
@@ -378,7 +378,7 @@
       "id": "we04",
       "outcomeId": "lo04",
       "difficulty": "Basic",
-      "title": "The sticky top of the pistil that catches pollen is",
+      "title": "Naming the Stigma",
       "prompt": "The sticky top of the pistil that catches pollen is the: (a) style (b) ovary (c) stigma (d) anther",
       "solution": "c) stigma. The stigma is sticky so it can catch pollen grains."
     },
@@ -610,10 +610,10 @@
     ],
     "vocabulary": [
       {
-        "term": "Feature",
-        "meaning": "Insect-Pollinated",
-        "example": "",
-        "letter": "F"
+        "term": "Insect-pollinated",
+        "meaning": "A flower that relies on insects like bees to carry its pollen.",
+        "example": "A brightly coloured, scented flower is usually insect-pollinated, using colour and scent to attract bees.",
+        "letter": "I"
       },
       {
         "term": "Petals",
@@ -623,20 +623,20 @@
       },
       {
         "term": "Scent",
-        "meaning": "Sweet smell",
-        "example": "Everything about a flower, its colour, its scent, its shape, and its sweet nectar, is a clever tool to help it do that job well.",
+        "meaning": "Sweet smell.",
+        "example": "A rose's strong scent helps attract bees from far away.",
         "letter": "S"
       },
       {
         "term": "Nectar",
-        "meaning": "Yes, to reward visitors",
-        "example": "Everything about a flower, its colour, its scent, its shape, and its sweet nectar, is a clever tool to help it do that job well.",
+        "meaning": "A sugary liquid made by a flower to reward the insects that visit it.",
+        "example": "A bee collects sweet nectar from a flower while accidentally picking up pollen on its legs.",
         "letter": "N"
       },
       {
         "term": "Pollen",
-        "meaning": "Smaller amount, sticky",
-        "example": "Explain pollination and describe how insects such as bees and butterflies, and how the wind, carry pollen from one flower to another.",
+        "meaning": "Tiny grains made by a flower's male part, carried to fertilise another flower.",
+        "example": "Yellow pollen dusts a bee's legs as it moves from flower to flower.",
         "letter": "P"
       },
       {
@@ -654,19 +654,19 @@
       {
         "term": "Stigma",
         "meaning": "Sticky top of the pistil that catches pollen.",
-        "example": "The female part; made of stigma, style and ovary.",
+        "example": "Pollen grains stick to the sticky stigma at the top of the flower.",
         "letter": "S"
       },
       {
         "term": "Style",
         "meaning": "Stalk joining the stigma to the ovary.",
-        "example": "The female part; made of stigma, style and ovary.",
+        "example": "Pollen travels down the style on its way to the ovary.",
         "letter": "S"
       },
       {
         "term": "Ovary",
         "meaning": "Base of the pistil; becomes the fruit.",
-        "example": "The female part; made of stigma, style and ovary.",
+        "example": "After fertilisation, the ovary swells and ripens into a fruit.",
         "letter": "O"
       },
       {
@@ -919,9 +919,9 @@
       "responseMode": "text",
       "prompt": "Name the three parts that make up the pistil.",
       "keyIdeas": [
-        "Feature",
-        "Petals",
-        "Scent"
+        "Stigma",
+        "Style",
+        "Ovary"
       ],
       "modelAnswer": "The pistil is made of the stigma, the style, and the ovary."
     },
@@ -932,9 +932,9 @@
       "responseMode": "text",
       "prompt": "Explain the difference between pollination and fertilisation.",
       "keyIdeas": [
-        "Petals",
-        "Scent",
-        "Nectar"
+        "Pollination: pollen moves to stigma",
+        "Fertilisation: male cell joins ovule",
+        "Pollination comes first"
       ],
       "modelAnswer": "Pollination is moving pollen from the anther to the stigma. Fertilisation happens afterward, when the male cell from the pollen joins an ovule inside the ovary to start a seed. Pollination comes first; fertilisation follows."
     },
@@ -945,9 +945,9 @@
       "responseMode": "text",
       "prompt": "Why are insect-pollinated flowers usually brightly coloured and scented?",
       "keyIdeas": [
-        "Scent",
-        "Nectar",
-        "Pollen"
+        "Bright colour attracts insects",
+        "Sweet scent attracts insects",
+        "Like an advertisement"
       ],
       "modelAnswer": "Bright colour and sweet scent attract insect pollinators such as bees and butterflies, which the flower needs to carry its pollen. The petals act like an advertisement."
     },
@@ -958,9 +958,9 @@
       "responseMode": "text",
       "prompt": "What happens to the petals of a flower after it has been fertilised?",
       "keyIdeas": [
-        "Nectar",
-        "Pollen",
-        "Filament"
+        "Wilt and fall off",
+        "Job of attracting pollinators is done",
+        "Saves the plant's energy"
       ],
       "modelAnswer": "The petals wilt and fall off because they have finished their job of attracting pollinators, and the plant no longer needs to spend energy on them."
     },
@@ -971,9 +971,9 @@
       "responseMode": "text",
       "prompt": "Describe two different ways that animals disperse seeds.",
       "keyIdeas": [
-        "Pollen",
-        "Filament",
-        "Pistil / Carpel"
+        "Hooks or sticky surfaces on fur",
+        "Eaten inside juicy fruit",
+        "Carried far away"
       ],
       "modelAnswer": "Any two: (1) Seeds with hooks or sticky surfaces catch on animal fur and are carried away; (2) Seeds inside juicy fruits are eaten and later passed out in the animal's droppings far away."
     },
@@ -984,9 +984,9 @@
       "responseMode": "text",
       "prompt": "Why is it bad for a plant if all its seeds land right beneath it?",
       "keyIdeas": [
-        "Filament",
-        "Pistil / Carpel",
-        "Stigma"
+        "Must compete for water and light",
+        "And soil",
+        "Most would not survive"
       ],
       "modelAnswer": "If all seeds land beneath the parent, they must compete for the same water, light and soil, so most will not survive. Spreading out helps more of them live."
     },

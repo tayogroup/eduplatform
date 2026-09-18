@@ -1,6 +1,6 @@
 {
   "schemaVersion": "Ehel Science Runtime v1.0",
-  "generatedAt": "2026-09-18T08:42:40.056Z",
+  "generatedAt": "2026-09-18T09:38:38.032Z",
   "stage": {
     "id": "s06",
     "label": "Stage 6"
@@ -388,7 +388,7 @@
       "id": "we02",
       "outcomeId": "lo02",
       "difficulty": "Intermediate",
-      "title": "1: Turning a 15-second count into a heart rate",
+      "title": "Turning a 15-Second Count into a Heart Rate",
       "prompt": "Counting your pulse for a full minute is accurate but slow. A faster way is to count for 15 seconds and then multiply, because there are four lots of 15 seconds in one minute. Suppose Idris counts 19 beats in 15 seconds. What is his heart rate in beats per minute?",
       "solution": "Write down what you counted: 19 beats in 15 seconds.\n\nAsk: how many 15-second blocks are in one minute? Answer: 60 divided by 15 = 4 blocks.\n\nMultiply your count by 4: 19 x 4 = 76.\n\nWrite the answer with its unit: Idris's heart rate is 76 beats per minute (bpm)."
     },
@@ -396,7 +396,7 @@
       "id": "we03",
       "outcomeId": "lo03",
       "difficulty": "Intermediate",
-      "title": "2: Finding the average of several readings",
+      "title": "Finding the Average of Several Readings",
       "prompt": "Scientists take a measurement more than once and find the average, because this smooths out little errors. Halima measured her resting pulse three times and got 74, 78, and 76 bpm. What is her average resting heart rate?",
       "solution": "Add all the readings together: 74 + 78 + 76 = 228.\n\nCount how many readings there are: 3 readings.\n\nDivide the total by the number of readings: 228 divided by 3 = 76.\n\nWrite the answer: Halima's average resting heart rate is 76 bpm."
     },
@@ -404,7 +404,7 @@
       "id": "we04",
       "outcomeId": "lo04",
       "difficulty": "Intermediate",
-      "title": "3: Comparing rest and exercise",
+      "title": "Comparing Rest and Exercise Heart Rates",
       "prompt": "Omar's heart rate was 80 bpm resting. Straight after doing star jumps it was 132 bpm. By how much did his heart rate increase?",
       "solution": "Write both numbers: resting = 80 bpm, after exercise = 132 bpm.\n\nTo find the increase, subtract the smaller from the larger: 132 — 80 = 52.\n\nWrite the answer: Omar's heart rate increased by 52 bpm because of the exercise.\n\nThis large jump makes perfect sense: Omar's working muscles needed far more oxygen, so his heart sped up to deliver it. The numbers tell the same story as the science."
     },
@@ -661,7 +661,7 @@
       {
         "term": "Organ system",
         "meaning": "A group of organs working together on one big task.",
-        "example": "",
+        "example": "The heart, blood and blood vessels together make up the circulatory organ system.",
         "letter": "O"
       },
       {
@@ -673,13 +673,13 @@
       {
         "term": "Heart",
         "meaning": "The muscular pump that keeps blood moving; about the size of your fist.",
-        "example": "Right now, without you thinking about it even once, your heart is squeezing and pushing blood around your body.",
+        "example": "Your heart beats faster when you run, pushing more blood to your muscles.",
         "letter": "H"
       },
       {
         "term": "Blood",
         "meaning": "Red liquid that carries oxygen, nutrients, and waste.",
-        "example": "Right now, without you thinking about it even once, your heart is squeezing and pushing blood around your body.",
+        "example": "Blood carries oxygen from your lungs to every part of your body.",
         "letter": "B"
       },
       {
@@ -958,9 +958,9 @@
       "responseMode": "text",
       "prompt": "Name the three main parts of the circulatory system.",
       "keyIdeas": [
-        "Organ",
-        "Organ system",
-        "Circulatory system"
+        "The heart",
+        "The blood",
+        "Blood vessels"
       ],
       "modelAnswer": "The heart, the blood, and the blood vessels (arteries and veins)."
     },
@@ -971,9 +971,9 @@
       "responseMode": "text",
       "prompt": "Explain the difference between an artery and a vein.",
       "keyIdeas": [
-        "Organ system",
-        "Circulatory system",
-        "Heart"
+        "Artery: carries blood away from heart",
+        "Vein: carries blood back to heart",
+        "Different wall thickness"
       ],
       "modelAnswer": "An artery carries blood away from the heart and has thick, muscular walls; a vein carries blood back to the heart, has thinner walls, and often has valves."
     },
@@ -984,9 +984,9 @@
       "responseMode": "text",
       "prompt": "Why does blood travel to the lungs before going to the rest of the body?",
       "keyIdeas": [
-        "Circulatory system",
-        "Heart",
-        "Blood"
+        "Returning blood is low on oxygen",
+        "Must collect fresh oxygen first",
+        "Before going round the body"
       ],
       "modelAnswer": "Because the blood returning from the body is low on oxygen, so it must go to the lungs first to collect fresh oxygen before being pumped around the body."
     },
@@ -997,9 +997,9 @@
       "responseMode": "text",
       "prompt": "What is gas exchange, and where in the body does it happen?",
       "keyIdeas": [
-        "Heart",
-        "Blood",
-        "Artery"
+        "Oxygen moves into the blood",
+        "Carbon dioxide moves out",
+        "Happens in the tiny air sacs of the lungs"
       ],
       "modelAnswer": "Gas exchange is oxygen moving from the air into the blood while carbon dioxide moves out of the blood into the air. It happens in the tiny air sacs of the lungs."
     },
@@ -1010,9 +1010,9 @@
       "responseMode": "text",
       "prompt": "Describe what happens to food in the stomach.",
       "keyIdeas": [
-        "Blood",
-        "Artery",
-        "Vein"
+        "Churned by muscular walls",
+        "Acid and chemicals break it down",
+        "Turns into a thick liquid"
       ],
       "modelAnswer": "The stomach churns the food with its muscular walls and adds acid and chemicals that break it down further and kill many germs, turning it into a thick liquid."
     },
@@ -1023,9 +1023,9 @@
       "responseMode": "text",
       "prompt": "Give two reasons why regular exercise is good for your heart.",
       "keyIdeas": [
-        "Artery",
-        "Vein",
-        "Pulse"
+        "Makes the heart muscle stronger",
+        "Pumps more blood each beat",
+        "Lowers risk of heart disease"
       ],
       "modelAnswer": "Any two: exercise makes the heart muscle stronger; it helps the heart pump more blood with each beat; it improves recovery time; it lowers the risk of heart disease."
     },

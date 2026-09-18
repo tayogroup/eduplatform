@@ -1,6 +1,6 @@
 {
   "schemaVersion": "Ehel Science Runtime v1.0",
-  "generatedAt": "2026-09-18T08:42:40.686Z",
+  "generatedAt": "2026-09-18T09:38:38.531Z",
   "stage": {
     "id": "s08",
     "label": "Stage 8"
@@ -350,7 +350,7 @@
       "id": "we03",
       "outcomeId": "lo03",
       "difficulty": "Basic",
-      "title": "Light travels in",
+      "title": "How Light Travels",
       "prompt": "Light travels in: (a) curves (b) straight lines (c) circles (d) zig-zags on its own",
       "solution": "(b) straight lines. This is shown by sharp shadows and narrow beams."
     },
@@ -358,7 +358,7 @@
       "id": "we04",
       "outcomeId": "lo04",
       "difficulty": "Basic",
-      "title": "The imaginary line at 90 degrees to a mirror is",
+      "title": "Naming the Normal",
       "prompt": "The imaginary line at 90 degrees to a mirror is called the: (a) ray (b) normal (c) incident line (d) spectrum",
       "solution": "(b) normal. The normal is drawn at 90 degrees to the surface and is the reference for all angles."
     },
@@ -390,7 +390,7 @@
       "id": "we08",
       "outcomeId": "lo08",
       "difficulty": "Intermediate",
-      "title": "A convex lens is",
+      "title": "Describing a Convex Lens",
       "prompt": "A convex lens is: (a) thinner in the middle (b) thicker in the middle (c) flat (d) always black",
       "solution": "(b) thicker in the middle. A convex (converging) lens is thicker at its centre."
     }
@@ -614,13 +614,13 @@
       {
         "term": "Luminous",
         "meaning": "Makes its own light (sun, fire, torch).",
-        "example": "Describe the difference between luminous and non-luminous objects and explain how we see non-luminous objects by reflected light.",
+        "example": "The Sun is luminous, making its own light rather than reflecting someone else's.",
         "letter": "L"
       },
       {
         "term": "Non-luminous",
         "meaning": "Seen only by reflected light (moon, goat, page).",
-        "example": "Describe the difference between luminous and non-luminous objects and explain how we see non-luminous objects by reflected light.",
+        "example": "The Moon is non-luminous; we only see it because it reflects sunlight.",
         "letter": "N"
       },
       {
@@ -632,13 +632,13 @@
       {
         "term": "Reflection",
         "meaning": "Light bouncing off a surface.",
-        "example": "Measure angles of incidence and reflection from the normal and solve simple numerical problems.",
+        "example": "You see your face in a mirror because of the reflection of light off its surface.",
         "letter": "R"
       },
       {
         "term": "Normal",
         "meaning": "Imaginary line at 90 degrees to a surface; used to measure angles.",
-        "example": "Measure angles of incidence and reflection from the normal and solve simple numerical problems.",
+        "example": "Light bouncing off a mirror makes an equal angle with the normal on either side.",
         "letter": "N"
       },
       {
@@ -674,13 +674,13 @@
       {
         "term": "Dispersion",
         "meaning": "Splitting of white light into a spectrum of colours.",
-        "example": "Explain dispersion and how a prism or rain droplets split white light into a spectrum.",
+        "example": "A glass prism splits white light by dispersion into a rainbow of colours.",
         "letter": "D"
       },
       {
         "term": "Spectrum",
         "meaning": "The band of colours in white light.",
-        "example": "Explain dispersion and how a prism or rain droplets split white light into a spectrum.",
+        "example": "A rainbow shows the full spectrum hidden inside ordinary white sunlight.",
         "letter": "S"
       }
     ],
@@ -913,9 +913,9 @@
       "responseMode": "text",
       "prompt": "What is the difference between a luminous and a non-luminous object? Give one example of each.",
       "keyIdeas": [
-        "Luminous",
-        "Non-luminous",
-        "Ray"
+        "Luminous: makes its own light (sun)",
+        "Non-luminous: seen by reflected light",
+        "The moon or a goat"
       ],
       "modelAnswer": "A luminous object makes its own light (e.g. the sun, a fire); a non-luminous object does not and is seen by reflected light (e.g. the moon, a goat)."
     },
@@ -926,9 +926,9 @@
       "responseMode": "text",
       "prompt": "State the law of reflection in one sentence.",
       "keyIdeas": [
-        "Non-luminous",
-        "Ray",
-        "Reflection"
+        "Angle of incidence equals angle of reflection",
+        "Both measured from the normal",
+        "A fixed rule"
       ],
       "modelAnswer": "The angle of incidence equals the angle of reflection, both measured from the normal."
     },
@@ -939,9 +939,9 @@
       "responseMode": "text",
       "prompt": "Why must angles in reflection be measured from the normal and not from the mirror?",
       "keyIdeas": [
-        "Ray",
-        "Reflection",
-        "Normal"
+        "Normal gives a fixed 90-degree reference",
+        "Mirror surface could be tilted",
+        "Would give inconsistent angles"
       ],
       "modelAnswer": "Because the normal gives a fixed 90-degree reference. Measuring from the tilted mirror surface would give inconsistent, confusing angles."
     },
@@ -952,9 +952,9 @@
       "responseMode": "text",
       "prompt": "Explain what refraction is.",
       "keyIdeas": [
-        "Reflection",
-        "Normal",
-        "Angle of incidence"
+        "Bending of light",
+        "Changes speed",
+        "Passing between materials"
       ],
       "modelAnswer": "Refraction is the bending of light as it changes speed when passing from one transparent material into another."
     },
@@ -965,9 +965,9 @@
       "responseMode": "text",
       "prompt": "A straw in a glass of water looks bent. Explain why using the idea of refraction.",
       "keyIdeas": [
-        "Normal",
-        "Angle of incidence",
-        "Angle of reflection"
+        "Light refracts leaving the water",
+        "Bends as it enters the air",
+        "Makes the straw look shifted"
       ],
       "modelAnswer": "Light from the underwater part of the straw refracts (bends) as it leaves the water into the air, so the straw's lower part appears shifted, making it look bent or broken at the surface."
     },
@@ -978,9 +978,9 @@
       "responseMode": "text",
       "prompt": "Name the two types of lens and say whether each brings light together or spreads it out.",
       "keyIdeas": [
-        "Angle of incidence",
-        "Angle of reflection",
-        "Refraction"
+        "Convex: brings light together",
+        "Concave: spreads light out",
+        "Converging vs diverging"
       ],
       "modelAnswer": "A convex (converging) lens brings light together; a concave (diverging) lens spreads light out."
     },

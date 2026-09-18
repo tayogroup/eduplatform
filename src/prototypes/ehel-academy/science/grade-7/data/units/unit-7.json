@@ -1,6 +1,6 @@
 {
   "schemaVersion": "Ehel Science Runtime v1.0",
-  "generatedAt": "2026-09-18T08:42:40.416Z",
+  "generatedAt": "2026-09-18T09:38:38.320Z",
   "stage": {
     "id": "s07",
     "label": "Stage 7"
@@ -324,7 +324,7 @@
       "id": "we02",
       "outcomeId": "lo02",
       "difficulty": "Intermediate",
-      "title": "1: Building a Food Chain",
+      "title": "Building a Food Chain",
       "prompt": "Question: A chicken eats grain from a maize plant. Amina eats the chicken. Draw a food chain and label each organism.",
       "solution": "Step 1 — Find the producer. The maize plant makes its own food using sunlight, so it is the producer. It goes first.\n\nStep 2 — Follow who eats whom. The chicken eats the maize grain. Amina eats the chicken.\n\nStep 3 — Draw the chain with arrows pointing in the direction energy flows:\n\nmaize plant -> chicken -> Amina"
     },
@@ -332,7 +332,7 @@
       "id": "we03",
       "outcomeId": "lo03",
       "difficulty": "Intermediate",
-      "title": "2: Calculating a Mean",
+      "title": "Calculating a Mean Leaf Length",
       "prompt": "Question: Khadija measures the length of five grass leaves growing next to cow dung: 11 cm, 13 cm, 9 cm, 12 cm and 8 cm. What is the mean (average) length?",
       "solution": "Step 1 — Add up all the values. 11 + 13 + 9 + 12 + 8 = 53 cm.\n\nStep 2 — Count how many values there are. There are 5 leaves.\n\nStep 3 — Divide the total by the number of values. 53 divided by 5 = 10.6 cm.\n\nAnswer: The mean length of the grass leaves next to the cow dung is 10.6 cm. To compare, if the five leaves far from dung measured 9, 10, 6, 7 and 9 cm, their total is 41 cm and their mean is 41 divided by 5 = 8.2 cm. The grass near the dung is taller on average, which fits the idea that decomposers broke the dung down and returned nutrients to the soil, helping the grass grow."
     },
@@ -600,13 +600,13 @@
       {
         "term": "Bacteria",
         "meaning": "Single-celled microbes with a cell wall but no nucleus; smaller than plant/animal cells.",
-        "example": "In this unit you will meet the main kinds of microorganism — bacteria, fungi, viruses, protozoa and algae.",
+        "example": "Bacteria can multiply into millions within hours on food left out too long.",
         "letter": "B"
       },
       {
         "term": "Fungi",
         "meaning": "Cell-walled organisms with a nucleus that never make their own food; include yeast, mould, mushrooms.",
-        "example": "In this unit you will meet the main kinds of microorganism — bacteria, fungi, viruses, protozoa and algae.",
+        "example": "Mould is a fungi that grows on bread left in a damp, warm place.",
         "letter": "F"
       },
       {
@@ -630,13 +630,13 @@
       {
         "term": "Protozoa",
         "meaning": "Single-celled microbes with animal-like cells; one kind causes malaria.",
-        "example": "In this unit you will meet the main kinds of microorganism — bacteria, fungi, viruses, protozoa and algae.",
+        "example": "The protozoa that causes malaria is spread by mosquito bites.",
         "letter": "P"
       },
       {
         "term": "Algae",
         "meaning": "Single-celled microbes with plant-like cells that make food from sunlight.",
-        "example": "In this unit you will meet the main kinds of microorganism — bacteria, fungi, viruses, protozoa and algae.",
+        "example": "Green algae covering a pond's surface use sunlight to make their own food.",
         "letter": "A"
       },
       {
@@ -891,9 +891,9 @@
       "responseMode": "text",
       "prompt": "Explain what a microorganism is and why we need a microscope to study one.",
       "keyIdeas": [
-        "Microorganism",
-        "Single-celled",
-        "Bacteria"
+        "A living thing far too small to see",
+        "Smaller than one of our own cells",
+        "Needs a microscope to see clearly"
       ],
       "modelAnswer": "A microorganism is a living thing so small it can only be seen clearly with a microscope. A single one is far smaller than one of our own cells, so our eyes alone cannot see it - only a microscope makes it visible."
     },
@@ -904,9 +904,9 @@
       "responseMode": "text",
       "prompt": "Name the four main kinds of microorganism and give one example of each.",
       "keyIdeas": [
-        "Single-celled",
-        "Bacteria",
-        "Fungi"
+        "Bacteria (in yoghurt)",
+        "Fungi (yeast or mould)",
+        "Protozoa and algae"
       ],
       "modelAnswer": "Bacteria (e.g. the bacteria in yoghurt); fungi (e.g. yeast or mould); protozoa (e.g. the malaria protozoan); algae (e.g. green algae in pond water)."
     },
@@ -917,9 +917,9 @@
       "responseMode": "text",
       "prompt": "Explain how one invisible microorganism can grow into a colony you can see.",
       "keyIdeas": [
-        "Bacteria",
-        "Fungi",
-        "Yeast"
+        "Divides into two, then those divide",
+        "In a day or two, becomes millions",
+        "Large enough to see as a colony"
       ],
       "modelAnswer": "One microorganism divides into two, those two each divide, and so on. In a day or two, one invisible cell becomes millions of cells - a colony - which is large enough to see."
     },
@@ -930,9 +930,9 @@
       "responseMode": "text",
       "prompt": "Give two examples of useful microorganisms and say what each one does.",
       "keyIdeas": [
-        "Fungi",
-        "Yeast",
-        "Mould"
+        "Yeast makes dough rise",
+        "Bacteria turn milk into yoghurt",
+        "Useful, not harmful"
       ],
       "modelAnswer": "Yeast makes dough rise for bread and canjeero; bacteria turn milk into yoghurt and fermented camel milk. (Also acceptable: gut bacteria aid digestion; soil decomposers recycle nutrients.)"
     },
@@ -943,9 +943,9 @@
       "responseMode": "text",
       "prompt": "Why must a Petri dish and agar jelly be sterile before use?",
       "keyIdeas": [
-        "Yeast",
-        "Mould",
-        "Virus"
+        "So no unwanted microorganisms present",
+        "Other microbes would grow",
+        "Would spoil the experiment"
       ],
       "modelAnswer": "So that no unwanted microorganisms are already growing on them. If they were not sterile, other microbes would grow and spoil the experiment."
     },
@@ -956,11 +956,11 @@
       "responseMode": "text",
       "prompt": "Explain why decomposers are important for keeping plants growing.",
       "keyIdeas": [
-        "Mould",
-        "Virus",
-        "Protozoa"
+        "Break down dead plants and animals",
+        "Release nutrients into the soil",
+        "Plants take up nutrients through roots"
       ],
-      "modelAnswer": "Producer: makes its own food from sunlight. Consumer: gets energy by eating other organisms. Herbivore: eats only plants. Carnivore: eats only other animals."
+      "modelAnswer": "Decomposers break down dead plants, dead animals and animal waste, releasing the nutrients locked inside back into the soil. Plants take up these nutrients through their roots and use them to grow, so without decomposers those nutrients would stay locked away and plants would have nothing left to grow on."
     },
     {
       "id": "7-enq-7",

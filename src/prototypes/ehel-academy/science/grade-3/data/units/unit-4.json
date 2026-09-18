@@ -1,6 +1,6 @@
 {
   "schemaVersion": "Ehel Science Runtime v1.0",
-  "generatedAt": "2026-09-18T08:42:39.367Z",
+  "generatedAt": "2026-09-18T09:38:37.669Z",
   "stage": {
     "id": "s03",
     "label": "Stage 3"
@@ -314,7 +314,7 @@
       "id": "we02",
       "outcomeId": "lo02",
       "difficulty": "Intermediate",
-      "title": "Amina wanted to find her resting heart rate. She sat quietly, found her pulse, and counted the beats for 15 seconds using a clock. She counted 22 beats.",
+      "title": "Turning a 15-Second Count into a Heart Rate",
       "prompt": "Step 1 — Write down what you counted. Amina counted 22 beats in 15 seconds.",
       "solution": "Step 2 — Remember the rule. 15 seconds fits into 1 minute exactly 4 times, so we multiply by 4.\n\nStep 3 — Do the sum. 22 x 4 = 88.\n\nStep 4 — Write the answer with the units. Amina's heart rate is 88 beats per minute.\n\nNow try one yourself. Hassan counted 20 beats in 15 seconds. What is his heart rate? Do the sum: 20 x 4 = 80 beats per minute. Well done! A resting heart rate for a child your age is usually somewhere between 70 and 110 beats per minute, so both Amina and Hassan are perfectly healthy."
     },
@@ -600,13 +600,13 @@
       {
         "term": "Organ",
         "meaning": "A special part of your body with its own important job.",
-        "example": "Use the correct science words such as organ, pulse, oxygen, nutrients, and digest when you talk about your body.",
+        "example": "Your heart is an organ that pumps blood around your body.",
         "letter": "O"
       },
       {
         "term": "Brain",
         "meaning": "The control center inside your head; it thinks and controls the body.",
-        "example": "Your heart, your lungs, your brain, your stomach, and many others are all organs, and they all work together as one team to keep you alive, strong, and able to run and play.",
+        "example": "Your brain controls everything your body does.",
         "letter": "B"
       },
       {
@@ -624,7 +624,7 @@
       {
         "term": "Stomach",
         "meaning": "The organ that breaks food down with acid after you swallow.",
-        "example": "Your heart, your lungs, your brain, your stomach, and many others are all organs, and they all work together as one team to keep you alive, strong, and able to run and play.",
+        "example": "Food goes to your stomach after you swallow it.",
         "letter": "S"
       },
       {
@@ -648,19 +648,19 @@
       {
         "term": "Oxygen",
         "meaning": "A gas in the air that every part of your body needs.",
-        "example": "Use the correct science words such as organ, pulse, oxygen, nutrients, and digest when you talk about your body.",
+        "example": "Every cell in your body needs oxygen to work.",
         "letter": "O"
       },
       {
         "term": "Nutrients",
         "meaning": "The goodness in food that gives energy and helps you grow.",
-        "example": "Use the correct science words such as organ, pulse, oxygen, nutrients, and digest when you talk about your body.",
+        "example": "Vegetables are full of nutrients that help you grow.",
         "letter": "N"
       },
       {
         "term": "Digest",
         "meaning": "To break food down so your body can use it.",
-        "example": "Use the correct science words such as organ, pulse, oxygen, nutrients, and digest when you talk about your body.",
+        "example": "It can take a few hours to digest a big meal.",
         "letter": "D"
       },
       {
@@ -899,9 +899,9 @@
       "responseMode": "text",
       "prompt": "Name three organs in your body and give one job for each.",
       "keyIdeas": [
-        "Organ",
-        "Brain",
-        "Heart"
+        "Brain controls the body",
+        "Heart pumps blood",
+        "Lungs help you breathe"
       ],
       "modelAnswer": "Any three, such as: brain (controls the body), heart (pumps blood), lungs (help you breathe), stomach (breaks down food), intestines (soak up nutrients)."
     },
@@ -912,9 +912,9 @@
       "responseMode": "text",
       "prompt": "What is an organ? Explain in your own words.",
       "keyIdeas": [
-        "Brain",
-        "Heart",
-        "Lungs"
+        "A special body part",
+        "Has its own important job",
+        "Works for the whole body"
       ],
       "modelAnswer": "An organ is a special part of your body that has its own important job."
     },
@@ -925,9 +925,9 @@
       "responseMode": "text",
       "prompt": "Why does your heart beat faster when you run and play football?",
       "keyIdeas": [
-        "Heart",
-        "Lungs",
-        "Stomach"
+        "Muscles need more oxygen",
+        "Need more food too",
+        "Heart pumps faster to deliver it"
       ],
       "modelAnswer": "Running muscles need more oxygen and food, so the heart beats faster to deliver more blood."
     },
@@ -938,9 +938,9 @@
       "responseMode": "text",
       "prompt": "What do your lungs do when you breathe in?",
       "keyIdeas": [
-        "Lungs",
-        "Stomach",
-        "Intestines"
+        "Lungs fill with air",
+        "Take oxygen out of it",
+        "Pass oxygen into the blood"
       ],
       "modelAnswer": "The lungs fill with air and take oxygen out of it, passing the oxygen into the blood."
     },
@@ -951,9 +951,9 @@
       "responseMode": "text",
       "prompt": "What happens to a plate of bariis after you swallow it? Name the two organs that help.",
       "keyIdeas": [
-        "Stomach",
-        "Intestines",
-        "Skeleton"
+        "Goes to the stomach",
+        "Broken down with acid",
+        "Then intestines soak up nutrients"
       ],
       "modelAnswer": "It goes to the stomach, which breaks it down with acid, then to the intestines, which soak up the nutrients."
     },
@@ -964,9 +964,9 @@
       "responseMode": "text",
       "prompt": "Why is your skeleton important? Give two reasons.",
       "keyIdeas": [
-        "Intestines",
-        "Skeleton",
-        "Pulse"
+        "Holds you up, gives shape",
+        "Protects soft organs",
+        "Lets you move at joints"
       ],
       "modelAnswer": "Any two: it holds you up and gives you shape; it protects soft organs; it lets you move at your joints."
     },

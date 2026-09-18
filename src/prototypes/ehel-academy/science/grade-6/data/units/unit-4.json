@@ -1,6 +1,6 @@
 {
   "schemaVersion": "Ehel Science Runtime v1.0",
-  "generatedAt": "2026-09-18T08:42:40.144Z",
+  "generatedAt": "2026-09-18T09:38:38.106Z",
   "stage": {
     "id": "s06",
     "label": "Stage 6"
@@ -361,7 +361,7 @@
       "id": "we02",
       "outcomeId": "lo02",
       "difficulty": "Intermediate",
-      "title": "1: The bag of rice",
+      "title": "Finding the Weight of a Bag of Rice",
       "prompt": "Amina buys a bag of rice with a mass of 5 kg in the market at Garissa. What is its weight on Earth?",
       "solution": "Write down what you know. Mass m = 5 kg. Gravity g = 10 N/kg.\n\nWrite the rule. Weight = mass x gravity.\n\nPut the numbers in. Weight = 5 x 10.\n\nDo the multiplication. Weight = 50."
     },
@@ -369,7 +369,7 @@
       "id": "we03",
       "outcomeId": "lo03",
       "difficulty": "Intermediate",
-      "title": "2: The water container",
+      "title": "Finding the Weight of a Water Container",
       "prompt": "Hassan fills a plastic jerrycan with water. The full jerrycan has a mass of 20 kg. What is its weight?",
       "solution": "What you know: mass m = 20 kg, gravity g = 10 N/kg.\n\nRule: Weight = mass x gravity.\n\nSubstitute: Weight = 20 x 10.\n\nCalculate: Weight = 200."
     },
@@ -377,7 +377,7 @@
       "id": "we04",
       "outcomeId": "lo04",
       "difficulty": "Intermediate",
-      "title": "3: Working backwards to find mass",
+      "title": "Working Backwards to Find Mass",
       "prompt": "Sometimes you know the weight and must find the mass. A goat weighs 300 N on Earth. What is its mass?",
       "solution": "What you know: weight W = 300 N, gravity g = 10 N/kg.\n\nRearrange the rule. Since Weight = mass x gravity, we get mass = weight / gravity.\n\nSubstitute: mass = 300 / 10.\n\nCalculate: mass = 30."
     },
@@ -385,7 +385,7 @@
       "id": "we05",
       "outcomeId": "lo05",
       "difficulty": "Intermediate",
-      "title": "4: Finding the net force",
+      "title": "Finding the Net Force on a Football",
       "prompt": "A football is being blown by the wind. The wind pushes it to the right with a force of 12 N. A child kicks it to the left with a force of 20 N. What is the net force, and which way does the ball go?",
       "solution": "List the forces. Wind: 12 N to the right. Kick: 20 N to the left.\n\nThe forces are in opposite directions, so subtract. 20 — 12 = 8.\n\nChoose the direction of the larger force. The kick (20 N) is larger, so the net force points left.\n\nAnswer: The net force is 8 N to the left, so the ball moves to the left."
     },
@@ -393,7 +393,7 @@
       "id": "we06",
       "outcomeId": "lo06",
       "difficulty": "Intermediate",
-      "title": "5: The speed of a goat",
+      "title": "Finding the Speed of a Goat",
       "prompt": "A goat trots 20 metres across a field in 10 seconds. What is its speed?",
       "solution": "Write what you know. Distance = 20 m. Time = 10 s.\n\nWrite the rule. Speed = distance / time.\n\nSubstitute the numbers. Speed = 20 / 10.\n\nCalculate. Speed = 2."
     },
@@ -401,7 +401,7 @@
       "id": "we07",
       "outcomeId": "lo07",
       "difficulty": "Intermediate",
-      "title": "6: A football on the pitch",
+      "title": "Finding the Average Speed of a Football",
       "prompt": "Farah kicks a football and it rolls 30 metres in 6 seconds before stopping. What was its average speed?",
       "solution": "What you know: distance = 30 m, time = 6 s.\n\nRule: Speed = distance / time.\n\nSubstitute: Speed = 30 / 6.\n\nCalculate: Speed = 5."
     },
@@ -409,7 +409,7 @@
       "id": "we08",
       "outcomeId": "lo08",
       "difficulty": "Intermediate",
-      "title": "7: A journey by bus",
+      "title": "Finding the Average Speed of a Bus",
       "prompt": "A bus travels 120 kilometres from Mombasa toward Nairobi in 2 hours. What is its average speed?",
       "solution": "What you know: distance = 120 km, time = 2 h.\n\nRule: Speed = distance / time.\n\nSubstitute: Speed = 120 / 2.\n\nCalculate: Speed = 60."
     }
@@ -632,7 +632,7 @@
       {
         "term": "Weight",
         "meaning": "Weight = mass x gravity (W = m x g)",
-        "example": "By the end you will be able to measure forces, calculate weight and speed, and predict how objects will move.",
+        "example": "A bag of rice has a bigger weight on Earth than the same bag would have on the Moon.",
         "letter": "W"
       },
       {
@@ -643,21 +643,21 @@
       },
       {
         "term": "Speed",
-        "meaning": "Speed = distance / time",
-        "example": "By the end you will be able to measure forces, calculate weight and speed, and predict how objects will move.",
+        "meaning": "Speed = distance / time.",
+        "example": "A cyclist covering 20 km in 1 hour is riding at a speed of 20 km/h.",
         "letter": "S"
       },
       {
         "term": "Net force",
-        "meaning": "add the forces",
-        "example": "When forces are unbalanced, there is an overall force — scientists call it a net force — pushing one way, and this net force changes the object's motion.",
+        "meaning": "The single overall force left when forces pointing the same way are combined; add them together.",
+        "example": "Two people pushing a cart in the same direction combine their forces into one bigger net force.",
         "letter": "N"
       },
       {
-        "term": "Net force",
-        "meaning": "subtract the smaller from the larger",
-        "example": "When forces are unbalanced, there is an overall force — scientists call it a net force — pushing one way, and this net force changes the object's motion.",
-        "letter": "N"
+        "term": "Resultant force",
+        "meaning": "The overall force left over when forces pulling in opposite directions are subtracted from each other.",
+        "example": "A tug-of-war rope with 400 N pulled one way and 350 N pulled the other has a resultant force of 50 N.",
+        "letter": "R"
       },
       {
         "term": "Friction",
@@ -668,13 +668,13 @@
       {
         "term": "Air resistance",
         "meaning": "A friction force from air pushing against a moving object; also called drag.",
-        "example": "Big Idea 4: Air Resistance and Water Resistance",
+        "example": "A cyclist leans forward to reduce the air resistance slowing them down.",
         "letter": "A"
       },
       {
         "term": "Water resistance",
         "meaning": "A force from water pushing against an object moving through it.",
-        "example": "Big Idea 4: Air Resistance and Water Resistance",
+        "example": "A swimmer feels water resistance pushing back against every stroke.",
         "letter": "W"
       },
       {
@@ -939,9 +939,9 @@
       "responseMode": "text",
       "prompt": "Explain the difference between mass and weight. Give the correct unit for each.",
       "keyIdeas": [
-        "Weight",
-        "Mass (from weight)",
-        "Speed"
+        "Mass: amount of matter, in kg",
+        "Weight: force of gravity, in newtons",
+        "Mass never changes, weight does"
       ],
       "modelAnswer": "Mass is the amount of matter in an object, measured in kilograms (kg), and it never changes. Weight is the force of gravity on that mass, measured in newtons (N), and it changes with gravity."
     },
@@ -952,9 +952,9 @@
       "responseMode": "text",
       "prompt": "Name two forces that can slow a moving object down.",
       "keyIdeas": [
-        "Mass (from weight)",
-        "Speed",
-        "Net force (same direction)"
+        "Friction",
+        "Air resistance",
+        "Water resistance"
       ],
       "modelAnswer": "Friction and air resistance (or water resistance) both slow a moving object down. Any two of these are correct."
     },
@@ -965,9 +965,9 @@
       "responseMode": "text",
       "prompt": "Why is friction greater on a sandy road than on a paved road?",
       "keyIdeas": [
-        "Speed",
-        "Net force (same direction)",
-        "Net force (opposite directions)"
+        "Sand is loose and rough",
+        "Wheels rub against many grains",
+        "More friction than smooth pavement"
       ],
       "modelAnswer": "Sand is loose and rough, so the wheels press into it and rub against many grains, creating more friction. A paved road is smooth and hard, so there is less friction."
     },
@@ -978,9 +978,9 @@
       "responseMode": "text",
       "prompt": "Give one example where friction is helpful and one example where friction is a nuisance.",
       "keyIdeas": [
-        "Net force (same direction)",
-        "Net force (opposite directions)",
-        "Friction"
+        "Helpful: walking without slipping",
+        "Nuisance: machine parts wearing out",
+        "Same force, two effects"
       ],
       "modelAnswer": "Helpful: friction between sandals and the ground lets you walk without slipping. Nuisance: friction between machine parts makes them wear out (other sensible examples are fine)."
     },
@@ -991,9 +991,9 @@
       "responseMode": "text",
       "prompt": "What does it mean when we say the forces on a resting book are balanced?",
       "keyIdeas": [
-        "Net force (opposite directions)",
-        "Friction",
-        "Air resistance"
+        "Gravity pulls down",
+        "Table pushes up equally",
+        "No overall force, book stays still"
       ],
       "modelAnswer": "It means the downward pull of gravity and the upward push of the table are equal in size and opposite in direction, so there is no overall force and the book stays still."
     },
@@ -1004,9 +1004,9 @@
       "responseMode": "text",
       "prompt": "Describe one way a force can change the shape of an object.",
       "keyIdeas": [
-        "Friction",
-        "Air resistance",
-        "Water resistance"
+        "Can squeeze or compress",
+        "Can stretch or bend",
+        "Squeezing dough, stretching a band"
       ],
       "modelAnswer": "A force can squeeze (compress), stretch, bend, or twist an object. For example, squeezing dough or stretching a rubber band changes its shape."
     },

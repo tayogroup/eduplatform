@@ -1,6 +1,6 @@
 {
   "schemaVersion": "Ehel Science Runtime v1.0",
-  "generatedAt": "2026-09-18T08:42:40.292Z",
+  "generatedAt": "2026-09-18T09:38:38.221Z",
   "stage": {
     "id": "s07",
     "label": "Stage 7"
@@ -343,7 +343,7 @@
       "id": "we01",
       "outcomeId": "lo01",
       "difficulty": "Intermediate",
-      "title": "1: The weight of a sack of rice on Earth.",
+      "title": "The Weight of a Sack of Rice on Earth",
       "prompt": "Amina buys a sack of bariis (rice) with a mass of 25 kg. What is its weight on Earth, where g = 10 N/kg?",
       "solution": "Given: mass m = 25 kg; gravitational field strength g = 10 N/kg.\n\nFormula: W = m x g.\n\nCalculate: W = 25 x 10 = 250.\n\nAnswer: The weight of the sack is 250 N on Earth."
     },
@@ -351,7 +351,7 @@
       "id": "we02",
       "outcomeId": "lo02",
       "difficulty": "Intermediate",
-      "title": "2: Your own weight.",
+      "title": "Calculating Your Own Weight",
       "prompt": "Hassan has a mass of 40 kg. Calculate his weight on Earth (g = 10 N/kg).",
       "solution": "Given: m = 40 kg; g = 10 N/kg.\n\nFormula: W = m x g.\n\nCalculate: W = 40 x 10 = 400.\n\nAnswer: Hassan weighs 400 N on Earth."
     },
@@ -359,7 +359,7 @@
       "id": "we03",
       "outcomeId": "lo03",
       "difficulty": "Intermediate",
-      "title": "3: The same person on the Moon.",
+      "title": "The Same Person's Weight on the Moon",
       "prompt": "The Moon's gravitational field strength is only about 1.6 N/kg, roughly one sixth of Earth's. What would Hassan weigh on the Moon, and what is his mass there?",
       "solution": "Given: m = 40 kg (mass does not change); g on the Moon = 1.6 N/kg.\n\nFormula: W = m x g.\n\nCalculate: W = 40 x 1.6 = 64.\n\nAnswer: On the Moon Hassan would weigh only 64 N, but his mass is still 40 kg."
     },
@@ -367,7 +367,7 @@
       "id": "we04",
       "outcomeId": "lo04",
       "difficulty": "Intermediate",
-      "title": "4: Working backwards to find mass.",
+      "title": "Working Backwards to Find Mass",
       "prompt": "A goat is weighed on Earth and its weight is found to be 300 N. What is its mass? (g = 10 N/kg.)",
       "solution": "Given: W = 300 N; g = 10 N/kg; we must find m.\n\nFormula: Start from W = m x g, then rearrange to m = W / g.\n\nCalculate: m = 300 / 10 = 30.\n\nAnswer: The goat's mass is 30 kg."
     },
@@ -375,7 +375,7 @@
       "id": "we05",
       "outcomeId": "lo05",
       "difficulty": "Intermediate",
-      "title": "5: A camel's weight.",
+      "title": "Finding a Camel's Weight",
       "prompt": "A young camel has a mass of 220 kg. What is its weight on Earth (g = 10 N/kg)?",
       "solution": "Given: m = 220 kg; g = 10 N/kg.\n\nFormula: W = m x g.\n\nCalculate: W = 220 x 10 = 2200.\n\nAnswer: The camel weighs 2200 N on Earth."
     },
@@ -383,7 +383,7 @@
       "id": "we06",
       "outcomeId": "lo06",
       "difficulty": "Intermediate",
-      "title": "6: Comparing two planets.",
+      "title": "Comparing Weight on Two Planets",
       "prompt": "A rover has a mass of 180 kg. Calculate its weight on Earth (g = 10 N/kg) and on Mars (g = 3.7 N/kg), and describe what you notice.",
       "solution": "Given: m = 180 kg; g(Earth) = 10 N/kg; g(Mars) = 3.7 N/kg.\n\nFormula: W = m x g.\n\nCalculate on Earth: W = 180 x 10 = 1800 N.\n\nCalculate on Mars: W = 180 x 3.7 = 666 N."
     },
@@ -399,7 +399,7 @@
       "id": "we08",
       "outcomeId": "lo08",
       "difficulty": "Intermediate",
-      "title": "The unit of mass is",
+      "title": "The Unit of Mass",
       "prompt": "The unit of mass is: (a) newton, (b) joule, (c) kilogram, (d) watt.",
       "solution": "(c) kilogram Mass is the quantity of matter, measured in kilograms."
     }
@@ -623,19 +623,19 @@
       {
         "term": "Weight from mass",
         "meaning": "W = m x g",
-        "example": "Calculate weight from mass using the relationship weight = mass x gravitational field strength, showing every step of your working.",
+        "example": "A 5 kg bag on Earth has a weight of 5 x 10 = 50 N.",
         "letter": "W"
       },
       {
         "term": "Mass from weight",
         "meaning": "m = W / g",
-        "example": "",
+        "example": "An object weighing 200 N on Earth has a mass of 200 ÷ 10 = 20 kg.",
         "letter": "M"
       },
       {
         "term": "Gravity value on Earth",
         "meaning": "g = 10 N/kg (approx.)",
-        "example": "",
+        "example": "Using g = 10 N/kg, a 3 kg mass has a weight of 30 N on Earth.",
         "letter": "G"
       },
       {
@@ -659,7 +659,7 @@
       {
         "term": "Gravitational field strength",
         "meaning": "The force of gravity per kilogram; about 10 N/kg on Earth, 1.6 N/kg on the Moon.",
-        "example": "Calculate weight from mass using the relationship weight = mass x gravitational field strength, showing every step of your working.",
+        "example": "The Moon's lower gravitational field strength is why an astronaut can jump so much higher there than on Earth.",
         "letter": "G"
       },
       {
@@ -926,9 +926,9 @@
       "responseMode": "text",
       "prompt": "Explain the difference between mass and weight. Give the unit of each.",
       "keyIdeas": [
-        "Weight from mass",
-        "Mass from weight",
-        "Gravity value on Earth"
+        "Mass: matter, in kilograms",
+        "Weight: force of gravity, in newtons",
+        "Mass never changes with location"
       ],
       "modelAnswer": "Mass is the quantity of matter in an object, measured in kilograms (kg), and it never changes with location. Weight is the force of gravity acting on that mass, measured in newtons (N), and it changes if gravity changes."
     },
@@ -939,9 +939,9 @@
       "responseMode": "text",
       "prompt": "State the relationship (formula) that connects weight, mass and gravitational field strength.",
       "keyIdeas": [
-        "Mass from weight",
-        "Gravity value on Earth",
-        "Wasted energy"
+        "Weight = mass x gravitational field strength",
+        "W = m x g",
+        "N, kg, N/kg"
       ],
       "modelAnswer": "Weight = mass x gravitational field strength, or W = m x g. Weight is in N, mass in kg, and g in N/kg."
     },
@@ -952,9 +952,9 @@
       "responseMode": "text",
       "prompt": "Why does your weight change on the Moon but your mass stay the same?",
       "keyIdeas": [
-        "Gravity value on Earth",
-        "Wasted energy",
-        "Mass"
+        "Mass stays the same",
+        "Weight depends on gravity's pull",
+        "Moon's gravity is weaker"
       ],
       "modelAnswer": "Your mass is the amount of matter you are made of, which does not change when you travel. Your weight depends on how strongly gravity pulls, and the Moon's gravity is weaker than Earth's, so you weigh less there while your mass stays the same."
     },
@@ -965,9 +965,9 @@
       "responseMode": "text",
       "prompt": "Name the force that holds the planets in their orbits around the Sun.",
       "keyIdeas": [
-        "Wasted energy",
-        "Mass",
-        "Weight"
+        "Gravity",
+        "Coming from the Sun",
+        "Holds planets in their orbits"
       ],
       "modelAnswer": "The force of gravity, coming from the Sun, holds the planets in their orbits."
     },
@@ -978,9 +978,9 @@
       "responseMode": "text",
       "prompt": "Explain, using the idea of the Earth's axis, why we have day and night.",
       "keyIdeas": [
-        "Mass",
-        "Weight",
-        "Gravitational field strength (g)"
+        "Earth spins on its axis",
+        "Facing Sun has day",
+        "Turned away has night"
       ],
       "modelAnswer": "The Earth spins on its axis roughly once every 24 hours. The side facing the Sun has day; the side turned away is in shadow and has night. As the Earth turns, each place passes from day into night and back."
     },
@@ -991,9 +991,9 @@
       "responseMode": "text",
       "prompt": "What causes the tides, and why are there very large tides at new Moon and full Moon?",
       "keyIdeas": [
-        "Weight",
-        "Gravitational field strength (g)",
-        "Solar System"
+        "Moon's gravity pulls ocean water",
+        "Sun and Moon line up",
+        "Combined pull gives large spring tides"
       ],
       "modelAnswer": "The tides are caused mainly by the gravitational pull of the Moon (with a smaller pull from the Sun) drawing the ocean water into bulges. At new Moon and full Moon the Sun and Moon line up, so their pulls combine to give especially large spring tides."
     },

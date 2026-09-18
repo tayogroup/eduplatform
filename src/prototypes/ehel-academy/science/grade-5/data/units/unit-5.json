@@ -1,6 +1,6 @@
 {
   "schemaVersion": "Ehel Science Runtime v1.0",
-  "generatedAt": "2026-09-18T08:42:39.986Z",
+  "generatedAt": "2026-09-18T09:38:37.982Z",
   "stage": {
     "id": "s05",
     "label": "Stage 5"
@@ -302,7 +302,7 @@
       "id": "we02",
       "outcomeId": "lo02",
       "difficulty": "Intermediate",
-      "title": "1: Comparing shadow to object",
+      "title": "Comparing Shadow Length to Object Height",
       "prompt": "A stick 10 cm tall casts a shadow 30 cm long in the early morning. How many times longer than the stick is the shadow?",
       "solution": "Step 1. Write what you know. Object height = 10 cm. Shadow length = 30 cm.\n\nStep 2. To find how many times longer, divide the shadow length by the object height. 30 divided by 10 equals 3.\n\nStep 3. State the answer clearly. The shadow is 3 times longer than the stick. This makes sense, because early morning sun is low, and low sun makes long shadows.\n\nWorked Example 2: Predicting a change"
     },
@@ -310,7 +310,7 @@
       "id": "we03",
       "outcomeId": "lo03",
       "difficulty": "Intermediate",
-      "title": "2: Predicting a change",
+      "title": "Predicting a Shadow Change",
       "prompt": "At midday the same 10 cm stick casts a shadow of only 4 cm. Later, in the afternoon, the shadow has grown to 20 cm. Is the sun higher or lower in the afternoon than at midday, and how do you know?",
       "solution": "Step 1. Compare the two shadows. Midday shadow = 4 cm (short). Afternoon shadow = 20 cm (much longer).\n\nStep 2. Remember the rule: low sun makes long shadows, high sun makes short shadows.\n\nStep 3. Because the afternoon shadow is longer, the sun must be lower in the afternoon than at midday. As the afternoon goes on and the sun sinks toward the west, the shadow will keep growing.\n\nWorked Example 3: Using the ratio to compare"
     },
@@ -318,7 +318,7 @@
       "id": "we04",
       "outcomeId": "lo04",
       "difficulty": "Intermediate",
-      "title": "3: Using the ratio to compare",
+      "title": "Using a Ratio to Compare Shadows",
       "prompt": "One investigation gave this data: when the light was 20 cm from a 10 cm object, the shadow was 30 cm; when the light was 60 cm away, the shadow was 10 cm. What pattern does this show?",
       "solution": "Step 1. Look at the near light. Light close (20 cm) gives a big shadow (30 cm).\n\nStep 2. Look at the far light. Light far (60 cm) gives a small shadow (10 cm), which is the same as the object's height.\n\nStep 3. State the pattern: the closer the light, the bigger the shadow; the farther the light, the smaller the shadow. When the light is far away, the shadow becomes almost the same size as the object itself, just like sunlight does.\n\nReading Comprehension: The Shadow Under the Acacia"
     },
@@ -342,7 +342,7 @@
       "id": "we07",
       "outcomeId": "lo07",
       "difficulty": "Intermediate",
-      "title": "Shadows prove that light travels in",
+      "title": "What Shadows Prove About Light",
       "prompt": "Shadows prove that light travels in: (a) circles (b) waves you can hold (c) straight lines (d) curved paths around objects",
       "solution": "(c) straight lines. The sharp, straight edge of a shadow shows light did not bend around the object."
     },
@@ -584,13 +584,13 @@
       {
         "term": "Transparent",
         "meaning": "A material you can see through clearly; makes almost no shadow.",
-        "example": "Sort materials into transparent, translucent, and opaque, and say what kind of shadow each one makes.",
+        "example": "Looking through clear glass, you can barely tell it is even casting a shadow.",
         "letter": "T"
       },
       {
         "term": "Translucent",
         "meaning": "A material that lets some light through but scatters it; makes a soft grey shadow.",
-        "example": "Sort materials into transparent, translucent, and opaque, and say what kind of shadow each one makes.",
+        "example": "Tracing paper held up to the light gives a soft grey shadow, not a black one.",
         "letter": "T"
       },
       {
@@ -620,13 +620,13 @@
       {
         "term": "Umbra",
         "meaning": "The darkest central part of a shadow, where no light reaches.",
-        "example": "Scientists call the darkest part, where no light reaches, the umbra, and the lighter, fuzzy edge, where some light still sneaks in, the penumbra.",
+        "example": "Stand exactly behind a lamp post and you are standing in its umbra.",
         "letter": "U"
       },
       {
         "term": "Penumbra",
         "meaning": "The lighter, fuzzy edge of a shadow, where a little light still reaches.",
-        "example": "Scientists call the darkest part, where no light reaches, the umbra, and the lighter, fuzzy edge, where some light still sneaks in, the penumbra.",
+        "example": "Step sideways out of the umbra and you enter the fuzzy penumbra, where the shadow is only partly dark.",
         "letter": "P"
       }
     ],
@@ -859,9 +859,9 @@
       "responseMode": "text",
       "prompt": "Explain why a shadow cannot be picked up or held.",
       "keyIdeas": [
-        "Shadow",
-        "Light source",
-        "Opaque"
+        "Not a material thing",
+        "A place where light is missing",
+        "Nothing solid to hold"
       ],
       "modelAnswer": "A shadow is not a material thing; it is simply a place where light is missing because an object blocked it. There is nothing solid to pick up."
     },
@@ -872,9 +872,9 @@
       "responseMode": "text",
       "prompt": "Name the three ingredients every shadow needs.",
       "keyIdeas": [
-        "Light source",
-        "Opaque",
-        "Transparent"
+        "A light source",
+        "An opaque object",
+        "A surface for the shadow"
       ],
       "modelAnswer": "A light source, an opaque object, and a surface for the shadow to fall on."
     },
@@ -885,9 +885,9 @@
       "responseMode": "text",
       "prompt": "Why are shadows long at sunrise and sunset but short at midday?",
       "keyIdeas": [
-        "Opaque",
-        "Transparent",
-        "Translucent"
+        "Sun low = sideways light = long shadow",
+        "Sun high = overhead light = short shadow",
+        "Angle of the sun changes it"
       ],
       "modelAnswer": "At sunrise and sunset the sun is low, so its light comes from a flat, sideways angle and casts a long shadow. At midday the sun is high, so light comes from nearly overhead and the shadow is short."
     },
@@ -898,9 +898,9 @@
       "responseMode": "text",
       "prompt": "What is the difference between a translucent and an opaque material?",
       "keyIdeas": [
-        "Transparent",
-        "Translucent",
-        "Blocking"
+        "Translucent: some light, scattered",
+        "Opaque: no light at all",
+        "Wax paper vs wood"
       ],
       "modelAnswer": "A translucent material lets some light through but scatters it, so you cannot see clearly (like wax paper). An opaque material lets no light through at all (like wood), so you cannot see through it."
     },
@@ -911,9 +911,9 @@
       "responseMode": "text",
       "prompt": "Why does the shadow of a stick move slowly through the day even though the stick stays still?",
       "keyIdeas": [
-        "Translucent",
-        "Blocking",
-        "Straight line"
+        "The stick stays still",
+        "Earth turns, Sun appears to move",
+        "Shadow swings and changes length"
       ],
       "modelAnswer": "The stick stays still, but the Earth turns, which makes the sun appear to move across the sky. As the sun's angle changes, the shadow swings and changes length."
     },
@@ -924,9 +924,9 @@
       "responseMode": "text",
       "prompt": "How can a folded stack of thin cloth block more light than a single layer?",
       "keyIdeas": [
-        "Blocking",
-        "Straight line",
-        "Gnomon"
+        "Each layer blocks a little light",
+        "Many layers block nearly all of it",
+        "Acts almost like opaque"
       ],
       "modelAnswer": "Each layer of cloth blocks a little more light. Stacking many layers together blocks nearly all the light, so the folded stack behaves almost like an opaque material."
     },

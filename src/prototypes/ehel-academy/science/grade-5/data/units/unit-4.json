@@ -1,6 +1,6 @@
 {
   "schemaVersion": "Ehel Science Runtime v1.0",
-  "generatedAt": "2026-09-18T08:42:39.958Z",
+  "generatedAt": "2026-09-18T09:38:37.961Z",
   "stage": {
     "id": "s05",
     "label": "Stage 5"
@@ -381,7 +381,7 @@
       "id": "we03",
       "outcomeId": "lo03",
       "difficulty": "Basic",
-      "title": "Light travels in",
+      "title": "How Light Travels",
       "prompt": "Light travels in: (a) curved lines (b) straight lines (c) zigzags (d) circles",
       "solution": "b) straight lines This is a basic property of light."
     },
@@ -405,7 +405,7 @@
       "id": "we06",
       "outcomeId": "lo06",
       "difficulty": "Intermediate",
-      "title": "A material that lets no light through is",
+      "title": "Naming an Opaque Material",
       "prompt": "A material that lets no light through is: (a) transparent (b) translucent (c) opaque (d) reflective",
       "solution": "c) opaque Opaque means no light passes through."
     },
@@ -670,19 +670,19 @@
       {
         "term": "Transparent",
         "meaning": "Lets almost all light through; you see clearly (glass, water).",
-        "example": "Classify materials as transparent, translucent, or opaque, and predict the shadows they make.",
+        "example": "Clean window glass is transparent, so you can see the garden clearly through it.",
         "letter": "T"
       },
       {
         "term": "Translucent",
         "meaning": "Lets some scattered light through; you see fuzzily (wax paper).",
-        "example": "Classify materials as transparent, translucent, or opaque, and predict the shadows they make.",
+        "example": "Wax paper is translucent; light gets through but you cannot see a clear picture.",
         "letter": "T"
       },
       {
         "term": "Opaque",
         "meaning": "Blocks all light (wood, metal, your body).",
-        "example": "Classify materials as transparent, translucent, or opaque, and predict the shadows they make.",
+        "example": "A wooden door is opaque and casts a dark, sharp-edged shadow.",
         "letter": "O"
       },
       {
@@ -945,9 +945,9 @@
       "responseMode": "text",
       "prompt": "In your own words, what is the difference between a light source and a reflector?",
       "keyIdeas": [
-        "Light",
-        "Light source",
-        "Reflect / Reflection"
+        "Source: makes its own light",
+        "Reflector: bounces back light",
+        "Cannot be seen in total darkness"
       ],
       "modelAnswer": "A light source makes its own light (sun, candle, torch). A reflector only bounces back light from a source (moon, mirror, paper) and cannot be seen in total darkness."
     },
@@ -958,9 +958,9 @@
       "responseMode": "text",
       "prompt": "Explain why light traveling in straight lines causes shadows to form.",
       "keyIdeas": [
-        "Light source",
-        "Reflect / Reflection",
-        "Ray"
+        "Light cannot bend around objects",
+        "Cannot pass through opaque objects",
+        "Blocked rays leave a dark shadow"
       ],
       "modelAnswer": "Light cannot bend around an opaque object or pass through it, so the straight rays are blocked and leave a dark shadow shaped like the object behind it."
     },
@@ -971,9 +971,9 @@
       "responseMode": "text",
       "prompt": "Describe the complete path of light that lets you see a green leaf in daylight.",
       "keyIdeas": [
-        "Reflect / Reflection",
-        "Ray",
-        "Transparent"
+        "Light travels to the leaf",
+        "Reflects off it as green light",
+        "Travels into the eye"
       ],
       "modelAnswer": "Light from a source (the sun) travels in a straight line to the leaf, reflects off it as green light, travels into the eye, and the brain reads it as a green leaf."
     },
@@ -984,9 +984,9 @@
       "responseMode": "text",
       "prompt": "Why does the moon shine even though it has no fire?",
       "keyIdeas": [
-        "Ray",
-        "Transparent",
-        "Translucent"
+        "Has no fire of its own",
+        "Reflects sunlight",
+        "Like a giant mirror"
       ],
       "modelAnswer": "The moon has no fire of its own; it reflects sunlight that hits it and bounces down to us, like a giant mirror in the sky."
     },
@@ -997,9 +997,9 @@
       "responseMode": "text",
       "prompt": "What is the difference between a translucent and an opaque material? Give one example of each.",
       "keyIdeas": [
-        "Transparent",
-        "Translucent",
-        "Opaque"
+        "Translucent: some scattered light through",
+        "Opaque: no light through at all",
+        "Wax paper vs wood"
       ],
       "modelAnswer": "A translucent material lets some scattered light through so you cannot see clearly (example: wax paper or thin cloth). An opaque material lets no light through (example: wood or metal)."
     },
@@ -1010,9 +1010,9 @@
       "responseMode": "text",
       "prompt": "Explain what refraction is and give one everyday example of it.",
       "keyIdeas": [
-        "Translucent",
-        "Opaque",
-        "Shadow"
+        "Bending of light",
+        "Passing between materials",
+        "A straw looking bent in water"
       ],
       "modelAnswer": "Refraction is the bending of light as it passes from one clear material into another, such as air into water. Example: a straw looking bent in a glass of water."
     },

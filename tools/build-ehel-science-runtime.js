@@ -876,6 +876,45 @@ const CONCEPT_INSERTS = {
   }],
 };
 
+// A content-QA defect found while auditing Grade 8, unrelated to Cambridge
+// coverage: `reasoningPrompts` in Units 3 and 4 pair each prompt with the
+// WRONG modelAnswer, shifted by one — reason01's prompt got reason02's
+// answer, and so on — traced to the pool of "Core"-level practice items these
+// two units draw from (`practiceData()`), upstream of this file, in content
+// this builder cannot re-extract. `realProblems` for the same two units,
+// built from the SAME pool's Challenge/Extension items, pairs correctly —
+// this is not a bug in the zip logic above, only in these two units' Core
+// items specifically. Fixed here by naming the correct pairing directly,
+// the same way CONCEPT_INSERTS names a specific defect rather than
+// rewriting the mechanism. Each shift left one answer with no prompt in the
+// surviving six (chemical symbols, in Unit 4) and one prompt with no answer
+// (why write a unit; why repeat and average, in Unit 3; reactant/product/
+// rusting, in Unit 4) — those two are authored fresh below rather than
+// guessed at from a neighbour.
+const REASONING_ANSWER_FIXES = {
+  "8-3": {
+    reason01: "Lower the object into a measuring jug of water and read the water level before and after. The rise in the water level equals the volume of the object (the displacement method).",
+    reason02: "An object floats if it is less dense than the liquid, and sinks if it is more dense than the liquid. In water (1 g/cm3), anything below 1 g/cm3 floats and anything above sinks.",
+    reason03: "Distance is how far an object travels; speed is how far it travels in each unit of time. A large distance can be covered at a low speed if it takes a long time.",
+    reason04: "A flat (horizontal) line means the distance is not changing while time goes on, so the object is stopped (not moving).",
+    reason05: "A measurement without a unit is just a number and could mean almost anything — '5' could be 5 grams or 5 kilograms, a difference of a thousand times. Writing the unit every time is what lets the number be checked, compared with someone else's, and used correctly in a formula.",
+    reason06: "A single measurement can be thrown off by a small mistake or an unlucky reading, and there is no way to tell from one number alone. Repeating the measurement and averaging spreads that mistake out, so an average of several readings is closer to the true value than any one reading on its own.",
+  },
+  "8-4": {
+    reason02: "Metals: shiny, good conductors of heat and electricity, malleable (bendable), strong, high melting point (any three). Non-metals: dull, poor conductors (insulators), brittle, low melting point, often gases (any three).",
+    reason03: "A group is a vertical column of the Periodic Table, and elements in it behave alike. A period is a horizontal row, across which elements change from metal to non-metal.",
+    reason04: "In a compound the elements are chemically joined and make a new substance (e.g. water). In a mixture they are only mixed and keep their own properties (e.g. air).",
+    reason05: "CaCO3 has 1 calcium, 1 carbon and 3 oxygen atoms. That is 5 atoms in total.",
+    reason06: "When iron rusts, the reactants are iron and oxygen (with water needed for the reaction to happen) and the product is rust, which is iron oxide. Reactants are the substances you start with; the product is the new substance made when they react.",
+  },
+};
+
+function applyReasoningAnswerFixes(grade, unitNo, prompts) {
+  const fixes = REASONING_ANSWER_FIXES[`${grade}-${unitNo}`];
+  if (!fixes) return prompts;
+  return prompts.map((prompt) => (fixes[prompt.id] ? { ...prompt, modelAnswer: fixes[prompt.id] } : prompt));
+}
+
 function applyConceptInserts(grade, unitNo, concepts) {
   const inserts = CONCEPT_INSERTS[`${grade}-${unitNo}`];
   if (!inserts) return concepts;
@@ -3530,7 +3569,7 @@ function buildGrade(grade) {
       realProblems.push({ id: `rp${String(realProblems.length + 1).padStart(2, "0")}`, outcomeId: "lo01", difficulty: "Core", context: "Daily life", prompt: item.prompt, answer: item.answer, hint: item.hint, errorFeedback: `Check your reasoning against this: ${item.answer}` });
     }
 
-    const reasoningPrompts = pool.filter((item) => item.level === "Core").slice(0, 6).map((item, index) => ({ id: `reason${String(index + 1).padStart(2, "0")}`, outcomeId: `lo${String(index % Math.max(1, outcomes.length) + 1).padStart(2, "0")}`, difficulty: index < 3 ? "Core" : "Challenge", responseMode: "text", prompt: item.prompt, keyIdeas: reference.terms.slice(index, index + 3).map((termPair) => termPair[0]), modelAnswer: item.answer }));
+    const reasoningPrompts = applyReasoningAnswerFixes(grade, unitNo, pool.filter((item) => item.level === "Core").slice(0, 6).map((item, index) => ({ id: `reason${String(index + 1).padStart(2, "0")}`, outcomeId: `lo${String(index % Math.max(1, outcomes.length) + 1).padStart(2, "0")}`, difficulty: index < 3 ? "Core" : "Challenge", responseMode: "text", prompt: item.prompt, keyIdeas: reference.terms.slice(index, index + 3).map((termPair) => termPair[0]), modelAnswer: item.answer })));
     while (reasoningPrompts.length < 4 && concepts.length) {
       const concept = concepts[reasoningPrompts.length % concepts.length];
       reasoningPrompts.push({ id: `reason${String(reasoningPrompts.length + 1).padStart(2, "0")}`, outcomeId: "lo01", difficulty: "Core", responseMode: "text", prompt: `Explain the key idea in ${concept.title}.`, keyIdeas: reference.terms.slice(0, 3).map((termPair) => termPair[0]), modelAnswer: concept.explanation });

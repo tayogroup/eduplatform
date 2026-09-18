@@ -618,6 +618,48 @@
     --gold-ink: #2A1F05;
   }
 
+/* ehel-g3-lesson-opener - see add-lesson-opener.py. Lives in g3-css.css, not a
+   per-lesson <style> block - see this tool's own docstring for why. */
+  .ovw { width: 100%; max-width: 34em; margin: 0 auto; text-align: center; }
+  .ovw-h { font-size: 19px; margin: 0 0 12px; }
+  .ovw-list { margin: 0; padding-left: 26px; display: flex; flex-direction: column; gap: 11px;
+    font-size: 19px; text-align: left; }
+  .ovw-list li::marker { color: var(--teal); font-weight: 800; }
+  .lec, .mw { width: 100%; max-width: 36em; margin: 0 auto; display: flex; flex-direction: column;
+    align-items: center; gap: 10px; text-align: center; }
+  .phase { color: var(--teal); font-weight: 800; font-size: 12.5px; letter-spacing: .1em;
+    text-transform: uppercase; }
+  .lec-h { font-weight: 800; font-size: clamp(21px, 4vw, 26px); margin: 0; }
+  .lec-p { margin: 0; font-size: 19px; line-height: 1.55; max-width: 34em; }
+  .lec-note { margin: 4px 0 0; color: var(--muted); font-size: 13.5px; }
+  .cardsgrid { display: grid; grid-template-columns: repeat(auto-fit, minmax(128px, 1fr)); gap: 12px;
+    width: 100%; max-width: 640px; }
+  .tapcard { display: flex; flex-direction: column; align-items: center; gap: 6px; padding: 14px 8px 12px;
+    border-radius: 18px; border: 3px solid var(--line); background: var(--card); color: var(--ink);
+    font-weight: 800; font-size: 17px; line-height: 1.2; transition: transform 120ms ease, border-color 120ms ease; }
+  .tapcard .cpic { font-size: clamp(40px, 8vw, 56px); line-height: 1.1; }
+  .tapcard:active { transform: scale(0.96); }
+  .tapcard.heard { border-color: var(--teal); background: var(--teal-soft); }
+  .tapcard.heard::after { content: "\2713"; color: var(--good); font-size: 15px; }
+  .wordpanel { width: 100%; max-width: 560px; padding: 16px 18px; border-radius: 20px;
+    border: 3px solid var(--teal); background: var(--card); text-align: left; }
+  .wp-head { display: flex; align-items: center; gap: 16px; }
+  .wp-pic { font-size: 40px; }
+  .wp-word { margin: 0; font-weight: 800; font-size: 28px; }
+  .wp-meaning { margin: 4px 0 0; font-size: 17.5px; line-height: 1.45; }
+  .wp-uses-h { margin: 12px 0 4px; color: var(--teal); font-weight: 800; font-size: 12.5px;
+    letter-spacing: .1em; text-transform: uppercase; }
+  .wp-uses { margin: 0 0 10px; padding-left: 20px; display: flex; flex-direction: column; gap: 5px;
+    font-size: 16.5px; font-style: italic; }
+  .wordbtns { display: flex; gap: 12px; flex-wrap: wrap; justify-content: center; }
+  .wordbtn { min-width: 118px; padding: 12px 18px; border-radius: 18px; border: 3px solid var(--line);
+    background: var(--card); color: var(--ink); font-weight: 800; cursor: pointer; }
+  .wordbtn .wbpic { display: block; font-size: 40px; line-height: 1.15; }
+  .wordbtn:active { transform: scale(0.96); }
+  .wordbtn.right { background: var(--good-soft); border-color: var(--good); }
+  .wordbtn.wrong { background: var(--bad-soft); border-color: var(--bad); }
+  .wordbtn:disabled { cursor: default; }
+
   /* --- the way back to the hub, drawn only when the learner arrived from it;
          see lesson-app-tools/wire-navigation.py --- */
   .lesson-back {
@@ -923,12 +965,29 @@
   <div class="eh-quiet" id="ehQuiet" role="status" aria-live="polite" hidden><span class="eh-quiet-msg"></span><button type="button" class="eh-quiet-ok">OK</button></div>
   <div class="deck" id="deck" role="main">
 
-    <!-- 1 2D shapes -->
-    <section class="slide" data-twm="characterising" data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>A flat shape is named by what it has, not by what it looks like to you.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>Count the straight sides.</s><s>Three is a triangle.</s><s>Four is a quadrilateral.</s><s>Five is a pentagon, six a hexagon, eight an octagon.</s><s>The corners always come to the same number as the sides.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="empathetic" styledegree="1.3"><prosody rate="-6%"><s>Turning a shape does not rename it.</s><s>A square standing on its corner is still a square, even when everybody in the room wants to call it a diamond.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>Count the sides, then tap the name.</s></mstts:express-as>' data-say="Count the straight sides, then tap the name of the shape.">
+    <!-- ehel-g3-lesson-opener: what this lesson is about -->
+    <section class="slide" data-say="By the end of this lesson you will be able to: Name flat shapes, including quadrilaterals; say whether a shape is regular or irregular; find a line of symmetry on a shape; reflect a shape over a mirror line; measure the perimeter of a shape; work out the area of a shape.">
       <div class="eh-warm" id="ehWarm"><p class="eh-warm-h">Warm up</p><div class="eh-warm-say"><button type="button" class="speak" aria-label="Read it to me">&#128266;</button><span class="eh-warm-q"></span></div><div class="choices eh-warm-ch"></div><p class="fb" role="status" aria-live="polite"></p></div>
-      <div class="slide-head"><span class="n">1</span><h2>Naming flat shapes</h2></div>
+      <div class="slide-head"><span class="n">1</span><h2>What this lesson is about</h2></div>
+      <div class="say"><button type="button" class="speak" aria-label="Read it to me">&#128266;</button><span id="askOvw">By the end of this lesson you will be able to: Name flat shapes, including quadrilaterals; say whether a shape is regular or irregular; find a line of symmetry on a shape; reflect a shape over a mirror line; measure the perimeter of a shape; work out the area of a shape.</span></div>
+      <div class="stage" id="stageOvw"></div>
+    </section>
+    <!-- ehel-g3-lesson-opener: unit lecture -->
+    <section class="slide" data-say="Watch the lesson told in parts, by the voice.">
+      <div class="slide-head"><span class="n">2</span><h2>Unit lecture</h2></div>
+      <div class="say"><button type="button" class="speak" aria-label="Read it to me">&#128266;</button><span id="askLec">Watch the lesson told in parts, by the voice.</span></div>
+      <div class="stage" id="stageLec"></div>
+    </section>
+    <!-- ehel-g3-lesson-opener: math words -->
+    <section class="slide" data-say="Tap each word to hear what it means and how to use it. Then show you know them.">
+      <div class="slide-head"><span class="n">3</span><h2>Math words</h2></div>
+      <div class="say"><button type="button" class="speak" aria-label="Read it to me">&#128266;</button><span id="askMw">Tap each word to hear what it means and how to use it. Then show you know them.</span></div>
+      <div class="stage" id="stageMw"></div>
+    </section>
+    <!-- 1 2D shapes -->
+    <section class="slide" data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>A flat shape is named by what it has, not by what it looks like to you.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>Count the straight sides.</s><s>Three is a triangle.</s><s>Four is a quadrilateral.</s><s>Five is a pentagon, six a hexagon, eight an octagon.</s><s>The corners always come to the same number as the sides.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="empathetic" styledegree="1.3"><prosody rate="-6%"><s>Turning a shape does not rename it.</s><s>A square standing on its corner is still a square, even when everybody in the room wants to call it a diamond.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>Count the sides, then tap the name.</s></mstts:express-as>' data-say="Count the straight sides, then tap the name of the shape.">
+      <div class="slide-head"><span class="n">4</span><h2>Naming flat shapes</h2></div>
       <div class="say"><button type="button" class="speak" aria-label="Read it to me">🔊</button><span id="say1">Count the sides. What is this shape called?</span></div>
-      <details class="kit"><summary>For the grown-up: what to have to hand</summary><p>A small mirror, paper shapes to fold and scissors, and a ruler marked in centimetres. Folding a shape to find its line of symmetry, and measuring right round its edge, are both things a hand does better than a tap.</p></details>
       <div class="stage">
         <svg class="gsvg" id="g1" viewBox="0 0 300 200" role="img" aria-label="a flat shape"></svg>
         <div class="choices" id="ch1"></div>
@@ -937,8 +996,8 @@
       </div>
     </section>
     <!-- 2 regular or irregular -->
-    <section class="slide" data-twm="characterising classifying" data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>A regular polygon has all its sides the same length and all its corners the same.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>Both of these have five sides, so both are pentagons.</s><s>Only one of them is regular.</s><s>The other is stretched, and a stretched pentagon is still a pentagon.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="empathetic" styledegree="1.3"><prosody rate="-6%"><s>Irregular does not mean it is not a proper shape.</s><s>It only means the sides are not all the same.</s><s>Most shapes in the real world are irregular.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>Which one has all its sides the same?</s></mstts:express-as>' data-say="Regular means every side the same length. Which one is regular?">
-      <div class="slide-head"><span class="n">2</span><h2>Regular or irregular</h2></div>
+    <section class="slide" data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>A regular polygon has all its sides the same length and all its corners the same.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>Both of these have five sides, so both are pentagons.</s><s>Only one of them is regular.</s><s>The other is stretched, and a stretched pentagon is still a pentagon.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="empathetic" styledegree="1.3"><prosody rate="-6%"><s>Irregular does not mean it is not a proper shape.</s><s>It only means the sides are not all the same.</s><s>Most shapes in the real world are irregular.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>Which one has all its sides the same?</s></mstts:express-as>' data-say="Regular means every side the same length. Which one is regular?">
+      <div class="slide-head"><span class="n">5</span><h2>Regular or irregular</h2></div>
       <div class="say"><button type="button" class="speak" aria-label="Read it to me">🔊</button><span id="say2">Which of these is <b>regular</b>?</span></div>
       <div class="stage">
         <div class="shapegrid" id="sg2"></div>
@@ -948,7 +1007,7 @@
     </section>
     <!-- 3 symmetry -->
     <section class="slide" data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>A line of symmetry is a fold line where the two halves land exactly on top of each other.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>Try the fold in your head.</s><s>Down the middle, and across the middle.</s><s>If every part matches, that line is a line of symmetry.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="empathetic" styledegree="1.3"><prosody rate="-6%"><s>Cutting a shape into two equal pieces is not enough.</s><s>The two pieces must be mirror images, not just the same size.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>Does the dashed line fold this shape onto itself?</s></mstts:express-as>' data-say="Would the shape fold exactly onto itself along the dashed line?">
-      <div class="slide-head"><span class="n">3</span><h2>Lines of symmetry</h2></div>
+      <div class="slide-head"><span class="n">6</span><h2>Lines of symmetry</h2></div>
       <div class="say"><button type="button" class="speak" aria-label="Read it to me">🔊</button><span id="say3">Is the dashed line a line of symmetry?</span></div>
       <div class="stage">
         <svg class="gsvg" id="g3" viewBox="0 0 300 200" role="img" aria-label="a shape with a dashed fold line"></svg>
@@ -959,7 +1018,7 @@
     </section>
     <!-- 4 reflection -->
     <section class="slide" data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>A reflection flips a shape over a mirror line.</s><s>Every point ends up the same distance from the line, on the other side.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>Work one square at a time.</s><s>If a square is two along from the mirror, its reflection is two along on the other side.</s><s>Not three, not one.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="empathetic" styledegree="1.3"><prosody rate="-6%"><s>A reflection is not a slide.</s><s>Sliding keeps the shape facing the same way.</s><s>Reflecting turns it round, so what was nearest the mirror is still nearest the mirror.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>Tap the squares where the reflection goes.</s></mstts:express-as>' data-say="Tap the squares where the reflection belongs, the same distance the other side.">
-      <div class="slide-head"><span class="n">4</span><h2>Mirror it</h2></div>
+      <div class="slide-head"><span class="n">7</span><h2>Mirror it</h2></div>
       <div class="say"><button type="button" class="speak" aria-label="Read it to me">🔊</button><span id="say4">Tap the squares where the <b>reflection</b> goes.</span></div>
       <div class="stage">
         <svg class="gsvg" id="g4" viewBox="0 0 320 260" role="img" aria-label="a grid with a shape and a mirror line"></svg>
@@ -968,8 +1027,8 @@
       </div>
     </section>
     <!-- 5 3D shapes -->
-    <section class="slide" data-twm="characterising classifying" data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>A solid shape is named by its faces, its edges and its corners.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>A face is a flat surface.</s><s>An edge is where two faces meet.</s><s>A corner is where edges meet.</s><s>A cube has six faces, twelve edges and eight corners.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="empathetic" styledegree="1.3"><prosody rate="-6%"><s>A drawing of a solid is flat, so some faces are hidden round the back.</s><s>Count what must be there, not only what you can see.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>Read the clues and name the solid.</s></mstts:express-as>' data-say="Faces, edges and corners. Which solid shape is it?">
-      <div class="slide-head"><span class="n">5</span><h2>Solid shapes</h2></div>
+    <section class="slide" data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>A solid shape is named by its faces, its edges and its corners.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>A face is a flat surface.</s><s>An edge is where two faces meet.</s><s>A corner is where edges meet.</s><s>A cube has six faces, twelve edges and eight corners.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="empathetic" styledegree="1.3"><prosody rate="-6%"><s>A drawing of a solid is flat, so some faces are hidden round the back.</s><s>Count what must be there, not only what you can see.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>Read the clues and name the solid.</s></mstts:express-as>' data-say="Faces, edges and corners. Which solid shape is it?">
+      <div class="slide-head"><span class="n">8</span><h2>Solid shapes</h2></div>
       <div class="say"><button type="button" class="speak" aria-label="Read it to me">🔊</button><span id="say5">Which solid shape is this?</span></div>
       <div class="stage">
         <svg class="gsvg" id="g5" viewBox="0 0 300 200" role="img" aria-label="a drawing of a solid shape"></svg>
@@ -981,7 +1040,7 @@
     </section>
     <!-- 6 perimeter -->
     <section class="slide" data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>The perimeter is the whole distance round the outside of a shape.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>Start at one corner and walk right round, adding each side as you pass it, until you are back where you began.</s><s>A rectangle has four sides, so four lengths get added, not two.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="empathetic" styledegree="1.3"><prosody rate="-6%"><s>Only two numbers are usually written on a rectangle, because the other two are the same.</s><s>They still have to be added.</s><s>Forgetting them halves the answer.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>Add up every side, all the way round.</s></mstts:express-as>' data-say="Add up every side, all the way round the outside.">
-      <div class="slide-head"><span class="n">6</span><h2>All the way round</h2></div>
+      <div class="slide-head"><span class="n">9</span><h2>All the way round</h2></div>
       <div class="say"><button type="button" class="speak" aria-label="Read it to me">🔊</button><span id="say6">What is the perimeter?</span></div>
       <div class="stage">
         <svg class="gsvg" id="g6" viewBox="0 0 320 200" role="img" aria-label="a rectangle with its sides labelled"></svg>
@@ -992,7 +1051,7 @@
     </section>
     <!-- 7 area -->
     <section class="slide" data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>Area is how much flat space a shape covers inside its edge.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>On a grid you can simply count the squares inside the shape.</s><s>Perimeter is the fence.</s><s>Area is the field.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="empathetic" styledegree="1.3"><prosody rate="-6%"><s>These two do not grow together.</s><s>Two shapes can cover the same number of squares and have completely different distances round the edge.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>Count the squares inside.</s></mstts:express-as>' data-say="Count the squares covered inside the shape.">
-      <div class="slide-head"><span class="n">7</span><h2>Counting the space inside</h2></div>
+      <div class="slide-head"><span class="n">10</span><h2>Counting the space inside</h2></div>
       <div class="say"><button type="button" class="speak" aria-label="Read it to me">🔊</button><span id="say7">How many squares does it cover?</span></div>
       <div class="stage">
         <svg class="gsvg" id="g7" viewBox="0 0 320 240" role="img" aria-label="a shape drawn on a square grid"></svg>
@@ -1003,7 +1062,7 @@
     </section>
     <!-- 8 draw it -->
     <section class="slide" data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>Drawing a shape to a given size is how you find out whether you really understand it.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>Tap one corner, then tap the opposite corner.</s><s>Count the squares along the top for the width and down the side for the height.</s><s>A square is a rectangle whose width and height happen to match.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="empathetic" styledegree="1.3"><prosody rate="-6%"><s>Count the squares, not the lines round them.</s><s>A rectangle four squares wide has five lines down it, and it is the squares you want.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>Draw it, then read off its perimeter and its area.</s></mstts:express-as>' data-say="Tap one corner, then the opposite corner, to draw the rectangle.">
-      <div class="slide-head"><span class="n">8</span><h2>Draw it yourself</h2></div>
+      <div class="slide-head"><span class="n">11</span><h2>Draw it yourself</h2></div>
       <div class="say"><button type="button" class="speak" aria-label="Read it to me">&#128266;</button><span id="say8d">Tap two opposite corners to draw the rectangle.</span></div>
       <div class="stage">
         <svg class="gsvg" id="g8d" viewBox="0 0 320 240" role="img" aria-label="a square grid to draw on"></svg>
@@ -1013,23 +1072,6 @@
       </div>
     </section>
     <!-- 17 check -->
-    <!-- 9  Support and Challenge  (Stage 3 Teacher's Guide) -->
-    <section class="slide" data-twm="specialising" data-say="Answer this one. Where it takes you next depends on how it goes." data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>This step meets you where you are.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>Answer the question as it is asked.</s><s>If it does not come out, the next one hands you something to think with.</s><s>If it does, the next one is harder.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="empathetic" styledegree="1.3"><prosody rate="-6%"><s>Taking the easier route costs you nothing.</s><s>The step is finished either way.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>Have a go, and see which way it takes you.</s></mstts:express-as>'>
-      <div class="slide-head"><span class="n">9</span><h2>Try this one</h2></div>
-      <div class="say"><button type="button" class="speak" aria-label="Read it to me">&#128266;</button><span id="sayT"></span></div>
-      <div id="tierT"></div>
-      <div class="choices" id="chT"></div>
-      <p class="fb" id="fbT" role="status" aria-live="polite"></p>
-      <p class="score" id="scT"></p>
-    </section>
-    <!-- 10  Story problems  (Cambridge Stage 3 word-problem shape) -->
-    <section class="slide" data-twm="specialising" data-say="Read the story, then work out the answer." data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>This one is a story.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>Read it carefully, and work out what it is asking.</s><s>The maths is the same maths you have just been using.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>Have a go.</s></mstts:express-as>'>
-      <div class="slide-head"><span class="n">10</span><h2>Story problems</h2></div>
-      <div class="say"><button type="button" class="speak" aria-label="Read it to me">&#128266;</button><span id="sayWpG3"></span></div>
-      <div id="wpG3"></div>
-      <div class="choices" id="chWpG3"></div>
-      <p class="fb" id="fbWpG3" role="status" aria-live="polite"></p>
-    </section>
     <section class="slide" data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>Nothing new here.</s><s>Every question uses something from this lesson.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>If it is a shape, count the sides.</s><s>If it is a measurement, check the unit first.</s><s>If it is a time, count on.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>Read it, think, then tap.</s></mstts:express-as>' data-say="Time to show what you know. Tap the answer.">
       <div class="slide-head"><span class="n">✓</span><h2>Show what you know</h2></div>
       <div class="say"><button type="button" class="speak" aria-label="Read it to me">🔊</button><span id="say17">Tap the answer.</span></div>
@@ -1042,7 +1084,7 @@
     </section>
     <!-- 18 stickers -->
     <!-- how do you know -->
-    <section class="slide" data-twm="convincing" data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>Getting the right answer is only half of it.</s><s>Knowing why it is right is the other half.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>Here is something that is true.</s><s>Underneath are three reasons somebody gave for it.</s><s>Only one of them actually explains it.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="empathetic" styledegree="1.3"><prosody rate="-6%"><s>Watch for a reason that is true and still explains nothing.</s><s>Both numbers are small can be perfectly true and tell you nothing about why the answer is what it is.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>Read all three, then pick the one that really does the work.</s></mstts:express-as>' data-say="Only one of these three reasons really explains it. Which one?">
+    <section class="slide" data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>Getting the right answer is only half of it.</s><s>Knowing why it is right is the other half.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>Here is something that is true.</s><s>Underneath are three reasons somebody gave for it.</s><s>Only one of them actually explains it.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="empathetic" styledegree="1.3"><prosody rate="-6%"><s>Watch for a reason that is true and still explains nothing.</s><s>Both numbers are small can be perfectly true and tell you nothing about why the answer is what it is.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>Read all three, then pick the one that really does the work.</s></mstts:express-as>' data-say="Only one of these three reasons really explains it. Which one?">
       <div class="slide-head"><span class="n">?</span><h2>How do you know?</h2></div>
       <div class="say"><button type="button" class="speak" aria-label="Read it to me">&#128266;</button><span id="sayW">Which reason really explains it?</span></div>
       <div class="stage">
@@ -1058,8 +1100,6 @@
       <div class="say"><button type="button" class="speak" aria-label="Read it to me">🔊</button><span>Every step you finished earned a sticker.</span></div>
       <div class="stage">
         <div class="stickers" id="stickers"></div>
-      <div id="selfcheck"></div>
-      <div id="vocab"></div>
         <p class="fb" id="fb18" role="status" aria-live="polite"></p>
         <div class="bigbtns"><button type="button" class="big small teal" id="restart">Play again</button></div>
       </div>
@@ -1449,6 +1489,74 @@
       try { window.__ehelTutorQuiet(); } catch (e) {}
     }
 
+    /* ==== ehel-narration-caption - see tools/add-narration-captions.py ====
+       The band under the instruction row, and the only speech that writes to it. */
+    let capEl = null;
+    function capFor(host) {
+      if (!host) return null;
+      let el = host.querySelector(":scope > .narr");
+      if (!el) {
+        el = document.createElement("div");
+        el.className = "narr";
+        el.innerHTML = '<span class="narr-k">What I am saying</span><span class="narr-t"></span>';
+        const bar = host.querySelector(":scope > .say");
+        if (bar && bar.parentNode) bar.parentNode.insertBefore(el, bar.nextSibling);
+        else host.insertBefore(el, host.firstChild);
+      }
+      return el;
+    }
+    function caption(text) {
+      if (!capEl) return;
+      const t = String(text == null ? "" : text).replace(PICTOGRAPH, " ").replace(/[ ]+/g, " ").trim();
+      if (!t) return;
+      capEl.querySelector(".narr-t").textContent = t;
+      capEl.classList.add("on");
+    }
+    /* Hidden when speech is CUT OFF - a caption left behind by a stopped voice
+       describes something the child is no longer hearing. A line that ends on its
+       own keeps its last sentence on screen, to be read at leisure. */
+    function capClear() {
+      if (!capEl) return;
+      capEl.classList.remove("on");
+      capEl.querySelector(".narr-t").textContent = "";
+      capEl = null;
+    }
+    /* ONE CAPTION PER SENTENCE. The authored SSML puts several sentences in one
+       block in places, and a block of three landing at once is a wall of text to
+       a six-year-old. This drives the CLIP too: caption and audio must be the
+       same unit or they cannot stay in step.
+
+       A full stop only ends a sentence when whitespace or the end follows, so
+       "1.5" survives. Written as a walk rather than a regex lookbehind because a
+       lookbehind is a PARSE error on older Safari, and that would take the whole
+       lesson down rather than just the captions. */
+    function sentenceSegs(segs) {
+      const CLOSERS = "\"'”’)]";
+      const out = [];
+      for (const s of segs) {
+        const t = s.text == null ? "" : String(s.text);
+        if (!t) { out.push(s); continue; }
+        const parts = [];
+        let start = 0;
+        for (let i = 0; i < t.length; i++) {
+          const c = t.charAt(i);
+          if (c !== "." && c !== "!" && c !== "?" && c !== "…") continue;
+          let j = i + 1;
+          while (j < t.length && CLOSERS.indexOf(t.charAt(j)) >= 0) j++;
+          if (j < t.length && !/\s/.test(t.charAt(j))) continue;   /* 1.5, not a stop */
+          const piece = t.slice(start, j).trim();
+          if (piece) parts.push(piece);
+          start = j;
+          i = j - 1;
+        }
+        const tail = t.slice(start).trim();
+        if (tail) parts.push(tail);
+        if (parts.length < 2) { out.push(s); continue; }
+        for (const p of parts) out.push(Object.assign({}, s, { text: p }));
+      }
+      return out;
+    }
+
     function pump() {
       if (reading) return;
       const segs = lines.shift();
@@ -1469,6 +1577,30 @@
       /* The endpoint first, the browser's own voice if it refuses. A lesson that
          goes quiet because a server was down is worse than one read by whatever
          voice the device has. A clip stopped on purpose has not refused. */
+      /* ehel-narration-caption: a captioned line plays one sentence at a time,
+         because spoken(segs) below concatenates the whole explain into a single
+         clip and a single clip cannot say which sentence is playing. Uncaptioned
+         speech is untouched and still goes out as one clip. */
+      if (capEl) {
+        let k = 0;
+        const stepOn = function () {
+          if (mine !== turn) return;
+          if (k >= segs.length) { finished(); return; }
+          const seg = segs[k++];
+          if (seg.pause != null) { timer = setTimeout(stepOn, Math.min(seg.pause, 400)); return; }
+          const one = spoken([seg]);
+          if (!one) { stepOn(); return; }
+          caption(seg.text);
+          PLATFORM_VOICE.play(one).then(stepOn, function (e) {
+            if (mine !== turn || PLATFORM_VOICE.stopped(e)) return;
+            /* the endpoint gave up part way: read the REST in the browser voice
+               rather than dropping the child mid-explanation */
+            queue = segs.slice(k - 1); at = 0; lineDone = finished; next(mine);
+          });
+        };
+        stepOn();
+        return;
+      }
       const line = spoken(segs);
       if (!line) { finished(); return; }
       PLATFORM_VOICE.play(line).then(finished, function (e) {
@@ -1483,6 +1615,7 @@
       lines = []; reading = false; lineDone = null;
       try { window.speechSynthesis.cancel(); } catch (e) {}
       PLATFORM_VOICE.stop();
+      capClear();                             /* ehel-narration-caption */
       mark(false);
     }
     function next(mine) {
@@ -1497,6 +1630,7 @@
       if (seg.pause != null) { timer = setTimeout(function () { next(mine); }, seg.pause); return; }
       const words = seg.text.replace(PICTOGRAPH, " ").replace(/[ ]+/g, " ").trim();
       if (!words) { next(mine); return; }
+      caption(seg.text);                      /* ehel-narration-caption */
       let u;
       try { u = new SpeechSynthesisUtterance(words); } catch (e) { at = queue.length; next(mine); return; }
       if (voice) u.voice = voice;
@@ -1515,12 +1649,15 @@
       u.onerror = onward;
       try { window.speechSynthesis.speak(u); } catch (e) { onward(); }
     }
-    function speak(x) {
+    function speak(x, cap) {
       if (!SUPPORTED && !PLATFORM_VOICE.ready()) return;
       const ssml = wrap(x);
       if (!ssml) return;
       stop();
-      const segs = flatten(ssml);
+      /* ehel-narration-caption: AFTER stop(), which clears the last caption -
+         setting it before would hand pump() a target stop() had just nulled */
+      if (cap) capEl = cap;
+      const segs = cap ? sentenceSegs(flatten(ssml)) : flatten(ssml);
       remember(segs);
       if (!segs.length) return;
       hushTutor();
@@ -1564,8 +1701,18 @@
       if (n.length < 8) return false;
       return recent.join(' | ').indexOf(n) >= 0;
     }
+    /* ehel-narration-caption: the ONLY captioned entry point. Everything else
+       that speaks is already written on the screen. */
+    function explain(x, host) {
+      const el = capFor(host);
+      speak(x, el);
+      /* the band opens on the PRESS, not on the first clip - so the page shifts
+         while the child's finger is still on the button, never mid-activity */
+      const segs = sentenceSegs(flatten(wrap(x) || ""));
+      for (const s of segs) { if (s.text) { caption(s.text); break; } }
+    }
     return {
-      speak: speak, follow: follow, stop: stop, hush: hush,
+      speak: speak, explain: explain, follow: follow, stop: stop, hush: hush,
       supported: SUPPORTED,
       voiceName: () => (voice ? voice.name : null),
       isSonia: () => !!(voice && /\bsonia\b/i.test(voice.name)),
@@ -1892,7 +2039,7 @@
       b.setAttribute("aria-label", "Explain this step to me");
       b.addEventListener("click", () => {
         const ssml = explainerFor(host);
-        if (ssml) VOICE.speak(ssml);
+        if (ssml) VOICE.explain(ssml, host);   /* ehel-narration-caption */
       });
       return b;
     }
@@ -2009,77 +2156,6 @@
       fb.className = "fb" + (ok ? " good" : ""); fb.textContent = msg; say(msg);
     });
   })();
-
-  /* ---- ehel-spiral: the warm-up's second question, drawn from lessons already
-     FINISHED - see add-spiral-warmup.py. Not a step: no sticker, no dot, no
-     score, no finish(). */
-  const SPIRAL = [
-    { from: "l01", q: "Which number is bigger: 348 or 438?", opts: [348, 438, 384], a: 438, why: "4 hundreds is more than 3 hundreds, so 438 is the bigger number." },
-    { from: "l01", q: "What is the value of the 6 in 462?", opts: [6, 60, 600], a: 60, why: "The 6 is in the tens column, so it is worth 6 tens, which is 60." },
-    { from: "l01", q: "How many hundreds are in 700?", opts: [7, 70, 700], a: 7, why: "700 is 7 hundreds, with no tens or ones left over." },
-    { from: "l02", q: "What is 300 add 400?", opts: [700, 300, 340], a: 700, why: "3 hundreds and 4 hundreds make 7 hundreds, which is 700." },
-    { from: "l02", q: "You have 500 shillings and spend 150. How much is left?", opts: [350, 450, 650], a: 350, why: "500 take away 150 is 350." },
-    { from: "l02", q: "Which makes 250 shillings: two 100s and a 50, or three 50s?", opts: ["two 100s and a 50", "three 50s", "the same"], a: "two 100s and a 50", why: "Two 100s make 200, plus a 50 makes 250. Three 50s make only 150." },
-    { from: "l03", q: "How many is 4 rows of 5?", opts: [20, 9, 45], a: 20, why: "4 rows of 5 is 4 times 5, which is 20." },
-    { from: "l03", q: "Share 12 into groups of 3. How many groups?", opts: [4, 3, 9], a: 4, why: "12 shared into groups of 3 makes 4 groups." },
-    { from: "l03", q: "What is 6 times 10?", opts: [60, 16, 600], a: 60, why: "6 times 10 is 60 - put a zero after the 6." },
-    { from: "l04", q: "A shape is cut into 5 equal pieces. What is one piece called?", opts: ["a fifth", "a quarter", "a half"], a: "a fifth", why: "5 equal parts are called fifths." },
-    { from: "l04", q: "Share 10 sweets equally among 5 people. How many does each person get?", opts: [2, 5, 10], a: 2, why: "10 shared equally among 5 people is 2 each." },
-    { from: "l04", q: "Which is bigger, a half or a quarter of the same whole?", opts: ["a half", "a quarter", "they are the same"], a: "a half", why: "Cutting something into only 2 parts makes each part bigger than cutting it into 4." },
-    { from: "l05", q: "How many sides does a hexagon have?", opts: [6, 5, 8], a: 6, why: "A hexagon has 6 straight sides." },
-    { from: "l05", q: "How many lines of symmetry does a square have?", opts: [4, 1, 2], a: 4, why: "A square can be folded in half four different ways and match exactly each time." },
-    { from: "l05", q: "A rectangle has sides 5 cm and 3 cm. What is the distance all the way round it?", opts: [16, 8, 15], a: 16, why: "5 add 3 add 5 add 3 is 16 - add all four sides to find the perimeter." },
-    { from: "l06", q: "Which unit would you use to measure how heavy an apple is?", opts: ["grams", "centimetres", "litres"], a: "grams", why: "Weight is measured in grams or kilograms, not length or capacity units." },
-    { from: "l06", q: "A jug shows 300 ml of water. You pour in 200 ml more. How much is in the jug now?", opts: [500, 100, 600], a: 500, why: "300 and 200 more makes 500 millilitres." },
-    { from: "l06", q: "You compare an angle to a right angle and it opens wider. Is it smaller, the same, or bigger than a right angle?", opts: ["bigger", "smaller", "the same"], a: "bigger", why: "An angle that opens wider than a right angle's corner is bigger than it." },
-    { from: "l07", q: "The clock shows 20 minutes past 3. In how many minutes will it be half past 3?", opts: [10, 20, 5], a: 10, why: "Half past 3 is 30 minutes past. From 20 minutes past to 30 minutes past is 10 minutes." },
-    { from: "l07", q: "You face north and turn to face east. Which way did you turn?", opts: ["a quarter turn clockwise", "a quarter turn anticlockwise", "a half turn"], a: "a quarter turn clockwise", why: "North to east is one quarter turn in the clockwise direction." },
-    { from: "l07", q: "A film starts at 4:15 and lasts 45 minutes. What time does it finish?", opts: ["5:00", "4:45", "5:15"], a: "5:00", why: "45 minutes after 4:15 is 5:00." },
-    { from: "l08", q: "A tally shows one bundle of five and 3 more marks. How many is that?", opts: [8, 7, 53], a: 8, why: "A bundle of five plus 3 more is 8." },
-    { from: "l08", q: "A bar chart shows 6 for red and 4 for blue. How many more chose red?", opts: [2, 10, 4], a: 2, why: "6 take away 4 is 2, so 2 more people chose red." },
-    { from: "l08", q: "Which is more likely: a red ball from a bag of 9 red and 1 blue, or a fair coin landing heads?", opts: ["the red ball", "the coin landing heads", "they are the same"], a: "the red ball", why: "9 out of 10 balls are red, which is more likely than a fair coin's 1 out of 2 chance." }
-  ];
-  const SPIRAL_TITLES = { l01: "Up to a Thousand", l02: "Adding, Taking Away and Money", l03: "Rows and Rules", l04: "Equal Parts", l05: "Shapes and Symmetry", l06: "Measure It", l07: "Time and Direction", l08: "Ask, Count and Chart" };
-  /* Called from the page's hydrate block with the whole course record. Until it
-     answers there is no spiral question, which is also what a child on their
-     first lesson correctly sees. */
-  window.__ehelSpiral = function (units, here) {
-    const w = document.getElementById("ehWarm");
-    if (!w || w.querySelector(".eh-spiral")) return;          /* once only */
-    const pool = SPIRAL.filter(function (it) {
-      const u = units && units[it.from];
-      return it.from !== here && u && u.completed === true;
-    });
-    if (!pool.length) return;
-    const it = pool[Math.floor(Math.random() * pool.length)];
-    const box = document.createElement("div");
-    box.className = "eh-spiral";
-    box.innerHTML = '<p class="eh-warm-h">And one from before</p>'
-      + '<div class="eh-warm-say"><button type="button" class="speak" aria-label="Read it to me">&#128266;</button>'
-      + '<span class="eh-spiral-q"></span></div>'
-      + '<div class="choices eh-spiral-ch"></div>'
-      + '<p class="fb" role="status" aria-live="polite"></p>';
-    box.querySelector(".eh-spiral-q").textContent = it.q;
-    /* bound here, not by the page-wide .speak wiring, which ran at load */
-    box.querySelector(".speak").addEventListener("click", function () { say(it.q); });
-    const ch = box.querySelector(".eh-spiral-ch"), fb = box.querySelector(".fb");
-    ch.innerHTML = shuffle(it.opts.slice()).map(function (o) {
-      return '<button type="button" class="choice" data-v="' + o + '">' + o + "</button>";
-    }).join("");
-    ch.addEventListener("click", function (e) {
-      const b = e.target.closest(".choice"); if (!b || b.disabled) return;
-      const ok = String(b.dataset.v) === String(it.a);
-      ch.querySelectorAll(".choice").forEach(function (c) {
-        c.disabled = true;
-        if (String(c.dataset.v) === String(it.a)) c.classList.add("right");
-      });
-      if (!ok) b.classList.add("wrong");
-      const msg = (ok ? cheer() + " " : "Good try. ") + it.why
-        + " That was in " + SPIRAL_TITLES[it.from] + ".";
-      fb.className = "fb" + (ok ? " good" : ""); fb.textContent = msg; say(msg);
-    });
-    w.appendChild(box);
-  };
   function finish(i, msg) { if (!done[i]) { done[i] = true; paintDots(); } if (window.__ehelStep) { try { window.__ehelStep(i, done); } catch (_) {} } if (msg) say(msg); }
   /* A round started on a timer belongs to the step it was set on. If the child
      has moved on by the time it fires - the usual thing after a right answer -
@@ -2178,7 +2254,7 @@
       $("fb1").textContent = (ok ? cheer() + " " : "") + "It has " + n + " straight sides and " + n + " corners, so it is a " + name + (wob ? " - a stretched one, but still a " + name + "." : ".");
       say(ok ? cheer() : n + " sides, so it is a " + name);
       scoreLine("sc1", got1, asked1, 4);
-      if (got1 >= 4) finish(0, "");
+      if (got1 >= 4) finish(3, "");
       later(round1, 2100);
     });
   }
@@ -2208,7 +2284,7 @@
       $("fb2").textContent = (ok ? cheer() + " " : "Look again. ") + "All three are " + (n === 5 ? "pentagons" : n === 6 ? "hexagons" : "octagons") + " because all three have " + n + " sides. Only the regular one has every side and every corner the same.";
       say(ok ? cheer() : "The regular one has every side the same");
       scoreLine("sc2", got2, asked2, 3);
-      if (got2 >= 3) finish(1, "");
+      if (got2 >= 3) finish(4, "");
       later(round2, 2400);
     };
   }
@@ -2244,7 +2320,7 @@
         : "Folded along that line the two halves do not match, so it is not a line of symmetry - even though it does cut the shape in two.");
       say(ok ? cheer() : yes ? "Yes, it folds exactly" : "No, the halves do not match");
       scoreLine("sc3", got3, asked3, 5);
-      if (got3 >= 5) finish(2, "");
+      if (got3 >= 5) finish(5, "");
       later(round3, 2300);
     };
   }
@@ -2292,7 +2368,7 @@
           $("fb4").className = "fb good";
           $("fb4").textContent = cheer() + " Every square is the same distance from the mirror on both sides" + (slips ? ", though " + slips + " went astray on the way." : ".");
           scoreLine("sc4", got4, asked4, 2);
-          if (got4 >= 2) finish(3, "");
+          if (got4 >= 2) finish(6, "");
           later(round4, 2600);
         }
       } else {
@@ -2344,7 +2420,7 @@
       $("fb5").textContent = (ok ? cheer() + " " : "") + "A " + s.name + " has " + s.f + " faces, " + s.e + " edges and " + s.v + " corners. Some of them are hidden round the back of the drawing.";
       say(ok ? cheer() : "It is a " + s.name);
       scoreLine("sc5", got5, asked5, 4);
-      if (got5 >= 4) finish(4, "");
+      if (got5 >= 4) finish(7, "");
       later(round5, 2400);
     });
   }
@@ -2372,7 +2448,7 @@
       $("fb6").textContent = (ok ? cheer() + " " : "") + w + " + " + h + " + " + w + " + " + h + " = " + answer + " cm. All four sides, not two.";
       say(ok ? cheer() : "The perimeter is " + answer + " centimetres");
       scoreLine("sc6", got6, asked6, 4);
-      if (got6 >= 4) finish(5, "");
+      if (got6 >= 4) finish(8, "");
       later(round6, 2300);
     });
   }
@@ -2408,7 +2484,7 @@
       $("fb7").textContent = (ok ? cheer() + " " : "") + "It covers " + answer + " squares. That is the area - the space inside, not the distance round the edge.";
       say(ok ? cheer() : "The area is " + answer + " squares");
       scoreLine("sc7", got7, asked7, 4);
-      if (got7 >= 4) finish(6, "");
+      if (got7 >= 4) finish(9, "");
       later(round7, 2300);
     });
   }
@@ -2453,7 +2529,7 @@
       + "You drew " + w + " wide and " + h + " tall" + (w === h ? ", which is a square" : "") + ". Its perimeter is " + w + " + " + h + " + " + w + " + " + h + " = " + per + " squares, and its area is " + w + " \u00d7 " + h + " = " + area + " squares.";
     say(ok ? cheer() + " perimeter " + per + ", area " + area : "That one is " + w + " by " + h);
     scoreLine("sc8d", got8d, asked8d, 3);
-    if (got8d >= 3) finish(7, "");
+    if (got8d >= 3) finish(10, "");
     pickA = null;
     later(round8d, 3000);
   });
@@ -2481,7 +2557,7 @@
       $("q17").textContent = ""; $("ch17").innerHTML = "";
       $("fb17").className = "fb good"; $("fb17").textContent = "Finished! " + got17 + " out of " + order17.length + ".";
       $("sc17").textContent = "";
-      if (got17 >= 6) finish(10, "You have finished the check.");
+      if (got17 >= 6) finish(11, "You have finished the check.");
       else retryCheck($("fb17"), $("ch17"), got17, order17.length, 6, function () { qi = 0; got17 = 0; order17 = shuffle(QS); round17(); });
       return;
     }
@@ -2505,10 +2581,17 @@
   round17();
 
   /* ---- 18: stickers ---- */
-  const STICKERS = [
-    ["🔺", "Naming flat shapes"], ["⬡", "Regular or irregular"], ["🦋", "Lines of symmetry"], ["↔️", "Mirror it"],
-    ["📦", "Solid shapes"], ["🚧", "Perimeter"], ["🔲", "Area"], ["✏️", "Draw it yourself"],
-    ["📝", "Try this one"], ["📖", "Story problems"], ["✅", "Show what I know"], ["\ud83e\udd14", "How do you know"]
+  const STICKERS = [["🔎", "What this lesson is about"], ["🎥", "Unit lecture"], ["🗣️", "Math words"], 
+    ["🔺", "Naming flat shapes"],
+    ["⬡", "Regular or irregular"],
+    ["🦋", "Lines of symmetry"],
+    ["↔️", "Mirror it"],
+    ["📦", "Solid shapes"],
+    ["🚧", "Perimeter"],
+    ["🔲", "Area"],
+    ["✏️", "Draw it yourself"],
+    ["✅", "Show what I know"],
+    ["\ud83e\udd14", "How do you know"]
   ];
 
   function paintStickers() {
@@ -2643,160 +2726,125 @@
   })();
 
 
-  /* ==== ehel-g3-self-check: the Workbook's own "I can" statements ====
-     Verbatim from the Stage 3 Workbook, each with the page it came from.
-     Two options because Stage 3 offers two; the third line in the book is
-     free text, which nothing in this build can take. NEVER a score: no
-     mark, no report, no pass depends on it. */
-  const SC_KEY = "ehel-g3-sc-shapes-and-symmetry";
-  const SELFCHECK = [{ t: "I can classify 2D shapes and talk about their properties", p: "p21" }, { t: "I can sort 3D shapes and talk about their properties", p: "p21" }, { t: "I can identify regular and irregular polygons", p: "p21" }, { t: "I know the names of 2D and 3D shapes", p: "p21" }, { t: "I can compare shapes and say what is the same and what is different about them", p: "p21" }, { t: "I can create 3D shapes from drawings of the shapes", p: "p21" }, { t: "I can see if a shape has more than 1 line of symmetry", p: "p64" }, { t: "I can find shapes with horizontal and vertical lines of symmetry", p: "p64" }, { t: "I can sketch the reflection of a shape in a horizontal or vertical mirror line, including where the mirror line is the edge of the shape", p: "p64" }];
-  const SC_SCALE = [["yes", "I can do this"], ["trying", "I can do this, but I need to keep trying"], ["notyet", "I can't do this yet"]];
-  function scLoad() {
-    try { return JSON.parse(localStorage.getItem(SC_KEY) || "{}") || {}; }
-    catch (e) { return {}; }
+  /* ==== ehel-g3-lesson-opener: three shared step functions, ported from Grade 4's own
+     add-lesson-opener.py in the same idiom - data-say for arrival
+     narration (show() already speaks it), plain finish(i, msg), no
+     ONSHOW/ONLEAVE/reportAttempt. esc() IS OWN, not shared, matching
+     every add-*.py tool in this build - see Grade 4's own docstring for
+     the ReferenceError this avoids. ==== */
+  const esc = (t) => String(t).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/"/g, "&quot;");
+  function lessonAbout(o) {
+    document.getElementById(o.stage).innerHTML =
+      '<div class="ovw"><h3 class="ovw-h">By the end of this lesson you will be able to&hellip;</h3>' +
+      '<ol class="ovw-list">' + o.about.map((t) => '<li>' + esc(t) + '</li>').join('') + '</ol>' +
+      '<div class="bigbtns"><button type="button" class="big small" id="' + o.stage + 'go">Got it, let\'s begin &#10003;</button></div></div>';
+    document.getElementById(o.stage + 'go').addEventListener('click', () => {
+      document.getElementById(o.stage + 'go').disabled = true;
+      finish(o.finish, o.done);
+    });
   }
-  function scSave(m) {
-    try { localStorage.setItem(SC_KEY, JSON.stringify(m)); } catch (e) {}
-  }
-  function scPaint() {
-    const host = document.getElementById("selfcheck");
-    if (!host) return;
-    const marks = scLoad();
-    const esc = (t) => String(t).replace(/&/g, "&amp;").replace(/</g, "&lt;")
-      .replace(/"/g, "&quot;");
-    host.innerHTML = '<p class="sc-head">What I can do</p>'
-      + '<p class="sc-sub">Cambridge asks these about this lesson. Tick the ones that are true for you. Nothing here is marked and nobody is told - it is for you.</p>'
-      + SELFCHECK.map((it, i) =>
-        '<div class="sc-row"><p class="sc-say">' + esc(it.t) + '</p>'
-        + SC_SCALE.map(([v, label]) =>
-            '<button type="button" class="sc-opt' + (marks[i] === v ? " on" : "")
-            + '" data-i="' + i + '" data-v="' + v + '" aria-pressed="'
-            + (marks[i] === v) + '">' + esc(label) + "</button>").join("")
-        + "</div>").join("");
-  }
-  document.addEventListener("click", (e) => {
-    const b = e.target.closest(".sc-opt");
-    if (!b) return;
-    const marks = scLoad();
-    const i = Number(b.dataset.i);
-    /* tapping the same one again clears it: a child who changes their mind
-       must be able to say nothing, not only swap to the other answer */
-    marks[i] = marks[i] === b.dataset.v ? "" : b.dataset.v;
-    scSave(marks);
-    scPaint();
-  });
-  scPaint();
 
-  /* ==== ehel-g3-tiers: Stage 3's Support and Challenge ====
-     Written in this page's own idiom and deriving its slot the way the
-     reasoning step does, so nothing later needs renumbering.
-
-     THE CORE QUESTION ALONE FINISHES THE STEP. A wrong answer brings the
-     support route, whose question names the apparatus a Stage 3 support note
-     would hand over; a right one offers the challenge AFTER the step is
-     already done. Neither tier scores, because a child who needs the aid must
-     not be marked down for using it and one who takes the challenge must not
-     be punished for trying. */
-  (function () {
-    const host = document.getElementById("tierT");
-    if (!host) return;
-    const SLOT = [...document.querySelectorAll(".slide")].indexOf(host.closest(".slide"));
-    const esc = (t) => String(t).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/"/g, "&quot;");
-    const TIERS = {
-      core: { q: "How many lines of symmetry has a rectangle?", why: "A rectangle folds onto itself across the middle both ways, but not corner to corner.", opts: [{ t: "2", ok: true }, { t: "1", ok: false }, { t: "4", ok: false }] },
-      support: { q: "Trace a rectangle on squared paper and fold it every way you can. How many folds match exactly?", why: "Fold across the middle one way, then the other. Only those two match exactly - check the diagonals too before you decide.", opts: [{ t: "2", ok: true }, { t: "1", ok: false }, { t: "3", ok: false }] },
-      extension: { q: "Regular shapes go triangle, square, pentagon, hexagon, then octagon. Which shape comes between the hexagon and the octagon?", why: "A heptagon has seven sides, one more than a hexagon and one fewer than an octagon.  (Teacher's Guide p49)", opts: [{ t: "heptagon", ok: true }, { t: "pentagon", ok: false }, { t: "decagon", ok: false }] }
-    };
-    let stage = "core", live = false;
+  function lessonLecture(o) {
+    const parts = o.parts || [];
+    let k = 0;
+    const id = o.stage + 'l';
     function paint() {
-      const it = TIERS[stage];
-      document.getElementById("sayT").textContent = it.q;
-      document.getElementById("chT").innerHTML = shuffle(it.opts.slice())
-        .map((o) => '<button type="button" class="choice word" data-ok="' + (o.ok ? 1 : 0)
-          + '">' + esc(o.t) + "</button>").join("");
-      document.getElementById("fbT").className = "fb";
-      document.getElementById("fbT").textContent = "";
-      document.getElementById("scT").textContent =
-        stage === "core" ? "" : (stage === "support" ? "A little help" : "A harder one");
-      live = true;
+      const p = parts[k];
+      document.getElementById(o.stage).innerHTML =
+        '<div class="lec"><p class="phase">Part ' + (k + 1) + ' of ' + parts.length + '</p>' +
+        '<h3 class="lec-h">' + esc(p.title) + '</h3><p class="lec-p">' + esc(p.say) + '</p>' +
+        '<div class="bigbtns">' +
+        '<button type="button" class="big small teal" id="' + id + 'hear">&#128266; Listen</button>' +
+        (k > 0 ? '<button type="button" class="big small ghost" id="' + id + 'back">&#9664; Last part</button>' : '') +
+        '<button type="button" class="big small" id="' + id + 'next">' + (k + 1 < parts.length ? 'Next part &#9654;' : 'I heard it all &#10003;') + '</button>' +
+        '</div><p class="lec-note">Read aloud by the lesson\'s voice. There is no video for this lesson yet.</p></div>';
+      document.getElementById(id + 'hear').addEventListener('click', () => say(p.title + '. ' + p.say));
+      if (k > 0) document.getElementById(id + 'back').addEventListener('click', () => { k--; paint(); say(parts[k].title + '. ' + parts[k].say); });
+      document.getElementById(id + 'next').addEventListener('click', () => {
+        if (k + 1 < parts.length) { k++; paint(); say(parts[k].title + '. ' + parts[k].say); }
+        else { finish(o.finish, o.done); }
+      });
     }
-    document.getElementById("chT").addEventListener("click", (e) => {
-      const b = e.target.closest(".choice");
-      if (!b || !live) return;
-      live = false;
-      const it = TIERS[stage], ok = b.dataset.ok === "1";
-      [...document.getElementById("chT").querySelectorAll(".choice")].forEach((x) => {
-        x.disabled = true;
-        if (x.dataset.ok === "1") x.classList.add("right");
-      });
-      if (!ok) b.classList.add("wrong");
-      const fb = document.getElementById("fbT");
-      fb.className = "fb " + (ok ? "good" : "");
-      fb.textContent = (ok ? cheer() + " " : "Not quite. ") + it.why;
-      say(ok ? cheer() : it.why);
-      if (stage === "core") {
-        /* the step is finished by the core question either way: the tiers are
-           a route through it, not a second hurdle */
-        finish(SLOT, "You can do this one, and you have seen a harder one.");
-        stage = ok ? "extension" : "support";
-        later(paint, 3600);
-      }
-    });
+    if (!parts.length) return;
     paint();
-  })();
+  }
 
-  /* ==== ehel-g3-story: a story problem, one per lesson ====
-     Written in the same idiom as add-differentiation.py's tiered step, so
-     nothing later needs renumbering: the slot is read from the DOM, not
-     hardcoded. ONE question, no tiers - Grade 1 and 2's own word-problem
-     banks are single questions too. */
-  (function () {
-    const host = document.getElementById("wpG3");
-    if (!host) return;
-    const SLOT = [...document.querySelectorAll(".slide")].indexOf(host.closest(".slide"));
-    const esc = (t) => String(t).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/"/g, "&quot;");
-    const IT = { q: "Zara draws 3 triangles, 2 squares and 1 hexagon on her paper. How many shapes does Zara draw in total?", why: "3 add 2 add 1 is 6 shapes altogether.", opts: [{ t: "6", ok: true }, { t: "5", ok: false }, { t: "3", ok: false }] };
-    let live = true;
-    document.getElementById("sayWpG3").textContent = IT.q;
-    document.getElementById("chWpG3").innerHTML = shuffle(IT.opts.slice())
-      .map((o) => '<button type="button" class="choice word" data-ok="' + (o.ok ? 1 : 0)
-        + '">' + esc(o.t) + "</button>").join("");
-    document.getElementById("chWpG3").addEventListener("click", (e) => {
-      const b = e.target.closest(".choice");
-      if (!b || !live) return;
-      live = false;
-      const ok = b.dataset.ok === "1";
-      [...document.getElementById("chWpG3").querySelectorAll(".choice")].forEach((x) => {
-        x.disabled = true;
-        if (x.dataset.ok === "1") x.classList.add("right");
+  function lessonWords(o) {
+    const items = o.words || [];
+    const heard = new Set();
+    let open = -1;
+    const id = o.stage + 'w';
+    function paintGrid() {
+      document.getElementById(o.stage).innerHTML =
+        '<div class="cardsgrid" id="' + id + 'g">' + items.map((w, k) =>
+          '<button type="button" class="tapcard' + (heard.has(k) ? ' heard' : '') + '" data-k="' + k + '">' +
+          '<span class="cpic" aria-hidden="true">' + w.pic + '</span>' + esc(w.w) + '</button>').join('') + '</div>' +
+        '<div class="wordpanel" id="' + id + 'p"' + (open < 0 ? ' hidden' : '') + '></div>' +
+        '<div class="bigbtns" id="' + id + 'go" style="' + (heard.size === items.length ? '' : 'display:none') + '">' +
+        '<button type="button" class="big small" id="' + id + 'quiz">Show I know them &#9654;</button></div>';
+      if (open >= 0) paintPanel();
+      document.getElementById(id + 'g').addEventListener('click', (e) => {
+        const b = e.target.closest('.tapcard'); if (!b) return;
+        open = Number(b.dataset.k); heard.add(open);
+        paintGrid();
+        const w = items[open];
+        say(w.w + '. ' + w.meaning + ' ' + (w.uses[0] || ''));
       });
-      if (!ok) b.classList.add("wrong");
-      const fb = document.getElementById("fbWpG3");
-      fb.className = "fb " + (ok ? "good" : "");
-      fb.textContent = (ok ? cheer() + " " : "Not quite. ") + IT.why;
-      say(ok ? cheer() : IT.why);
-      finish(SLOT, "Story problems teach the same maths in a real situation.");
-    });
-  })();
+      if (heard.size === items.length) {
+        const goBtn = document.getElementById(id + 'quiz');
+        if (goBtn) goBtn.addEventListener('click', () => check());
+      }
+    }
+    function paintPanel() {
+      const w = items[open];
+      const p = document.getElementById(id + 'p');
+      p.hidden = false;
+      p.innerHTML = '<div class="wp-head"><span class="wp-pic" aria-hidden="true">' + w.pic + '</span>' +
+        '<div><p class="wp-word">' + esc(w.w) + '</p><p class="wp-meaning">' + esc(w.meaning) + '</p></div></div>' +
+        '<p class="wp-uses-h">Use it</p><ul class="wp-uses">' + (w.uses || []).map((u) => '<li>' + esc(u) + '</li>').join('') + '</ul>' +
+        '<div class="bigbtns"><button type="button" class="big small teal" id="' + id + 'h">&#128266; Hear it again</button></div>';
+      document.getElementById(id + 'h').addEventListener('click', () => say(w.w + '. ' + w.meaning + ' ' + (w.uses || []).join(' ')));
+    }
+    function check() {
+      const order = shuffle(items.map((_, k) => k));
+      let i = 0, right = 0, lock = false;
+      function draw() {
+        lock = false;
+        const k = order[i], w = items[k];
+        const others = shuffle(items.map((_, j) => j).filter((j) => j !== k)).slice(0, Math.min(2, items.length - 1));
+        const opts = shuffle([k].concat(others));
+        document.getElementById(o.stage).innerHTML =
+          '<div class="mw"><p class="lec-p">Which word means: <b>' + esc(w.meaning) + '</b></p>' +
+          '<div class="wordbtns" id="' + id + 'ch">' + opts.map((j) =>
+            '<button type="button" class="wordbtn" data-ok="' + (j === k ? 1 : 0) + '">' +
+            '<span class="wbpic" aria-hidden="true">' + items[j].pic + '</span>' + esc(items[j].w) + '</button>').join('') + '</div>' +
+          '<p class="lec-note" id="' + id + 'fb"></p></div>';
+        say('Which word means: ' + w.meaning);
+        document.getElementById(id + 'ch').addEventListener('click', (e) => {
+          const b = e.target.closest('.wordbtn'); if (!b || lock) return;
+          lock = true;
+          const ok = b.dataset.ok === '1';
+          document.getElementById(id + 'ch').querySelectorAll('.wordbtn').forEach((c) => { c.disabled = true; if (c.dataset.ok === '1') c.classList.add('right'); });
+          if (!ok) b.classList.add('wrong'); else right++;
+          const msg = ok ? cheer() + ' ' + w.w + '.' : 'That word is ' + w.w + '. ' + w.meaning;
+          document.getElementById(id + 'fb').textContent = msg; say(msg);
+          i++;
+          setTimeout(() => {
+            if (i >= items.length) {
+              document.getElementById(o.stage).innerHTML = '<div class="mw"><p class="lec-p">You know ' + right + ' of ' + items.length + ' math words.</p></div>';
+              finish(o.finish, o.done);
+            } else draw();
+          }, 2200);
+        });
+      }
+      draw();
+    }
+    paintGrid();
+  }
 
-
-  /* ==== ehel-g3-vocabulary: Math Words for this lesson ====
-     Same insertion pattern as add-self-check.py: an empty host div on
-     the sticker-shelf slide, populated by this script, never scored. */
-  (function () {
-    const VOCAB = [{ w: "quadrilateral", d: "Any flat shape with exactly four straight sides, such as a square, rectangle or trapezium." }, { w: "regular", d: "A shape where every side is the same length and every corner is the same - an irregular shape is not." }, { w: "symmetry", d: "A shape has a line of symmetry when it can be folded along that line so the two halves land exactly on top of each other." }, { w: "reflection", d: "A flip of a shape over a mirror line, so every point ends up the same distance from the line, on the other side." }, { w: "perimeter", d: "The whole distance all the way round the outside edge of a shape." }, { w: "area", d: "How much flat space is covered inside a shape's edge, measured in square units." }];
-    const host = document.getElementById("vocab");
-    if (!host) return;
-    const esc = (t) => String(t).replace(/&/g, "&amp;").replace(/</g, "&lt;")
-      .replace(/"/g, "&quot;");
-    host.innerHTML = '<p class="vc-head">Math Words</p>'
-      + '<p class="vc-sub">Words from this lesson, explained in one line each.</p>'
-      + '<dl class="vc-list">'
-      + VOCAB.map((it) => '<div class="vc-row"><dt>' + esc(it.w) + '</dt><dd>'
-        + esc(it.d) + "</dd></div>").join("")
-      + "</dl>";
-  })();
-
+  lessonAbout({ stage: 'stageOvw', about: ["Name flat shapes, including quadrilaterals.", "Say whether a shape is regular or irregular.", "Find a line of symmetry on a shape.", "Reflect a shape over a mirror line.", "Measure the perimeter of a shape.", "Work out the area of a shape."], finish: 0, done: "Let's begin." });
+  lessonLecture({ stage: 'stageLec', parts: [{ title: "Regular and irregular shapes", say: "A quadrilateral is any flat shape with exactly four straight sides. A shape is regular when every side and every corner is the same - otherwise it is irregular." }, { title: "Symmetry and reflection", say: "A shape has a line of symmetry if folding it along that line makes both halves land exactly on top of each other. A reflection flips a shape over a mirror line the same way." }, { title: "Perimeter and area", say: "Perimeter is the whole distance all the way round the outside edge of a shape. Area is how much flat space is covered inside it." }], finish: 1, done: "You have heard the whole lesson. Now do it yourself." });
+  lessonWords({ stage: 'stageMw', words: [{ w: "quadrilateral", pic: "🔷", meaning: "Any flat shape with exactly four straight sides, such as a square, rectangle or trapezium.", uses: ["Name a quadrilateral you can see in the room."] }, { w: "regular", pic: "⬡", meaning: "A shape where every side is the same length and every corner is the same - an irregular shape is not.", uses: ["Say whether this hexagon is regular."] }, { w: "symmetry", pic: "🦋", meaning: "A shape has a line of symmetry when it can be folded along that line so the two halves land exactly on top of each other.", uses: ["Fold the shape to check for symmetry."] }, { w: "reflection", pic: "↔️", meaning: "A flip of a shape over a mirror line, so every point ends up the same distance from the line, on the other side.", uses: ["Draw the reflection of the triangle."] }, { w: "perimeter", pic: "🚧", meaning: "The whole distance all the way round the outside edge of a shape.", uses: ["Measure the perimeter of the book."] }, { w: "area", pic: "🔲", meaning: "How much flat space is covered inside a shape's edge, measured in square units.", uses: ["Work out the area of the rectangle."] }], finish: 2, done: "You know the math words of this lesson." });
   show(0, false);
   quiet -= 1;   /* the first draw is over: say() speaks from here on */
 
@@ -3403,10 +3451,6 @@
     try {
       const doc = await ws.hydrate();
       const u = doc && doc.units && doc.units[UNIT];
-      /* ehel-spiral: the whole record, not this unit - a child at the top of
-         a later lesson with earlier ones behind them has no `u` yet. */
-      try { if (window.__ehelSpiral) window.__ehelSpiral(doc && doc.units, UNIT); }
-      catch (_) { /* never break the lesson */ }
       if (!u) return;
       if (u.attempted && typeof u.attempted === "object") baseAttempted = u.attempted;
       if (Array.isArray(u.knownWords)) baseKnown = u.knownWords;
@@ -3622,52 +3666,4 @@
     .eh-find input { width: 96px; }
     .eh-found { top: var(--eh-found-top-narrow, 100px); }
   }
-</style>
-<style>/* ehel-g3-self-check - see add-self-check.py */
-  #selfcheck { margin: 18px auto 0; max-width: 46ch; text-align: left; }
-  .sc-head { font-size: 17px; font-weight: 700; margin: 0 0 4px; }
-  .sc-sub { font-size: 13.5px; color: var(--muted, #666); margin: 0 0 12px; line-height: 1.5; }
-  .sc-row { padding: 9px 0; border-top: 1px solid var(--line, #ddd); }
-  .sc-say { margin: 0 0 6px; font-size: 15px; line-height: 1.45; }
-  .sc-opt { font: inherit; font-size: 13px; padding: 5px 11px; margin: 0 6px 0 0;
-    border-radius: 999px; border: 1px solid var(--line, #ddd);
-    background: var(--card, #fff); color: var(--muted, #555); cursor: pointer; }
-  .sc-opt.on { background: var(--good-soft, #e6f1ea); border-color: var(--good, #2f6f4a);
-    color: var(--good, #2f6f4a); font-weight: 600; }
-</style>
-<!-- ehel-g3-twm: see add-twm-stamps.py -->
-<style>/* ehel-g3-tiers - see add-differentiation.py */
-  #scT { font-size: 12px; letter-spacing: .05em; text-transform: uppercase;
-    color: var(--muted, #666); }
-</style>
-
-<style>/* ehel-materials-note - see add-materials-note.py */
-  .kit { margin: 10px 0 0; border: 1px dashed var(--line); border-radius: 12px;
-    padding: 0 14px; background: transparent; }
-  .kit[open] { padding-bottom: 12px; }
-  .kit > summary { cursor: pointer; list-style: none; padding: 9px 0; min-height: 44px;
-    display: flex; align-items: center; gap: 8px;
-    font-family: "Inter", "Segoe UI", sans-serif; font-size: 14px; font-weight: 700;
-    color: var(--muted); }
-  .kit > summary::-webkit-details-marker { display: none; }
-  .kit > summary::after { content: "+"; margin-left: auto; font-size: 18px; }
-  .kit[open] > summary::after { content: "\2013"; }
-  .kit p { margin: 0; font-size: 15px; line-height: 1.5; color: var(--ink); }
-</style>
-
-<style>/* ehel-spiral - see add-spiral-warmup.py */
-  .eh-spiral { margin-top: 16px; padding-top: 14px; border-top: 2px dashed var(--line); }
-  .eh-spiral .eh-spiral-ch { margin-top: 12px; }
-</style>
-<style>/* ehel-g3-story - see add-story-problems.py */
-  #fbWpG3 { margin-top: 4px; }
-</style>
-<style>/* ehel-g3-vocabulary - see add-vocabulary.py */
-  #vocab { margin: 18px auto 0; max-width: 46ch; text-align: left; }
-  .vc-head { font-size: 17px; font-weight: 700; margin: 0 0 4px; }
-  .vc-sub { font-size: 13.5px; color: var(--muted, #666); margin: 0 0 12px; line-height: 1.5; }
-  .vc-list { margin: 0; }
-  .vc-row { padding: 9px 0; border-top: 1px solid var(--line, #ddd); }
-  .vc-row dt { margin: 0 0 3px; font-size: 15px; font-weight: 700; }
-  .vc-row dd { margin: 0; font-size: 14px; line-height: 1.45; color: var(--ink, #222); }
 </style>

@@ -54,7 +54,7 @@
       $("fb1").textContent = (ok ? cheer() + " " : "") + "It has " + n + " straight sides and " + n + " corners, so it is a " + name + (wob ? " - a stretched one, but still a " + name + "." : ".");
       say(ok ? cheer() : n + " sides, so it is a " + name);
       scoreLine("sc1", got1, asked1, 4);
-      if (got1 >= 4) finish(0, "");
+      if (got1 >= 4) finish(3, "");
       later(round1, 2100);
     });
   }
@@ -84,7 +84,7 @@
       $("fb2").textContent = (ok ? cheer() + " " : "Look again. ") + "All three are " + (n === 5 ? "pentagons" : n === 6 ? "hexagons" : "octagons") + " because all three have " + n + " sides. Only the regular one has every side and every corner the same.";
       say(ok ? cheer() : "The regular one has every side the same");
       scoreLine("sc2", got2, asked2, 3);
-      if (got2 >= 3) finish(1, "");
+      if (got2 >= 3) finish(4, "");
       later(round2, 2400);
     };
   }
@@ -120,7 +120,7 @@
         : "Folded along that line the two halves do not match, so it is not a line of symmetry - even though it does cut the shape in two.");
       say(ok ? cheer() : yes ? "Yes, it folds exactly" : "No, the halves do not match");
       scoreLine("sc3", got3, asked3, 5);
-      if (got3 >= 5) finish(2, "");
+      if (got3 >= 5) finish(5, "");
       later(round3, 2300);
     };
   }
@@ -168,7 +168,7 @@
           $("fb4").className = "fb good";
           $("fb4").textContent = cheer() + " Every square is the same distance from the mirror on both sides" + (slips ? ", though " + slips + " went astray on the way." : ".");
           scoreLine("sc4", got4, asked4, 2);
-          if (got4 >= 2) finish(3, "");
+          if (got4 >= 2) finish(6, "");
           later(round4, 2600);
         }
       } else {
@@ -220,7 +220,7 @@
       $("fb5").textContent = (ok ? cheer() + " " : "") + "A " + s.name + " has " + s.f + " faces, " + s.e + " edges and " + s.v + " corners. Some of them are hidden round the back of the drawing.";
       say(ok ? cheer() : "It is a " + s.name);
       scoreLine("sc5", got5, asked5, 4);
-      if (got5 >= 4) finish(4, "");
+      if (got5 >= 4) finish(7, "");
       later(round5, 2400);
     });
   }
@@ -248,7 +248,7 @@
       $("fb6").textContent = (ok ? cheer() + " " : "") + w + " + " + h + " + " + w + " + " + h + " = " + answer + " cm. All four sides, not two.";
       say(ok ? cheer() : "The perimeter is " + answer + " centimetres");
       scoreLine("sc6", got6, asked6, 4);
-      if (got6 >= 4) finish(5, "");
+      if (got6 >= 4) finish(8, "");
       later(round6, 2300);
     });
   }
@@ -284,7 +284,7 @@
       $("fb7").textContent = (ok ? cheer() + " " : "") + "It covers " + answer + " squares. That is the area - the space inside, not the distance round the edge.";
       say(ok ? cheer() : "The area is " + answer + " squares");
       scoreLine("sc7", got7, asked7, 4);
-      if (got7 >= 4) finish(6, "");
+      if (got7 >= 4) finish(9, "");
       later(round7, 2300);
     });
   }
@@ -329,7 +329,7 @@
       + "You drew " + w + " wide and " + h + " tall" + (w === h ? ", which is a square" : "") + ". Its perimeter is " + w + " + " + h + " + " + w + " + " + h + " = " + per + " squares, and its area is " + w + " \u00d7 " + h + " = " + area + " squares.";
     say(ok ? cheer() + " perimeter " + per + ", area " + area : "That one is " + w + " by " + h);
     scoreLine("sc8d", got8d, asked8d, 3);
-    if (got8d >= 3) finish(7, "");
+    if (got8d >= 3) finish(10, "");
     pickA = null;
     later(round8d, 3000);
   });
@@ -357,7 +357,7 @@
       $("q17").textContent = ""; $("ch17").innerHTML = "";
       $("fb17").className = "fb good"; $("fb17").textContent = "Finished! " + got17 + " out of " + order17.length + ".";
       $("sc17").textContent = "";
-      if (got17 >= 6) finish(8, "You have finished the check.");
+      if (got17 >= 6) finish(11, "You have finished the check.");
       else retryCheck($("fb17"), $("ch17"), got17, order17.length, 6, function () { qi = 0; got17 = 0; order17 = shuffle(QS); round17(); });
       return;
     }
@@ -381,7 +381,7 @@
   round17();
 
   /* ---- 18: stickers ---- */
-  const STICKERS = [
+  const STICKERS = [["🔎", "What this lesson is about"], ["🎥", "Unit lecture"], ["🗣️", "Math words"], 
     ["🔺", "Naming flat shapes"],
     ["⬡", "Regular or irregular"],
     ["🦋", "Lines of symmetry"],
@@ -525,6 +525,126 @@
     paint();
   })();
 
+
+  /* ==== ehel-g3-lesson-opener: three shared step functions, ported from Grade 4's own
+     add-lesson-opener.py in the same idiom - data-say for arrival
+     narration (show() already speaks it), plain finish(i, msg), no
+     ONSHOW/ONLEAVE/reportAttempt. esc() IS OWN, not shared, matching
+     every add-*.py tool in this build - see Grade 4's own docstring for
+     the ReferenceError this avoids. ==== */
+  const esc = (t) => String(t).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/"/g, "&quot;");
+  function lessonAbout(o) {
+    document.getElementById(o.stage).innerHTML =
+      '<div class="ovw"><h3 class="ovw-h">By the end of this lesson you will be able to&hellip;</h3>' +
+      '<ol class="ovw-list">' + o.about.map((t) => '<li>' + esc(t) + '</li>').join('') + '</ol>' +
+      '<div class="bigbtns"><button type="button" class="big small" id="' + o.stage + 'go">Got it, let\'s begin &#10003;</button></div></div>';
+    document.getElementById(o.stage + 'go').addEventListener('click', () => {
+      document.getElementById(o.stage + 'go').disabled = true;
+      finish(o.finish, o.done);
+    });
+  }
+
+  function lessonLecture(o) {
+    const parts = o.parts || [];
+    let k = 0;
+    const id = o.stage + 'l';
+    function paint() {
+      const p = parts[k];
+      document.getElementById(o.stage).innerHTML =
+        '<div class="lec"><p class="phase">Part ' + (k + 1) + ' of ' + parts.length + '</p>' +
+        '<h3 class="lec-h">' + esc(p.title) + '</h3><p class="lec-p">' + esc(p.say) + '</p>' +
+        '<div class="bigbtns">' +
+        '<button type="button" class="big small teal" id="' + id + 'hear">&#128266; Listen</button>' +
+        (k > 0 ? '<button type="button" class="big small ghost" id="' + id + 'back">&#9664; Last part</button>' : '') +
+        '<button type="button" class="big small" id="' + id + 'next">' + (k + 1 < parts.length ? 'Next part &#9654;' : 'I heard it all &#10003;') + '</button>' +
+        '</div><p class="lec-note">Read aloud by the lesson\'s voice. There is no video for this lesson yet.</p></div>';
+      document.getElementById(id + 'hear').addEventListener('click', () => say(p.title + '. ' + p.say));
+      if (k > 0) document.getElementById(id + 'back').addEventListener('click', () => { k--; paint(); say(parts[k].title + '. ' + parts[k].say); });
+      document.getElementById(id + 'next').addEventListener('click', () => {
+        if (k + 1 < parts.length) { k++; paint(); say(parts[k].title + '. ' + parts[k].say); }
+        else { finish(o.finish, o.done); }
+      });
+    }
+    if (!parts.length) return;
+    paint();
+  }
+
+  function lessonWords(o) {
+    const items = o.words || [];
+    const heard = new Set();
+    let open = -1;
+    const id = o.stage + 'w';
+    function paintGrid() {
+      document.getElementById(o.stage).innerHTML =
+        '<div class="cardsgrid" id="' + id + 'g">' + items.map((w, k) =>
+          '<button type="button" class="tapcard' + (heard.has(k) ? ' heard' : '') + '" data-k="' + k + '">' +
+          '<span class="cpic" aria-hidden="true">' + w.pic + '</span>' + esc(w.w) + '</button>').join('') + '</div>' +
+        '<div class="wordpanel" id="' + id + 'p"' + (open < 0 ? ' hidden' : '') + '></div>' +
+        '<div class="bigbtns" id="' + id + 'go" style="' + (heard.size === items.length ? '' : 'display:none') + '">' +
+        '<button type="button" class="big small" id="' + id + 'quiz">Show I know them &#9654;</button></div>';
+      if (open >= 0) paintPanel();
+      document.getElementById(id + 'g').addEventListener('click', (e) => {
+        const b = e.target.closest('.tapcard'); if (!b) return;
+        open = Number(b.dataset.k); heard.add(open);
+        paintGrid();
+        const w = items[open];
+        say(w.w + '. ' + w.meaning + ' ' + (w.uses[0] || ''));
+      });
+      if (heard.size === items.length) {
+        const goBtn = document.getElementById(id + 'quiz');
+        if (goBtn) goBtn.addEventListener('click', () => check());
+      }
+    }
+    function paintPanel() {
+      const w = items[open];
+      const p = document.getElementById(id + 'p');
+      p.hidden = false;
+      p.innerHTML = '<div class="wp-head"><span class="wp-pic" aria-hidden="true">' + w.pic + '</span>' +
+        '<div><p class="wp-word">' + esc(w.w) + '</p><p class="wp-meaning">' + esc(w.meaning) + '</p></div></div>' +
+        '<p class="wp-uses-h">Use it</p><ul class="wp-uses">' + (w.uses || []).map((u) => '<li>' + esc(u) + '</li>').join('') + '</ul>' +
+        '<div class="bigbtns"><button type="button" class="big small teal" id="' + id + 'h">&#128266; Hear it again</button></div>';
+      document.getElementById(id + 'h').addEventListener('click', () => say(w.w + '. ' + w.meaning + ' ' + (w.uses || []).join(' ')));
+    }
+    function check() {
+      const order = shuffle(items.map((_, k) => k));
+      let i = 0, right = 0, lock = false;
+      function draw() {
+        lock = false;
+        const k = order[i], w = items[k];
+        const others = shuffle(items.map((_, j) => j).filter((j) => j !== k)).slice(0, Math.min(2, items.length - 1));
+        const opts = shuffle([k].concat(others));
+        document.getElementById(o.stage).innerHTML =
+          '<div class="mw"><p class="lec-p">Which word means: <b>' + esc(w.meaning) + '</b></p>' +
+          '<div class="wordbtns" id="' + id + 'ch">' + opts.map((j) =>
+            '<button type="button" class="wordbtn" data-ok="' + (j === k ? 1 : 0) + '">' +
+            '<span class="wbpic" aria-hidden="true">' + items[j].pic + '</span>' + esc(items[j].w) + '</button>').join('') + '</div>' +
+          '<p class="lec-note" id="' + id + 'fb"></p></div>';
+        say('Which word means: ' + w.meaning);
+        document.getElementById(id + 'ch').addEventListener('click', (e) => {
+          const b = e.target.closest('.wordbtn'); if (!b || lock) return;
+          lock = true;
+          const ok = b.dataset.ok === '1';
+          document.getElementById(id + 'ch').querySelectorAll('.wordbtn').forEach((c) => { c.disabled = true; if (c.dataset.ok === '1') c.classList.add('right'); });
+          if (!ok) b.classList.add('wrong'); else right++;
+          const msg = ok ? cheer() + ' ' + w.w + '.' : 'That word is ' + w.w + '. ' + w.meaning;
+          document.getElementById(id + 'fb').textContent = msg; say(msg);
+          i++;
+          setTimeout(() => {
+            if (i >= items.length) {
+              document.getElementById(o.stage).innerHTML = '<div class="mw"><p class="lec-p">You know ' + right + ' of ' + items.length + ' math words.</p></div>';
+              finish(o.finish, o.done);
+            } else draw();
+          }, 2200);
+        });
+      }
+      draw();
+    }
+    paintGrid();
+  }
+
+  lessonAbout({ stage: 'stageOvw', about: ["Name flat shapes, including quadrilaterals.", "Say whether a shape is regular or irregular.", "Find a line of symmetry on a shape.", "Reflect a shape over a mirror line.", "Measure the perimeter of a shape.", "Work out the area of a shape."], finish: 0, done: "Let's begin." });
+  lessonLecture({ stage: 'stageLec', parts: [{ title: "Regular and irregular shapes", say: "A quadrilateral is any flat shape with exactly four straight sides. A shape is regular when every side and every corner is the same - otherwise it is irregular." }, { title: "Symmetry and reflection", say: "A shape has a line of symmetry if folding it along that line makes both halves land exactly on top of each other. A reflection flips a shape over a mirror line the same way." }, { title: "Perimeter and area", say: "Perimeter is the whole distance all the way round the outside edge of a shape. Area is how much flat space is covered inside it." }], finish: 1, done: "You have heard the whole lesson. Now do it yourself." });
+  lessonWords({ stage: 'stageMw', words: [{ w: "quadrilateral", pic: "🔷", meaning: "Any flat shape with exactly four straight sides, such as a square, rectangle or trapezium.", uses: ["Name a quadrilateral you can see in the room."] }, { w: "regular", pic: "⬡", meaning: "A shape where every side is the same length and every corner is the same - an irregular shape is not.", uses: ["Say whether this hexagon is regular."] }, { w: "symmetry", pic: "🦋", meaning: "A shape has a line of symmetry when it can be folded along that line so the two halves land exactly on top of each other.", uses: ["Fold the shape to check for symmetry."] }, { w: "reflection", pic: "↔️", meaning: "A flip of a shape over a mirror line, so every point ends up the same distance from the line, on the other side.", uses: ["Draw the reflection of the triangle."] }, { w: "perimeter", pic: "🚧", meaning: "The whole distance all the way round the outside edge of a shape.", uses: ["Measure the perimeter of the book."] }, { w: "area", pic: "🔲", meaning: "How much flat space is covered inside a shape's edge, measured in square units.", uses: ["Work out the area of the rectangle."] }], finish: 2, done: "You know the math words of this lesson." });
   show(0, false);
   quiet -= 1;   /* the first draw is over: say() speaks from here on */
 })();

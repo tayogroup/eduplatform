@@ -66,7 +66,7 @@
       $("fb13").textContent = (ok ? cheer() + " " : "") + "The short hand has passed " + hh + ", so the hour is " + hh + ". The long hand is at " + (mm / 5 === 0 ? 12 : mm / 5) + ", which is " + mm + " minutes.";
       say(ok ? cheer() : "It is " + right);
       scoreLine("sc13", got13, asked13, 4);
-      if (got13 >= 4) finish(0, "");
+      if (got13 >= 4) finish(3, "");
       later(round13, 2500);
     });
   }
@@ -105,7 +105,7 @@
       $("fb14").textContent = (ok ? cheer() + " " : "") + "You would measure " + it.t + " in " + it.a + ". Pick the unit that gives a sensible number - not so small that the number is huge, and not so big that the answer is nearly nothing.";
       say(ok ? cheer() : it.t + " is measured in " + it.a);
       scoreLine("sc14", got14, asked14, 5);
-      if (got14 >= 5) finish(1, "");
+      if (got14 >= 5) finish(4, "");
       later(round14, 2700);
     });
   }
@@ -137,7 +137,7 @@
       $("fb14").textContent = (ok ? cheer() + " " : "") + why;
       say(ok ? cheer() : why);
       scoreLine("sc14", got14, asked14, 5);
-      if (got14 >= 5) finish(1, "");
+      if (got14 >= 5) finish(4, "");
       later(round14, 2700);
     });
   }
@@ -167,7 +167,7 @@
       $("fb14").textContent = (ok ? cheer() + " " : "") + "Count on: " + (toHour ? toHour + " minutes to " + (h1 + 1) + ":00, then on to " + h2 + ":" + two(m2) + ". " : "") + "That is " + right + ".";
       say(ok ? cheer() : "It is " + right);
       scoreLine("sc14", got14, asked14, 4);
-      if (got14 >= 4) finish(1, "");
+      if (got14 >= 4) finish(4, "");
       later(round14, 2700);
     });
   }
@@ -218,7 +218,7 @@
       $("fb15").textContent = (ok ? cheer() + " " : "") + "Find the row, then look along it to the right column. The answer is " + right + ".";
       say(ok ? cheer() : "It is " + right);
       scoreLine("sc15", got15, asked15, 4);
-      if (got15 >= 4) finish(2, "");
+      if (got15 >= 4) finish(5, "");
       later(round15, 2800);
     });
   }
@@ -252,7 +252,7 @@
           $("fb16").className = "fb good";
           $("fb16").textContent = cheer() + " North is up, south is down, east is right and west is left - and they stay put whichever way you are facing.";
           scoreLine("sc16", got16, asked16, 3);
-          if (got16 >= 3) finish(3, "");
+          if (got16 >= 3) finish(6, "");
           later(round16, 2400);
         } else {
           $("fb16").className = "fb"; $("fb16").textContent = i + " of " + seq.length + " done.";
@@ -448,7 +448,7 @@
       $("q17").textContent = ""; $("ch17").innerHTML = "";
       $("fb17").className = "fb good"; $("fb17").textContent = "Finished! " + got17 + " out of " + order17.length + ".";
       $("sc17").textContent = "";
-      if (got17 >= 6) finish(7, "You have finished the check.");
+      if (got17 >= 6) finish(10, "You have finished the check.");
       else retryCheck($("fb17"), $("ch17"), got17, order17.length, 6, function () { qi = 0; got17 = 0; order17 = shuffle(QS); round17(); });
       return;
     }
@@ -472,7 +472,7 @@
   round17();
 
   /* ---- 18: stickers ---- */
-  const STICKERS = [
+  const STICKERS = [["🔎", "What this lesson is about"], ["🎥", "Unit lecture"], ["🗣️", "Math words"], 
     ["🕰️", "Telling the time"],
     ["⏳", "How long it takes"],
     ["🚌", "Timetables"],
@@ -615,6 +615,126 @@
     paint();
   })();
 
+
+  /* ==== ehel-g3-lesson-opener: three shared step functions, ported from Grade 4's own
+     add-lesson-opener.py in the same idiom - data-say for arrival
+     narration (show() already speaks it), plain finish(i, msg), no
+     ONSHOW/ONLEAVE/reportAttempt. esc() IS OWN, not shared, matching
+     every add-*.py tool in this build - see Grade 4's own docstring for
+     the ReferenceError this avoids. ==== */
+  const esc = (t) => String(t).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/"/g, "&quot;");
+  function lessonAbout(o) {
+    document.getElementById(o.stage).innerHTML =
+      '<div class="ovw"><h3 class="ovw-h">By the end of this lesson you will be able to&hellip;</h3>' +
+      '<ol class="ovw-list">' + o.about.map((t) => '<li>' + esc(t) + '</li>').join('') + '</ol>' +
+      '<div class="bigbtns"><button type="button" class="big small" id="' + o.stage + 'go">Got it, let\'s begin &#10003;</button></div></div>';
+    document.getElementById(o.stage + 'go').addEventListener('click', () => {
+      document.getElementById(o.stage + 'go').disabled = true;
+      finish(o.finish, o.done);
+    });
+  }
+
+  function lessonLecture(o) {
+    const parts = o.parts || [];
+    let k = 0;
+    const id = o.stage + 'l';
+    function paint() {
+      const p = parts[k];
+      document.getElementById(o.stage).innerHTML =
+        '<div class="lec"><p class="phase">Part ' + (k + 1) + ' of ' + parts.length + '</p>' +
+        '<h3 class="lec-h">' + esc(p.title) + '</h3><p class="lec-p">' + esc(p.say) + '</p>' +
+        '<div class="bigbtns">' +
+        '<button type="button" class="big small teal" id="' + id + 'hear">&#128266; Listen</button>' +
+        (k > 0 ? '<button type="button" class="big small ghost" id="' + id + 'back">&#9664; Last part</button>' : '') +
+        '<button type="button" class="big small" id="' + id + 'next">' + (k + 1 < parts.length ? 'Next part &#9654;' : 'I heard it all &#10003;') + '</button>' +
+        '</div><p class="lec-note">Read aloud by the lesson\'s voice. There is no video for this lesson yet.</p></div>';
+      document.getElementById(id + 'hear').addEventListener('click', () => say(p.title + '. ' + p.say));
+      if (k > 0) document.getElementById(id + 'back').addEventListener('click', () => { k--; paint(); say(parts[k].title + '. ' + parts[k].say); });
+      document.getElementById(id + 'next').addEventListener('click', () => {
+        if (k + 1 < parts.length) { k++; paint(); say(parts[k].title + '. ' + parts[k].say); }
+        else { finish(o.finish, o.done); }
+      });
+    }
+    if (!parts.length) return;
+    paint();
+  }
+
+  function lessonWords(o) {
+    const items = o.words || [];
+    const heard = new Set();
+    let open = -1;
+    const id = o.stage + 'w';
+    function paintGrid() {
+      document.getElementById(o.stage).innerHTML =
+        '<div class="cardsgrid" id="' + id + 'g">' + items.map((w, k) =>
+          '<button type="button" class="tapcard' + (heard.has(k) ? ' heard' : '') + '" data-k="' + k + '">' +
+          '<span class="cpic" aria-hidden="true">' + w.pic + '</span>' + esc(w.w) + '</button>').join('') + '</div>' +
+        '<div class="wordpanel" id="' + id + 'p"' + (open < 0 ? ' hidden' : '') + '></div>' +
+        '<div class="bigbtns" id="' + id + 'go" style="' + (heard.size === items.length ? '' : 'display:none') + '">' +
+        '<button type="button" class="big small" id="' + id + 'quiz">Show I know them &#9654;</button></div>';
+      if (open >= 0) paintPanel();
+      document.getElementById(id + 'g').addEventListener('click', (e) => {
+        const b = e.target.closest('.tapcard'); if (!b) return;
+        open = Number(b.dataset.k); heard.add(open);
+        paintGrid();
+        const w = items[open];
+        say(w.w + '. ' + w.meaning + ' ' + (w.uses[0] || ''));
+      });
+      if (heard.size === items.length) {
+        const goBtn = document.getElementById(id + 'quiz');
+        if (goBtn) goBtn.addEventListener('click', () => check());
+      }
+    }
+    function paintPanel() {
+      const w = items[open];
+      const p = document.getElementById(id + 'p');
+      p.hidden = false;
+      p.innerHTML = '<div class="wp-head"><span class="wp-pic" aria-hidden="true">' + w.pic + '</span>' +
+        '<div><p class="wp-word">' + esc(w.w) + '</p><p class="wp-meaning">' + esc(w.meaning) + '</p></div></div>' +
+        '<p class="wp-uses-h">Use it</p><ul class="wp-uses">' + (w.uses || []).map((u) => '<li>' + esc(u) + '</li>').join('') + '</ul>' +
+        '<div class="bigbtns"><button type="button" class="big small teal" id="' + id + 'h">&#128266; Hear it again</button></div>';
+      document.getElementById(id + 'h').addEventListener('click', () => say(w.w + '. ' + w.meaning + ' ' + (w.uses || []).join(' ')));
+    }
+    function check() {
+      const order = shuffle(items.map((_, k) => k));
+      let i = 0, right = 0, lock = false;
+      function draw() {
+        lock = false;
+        const k = order[i], w = items[k];
+        const others = shuffle(items.map((_, j) => j).filter((j) => j !== k)).slice(0, Math.min(2, items.length - 1));
+        const opts = shuffle([k].concat(others));
+        document.getElementById(o.stage).innerHTML =
+          '<div class="mw"><p class="lec-p">Which word means: <b>' + esc(w.meaning) + '</b></p>' +
+          '<div class="wordbtns" id="' + id + 'ch">' + opts.map((j) =>
+            '<button type="button" class="wordbtn" data-ok="' + (j === k ? 1 : 0) + '">' +
+            '<span class="wbpic" aria-hidden="true">' + items[j].pic + '</span>' + esc(items[j].w) + '</button>').join('') + '</div>' +
+          '<p class="lec-note" id="' + id + 'fb"></p></div>';
+        say('Which word means: ' + w.meaning);
+        document.getElementById(id + 'ch').addEventListener('click', (e) => {
+          const b = e.target.closest('.wordbtn'); if (!b || lock) return;
+          lock = true;
+          const ok = b.dataset.ok === '1';
+          document.getElementById(id + 'ch').querySelectorAll('.wordbtn').forEach((c) => { c.disabled = true; if (c.dataset.ok === '1') c.classList.add('right'); });
+          if (!ok) b.classList.add('wrong'); else right++;
+          const msg = ok ? cheer() + ' ' + w.w + '.' : 'That word is ' + w.w + '. ' + w.meaning;
+          document.getElementById(id + 'fb').textContent = msg; say(msg);
+          i++;
+          setTimeout(() => {
+            if (i >= items.length) {
+              document.getElementById(o.stage).innerHTML = '<div class="mw"><p class="lec-p">You know ' + right + ' of ' + items.length + ' math words.</p></div>';
+              finish(o.finish, o.done);
+            } else draw();
+          }, 2200);
+        });
+      }
+      draw();
+    }
+    paintGrid();
+  }
+
+  lessonAbout({ stage: 'stageOvw', about: ["Tell the time and work out how long something took.", "Read a timetable to plan a journey.", "Use north, south, east and west to give directions.", "Choose the right unit of time for an activity.", "Follow and give directions using cardinal points."], finish: 0, done: "Let's begin." });
+  lessonLecture({ stage: 'stageLec', parts: [{ title: "Time intervals", say: "A time interval is how long something lasts, found by counting on from the start time to the end time." }, { title: "Timetables", say: "A timetable sets out times in rows and columns, such as which bus reaches which stop and when - reading it means finding the right row and the right column together." }, { title: "Cardinal points and direction", say: "North, south, east and west never change, whichever way you are facing. Clockwise turns the way a clock's hands move; anticlockwise turns the other way." }], finish: 1, done: "You have heard the whole lesson. Now do it yourself." });
+  lessonWords({ stage: 'stageMw', words: [{ w: "time interval", pic: "⏳", meaning: "How long something lasts, found by counting on from the start time to the end time.", uses: ["Work out the time interval between 3:15 and 4:00."] }, { w: "timetable", pic: "🚌", meaning: "A list of times set out in rows and columns, such as which bus arrives at which stop and when.", uses: ["Read the timetable to find when the bus arrives."] }, { w: "cardinal point", pic: "🗺️", meaning: "One of the four main compass directions - north, south, east and west - which never change, whichever way you are facing.", uses: ["Point to north, then name the cardinal point behind you."] }, { w: "clockwise", pic: "↻", meaning: "Turning the same way the hands of a clock move - from 12 towards 3, then 6, then 9.", uses: ["Turn the shape clockwise."] }, { w: "anticlockwise", pic: "↺", meaning: "Turning the opposite way to the hands of a clock.", uses: ["Turn the shape anticlockwise."] }], finish: 2, done: "You know the math words of this lesson." });
   show(0, false);
   quiet -= 1;   /* the first draw is over: say() speaks from here on */
 })();

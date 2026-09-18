@@ -9,9 +9,27 @@
 
   <div class="deck" id="deck">
 
+    <!-- ehel-g3-lesson-opener: what this lesson is about -->
+    <section class="slide" data-say="By the end of this lesson you will be able to: Say what a digit is worth by which column it sits in, up to a thousand; break a 3-digit number apart into hundreds, tens and ones; regroup a number into a different mix of hundreds and tens; multiply a number by 10 and see every digit move one place; round a number to the nearest 10 or 100; make a good estimate of how many things are in a group.">
+      <div class="slide-head"><span class="n">1</span><h2>What this lesson is about</h2></div>
+      <div class="say"><button type="button" class="speak" aria-label="Read it to me">&#128266;</button><span id="askOvw">By the end of this lesson you will be able to: Say what a digit is worth by which column it sits in, up to a thousand; break a 3-digit number apart into hundreds, tens and ones; regroup a number into a different mix of hundreds and tens; multiply a number by 10 and see every digit move one place; round a number to the nearest 10 or 100; make a good estimate of how many things are in a group.</span></div>
+      <div class="stage" id="stageOvw"></div>
+    </section>
+    <!-- ehel-g3-lesson-opener: unit lecture -->
+    <section class="slide" data-say="Watch the lesson told in parts, by the voice.">
+      <div class="slide-head"><span class="n">2</span><h2>Unit lecture</h2></div>
+      <div class="say"><button type="button" class="speak" aria-label="Read it to me">&#128266;</button><span id="askLec">Watch the lesson told in parts, by the voice.</span></div>
+      <div class="stage" id="stageLec"></div>
+    </section>
+    <!-- ehel-g3-lesson-opener: math words -->
+    <section class="slide" data-say="Tap each word to hear what it means and how to use it. Then show you know them.">
+      <div class="slide-head"><span class="n">3</span><h2>Math words</h2></div>
+      <div class="say"><button type="button" class="speak" aria-label="Read it to me">&#128266;</button><span id="askMw">Tap each word to hear what it means and how to use it. Then show you know them.</span></div>
+      <div class="stage" id="stageMw"></div>
+    </section>
     <!-- 1 three digits -->
     <section class="slide" data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>A digit on its own does not tell you how much it is worth.</s><s>Where it stands does.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>Press the buttons to build a number.</s><s>Watch the blocks.</s><s>A hundred block is a whole square, a ten is a single rod, a one is a little cube.</s><s>The three in three hundred and forty eight is worth three hundred, because it is standing in the hundreds column.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="empathetic" styledegree="1.3"><prosody rate="-6%"><s>Children read the digits as separate small numbers, three, four, eight.</s><s>They are not.</s><s>They are three hundred, and forty, and eight.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>So build a number, then read what each digit is worth out loud.</s></mstts:express-as>' data-say="Build a number with the buttons. Look at what each digit is worth.">
-      <div class="slide-head"><span class="n">1</span><h2>Three digits</h2></div>
+      <div class="slide-head"><span class="n">4</span><h2>Three digits</h2></div>
       <div class="say"><button type="button" class="speak" aria-label="Read it to me">🔊</button><span>Press <b>+</b> and <b>−</b> to build a number. Each digit is worth what its column says.</span></div>
       <div class="stage">
         <div class="pvcols" id="pv1"></div>
@@ -22,7 +40,7 @@
     </section>
     <!-- 2 read and write -->
     <section class="slide" data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>Numbers are said in the order they are written, hundreds first.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>Four hundred and seventy two.</s><s>Four hundred, then seventy, then two.</s><s>The word and goes in once, after the hundreds, and nowhere else.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="empathetic" styledegree="1.3"><prosody rate="-6%"><s>The teens are the trap.</s><s>Fourteen is one ten and four ones, but you say the four first.</s><s>Forty is four tens.</s><s>Listen for the difference.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>Read the number, then tap the words that match.</s></mstts:express-as>' data-say="Read the number. Tap the words that say it.">
-      <div class="slide-head"><span class="n">2</span><h2>Read it and write it</h2></div>
+      <div class="slide-head"><span class="n">5</span><h2>Read it and write it</h2></div>
       <div class="say"><button type="button" class="speak" aria-label="Read it to me">🔊</button><span id="say2">Read the number, then tap the words that say it.</span></div>
       <div class="stage">
         <div class="bignum" id="num2">—</div>
@@ -33,7 +51,7 @@
     </section>
     <!-- 3 break it apart -->
     <section class="slide" data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>Taking a number apart into its hundreds, its tens and its ones is called decomposing it.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>Three hundred and forty eight comes apart into three hundred, and forty, and eight.</s><s>Add those three back together and you have the number again.</s><s>Nothing is lost and nothing is added.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="empathetic" styledegree="1.3"><prosody rate="-6%"><s>Watch the zero.</s><s>Three hundred and seven has no tens, so its parts are three hundred and seven, and the zero is holding the tens column open.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>Tap the three parts that make the number.</s></mstts:express-as>' data-say="Tap the three parts that add up to this number.">
-      <div class="slide-head"><span class="n">3</span><h2>Break it apart</h2></div>
+      <div class="slide-head"><span class="n">6</span><h2>Break it apart</h2></div>
       <div class="say"><button type="button" class="speak" aria-label="Read it to me">🔊</button><span id="say3">Tap the parts that add up to the number.</span></div>
       <div class="stage">
         <div class="bignum" id="num3">—</div>
@@ -45,7 +63,7 @@
     </section>
     <!-- 4 regroup -->
     <section class="slide" data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>There is more than one way to cut a number up, and every way is still the same number.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>Three hundred and forty eight is three hundred, forty and eight.</s><s>It is also two hundred, one hundred and forty, and eight.</s><s>One hundred moved out of the hundreds and joined the tens as ten tens.</s><s>That is called regrouping.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="empathetic" styledegree="1.3"><prosody rate="-6%"><s>This looks like a trick until you need it.</s><s>It is exactly what you do when you take away and the top digit is too small.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>Move a hundred across and check the total has not changed.</s></mstts:express-as>' data-say="Move one hundred into the tens. The number stays the same.">
-      <div class="slide-head"><span class="n">4</span><h2>Another way to break it</h2></div>
+      <div class="slide-head"><span class="n">7</span><h2>Another way to break it</h2></div>
       <div class="say"><button type="button" class="speak" aria-label="Read it to me">🔊</button><span>Move a hundred across into the tens. The total must not change.</span></div>
       <div class="stage">
         <div class="regroup" id="rg4"></div>
@@ -55,7 +73,7 @@
     </section>
     <!-- 5 times ten -->
     <section class="slide" data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>Multiplying by ten does not add a zero.</s><s>It moves every digit one column to the left.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>Thirty five times ten.</s><s>The three was three tens and becomes three hundreds.</s><s>The five was five ones and becomes five tens.</s><s>Nothing is left in the ones, so a zero holds that column open.</s><s>Three hundred and fifty.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="empathetic" styledegree="1.3"><prosody rate="-6%"><s>Add a zero works here and stops working the moment there is a decimal point.</s><s>Learn the move, not the trick.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>Press times ten and watch the digits slide.</s></mstts:express-as>' data-say="Press times ten and watch every digit move one column left.">
-      <div class="slide-head"><span class="n">5</span><h2>Ten times bigger</h2></div>
+      <div class="slide-head"><span class="n">8</span><h2>Ten times bigger</h2></div>
       <div class="say"><button type="button" class="speak" aria-label="Read it to me">🔊</button><span id="say5">Press <b>× 10</b> and watch the digits move one place to the left.</span></div>
       <div class="stage">
         <div class="pvcols" id="pv5"></div>
@@ -65,7 +83,7 @@
     </section>
     <!-- 6 count in steps -->
     <section class="slide" data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>Counting in steps means adding the same amount again and again, from wherever you happen to be.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>Pick a start and a step.</s><s>Counting on in tens from two hundred and thirty six gives two hundred and forty six, two hundred and fifty six, two hundred and sixty six.</s><s>Only the tens digit is moving.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="empathetic" styledegree="1.3"><prosody rate="-6%"><s>Then it crosses a hundred and the hundreds digit moves too.</s><s>Two hundred and ninety six, then three hundred and six.</s><s>That is the step everyone gets wrong, so go slowly there.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>Choose a start, choose a step, and fill in what comes next.</s></mstts:express-as>' data-say="Pick a start and a step. Then tap the number that comes next.">
-      <div class="slide-head"><span class="n">6</span><h2>Count in ones, tens and hundreds</h2></div>
+      <div class="slide-head"><span class="n">9</span><h2>Count in ones, tens and hundreds</h2></div>
       <div class="say"><button type="button" class="speak" aria-label="Read it to me">🔊</button><span id="say6">Pick a step, then tap the number that comes next.</span></div>
       <div class="stage">
         <div class="chiprow" id="step6"></div>
@@ -77,7 +95,7 @@
     </section>
     <!-- 7 odd and even -->
     <section class="slide" data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>A number is even if it can be shared into two equal whole groups, and odd if one is always left over.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>You do not have to test the whole number.</s><s>Only the ones digit decides.</s><s>If it ends in nought, two, four, six or eight it is even, however many hundreds are in front of it.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="empathetic" styledegree="1.3"><prosody rate="-6%"><s>Children look at the first digit because that is the biggest one.</s><s>It tells you nothing here.</s><s>Cover the number and leave only the last digit showing.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>Sort each number into odd or even.</s></mstts:express-as>' data-say="Look at the last digit only. Is it odd or even?">
-      <div class="slide-head"><span class="n">7</span><h2>Odd or even</h2></div>
+      <div class="slide-head"><span class="n">10</span><h2>Odd or even</h2></div>
       <div class="say"><button type="button" class="speak" aria-label="Read it to me">🔊</button><span id="say7">Look at the <b>last digit</b> only. Odd or even?</span></div>
       <div class="stage">
         <div class="bignum" id="num7">—</div>
@@ -88,7 +106,7 @@
     </section>
     <!-- 8 compare -->
     <section class="slide" data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>To compare two numbers, start at the biggest column, not at the end.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>Look at the hundreds first.</s><s>If they are different you already have your answer and nothing else matters.</s><s>If they are the same, move along to the tens, then to the ones.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="empathetic" styledegree="1.3"><prosody rate="-6%"><s>The greater than sign always opens towards the bigger number, like a mouth.</s><s>The point goes to the smaller one.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>Tap the sign that belongs between them.</s></mstts:express-as>' data-say="Compare the hundreds first. Tap the sign that goes between them.">
-      <div class="slide-head"><span class="n">8</span><h2>Which is bigger?</h2></div>
+      <div class="slide-head"><span class="n">11</span><h2>Which is bigger?</h2></div>
       <div class="say"><button type="button" class="speak" aria-label="Read it to me">🔊</button><span id="say8">Tap the sign that belongs between the two numbers.</span></div>
       <div class="stage">
         <div class="cmprow" id="cmp8"></div>
@@ -99,7 +117,7 @@
     </section>
     <!-- 9 order -->
     <section class="slide" data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>Putting numbers in order is the same comparing, done again and again.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>Find the smallest of them all and take it first.</s><s>Then find the smallest of what is left.</s><s>Keep going until there is nothing left to take.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="empathetic" styledegree="1.3"><prosody rate="-6%"><s>Do not sort by how long a number looks, or by its first digit alone.</s><s>Ninety nine is shorter than one hundred and one, and smaller.</s><s>But eighty is shorter than seventy nine, and bigger.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>Tap them from smallest to biggest.</s></mstts:express-as>' data-say="Tap the numbers in order, smallest first.">
-      <div class="slide-head"><span class="n">9</span><h2>Put them in order</h2></div>
+      <div class="slide-head"><span class="n">12</span><h2>Put them in order</h2></div>
       <div class="say"><button type="button" class="speak" aria-label="Read it to me">🔊</button><span id="say9">Tap them from <b>smallest</b> to <b>biggest</b>.</span></div>
       <div class="stage">
         <div class="seqbox" id="ord9"></div>
@@ -110,7 +128,7 @@
     </section>
     <!-- 10 rounding -->
     <section class="slide" data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>Rounding means picking whichever neighbour is nearer.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>Find the two tens the number sits between, or the two hundreds.</s><s>Mark the halfway point.</s><s>If the number is past halfway it goes up, and if it has not got there yet it goes down.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="empathetic" styledegree="1.3"><prosody rate="-6%"><s>Exactly halfway is nobody nearer, so there is no right answer to find.</s><s>There is only a rule everyone agreed to follow, and the rule is up.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>Look at the line, then tap the answer.</s></mstts:express-as>' data-say="Which neighbour is nearer? Look at the line, then tap.">
-      <div class="slide-head"><span class="n">10</span><h2>Round it to 10 or 100</h2></div>
+      <div class="slide-head"><span class="n">13</span><h2>Round it to 10 or 100</h2></div>
       <div class="say"><button type="button" class="speak" aria-label="Read it to me">🔊</button><span id="say10">Which neighbour is nearer? Tap the answer.</span></div>
       <div class="stage">
         <svg class="rline" id="line10" viewBox="0 0 520 116" role="img" aria-label="A number line between two neighbours"></svg>
@@ -121,7 +139,7 @@
     </section>
     <!-- 11 estimate -->
     <section class="slide" data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>An estimate is a sensible guess made on purpose, not a wild one.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>Do not try to count them all.</s><s>Look at one small group, decide roughly how many are in it, then see how many groups like that would fill the box.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="empathetic" styledegree="1.3"><prosody rate="-6%"><s>An estimate is not a wrong answer.</s><s>Close is the whole point.</s><s>If you are within about a hundred here, you estimated well.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>Have a look, pick the closest, then count a group to check.</s></mstts:express-as>' data-say="Do not count them all. Pick the closest estimate.">
-      <div class="slide-head"><span class="n">11</span><h2>Roughly how many?</h2></div>
+      <div class="slide-head"><span class="n">14</span><h2>Roughly how many?</h2></div>
       <div class="say"><button type="button" class="speak" aria-label="Read it to me">🔊</button><span id="say11">Do not count them all. Pick the <b>closest</b>.</span></div>
       <div class="stage">
         <div class="dotbox" id="box11"></div>

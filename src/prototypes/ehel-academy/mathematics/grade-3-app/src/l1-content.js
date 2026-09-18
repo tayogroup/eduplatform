@@ -56,7 +56,7 @@
     const n = D1[0] * 100 + D1[1] * 10 + D1[2];
     $("big1").textContent = n;
     $("worth1").innerHTML = D1[0] * 100 + " + " + D1[1] * 10 + " + " + D1[2] + " = <b>" + n + "</b>";
-    if (seen1 >= 6 && D1[0] > 0 && !done[0]) { finish(0, "You have built numbers all the way up to a thousand. Sticker earned."); $("fb1").className = "fb good"; $("fb1").textContent = "Sticker earned! Keep building if you like."; }
+    if (seen1 >= 6 && D1[0] > 0 && !done[0]) { finish(3, "You have built numbers all the way up to a thousand. Sticker earned."); $("fb1").className = "fb good"; $("fb1").textContent = "Sticker earned! Keep building if you like."; }
   }
   $("pv1").addEventListener("click", (e) => {
     const b = e.target.closest("button"); if (!b) return;
@@ -91,7 +91,7 @@
       $("fb2").textContent = ok ? cheer() + " " + n2 + " is " + words(n2) + "." : "Not quite. " + n2 + " is " + words(n2) + ".";
       say(ok ? cheer() + " " + words(n2) : n2 + " is " + words(n2));
       scoreLine("sc2", got2, asked2, 4);
-      if (got2 >= 4) finish(1, "");
+      if (got2 >= 4) finish(4, "");
       later(round2, 1600);
     });
   }
@@ -133,7 +133,7 @@
         $("fb3").textContent = cheer() + " " + want.join(" + ") + " = " + n3 + ".";
         say(want.join(" plus ") + " makes " + n3);
         scoreLine("sc3", got3, asked3, 3);
-        if (got3 >= 3) finish(2, "");
+        if (got3 >= 3) finish(5, "");
         later(round3, 1900);
       }
     };
@@ -157,7 +157,7 @@
       ? base4 + " split the ordinary way: " + hh + " + " + tt + " + " + o + "."
       : moved4 + " hundred moved across as " + (moved4 * 10) + " tens - and the total is still " + base4 + ".";
   }
-  $("rgmore").addEventListener("click", () => { moved4++; paint4(); say("One hundred moves across as ten tens. Still " + base4 + "."); if (moved4 >= 1) finish(3, ""); });
+  $("rgmore").addEventListener("click", () => { moved4++; paint4(); say("One hundred moves across as ten tens. Still " + base4 + "."); if (moved4 >= 1) finish(6, ""); });
   $("rgless").addEventListener("click", () => { moved4--; paint4(); say("Put back. Still " + base4 + "."); });
   paint4();
 
@@ -181,7 +181,7 @@
     $("fb5").className = "fb good";
     $("fb5").textContent = was5 + " × 10 = " + n5 + ". Every digit moved one column left, and a 0 holds the ones column open.";
     say(was5 + " times ten is " + n5 + ". Every digit moved one place to the left, and a zero holds the ones column open.");
-    finish(4, "");
+    finish(7, "");
   });
   $("new5").addEventListener("click", new5);
   new5();
@@ -219,7 +219,7 @@
       $("fb6").textContent = ok ? cheer() + " " + seq6[2] + " " + (step6 > 0 ? "+" : "−") + " " + Math.abs(step6) + " = " + answer + "." : "The step is " + (step6 > 0 ? "+" : "−") + Math.abs(step6) + ", so " + seq6[2] + " goes to " + answer + ".";
       say(ok ? cheer() : seq6[2] + (step6 > 0 ? " add " : " take away ") + Math.abs(step6) + " is " + answer);
       scoreLine("sc6", got6, asked6, 4);
-      if (got6 >= 4) finish(5, "");
+      if (got6 >= 4) finish(8, "");
       later(round6, 1700);
     });
   }
@@ -248,7 +248,7 @@
       $("fb7").textContent = (ok ? cheer() + " " : "Look again. ") + "It ends in " + last + ", and " + last + " is " + right + " - so " + n7 + " is " + right + ". The hundreds make no difference at all.";
       say(ok ? cheer() + " it ends in " + last + ", which is " + right : "It ends in " + last + ", so it is " + right);
       scoreLine("sc7", got7, asked7, 4);
-      if (got7 >= 4) finish(6, "");
+      if (got7 >= 4) finish(9, "");
       later(round7, 1700);
     };
   }
@@ -277,7 +277,7 @@
       $("fb8").textContent = (ok ? cheer() + " " : "") + a + " " + right + " " + b + ". " + why;
       say(ok ? cheer() : a + " is " + (right === ">" ? "greater than " : right === "<" ? "less than " : "equal to ") + b);
       scoreLine("sc8", got8, asked8, 4);
-      if (got8 >= 4) finish(7, "");
+      if (got8 >= 4) finish(10, "");
       later(round8, 1700);
     };
   }
@@ -313,7 +313,7 @@
         $("fb9").textContent = cheer() + " " + taken9.join(" < ") + ".";
         say("In order: " + taken9.join(", "));
         scoreLine("sc9", got9, asked9, 3);
-        if (got9 >= 3) finish(8, "");
+        if (got9 >= 3) finish(11, "");
         later(round9, 2000);
       }
     };
@@ -348,7 +348,7 @@
       $("fb10").textContent = (ok ? cheer() + " " : "") + n + " to the nearest " + to + " is " + answer + ". " + why;
       say(ok ? cheer() + " " + answer : n + " rounds to " + answer);
       scoreLine("sc10", got10, asked10, 4);
-      if (got10 >= 4) finish(9, "");
+      if (got10 >= 4) finish(12, "");
       later(round10, 2000);
     });
   }
@@ -372,7 +372,7 @@
       $("fb11").textContent = (ok ? cheer() + " " : "") + "There were " + real + ", so about " + near + " was the closest. An estimate is meant to be close, not exact.";
       say(ok ? cheer() + " there were " + real : "There were " + real + ", so " + near + " was closest");
       scoreLine("sc11", got11, asked11, 3);
-      if (got11 >= 3) finish(10, "");
+      if (got11 >= 3) finish(13, "");
       later(round11, 2200);
     });
   }
@@ -404,7 +404,7 @@
       $("fb18").className = "fb good";
       $("fb18").textContent = "Finished! " + got18 + " out of " + order18.length + ".";
       $("sc18").textContent = "";
-      if (got18 >= 6) finish(11, "You have finished the check. Well done.");
+      if (got18 >= 6) finish(14, "You have finished the check. Well done.");
       else retryCheck($("fb18"), $("ch18"), got18, order18.length, 6, function () { qi = 0; got18 = 0; order18 = shuffle(QS); round18(); });
       return;
     }
@@ -429,7 +429,7 @@
   round18();
 
   /* ---- 19: stickers ---- */
-  const STICKERS = [
+  const STICKERS = [["🔎", "What this lesson is about"], ["🎥", "Unit lecture"], ["🗣️", "Math words"], 
     ["🏗️", "Three digits"],
     ["🔤", "Read it and write it"],
     ["✂️", "Break it apart"],
@@ -576,6 +576,126 @@
     paint();
   })();
 
+
+  /* ==== ehel-g3-lesson-opener: three shared step functions, ported from Grade 4's own
+     add-lesson-opener.py in the same idiom - data-say for arrival
+     narration (show() already speaks it), plain finish(i, msg), no
+     ONSHOW/ONLEAVE/reportAttempt. esc() IS OWN, not shared, matching
+     every add-*.py tool in this build - see Grade 4's own docstring for
+     the ReferenceError this avoids. ==== */
+  const esc = (t) => String(t).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/"/g, "&quot;");
+  function lessonAbout(o) {
+    document.getElementById(o.stage).innerHTML =
+      '<div class="ovw"><h3 class="ovw-h">By the end of this lesson you will be able to&hellip;</h3>' +
+      '<ol class="ovw-list">' + o.about.map((t) => '<li>' + esc(t) + '</li>').join('') + '</ol>' +
+      '<div class="bigbtns"><button type="button" class="big small" id="' + o.stage + 'go">Got it, let\'s begin &#10003;</button></div></div>';
+    document.getElementById(o.stage + 'go').addEventListener('click', () => {
+      document.getElementById(o.stage + 'go').disabled = true;
+      finish(o.finish, o.done);
+    });
+  }
+
+  function lessonLecture(o) {
+    const parts = o.parts || [];
+    let k = 0;
+    const id = o.stage + 'l';
+    function paint() {
+      const p = parts[k];
+      document.getElementById(o.stage).innerHTML =
+        '<div class="lec"><p class="phase">Part ' + (k + 1) + ' of ' + parts.length + '</p>' +
+        '<h3 class="lec-h">' + esc(p.title) + '</h3><p class="lec-p">' + esc(p.say) + '</p>' +
+        '<div class="bigbtns">' +
+        '<button type="button" class="big small teal" id="' + id + 'hear">&#128266; Listen</button>' +
+        (k > 0 ? '<button type="button" class="big small ghost" id="' + id + 'back">&#9664; Last part</button>' : '') +
+        '<button type="button" class="big small" id="' + id + 'next">' + (k + 1 < parts.length ? 'Next part &#9654;' : 'I heard it all &#10003;') + '</button>' +
+        '</div><p class="lec-note">Read aloud by the lesson\'s voice. There is no video for this lesson yet.</p></div>';
+      document.getElementById(id + 'hear').addEventListener('click', () => say(p.title + '. ' + p.say));
+      if (k > 0) document.getElementById(id + 'back').addEventListener('click', () => { k--; paint(); say(parts[k].title + '. ' + parts[k].say); });
+      document.getElementById(id + 'next').addEventListener('click', () => {
+        if (k + 1 < parts.length) { k++; paint(); say(parts[k].title + '. ' + parts[k].say); }
+        else { finish(o.finish, o.done); }
+      });
+    }
+    if (!parts.length) return;
+    paint();
+  }
+
+  function lessonWords(o) {
+    const items = o.words || [];
+    const heard = new Set();
+    let open = -1;
+    const id = o.stage + 'w';
+    function paintGrid() {
+      document.getElementById(o.stage).innerHTML =
+        '<div class="cardsgrid" id="' + id + 'g">' + items.map((w, k) =>
+          '<button type="button" class="tapcard' + (heard.has(k) ? ' heard' : '') + '" data-k="' + k + '">' +
+          '<span class="cpic" aria-hidden="true">' + w.pic + '</span>' + esc(w.w) + '</button>').join('') + '</div>' +
+        '<div class="wordpanel" id="' + id + 'p"' + (open < 0 ? ' hidden' : '') + '></div>' +
+        '<div class="bigbtns" id="' + id + 'go" style="' + (heard.size === items.length ? '' : 'display:none') + '">' +
+        '<button type="button" class="big small" id="' + id + 'quiz">Show I know them &#9654;</button></div>';
+      if (open >= 0) paintPanel();
+      document.getElementById(id + 'g').addEventListener('click', (e) => {
+        const b = e.target.closest('.tapcard'); if (!b) return;
+        open = Number(b.dataset.k); heard.add(open);
+        paintGrid();
+        const w = items[open];
+        say(w.w + '. ' + w.meaning + ' ' + (w.uses[0] || ''));
+      });
+      if (heard.size === items.length) {
+        const goBtn = document.getElementById(id + 'quiz');
+        if (goBtn) goBtn.addEventListener('click', () => check());
+      }
+    }
+    function paintPanel() {
+      const w = items[open];
+      const p = document.getElementById(id + 'p');
+      p.hidden = false;
+      p.innerHTML = '<div class="wp-head"><span class="wp-pic" aria-hidden="true">' + w.pic + '</span>' +
+        '<div><p class="wp-word">' + esc(w.w) + '</p><p class="wp-meaning">' + esc(w.meaning) + '</p></div></div>' +
+        '<p class="wp-uses-h">Use it</p><ul class="wp-uses">' + (w.uses || []).map((u) => '<li>' + esc(u) + '</li>').join('') + '</ul>' +
+        '<div class="bigbtns"><button type="button" class="big small teal" id="' + id + 'h">&#128266; Hear it again</button></div>';
+      document.getElementById(id + 'h').addEventListener('click', () => say(w.w + '. ' + w.meaning + ' ' + (w.uses || []).join(' ')));
+    }
+    function check() {
+      const order = shuffle(items.map((_, k) => k));
+      let i = 0, right = 0, lock = false;
+      function draw() {
+        lock = false;
+        const k = order[i], w = items[k];
+        const others = shuffle(items.map((_, j) => j).filter((j) => j !== k)).slice(0, Math.min(2, items.length - 1));
+        const opts = shuffle([k].concat(others));
+        document.getElementById(o.stage).innerHTML =
+          '<div class="mw"><p class="lec-p">Which word means: <b>' + esc(w.meaning) + '</b></p>' +
+          '<div class="wordbtns" id="' + id + 'ch">' + opts.map((j) =>
+            '<button type="button" class="wordbtn" data-ok="' + (j === k ? 1 : 0) + '">' +
+            '<span class="wbpic" aria-hidden="true">' + items[j].pic + '</span>' + esc(items[j].w) + '</button>').join('') + '</div>' +
+          '<p class="lec-note" id="' + id + 'fb"></p></div>';
+        say('Which word means: ' + w.meaning);
+        document.getElementById(id + 'ch').addEventListener('click', (e) => {
+          const b = e.target.closest('.wordbtn'); if (!b || lock) return;
+          lock = true;
+          const ok = b.dataset.ok === '1';
+          document.getElementById(id + 'ch').querySelectorAll('.wordbtn').forEach((c) => { c.disabled = true; if (c.dataset.ok === '1') c.classList.add('right'); });
+          if (!ok) b.classList.add('wrong'); else right++;
+          const msg = ok ? cheer() + ' ' + w.w + '.' : 'That word is ' + w.w + '. ' + w.meaning;
+          document.getElementById(id + 'fb').textContent = msg; say(msg);
+          i++;
+          setTimeout(() => {
+            if (i >= items.length) {
+              document.getElementById(o.stage).innerHTML = '<div class="mw"><p class="lec-p">You know ' + right + ' of ' + items.length + ' math words.</p></div>';
+              finish(o.finish, o.done);
+            } else draw();
+          }, 2200);
+        });
+      }
+      draw();
+    }
+    paintGrid();
+  }
+
+  lessonAbout({ stage: 'stageOvw', about: ["Say what a digit is worth by which column it sits in, up to a thousand.", "Break a 3-digit number apart into hundreds, tens and ones.", "Regroup a number into a different mix of hundreds and tens.", "Multiply a number by 10 and see every digit move one place.", "Round a number to the nearest 10 or 100.", "Make a good estimate of how many things are in a group."], finish: 0, done: "Let's begin." });
+  lessonLecture({ stage: 'stageLec', parts: [{ title: "Place value to a thousand", say: "A digit is worth a different amount depending on which column it sits in - the 3 in 348 is worth three hundred, not just three." }, { title: "Regrouping", say: "The same number can be written as a different mix of hundreds and tens - trading one hundred for ten tens never changes what the number is worth." }, { title: "Rounding and estimating", say: "Rounding replaces a number with a nearby one that is easier to work with. Estimating is a sensible guess made before you count everything exactly." }], finish: 1, done: "You have heard the whole lesson. Now do it yourself." });
+  lessonWords({ stage: 'stageMw', words: [{ w: "digit", pic: "🔢", meaning: "One of the ten symbols 0-9 used to write a number - 348 has three digits.", uses: ["Point to the digit in the hundreds column of 348."] }, { w: "place value", pic: "🏷️", meaning: "What a digit is worth because of the column it stands in, not just the symbol itself.", uses: ["The place value of the 3 in 348 is three hundred."] }, { w: "decompose", pic: "✂️", meaning: "Break a number apart into its hundreds, tens and ones, such as 348 into 300, 40 and 8.", uses: ["Decompose 348 into hundreds, tens and ones."] }, { w: "regroup", pic: "🔄", meaning: "Rewrite the same number using a different mix of hundreds and tens, such as trading one hundred for ten tens - the value never changes.", uses: ["Regroup 348 to show 2 hundreds and 14 tens."] }, { w: "round", pic: "🎯", meaning: "Replace a number with a nearby one that is easier to work with, such as the nearest 10 or 100.", uses: ["Round 348 to the nearest hundred."] }, { w: "estimate", pic: "🎲", meaning: "A sensible guess at an amount, made by picturing part of it rather than counting every single one.", uses: ["Estimate how many beans are in the jar."] }], finish: 2, done: "You know the math words of this lesson." });
   show(0, false);
   quiet -= 1;   /* the first draw is over: say() speaks from here on */
 })();

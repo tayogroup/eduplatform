@@ -62,7 +62,7 @@
       $("fb12").textContent = (ok ? cheer() + " " : "") + have + " + " + answer + " = " + target + ".";
       say(ok ? cheer() : have + " and " + answer + " make " + target);
       scoreLine("sc12", got12, asked12, 4);
-      if (got12 >= 4) finish(0, "");
+      if (got12 >= 4) finish(3, "");
       later(round12, 1800);
     });
   }
@@ -91,7 +91,7 @@
         : "That pair works, but " + a + " + " + b + " = 100 is the easy one. Then 100 + " + c + " = " + total + ".";
       say(a + " and " + b + " make one hundred, then add " + c + " to get " + total);
       scoreLine("sc13", got13, asked13, 3);
-      if (got13 >= 3) finish(1, "");
+      if (got13 >= 3) finish(4, "");
       later(round13, 2200);
     };
   }
@@ -224,7 +224,7 @@
       $("fb16").textContent = (ok ? cheer() + " " : "") + money(v) + " is " + right + ". The two figures after the dot are cents, and there are 100 cents in a shilling.";
       say(ok ? cheer() : money(v) + " is " + right);
       scoreLine("sc16", got16, asked16, 4);
-      if (got16 >= 4) finish(4, "");
+      if (got16 >= 4) finish(7, "");
       later(round16, 2000);
     });
   }
@@ -251,7 +251,7 @@
       $("fb17").textContent = (ok ? cheer() + " " : "") + "Count on: " + money(price) + " + " + upToWhole + " cents makes " + money(Math.ceil(price)) + ", then on to " + money(paid) + ". Change is sh " + change.toFixed(2) + ".";
       say(ok ? cheer() : "The change is " + change.toFixed(2));
       scoreLine("sc17", got17, asked17, 4);
-      if (got17 >= 4) finish(5, "");
+      if (got17 >= 4) finish(8, "");
       later(round17, 2400);
     });
   }
@@ -359,7 +359,7 @@
       $("fb18").className = "fb good";
       $("fb18").textContent = "Finished! " + got18 + " out of " + order18.length + ".";
       $("sc18").textContent = "";
-      if (got18 >= 6) finish(8, "You have finished the check. Well done.");
+      if (got18 >= 6) finish(11, "You have finished the check. Well done.");
       else retryCheck($("fb18"), $("ch18"), got18, order18.length, 6, function () { qi = 0; got18 = 0; order18 = shuffle(QS); round18(); });
       return;
     }
@@ -384,7 +384,7 @@
   round18();
 
   /* ---- 19: stickers ---- */
-  const STICKERS = [
+  const STICKERS = [["🔎", "What this lesson is about"], ["🎥", "Unit lecture"], ["🗣️", "Math words"], 
     ["💯", "Make 100"],
     ["🔀", "Add in any order"],
     ["➕", "Adding with regrouping"],
@@ -528,6 +528,126 @@
     paint();
   })();
 
+
+  /* ==== ehel-g3-lesson-opener: three shared step functions, ported from Grade 4's own
+     add-lesson-opener.py in the same idiom - data-say for arrival
+     narration (show() already speaks it), plain finish(i, msg), no
+     ONSHOW/ONLEAVE/reportAttempt. esc() IS OWN, not shared, matching
+     every add-*.py tool in this build - see Grade 4's own docstring for
+     the ReferenceError this avoids. ==== */
+  const esc = (t) => String(t).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/"/g, "&quot;");
+  function lessonAbout(o) {
+    document.getElementById(o.stage).innerHTML =
+      '<div class="ovw"><h3 class="ovw-h">By the end of this lesson you will be able to&hellip;</h3>' +
+      '<ol class="ovw-list">' + o.about.map((t) => '<li>' + esc(t) + '</li>').join('') + '</ol>' +
+      '<div class="bigbtns"><button type="button" class="big small" id="' + o.stage + 'go">Got it, let\'s begin &#10003;</button></div></div>';
+    document.getElementById(o.stage + 'go').addEventListener('click', () => {
+      document.getElementById(o.stage + 'go').disabled = true;
+      finish(o.finish, o.done);
+    });
+  }
+
+  function lessonLecture(o) {
+    const parts = o.parts || [];
+    let k = 0;
+    const id = o.stage + 'l';
+    function paint() {
+      const p = parts[k];
+      document.getElementById(o.stage).innerHTML =
+        '<div class="lec"><p class="phase">Part ' + (k + 1) + ' of ' + parts.length + '</p>' +
+        '<h3 class="lec-h">' + esc(p.title) + '</h3><p class="lec-p">' + esc(p.say) + '</p>' +
+        '<div class="bigbtns">' +
+        '<button type="button" class="big small teal" id="' + id + 'hear">&#128266; Listen</button>' +
+        (k > 0 ? '<button type="button" class="big small ghost" id="' + id + 'back">&#9664; Last part</button>' : '') +
+        '<button type="button" class="big small" id="' + id + 'next">' + (k + 1 < parts.length ? 'Next part &#9654;' : 'I heard it all &#10003;') + '</button>' +
+        '</div><p class="lec-note">Read aloud by the lesson\'s voice. There is no video for this lesson yet.</p></div>';
+      document.getElementById(id + 'hear').addEventListener('click', () => say(p.title + '. ' + p.say));
+      if (k > 0) document.getElementById(id + 'back').addEventListener('click', () => { k--; paint(); say(parts[k].title + '. ' + parts[k].say); });
+      document.getElementById(id + 'next').addEventListener('click', () => {
+        if (k + 1 < parts.length) { k++; paint(); say(parts[k].title + '. ' + parts[k].say); }
+        else { finish(o.finish, o.done); }
+      });
+    }
+    if (!parts.length) return;
+    paint();
+  }
+
+  function lessonWords(o) {
+    const items = o.words || [];
+    const heard = new Set();
+    let open = -1;
+    const id = o.stage + 'w';
+    function paintGrid() {
+      document.getElementById(o.stage).innerHTML =
+        '<div class="cardsgrid" id="' + id + 'g">' + items.map((w, k) =>
+          '<button type="button" class="tapcard' + (heard.has(k) ? ' heard' : '') + '" data-k="' + k + '">' +
+          '<span class="cpic" aria-hidden="true">' + w.pic + '</span>' + esc(w.w) + '</button>').join('') + '</div>' +
+        '<div class="wordpanel" id="' + id + 'p"' + (open < 0 ? ' hidden' : '') + '></div>' +
+        '<div class="bigbtns" id="' + id + 'go" style="' + (heard.size === items.length ? '' : 'display:none') + '">' +
+        '<button type="button" class="big small" id="' + id + 'quiz">Show I know them &#9654;</button></div>';
+      if (open >= 0) paintPanel();
+      document.getElementById(id + 'g').addEventListener('click', (e) => {
+        const b = e.target.closest('.tapcard'); if (!b) return;
+        open = Number(b.dataset.k); heard.add(open);
+        paintGrid();
+        const w = items[open];
+        say(w.w + '. ' + w.meaning + ' ' + (w.uses[0] || ''));
+      });
+      if (heard.size === items.length) {
+        const goBtn = document.getElementById(id + 'quiz');
+        if (goBtn) goBtn.addEventListener('click', () => check());
+      }
+    }
+    function paintPanel() {
+      const w = items[open];
+      const p = document.getElementById(id + 'p');
+      p.hidden = false;
+      p.innerHTML = '<div class="wp-head"><span class="wp-pic" aria-hidden="true">' + w.pic + '</span>' +
+        '<div><p class="wp-word">' + esc(w.w) + '</p><p class="wp-meaning">' + esc(w.meaning) + '</p></div></div>' +
+        '<p class="wp-uses-h">Use it</p><ul class="wp-uses">' + (w.uses || []).map((u) => '<li>' + esc(u) + '</li>').join('') + '</ul>' +
+        '<div class="bigbtns"><button type="button" class="big small teal" id="' + id + 'h">&#128266; Hear it again</button></div>';
+      document.getElementById(id + 'h').addEventListener('click', () => say(w.w + '. ' + w.meaning + ' ' + (w.uses || []).join(' ')));
+    }
+    function check() {
+      const order = shuffle(items.map((_, k) => k));
+      let i = 0, right = 0, lock = false;
+      function draw() {
+        lock = false;
+        const k = order[i], w = items[k];
+        const others = shuffle(items.map((_, j) => j).filter((j) => j !== k)).slice(0, Math.min(2, items.length - 1));
+        const opts = shuffle([k].concat(others));
+        document.getElementById(o.stage).innerHTML =
+          '<div class="mw"><p class="lec-p">Which word means: <b>' + esc(w.meaning) + '</b></p>' +
+          '<div class="wordbtns" id="' + id + 'ch">' + opts.map((j) =>
+            '<button type="button" class="wordbtn" data-ok="' + (j === k ? 1 : 0) + '">' +
+            '<span class="wbpic" aria-hidden="true">' + items[j].pic + '</span>' + esc(items[j].w) + '</button>').join('') + '</div>' +
+          '<p class="lec-note" id="' + id + 'fb"></p></div>';
+        say('Which word means: ' + w.meaning);
+        document.getElementById(id + 'ch').addEventListener('click', (e) => {
+          const b = e.target.closest('.wordbtn'); if (!b || lock) return;
+          lock = true;
+          const ok = b.dataset.ok === '1';
+          document.getElementById(id + 'ch').querySelectorAll('.wordbtn').forEach((c) => { c.disabled = true; if (c.dataset.ok === '1') c.classList.add('right'); });
+          if (!ok) b.classList.add('wrong'); else right++;
+          const msg = ok ? cheer() + ' ' + w.w + '.' : 'That word is ' + w.w + '. ' + w.meaning;
+          document.getElementById(id + 'fb').textContent = msg; say(msg);
+          i++;
+          setTimeout(() => {
+            if (i >= items.length) {
+              document.getElementById(o.stage).innerHTML = '<div class="mw"><p class="lec-p">You know ' + right + ' of ' + items.length + ' math words.</p></div>';
+              finish(o.finish, o.done);
+            } else draw();
+          }, 2200);
+        });
+      }
+      draw();
+    }
+    paintGrid();
+  }
+
+  lessonAbout({ stage: 'stageOvw', about: ["Find the complement of a number to 100.", "Add pairs of numbers in any order without changing the total.", "Add and take away with regrouping.", "Use money notation with a decimal point.", "Estimate an answer before adding or taking away exactly.", "Work out change from a shopping total."], finish: 0, done: "Let's begin." });
+  lessonLecture({ stage: 'stageLec', parts: [{ title: "Complements and adding in any order", say: "A complement to 100 is the amount still needed to reach it - 62 and 38 are complements. Numbers can be added in any order without changing the total." }, { title: "Regrouping to add and take away", say: "When a column adds up to more than 9, a ten moves into the next column - that is regrouping, or carrying." }, { title: "Money and change", say: "Money is written with a decimal point - the two figures after it are always cents. Giving change means working out the gap between the price and what was paid." }], finish: 1, done: "You have heard the whole lesson. Now do it yourself." });
+  lessonWords({ stage: 'stageMw', words: [{ w: "complement", pic: "💯", meaning: "The amount still needed to reach a round number, such as a multiple of 10 or 100 - 62 and its complement to 100 is 38.", uses: ["Find the complement of 62 to 100."] }, { w: "regroup", pic: "🔄", meaning: "Move a group of ten from one column into the next, such as moving 100 out of the hundreds to make 10 more tens.", uses: ["Regroup to take away 48 from 300."] }, { w: "carry", pic: "➡️", meaning: "A ten (or a hundred) that moves from one column into the next when adding, because that column added up to more than 9.", uses: ["Carry the ten into the tens column."] }, { w: "exchange", pic: "🔁", meaning: "Trade one from the column to the left for ten in the column you are working on, so you have enough to take away.", uses: ["Exchange a hundred for ten tens."] }, { w: "estimate", pic: "🎲", meaning: "A sensible rough answer worked out before the exact calculation, by rounding the numbers first.", uses: ["Estimate the total before adding exactly."] }], finish: 2, done: "You know the math words of this lesson." });
   show(0, false);
   quiet -= 1;   /* the first draw is over: say() speaks from here on */
 })();

@@ -36,7 +36,7 @@
     $("arr1").style.gridTemplateColumns = "repeat(" + c1 + ", 22px)";
     $("arr1").innerHTML = dots(r1 * c1);
     $("lab1").innerHTML = r1 + " × " + c1 + " = <b>" + r1 * c1 + "</b><small>" + r1 + " rows of " + c1 + "</small>";
-    if (!done[0] && (r1 !== 4 || c1 !== 6)) finish(0, "");
+    if (!done[0] && (r1 !== 4 || c1 !== 6)) finish(3, "");
     $("fb1").className = "fb"; $("fb1").textContent = r1 + " rows with " + c1 + " in each row is " + r1 * c1 + " altogether.";
   }
   $("ctl1").addEventListener("click", (e) => {
@@ -67,7 +67,7 @@
     $("fb2").className = "fb good";
     $("fb2").textContent = a2 + " × " + b2 + " = " + b2 + " × " + a2 + " = " + a2 * b2 + ". The same dots, turned round - so learning one fact gives you two.";
     say(a2 + " times " + b2 + " and " + b2 + " times " + a2 + " are both " + a2 * b2);
-    finish(1, "");
+    finish(4, "");
   });
   $("new2").addEventListener("click", new2);
   new2();
@@ -91,7 +91,7 @@
       $("fb3").textContent = (ok ? cheer() + " " : "") + a + " × " + b + " = " + answer + ".";
       say(ok ? cheer() : a + " times " + b + " is " + answer);
       scoreLine("sc3", got3, asked3, 8);
-      if (got3 >= 8) finish(2, "");
+      if (got3 >= 8) finish(5, "");
       later(round3, 1500);
     });
   }
@@ -125,7 +125,7 @@
         $("fb4").className = "fb good";
         $("fb4").textContent = cheer() + " One array, two times facts and two sharing facts - they are all the same fact.";
         scoreLine("sc4", got4, asked4, 2);
-        if (got4 >= 2) finish(3, "");
+        if (got4 >= 2) finish(6, "");
         later(round4, 2400);
       }
     };
@@ -153,7 +153,7 @@
       $("fb5").textContent = (ok ? cheer() + " " : "") + t * m + " + " + o * m + " = " + answer + ". Both parts had to be multiplied.";
       say(ok ? cheer() : t * m + " plus " + o * m + " is " + answer);
       scoreLine("sc5", got5, asked5, 4);
-      if (got5 >= 4) finish(4, "");
+      if (got5 >= 4) finish(7, "");
       later(round5, 2100);
     });
   }
@@ -178,7 +178,7 @@
       $("fb6").textContent = (ok ? cheer() + " " : "") + n + " × " + m + " = " + answer + ", and the estimate said about " + near * m + ". Close, as it should be.";
       say(ok ? cheer() : n + " times " + m + " is " + answer);
       scoreLine("sc6", got6, asked6, 4);
-      if (got6 >= 4) finish(5, "");
+      if (got6 >= 4) finish(8, "");
       later(round6, 2200);
     });
   }
@@ -208,7 +208,7 @@
       $("fb7").textContent = (ok ? cheer() + " " : "") + total + " ÷ " + g + " = " + each + (rem ? " remainder " + rem + ". And " + rem + " is smaller than " + g + ", so the sharing really is finished." : " exactly.");
       say(ok ? cheer() : total + " shared between " + g + " is " + each + (rem ? " remainder " + rem : ""));
       scoreLine("sc7", got7, asked7, 4);
-      if (got7 >= 4) finish(6, "");
+      if (got7 >= 4) finish(9, "");
       later(round7, 2400);
     });
   }
@@ -239,7 +239,7 @@
         $("fb8").className = "fb good";
         $("fb8").textContent = cheer() + " All " + want.length + " found" + (wrong8 ? ", with " + wrong8 + " to spare" : " with none wrong") + ". Multiples of " + w8 + " always end in " + (w8 === 10 ? "0" : w8 === 5 ? "0 or 5" : "0, 2, 4, 6 or 8") + ".";
         scoreLine("sc8", rounds8, rounds8, 2);
-        if (rounds8 >= 2) finish(7, "");
+        if (rounds8 >= 2) finish(10, "");
         later(round8, 2600);
       }
     };
@@ -271,7 +271,7 @@
       $("fb9").textContent = (ok ? cheer() + " " : "") + "The rule is " + right + ", so the next number is " + next + ".";
       say(ok ? cheer() : "The rule is " + right);
       scoreLine("sc9", got9, asked9, 4);
-      if (got9 >= 4) finish(8, "");
+      if (got9 >= 4) finish(11, "");
       later(round9, 2000);
     });
   }
@@ -304,7 +304,7 @@
       $("fb10").textContent = (ok ? cheer() + " " : "") + "Each picture " + (grow ? "adds " : "takes away ") + step + ", so " + counts[2] + (grow ? " + " : " − ") + step + " = " + answer + ".";
       say(ok ? cheer() : "Each one " + (grow ? "adds " : "takes away ") + step + ", so the next is " + answer);
       scoreLine("sc10", got10, asked10, 4);
-      if (got10 >= 4) finish(9, "");
+      if (got10 >= 4) finish(12, "");
       later(round10, 2200);
     });
   }
@@ -334,7 +334,7 @@
       $("fb11").textContent = (ok ? cheer() + " " : "") + why;
       say(ok ? cheer() : why);
       scoreLine("sc11", got11, asked11, 4);
-      if (got11 >= 4) finish(10, "");
+      if (got11 >= 4) finish(13, "");
       later(round11, 2200);
     });
   }
@@ -362,7 +362,7 @@
       $("q12").textContent = ""; $("ch12").innerHTML = "";
       $("fb12").className = "fb good"; $("fb12").textContent = "Finished! " + got12 + " out of " + order12.length + ".";
       $("sc12").textContent = "";
-      if (got12 >= 8) finish(11, "You have finished the check.");
+      if (got12 >= 8) finish(14, "You have finished the check.");
       else retryCheck($("fb12"), $("ch12"), got12, order12.length, 8, function () { qi = 0; got12 = 0; order12 = shuffle(QS); round12(); });
       return;
     }
@@ -386,7 +386,7 @@
   round12();
 
   /* ---- 13: stickers ---- */
-  const STICKERS = [
+  const STICKERS = [["🔎", "What this lesson is about"], ["🎥", "Unit lecture"], ["🗣️", "Math words"], 
     ["🔲", "Rows and columns"], ["🔄", "Turn it round"], ["✖️", "The tables you need"], ["👨‍👩‍👧", "One array, four facts"],
     ["✂️", "Split it to multiply"], ["🎯", "Estimate, then multiply"], ["🍪", "Sharing and leftovers"], ["🔟", "Multiples"],
     ["📈", "The rule"], ["🔺", "Patterns that grow"], ["📦", "The mystery box"], ["✅", "Show what I know"],
@@ -523,6 +523,126 @@
     paint();
   })();
 
+
+  /* ==== ehel-g3-lesson-opener: three shared step functions, ported from Grade 4's own
+     add-lesson-opener.py in the same idiom - data-say for arrival
+     narration (show() already speaks it), plain finish(i, msg), no
+     ONSHOW/ONLEAVE/reportAttempt. esc() IS OWN, not shared, matching
+     every add-*.py tool in this build - see Grade 4's own docstring for
+     the ReferenceError this avoids. ==== */
+  const esc = (t) => String(t).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/"/g, "&quot;");
+  function lessonAbout(o) {
+    document.getElementById(o.stage).innerHTML =
+      '<div class="ovw"><h3 class="ovw-h">By the end of this lesson you will be able to&hellip;</h3>' +
+      '<ol class="ovw-list">' + o.about.map((t) => '<li>' + esc(t) + '</li>').join('') + '</ol>' +
+      '<div class="bigbtns"><button type="button" class="big small" id="' + o.stage + 'go">Got it, let\'s begin &#10003;</button></div></div>';
+    document.getElementById(o.stage + 'go').addEventListener('click', () => {
+      document.getElementById(o.stage + 'go').disabled = true;
+      finish(o.finish, o.done);
+    });
+  }
+
+  function lessonLecture(o) {
+    const parts = o.parts || [];
+    let k = 0;
+    const id = o.stage + 'l';
+    function paint() {
+      const p = parts[k];
+      document.getElementById(o.stage).innerHTML =
+        '<div class="lec"><p class="phase">Part ' + (k + 1) + ' of ' + parts.length + '</p>' +
+        '<h3 class="lec-h">' + esc(p.title) + '</h3><p class="lec-p">' + esc(p.say) + '</p>' +
+        '<div class="bigbtns">' +
+        '<button type="button" class="big small teal" id="' + id + 'hear">&#128266; Listen</button>' +
+        (k > 0 ? '<button type="button" class="big small ghost" id="' + id + 'back">&#9664; Last part</button>' : '') +
+        '<button type="button" class="big small" id="' + id + 'next">' + (k + 1 < parts.length ? 'Next part &#9654;' : 'I heard it all &#10003;') + '</button>' +
+        '</div><p class="lec-note">Read aloud by the lesson\'s voice. There is no video for this lesson yet.</p></div>';
+      document.getElementById(id + 'hear').addEventListener('click', () => say(p.title + '. ' + p.say));
+      if (k > 0) document.getElementById(id + 'back').addEventListener('click', () => { k--; paint(); say(parts[k].title + '. ' + parts[k].say); });
+      document.getElementById(id + 'next').addEventListener('click', () => {
+        if (k + 1 < parts.length) { k++; paint(); say(parts[k].title + '. ' + parts[k].say); }
+        else { finish(o.finish, o.done); }
+      });
+    }
+    if (!parts.length) return;
+    paint();
+  }
+
+  function lessonWords(o) {
+    const items = o.words || [];
+    const heard = new Set();
+    let open = -1;
+    const id = o.stage + 'w';
+    function paintGrid() {
+      document.getElementById(o.stage).innerHTML =
+        '<div class="cardsgrid" id="' + id + 'g">' + items.map((w, k) =>
+          '<button type="button" class="tapcard' + (heard.has(k) ? ' heard' : '') + '" data-k="' + k + '">' +
+          '<span class="cpic" aria-hidden="true">' + w.pic + '</span>' + esc(w.w) + '</button>').join('') + '</div>' +
+        '<div class="wordpanel" id="' + id + 'p"' + (open < 0 ? ' hidden' : '') + '></div>' +
+        '<div class="bigbtns" id="' + id + 'go" style="' + (heard.size === items.length ? '' : 'display:none') + '">' +
+        '<button type="button" class="big small" id="' + id + 'quiz">Show I know them &#9654;</button></div>';
+      if (open >= 0) paintPanel();
+      document.getElementById(id + 'g').addEventListener('click', (e) => {
+        const b = e.target.closest('.tapcard'); if (!b) return;
+        open = Number(b.dataset.k); heard.add(open);
+        paintGrid();
+        const w = items[open];
+        say(w.w + '. ' + w.meaning + ' ' + (w.uses[0] || ''));
+      });
+      if (heard.size === items.length) {
+        const goBtn = document.getElementById(id + 'quiz');
+        if (goBtn) goBtn.addEventListener('click', () => check());
+      }
+    }
+    function paintPanel() {
+      const w = items[open];
+      const p = document.getElementById(id + 'p');
+      p.hidden = false;
+      p.innerHTML = '<div class="wp-head"><span class="wp-pic" aria-hidden="true">' + w.pic + '</span>' +
+        '<div><p class="wp-word">' + esc(w.w) + '</p><p class="wp-meaning">' + esc(w.meaning) + '</p></div></div>' +
+        '<p class="wp-uses-h">Use it</p><ul class="wp-uses">' + (w.uses || []).map((u) => '<li>' + esc(u) + '</li>').join('') + '</ul>' +
+        '<div class="bigbtns"><button type="button" class="big small teal" id="' + id + 'h">&#128266; Hear it again</button></div>';
+      document.getElementById(id + 'h').addEventListener('click', () => say(w.w + '. ' + w.meaning + ' ' + (w.uses || []).join(' ')));
+    }
+    function check() {
+      const order = shuffle(items.map((_, k) => k));
+      let i = 0, right = 0, lock = false;
+      function draw() {
+        lock = false;
+        const k = order[i], w = items[k];
+        const others = shuffle(items.map((_, j) => j).filter((j) => j !== k)).slice(0, Math.min(2, items.length - 1));
+        const opts = shuffle([k].concat(others));
+        document.getElementById(o.stage).innerHTML =
+          '<div class="mw"><p class="lec-p">Which word means: <b>' + esc(w.meaning) + '</b></p>' +
+          '<div class="wordbtns" id="' + id + 'ch">' + opts.map((j) =>
+            '<button type="button" class="wordbtn" data-ok="' + (j === k ? 1 : 0) + '">' +
+            '<span class="wbpic" aria-hidden="true">' + items[j].pic + '</span>' + esc(items[j].w) + '</button>').join('') + '</div>' +
+          '<p class="lec-note" id="' + id + 'fb"></p></div>';
+        say('Which word means: ' + w.meaning);
+        document.getElementById(id + 'ch').addEventListener('click', (e) => {
+          const b = e.target.closest('.wordbtn'); if (!b || lock) return;
+          lock = true;
+          const ok = b.dataset.ok === '1';
+          document.getElementById(id + 'ch').querySelectorAll('.wordbtn').forEach((c) => { c.disabled = true; if (c.dataset.ok === '1') c.classList.add('right'); });
+          if (!ok) b.classList.add('wrong'); else right++;
+          const msg = ok ? cheer() + ' ' + w.w + '.' : 'That word is ' + w.w + '. ' + w.meaning;
+          document.getElementById(id + 'fb').textContent = msg; say(msg);
+          i++;
+          setTimeout(() => {
+            if (i >= items.length) {
+              document.getElementById(o.stage).innerHTML = '<div class="mw"><p class="lec-p">You know ' + right + ' of ' + items.length + ' math words.</p></div>';
+              finish(o.finish, o.done);
+            } else draw();
+          }, 2200);
+        });
+      }
+      draw();
+    }
+    paintGrid();
+  }
+
+  lessonAbout({ stage: 'stageOvw', about: ["Use an array of rows and columns to show a multiplication fact.", "Know that turning an array round gives the same total a different way.", "Split a multiplication into easier parts.", "Share an amount into equal groups and say what is left over.", "Find multiples of a number by counting up in equal steps.", "Find the rule in a growing pattern and use it to predict the next term."], finish: 0, done: "Let's begin." });
+  lessonLecture({ stage: 'stageLec', parts: [{ title: "Arrays", say: "An array arranges things in equal rows and columns, so a multiplication can be seen and counted rather than just recited - 3 rows of 4 is the same total as 4 rows of 3." }, { title: "Sharing and multiples", say: "Sharing an amount into equal groups can leave a remainder if it does not divide exactly. A multiple is a number you land on when counting up in equal steps from zero." }, { title: "Patterns and rules", say: "A growing pattern follows a rule from one term to the next - find the rule, and you can predict any term without drawing it out." }], finish: 1, done: "You have heard the whole lesson. Now do it yourself." });
+  lessonWords({ stage: 'stageMw', words: [{ w: "array", pic: "🔲", meaning: "Objects or numbers arranged in equal rows and columns, so you can count them by multiplying instead of one at a time.", uses: ["Draw an array to show 3 rows of 4."] }, { w: "multiple", pic: "🔟", meaning: "A number you land on when counting up in equal steps from zero, such as 5, 10, 15, 20 when counting in fives.", uses: ["List the first four multiples of 5."] }, { w: "remainder", pic: "🍪", meaning: "What is left over when an amount cannot be shared into equal groups exactly.", uses: ["Share 13 biscuits into groups of 4 and find the remainder."] }, { w: "sequence", pic: "➡️", meaning: "A list of numbers or shapes that follow a pattern, one after another.", uses: ["3, 6, 9, 12 is a sequence."] }, { w: "rule", pic: "📏", meaning: "The instruction that says how to get from one number in a sequence to the next.", uses: ["The rule for this sequence is add 3 each time."] }], finish: 2, done: "You know the math words of this lesson." });
   show(0, false);
   quiet -= 1;   /* the first draw is over: say() speaks from here on */
 })();

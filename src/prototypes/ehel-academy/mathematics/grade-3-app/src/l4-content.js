@@ -72,7 +72,7 @@
       $("fb1").textContent = (ok ? cheer() + " " : "Look again. ") + "Only equal parts are fractions - if one piece is bigger than another, the shape is cut into parts but not into " + NAMES[d][1] + ".";
       say(ok ? cheer() : "The parts have to be equal");
       scoreLine("sc1", got1, asked1, 4);
-      if (got1 >= 4) finish(0, "");
+      if (got1 >= 4) finish(3, "");
       later(round1, 2000);
     };
     $("sh1").dataset.live = "1";
@@ -88,7 +88,7 @@
     $("fb2").textContent = on2 === d2
       ? "All " + d2 + " " + NAMES[d2][1] + " together make one whole - not nearly one, exactly one."
       : fracName(on2, d2) + " coloured, " + (d2 - on2) + " to go.";
-    if (on2 === d2) finish(1, "");
+    if (on2 === d2) finish(4, "");
   }
   $("den2").innerHTML = DENS.map((v) => '<button type="button" class="' + (v === d2 ? "on" : "") + '" data-v="' + v + '">' + NAMES[v][1] + "</button>").join("");
   $("den2").addEventListener("click", (e) => {
@@ -123,7 +123,7 @@
         $("fb3").className = "fb good";
         $("fb3").textContent = cheer() + " Different shapes, turned different ways - all of them " + fracName(n, d) + ". The shape does not decide the fraction; the size of the part does.";
         scoreLine("sc3", got3, asked3, 3);
-        if (got3 >= 3) finish(2, "");
+        if (got3 >= 3) finish(5, "");
         later(round3, 2600);
       }
     };
@@ -150,7 +150,7 @@
       $("fb4").textContent = (ok ? cheer() + " " : "") + "Share " + total + " into " + d + " equal piles of " + each + ", then take " + n + " pile" + (n === 1 ? "" : "s") + ": " + answer + ".";
       say(ok ? cheer() : fracName(n, d) + " of " + total + " is " + answer);
       scoreLine("sc4", got4, asked4, 4);
-      if (got4 >= 4) finish(3, "");
+      if (got4 >= 4) finish(6, "");
       later(round4, 2300);
     });
   }
@@ -175,7 +175,7 @@
       $("fb5").textContent = (ok ? cheer() + " " : "") + fracName(n, d) + " means " + n + " shared between " + d + ". The line is a dividing line.";
       say(ok ? cheer() : fracName(n, d) + " means " + n + " divided by " + d);
       scoreLine("sc5", got5, asked5, 3);
-      if (got5 >= 3) finish(4, "");
+      if (got5 >= 3) finish(7, "");
       later(round5, 2100);
     });
   }
@@ -203,7 +203,7 @@
       $("fb6").textContent = (ok ? cheer() + " " : "") + total + " ÷ " + d + " = " + each + ", then " + each + " × " + n + " = " + answer + ".";
       say(ok ? cheer() : total + " divided by " + d + " is " + each + ", times " + n + " is " + answer);
       scoreLine("sc6", got6, asked6, 4);
-      if (got6 >= 4) finish(5, "");
+      if (got6 >= 4) finish(8, "");
       later(round6, 2400);
     });
   }
@@ -233,7 +233,7 @@
       $("fb7").textContent = (ok ? cheer() + " " : "") + fracName(n1, d1) + " and " + fracName(n2, d2) + " colour exactly the same amount of the bar. Bigger numbers do not mean a bigger fraction.";
       say(ok ? cheer() : fracName(n1, d1) + " is the same as " + fracName(n2, d2));
       scoreLine("sc7", got7, asked7, 4);
-      if (got7 >= 4) finish(6, "");
+      if (got7 >= 4) finish(9, "");
       later(round7, 2400);
     });
   }
@@ -263,7 +263,7 @@
       $("fb8").textContent = (ok ? cheer() + " " : "") + a + (adding ? " + " : " − ") + b2 + " = " + answer + " pieces, and they are still " + NAMES[d][1] + ". The bottom number never changes.";
       say(ok ? cheer() : "The answer is " + fracName(answer, d));
       scoreLine("sc8", got8, asked8, 4);
-      if (got8 >= 4) finish(7, "");
+      if (got8 >= 4) finish(10, "");
       later(round8, 2400);
     });
   }
@@ -311,7 +311,7 @@
       $("fb9").textContent = (ok ? cheer() + " " : "") + right + ". " + (sameDen ? "Same size pieces, so more pieces is more." : "Every one is a single piece, so the bigger the bottom number the smaller the piece.");
       say(ok ? cheer() : "In order: " + right.replace(/</g, "then"));
       scoreLine("sc9", got9, asked9, 4);
-      if (got9 >= 4) finish(8, "");
+      if (got9 >= 4) finish(11, "");
       later(round9, 2600);
     });
   }
@@ -342,7 +342,7 @@
       $("fb9").textContent = (ok ? cheer() + " " : "") + why;
       say(ok ? cheer() : why);
       scoreLine("sc9", got9, asked9, 4);
-      if (got9 >= 4) finish(8, "");
+      if (got9 >= 4) finish(11, "");
       later(round9, 2400);
     };
   }
@@ -367,7 +367,7 @@
       $("q10").textContent = ""; $("ch10").innerHTML = "";
       $("fb10").className = "fb good"; $("fb10").textContent = "Finished! " + got10 + " out of " + order10.length + ".";
       $("sc10").textContent = "";
-      if (got10 >= 8) finish(9, "You have finished the check.");
+      if (got10 >= 8) finish(12, "You have finished the check.");
       else retryCheck($("fb10"), $("ch10"), got10, order10.length, 8, function () { qi = 0; got10 = 0; order10 = shuffle(QS); round10(); });
       return;
     }
@@ -391,7 +391,7 @@
   round10();
 
   /* ---- 11: stickers ---- */
-  const STICKERS = [
+  const STICKERS = [["🔎", "What this lesson is about"], ["🎥", "Unit lecture"], ["🗣️", "Math words"], 
     ["✂️", "Equal parts"], ["🥧", "All the parts make one"], ["🔷", "Same fraction, different shape"], ["🍬", "A fraction of a group"],
     ["➗", "The line means divide"], ["🔢", "A fraction of a number"], ["⚖️", "The same, in different pieces"], ["➕", "Adding pieces"],
     ["📏", "Which is bigger"], ["✅", "Show what I know"],
@@ -528,6 +528,126 @@
     paint();
   })();
 
+
+  /* ==== ehel-g3-lesson-opener: three shared step functions, ported from Grade 4's own
+     add-lesson-opener.py in the same idiom - data-say for arrival
+     narration (show() already speaks it), plain finish(i, msg), no
+     ONSHOW/ONLEAVE/reportAttempt. esc() IS OWN, not shared, matching
+     every add-*.py tool in this build - see Grade 4's own docstring for
+     the ReferenceError this avoids. ==== */
+  const esc = (t) => String(t).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/"/g, "&quot;");
+  function lessonAbout(o) {
+    document.getElementById(o.stage).innerHTML =
+      '<div class="ovw"><h3 class="ovw-h">By the end of this lesson you will be able to&hellip;</h3>' +
+      '<ol class="ovw-list">' + o.about.map((t) => '<li>' + esc(t) + '</li>').join('') + '</ol>' +
+      '<div class="bigbtns"><button type="button" class="big small" id="' + o.stage + 'go">Got it, let\'s begin &#10003;</button></div></div>';
+    document.getElementById(o.stage + 'go').addEventListener('click', () => {
+      document.getElementById(o.stage + 'go').disabled = true;
+      finish(o.finish, o.done);
+    });
+  }
+
+  function lessonLecture(o) {
+    const parts = o.parts || [];
+    let k = 0;
+    const id = o.stage + 'l';
+    function paint() {
+      const p = parts[k];
+      document.getElementById(o.stage).innerHTML =
+        '<div class="lec"><p class="phase">Part ' + (k + 1) + ' of ' + parts.length + '</p>' +
+        '<h3 class="lec-h">' + esc(p.title) + '</h3><p class="lec-p">' + esc(p.say) + '</p>' +
+        '<div class="bigbtns">' +
+        '<button type="button" class="big small teal" id="' + id + 'hear">&#128266; Listen</button>' +
+        (k > 0 ? '<button type="button" class="big small ghost" id="' + id + 'back">&#9664; Last part</button>' : '') +
+        '<button type="button" class="big small" id="' + id + 'next">' + (k + 1 < parts.length ? 'Next part &#9654;' : 'I heard it all &#10003;') + '</button>' +
+        '</div><p class="lec-note">Read aloud by the lesson\'s voice. There is no video for this lesson yet.</p></div>';
+      document.getElementById(id + 'hear').addEventListener('click', () => say(p.title + '. ' + p.say));
+      if (k > 0) document.getElementById(id + 'back').addEventListener('click', () => { k--; paint(); say(parts[k].title + '. ' + parts[k].say); });
+      document.getElementById(id + 'next').addEventListener('click', () => {
+        if (k + 1 < parts.length) { k++; paint(); say(parts[k].title + '. ' + parts[k].say); }
+        else { finish(o.finish, o.done); }
+      });
+    }
+    if (!parts.length) return;
+    paint();
+  }
+
+  function lessonWords(o) {
+    const items = o.words || [];
+    const heard = new Set();
+    let open = -1;
+    const id = o.stage + 'w';
+    function paintGrid() {
+      document.getElementById(o.stage).innerHTML =
+        '<div class="cardsgrid" id="' + id + 'g">' + items.map((w, k) =>
+          '<button type="button" class="tapcard' + (heard.has(k) ? ' heard' : '') + '" data-k="' + k + '">' +
+          '<span class="cpic" aria-hidden="true">' + w.pic + '</span>' + esc(w.w) + '</button>').join('') + '</div>' +
+        '<div class="wordpanel" id="' + id + 'p"' + (open < 0 ? ' hidden' : '') + '></div>' +
+        '<div class="bigbtns" id="' + id + 'go" style="' + (heard.size === items.length ? '' : 'display:none') + '">' +
+        '<button type="button" class="big small" id="' + id + 'quiz">Show I know them &#9654;</button></div>';
+      if (open >= 0) paintPanel();
+      document.getElementById(id + 'g').addEventListener('click', (e) => {
+        const b = e.target.closest('.tapcard'); if (!b) return;
+        open = Number(b.dataset.k); heard.add(open);
+        paintGrid();
+        const w = items[open];
+        say(w.w + '. ' + w.meaning + ' ' + (w.uses[0] || ''));
+      });
+      if (heard.size === items.length) {
+        const goBtn = document.getElementById(id + 'quiz');
+        if (goBtn) goBtn.addEventListener('click', () => check());
+      }
+    }
+    function paintPanel() {
+      const w = items[open];
+      const p = document.getElementById(id + 'p');
+      p.hidden = false;
+      p.innerHTML = '<div class="wp-head"><span class="wp-pic" aria-hidden="true">' + w.pic + '</span>' +
+        '<div><p class="wp-word">' + esc(w.w) + '</p><p class="wp-meaning">' + esc(w.meaning) + '</p></div></div>' +
+        '<p class="wp-uses-h">Use it</p><ul class="wp-uses">' + (w.uses || []).map((u) => '<li>' + esc(u) + '</li>').join('') + '</ul>' +
+        '<div class="bigbtns"><button type="button" class="big small teal" id="' + id + 'h">&#128266; Hear it again</button></div>';
+      document.getElementById(id + 'h').addEventListener('click', () => say(w.w + '. ' + w.meaning + ' ' + (w.uses || []).join(' ')));
+    }
+    function check() {
+      const order = shuffle(items.map((_, k) => k));
+      let i = 0, right = 0, lock = false;
+      function draw() {
+        lock = false;
+        const k = order[i], w = items[k];
+        const others = shuffle(items.map((_, j) => j).filter((j) => j !== k)).slice(0, Math.min(2, items.length - 1));
+        const opts = shuffle([k].concat(others));
+        document.getElementById(o.stage).innerHTML =
+          '<div class="mw"><p class="lec-p">Which word means: <b>' + esc(w.meaning) + '</b></p>' +
+          '<div class="wordbtns" id="' + id + 'ch">' + opts.map((j) =>
+            '<button type="button" class="wordbtn" data-ok="' + (j === k ? 1 : 0) + '">' +
+            '<span class="wbpic" aria-hidden="true">' + items[j].pic + '</span>' + esc(items[j].w) + '</button>').join('') + '</div>' +
+          '<p class="lec-note" id="' + id + 'fb"></p></div>';
+        say('Which word means: ' + w.meaning);
+        document.getElementById(id + 'ch').addEventListener('click', (e) => {
+          const b = e.target.closest('.wordbtn'); if (!b || lock) return;
+          lock = true;
+          const ok = b.dataset.ok === '1';
+          document.getElementById(id + 'ch').querySelectorAll('.wordbtn').forEach((c) => { c.disabled = true; if (c.dataset.ok === '1') c.classList.add('right'); });
+          if (!ok) b.classList.add('wrong'); else right++;
+          const msg = ok ? cheer() + ' ' + w.w + '.' : 'That word is ' + w.w + '. ' + w.meaning;
+          document.getElementById(id + 'fb').textContent = msg; say(msg);
+          i++;
+          setTimeout(() => {
+            if (i >= items.length) {
+              document.getElementById(o.stage).innerHTML = '<div class="mw"><p class="lec-p">You know ' + right + ' of ' + items.length + ' math words.</p></div>';
+              finish(o.finish, o.done);
+            } else draw();
+          }, 2200);
+        });
+      }
+      draw();
+    }
+    paintGrid();
+  }
+
+  lessonAbout({ stage: 'stageOvw', about: ["Know that a fraction's parts must be exactly equal, not just close.", "Find a fraction of a group of objects.", "Say what the line in a fraction means.", "Name fractions that are worth the same, even though they look different.", "Compare two fractions and say which is bigger."], finish: 0, done: "Let's begin." });
+  lessonLecture({ stage: 'stageLec', parts: [{ title: "Equal parts and fractions", say: "A fraction is one or more equal parts of a whole - the parts must be exactly the same size, not just close, or it is not a fraction at all." }, { title: "Dividing to find a fraction", say: "The line in a fraction means divide - finding a fraction of a group means sharing it into that many equal parts." }, { title: "Comparing fractions", say: "Fractions can be worth the same amount even though they look different, and two fractions can be compared by looking at whether their top or bottom numbers match." }], finish: 1, done: "You have heard the whole lesson. Now do it yourself." });
+  lessonWords({ stage: 'stageMw', words: [{ w: "fraction", pic: "🍕", meaning: "One or more equal parts of a whole, written as one number over another, such as 3/4.", uses: ["Shade 3/4 of the circle to show the fraction."] }, { w: "equal parts", pic: "⚖️", meaning: "Pieces of a whole that are all exactly the same size - not just close, but the same.", uses: ["Cut the paper into four equal parts."] }, { w: "whole", pic: "🍎", meaning: "All of the equal parts put back together - one complete thing, before any of it was shared out.", uses: ["Put the pieces back together to make one whole."] }, { w: "divide", pic: "➗", meaning: "Share an amount into equal parts - the line in a fraction means exactly this.", uses: ["Divide 12 sweets into 4 equal groups."] }, { w: "compare", pic: "📏", meaning: "Work out which of two fractions is bigger, by looking at whether their top numbers or bottom numbers match.", uses: ["Compare 3/4 and 1/2 and say which is bigger."] }], finish: 2, done: "You know the math words of this lesson." });
   show(0, false);
   quiet -= 1;   /* the first draw is over: say() speaks from here on */
 })();

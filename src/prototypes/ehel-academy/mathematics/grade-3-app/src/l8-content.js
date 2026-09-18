@@ -49,7 +49,7 @@
       $("fb1").textContent = (ok ? cheer() + " " : "") + "The others have one answer that is the same for everybody, so there is nothing to collect. This one only has an answer once you have asked people, and the answers vary.";
       say(ok ? cheer() : "That one needs data");
       scoreLine("sc1", got1, asked1, 3);
-      if (got1 >= 3) finish(0, "");
+      if (got1 >= 3) finish(3, "");
       later(round1, 2500);
     });
   }
@@ -86,7 +86,7 @@
       $("fb2").textContent = (ok ? cheer() + " " : "") + bundles + " bundle" + (bundles === 1 ? "" : "s") + " of five is " + bundles * 5 + (left ? ", and " + left + " more makes " + answer : " altogether") + ".";
       say(ok ? cheer() : "It is " + answer);
       scoreLine("sc2", got2, asked2, 4);
-      if (got2 >= 4) finish(1, "");
+      if (got2 >= 4) finish(4, "");
       later(round2, 2600);
     });
   }
@@ -118,7 +118,7 @@
       $("fb3").textContent = (ok ? cheer() + " " : "") + r.whole + " whole picture" + (r.whole === 1 ? "" : "s") + " × " + per + " = " + r.whole * per + (r.half ? ", plus half a picture (" + per / 2 + ") = " + answer : "") + ". Counting the pictures instead of reading the key gives " + (r.whole + (r.half ? 1 : 0)) + ".";
       say(ok ? cheer() : "It is " + answer);
       scoreLine("sc3", got3, asked3, 4);
-      if (got3 >= 4) finish(2, "");
+      if (got3 >= 4) finish(5, "");
       later(round3, 2900);
     });
   }
@@ -150,7 +150,7 @@
       $("fb4").textContent = (ok ? cheer() + " " : "") + "The " + rows[askIdx].t + " bar reaches " + answer + ".";
       say(ok ? cheer() : "It is " + answer);
       scoreLine("sc4", got4, asked4, 4);
-      if (got4 >= 4) finish(3, "");
+      if (got4 >= 4) finish(6, "");
       later(round4, 2500);
     });
   }
@@ -177,7 +177,7 @@
       $("fb7").textContent = (ok ? cheer() + " " : "") + "The answer is " + answer + ". Remember the chart tells you about the children who were asked - not about anybody else, and not why they chose it.";
       say(ok ? cheer() : "The answer is " + answer);
       scoreLine("sc7", got7, asked7, 4);
-      if (got7 >= 4) finish(6, "");
+      if (got7 >= 4) finish(9, "");
       later(round7, 2700);
     });
   }
@@ -218,7 +218,7 @@
       $("fb5").textContent = (ok ? cheer() + " " : "") + n + " is " + (inA ? "" : "not ") + t.a + " and " + (inB ? "" : "not ") + t.b + ", so it goes " + (zone === "both" ? "in the middle, where the hoops overlap" : zone === "none" ? "outside both hoops" : "in the " + (zone === "a" ? t.a : t.b) + " hoop only") + ".";
       say(ok ? cheer() : "It goes " + (zone === "both" ? "in the middle" : zone === "none" ? "outside both" : "in one hoop"));
       scoreLine("sc5", got5, asked5, 4);
-      if (got5 >= 4) finish(4, "");
+      if (got5 >= 4) finish(7, "");
       later(round5, 2900);
     };
   }
@@ -248,7 +248,7 @@
       $("fb6").textContent = (ok ? cheer() + " " : "") + n + " is " + (inA ? "" : "not ") + t.a + " and " + (inB ? "" : "not ") + t.b + ". A Carroll diagram holds the same information as a Venn diagram - the not-and-not box is the same as being outside both hoops.";
       say(ok ? cheer() : "It goes in the " + (inA ? "" : "not ") + t.a + " row");
       scoreLine("sc6", got6, asked6, 4);
-      if (got6 >= 4) finish(5, "");
+      if (got6 >= 4) finish(8, "");
       later(round6, 3000);
     };
   }
@@ -308,7 +308,7 @@
       $("fb8c").textContent = (ok ? cheer() + " " : "It is " + it.a + ". ") + it.why;
       say(ok ? cheer() : it.why);
       scoreLine("sc8c", got8c, asked8c, 4);
-      if (got8c >= 4) finish(7, "");
+      if (got8c >= 4) finish(10, "");
       later(round8c, 3200);
     });
   }
@@ -345,7 +345,7 @@
       $("fb8").textContent = (ok ? cheer() + " " : "") + "This one is “" + cur8.a + "”. Save “will not” for things that truly cannot happen. If it could happen, even rarely, it might happen.";
       say(ok ? cheer() : cur8.a);
       scoreLine("sc8", got8, asked8, 5);
-      if (got8 >= 5) finish(8, "");
+      if (got8 >= 5) finish(11, "");
       later(round8, 2900);
     };
   }
@@ -384,7 +384,7 @@
     $("fb9").textContent = spins9 === 0 ? "Spin it and keep the score."
       : spins9 < 30 ? "After only " + spins9 + " spins the counts can look like anything. Keep going."
       : "After " + spins9 + " spins: expected roughly " + exp + ". Red has the most room, so red comes up most - but only over many spins.";
-    if (spins9 >= 30) finish(9, "");
+    if (spins9 >= 30) finish(12, "");
   }
   function doSpin(times) {
     for (let k = 0; k < times; k++) {
@@ -419,7 +419,7 @@
       $("q10").textContent = ""; $("ch10").innerHTML = "";
       $("fb10").className = "fb good"; $("fb10").textContent = "Finished! " + got10 + " out of " + order10.length + ".";
       $("sc10").textContent = "";
-      if (got10 >= 8) finish(10, "You have finished the check.");
+      if (got10 >= 8) finish(13, "You have finished the check.");
       else retryCheck($("fb10"), $("ch10"), got10, order10.length, 8, function () { qi = 0; got10 = 0; order10 = shuffle(QS); round10(); });
       return;
     }
@@ -443,7 +443,7 @@
   round10();
 
   /* ---- 11: stickers ---- */
-  const STICKERS = [
+  const STICKERS = [["🔎", "What this lesson is about"], ["🎥", "Unit lecture"], ["🗣️", "Math words"], 
     ["❓", "A question worth asking"], ["✏️", "Tally marks"], ["🍎", "Pictograms"], ["📊", "Bar charts"],
     ["⭕", "Venn diagrams"], ["🔲", "Carroll diagrams"], ["🔍", "What the data says"], ["📈", "Choosing the right chart"], ["🎲", "Will, might, will not"],
     ["🎡", "Try it and see"], ["✅", "Show what I know"],
@@ -580,6 +580,126 @@
     paint();
   })();
 
+
+  /* ==== ehel-g3-lesson-opener: three shared step functions, ported from Grade 4's own
+     add-lesson-opener.py in the same idiom - data-say for arrival
+     narration (show() already speaks it), plain finish(i, msg), no
+     ONSHOW/ONLEAVE/reportAttempt. esc() IS OWN, not shared, matching
+     every add-*.py tool in this build - see Grade 4's own docstring for
+     the ReferenceError this avoids. ==== */
+  const esc = (t) => String(t).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/"/g, "&quot;");
+  function lessonAbout(o) {
+    document.getElementById(o.stage).innerHTML =
+      '<div class="ovw"><h3 class="ovw-h">By the end of this lesson you will be able to&hellip;</h3>' +
+      '<ol class="ovw-list">' + o.about.map((t) => '<li>' + esc(t) + '</li>').join('') + '</ol>' +
+      '<div class="bigbtns"><button type="button" class="big small" id="' + o.stage + 'go">Got it, let\'s begin &#10003;</button></div></div>';
+    document.getElementById(o.stage + 'go').addEventListener('click', () => {
+      document.getElementById(o.stage + 'go').disabled = true;
+      finish(o.finish, o.done);
+    });
+  }
+
+  function lessonLecture(o) {
+    const parts = o.parts || [];
+    let k = 0;
+    const id = o.stage + 'l';
+    function paint() {
+      const p = parts[k];
+      document.getElementById(o.stage).innerHTML =
+        '<div class="lec"><p class="phase">Part ' + (k + 1) + ' of ' + parts.length + '</p>' +
+        '<h3 class="lec-h">' + esc(p.title) + '</h3><p class="lec-p">' + esc(p.say) + '</p>' +
+        '<div class="bigbtns">' +
+        '<button type="button" class="big small teal" id="' + id + 'hear">&#128266; Listen</button>' +
+        (k > 0 ? '<button type="button" class="big small ghost" id="' + id + 'back">&#9664; Last part</button>' : '') +
+        '<button type="button" class="big small" id="' + id + 'next">' + (k + 1 < parts.length ? 'Next part &#9654;' : 'I heard it all &#10003;') + '</button>' +
+        '</div><p class="lec-note">Read aloud by the lesson\'s voice. There is no video for this lesson yet.</p></div>';
+      document.getElementById(id + 'hear').addEventListener('click', () => say(p.title + '. ' + p.say));
+      if (k > 0) document.getElementById(id + 'back').addEventListener('click', () => { k--; paint(); say(parts[k].title + '. ' + parts[k].say); });
+      document.getElementById(id + 'next').addEventListener('click', () => {
+        if (k + 1 < parts.length) { k++; paint(); say(parts[k].title + '. ' + parts[k].say); }
+        else { finish(o.finish, o.done); }
+      });
+    }
+    if (!parts.length) return;
+    paint();
+  }
+
+  function lessonWords(o) {
+    const items = o.words || [];
+    const heard = new Set();
+    let open = -1;
+    const id = o.stage + 'w';
+    function paintGrid() {
+      document.getElementById(o.stage).innerHTML =
+        '<div class="cardsgrid" id="' + id + 'g">' + items.map((w, k) =>
+          '<button type="button" class="tapcard' + (heard.has(k) ? ' heard' : '') + '" data-k="' + k + '">' +
+          '<span class="cpic" aria-hidden="true">' + w.pic + '</span>' + esc(w.w) + '</button>').join('') + '</div>' +
+        '<div class="wordpanel" id="' + id + 'p"' + (open < 0 ? ' hidden' : '') + '></div>' +
+        '<div class="bigbtns" id="' + id + 'go" style="' + (heard.size === items.length ? '' : 'display:none') + '">' +
+        '<button type="button" class="big small" id="' + id + 'quiz">Show I know them &#9654;</button></div>';
+      if (open >= 0) paintPanel();
+      document.getElementById(id + 'g').addEventListener('click', (e) => {
+        const b = e.target.closest('.tapcard'); if (!b) return;
+        open = Number(b.dataset.k); heard.add(open);
+        paintGrid();
+        const w = items[open];
+        say(w.w + '. ' + w.meaning + ' ' + (w.uses[0] || ''));
+      });
+      if (heard.size === items.length) {
+        const goBtn = document.getElementById(id + 'quiz');
+        if (goBtn) goBtn.addEventListener('click', () => check());
+      }
+    }
+    function paintPanel() {
+      const w = items[open];
+      const p = document.getElementById(id + 'p');
+      p.hidden = false;
+      p.innerHTML = '<div class="wp-head"><span class="wp-pic" aria-hidden="true">' + w.pic + '</span>' +
+        '<div><p class="wp-word">' + esc(w.w) + '</p><p class="wp-meaning">' + esc(w.meaning) + '</p></div></div>' +
+        '<p class="wp-uses-h">Use it</p><ul class="wp-uses">' + (w.uses || []).map((u) => '<li>' + esc(u) + '</li>').join('') + '</ul>' +
+        '<div class="bigbtns"><button type="button" class="big small teal" id="' + id + 'h">&#128266; Hear it again</button></div>';
+      document.getElementById(id + 'h').addEventListener('click', () => say(w.w + '. ' + w.meaning + ' ' + (w.uses || []).join(' ')));
+    }
+    function check() {
+      const order = shuffle(items.map((_, k) => k));
+      let i = 0, right = 0, lock = false;
+      function draw() {
+        lock = false;
+        const k = order[i], w = items[k];
+        const others = shuffle(items.map((_, j) => j).filter((j) => j !== k)).slice(0, Math.min(2, items.length - 1));
+        const opts = shuffle([k].concat(others));
+        document.getElementById(o.stage).innerHTML =
+          '<div class="mw"><p class="lec-p">Which word means: <b>' + esc(w.meaning) + '</b></p>' +
+          '<div class="wordbtns" id="' + id + 'ch">' + opts.map((j) =>
+            '<button type="button" class="wordbtn" data-ok="' + (j === k ? 1 : 0) + '">' +
+            '<span class="wbpic" aria-hidden="true">' + items[j].pic + '</span>' + esc(items[j].w) + '</button>').join('') + '</div>' +
+          '<p class="lec-note" id="' + id + 'fb"></p></div>';
+        say('Which word means: ' + w.meaning);
+        document.getElementById(id + 'ch').addEventListener('click', (e) => {
+          const b = e.target.closest('.wordbtn'); if (!b || lock) return;
+          lock = true;
+          const ok = b.dataset.ok === '1';
+          document.getElementById(id + 'ch').querySelectorAll('.wordbtn').forEach((c) => { c.disabled = true; if (c.dataset.ok === '1') c.classList.add('right'); });
+          if (!ok) b.classList.add('wrong'); else right++;
+          const msg = ok ? cheer() + ' ' + w.w + '.' : 'That word is ' + w.w + '. ' + w.meaning;
+          document.getElementById(id + 'fb').textContent = msg; say(msg);
+          i++;
+          setTimeout(() => {
+            if (i >= items.length) {
+              document.getElementById(o.stage).innerHTML = '<div class="mw"><p class="lec-p">You know ' + right + ' of ' + items.length + ' math words.</p></div>';
+              finish(o.finish, o.done);
+            } else draw();
+          }, 2200);
+        });
+      }
+      draw();
+    }
+    paintGrid();
+  }
+
+  lessonAbout({ stage: 'stageOvw', about: ["Ask a real question and record the answers with tally marks.", "Read a pictogram using its key.", "Read a bar chart and say what it shows.", "Sort things using a Venn diagram or a Carroll diagram.", "Say whether something will, might or will not happen."], finish: 0, done: "Let's begin." });
+  lessonLecture({ stage: 'stageLec', parts: [{ title: "Tallying and charting", say: "A tally chart counts things as they happen, with a mark laid across every fifth one. A bar chart shows the same kind of information as bars - the taller the bar, the bigger the amount." }, { title: "Pictograms and their key", say: "A pictogram uses pictures instead of bars, and its key says how much one picture is worth - without the key, a pictogram cannot be read." }, { title: "Venn and Carroll diagrams", say: "A Venn diagram sorts things using two overlapping circles, and a Carroll diagram sorts the same kind of thing into a grid using two yes/no questions." }], finish: 1, done: "You have heard the whole lesson. Now do it yourself." });
+  lessonWords({ stage: 'stageMw', words: [{ w: "tally chart", pic: "✏️", meaning: "A way of counting things as they happen, using one mark for each one and a mark laid across every fifth one.", uses: ["Keep a tally chart of how many heads you toss."] }, { w: "pictogram", pic: "🍎", meaning: "A chart that uses pictures to show amounts, where a key says how much each picture is worth.", uses: ["Read the pictogram using its key."] }, { w: "bar chart", pic: "📊", meaning: "A chart that shows amounts as bars - the taller the bar, the bigger the amount.", uses: ["Build a bar chart of favourite fruits."] }, { w: "Venn diagram", pic: "⭕", meaning: "Two overlapping circles that sort things by which of two properties they have - the middle holds things with both.", uses: ["Sort the numbers using a Venn diagram."] }, { w: "Carroll diagram", pic: "🔲", meaning: "A grid that sorts things into boxes using two yes/no questions, one across the top and one down the side.", uses: ["Sort the shapes using a Carroll diagram."] }, { w: "key", pic: "🔑", meaning: "The part of a pictogram that says how much one picture stands for.", uses: ["Check the key before reading the pictogram."] }], finish: 2, done: "You know the math words of this lesson." });
   show(0, false);
   quiet -= 1;   /* the first draw is over: say() speaks from here on */
 })();

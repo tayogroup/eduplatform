@@ -776,10 +776,28 @@
 
   <div class="eh-quiet" id="ehQuiet" role="status" aria-live="polite" hidden><span class="eh-quiet-msg"></span><button type="button" class="eh-quiet-ok">OK</button></div>
   <div class="deck" id="deck" role="main">
+    <!-- STEP 0a: what this lesson is about -->
+    <section class="slide" data-say="By the end of this lesson you will be able to: Count up to 20 things, touching each one once; say how many you see without counting them; count in twos and in tens; say whether a number is odd or even; read and write numbers up to 20; put numbers in order and say which is more.">
+      <div class="slide-head"><span class="n">1</span><h2>What this lesson is about</h2></div>
+      <div class="say"><button type="button" class="speak" aria-label="Read it to me">&#128266;</button><span id="askOvw">By the end of this lesson you will be able to: Count up to 20 things, touching each one once; say how many you see without counting them; count in twos and in tens; say whether a number is odd or even; read and write numbers up to 20; put numbers in order and say which is more.</span></div>
+      <div class="stage" id="stageOvw"></div>
+    </section>
+    <!-- STEP 0b: unit lecture -->
+    <section class="slide" data-say="Watch the lesson told in parts, by the voice.">
+      <div class="slide-head"><span class="n">2</span><h2>Unit lecture</h2></div>
+      <div class="say"><button type="button" class="speak" aria-label="Read it to me">&#128266;</button><span id="askLec">Watch the lesson told in parts, by the voice.</span></div>
+      <div class="stage" id="stageLec"></div>
+    </section>
+    <!-- STEP 0c: math words -->
+    <section class="slide" data-say="Tap each word to hear what it means and how to use it. Then show you know them.">
+      <div class="slide-head"><span class="n">3</span><h2>Math words</h2></div>
+      <div class="say"><button type="button" class="speak" aria-label="Read it to me">&#128266;</button><span id="askMw">Tap each word to hear what it means and how to use it. Then show you know them.</span></div>
+      <div class="stage" id="stageMw"></div>
+    </section>
     <!-- 1  1Nc.01  Count to 10 -->
     <section class="slide" data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>Counting is saying one number for each thing, and never saying two numbers for the same thing.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>Press the plus.</s><s>One counter appears, and we say one.</s><s>Press again.</s><s>Two.</s><s>Each press puts exactly one counter in a hole and we say exactly one number.</s><s>When the frame is full we have said ten.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="empathetic" styledegree="1.3"><prosody rate="-6%"><s>Children rush and say numbers faster than the counters appear, so the last number they say is not how many there are.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>So press once, say one number, then wait.</s><s>Let your voice keep up with your finger.</s><s>Then press Mix them up. The counters move to new holes, but no counter comes or goes, so the number stays the same.</s></mstts:express-as>' data-say="Press the plus to put a counter in the frame. Count out loud with me. Then press Mix them up. Is it still the same number?">
       <div class="eh-warm" id="ehWarm"><p class="eh-warm-h">Warm up</p><div class="eh-warm-say"><button type="button" class="speak" aria-label="Read it to me">&#128266;</button><span class="eh-warm-q"></span></div><div class="choices eh-warm-ch"></div><p class="fb" role="status" aria-live="polite"></p></div>
-      <div class="slide-head"><span class="n">1</span><h2>Count to 10</h2></div>
+      <div class="slide-head"><span class="n">4</span><h2>Count to 10</h2></div>
       <div class="say"><button type="button" class="speak" aria-label="Read it to me">🔊</button><span>Press <b>+</b> to put a counter in the frame. Count out loud with me. Then press <b>Mix them up</b>. Is it still the same number?</span></div>
       <details class="kit"><summary>For the grown-up: what to have to hand</summary><p>Up to 20 small things that are all the same - dried beans, bottle tops or stones - and a dice if you have one. The counting, the ten frames and the odd-and-even pairing all work better in a hand than on a screen.</p></details>
       <div class="stage">
@@ -792,7 +810,7 @@
     </section>
 <!-- 2  1Nc.02  See how many -->
 <section class="slide" data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>You do not always have to count.</s><s>Some patterns you can just see.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>Press look.</s><s>The counters flash up in a pattern, like the dots on a dice, and then they are gone.</s><s>Five in a dice pattern looks like five.</s><s>You did not count it.</s><s>You recognised it.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="empathetic" styledegree="1.3"><prosody rate="-6%"><s>Children panic when the pattern disappears and guess wildly.</s><s>You saw it.</s><s>Trust the picture in your head.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>So press look, hold the picture, then tap what you saw.</s></mstts:express-as>' data-say="Do not count! Press look, see the pattern, then tap how many you saw.">
-      <div class="slide-head"><span class="n">2</span><h2>See how many</h2></div>
+      <div class="slide-head"><span class="n">5</span><h2>See how many</h2></div>
       <div class="say"><button type="button" class="speak" aria-label="Read it to me">🔊</button><span id="saysub">Press <b>Look!</b> The pattern shows for a moment. Tap <b>how many</b> you saw, without counting.</span></div>
       <div class="stage">
         <div class="flashbox hide" id="flashsub"></div>
@@ -804,7 +822,7 @@
     </section>
 <!-- 3  1Nc.01, 1Np.02  Then to 20 -->
 <section class="slide" data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>After ten we do not start again.</s><s>We keep the ten and add the rest on.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>Fill the first frame right up.</s><s>That is ten.</s><s>Now put one counter in the second frame.</s><s>Ten and one more is eleven.</s><s>Another.</s><s>Ten and two is twelve.</s><s>All the way to twenty, which is two full frames.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="empathetic" styledegree="1.3"><prosody rate="-6%"><s>Children think the second frame starts a new count and say one again.</s><s>It does not.</s><s>The ten is still there, sitting in the first frame.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>So say ten and, then count the loose ones on top.</s></mstts:express-as>' data-say="Fill the first frame. That is ten. Then keep going. Ten and one more is eleven.">
-      <div class="slide-head"><span class="n">3</span><h2>Then to 20</h2></div>
+      <div class="slide-head"><span class="n">6</span><h2>Then to 20</h2></div>
       <div class="say"><button type="button" class="speak" aria-label="Read it to me">🔊</button><span>Fill the first frame. That is <b>10</b>. Then keep going: 10 and 1 more is 11.</span></div>
       <div class="stage">
         <div class="frames"><div class="tenframe" id="tf2a"></div><div class="tenframe" id="tf2b"></div></div>
@@ -817,7 +835,7 @@
     </section>
 <!-- 4  1Ni.01  Read the number -->
 <section class="slide" data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>Every amount of counters has one number that names it.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>Look at the frame.</s><s>One full row and three more.</s><s>That is thirteen.</s><s>Now find thirteen among the numbers and tap it.</s><s>The counters and the number are two ways of saying exactly the same thing.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="empathetic" styledegree="1.3"><prosody rate="-6%"><s>Children tap a number that looks like the one they want.</s><s>Thirteen and thirty sound alike and look alike at a glance.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>So count the counters first, say the number out loud, then look for that number.</s></mstts:express-as>' data-say="Look at the counters. Which number is it? Tap the number.">
-      <div class="slide-head"><span class="n">4</span><h2>Read the number</h2></div>
+      <div class="slide-head"><span class="n">7</span><h2>Read the number</h2></div>
       <div class="say"><button type="button" class="speak" aria-label="Read it to me">🔊</button><span id="say3">Look at the counters. Which number is it? Tap it.</span></div>
       <div class="stage">
         <div class="frames" id="show3"></div>
@@ -828,7 +846,7 @@
     </section>
 <!-- 5  1Ni.01  Write the number -->
 <section class="slide" data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>Writing a number means choosing its digits and putting them in the right order.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>For fourteen you press one, then four.</s><s>The one is not saying one.</s><s>It is saying one whole ten.</s><s>The four beside it is the four loose ones.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="empathetic" styledegree="1.3"><prosody rate="-6%"><s>Children press the digits in the order they hear them, and forty one comes out instead of fourteen.</s><s>The tens digit goes first, on the left.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>So count the full frames first and press that digit.</s><s>Then count the loose ones and press that.</s></mstts:express-as>' data-say="Now write the number. Press the digit keys to build it.">
-      <div class="slide-head"><span class="n">5</span><h2>Write the number</h2></div>
+      <div class="slide-head"><span class="n">8</span><h2>Write the number</h2></div>
       <div class="say"><button type="button" class="speak" aria-label="Read it to me">🔊</button><span id="saywr">Press the keys to <b>write</b> the number.</span></div>
       <div class="stage">
         <div class="word" id="askwr"></div>
@@ -841,7 +859,7 @@
     </section>
 <!-- 6  1Np.01  Zero means none -->
 <section class="slide" data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>Zero is a number, and it means there are none at all.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>Take the counters away one at a time.</s><s>Three.</s><s>Two.</s><s>One.</s><s>Now take the last one.</s><s>The frame is empty, and the number for an empty frame is zero.</s><s>Not nothing, not blank.</s><s>Zero.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="empathetic" styledegree="1.3"><prosody rate="-6%"><s>Children think zero means the counting stopped, or that it is not really a number.</s><s>It is a number, and it has its own place at the very start of the number line.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>So take them away one by one and say the number each time, right down to zero.</s></mstts:express-as>' data-say="Take the counters away one at a time. When there are none left, that is zero.">
-      <div class="slide-head"><span class="n">6</span><h2>Zero means none</h2></div>
+      <div class="slide-head"><span class="n">9</span><h2>Zero means none</h2></div>
       <div class="say"><button type="button" class="speak" aria-label="Read it to me">🔊</button><span id="sayzr">Press <b>Take one away</b> until the plate is empty.</span></div>
       <div class="stage">
         <div class="group" id="platezr" style="cursor:default"></div>
@@ -854,7 +872,7 @@
     </section>
 <!-- 7  1Nc.04, 1Np.02  Counting in tens -->
 <section class="slide" data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>Counting in tens works the same way, in bigger steps.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>One full frame is one ten.</s><s>Press next ten and another full frame appears.</s><s>Ten.</s><s>Twenty.</s><s>Thirty.</s><s>Each press is a whole frame of ten, not one counter.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="empathetic" styledegree="1.3"><prosody rate="-6%"><s>Children count the frames as ones, and say one, two, three instead of ten, twenty, thirty.</s><s>Each frame is worth ten all by itself.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>So say ten every time a new frame appears, and count them in tens.</s></mstts:express-as>' data-say="A full frame is one ten. Press next ten and count in tens: ten, twenty.">
-      <div class="slide-head"><span class="n">7</span><h2>Counting in tens</h2></div>
+      <div class="slide-head"><span class="n">10</span><h2>Counting in tens</h2></div>
       <div class="say"><button type="button" class="speak" aria-label="Read it to me">🔊</button><span id="say10s">A full frame is <b>one ten</b>. Press <b>Next ten</b> and count in tens: 10, 20.</span></div>
       <div class="stage">
         <div class="frames" id="frames10s"></div>
@@ -870,7 +888,7 @@
     </section>
 <!-- 8  1Nc.04  Counting in twos -->
 <section class="slide" data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>Counting in twos means saying every second number and skipping the ones between.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>Socks come in pairs, and a pair is two.</s><s>Press next pair.</s><s>Two.</s><s>Again.</s><s>Four.</s><s>Again.</s><s>Six.</s><s>You are counting the socks, but two at a time, so it is much quicker than counting them one by one.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="empathetic" styledegree="1.3"><prosody rate="-6%"><s>Children say the numbers in between out of habit.</s><s>In twos you go two, four, six.</s><s>Three and five are skipped over.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>So say it out loud with me and let the rhythm carry you.</s><s>Two, four, six, eight, ten.</s></mstts:express-as>' data-say="Socks come in pairs. Press next pair and count in twos with me: two, four, six.">
-      <div class="slide-head"><span class="n">8</span><h2>Counting in twos</h2></div>
+      <div class="slide-head"><span class="n">11</span><h2>Counting in twos</h2></div>
       <div class="say"><button type="button" class="speak" aria-label="Read it to me">🔊</button><span id="say2s">Socks come in <b>pairs</b>. Press <b>Next pair</b> and count in twos with me: 2, 4, 6…</span></div>
       <div class="stage">
         <div class="pairsrow" id="pairs2s"></div>
@@ -885,7 +903,7 @@
     </section>
 <!-- 9  1Nc.05  Odd and even -->
 <section class="slide" data-twm="characterising classifying" data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>An even number can be split into pairs with nobody left out.</s><s>An odd number always has one left over.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>Take six.</s><s>Pair them up.</s><s>Two, two, two.</s><s>Everybody has a partner, so six is even.</s><s>Now take seven.</s><s>Pair them up and one counter is standing on its own with nobody to go with.</s><s>So seven is odd.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="empathetic" styledegree="1.3"><prosody rate="-6%"><s>Children guess by whether the number looks big or small.</s><s>Size has nothing to do with it.</s><s>Only the pairing does.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>So pair them up and look for one left over.</s></mstts:express-as>' data-say="Tap a number. If every counter has a partner, the number is even. If one is left alone, it is odd.">
-      <div class="slide-head"><span class="n">9</span><h2>Odd and even</h2></div>
+      <div class="slide-head"><span class="n">12</span><h2>Odd and even</h2></div>
       <div class="say"><button type="button" class="speak" aria-label="Read it to me">🔊</button><span id="sayoe">Tap a number. If every counter has a <b>partner</b>, the number is <b>even</b>. If one is left alone, it is <b>odd</b>. Sort <b>8</b> numbers.</span></div>
       <div class="stage">
         <div class="numgrid" id="gridoe"></div>
@@ -900,7 +918,7 @@
     </section>
 <!-- 10  1Nc.01, 1Np.03  More or fewer? -->
 <section class="slide" data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>More means a bigger amount.</s><s>Fewer means a smaller one.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>Two groups on the screen.</s><s>Match them up, one from this group with one from that group.</s><s>When one group runs out first, the other group has more.</s><s>If they run out together, they are the same.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="empathetic" styledegree="1.3"><prosody rate="-6%"><s>Children choose the group that takes up more room.</s><s>Six big things spread out is still fewer than eight little things squeezed together.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>So pair them off one to one and see which group still has some left.</s></mstts:express-as>' data-say="Which group has more? Tap it.">
-      <div class="slide-head"><span class="n">10</span><h2>More or fewer?</h2></div>
+      <div class="slide-head"><span class="n">13</span><h2>More or fewer?</h2></div>
       <div class="say"><button type="button" class="speak" aria-label="Read it to me">🔊</button><span id="say4">Which group has <b>more</b>? Tap it.</span></div>
       <div class="stage">
         <div class="groups" id="groups4"></div>
@@ -910,7 +928,7 @@
     </section>
 <!-- 11  1Np.03  Put them in order -->
 <section class="slide" data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>Putting numbers in order means starting at the smallest and working up.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>Look at all the cards and find the smallest number of them all.</s><s>Tap that first.</s><s>Now look at what is left and find the smallest of those.</s><s>Tap that.</s><s>Keep going and the cards line up in order.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="empathetic" styledegree="1.3"><prosody rate="-6%"><s>Children order the cards by how they are arranged on the screen, or start from the biggest.</s><s>Read the numbers, not the positions.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>So each time, ask which of the ones still left is smallest.</s></mstts:express-as>' data-say="Tap the cards from the smallest number to the biggest.">
-      <div class="slide-head"><span class="n">11</span><h2>Put them in order</h2></div>
+      <div class="slide-head"><span class="n">14</span><h2>Put them in order</h2></div>
       <div class="say"><button type="button" class="speak" aria-label="Read it to me">🔊</button><span>Tap the cards from the <b>smallest</b> to the <b>biggest</b>.</span></div>
       <div class="stage">
         <div class="cards" id="cards5"></div>
@@ -921,7 +939,7 @@
     </section>
 <!-- 12  1Np.03  Numbers to 20 -->
 <section class="slide" data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>The number line settles any argument about which number is bigger.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>Find both numbers on the line.</s><s>The one further to the right is the bigger one, every time.</s><s>Fifteen sits to the right of nine, so fifteen is bigger.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="empathetic" styledegree="1.3"><prosody rate="-6%"><s>Children compare the digits and pick the one that looks longer or louder.</s><s>Nine has a big digit but it sits well to the left of fifteen.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>So find both numbers on the line, and tap the one further along.</s></mstts:express-as>' data-say="Two numbers. Which one is bigger? Tap it. The number line will help you.">
-      <div class="slide-head"><span class="n">12</span><h2>Numbers to 20</h2></div>
+      <div class="slide-head"><span class="n">15</span><h2>Numbers to 20</h2></div>
       <div class="say"><button type="button" class="speak" aria-label="Read it to me">🔊</button><span id="sayc">Two numbers. Which one is <b>bigger</b>? Tap it. The number line will help you.</span></div>
       <div class="stage">
         <div class="choices" id="bigc"></div>
@@ -934,7 +952,7 @@
     </section>
 <!-- 13  1Np.03  Compare to 20 -->
 <section class="slide" data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>With bigger numbers, look at the tens before you look at the ones.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>Two pictures.</s><s>Count the full frames in each.</s><s>If one has two full frames and the other has one, the first one is bigger, and you can stop right there.</s><s>Only if the tens match do you need to compare the loose ones.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="empathetic" styledegree="1.3"><prosody rate="-6%"><s>Children start with the loose ones because they are easier to see.</s><s>Nine loose ones is still fewer than one full ten.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>So count the full frames first.</s><s>If those are equal, then count the loose ones.</s></mstts:express-as>' data-say="Two pictures. Does the first have more, fewer, or the same? Look at the tens first, then the ones.">
-      <div class="slide-head"><span class="n">13</span><h2>Compare to 20</h2></div>
+      <div class="slide-head"><span class="n">16</span><h2>Compare to 20</h2></div>
       <div class="say"><button type="button" class="speak" aria-label="Read it to me">🔊</button><span id="sayk">Two pictures. Does the <b>first</b> one have <b>more</b>, <b>fewer</b>, or <b>the same</b>? Look at the tens first, then the ones.</span></div>
       <div class="stage">
         <div class="picrow" id="pick"></div>
@@ -945,7 +963,7 @@
     </section>
 <!-- 14  1Np.04  First, second, third -->
 <section class="slide" data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>Ordinal numbers say what position something is in, not how many there are.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>Ten runners heading for the flag.</s><s>The one nearest the flag is first.</s><s>Behind them is second, then third.</s><s>Press next runner and follow them all the way to tenth.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="empathetic" styledegree="1.3"><prosody rate="-6%"><s>Children mix up first and one.</s><s>One tells you how many.</s><s>First tells you where in the line.</s><s>There is one runner in first place.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>So find the flag, then count back from the runner nearest to it.</s></mstts:express-as>' data-say="Ten runners in a race. The one nearest the flag is first. Press next runner: first, second, third.">
-      <div class="slide-head"><span class="n">14</span><h2>First, second, third</h2></div>
+      <div class="slide-head"><span class="n">17</span><h2>First, second, third</h2></div>
       <div class="say"><button type="button" class="speak" aria-label="Read it to me">🔊</button><span id="sayord">Ten runners in a race. The one nearest the <b>flag</b> is <b>first</b>. Press <b>Next runner</b> and say the places with me.</span></div>
       <div class="stage">
         <div class="queue" id="queue"></div>
@@ -959,7 +977,7 @@
     </section>
 <!-- 15  1Nc.03  Guess, then count -->
 <section class="slide" data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>An estimate is a sensible guess made before you count.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>Look at the stars for a moment.</s><s>Do not count.</s><s>Does it look like about five, or about ten, or about twenty?</s><s>Say the closest one.</s><s>That is your estimate.</s><s>Then count and see how near you were.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="empathetic" styledegree="1.3"><prosody rate="-6%"><s>Children think a guess has to be exactly right and freeze.</s><s>An estimate is allowed to be a bit out.</s><s>Being close is the whole job.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>So look, say the first sensible number that comes to mind, then count to check.</s></mstts:express-as>' data-say="Do not count yet! How many stars do you think there are? Tap your guess.">
-      <div class="slide-head"><span class="n">15</span><h2>Guess, then count</h2></div>
+      <div class="slide-head"><span class="n">18</span><h2>Guess, then count</h2></div>
       <div class="say"><button type="button" class="speak" aria-label="Read it to me">🔊</button><span id="say6">Don't count yet! How many stars do you <b>think</b> there are? Tap your guess.</span></div>
       <div class="stage">
         <div class="field" id="field6"></div>
@@ -970,7 +988,7 @@
     </section>
 <!-- 16  1Nc.03  Estimate to 20 -->
 <section class="slide" data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>You can estimate on a number line by sliding to about the right place.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>Look at the apples.</s><s>If it seems like more than ten but not as many as twenty, slide to somewhere near fifteen and lock it in.</s><s>Then tap each apple one at a time and count.</s><s>Compare your guess with the real count.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="empathetic" styledegree="1.3"><prosody rate="-6%"><s>Children slide to a number they like rather than one that fits the picture.</s><s>Look at the apples first, then move the slider to match what you saw.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>So look, slide, lock, then count and compare.</s></mstts:express-as>' data-say="How many apples? Slide your guess on the number line and lock it. Then tap each apple to count it into the frames.">
-      <div class="slide-head"><span class="n">16</span><h2>Estimate to 20</h2></div>
+      <div class="slide-head"><span class="n">19</span><h2>Estimate to 20</h2></div>
       <div class="say"><button type="button" class="speak" aria-label="Read it to me">🔊</button><span id="saye">How many apples? <b>Slide</b> your guess on the number line and lock it. Then tap each apple to count it into the frames.</span></div>
       <div class="stage">
         <div class="field" id="fielde"></div>
@@ -986,7 +1004,7 @@
     </section>
 <!-- 17  1Nc.02  Patterns you know -->
 <section class="slide" data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>Some patterns you see so often that you know them straight away.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>Five fingers on one hand.</s><s>Five dots in a row, and more underneath.</s><s>A domino with a four and a two.</s><s>Look for the parts you know, then put them together: four and two make six, without counting one at a time.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="empathetic" styledegree="1.3"><prosody rate="-6%"><s>Children try to count every dot, one by one, and the picture hides before they finish.</s><s>You do not need to.</s><s>Find a part you already know, like five, and add on the rest.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>So press look, find the parts you know, and tap your answer.</s></mstts:express-as>' data-say="Press look. The picture shows for a moment. Then tap how many you saw, without counting.">
-      <div class="slide-head"><span class="n">17</span><h2>Patterns you know</h2></div>
+      <div class="slide-head"><span class="n">20</span><h2>Patterns you know</h2></div>
       <div class="say"><button type="button" class="speak" aria-label="Read it to me">🔊</button><span id="ss17say">Press <b>Look!</b> The picture shows for a moment. Say how many straight away, without counting.</span></div>
       <div class="stage" id="ss17st"></div>
       <div class="choices" id="ss17ch"></div>
@@ -996,7 +1014,7 @@
     </section>
 <!-- 18  1Np.01  Zero means empty -->
 <section class="slide" data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>Zero is the number for none at all.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>An empty plate has zero mangoes.</s><s>An empty ten frame has zero counters.</s><s>If you have three sweets and eat all three, you have zero left.</s><s>We write zero like this: 0.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="empathetic" styledegree="1.3"><prosody rate="-6%"><s>Children sometimes think zero is not a number, because there is nothing to count.</s><s>It is a number.</s><s>It is the number that says none, and it comes just before one when you count.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>So when you see nothing there, say zero, and tap 0.</s></mstts:express-as>' data-say="Zero means none at all. Look at each picture and tap the answer.">
-      <div class="slide-head"><span class="n">18</span><h2>Zero means empty</h2></div>
+      <div class="slide-head"><span class="n">21</span><h2>Zero means empty</h2></div>
       <div class="say"><button type="button" class="speak" aria-label="Read it to me">🔊</button><span id="ss18say"><b>Zero</b> means none at all. Tap the answer.</span></div>
       <div class="stage" id="ss18st"></div>
       <div class="choices" id="ss18ch"></div>
@@ -1006,7 +1024,7 @@
     </section>
 <!-- 19  1Nc.05  Every other number -->
 <section class="slide" data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>When you count, odd and even numbers take turns.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>Start at zero and say every other number: zero, two, four, six, eight.</s><s>Those are the even numbers.</s><s>Start at one instead: one, three, five, seven, nine.</s><s>Those are the odd numbers.</s><s>Even, odd, even, odd, all the way to twenty.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="empathetic" styledegree="1.3"><prosody rate="-6%"><s>Children think a big number must be even, or that odd means strange.</s><s>Neither is true.</s><s>Twenty is even and nineteen is odd, because they take turns, just like the small ones.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>So hop along the numbers, jumping over every other one, and see where you land.</s></mstts:express-as>' data-say="Count, and say every other number. The numbers you land on are all even, or all odd.">
-      <div class="slide-head"><span class="n">19</span><h2>Every other number</h2></div>
+      <div class="slide-head"><span class="n">22</span><h2>Every other number</h2></div>
       <div class="say"><button type="button" class="speak" aria-label="Read it to me">🔊</button><span id="ss19say">Say <b>every other number</b> as you count. Tap the answer.</span></div>
       <div class="stage" id="ss19st"></div>
       <div class="choices" id="ss19ch"></div>
@@ -1016,7 +1034,7 @@
     </section>
 <!-- 20  1Np.04  Places in a line -->
 <section class="slide" data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>First, second and third tell you a place in a line, not how many there are.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>Always start counting at the front.</s><s>The one at the front is first, then second, then third, then fourth, fifth, sixth, seventh, eighth, ninth, and tenth.</s><s>When we write them short, first is 1st, second is 2nd and third is 3rd.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="empathetic" styledegree="1.3"><prosody rate="-6%"><s>Children start counting from the wrong end, or they count the flag as first.</s><s>The flag is not in the line.</s><s>Start with the one standing right behind it.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>So point at the front one and say first, then keep going until you reach the one you want.</s></mstts:express-as>' data-say="Count from the front of the line: first, second, third. Tap the answer.">
-      <div class="slide-head"><span class="n">20</span><h2>Places in a line</h2></div>
+      <div class="slide-head"><span class="n">23</span><h2>Places in a line</h2></div>
       <div class="say"><button type="button" class="speak" aria-label="Read it to me">🔊</button><span id="ss20say">Count from the front: <b>1st</b>, <b>2nd</b>, <b>3rd</b>, all the way to <b>10th</b>. Tap the answer.</span></div>
       <div class="stage" id="ss20st"></div>
       <div class="choices" id="ss20ch"></div>
@@ -1026,7 +1044,7 @@
     </section>
 <!-- 21  1Nc.01  Spot the mistake -->
 <section class="slide" data-twm="critiquing improving" data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>Today you are the checker.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>Somebody has done some maths and told you what they think.</s><s>Sometimes they are right and sometimes they have slipped.</s><s>Do it yourself first, then look at what they said.</s><s>If it does not match, work out WHICH part went wrong.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="empathetic" styledegree="1.3"><prosody rate="-6%"><s>Children often tap the first answer that sounds like a mistake.</s><s>Look again before you tap.</s><s>And some of these are right.</s><s>Saying right when it is right is just as clever as finding a mistake.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>So read what they say, work it out yourself, and tap what went wrong.</s></mstts:express-as>' data-say="Read what each child says. Work it out yourself. Then tap what went wrong.">
-      <div class="slide-head"><span class="n">21</span><h2>Spot the mistake</h2></div>
+      <div class="slide-head"><span class="n">24</span><h2>Spot the mistake</h2></div>
       <div class="say"><button type="button" class="speak" aria-label="Read it to me">🔊</button><span id="sm21say">Read what each child says, work it out yourself, then tap what went wrong.</span></div>
       <div class="stage" id="sm21st"></div>
       <div class="choices" id="sm21ch"></div>
@@ -1036,7 +1054,7 @@
     </section>
 <!-- 22  1Nc.01  Story problems -->
 <section class="slide" data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>A story problem is maths hiding inside a story.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>Listen to the whole story first, right to the end.</s><s>Then ask yourself one question.</s><s>Am I putting things together, or taking them away?</s><s>Putting together means adding.</s><s>Taking away, or finding how many more, means subtracting.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="empathetic" styledegree="1.3"><prosody rate="-6%"><s>Children often grab the two numbers and add them, whatever the story said.</s><s>That is why the story comes first and the numbers come second.</s><s>Say the story back to yourself in your own words before you choose.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>So listen to the story, decide what is happening, then tap your answer.</s></mstts:express-as>' data-say="Listen to the whole story. Work out the answer. Then tap it.">
-      <div class="slide-head"><span class="n">22</span><h2>Story problems</h2></div>
+      <div class="slide-head"><span class="n">25</span><h2>Story problems</h2></div>
       <div class="say"><button type="button" class="speak" aria-label="Read it to me">🔊</button><span id="wp22say">Read the story, work out the answer, then tap it.</span></div>
       <div class="stage" id="wp22st"></div>
       <div class="choices" id="wp22ch"></div>
@@ -1046,7 +1064,7 @@
     </section>
 <!-- 23  1Nc.05  Will it always work? -->
 <section class="slide" data-twm="specialising generalising" data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>Somebody has an idea about numbers. Your job is to test it.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>Testing an idea is not the same as agreeing with it.</s><s>You try it on one example, then on another.</s><s>If it works both times, you ask the big question: does it ALWAYS work?</s><s>And if you find even one example where it does not work, then it does not always work.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="empathetic" styledegree="1.3"><prosody rate="-6%"><s>Children often decide after one try.</s><s>One try is not enough to say always.</s><s>But one try IS enough to say NOT always, if that try breaks the idea.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>So test it twice, then say whether it always works.</s></mstts:express-as>' data-say="Somebody has an idea. Test it on each example, then say whether it always works.">
-      <div class="slide-head"><span class="n">23</span><h2>Will it always work?</h2></div>
+      <div class="slide-head"><span class="n">26</span><h2>Will it always work?</h2></div>
       <div class="say"><button type="button" class="speak" aria-label="Read it to me">🔊</button><span id="at23say">Test the idea on each example. Then say whether it always works.</span></div>
       <div class="stage" id="at23st"></div>
       <div class="choices" id="at23ch"></div>
@@ -1084,7 +1102,6 @@
         <div class="stickers" id="stickers"></div>
         <p class="fb" id="fb13" role="status" aria-live="polite"></p>
         <div class="sc-wrap" id="selfcheck"></div>
-      <div id="vocab"></div>
         <div class="bigbtns"><button type="button" class="big small teal" id="restart">Play again</button></div>
       </div>
     </section>
@@ -2469,7 +2486,7 @@
     $("num1").textContent = n1; $("word1").textContent = WORDS[n1];
     $("plus1").disabled = n1 >= 10; $("minus1").disabled = n1 <= 0; $("mix1").disabled = n1 < 2 || n1 >= 10;
     $("fb1").className = "fb " + (n1 === 10 ? "good" : ""); $("fb1").textContent = n1 === 10 ? "Ten! The frame is full." : n1 === 5 ? "Five: one whole row." : "";
-    if (n1 === 10) finish(0, "Ten! The frame is full.");
+    if (n1 === 10) finish(3, "Ten! The frame is full.");
   }
   $("plus1").addEventListener("click", () => { if (n1 < 10) { n1++; paint1(true); say(WORDS[n1]); } });
   $("minus1").addEventListener("click", () => { if (n1 > 0) { n1--; paint1(); say(WORDS[n1]); } });
@@ -2539,7 +2556,7 @@
         $("fbsub").className = "fb good";
         $("fbsub").textContent = "You saw " + rightSub + " of " + SUBS.length + " without counting.";
         $("saysub").innerHTML = "Some patterns you just <b>know</b>, without counting them one by one.";
-        finish(1, "You can see how many without counting. Brilliant!");
+        finish(4, "You can see how many without counting. Brilliant!");
       } else roundSub();
     }, 2800);
   });
@@ -2554,7 +2571,7 @@
     $("split2").textContent = n2 > 10 ? "10 and " + (n2 - 10) + " make " + n2 : n2 === 10 ? "One full frame is 10" : "";
     $("plus2").disabled = n2 >= 20; $("minus2").disabled = n2 <= 0;
     $("fb2").className = "fb " + (n2 === 20 ? "good" : ""); $("fb2").textContent = n2 === 20 ? "Twenty! Two full frames." : "";
-    if (n2 === 20) finish(2, "Twenty! Two full frames.");
+    if (n2 === 20) finish(5, "Twenty! Two full frames.");
   }
   $("plus2").addEventListener("click", () => { if (n2 < 20) { n2++; paint2(true); say(n2 > 10 ? "ten and " + WORDS[n2 - 10] + ", " + WORDS[n2] : WORDS[n2]); } });
   $("minus2").addEventListener("click", () => { if (n2 > 0) { n2--; paint2(); say(WORDS[n2]); } });
@@ -2564,7 +2581,7 @@
   let r3 = 0, right3 = 0, lock3 = false; const ROUNDS3 = 6;
   function round3() {
     lock3 = false; $("fb3").textContent = ""; $("fb3").className = "fb";
-    if (r3 >= ROUNDS3) { $("show3").innerHTML = ""; $("ch3").innerHTML = ""; $("fb3").className = "fb good"; $("fb3").textContent = "You read " + right3 + " of " + ROUNDS3 + " numbers!"; finish(3, "You read " + right3 + " numbers. Well done!"); return; }
+    if (r3 >= ROUNDS3) { $("show3").innerHTML = ""; $("ch3").innerHTML = ""; $("fb3").className = "fb good"; $("fb3").textContent = "You read " + right3 + " of " + ROUNDS3 + " numbers!"; finish(6, "You read " + right3 + " numbers. Well done!"); return; }
     const n = rnd(r3 < 3 ? 1 : 11, r3 < 3 ? 10 : 20), asWord = r3 % 2 === 1;
     $("score3").textContent = "Number " + (r3 + 1) + " of " + ROUNDS3;
     if (!asWord) {
@@ -2627,7 +2644,7 @@
         $("fbwr").className = "fb good";
         $("fbwr").textContent = "You wrote " + rightWr + " of " + WRITE.length + " numbers.";
         $("saywr").innerHTML = "A teen number is <b>1 ten</b> and some ones, so it is written with a <b>1</b> first.";
-        finish(4, "You can write numbers to twenty. Brilliant!");
+        finish(7, "You can write numbers to twenty. Brilliant!");
       } else roundWr();
     }, 2800);
   }
@@ -2688,7 +2705,7 @@
       if (qzr >= ZQ.length) {
         $("chzr").innerHTML = ""; $("sczr").textContent = "";
         $("fbzr").className = "fb good"; $("fbzr").textContent = "Zero means none of something.";
-        finish(5, "You know what zero means. Brilliant!");
+        finish(8, "You know what zero means. Brilliant!");
       } else askZr();
     }, 2800);
   });
@@ -2711,7 +2728,7 @@
     phase10s = "split"; $("next10s").hidden = true; $("nl10s").innerHTML = ""; $("word10s").textContent = ""; tRound = 0; nextTensOnes();
   }
   function nextTensOnes() {
-    if (tRound >= TROUNDS) { $("tens10s").innerHTML = ""; $("ones10s").innerHTML = ""; $("frames10s").innerHTML = ""; $("num10s").textContent = ""; $("fb10s").className = "fb good"; $("fb10s").textContent = "You got " + tRight + " of " + TROUNDS + ". Tens and ones!"; $("say10s").innerHTML = "Every number to 20 is some tens and some ones: 14 is 1 ten and 4 ones."; finish(6, "You can count in tens, and you know tens and ones. Brilliant!"); return; }
+    if (tRound >= TROUNDS) { $("tens10s").innerHTML = ""; $("ones10s").innerHTML = ""; $("frames10s").innerHTML = ""; $("num10s").textContent = ""; $("fb10s").className = "fb good"; $("fb10s").textContent = "You got " + tRight + " of " + TROUNDS + ". Tens and ones!"; $("say10s").innerHTML = "Every number to 20 is some tens and some ones: 14 is 1 ten and 4 ones."; finish(9, "You can count in tens, and you know tens and ones. Brilliant!"); return; }
     tNum = rnd(11, 20); tPickTens = null;
     $("frames10s").innerHTML = '<div class="tenframe">' + frameHtml(10) + '</div><div class="tenframe">' + frameHtml(tNum - 10, "b") + "</div>";
     $("num10s").textContent = tNum;
@@ -2784,7 +2801,7 @@
     phase2s = "how"; $("seq2s").innerHTML = ""; howRound = 0; nextHow();
   }
   function nextHow() {
-    if (howRound >= 2) { $("ch2s").innerHTML = ""; $("pairs2s").innerHTML = ""; $("fb2s").className = "fb good"; $("fb2s").textContent = "You can count in twos to 20!"; $("say2s").innerHTML = "Counting in twos is fast: 2, 4, 6, 8, 10, 12, 14, 16, 18, 20."; finish(7, "You can count in twos to twenty. Brilliant!"); return; }
+    if (howRound >= 2) { $("ch2s").innerHTML = ""; $("pairs2s").innerHTML = ""; $("fb2s").className = "fb good"; $("fb2s").textContent = "You can count in twos to 20!"; $("say2s").innerHTML = "Counting in twos is fast: 2, 4, 6, 8, 10, 12, 14, 16, 18, 20."; finish(10, "You can count in twos to twenty. Brilliant!"); return; }
     const n = rnd(3, 10); howAns = n * 2;
     $("pairs2s").innerHTML = Array.from({ length: n }, () => '<div class="pairbox plain"><i></i><i></i></div>').join("");
     $("num2s").textContent = "";
@@ -2835,7 +2852,7 @@
     } else { $("fboe").className = "fb"; $("fboe").textContent = why; }
   }
   function askOE() {
-    if (askedOE >= QUIZOE) { quizOE = -1; $("choe").innerHTML = ""; $("fboe").className = "fb good"; $("fboe").textContent = "You got " + rightOE + " of " + QUIZOE + ". The even numbers are the counting-in-twos numbers!"; $("sayoe").innerHTML = "Even numbers end in 0, 2, 4, 6 or 8. Odd numbers end in 1, 3, 5, 7 or 9."; finish(8, "You know odd and even. The even numbers are the counting in twos numbers."); return; }
+    if (askedOE >= QUIZOE) { quizOE = -1; $("choe").innerHTML = ""; $("fboe").className = "fb good"; $("fboe").textContent = "You got " + rightOE + " of " + QUIZOE + ". The even numbers are the counting-in-twos numbers!"; $("sayoe").innerHTML = "Even numbers end in 0, 2, 4, 6 or 8. Odd numbers end in 1, 3, 5, 7 or 9."; finish(11, "You know odd and even. The even numbers are the counting in twos numbers."); return; }
     quizOE = rnd(1, 20); askedOE++;
     $("scoreoe").textContent = "Question " + askedOE + " of " + QUIZOE;
     $("sayoe").innerHTML = "Is <b>" + quizOE + "</b> odd or even? Tap the answer, then look at the partners.";
@@ -2859,7 +2876,7 @@
   let r4 = 0, right4 = 0, lock4 = false; const ROUNDS4 = 4;
   function round4() {
     lock4 = false; $("fb4").textContent = ""; $("fb4").className = "fb";
-    if (r4 >= ROUNDS4) { $("groups4").innerHTML = ""; $("fb4").className = "fb good"; $("fb4").textContent = "You compared " + right4 + " of " + ROUNDS4 + "!"; finish(9, "Well done. You know more and fewer."); return; }
+    if (r4 >= ROUNDS4) { $("groups4").innerHTML = ""; $("fb4").className = "fb good"; $("fb4").textContent = "You compared " + right4 + " of " + ROUNDS4 + "!"; finish(12, "Well done. You know more and fewer."); return; }
     const a = rnd(1, 10); let b = rnd(1, 10); while (b === a) b = rnd(1, 10);
     const wantMore = r4 < 2;
     $("say4").innerHTML = "Which group has <b>" + (wantMore ? "more" : "fewer") + "</b>? Tap it.";
@@ -2899,7 +2916,7 @@
       const orderText = correct.map((k) => set5[k]).join(", ");
       $("fb5").className = "fb " + (wrong ? "bad" : "good"); $("fb5").textContent = (wrong ? "Not quite. The order is " : cheer() + " ") + orderText + (wrong ? "." : ", smallest to biggest.");
       say((wrong ? "Not quite. The order is " : cheer() + " ") + orderText);
-      if (!wrong) finish(10);
+      if (!wrong) finish(13);
     }
   });
   $("again5").addEventListener("click", newCards);
@@ -2912,7 +2929,7 @@
   function roundc() {
     lockc = false; $("fbc").textContent = ""; $("fbc").className = "fb";
     $("bigc").innerHTML = ""; $("cardsc").innerHTML = ""; $("chc").innerHTML = "";
-    if (rc >= ROUNDSC.length) { $("nlc").innerHTML = ""; $("fbc").className = "fb good"; $("fbc").textContent = "You got " + rightc + " of " + ROUNDSC.length + " right!"; finish(11, "You know your numbers to twenty!"); return; }
+    if (rc >= ROUNDSC.length) { $("nlc").innerHTML = ""; $("fbc").className = "fb good"; $("fbc").textContent = "You got " + rightc + " of " + ROUNDSC.length + " right!"; finish(14, "You know your numbers to twenty!"); return; }
     const R = ROUNDSC[rc];
     $("scorec").textContent = "Question " + (rc + 1) + " of " + ROUNDSC.length;
     if (R.t === "cmp") {
@@ -2979,7 +2996,7 @@
   function picHtml(n, cls) { return '<div class="tenframe">' + frameHtml(Math.min(10, n)) + '</div><div class="tenframe">' + frameHtml(Math.max(0, n - 10), "b") + "</div>"; }
   function roundk() {
     lockk = false; $("fbk").textContent = ""; $("fbk").className = "fb"; $("chk").innerHTML = "";
-    if (rk >= ROUNDSK.length) { $("pick").innerHTML = ""; $("fbk").className = "fb good"; $("fbk").textContent = "You got " + rightk + " of " + ROUNDSK.length + ". You can compare and order to 20!"; $("sayk").innerHTML = "Tens first, then ones: that is how to compare numbers to 20."; finish(12, "You can compare and order to twenty. Brilliant!"); return; }
+    if (rk >= ROUNDSK.length) { $("pick").innerHTML = ""; $("fbk").className = "fb good"; $("fbk").textContent = "You got " + rightk + " of " + ROUNDSK.length + ". You can compare and order to 20!"; $("sayk").innerHTML = "Tens first, then ones: that is how to compare numbers to 20."; finish(15, "You can compare and order to twenty. Brilliant!"); return; }
     const R = ROUNDSK[rk];
     $("scorek").textContent = "Question " + (rk + 1) + " of " + ROUNDSK.length;
     if (R.t === "cmp") {
@@ -3055,7 +3072,7 @@
   }
   function startWhich() { phaseOrd = "which"; whichRound = 0; nextWhich(); }
   function nextWhich() {
-    if (whichRound >= 2) { $("chord").innerHTML = ""; $("fbord").className = "fb good"; $("fbord").textContent = "You got " + rightOrd + " of 5. First, second, third… all the way to tenth!"; $("sayord").innerHTML = "1st, 2nd, 3rd, then 4th, 5th… and 10th. Places tell you where in the line."; paintQueue(); finish(13, "You know first, second, third, all the way to tenth. Brilliant!"); return; }
+    if (whichRound >= 2) { $("chord").innerHTML = ""; $("fbord").className = "fb good"; $("fbord").textContent = "You got " + rightOrd + " of 5. First, second, third… all the way to tenth!"; $("sayord").innerHTML = "1st, 2nd, 3rd, then 4th, 5th… and 10th. Places tell you where in the line."; paintQueue(); finish(16, "You know first, second, third, all the way to tenth. Brilliant!"); return; }
     whichPos = rnd(2, 10); lockOrd = false; paintQueue(whichPos);
     $("sayord").innerHTML = "Which place is the <b>teal</b> runner? Count from the flag, then tap the answer.";
     const opts = shuffle([whichPos, whichPos - 1, whichPos + 1 > 10 ? whichPos - 2 : whichPos + 1]);
@@ -3110,7 +3127,7 @@
       $("field6").classList.add("locked");
       const diff = Math.abs(guess6 - stars6), verdict = diff <= 2 ? "A great guess!" : diff <= 5 ? "A good guess." : "Guessing is hard. Try again!";
       $("fb6").className = "fb good"; $("fb6").textContent = "There are " + stars6 + ". You guessed about " + guess6 + ". " + verdict;
-      say("There are " + stars6 + ". You guessed about " + guess6 + ". " + verdict); $("again6").hidden = false; finish(14);
+      say("There are " + stars6 + ". You guessed about " + guess6 + ". " + verdict); $("again6").hidden = false; finish(17);
     }
   });
   $("again6").addEventListener("click", newStars);
@@ -3151,7 +3168,7 @@
       const diff = Math.abs(este - ne), verdict = diff === 0 ? "Exactly right!" : diff <= 2 ? "Only " + diff + " away. A great guess!" : diff <= 5 ? diff + " away. A good guess." : diff + " away. Look at the frames and try again.";
       $("fbe").className = "fb good"; $("fbe").textContent = "There are " + ne + ". You guessed " + este + ". " + verdict;
       say("There are " + ne + ". You guessed " + este + ". " + verdict);
-      roundse++; if (roundse >= ROUNDSE) finish(15, "You can estimate to twenty!"); $("againe").hidden = false;
+      roundse++; if (roundse >= ROUNDSE) finish(18, "You can estimate to twenty!"); $("againe").hidden = false;
     }
   });
   $("againe").addEventListener("click", newApples);
@@ -3195,7 +3212,7 @@
       $("q12").textContent = ""; $("pic12").innerHTML = ""; $("ch12").innerHTML = "";
       $("fb12").className = "fb good"; $("fb12").innerHTML = "You got <b>" + right12 + "</b> out of " + CHECK.length + "!";
       $("score12").textContent = right12 === CHECK.length ? "Every single one!" : right12 >= Math.ceil(CHECK.length * 0.75) ? "Nearly all of them!" : "Try the steps again, then come back.";
-      if (right12 >= Math.ceil(CHECK.length * 0.75)) { finish(23, "You got " + right12 + " out of " + CHECK.length + "."); return; }
+      if (right12 >= Math.ceil(CHECK.length * 0.75)) { finish(26, "You got " + right12 + " out of " + CHECK.length + "."); return; }
       retryCheck($("fb12"), $("ch12"), right12, CHECK.length, function () { c12 = 0; right12 = 0; round12(); }); return;
     }
     const q = CHECK[c12];
@@ -3496,7 +3513,7 @@
   });
 
   /* ---- 13: stickers ---- */
-  const STICKERS = [
+  const STICKERS = [["🔎", "What this lesson is about"], ["🎥", "Unit lecture"], ["🗣️", "Math words"], 
     ["🔟", "I can count to 10"],
     ["👁️", "I can see how many"],
     ["2️⃣0️⃣", "I can count to 20"],
@@ -3639,23 +3656,125 @@
   })();
 
 
-  /* ==== ehel-g1-vocabulary: Math Words for this lesson ====
-     Same insertion pattern as add-self-check.py: an empty host div on
-     the sticker-shelf slide, populated by this script, never scored. */
-  (function () {
-    const VOCAB = [{ w: "odd number", d: "A number that always has one left over when you pair it up." }, { w: "even number", d: "A number that pairs up exactly, with nobody left out." }, { w: "zero", d: "The number for none at all." }, { w: "ordinal number", d: "A number that says where something is in a line, like first or second." }, { w: "estimate", d: "A sensible guess you make before you count." }, { w: "number line", d: "A line of numbers in order, so you can see which one is bigger." }];
-    const host = document.getElementById("vocab");
-    if (!host) return;
-    const esc = (t) => String(t).replace(/&/g, "&amp;").replace(/</g, "&lt;")
-      .replace(/"/g, "&quot;");
-    host.innerHTML = '<p class="vc-head">Math Words</p>'
-      + '<p class="vc-sub">Words from this lesson, explained in one line each.</p>'
-      + '<dl class="vc-list">'
-      + VOCAB.map((it) => '<div class="vc-row"><dt>' + esc(it.w) + '</dt><dd>'
-        + esc(it.d) + "</dd></div>").join("")
-      + "</dl>";
-  })();
+  /* ==== ehel-g1-lesson-opener: three shared step functions, ported from Grade 4's own
+     add-lesson-opener.py in the same idiom - data-say for arrival
+     narration (show() already speaks it), plain finish(i, msg), no
+     ONSHOW/ONLEAVE/reportAttempt. esc() IS OWN, not shared, matching
+     every add-*.py tool in this build - see Grade 4's own docstring for
+     the ReferenceError this avoids. ==== */
+  const esc = (t) => String(t).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/"/g, "&quot;");
+  function lessonAbout(o) {
+    document.getElementById(o.stage).innerHTML =
+      '<div class="ovw"><h3 class="ovw-h">By the end of this lesson you will be able to&hellip;</h3>' +
+      '<ol class="ovw-list">' + o.about.map((t) => '<li>' + esc(t) + '</li>').join('') + '</ol>' +
+      '<div class="bigbtns"><button type="button" class="big small" id="' + o.stage + 'go">Got it, let\'s begin &#10003;</button></div></div>';
+    document.getElementById(o.stage + 'go').addEventListener('click', () => {
+      document.getElementById(o.stage + 'go').disabled = true;
+      finish(o.finish, o.done);
+    });
+  }
 
+  function lessonLecture(o) {
+    const parts = o.parts || [];
+    let k = 0;
+    const id = o.stage + 'l';
+    function paint() {
+      const p = parts[k];
+      document.getElementById(o.stage).innerHTML =
+        '<div class="lec"><p class="phase">Part ' + (k + 1) + ' of ' + parts.length + '</p>' +
+        '<h3 class="lec-h">' + esc(p.title) + '</h3><p class="lec-p">' + esc(p.say) + '</p>' +
+        '<div class="bigbtns">' +
+        '<button type="button" class="big small teal" id="' + id + 'hear">&#128266; Listen</button>' +
+        (k > 0 ? '<button type="button" class="big small ghost" id="' + id + 'back">&#9664; Last part</button>' : '') +
+        '<button type="button" class="big small" id="' + id + 'next">' + (k + 1 < parts.length ? 'Next part &#9654;' : 'I heard it all &#10003;') + '</button>' +
+        '</div><p class="lec-note">Read aloud by the lesson\'s voice. There is no video for this lesson yet.</p></div>';
+      document.getElementById(id + 'hear').addEventListener('click', () => say(p.title + '. ' + p.say));
+      if (k > 0) document.getElementById(id + 'back').addEventListener('click', () => { k--; paint(); say(parts[k].title + '. ' + parts[k].say); });
+      document.getElementById(id + 'next').addEventListener('click', () => {
+        if (k + 1 < parts.length) { k++; paint(); say(parts[k].title + '. ' + parts[k].say); }
+        else { finish(o.finish, o.done); }
+      });
+    }
+    if (!parts.length) return;
+    paint();
+  }
+
+  function lessonWords(o) {
+    const items = o.words || [];
+    const heard = new Set();
+    let open = -1;
+    const id = o.stage + 'w';
+    function paintGrid() {
+      document.getElementById(o.stage).innerHTML =
+        '<div class="cardsgrid" id="' + id + 'g">' + items.map((w, k) =>
+          '<button type="button" class="tapcard' + (heard.has(k) ? ' heard' : '') + '" data-k="' + k + '">' +
+          '<span class="cpic" aria-hidden="true">' + w.pic + '</span>' + esc(w.w) + '</button>').join('') + '</div>' +
+        '<div class="wordpanel" id="' + id + 'p"' + (open < 0 ? ' hidden' : '') + '></div>' +
+        '<div class="bigbtns" id="' + id + 'go" style="' + (heard.size === items.length ? '' : 'display:none') + '">' +
+        '<button type="button" class="big small" id="' + id + 'quiz">Show I know them &#9654;</button></div>';
+      if (open >= 0) paintPanel();
+      document.getElementById(id + 'g').addEventListener('click', (e) => {
+        const b = e.target.closest('.tapcard'); if (!b) return;
+        open = Number(b.dataset.k); heard.add(open);
+        paintGrid();
+        const w = items[open];
+        say(w.w + '. ' + w.meaning + ' ' + (w.uses[0] || ''));
+      });
+      if (heard.size === items.length) {
+        const goBtn = document.getElementById(id + 'quiz');
+        if (goBtn) goBtn.addEventListener('click', () => check());
+      }
+    }
+    function paintPanel() {
+      const w = items[open];
+      const p = document.getElementById(id + 'p');
+      p.hidden = false;
+      p.innerHTML = '<div class="wp-head"><span class="wp-pic" aria-hidden="true">' + w.pic + '</span>' +
+        '<div><p class="wp-word">' + esc(w.w) + '</p><p class="wp-meaning">' + esc(w.meaning) + '</p></div></div>' +
+        '<p class="wp-uses-h">Use it</p><ul class="wp-uses">' + (w.uses || []).map((u) => '<li>' + esc(u) + '</li>').join('') + '</ul>' +
+        '<div class="bigbtns"><button type="button" class="big small teal" id="' + id + 'h">&#128266; Hear it again</button></div>';
+      document.getElementById(id + 'h').addEventListener('click', () => say(w.w + '. ' + w.meaning + ' ' + (w.uses || []).join(' ')));
+    }
+    function check() {
+      const order = shuffle(items.map((_, k) => k));
+      let i = 0, right = 0, lock = false;
+      function draw() {
+        lock = false;
+        const k = order[i], w = items[k];
+        const others = shuffle(items.map((_, j) => j).filter((j) => j !== k)).slice(0, Math.min(2, items.length - 1));
+        const opts = shuffle([k].concat(others));
+        document.getElementById(o.stage).innerHTML =
+          '<div class="mw"><p class="lec-p">Which word means: <b>' + esc(w.meaning) + '</b></p>' +
+          '<div class="wordbtns" id="' + id + 'ch">' + opts.map((j) =>
+            '<button type="button" class="wordbtn" data-ok="' + (j === k ? 1 : 0) + '">' +
+            '<span class="wbpic" aria-hidden="true">' + items[j].pic + '</span>' + esc(items[j].w) + '</button>').join('') + '</div>' +
+          '<p class="lec-note" id="' + id + 'fb"></p></div>';
+        say('Which word means: ' + w.meaning);
+        document.getElementById(id + 'ch').addEventListener('click', (e) => {
+          const b = e.target.closest('.wordbtn'); if (!b || lock) return;
+          lock = true;
+          const ok = b.dataset.ok === '1';
+          document.getElementById(id + 'ch').querySelectorAll('.wordbtn').forEach((c) => { c.disabled = true; if (c.dataset.ok === '1') c.classList.add('right'); });
+          if (!ok) b.classList.add('wrong'); else right++;
+          const msg = ok ? cheer() + ' ' + w.w + '.' : 'That word is ' + w.w + '. ' + w.meaning;
+          document.getElementById(id + 'fb').textContent = msg; say(msg);
+          i++;
+          setTimeout(() => {
+            if (i >= items.length) {
+              document.getElementById(o.stage).innerHTML = '<div class="mw"><p class="lec-p">You know ' + right + ' of ' + items.length + ' math words.</p></div>';
+              finish(o.finish, o.done);
+            } else draw();
+          }, 2200);
+        });
+      }
+      draw();
+    }
+    paintGrid();
+  }
+
+  lessonAbout({ stage: 'stageOvw', about: ["Count up to 20 things, touching each one once.", "Say how many you see without counting them.", "Count in twos and in tens.", "Say whether a number is odd or even.", "Read and write numbers up to 20.", "Put numbers in order and say which is more."], finish: 0, done: "Let's begin." });
+  lessonLecture({ stage: 'stageLec', parts: [{ title: "Counting carefully", say: "Touch each thing once as you count it, so you never count the same one twice or miss one out." }, { title: "Seeing without counting", say: "Some small groups you can just see, without counting one by one - three dots in a triangle is still three, at a glance." }, { title: "Odd and even", say: "Pair the things up. If every one has a partner, the number is even. If one is left over, it is odd." }], finish: 1, done: "You have heard the whole lesson. Now do it yourself." });
+  lessonWords({ stage: 'stageMw', words: [{ w: "odd number", pic: "🔵", meaning: "A number that always has one left over when you pair it up.", uses: ["7 is an odd number - pair them up and one is left over."] }, { w: "even number", pic: "🔴", meaning: "A number that pairs up exactly, with nobody left out.", uses: ["8 is an even number - four pairs, nobody left out."] }, { w: "zero", pic: "0️⃣", meaning: "The number for none at all.", uses: ["Zero beans means there are none at all."] }, { w: "ordinal number", pic: "🥇", meaning: "A number that says where something is in a line, like first or second.", uses: ["The winner is first, an ordinal number."] }, { w: "estimate", pic: "🎲", meaning: "A sensible guess you make before you count.", uses: ["Estimate how many beans are in the jar before you count them."] }, { w: "number line", pic: "📏", meaning: "A line of numbers in order, so you can see which one is bigger.", uses: ["Find 12 and 15 on the number line and say which is bigger."] }], finish: 2, done: "You know the math words of this lesson." });
   show(0, false);
 
   /* ================= the two header bars =================
@@ -4563,12 +4682,45 @@
   .twm-ch { margin-top: 12px; }
   .twm-sc { margin: 10px 0 0; }
 </style>
-<style>/* ehel-g1-vocabulary - see add-vocabulary.py */
-  #vocab { margin: 18px auto 0; max-width: 46ch; text-align: left; }
-  .vc-head { font-size: 17px; font-weight: 700; margin: 0 0 4px; }
-  .vc-sub { font-size: 13.5px; color: var(--muted, #666); margin: 0 0 12px; line-height: 1.5; }
-  .vc-list { margin: 0; }
-  .vc-row { padding: 9px 0; border-top: 1px solid var(--line, #ddd); }
-  .vc-row dt { margin: 0 0 3px; font-size: 15px; font-weight: 700; }
-  .vc-row dd { margin: 0; font-size: 14px; line-height: 1.45; color: var(--ink, #222); }
+
+<style>/* ehel-g1-lesson-opener - see add-lesson-opener.py */
+  .ovw { width: 100%; max-width: 34em; margin: 0 auto; text-align: center; }
+  .ovw-h { font-size: 19px; margin: 0 0 12px; }
+  .ovw-list { margin: 0; padding-left: 26px; display: flex; flex-direction: column; gap: 11px;
+    font-size: 19px; text-align: left; }
+  .ovw-list li::marker { color: var(--teal); font-weight: 800; }
+  .lec, .mw { width: 100%; max-width: 36em; margin: 0 auto; display: flex; flex-direction: column;
+    align-items: center; gap: 10px; text-align: center; }
+  .phase { color: var(--teal); font-weight: 800; font-size: 12.5px; letter-spacing: .1em;
+    text-transform: uppercase; }
+  .lec-h { font-weight: 800; font-size: clamp(21px, 4vw, 26px); margin: 0; }
+  .lec-p { margin: 0; font-size: 19px; line-height: 1.55; max-width: 34em; }
+  .lec-note { margin: 4px 0 0; color: var(--muted); font-size: 13.5px; }
+  .cardsgrid { display: grid; grid-template-columns: repeat(auto-fit, minmax(128px, 1fr)); gap: 12px;
+    width: 100%; max-width: 640px; }
+  .tapcard { display: flex; flex-direction: column; align-items: center; gap: 6px; padding: 14px 8px 12px;
+    border-radius: 18px; border: 3px solid var(--line); background: var(--card); color: var(--ink);
+    font-weight: 800; font-size: 17px; line-height: 1.2; transition: transform 120ms ease, border-color 120ms ease; }
+  .tapcard .cpic { font-size: clamp(40px, 8vw, 56px); line-height: 1.1; }
+  .tapcard:active { transform: scale(0.96); }
+  .tapcard.heard { border-color: var(--teal); background: var(--teal-soft); }
+  .tapcard.heard::after { content: "\2713"; color: var(--good); font-size: 15px; }
+  .wordpanel { width: 100%; max-width: 560px; padding: 16px 18px; border-radius: 20px;
+    border: 3px solid var(--teal); background: var(--card); text-align: left; }
+  .wp-head { display: flex; align-items: center; gap: 16px; }
+  .wp-pic { font-size: 40px; }
+  .wp-word { margin: 0; font-weight: 800; font-size: 28px; }
+  .wp-meaning { margin: 4px 0 0; font-size: 17.5px; line-height: 1.45; }
+  .wp-uses-h { margin: 12px 0 4px; color: var(--teal); font-weight: 800; font-size: 12.5px;
+    letter-spacing: .1em; text-transform: uppercase; }
+  .wp-uses { margin: 0 0 10px; padding-left: 20px; display: flex; flex-direction: column; gap: 5px;
+    font-size: 16.5px; font-style: italic; }
+  .wordbtns { display: flex; gap: 12px; flex-wrap: wrap; justify-content: center; }
+  .wordbtn { min-width: 118px; padding: 12px 18px; border-radius: 18px; border: 3px solid var(--line);
+    background: var(--card); color: var(--ink); font-weight: 800; cursor: pointer; }
+  .wordbtn .wbpic { display: block; font-size: 40px; line-height: 1.15; }
+  .wordbtn:active { transform: scale(0.96); }
+  .wordbtn.right { background: var(--good-soft); border-color: var(--good); }
+  .wordbtn.wrong { background: var(--bad-soft); border-color: var(--bad); }
+  .wordbtn:disabled { cursor: default; }
 </style>

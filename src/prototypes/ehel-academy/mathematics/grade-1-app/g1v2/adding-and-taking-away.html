@@ -776,10 +776,28 @@
 
   <div class="eh-quiet" id="ehQuiet" role="status" aria-live="polite" hidden><span class="eh-quiet-msg"></span><button type="button" class="eh-quiet-ok">OK</button></div>
   <div class="deck" id="deck" role="main">
+    <!-- STEP 0a: what this lesson is about -->
+    <section class="slide" data-say="By the end of this lesson you will be able to: Put two groups together to add them; take away by counting back; find how many more one group has than another; know the pairs of numbers that make 10; know your doubles up to double 10; name the coins we use.">
+      <div class="slide-head"><span class="n">1</span><h2>What this lesson is about</h2></div>
+      <div class="say"><button type="button" class="speak" aria-label="Read it to me">&#128266;</button><span id="askOvw">By the end of this lesson you will be able to: Put two groups together to add them; take away by counting back; find how many more one group has than another; know the pairs of numbers that make 10; know your doubles up to double 10; name the coins we use.</span></div>
+      <div class="stage" id="stageOvw"></div>
+    </section>
+    <!-- STEP 0b: unit lecture -->
+    <section class="slide" data-say="Watch the lesson told in parts, by the voice.">
+      <div class="slide-head"><span class="n">2</span><h2>Unit lecture</h2></div>
+      <div class="say"><button type="button" class="speak" aria-label="Read it to me">&#128266;</button><span id="askLec">Watch the lesson told in parts, by the voice.</span></div>
+      <div class="stage" id="stageLec"></div>
+    </section>
+    <!-- STEP 0c: math words -->
+    <section class="slide" data-say="Tap each word to hear what it means and how to use it. Then show you know them.">
+      <div class="slide-head"><span class="n">3</span><h2>Math words</h2></div>
+      <div class="say"><button type="button" class="speak" aria-label="Read it to me">&#128266;</button><span id="askMw">Tap each word to hear what it means and how to use it. Then show you know them.</span></div>
+      <div class="stage" id="stageMw"></div>
+    </section>
     <!-- 1  1Ni.02, 1Ni.05  Adding -->
     <section class="slide" data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>Adding is putting two groups together and finding how many there are altogether.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>Three counters here and two counters there.</s><s>Push them together into one group.</s><s>Now count the whole lot.</s><s>One, two, three, four, five.</s><s>Three and two make five.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="empathetic" styledegree="1.3"><prosody rate="-6%"><s>Children count one group and forget to carry on into the other, so they answer with just one part.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>So push the groups together first, then count every counter in the new group.</s></mstts:express-as>' data-say="Put the two groups together. How many altogether? Tap the answer.">
       <div class="eh-warm" id="ehWarm"><p class="eh-warm-h">Warm up</p><div class="eh-warm-say"><button type="button" class="speak" aria-label="Read it to me">&#128266;</button><span class="eh-warm-q"></span></div><div class="choices eh-warm-ch"></div><p class="fb" role="status" aria-live="polite"></p></div>
-      <div class="slide-head"><span class="n">1</span><h2>Adding</h2></div>
+      <div class="slide-head"><span class="n">4</span><h2>Adding</h2></div>
       <div class="say"><button type="button" class="speak" aria-label="Read it to me">🔊</button><span>Put the two groups together. How many <b>altogether</b>? Tap the answer.</span></div>
       <details class="kit"><summary>For the grown-up: what to have to hand</summary><p>Up to 20 small things and a cup to hide some under, plus a few coins. Hiding some of ten and asking how many are hidden is the whole of the number-bond step, done for real.</p></details>
       <div class="stage">
@@ -793,7 +811,7 @@
     </section>
 <!-- 2  1Ni.03, 1Ni.05  Taking away -->
 <section class="slide" data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>Taking away means starting with a group and removing some of it.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>Seven counters.</s><s>Tap three of them and they are crossed out.</s><s>Now count only the ones without a line through them.</s><s>Four left.</s><s>Seven take away three is four.</s><s>There is a second way to reach that answer, and it is called counting back.</s><s>Start at seven and count back three.</s><s>Six.</s><s>Five.</s><s>Four.</s><s>Taking away and counting back are two ways of doing the same subtraction.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="empathetic" styledegree="1.3"><prosody rate="-6%"><s>Children count the crossed ones and answer with those.</s><s>The crossed ones are the ones that have gone.</s><s>The answer is what is still there.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>So cross out, then count only the ones still standing.</s></mstts:express-as>' data-say="Take some away. Tap the counters to cross them out.">
-      <div class="slide-head"><span class="n">2</span><h2>Taking away</h2></div>
+      <div class="slide-head"><span class="n">5</span><h2>Taking away</h2></div>
       <div class="say"><button type="button" class="speak" aria-label="Read it to me">🔊</button><span id="say8">Tap the counters to cross them out.</span></div>
       <div class="stage">
         <div class="bignum" id="sub8" style="font-size:clamp(40px,9vw,64px)"></div>
@@ -805,7 +823,7 @@
     </section>
 <!-- 3  1Ni.03  How many more? -->
 <section class="slide" data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>How many more is a question about the difference between two rows.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>Line the rows up so each thing in the top row has one underneath it.</s><s>Some at the end of the longer row have nobody below them.</s><s>Count those.</s><s>That is how many more.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="empathetic" styledegree="1.3"><prosody rate="-6%"><s>Children add the two rows together, because the word more sounds like adding.</s><s>This is not adding.</s><s>It is finding the gap between them.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>So pair them off, then count only the ones left over.</s></mstts:express-as>' data-say="Two rows. Match them up in pairs, and the ones left over tell you how many more.">
-      <div class="slide-head"><span class="n">3</span><h2>How many more?</h2></div>
+      <div class="slide-head"><span class="n">6</span><h2>How many more?</h2></div>
       <div class="say"><button type="button" class="speak" aria-label="Read it to me">🔊</button><span id="saydf">Press <b>Match them up</b>. The ones with no partner are the <b>difference</b>.</span></div>
       <div class="stage">
         <div class="pairs" id="pairsdf"></div>
@@ -817,7 +835,7 @@
     </section>
 <!-- 4  1Ni.04  Making 10 -->
 <section class="slide" data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>Two numbers that make ten together are called a number bond.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>Ten friends in a row.</s><s>Tap between them to split them into two groups.</s><s>Split after four and you have four and six.</s><s>Four and six make ten.</s><s>Split after seven and you get seven and three.</s><s>Also ten.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="empathetic" styledegree="1.3"><prosody rate="-6%"><s>Children think there is only one right way to split them.</s><s>There are lots, and every one of them is a real bond as long as both parts add to ten.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>So split them anywhere, then count each side and check they make ten together.</s></mstts:express-as>' data-say="Ten friends in a row. Tap where to split them. Two numbers that make ten are a number bond.">
-      <div class="slide-head"><span class="n">4</span><h2>Making 10</h2></div>
+      <div class="slide-head"><span class="n">7</span><h2>Making 10</h2></div>
       <div class="say"><button type="button" class="speak" aria-label="Read it to me">🔊</button><span>Ten in a row. Tap where to <b>split</b> them. Find 5 different ways to make 10.</span></div>
       <div class="stage">
         <div class="bondbar" id="bond9"></div>
@@ -828,7 +846,7 @@
     </section>
 <!-- 5  1Ni.05  Through 10 -->
 <section class="slide" data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>When you go past ten, it helps to stop at ten on the way.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>Take eight add five.</s><s>Go up to ten first.</s><s>Eight needs two to reach ten, and that leaves three of the five still to add.</s><s>Ten and three is thirteen.</s><s>You have gone through ten instead of counting on five times.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="empathetic" styledegree="1.3"><prosody rate="-6%"><s>Children count on in ones and lose their place somewhere in the middle, especially past ten.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>So ask how many to reach ten, use them up, then add what is left over.</s></mstts:express-as>' data-say="Adding and taking away with bigger numbers. First tap the answer. Then we will go through ten together.">
-      <div class="slide-head"><span class="n">5</span><h2>Through 10</h2></div>
+      <div class="slide-head"><span class="n">8</span><h2>Through 10</h2></div>
       <div class="say"><button type="button" class="speak" aria-label="Read it to me">🔊</button><span id="saym">Bigger sums. First tap the answer. Then we go <b>through 10</b> together, one counter at a time.</span></div>
       <div class="stage">
         <div class="bignum" id="sentm" style="font-size:clamp(40px,9vw,64px)"></div>
@@ -845,7 +863,7 @@
     </section>
 <!-- 6  1Ni.06  Doubles -->
 <section class="slide" data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>Doubling means having the same amount again.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>A ladybird has the same number of spots on each side.</s><s>Three on the left, three on the right.</s><s>Count them all.</s><s>Six.</s><s>So double three is six.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="empathetic" styledegree="1.3"><prosody rate="-6%"><s>Children add one more instead of the same again.</s><s>Double three is not four.</s><s>It is three and another three.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>So count one side, then count the same number again on the other.</s></mstts:express-as>' data-say="A ladybird has the same spots on both sides. Double means the same again.">
-      <div class="slide-head"><span class="n">6</span><h2>Doubles</h2></div>
+      <div class="slide-head"><span class="n">9</span><h2>Doubles</h2></div>
       <div class="say"><button type="button" class="speak" aria-label="Read it to me">🔊</button><span id="say10">A ladybird has the <b>same</b> spots on both sides. Double means the same again.</span></div>
       <div class="stage">
         <svg class="bug" id="bug10" viewBox="0 0 260 170" aria-hidden="true"></svg>
@@ -857,7 +875,7 @@
     </section>
 <!-- 7  1Ni.06  Doubles to 20 -->
 <section class="slide" data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>Bigger doubles are easier if you see them as a full ten and some left over.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>Double seven.</s><s>Seven on one side, seven on the other.</s><s>Watch the frames fill.</s><s>The first frame fills up to ten, and four counters land in the second.</s><s>So double seven is ten and four, which is fourteen.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="empathetic" styledegree="1.3"><prosody rate="-6%"><s>Children count all fourteen in ones and lose track halfway.</s><s>Filling the ten first gives you something solid to build on.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>So fill to ten, then count what is left over on top.</s></mstts:express-as>' data-say="Tap a double to see it in the frames. Double seven is fourteen: that is ten and four.">
-      <div class="slide-head"><span class="n">7</span><h2>Doubles to 20</h2></div>
+      <div class="slide-head"><span class="n">10</span><h2>Doubles to 20</h2></div>
       <div class="say"><button type="button" class="speak" aria-label="Read it to me">🔊</button><span id="sayd">Tap a double to see it in the frames. Find <b>5</b> doubles, then use them to add.</span></div>
       <div class="stage">
         <div class="choices" id="dpick" style="gap:8px"></div>
@@ -871,7 +889,7 @@
     </section>
 <!-- 8  1Nm.01  Money to 20 -->
 <section class="slide" data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>Coins are worth different amounts, so you count their value, not how many coins there are.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>Say the price is seven.</s><s>Tap a five coin and the total says five.</s><s>Now tap a two and the total says seven.</s><s>Two coins, but seven altogether, because each coin is worth what is written on it.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="empathetic" styledegree="1.3"><prosody rate="-6%"><s>Children count the coins instead of adding up what they are worth.</s><s>Three coins can be worth less than one bigger coin.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>So watch the total as it climbs, and stop when it reaches the price.</s></mstts:express-as>' data-say="Coins! Tap coins from the purse to pay the price. Watch the total.">
-      <div class="slide-head"><span class="n">8</span><h2>Money to 20</h2></div>
+      <div class="slide-head"><span class="n">11</span><h2>Money to 20</h2></div>
       <div class="say"><button type="button" class="speak" aria-label="Read it to me">🔊</button><span id="saym2">Coins! Tap coins from the <b>purse</b> to pay the price. Watch the total.</span></div>
       <div class="stage">
         <div class="pricetag" id="price25"></div>
@@ -885,7 +903,7 @@
     </section>
 <!-- 9  1Ni.02  Counting on -->
 <section class="slide" data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>You do not have to count everything from one.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>Put the first number in your head.</s><s>Say it, then count on the rest, one at a time.</s><s>Six in your head, then count on three: seven, eight, nine.</s><s>Nine altogether.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="empathetic" styledegree="1.3"><prosody rate="-6%"><s>Children start again from one and count every counter, and they lose their place.</s><s>Start from the number you already know, and it is much quicker.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>So say the bigger number first, then count on with your fingers.</s></mstts:express-as>' data-say="Put the bigger number in your head, then count on. Tap the answer.">
-      <div class="slide-head"><span class="n">9</span><h2>Counting on</h2></div>
+      <div class="slide-head"><span class="n">12</span><h2>Counting on</h2></div>
       <div class="say"><button type="button" class="speak" aria-label="Read it to me">🔊</button><span id="ss9say">Put the first number in your head, then <b>count on</b>. How many <b>altogether</b>?</span></div>
       <div class="stage" id="ss9st"></div>
       <div class="choices" id="ss9ch"></div>
@@ -895,7 +913,7 @@
     </section>
 <!-- 10  1Ni.04  Pairs that make 10 -->
 <section class="slide" data-twm="characterising classifying" data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>Numbers come in pairs that make ten, and it helps to know them by heart.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>A ten frame shows them.</s><s>Seven counters leave three empty spaces, so seven and three make ten.</s><s>One and nine, two and eight, three and seven, four and six, five and five.</s><s>And ten and zero.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="empathetic" styledegree="1.3"><prosody rate="-6%"><s>Children count the counters that are there, when the question asks about the spaces.</s><s>Count the empty spaces instead.</s><s>They are the number you need to make ten.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>So look at the gaps, and say the pair out loud: seven and three make ten.</s></mstts:express-as>' data-say="Ten is a full frame. How many more make ten? Look at the empty spaces.">
-      <div class="slide-head"><span class="n">10</span><h2>Pairs that make 10</h2></div>
+      <div class="slide-head"><span class="n">13</span><h2>Pairs that make 10</h2></div>
       <div class="say"><button type="button" class="speak" aria-label="Read it to me">🔊</button><span id="ss10say">How many more <b>make 10</b>? Look at the empty spaces.</span></div>
       <div class="stage" id="ss10st"></div>
       <div class="choices" id="ss10ch"></div>
@@ -907,7 +925,7 @@
     </section>
 <!-- 11  1Nm.01  Know your coins -->
 <section class="slide" data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>Our money is counted in shillings, and we write sh for short.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>Each coin has a number on it.</s><s>The number tells you how many shillings the coin is worth.</s><s>A ten shilling coin is worth ten, even though it is only one coin.</s><s>Two five shilling coins are worth the same as one ten.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="empathetic" styledegree="1.3"><prosody rate="-6%"><s>Children think more coins always means more money.</s><s>It does not.</s><s>One ten shilling coin is worth more than three two shilling coins, because ten is more than six.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>So read the number on each coin, and add them up before you decide.</s></mstts:express-as>' data-say="Look at the coins. The number on each coin says how many shillings it is worth. Tap the answer.">
-      <div class="slide-head"><span class="n">11</span><h2>Know your coins</h2></div>
+      <div class="slide-head"><span class="n">14</span><h2>Know your coins</h2></div>
       <div class="say"><button type="button" class="speak" aria-label="Read it to me">🔊</button><span id="ss11say">Look at the coins. The number on a <b>coin</b> says how many shillings it is worth.</span></div>
       <div class="stage" id="ss11st"></div>
       <div class="choices" id="ss11ch"></div>
@@ -917,7 +935,7 @@
     </section>
 <!-- 12  1Ni.05  Spot the mistake -->
 <section class="slide" data-twm="critiquing improving" data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>Today you are the checker.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>Somebody has done some maths and told you what they think.</s><s>Sometimes they are right and sometimes they have slipped.</s><s>Do it yourself first, then look at what they said.</s><s>If it does not match, work out WHICH part went wrong.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="empathetic" styledegree="1.3"><prosody rate="-6%"><s>Children often tap the first answer that sounds like a mistake.</s><s>Look again before you tap.</s><s>And some of these are right.</s><s>Saying right when it is right is just as clever as finding a mistake.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>So read what they say, work it out yourself, and tap what went wrong.</s></mstts:express-as>' data-say="Read what each child says. Work it out yourself. Then tap what went wrong.">
-      <div class="slide-head"><span class="n">12</span><h2>Spot the mistake</h2></div>
+      <div class="slide-head"><span class="n">15</span><h2>Spot the mistake</h2></div>
       <div class="say"><button type="button" class="speak" aria-label="Read it to me">🔊</button><span id="sm12say">Read what each child says, work it out yourself, then tap what went wrong.</span></div>
       <div class="stage" id="sm12st"></div>
       <div class="choices" id="sm12ch"></div>
@@ -927,7 +945,7 @@
     </section>
 <!-- 13  1Ni.05  Story problems -->
 <section class="slide" data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>A story problem is maths hiding inside a story.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>Listen to the whole story first, right to the end.</s><s>Then ask yourself one question.</s><s>Am I putting things together, or taking them away?</s><s>Putting together means adding.</s><s>Taking away, or finding how many more, means subtracting.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="empathetic" styledegree="1.3"><prosody rate="-6%"><s>Children often grab the two numbers and add them, whatever the story said.</s><s>That is why the story comes first and the numbers come second.</s><s>Say the story back to yourself in your own words before you choose.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>So listen to the story, decide what is happening, then tap your answer.</s></mstts:express-as>' data-say="Listen to the whole story. Work out the answer. Then tap it.">
-      <div class="slide-head"><span class="n">13</span><h2>Story problems</h2></div>
+      <div class="slide-head"><span class="n">16</span><h2>Story problems</h2></div>
       <div class="say"><button type="button" class="speak" aria-label="Read it to me">🔊</button><span id="wp13say">Read the story, work out the answer, then tap it.</span></div>
       <div class="stage" id="wp13st"></div>
       <div class="choices" id="wp13ch"></div>
@@ -937,7 +955,7 @@
     </section>
 <!-- 14  1Ni.05  Will it always work? -->
 <section class="slide" data-twm="specialising generalising" data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>Somebody has an idea about numbers. Your job is to test it.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>Testing an idea is not the same as agreeing with it.</s><s>You try it on one example, then on another.</s><s>If it works both times, you ask the big question: does it ALWAYS work?</s><s>And if you find even one example where it does not work, then it does not always work.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="empathetic" styledegree="1.3"><prosody rate="-6%"><s>Children often decide after one try.</s><s>One try is not enough to say always.</s><s>But one try IS enough to say NOT always, if that try breaks the idea.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>So test it twice, then say whether it always works.</s></mstts:express-as>' data-say="Somebody has an idea. Test it on each example, then say whether it always works.">
-      <div class="slide-head"><span class="n">14</span><h2>Will it always work?</h2></div>
+      <div class="slide-head"><span class="n">17</span><h2>Will it always work?</h2></div>
       <div class="say"><button type="button" class="speak" aria-label="Read it to me">🔊</button><span id="at14say">Test the idea on each example. Then say whether it always works.</span></div>
       <div class="stage" id="at14st"></div>
       <div class="choices" id="at14ch"></div>
@@ -975,7 +993,6 @@
         <div class="stickers" id="stickers"></div>
         <p class="fb" id="fb13" role="status" aria-live="polite"></p>
         <div class="sc-wrap" id="selfcheck"></div>
-      <div id="vocab"></div>
         <div class="bigbtns"><button type="button" class="big small teal" id="restart">Play again</button></div>
       </div>
     </section>
@@ -2357,7 +2374,7 @@
   let r7 = 0, right7 = 0, lock7 = false; const ROUNDS7 = 5;
   function round7() {
     lock7 = false; $("fb7").textContent = ""; $("fb7").className = "fb";
-    if (r7 >= ROUNDS7) { $("frames7").innerHTML = ""; $("ch7").innerHTML = ""; $("nl7").innerHTML = ""; $("sum7").textContent = ""; $("fb7").className = "fb good"; $("fb7").textContent = "You added " + right7 + " of " + ROUNDS7 + "!"; finish(0, "You can add. Well done!"); return; }
+    if (r7 >= ROUNDS7) { $("frames7").innerHTML = ""; $("ch7").innerHTML = ""; $("nl7").innerHTML = ""; $("sum7").textContent = ""; $("fb7").className = "fb good"; $("fb7").textContent = "You added " + right7 + " of " + ROUNDS7 + "!"; finish(3, "You can add. Well done!"); return; }
     const a = rnd(1, 10), b = rnd(1, Math.min(10, 20 - a)), s = a + b;
     $("score7").textContent = "Sum " + (r7 + 1) + " of " + ROUNDS7;
     $("sum7").innerHTML = a + ' <span style="color:var(--teal)">+</span> ' + b + ' <span style="color:var(--muted)">= ?</span>';
@@ -2385,7 +2402,7 @@
   let r8 = 0, right8 = 0, n8 = 0, k8 = 0, crossed8 = 0; const ROUNDS8 = 4;
   function round8() {
     $("fb8").textContent = ""; $("fb8").className = "fb"; $("next8").hidden = true; crossed8 = 0;
-    if (r8 >= ROUNDS8) { $("frames8").innerHTML = ""; $("sub8").textContent = ""; $("fb8").className = "fb good"; $("fb8").textContent = "You took away " + ROUNDS8 + " times!"; finish(1, "You can take away. Well done!"); return; }
+    if (r8 >= ROUNDS8) { $("frames8").innerHTML = ""; $("sub8").textContent = ""; $("fb8").className = "fb good"; $("fb8").textContent = "You took away " + ROUNDS8 + " times!"; finish(4, "You can take away. Well done!"); return; }
     n8 = rnd(5, 20); k8 = rnd(1, Math.min(9, n8 - 1));
     $("score8").textContent = "Take away " + (r8 + 1) + " of " + ROUNDS8;
     $("sub8").innerHTML = n8 + ' <span style="color:var(--teal)">−</span> ' + k8 + ' <span style="color:var(--muted)">= ?</span>';
@@ -2460,7 +2477,7 @@
         $("fbdf").className = "fb good";
         $("fbdf").textContent = "You got " + rightDf + " of " + DIFFS.length + ".";
         $("saydf").innerHTML = "Taking away and finding the <b>difference</b> are both subtraction. Here nothing was taken away: you compared two rows.";
-        finish(2, "You can find how many more. Brilliant!");
+        finish(5, "You can find how many more. Brilliant!");
       } else roundDf();
     }, 3000);
   });
@@ -2474,7 +2491,7 @@
     $("pairs9").innerHTML = [...found9].sort((x, y) => x - y).map((a) => '<span class="pair">' + a + " + " + (10 - a) + "</span>").join("");
     const n = found9.size;
     $("fb9").className = "fb " + (n >= 5 ? "good" : ""); $("fb9").textContent = n >= 5 ? "You found " + n + " ways to make 10!" : n ? n + " found. Find " + (5 - n) + " more." : "";
-    if (n >= 5) finish(3, "You found five ways to make ten. Brilliant!");
+    if (n >= 5) finish(6, "You found five ways to make ten. Brilliant!");
   }
   $("bond9").addEventListener("click", (e) => {
     const b = e.target.closest("button"); if (!b) return;
@@ -2487,7 +2504,7 @@
   let rm = 0, am = 0, bm = 0, totm = 0, opm = "+", movedm = 0, lockm = false; const ROUNDSM = 4;
   function roundm() {
     lockm = false; movedm = 0; $("fbm").textContent = ""; $("fbm").className = "fb"; $("workm").innerHTML = ""; $("famm").innerHTML = ""; $("nextm").hidden = true; $("movem").hidden = true;
-    if (rm >= ROUNDSM) { $("sentm").textContent = ""; $("framesm").innerHTML = ""; $("loosem").innerHTML = ""; $("chm").innerHTML = ""; $("fbm").className = "fb good"; $("fbm").textContent = "You went through 10 four times!"; finish(4, "You can add and take away through ten. Brilliant!"); return; }
+    if (rm >= ROUNDSM) { $("sentm").textContent = ""; $("framesm").innerHTML = ""; $("loosem").innerHTML = ""; $("chm").innerHTML = ""; $("fbm").className = "fb good"; $("fbm").textContent = "You went through 10 four times!"; finish(7, "You can add and take away through ten. Brilliant!"); return; }
     opm = rm % 2 === 0 ? "+" : "−";
     if (opm === "+") { am = rnd(5, 9); bm = rnd(11 - am, 9); totm = am + bm; }
     else { totm = rnd(11, 18); bm = rnd(totm - 9, 9); am = totm - bm; }
@@ -2571,7 +2588,7 @@
     d10 = quiz10; paint10();
     $("fb10").className = "fb " + (ok ? "good" : "bad"); $("fb10").textContent = (ok ? cheer() + " " : "") + "Double " + quiz10 + " is " + quiz10 * 2 + ". " + quiz10 + " + " + quiz10 + " = " + quiz10 * 2 + ".";
     say((ok ? cheer() + " " : "") + "double " + WORDS[quiz10] + " is " + WORDS[quiz10 * 2]);
-    if (right10 >= 3) finish(5, "You know your doubles!"); later(ask10, 1600);
+    if (right10 >= 3) finish(8, "You know your doubles!"); later(ask10, 1600);
   });
   paint10(); ask10();
 
@@ -2595,7 +2612,7 @@
     }
   }
   function askNear() {
-    if (askedD >= QUIZD) { nearD = -1; $("dch").innerHTML = ""; $("dfb").className = "fb good"; $("dfb").textContent = "You got " + rightD + " of " + QUIZD + ". Doubles help you add!"; $("sayd").innerHTML = "Doubles help you add: 7 + 8 is double 7 and 1 more."; finish(6, "You know your doubles to twenty, and you can use them to add."); return; }
+    if (askedD >= QUIZD) { nearD = -1; $("dch").innerHTML = ""; $("dfb").className = "fb good"; $("dfb").textContent = "You got " + rightD + " of " + QUIZD + ". Doubles help you add!"; $("sayd").innerHTML = "Doubles help you add: 7 + 8 is double 7 and 1 more."; finish(9, "You know your doubles to twenty, and you can use them to add."); return; }
     nearD = rnd(1, 9); askedD++;
     $("dscore").textContent = "Question " + askedD + " of " + QUIZD;
     const a = nearD, b = nearD + 1, ans = a + b;
@@ -2641,7 +2658,7 @@
   function roundMoney() {
     lock25 = false; tray25 = []; $("fb25").textContent = ""; $("fb25").className = "fb"; $("next25").hidden = true; $("ch25").innerHTML = "";
     $("tray25").classList.remove("over", "done");
-    if (rm2 >= MONEY_ROUNDS.length) { $("price25").innerHTML = ""; $("tray25").hidden = true; $("purse25").hidden = true; $("fb25").className = "fb good"; $("fb25").textContent = "You got " + right25 + " of " + MONEY_ROUNDS.length + ". You can pay and count coins!"; $("saym2").innerHTML = "Coins add up just like counters: 10 and 5 and 2 make 17 shillings."; finish(7, "You can pay with coins and count money to twenty. Brilliant!"); return; }
+    if (rm2 >= MONEY_ROUNDS.length) { $("price25").innerHTML = ""; $("tray25").hidden = true; $("purse25").hidden = true; $("fb25").className = "fb good"; $("fb25").textContent = "You got " + right25 + " of " + MONEY_ROUNDS.length + ". You can pay and count coins!"; $("saym2").innerHTML = "Coins add up just like counters: 10 and 5 and 2 make 17 shillings."; finish(10, "You can pay with coins and count money to twenty. Brilliant!"); return; }
     const R = MONEY_ROUNDS[rm2]; $("score25").textContent = "Coins " + (rm2 + 1) + " of " + MONEY_ROUNDS.length;
     $("tray25").hidden = false;
     if (R.t === "pay") {
@@ -2718,7 +2735,7 @@
       $("q12").textContent = ""; $("pic12").innerHTML = ""; $("ch12").innerHTML = "";
       $("fb12").className = "fb good"; $("fb12").innerHTML = "You got <b>" + right12 + "</b> out of " + CHECK.length + "!";
       $("score12").textContent = right12 === CHECK.length ? "Every single one!" : right12 >= Math.ceil(CHECK.length * 0.75) ? "Nearly all of them!" : "Try the steps again, then come back.";
-      if (right12 >= Math.ceil(CHECK.length * 0.75)) { finish(14, "You got " + right12 + " out of " + CHECK.length + "."); return; }
+      if (right12 >= Math.ceil(CHECK.length * 0.75)) { finish(17, "You got " + right12 + " out of " + CHECK.length + "."); return; }
       retryCheck($("fb12"), $("ch12"), right12, CHECK.length, function () { c12 = 0; right12 = 0; round12(); }); return;
     }
     const q = CHECK[c12];
@@ -2990,7 +3007,7 @@
   });
 
   /* ---- 13: stickers ---- */
-  const STICKERS = [
+  const STICKERS = [["🔎", "What this lesson is about"], ["🎥", "Unit lecture"], ["🗣️", "Math words"], 
     ["➕", "I can add"],
     ["➖", "I can take away"],
     ["↔️", "How many more"],
@@ -3124,23 +3141,125 @@
   })();
 
 
-  /* ==== ehel-g1-vocabulary: Math Words for this lesson ====
-     Same insertion pattern as add-self-check.py: an empty host div on
-     the sticker-shelf slide, populated by this script, never scored. */
-  (function () {
-    const VOCAB = [{ w: "add", d: "Put two groups together to find out how many there are altogether." }, { w: "take away", d: "Start with a group and remove some of it." }, { w: "double", d: "The same amount again, like 3 and 3 more." }, { w: "number bond", d: "Two numbers that add together to make ten." }, { w: "count back", d: "Start at a number and count backwards to take some away." }, { w: "shilling", d: "The money we count in. We write it as sh for short." }];
-    const host = document.getElementById("vocab");
-    if (!host) return;
-    const esc = (t) => String(t).replace(/&/g, "&amp;").replace(/</g, "&lt;")
-      .replace(/"/g, "&quot;");
-    host.innerHTML = '<p class="vc-head">Math Words</p>'
-      + '<p class="vc-sub">Words from this lesson, explained in one line each.</p>'
-      + '<dl class="vc-list">'
-      + VOCAB.map((it) => '<div class="vc-row"><dt>' + esc(it.w) + '</dt><dd>'
-        + esc(it.d) + "</dd></div>").join("")
-      + "</dl>";
-  })();
+  /* ==== ehel-g1-lesson-opener: three shared step functions, ported from Grade 4's own
+     add-lesson-opener.py in the same idiom - data-say for arrival
+     narration (show() already speaks it), plain finish(i, msg), no
+     ONSHOW/ONLEAVE/reportAttempt. esc() IS OWN, not shared, matching
+     every add-*.py tool in this build - see Grade 4's own docstring for
+     the ReferenceError this avoids. ==== */
+  const esc = (t) => String(t).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/"/g, "&quot;");
+  function lessonAbout(o) {
+    document.getElementById(o.stage).innerHTML =
+      '<div class="ovw"><h3 class="ovw-h">By the end of this lesson you will be able to&hellip;</h3>' +
+      '<ol class="ovw-list">' + o.about.map((t) => '<li>' + esc(t) + '</li>').join('') + '</ol>' +
+      '<div class="bigbtns"><button type="button" class="big small" id="' + o.stage + 'go">Got it, let\'s begin &#10003;</button></div></div>';
+    document.getElementById(o.stage + 'go').addEventListener('click', () => {
+      document.getElementById(o.stage + 'go').disabled = true;
+      finish(o.finish, o.done);
+    });
+  }
 
+  function lessonLecture(o) {
+    const parts = o.parts || [];
+    let k = 0;
+    const id = o.stage + 'l';
+    function paint() {
+      const p = parts[k];
+      document.getElementById(o.stage).innerHTML =
+        '<div class="lec"><p class="phase">Part ' + (k + 1) + ' of ' + parts.length + '</p>' +
+        '<h3 class="lec-h">' + esc(p.title) + '</h3><p class="lec-p">' + esc(p.say) + '</p>' +
+        '<div class="bigbtns">' +
+        '<button type="button" class="big small teal" id="' + id + 'hear">&#128266; Listen</button>' +
+        (k > 0 ? '<button type="button" class="big small ghost" id="' + id + 'back">&#9664; Last part</button>' : '') +
+        '<button type="button" class="big small" id="' + id + 'next">' + (k + 1 < parts.length ? 'Next part &#9654;' : 'I heard it all &#10003;') + '</button>' +
+        '</div><p class="lec-note">Read aloud by the lesson\'s voice. There is no video for this lesson yet.</p></div>';
+      document.getElementById(id + 'hear').addEventListener('click', () => say(p.title + '. ' + p.say));
+      if (k > 0) document.getElementById(id + 'back').addEventListener('click', () => { k--; paint(); say(parts[k].title + '. ' + parts[k].say); });
+      document.getElementById(id + 'next').addEventListener('click', () => {
+        if (k + 1 < parts.length) { k++; paint(); say(parts[k].title + '. ' + parts[k].say); }
+        else { finish(o.finish, o.done); }
+      });
+    }
+    if (!parts.length) return;
+    paint();
+  }
+
+  function lessonWords(o) {
+    const items = o.words || [];
+    const heard = new Set();
+    let open = -1;
+    const id = o.stage + 'w';
+    function paintGrid() {
+      document.getElementById(o.stage).innerHTML =
+        '<div class="cardsgrid" id="' + id + 'g">' + items.map((w, k) =>
+          '<button type="button" class="tapcard' + (heard.has(k) ? ' heard' : '') + '" data-k="' + k + '">' +
+          '<span class="cpic" aria-hidden="true">' + w.pic + '</span>' + esc(w.w) + '</button>').join('') + '</div>' +
+        '<div class="wordpanel" id="' + id + 'p"' + (open < 0 ? ' hidden' : '') + '></div>' +
+        '<div class="bigbtns" id="' + id + 'go" style="' + (heard.size === items.length ? '' : 'display:none') + '">' +
+        '<button type="button" class="big small" id="' + id + 'quiz">Show I know them &#9654;</button></div>';
+      if (open >= 0) paintPanel();
+      document.getElementById(id + 'g').addEventListener('click', (e) => {
+        const b = e.target.closest('.tapcard'); if (!b) return;
+        open = Number(b.dataset.k); heard.add(open);
+        paintGrid();
+        const w = items[open];
+        say(w.w + '. ' + w.meaning + ' ' + (w.uses[0] || ''));
+      });
+      if (heard.size === items.length) {
+        const goBtn = document.getElementById(id + 'quiz');
+        if (goBtn) goBtn.addEventListener('click', () => check());
+      }
+    }
+    function paintPanel() {
+      const w = items[open];
+      const p = document.getElementById(id + 'p');
+      p.hidden = false;
+      p.innerHTML = '<div class="wp-head"><span class="wp-pic" aria-hidden="true">' + w.pic + '</span>' +
+        '<div><p class="wp-word">' + esc(w.w) + '</p><p class="wp-meaning">' + esc(w.meaning) + '</p></div></div>' +
+        '<p class="wp-uses-h">Use it</p><ul class="wp-uses">' + (w.uses || []).map((u) => '<li>' + esc(u) + '</li>').join('') + '</ul>' +
+        '<div class="bigbtns"><button type="button" class="big small teal" id="' + id + 'h">&#128266; Hear it again</button></div>';
+      document.getElementById(id + 'h').addEventListener('click', () => say(w.w + '. ' + w.meaning + ' ' + (w.uses || []).join(' ')));
+    }
+    function check() {
+      const order = shuffle(items.map((_, k) => k));
+      let i = 0, right = 0, lock = false;
+      function draw() {
+        lock = false;
+        const k = order[i], w = items[k];
+        const others = shuffle(items.map((_, j) => j).filter((j) => j !== k)).slice(0, Math.min(2, items.length - 1));
+        const opts = shuffle([k].concat(others));
+        document.getElementById(o.stage).innerHTML =
+          '<div class="mw"><p class="lec-p">Which word means: <b>' + esc(w.meaning) + '</b></p>' +
+          '<div class="wordbtns" id="' + id + 'ch">' + opts.map((j) =>
+            '<button type="button" class="wordbtn" data-ok="' + (j === k ? 1 : 0) + '">' +
+            '<span class="wbpic" aria-hidden="true">' + items[j].pic + '</span>' + esc(items[j].w) + '</button>').join('') + '</div>' +
+          '<p class="lec-note" id="' + id + 'fb"></p></div>';
+        say('Which word means: ' + w.meaning);
+        document.getElementById(id + 'ch').addEventListener('click', (e) => {
+          const b = e.target.closest('.wordbtn'); if (!b || lock) return;
+          lock = true;
+          const ok = b.dataset.ok === '1';
+          document.getElementById(id + 'ch').querySelectorAll('.wordbtn').forEach((c) => { c.disabled = true; if (c.dataset.ok === '1') c.classList.add('right'); });
+          if (!ok) b.classList.add('wrong'); else right++;
+          const msg = ok ? cheer() + ' ' + w.w + '.' : 'That word is ' + w.w + '. ' + w.meaning;
+          document.getElementById(id + 'fb').textContent = msg; say(msg);
+          i++;
+          setTimeout(() => {
+            if (i >= items.length) {
+              document.getElementById(o.stage).innerHTML = '<div class="mw"><p class="lec-p">You know ' + right + ' of ' + items.length + ' math words.</p></div>';
+              finish(o.finish, o.done);
+            } else draw();
+          }, 2200);
+        });
+      }
+      draw();
+    }
+    paintGrid();
+  }
+
+  lessonAbout({ stage: 'stageOvw', about: ["Put two groups together to add them.", "Take away by counting back.", "Find how many more one group has than another.", "Know the pairs of numbers that make 10.", "Know your doubles up to double 10.", "Name the coins we use."], finish: 0, done: "Let's begin." });
+  lessonLecture({ stage: 'stageLec', parts: [{ title: "Adding", say: "Putting two groups together and counting them all makes an addition - if you have 4 and 3 more, count on from 4: 5, 6, 7." }, { title: "Taking away and counting back", say: "Start at the bigger number and count backwards to take some away - start at 8, count back 3, land on 5." }, { title: "Bonds to 10 and doubles", say: "Two numbers that add together to make 10 are a number bond - 6 and 4 make 10. A double is the same amount again, like 3 and 3 more." }], finish: 1, done: "You have heard the whole lesson. Now do it yourself." });
+  lessonWords({ stage: 'stageMw', words: [{ w: "add", pic: "➕", meaning: "Put two groups together to find out how many there are altogether.", uses: ["Add 4 counters and 3 counters together."] }, { w: "take away", pic: "➖", meaning: "Start with a group and remove some of it.", uses: ["Take away 3 counters from a group of 8."] }, { w: "double", pic: "2️⃣", meaning: "The same amount again, like 3 and 3 more.", uses: ["Double 5 is 10."] }, { w: "number bond", pic: "🔗", meaning: "Two numbers that add together to make ten.", uses: ["6 and 4 are a number bond to ten."] }, { w: "count back", pic: "⏪", meaning: "Start at a number and count backwards to take some away.", uses: ["Count back 3 from 8 to take some away."] }, { w: "shilling", pic: "💰", meaning: "The money we count in. We write it as sh for short.", uses: ["Two shillings and three more make five shillings."] }], finish: 2, done: "You know the math words of this lesson." });
   show(0, false);
 
   /* ================= the two header bars =================
@@ -4048,12 +4167,45 @@
   .twm-ch { margin-top: 12px; }
   .twm-sc { margin: 10px 0 0; }
 </style>
-<style>/* ehel-g1-vocabulary - see add-vocabulary.py */
-  #vocab { margin: 18px auto 0; max-width: 46ch; text-align: left; }
-  .vc-head { font-size: 17px; font-weight: 700; margin: 0 0 4px; }
-  .vc-sub { font-size: 13.5px; color: var(--muted, #666); margin: 0 0 12px; line-height: 1.5; }
-  .vc-list { margin: 0; }
-  .vc-row { padding: 9px 0; border-top: 1px solid var(--line, #ddd); }
-  .vc-row dt { margin: 0 0 3px; font-size: 15px; font-weight: 700; }
-  .vc-row dd { margin: 0; font-size: 14px; line-height: 1.45; color: var(--ink, #222); }
+
+<style>/* ehel-g1-lesson-opener - see add-lesson-opener.py */
+  .ovw { width: 100%; max-width: 34em; margin: 0 auto; text-align: center; }
+  .ovw-h { font-size: 19px; margin: 0 0 12px; }
+  .ovw-list { margin: 0; padding-left: 26px; display: flex; flex-direction: column; gap: 11px;
+    font-size: 19px; text-align: left; }
+  .ovw-list li::marker { color: var(--teal); font-weight: 800; }
+  .lec, .mw { width: 100%; max-width: 36em; margin: 0 auto; display: flex; flex-direction: column;
+    align-items: center; gap: 10px; text-align: center; }
+  .phase { color: var(--teal); font-weight: 800; font-size: 12.5px; letter-spacing: .1em;
+    text-transform: uppercase; }
+  .lec-h { font-weight: 800; font-size: clamp(21px, 4vw, 26px); margin: 0; }
+  .lec-p { margin: 0; font-size: 19px; line-height: 1.55; max-width: 34em; }
+  .lec-note { margin: 4px 0 0; color: var(--muted); font-size: 13.5px; }
+  .cardsgrid { display: grid; grid-template-columns: repeat(auto-fit, minmax(128px, 1fr)); gap: 12px;
+    width: 100%; max-width: 640px; }
+  .tapcard { display: flex; flex-direction: column; align-items: center; gap: 6px; padding: 14px 8px 12px;
+    border-radius: 18px; border: 3px solid var(--line); background: var(--card); color: var(--ink);
+    font-weight: 800; font-size: 17px; line-height: 1.2; transition: transform 120ms ease, border-color 120ms ease; }
+  .tapcard .cpic { font-size: clamp(40px, 8vw, 56px); line-height: 1.1; }
+  .tapcard:active { transform: scale(0.96); }
+  .tapcard.heard { border-color: var(--teal); background: var(--teal-soft); }
+  .tapcard.heard::after { content: "\2713"; color: var(--good); font-size: 15px; }
+  .wordpanel { width: 100%; max-width: 560px; padding: 16px 18px; border-radius: 20px;
+    border: 3px solid var(--teal); background: var(--card); text-align: left; }
+  .wp-head { display: flex; align-items: center; gap: 16px; }
+  .wp-pic { font-size: 40px; }
+  .wp-word { margin: 0; font-weight: 800; font-size: 28px; }
+  .wp-meaning { margin: 4px 0 0; font-size: 17.5px; line-height: 1.45; }
+  .wp-uses-h { margin: 12px 0 4px; color: var(--teal); font-weight: 800; font-size: 12.5px;
+    letter-spacing: .1em; text-transform: uppercase; }
+  .wp-uses { margin: 0 0 10px; padding-left: 20px; display: flex; flex-direction: column; gap: 5px;
+    font-size: 16.5px; font-style: italic; }
+  .wordbtns { display: flex; gap: 12px; flex-wrap: wrap; justify-content: center; }
+  .wordbtn { min-width: 118px; padding: 12px 18px; border-radius: 18px; border: 3px solid var(--line);
+    background: var(--card); color: var(--ink); font-weight: 800; cursor: pointer; }
+  .wordbtn .wbpic { display: block; font-size: 40px; line-height: 1.15; }
+  .wordbtn:active { transform: scale(0.96); }
+  .wordbtn.right { background: var(--good-soft); border-color: var(--good); }
+  .wordbtn.wrong { background: var(--bad-soft); border-color: var(--bad); }
+  .wordbtn:disabled { cursor: default; }
 </style>

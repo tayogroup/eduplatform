@@ -622,10 +622,28 @@
   <div class="eh-quiet" id="ehQuiet" role="status" aria-live="polite" hidden><span class="eh-quiet-msg"></span><button type="button" class="eh-quiet-ok">OK</button></div>
   <div class="deck" id="deck" role="main">
 
+    <!-- STEP 0a: what this lesson is about -->
+    <section class="slide" data-say="By the end of this lesson you will be able to: Name flat shapes and say how many sides they have; name solid shapes and count their faces; tell a flat shape from a solid shape; say which of two things is longer; say which of two things is heavier; say which container holds more.">
+      <div class="slide-head"><span class="n">1</span><h2>What this lesson is about</h2></div>
+      <div class="say"><button type="button" class="speak" aria-label="Read it to me">&#128266;</button><span id="askOvw">By the end of this lesson you will be able to: Name flat shapes and say how many sides they have; name solid shapes and count their faces; tell a flat shape from a solid shape; say which of two things is longer; say which of two things is heavier; say which container holds more.</span></div>
+      <div class="stage" id="stageOvw"></div>
+    </section>
+    <!-- STEP 0b: unit lecture -->
+    <section class="slide" data-say="Watch the lesson told in parts, by the voice.">
+      <div class="slide-head"><span class="n">2</span><h2>Unit lecture</h2></div>
+      <div class="say"><button type="button" class="speak" aria-label="Read it to me">&#128266;</button><span id="askLec">Watch the lesson told in parts, by the voice.</span></div>
+      <div class="stage" id="stageLec"></div>
+    </section>
+    <!-- STEP 0c: math words -->
+    <section class="slide" data-say="Tap each word to hear what it means and how to use it. Then show you know them.">
+      <div class="slide-head"><span class="n">3</span><h2>Math words</h2></div>
+      <div class="say"><button type="button" class="speak" aria-label="Read it to me">&#128266;</button><span id="askMw">Tap each word to hear what it means and how to use it. Then show you know them.</span></div>
+      <div class="stage" id="stageMw"></div>
+    </section>
     <!-- 1  1Gg.01  Flat shapes -->
     <section class="slide" data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>A flat shape is one you could draw on paper.</s><s>It has sides and it has corners.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>Take the square.</s><s>Press count the sides and watch each one light up as we say it.</s><s>One, two, three, four.</s><s>Four sides.</s><s>And look where two sides meet, at each corner.</s><s>Four of those as well.</s><s>A triangle lights up three sides and three corners.</s><s>A circle has one edge that curves all the way round, and no corners at all.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="empathetic" styledegree="1.3"><prosody rate="-6%"><s>Children count a corner twice, or start counting again where they began and get one too many.</s><s>It is easy to lose your place going round a shape.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>So start at one corner and remember it.</s><s>Go round once.</s><s>Stop when you are back where you started.</s></mstts:express-as>' data-say="Here is a flat shape. Press count the sides and I will count them with you. Then press next shape.">
       <div class="eh-warm" id="ehWarm"><p class="eh-warm-h">Warm up</p><div class="eh-warm-say"><button type="button" class="speak" aria-label="Read it to me">&#128266;</button><span class="eh-warm-q"></span></div><div class="choices eh-warm-ch"></div><p class="fb" role="status" aria-live="polite"></p></div>
-      <div class="slide-head"><span class="n">1</span><h2>Flat shapes</h2></div>
+      <div class="slide-head"><span class="n">4</span><h2>Flat shapes</h2></div>
       <div class="say"><button type="button" class="speak" aria-label="Read it to me">🔊</button><span id="say1">This is a flat shape. Press <b>Count the sides</b>, then <b>Next shape</b>.</span></div>
       <details class="kit"><summary>For the grown-up: what to have to hand</summary><p>A tin, a box and a ball; something to measure with, all the same size (cubes, paperclips or pasta); two things to feel the weight of; and two cups and a jug of water. This lesson is about handling things, so handle them.</p></details>
       <div class="stage">
@@ -638,7 +656,7 @@
     </section>
 <!-- 2  1Gg.01  Sort the shapes -->
 <section class="slide" data-twm="characterising classifying" data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>Sorting means picking out only the shapes that follow one rule, and leaving the rest.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>If the rule is four sides, then squares and rectangles go in, because they both have four.</s><s>Triangles stay out, because they have three.</s><s>The colour does not matter.</s><s>The size does not matter.</s><s>Only the rule matters.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="empathetic" styledegree="1.3"><prosody rate="-6%"><s>Children pick shapes that look alike, or ones they like the look of.</s><s>A big red square and a small blue square both follow four sides, even though they look different.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>So read the rule again.</s><s>Then take each shape and ask it that one question.</s></mstts:express-as>' data-say="Read the rule, then tap every shape that follows it.">
-      <div class="slide-head"><span class="n">2</span><h2>Sort the shapes</h2></div>
+      <div class="slide-head"><span class="n">5</span><h2>Sort the shapes</h2></div>
       <div class="say"><button type="button" class="speak" aria-label="Read it to me">🔊</button><span id="say2">Tap every shape that follows the rule.</span></div>
       <div class="stage">
         <div class="picks" id="picks2"></div>
@@ -650,7 +668,7 @@
     </section>
 <!-- 3  1Gg.03  Solid shapes -->
 <section class="slide" data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>A solid shape is not flat.</s><s>It is a thing you could pick up and hold in your hand.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>Press next shape to meet them.</s><s>A cube is like a dice, with flat square faces.</s><s>A sphere is like a ball, and it rolls.</s><s>A cylinder is like a tin, flat at each end and round in the middle.</s><s>A cone has a point at the top, like a party hat.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="empathetic" styledegree="1.3"><prosody rate="-6%"><s>Children mix up a circle and a sphere, or a square and a cube.</s><s>A circle is drawn on paper.</s><s>A sphere is a ball you can hold.</s><s>The flat one and the solid one are not the same shape.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>So ask yourself, could I pick this up, or is it drawn flat.</s></mstts:express-as>' data-say="A solid shape is not flat. You can hold it. Press next shape to meet them all.">
-      <div class="slide-head"><span class="n">3</span><h2>Solid shapes</h2></div>
+      <div class="slide-head"><span class="n">6</span><h2>Solid shapes</h2></div>
       <div class="say"><button type="button" class="speak" aria-label="Read it to me">🔊</button><span id="say3">A <b>solid</b> shape is not flat: you can hold it in your hand. Press <b>Next shape</b>.</span></div>
       <div class="stage">
         <div class="shapebox"><svg id="sv3" viewBox="0 0 200 200" class="solid" role="img" aria-label="A solid shape"></svg></div>
@@ -662,7 +680,7 @@
     </section>
 <!-- 4  1Gg.06  Flat or solid? -->
 <section class="slide" data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>Every shape here is either flat or solid, and you can tell by asking one question.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>Could you hold it in your hand and turn it over?</s><s>A ball, yes, so it is solid.</s><s>A triangle drawn on the page, no, so it is flat.</s><s>That one question sorts every shape on the screen.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="empathetic" styledegree="1.3"><prosody rate="-6%"><s>A picture of a solid shape is still a picture, and that catches children out.</s><s>The drawing of a cube is flat on your screen, but the shape it shows is a solid one.</s><s>Think about the real thing, not the paper.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>So look at the shape and ask, is this a thing I could pick up.</s></mstts:express-as>' data-say="Look at the shape. Is it flat, or is it solid? Tap your answer.">
-      <div class="slide-head"><span class="n">4</span><h2>Flat or solid?</h2></div>
+      <div class="slide-head"><span class="n">7</span><h2>Flat or solid?</h2></div>
       <div class="say"><button type="button" class="speak" aria-label="Read it to me">🔊</button><span id="say4">Is this shape <b>flat</b> or <b>solid</b>? Tap the answer.</span></div>
       <div class="stage" id="stage4"></div>
       <div class="choices" id="ch4"></div>
@@ -671,7 +689,7 @@
     </section>
 <!-- 5  1Gg.07  Turn it round -->
 <section class="slide" data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>Turning a shape moves it round without changing it.</s><s>It is the same shape, just facing a different way.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>Press turn it and the shape swings round, the way the hand of a clock moves from twelve round to three.</s><s>That is a quarter turn.</s><s>A square looks exactly the same after a quarter turn, because all its sides match.</s><s>A rectangle does not.</s><s>It was lying down and now it is standing up.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="empathetic" styledegree="1.3"><prosody rate="-6%"><s>Children think a turned shape has become a new shape.</s><s>It has not.</s><s>Nothing was added and nothing was taken away.</s><s>It only moved.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>So watch one corner as it turns.</s><s>Follow that corner and you will see the shape is the same one.</s></mstts:express-as>' data-say="Press turn it. The shape makes a quarter turn. Does it look the same as before?">
-      <div class="slide-head"><span class="n">5</span><h2>Turn it round</h2></div>
+      <div class="slide-head"><span class="n">8</span><h2>Turn it round</h2></div>
       <div class="say"><button type="button" class="speak" aria-label="Read it to me">🔊</button><span id="say5">Press <b>Turn it</b>. Does the shape look <b>the same</b> after the turn, or <b>different</b>?</span></div>
       <div class="stage">
         <div class="shapebox"><svg id="sv5" viewBox="-20 -20 240 240" role="img" aria-label="A shape that turns"></svg></div>
@@ -683,7 +701,7 @@
     </section>
 <!-- 6  1Gg.02  Long, longer, longest -->
 <section class="slide" data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>To put things in order by length, you compare them two at a time.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>Look at the pencil and the ruler.</s><s>Line up one end of each and see which one goes further.</s><s>The one that goes further is longer.</s><s>Find the shortest of all, tap that first, then the next shortest, and keep going.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="empathetic" styledegree="1.3"><prosody rate="-6%"><s>Children compare things that are not lined up at the same end, and pick wrong.</s><s>A short pencil held high can look longer than a long one lying low.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>So imagine both ends starting in the same place, then see which one reaches further.</s></mstts:express-as>' data-say="Tap the pictures in order, from the shortest to the longest.">
-      <div class="slide-head"><span class="n">6</span><h2>Long, longer, longest</h2></div>
+      <div class="slide-head"><span class="n">9</span><h2>Long, longer, longest</h2></div>
       <div class="say"><button type="button" class="speak" aria-label="Read it to me">🔊</button><span id="say6">Tap them in order.</span></div>
       <div class="stage" id="stage6"></div>
       <p class="fb" id="fb6" role="status" aria-live="polite"></p>
@@ -691,7 +709,7 @@
     </section>
 <!-- 7  1Gg.04  Heavy and light -->
 <section class="slide" data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>A balance tells you which thing is heavier without you having to guess.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>Put an apple on one side and a feather on the other.</s><s>The side that goes down is holding the heavier thing.</s><s>The side that rises is holding the lighter one.</s><s>If the balance stays level, they weigh the same.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="empathetic" styledegree="1.3"><prosody rate="-6%"><s>Children think the bigger thing must be heavier.</s><s>Size and weight are not the same.</s><s>A big empty box can be lighter than a small stone.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>So look only at which side of the balance has gone down.</s></mstts:express-as>' data-say="Two things on a balance. The heavier one goes down. Tap the answer.">
-      <div class="slide-head"><span class="n">7</span><h2>Heavy and light</h2></div>
+      <div class="slide-head"><span class="n">10</span><h2>Heavy and light</h2></div>
       <div class="say"><button type="button" class="speak" aria-label="Read it to me">🔊</button><span id="say7">Which one is it? Tap the answer.</span></div>
       <div class="stage" id="stage7"></div>
       <div class="choices" id="ch7"></div>
@@ -700,7 +718,7 @@
     </section>
 <!-- 8  1Gg.05  Full and empty -->
 <section class="slide" data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>Capacity is how much a container holds, and you can see it by looking at the water.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>A full jug has water right up to the top.</s><s>An empty one has none at all.</s><s>Between the two, one jug holds more than another if its water comes up higher, when the jugs are the same shape and size.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="empathetic" styledegree="1.3"><prosody rate="-6%"><s>Children say a tall jug holds more just because it is tall.</s><s>A tall thin jug can hold less than a short wide one.</s><s>Look at how much water is in it, not how high the jug is.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>So look at the water itself, and compare how much of the jug it fills.</s></mstts:express-as>' data-say="These jugs hold water. Full, empty, more or less. Tap the answer.">
-      <div class="slide-head"><span class="n">8</span><h2>Full and empty</h2></div>
+      <div class="slide-head"><span class="n">11</span><h2>Full and empty</h2></div>
       <div class="say"><button type="button" class="speak" aria-label="Read it to me">🔊</button><span id="say8">Tap the answer.</span></div>
       <div class="stage" id="stage8"></div>
       <div class="choices" id="ch8"></div>
@@ -709,7 +727,7 @@
     </section>
 <!-- 9  1Gg.08  Which tool measures it? -->
 <section class="slide" data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>Different jobs need different tools, and each tool has numbers on it for its own kind of measuring.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>To find out how long something is, you use a ruler or a tape.</s><s>To find out how heavy, you use scales.</s><s>To find out how much a jug holds, you use a measuring jug.</s><s>To find out how long something takes, you use a clock.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="empathetic" styledegree="1.3"><prosody rate="-6%"><s>Children pick the tool they have seen most often, rather than the one for this job.</s><s>A ruler cannot tell you how heavy something is, however many numbers it has on it.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>So ask what the question wants to know.</s><s>How long, how heavy, how much, or how much time.</s></mstts:express-as>' data-say="Every measuring tool has numbers on it. Which one would you use for this job? Tap it.">
-      <div class="slide-head"><span class="n">9</span><h2>Which tool measures it?</h2></div>
+      <div class="slide-head"><span class="n">12</span><h2>Which tool measures it?</h2></div>
       <div class="say"><button type="button" class="speak" aria-label="Read it to me">🔊</button><span id="say9">Which tool would you use? Tap it.</span></div>
       <div class="stage" id="stage9"></div>
       <div class="choices" id="ch9"></div>
@@ -718,7 +736,7 @@
     </section>
 <!-- 10  1Gp.01  Where is it? -->
 <section class="slide" data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>Position words say where something is compared with something else.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>Look at the ball and the box.</s><s>If the ball sits on top, that is above.</s><s>Underneath is below.</s><s>Tucked inside is in.</s><s>Off to one side is beside, and hidden round the back is behind.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="empathetic" styledegree="1.3"><prosody rate="-6%"><s>Children say the word for where they would put it, instead of where it actually is.</s><s>Look at the picture in front of you and describe what you can see.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>So find the ball, find the box, and say out loud where the ball is compared to the box.</s></mstts:express-as>' data-say="Where is the ball? Look at the box, then tap the word that says where the ball is.">
-      <div class="slide-head"><span class="n">10</span><h2>Where is it?</h2></div>
+      <div class="slide-head"><span class="n">13</span><h2>Where is it?</h2></div>
       <div class="say"><button type="button" class="speak" aria-label="Read it to me">🔊</button><span id="say10">Tap the word that says where it is.</span></div>
       <div class="stage" id="stage10"></div>
       <div class="choices" id="ch10"></div>
@@ -727,7 +745,7 @@
     </section>
 <!-- 11  1Gg.03  Faces and edges -->
 <section class="slide" data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>A face is a side of a solid shape, and an edge is where two faces meet.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>A cube has six flat faces, like a dice.</s><s>A sphere has one curved face and no edges at all, like a ball.</s><s>A cylinder has two flat circles and one curved face, like a tin.</s><s>A cone has one flat circle, one curved face, and one edge where they meet.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="empathetic" styledegree="1.3"><prosody rate="-6%"><s>Children only count the faces they can see in the picture.</s><s>A solid shape has faces at the back and underneath too.</s><s>Imagine picking it up and turning it round.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>So hold the shape in your mind, turn it round, and count every face.</s></mstts:express-as>' data-say="Look at each solid shape. Think about its faces and its edges, then tap the answer.">
-      <div class="slide-head"><span class="n">11</span><h2>Faces and edges</h2></div>
+      <div class="slide-head"><span class="n">14</span><h2>Faces and edges</h2></div>
       <div class="say"><button type="button" class="speak" aria-label="Read it to me">🔊</button><span id="ss11say">Look at the solid shape. Think about its <b>faces</b> and <b>edges</b>, flat or curved. Tap the answer.</span></div>
       <div class="stage" id="ss11st"></div>
       <div class="choices" id="ss11ch"></div>
@@ -737,7 +755,7 @@
     </section>
 <!-- 12  1Gg.06  Flat shape, solid shape -->
 <section class="slide" data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>Every solid shape is made of faces, and a face is a flat shape.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>Draw round one face of a cube and you draw a square.</s><s>The square is flat, and the cube is solid.</s><s>A circle is flat, like a drawing of a ball.</s><s>A sphere is solid, like the ball itself.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="empathetic" styledegree="1.3"><prosody rate="-6%"><s>Children call a cube a square, because its faces are squares.</s><s>A square is only one face.</s><s>The whole cube, which you can hold, is a solid shape.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>So ask yourself: could I pick it up? If you could, it is solid.</s></mstts:express-as>' data-say="A flat shape lies on paper. A solid shape can be picked up and held. Tap the answer.">
-      <div class="slide-head"><span class="n">12</span><h2>Flat shape, solid shape</h2></div>
+      <div class="slide-head"><span class="n">15</span><h2>Flat shape, solid shape</h2></div>
       <div class="say"><button type="button" class="speak" aria-label="Read it to me">🔊</button><span id="ss12say">A <b>flat</b> shape is drawn on paper. A <b>solid</b> shape can be picked up. Tap the answer.</span></div>
       <div class="stage" id="ss12st"></div>
       <div class="choices" id="ss12ch"></div>
@@ -747,7 +765,7 @@
     </section>
 <!-- 13  1Gg.07  Will it look the same? -->
 <section class="slide" data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>Some shapes look exactly the same after you turn them, and some do not.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>A quarter turn is like the hand of a clock moving from twelve to three.</s><s>A square looks the same after a quarter turn, because all its sides are the same length.</s><s>A circle looks the same however far you turn it.</s><s>A rectangle stands up on its end, so it looks different, until it has turned half way round.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="empathetic" styledegree="1.3"><prosody rate="-6%"><s>Children think every shape changes when it turns, or that every shape stays the same.</s><s>It depends on the shape.</s><s>Picture it turning in your head, and look at where its corners go.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>So turn each shape in your mind, and ask: would I notice that it had moved?</s></mstts:express-as>' data-say="Imagine each shape turning. Which one would look exactly the same after the turn?">
-      <div class="slide-head"><span class="n">13</span><h2>Will it look the same?</h2></div>
+      <div class="slide-head"><span class="n">16</span><h2>Will it look the same?</h2></div>
       <div class="say"><button type="button" class="speak" aria-label="Read it to me">🔊</button><span id="ss13say">Imagine each shape making a <b>turn</b>. Does it look <b>the same</b> afterwards?</span></div>
       <div class="stage" id="ss13st"></div>
       <div class="choices" id="ss13ch"></div>
@@ -757,7 +775,7 @@
     </section>
 <!-- 14  1Gg.02  Longer or shorter? -->
 <section class="slide" data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>To compare two lengths, start them at the same place.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>Line two pencils up at one end.</s><s>The one that reaches further at the other end is longer, and the other one is shorter.</s><s>For trees and people we say tall, taller and tallest.</s><s>For a rope or a worm we can say thin, thinner and thinnest.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="empathetic" styledegree="1.3"><prosody rate="-6%"><s>Children look at only one end, or they choose the one that looks biggest overall.</s><s>A thick worm is not a long worm.</s><s>Check that the ends line up, then look at the other end.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>So line them up, look along to the far end, and then choose your word.</s></mstts:express-as>' data-say="Compare them. Which is longer, taller or thinner? Tap the answer.">
-      <div class="slide-head"><span class="n">14</span><h2>Longer or shorter?</h2></div>
+      <div class="slide-head"><span class="n">17</span><h2>Longer or shorter?</h2></div>
       <div class="say"><button type="button" class="speak" aria-label="Read it to me">🔊</button><span id="ss14say">Compare them carefully: <b>longer</b>, <b>shorter</b>, <b>taller</b>, <b>thinner</b>. Tap the answer.</span></div>
       <div class="stage" id="ss14st"></div>
       <div class="choices" id="ss14ch"></div>
@@ -767,7 +785,7 @@
     </section>
 <!-- 15  1Gg.04  Heavier or lighter? -->
 <section class="slide" data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>On a balance, the heavier side always goes down.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>The lighter side goes up.</s><s>If both sides weigh the same, the balance stays level.</s><s>Big things are not always heavy.</s><s>A big balloon is lighter than a small stone.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="empathetic" styledegree="1.3"><prosody rate="-6%"><s>Children think the bigger thing must be the heavier thing.</s><s>Size can trick you.</s><s>Look at which side goes down, or think about lifting it.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>So picture lifting each one in your hands, and feel which one pulls down more.</s></mstts:express-as>' data-say="Heavy, light, more and less. Think about how heavy each thing is, then tap the answer.">
-      <div class="slide-head"><span class="n">15</span><h2>Heavier or lighter?</h2></div>
+      <div class="slide-head"><span class="n">18</span><h2>Heavier or lighter?</h2></div>
       <div class="say"><button type="button" class="speak" aria-label="Read it to me">🔊</button><span id="ss15say">Think about how <b>heavy</b> each thing is. Tap the answer.</span></div>
       <div class="stage" id="ss15st"></div>
       <div class="choices" id="ss15ch"></div>
@@ -777,7 +795,7 @@
     </section>
 <!-- 16  1Gg.05  Pour and fill -->
 <section class="slide" data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>Capacity is how much something can hold.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>A bucket holds more than a cup, because it is bigger inside.</s><s>When a container has no room left, it is full.</s><s>When there is nothing in it, it is empty.</s><s>Pour water from one jug into another, and the first one has less while the second has more.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="empathetic" styledegree="1.3"><prosody rate="-6%"><s>Children look only at how tall a container is.</s><s>A tall thin glass can hold less than a wide bowl.</s><s>Think about how much space there is inside.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>So picture pouring the water, and watch where it goes.</s></mstts:express-as>' data-say="Full, empty, more and less. Think about how much water each one holds, then tap the answer.">
-      <div class="slide-head"><span class="n">16</span><h2>Pour and fill</h2></div>
+      <div class="slide-head"><span class="n">19</span><h2>Pour and fill</h2></div>
       <div class="say"><button type="button" class="speak" aria-label="Read it to me">🔊</button><span id="ss16say">Think about how much each one <b>holds</b>: <b>full</b>, <b>empty</b>, <b>more</b> or <b>less</b>.</span></div>
       <div class="stage" id="ss16st"></div>
       <div class="choices" id="ss16ch"></div>
@@ -787,7 +805,7 @@
     </section>
 <!-- 17  1Gg.08  Read the numbers -->
 <section class="slide" data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>A measuring tool has a scale of numbers, and the numbers tell you how much.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>On a ruler, start at zero and see which number the end reaches.</s><s>On a thermometer, the red line climbs higher, to bigger numbers, when it is hotter.</s><s>On a measuring jug, more water reaches a bigger number.</s><s>On scales, the pointer turns round to a bigger number for something heavier.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="empathetic" styledegree="1.3"><prosody rate="-6%"><s>Children start measuring from the end of the ruler instead of from zero.</s><s>Line the thing up with zero first.</s><s>Then read the number at the other end.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>So find zero, find where it stops, and read the number there.</s></mstts:express-as>' data-say="Every measuring tool has numbers on it. Read the numbers, then tap the answer.">
-      <div class="slide-head"><span class="n">17</span><h2>Read the numbers</h2></div>
+      <div class="slide-head"><span class="n">20</span><h2>Read the numbers</h2></div>
       <div class="say"><button type="button" class="speak" aria-label="Read it to me">🔊</button><span id="ss17say">A ruler, scales, a jug and a thermometer all have a scale of <b>numbers</b>. Read them.</span></div>
       <div class="stage" id="ss17st"></div>
       <div class="choices" id="ss17ch"></div>
@@ -797,7 +815,7 @@
     </section>
 <!-- 18  1Gp.01  Between, above, behind -->
 <section class="slide" data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>Position words say where something is, and direction words say which way it is going.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>Between means in the middle of two things.</s><s>Above means higher up, and below means lower down.</s><s>Behind means at the back, where it can be hidden.</s><s>Towards means going closer, and away means going further off.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="empathetic" styledegree="1.3"><prosody rate="-6%"><s>Children mix up words that come in pairs, like above and below, or towards and away.</s><s>Each word has a partner that means the opposite.</s><s>Say both words, then decide which one fits.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>So point at the thing, look at what is next to it, and choose your word.</s></mstts:express-as>' data-say="Look at the picture. Tap the words that say where it is, or which way it is going.">
-      <div class="slide-head"><span class="n">18</span><h2>Between, above, behind</h2></div>
+      <div class="slide-head"><span class="n">21</span><h2>Between, above, behind</h2></div>
       <div class="say"><button type="button" class="speak" aria-label="Read it to me">🔊</button><span id="ss18say">Tap the words that say <b>where</b> it is, or <b>which way</b> it is going: between, above, behind, towards.</span></div>
       <div class="stage" id="ss18st"></div>
       <div class="choices" id="ss18ch"></div>
@@ -807,7 +825,7 @@
     </section>
 <!-- 19  1Gg.06  Spot the mistake -->
 <section class="slide" data-twm="critiquing improving" data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>Today you are the checker.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>Somebody has done some maths and told you what they think.</s><s>Sometimes they are right and sometimes they have slipped.</s><s>Do it yourself first, then look at what they said.</s><s>If it does not match, work out WHICH part went wrong.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="empathetic" styledegree="1.3"><prosody rate="-6%"><s>Children often tap the first answer that sounds like a mistake.</s><s>Look again before you tap.</s><s>And some of these are right.</s><s>Saying right when it is right is just as clever as finding a mistake.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>So read what they say, work it out yourself, and tap what went wrong.</s></mstts:express-as>' data-say="Read what each child says. Work it out yourself. Then tap what went wrong.">
-      <div class="slide-head"><span class="n">19</span><h2>Spot the mistake</h2></div>
+      <div class="slide-head"><span class="n">22</span><h2>Spot the mistake</h2></div>
       <div class="say"><button type="button" class="speak" aria-label="Read it to me">🔊</button><span id="sm19say">Read what each child says, work it out yourself, then tap what went wrong.</span></div>
       <div class="stage" id="sm19st"></div>
       <div class="choices" id="sm19ch"></div>
@@ -817,7 +835,7 @@
     </section>
 <!-- 20  1Gg.02  Story problems -->
 <section class="slide" data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>A story problem is maths hiding inside a story.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>Listen to the whole story first, right to the end.</s><s>Then ask yourself one question.</s><s>Am I putting things together, or taking them away?</s><s>Putting together means adding.</s><s>Taking away, or finding how many more, means subtracting.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="empathetic" styledegree="1.3"><prosody rate="-6%"><s>Children often grab the two numbers and add them, whatever the story said.</s><s>That is why the story comes first and the numbers come second.</s><s>Say the story back to yourself in your own words before you choose.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>So listen to the story, decide what is happening, then tap your answer.</s></mstts:express-as>' data-say="Listen to the whole story. Work out the answer. Then tap it.">
-      <div class="slide-head"><span class="n">20</span><h2>Story problems</h2></div>
+      <div class="slide-head"><span class="n">23</span><h2>Story problems</h2></div>
       <div class="say"><button type="button" class="speak" aria-label="Read it to me">🔊</button><span id="wp20say">Read the story, work out the answer, then tap it.</span></div>
       <div class="stage" id="wp20st"></div>
       <div class="choices" id="wp20ch"></div>
@@ -827,7 +845,7 @@
     </section>
 <!-- 21  1Gg.01  Will it always work? -->
 <section class="slide" data-twm="specialising generalising" data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>Somebody has an idea about numbers. Your job is to test it.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>Testing an idea is not the same as agreeing with it.</s><s>You try it on one example, then on another.</s><s>If it works both times, you ask the big question: does it ALWAYS work?</s><s>And if you find even one example where it does not work, then it does not always work.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="empathetic" styledegree="1.3"><prosody rate="-6%"><s>Children often decide after one try.</s><s>One try is not enough to say always.</s><s>But one try IS enough to say NOT always, if that try breaks the idea.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>So test it twice, then say whether it always works.</s></mstts:express-as>' data-say="Somebody has an idea. Test it on each example, then say whether it always works.">
-      <div class="slide-head"><span class="n">21</span><h2>Will it always work?</h2></div>
+      <div class="slide-head"><span class="n">24</span><h2>Will it always work?</h2></div>
       <div class="say"><button type="button" class="speak" aria-label="Read it to me">🔊</button><span id="at21say">Test the idea on each example. Then say whether it always works.</span></div>
       <div class="stage" id="at21st"></div>
       <div class="choices" id="at21ch"></div>
@@ -862,7 +880,6 @@
         <div class="stickers" id="stickers"></div>
         <p class="fb" id="fbstick" role="status" aria-live="polite"></p>
         <div class="sc-wrap" id="selfcheck"></div>
-      <div id="vocab"></div>
         <div class="bigbtns"><button type="button" class="big ghost small" id="restart">Start again</button></div>
       </div>
     </section>
@@ -2448,7 +2465,7 @@
         $("fb1").textContent = "A " + f.name + " has " + f.sides + " straight sides and " + f.sides + " corners.";
         say("A " + f.name + " has " + f.sides + " straight sides.");
         seen1.add(f1);
-        if (seen1.size === FLAT.length) finish(0, "You know your flat shapes. Brilliant!");
+        if (seen1.size === FLAT.length) finish(3, "You know your flat shapes. Brilliant!");
       }
     };
     step();
@@ -2459,7 +2476,7 @@
     if (counting) return;
     f1 = (f1 + 1) % FLAT.length; paint1(); seen1.add(f1);
     say(art(FLAT[f1].name));
-    if (seen1.size === FLAT.length) finish(0, "You have met every flat shape. Brilliant!");
+    if (seen1.size === FLAT.length) finish(3, "You have met every flat shape. Brilliant!");
   });
   paint1();
 
@@ -2500,7 +2517,7 @@
         if (r2 >= SORT_ROUNDS.length) {
           $("picks2").innerHTML = ""; $("sc2").textContent = "";
           $("fb2").className = "fb good"; $("fb2").textContent = "You sorted every rule. Brilliant!";
-          finish(1, "You can sort shapes by their sides. Brilliant!");
+          finish(4, "You can sort shapes by their sides. Brilliant!");
         } else round2();
       }, 2600);
     }
@@ -2523,7 +2540,7 @@
   $("next3").addEventListener("click", () => {
     s3 = (s3 + 1) % SOLIDS.length; paint3(); seen3.add(s3);
     say(art(SOLIDS[s3].name) + ". " + SOLIDS[s3].note);
-    if (seen3.size === SOLIDS.length) finish(2, "You have met every solid shape. Brilliant!");
+    if (seen3.size === SOLIDS.length) finish(5, "You have met every solid shape. Brilliant!");
   });
   paint3();
 
@@ -2605,7 +2622,7 @@
       if (t5 >= TURNS.length) {
         $("ch5").innerHTML = ""; $("sc5").textContent = "";
         $("fb5").className = "fb good"; $("fb5").textContent = "You can spot a shape that looks the same as it turns.";
-        finish(4, "You can spot a shape that looks the same as it turns. Brilliant!");
+        finish(7, "You can spot a shape that looks the same as it turns. Brilliant!");
       } else round5();
     }, 3000);
   });
@@ -2929,7 +2946,7 @@
         $("fbck").className = "fb good";
         $("fbck").textContent = "You got " + rightc + " out of " + CHECK.length + "!";
         say("You got " + rightc + " out of " + CHECK.length + "!");
-        if (rightc >= Math.ceil(CHECK.length * 0.75)) finish(21, "Well done!");
+        if (rightc >= Math.ceil(CHECK.length * 0.75)) finish(24, "Well done!");
         else retryCheck($("fbck"), $("chck"), rightc, CHECK.length, function () { qc = 0; rightc = 0; askCheck(); });
       } else askCheck();
     }, 2800);
@@ -3315,7 +3332,7 @@
   });
 
   /* ---- stickers ---- */
-  const STICKERS = [
+  const STICKERS = [["🔎", "What this lesson is about"], ["🎥", "Unit lecture"], ["🗣️", "Math words"], 
     ["🔺", "Flat shapes"],
     ["🗂️", "I can sort shapes"],
     ["📦", "Solid shapes"],
@@ -3458,23 +3475,125 @@
   })();
 
 
-  /* ==== ehel-g1-vocabulary: Math Words for this lesson ====
-     Same insertion pattern as add-self-check.py: an empty host div on
-     the sticker-shelf slide, populated by this script, never scored. */
-  (function () {
-    const VOCAB = [{ w: "side", d: "A straight or curved edge of a flat shape." }, { w: "corner", d: "The point where two sides of a shape meet." }, { w: "face", d: "A flat surface on a solid shape." }, { w: "edge", d: "The line where two faces of a solid shape meet." }, { w: "capacity", d: "How much a container can hold." }, { w: "balance", d: "A tool that shows which of two things is heavier." }];
-    const host = document.getElementById("vocab");
-    if (!host) return;
-    const esc = (t) => String(t).replace(/&/g, "&amp;").replace(/</g, "&lt;")
-      .replace(/"/g, "&quot;");
-    host.innerHTML = '<p class="vc-head">Math Words</p>'
-      + '<p class="vc-sub">Words from this lesson, explained in one line each.</p>'
-      + '<dl class="vc-list">'
-      + VOCAB.map((it) => '<div class="vc-row"><dt>' + esc(it.w) + '</dt><dd>'
-        + esc(it.d) + "</dd></div>").join("")
-      + "</dl>";
-  })();
+  /* ==== ehel-g1-lesson-opener: three shared step functions, ported from Grade 4's own
+     add-lesson-opener.py in the same idiom - data-say for arrival
+     narration (show() already speaks it), plain finish(i, msg), no
+     ONSHOW/ONLEAVE/reportAttempt. esc() IS OWN, not shared, matching
+     every add-*.py tool in this build - see Grade 4's own docstring for
+     the ReferenceError this avoids. ==== */
+  const esc = (t) => String(t).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/"/g, "&quot;");
+  function lessonAbout(o) {
+    document.getElementById(o.stage).innerHTML =
+      '<div class="ovw"><h3 class="ovw-h">By the end of this lesson you will be able to&hellip;</h3>' +
+      '<ol class="ovw-list">' + o.about.map((t) => '<li>' + esc(t) + '</li>').join('') + '</ol>' +
+      '<div class="bigbtns"><button type="button" class="big small" id="' + o.stage + 'go">Got it, let\'s begin &#10003;</button></div></div>';
+    document.getElementById(o.stage + 'go').addEventListener('click', () => {
+      document.getElementById(o.stage + 'go').disabled = true;
+      finish(o.finish, o.done);
+    });
+  }
 
+  function lessonLecture(o) {
+    const parts = o.parts || [];
+    let k = 0;
+    const id = o.stage + 'l';
+    function paint() {
+      const p = parts[k];
+      document.getElementById(o.stage).innerHTML =
+        '<div class="lec"><p class="phase">Part ' + (k + 1) + ' of ' + parts.length + '</p>' +
+        '<h3 class="lec-h">' + esc(p.title) + '</h3><p class="lec-p">' + esc(p.say) + '</p>' +
+        '<div class="bigbtns">' +
+        '<button type="button" class="big small teal" id="' + id + 'hear">&#128266; Listen</button>' +
+        (k > 0 ? '<button type="button" class="big small ghost" id="' + id + 'back">&#9664; Last part</button>' : '') +
+        '<button type="button" class="big small" id="' + id + 'next">' + (k + 1 < parts.length ? 'Next part &#9654;' : 'I heard it all &#10003;') + '</button>' +
+        '</div><p class="lec-note">Read aloud by the lesson\'s voice. There is no video for this lesson yet.</p></div>';
+      document.getElementById(id + 'hear').addEventListener('click', () => say(p.title + '. ' + p.say));
+      if (k > 0) document.getElementById(id + 'back').addEventListener('click', () => { k--; paint(); say(parts[k].title + '. ' + parts[k].say); });
+      document.getElementById(id + 'next').addEventListener('click', () => {
+        if (k + 1 < parts.length) { k++; paint(); say(parts[k].title + '. ' + parts[k].say); }
+        else { finish(o.finish, o.done); }
+      });
+    }
+    if (!parts.length) return;
+    paint();
+  }
+
+  function lessonWords(o) {
+    const items = o.words || [];
+    const heard = new Set();
+    let open = -1;
+    const id = o.stage + 'w';
+    function paintGrid() {
+      document.getElementById(o.stage).innerHTML =
+        '<div class="cardsgrid" id="' + id + 'g">' + items.map((w, k) =>
+          '<button type="button" class="tapcard' + (heard.has(k) ? ' heard' : '') + '" data-k="' + k + '">' +
+          '<span class="cpic" aria-hidden="true">' + w.pic + '</span>' + esc(w.w) + '</button>').join('') + '</div>' +
+        '<div class="wordpanel" id="' + id + 'p"' + (open < 0 ? ' hidden' : '') + '></div>' +
+        '<div class="bigbtns" id="' + id + 'go" style="' + (heard.size === items.length ? '' : 'display:none') + '">' +
+        '<button type="button" class="big small" id="' + id + 'quiz">Show I know them &#9654;</button></div>';
+      if (open >= 0) paintPanel();
+      document.getElementById(id + 'g').addEventListener('click', (e) => {
+        const b = e.target.closest('.tapcard'); if (!b) return;
+        open = Number(b.dataset.k); heard.add(open);
+        paintGrid();
+        const w = items[open];
+        say(w.w + '. ' + w.meaning + ' ' + (w.uses[0] || ''));
+      });
+      if (heard.size === items.length) {
+        const goBtn = document.getElementById(id + 'quiz');
+        if (goBtn) goBtn.addEventListener('click', () => check());
+      }
+    }
+    function paintPanel() {
+      const w = items[open];
+      const p = document.getElementById(id + 'p');
+      p.hidden = false;
+      p.innerHTML = '<div class="wp-head"><span class="wp-pic" aria-hidden="true">' + w.pic + '</span>' +
+        '<div><p class="wp-word">' + esc(w.w) + '</p><p class="wp-meaning">' + esc(w.meaning) + '</p></div></div>' +
+        '<p class="wp-uses-h">Use it</p><ul class="wp-uses">' + (w.uses || []).map((u) => '<li>' + esc(u) + '</li>').join('') + '</ul>' +
+        '<div class="bigbtns"><button type="button" class="big small teal" id="' + id + 'h">&#128266; Hear it again</button></div>';
+      document.getElementById(id + 'h').addEventListener('click', () => say(w.w + '. ' + w.meaning + ' ' + (w.uses || []).join(' ')));
+    }
+    function check() {
+      const order = shuffle(items.map((_, k) => k));
+      let i = 0, right = 0, lock = false;
+      function draw() {
+        lock = false;
+        const k = order[i], w = items[k];
+        const others = shuffle(items.map((_, j) => j).filter((j) => j !== k)).slice(0, Math.min(2, items.length - 1));
+        const opts = shuffle([k].concat(others));
+        document.getElementById(o.stage).innerHTML =
+          '<div class="mw"><p class="lec-p">Which word means: <b>' + esc(w.meaning) + '</b></p>' +
+          '<div class="wordbtns" id="' + id + 'ch">' + opts.map((j) =>
+            '<button type="button" class="wordbtn" data-ok="' + (j === k ? 1 : 0) + '">' +
+            '<span class="wbpic" aria-hidden="true">' + items[j].pic + '</span>' + esc(items[j].w) + '</button>').join('') + '</div>' +
+          '<p class="lec-note" id="' + id + 'fb"></p></div>';
+        say('Which word means: ' + w.meaning);
+        document.getElementById(id + 'ch').addEventListener('click', (e) => {
+          const b = e.target.closest('.wordbtn'); if (!b || lock) return;
+          lock = true;
+          const ok = b.dataset.ok === '1';
+          document.getElementById(id + 'ch').querySelectorAll('.wordbtn').forEach((c) => { c.disabled = true; if (c.dataset.ok === '1') c.classList.add('right'); });
+          if (!ok) b.classList.add('wrong'); else right++;
+          const msg = ok ? cheer() + ' ' + w.w + '.' : 'That word is ' + w.w + '. ' + w.meaning;
+          document.getElementById(id + 'fb').textContent = msg; say(msg);
+          i++;
+          setTimeout(() => {
+            if (i >= items.length) {
+              document.getElementById(o.stage).innerHTML = '<div class="mw"><p class="lec-p">You know ' + right + ' of ' + items.length + ' math words.</p></div>';
+              finish(o.finish, o.done);
+            } else draw();
+          }, 2200);
+        });
+      }
+      draw();
+    }
+    paintGrid();
+  }
+
+  lessonAbout({ stage: 'stageOvw', about: ["Name flat shapes and say how many sides they have.", "Name solid shapes and count their faces.", "Tell a flat shape from a solid shape.", "Say which of two things is longer.", "Say which of two things is heavier.", "Say which container holds more."], finish: 0, done: "Let's begin." });
+  lessonLecture({ stage: 'stageLec', parts: [{ title: "Flat and solid shapes", say: "A flat shape lies on the page, like a circle or a square. A solid shape you can pick up and turn over, like a ball or a box." }, { title: "Sides, corners and faces", say: "A side is an edge of a flat shape, and a corner is where two sides meet. A solid shape has faces instead - flat surfaces you can count." }, { title: "Comparing size", say: "Line two things up to see which is longer. Hold two things to feel which is heavier. Pour water from one cup to another to see which holds more." }], finish: 1, done: "You have heard the whole lesson. Now do it yourself." });
+  lessonWords({ stage: 'stageMw', words: [{ w: "side", pic: "📐", meaning: "A straight or curved edge of a flat shape.", uses: ["Count the sides of the triangle."] }, { w: "corner", pic: "📍", meaning: "The point where two sides of a shape meet.", uses: ["A square has four corners."] }, { w: "face", pic: "🎲", meaning: "A flat surface on a solid shape.", uses: ["A dice has six faces."] }, { w: "edge", pic: "📏", meaning: "The line where two faces of a solid shape meet.", uses: ["Run your finger along the edge of the box."] }, { w: "capacity", pic: "🥤", meaning: "How much a container can hold.", uses: ["Which cup has the bigger capacity?"] }, { w: "balance", pic: "⚖️", meaning: "A tool that shows which of two things is heavier.", uses: ["Use the balance to see which is heavier."] }], finish: 2, done: "You know the math words of this lesson." });
   show(0, false);
 
   /* ================= the two header bars =================
@@ -4359,12 +4478,45 @@
   .twm-ch { margin-top: 12px; }
   .twm-sc { margin: 10px 0 0; }
 </style>
-<style>/* ehel-g1-vocabulary - see add-vocabulary.py */
-  #vocab { margin: 18px auto 0; max-width: 46ch; text-align: left; }
-  .vc-head { font-size: 17px; font-weight: 700; margin: 0 0 4px; }
-  .vc-sub { font-size: 13.5px; color: var(--muted, #666); margin: 0 0 12px; line-height: 1.5; }
-  .vc-list { margin: 0; }
-  .vc-row { padding: 9px 0; border-top: 1px solid var(--line, #ddd); }
-  .vc-row dt { margin: 0 0 3px; font-size: 15px; font-weight: 700; }
-  .vc-row dd { margin: 0; font-size: 14px; line-height: 1.45; color: var(--ink, #222); }
+
+<style>/* ehel-g1-lesson-opener - see add-lesson-opener.py */
+  .ovw { width: 100%; max-width: 34em; margin: 0 auto; text-align: center; }
+  .ovw-h { font-size: 19px; margin: 0 0 12px; }
+  .ovw-list { margin: 0; padding-left: 26px; display: flex; flex-direction: column; gap: 11px;
+    font-size: 19px; text-align: left; }
+  .ovw-list li::marker { color: var(--teal); font-weight: 800; }
+  .lec, .mw { width: 100%; max-width: 36em; margin: 0 auto; display: flex; flex-direction: column;
+    align-items: center; gap: 10px; text-align: center; }
+  .phase { color: var(--teal); font-weight: 800; font-size: 12.5px; letter-spacing: .1em;
+    text-transform: uppercase; }
+  .lec-h { font-weight: 800; font-size: clamp(21px, 4vw, 26px); margin: 0; }
+  .lec-p { margin: 0; font-size: 19px; line-height: 1.55; max-width: 34em; }
+  .lec-note { margin: 4px 0 0; color: var(--muted); font-size: 13.5px; }
+  .cardsgrid { display: grid; grid-template-columns: repeat(auto-fit, minmax(128px, 1fr)); gap: 12px;
+    width: 100%; max-width: 640px; }
+  .tapcard { display: flex; flex-direction: column; align-items: center; gap: 6px; padding: 14px 8px 12px;
+    border-radius: 18px; border: 3px solid var(--line); background: var(--card); color: var(--ink);
+    font-weight: 800; font-size: 17px; line-height: 1.2; transition: transform 120ms ease, border-color 120ms ease; }
+  .tapcard .cpic { font-size: clamp(40px, 8vw, 56px); line-height: 1.1; }
+  .tapcard:active { transform: scale(0.96); }
+  .tapcard.heard { border-color: var(--teal); background: var(--teal-soft); }
+  .tapcard.heard::after { content: "\2713"; color: var(--good); font-size: 15px; }
+  .wordpanel { width: 100%; max-width: 560px; padding: 16px 18px; border-radius: 20px;
+    border: 3px solid var(--teal); background: var(--card); text-align: left; }
+  .wp-head { display: flex; align-items: center; gap: 16px; }
+  .wp-pic { font-size: 40px; }
+  .wp-word { margin: 0; font-weight: 800; font-size: 28px; }
+  .wp-meaning { margin: 4px 0 0; font-size: 17.5px; line-height: 1.45; }
+  .wp-uses-h { margin: 12px 0 4px; color: var(--teal); font-weight: 800; font-size: 12.5px;
+    letter-spacing: .1em; text-transform: uppercase; }
+  .wp-uses { margin: 0 0 10px; padding-left: 20px; display: flex; flex-direction: column; gap: 5px;
+    font-size: 16.5px; font-style: italic; }
+  .wordbtns { display: flex; gap: 12px; flex-wrap: wrap; justify-content: center; }
+  .wordbtn { min-width: 118px; padding: 12px 18px; border-radius: 18px; border: 3px solid var(--line);
+    background: var(--card); color: var(--ink); font-weight: 800; cursor: pointer; }
+  .wordbtn .wbpic { display: block; font-size: 40px; line-height: 1.15; }
+  .wordbtn:active { transform: scale(0.96); }
+  .wordbtn.right { background: var(--good-soft); border-color: var(--good); }
+  .wordbtn.wrong { background: var(--bad-soft); border-color: var(--bad); }
+  .wordbtn:disabled { cursor: default; }
 </style>

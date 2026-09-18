@@ -626,10 +626,28 @@
   <div class="eh-quiet" id="ehQuiet" role="status" aria-live="polite" hidden><span class="eh-quiet-msg"></span><button type="button" class="eh-quiet-ok">OK</button></div>
   <div class="deck" id="deck" role="main">
 
+    <!-- STEP 0a: what this lesson is about -->
+    <section class="slide" data-say="By the end of this lesson you will be able to: Know that a half means two parts of the same size; colour one half of a shape; find half of a group of things; work out half of a number; know that two halves make one whole.">
+      <div class="slide-head"><span class="n">1</span><h2>What this lesson is about</h2></div>
+      <div class="say"><button type="button" class="speak" aria-label="Read it to me">&#128266;</button><span id="askOvw">By the end of this lesson you will be able to: Know that a half means two parts of the same size; colour one half of a shape; find half of a group of things; work out half of a number; know that two halves make one whole.</span></div>
+      <div class="stage" id="stageOvw"></div>
+    </section>
+    <!-- STEP 0b: unit lecture -->
+    <section class="slide" data-say="Watch the lesson told in parts, by the voice.">
+      <div class="slide-head"><span class="n">2</span><h2>Unit lecture</h2></div>
+      <div class="say"><button type="button" class="speak" aria-label="Read it to me">&#128266;</button><span id="askLec">Watch the lesson told in parts, by the voice.</span></div>
+      <div class="stage" id="stageLec"></div>
+    </section>
+    <!-- STEP 0c: math words -->
+    <section class="slide" data-say="Tap each word to hear what it means and how to use it. Then show you know them.">
+      <div class="slide-head"><span class="n">3</span><h2>Math words</h2></div>
+      <div class="say"><button type="button" class="speak" aria-label="Read it to me">&#128266;</button><span id="askMw">Tap each word to hear what it means and how to use it. Then show you know them.</span></div>
+      <div class="stage" id="stageMw"></div>
+    </section>
     <!-- 1  1Nf.01  two equal parts, or two unequal parts -->
     <section class="slide" data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>This lesson stands on one word.</s><s>Equal.</s><s>Equal means exactly the same size.</s><s>Not nearly.</s><s>Exactly.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>Look at the square with the line straight down the middle.</s><s>The left part and the right part are the same size.</s><s>Swap them over and you would not notice.</s><s>That is equal.</s><s>Now the long shape, cut near one end.</s><s>One part is fat, one is thin.</s><s>Not equal.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="empathetic" styledegree="1.3"><prosody rate="-6%"><s>Here is where children slip up.</s><s>They see two parts and say equal, because there are two.</s><s>Two parts is not enough.</s><s>They have to be the same size.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>So cover one part with your hand.</s><s>Is the part left over the same size?</s><s>Now tap your answer.</s></mstts:express-as>' data-say="A half means two parts that are exactly the same size. Look at each shape and say whether the two parts are equal.">
       <div class="eh-warm" id="ehWarm"><p class="eh-warm-h">Warm up</p><div class="eh-warm-say"><button type="button" class="speak" aria-label="Read it to me">&#128266;</button><span class="eh-warm-q"></span></div><div class="choices eh-warm-ch"></div><p class="fb" role="status" aria-live="polite"></p></div>
-      <div class="slide-head"><span class="n">1</span><h2>Two equal parts</h2></div>
+      <div class="slide-head"><span class="n">4</span><h2>Two equal parts</h2></div>
       <div class="say"><button type="button" class="speak" aria-label="Read it to me">🔊</button><span id="say1">Are the two parts <b>equal</b>? Equal means exactly the same size.</span></div>
       <details class="kit"><summary>For the grown-up: what to have to hand</summary><p>A sheet of paper to fold and cut, a piece of fruit or bread to halve at snack time, and about 20 beans to share out fairly. Folding is what teaches equal parts; the screen can only show it.</p></details>
       <div class="stage">
@@ -642,7 +660,7 @@
 
     <!-- 2  1Nf.01  choose the fair cut -->
     <section class="slide" data-twm="characterising classifying" data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>A fair cut makes two parts the same size.</s><s>Only one cut on the screen is fair.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>Take the square.</s><s>A line straight down the middle leaves two parts that match.</s><s>A line near the edge leaves a thin strip and a big piece.</s><s>Not fair.</s><s>And watch this one.</s><s>A line from corner to corner on a square is fair too.</s><s>It does not have to be straight down.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="empathetic" styledegree="1.3"><prosody rate="-6%"><s>Children often pick the cut that looks neatest, or the one that is nearly in the middle.</s><s>Nearly is not enough.</s><s>The two parts have to match.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>So cover one part with your finger.</s><s>If both parts look the same size, that is the fair cut.</s><s>Tap it.</s></mstts:express-as>' data-say="Only one of these cuts makes two equal parts. Tap the shape that is cut fairly.">
-      <div class="slide-head"><span class="n">2</span><h2>Cut it in half</h2></div>
+      <div class="slide-head"><span class="n">5</span><h2>Cut it in half</h2></div>
       <div class="say"><button type="button" class="speak" aria-label="Read it to me">🔊</button><span id="say2">Tap the shape that is cut into <b>two equal parts</b>.</span></div>
       <div class="stage">
         <div class="shapes" id="pic2"></div>
@@ -655,7 +673,7 @@
 
     <!-- 3  1Nf.02  one of two equal parts of a shape -->
     <section class="slide" data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>The shape is already cut into two equal parts.</s><s>One half means one of those two parts.</s><s>One, not both.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>Watch.</s><s>The circle has a line across the middle.</s><s>Two equal parts.</s><s>I colour the top part and I stop.</s><s>That coloured piece is one half.</s><s>If I colour the bottom part as well, I have coloured every bit of the circle.</s><s>That is not a half.</s><s>That is the whole shape.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="empathetic" styledegree="1.3"><prosody rate="-6%"><s>This is the mistake almost everybody makes.</s><s>Tapping is fun, so children tap both parts.</s><s>Two parts coloured is the whole shape.</s><s>One part is the half.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>So tap one part.</s><s>Just one.</s><s>Then say it out loud with me.</s><s>One half.</s></mstts:express-as>' data-say="This shape is cut into two equal parts. Tap one part to colour it. One of two equal parts is one half.">
-      <div class="slide-head"><span class="n">3</span><h2>Colour one half</h2></div>
+      <div class="slide-head"><span class="n">6</span><h2>Colour one half</h2></div>
       <div class="say"><button type="button" class="speak" aria-label="Read it to me">🔊</button><span id="say3">Tap <b>one</b> part. One of two equal parts is <b>one half</b>.</span></div>
       <div class="stage">
         <div class="shapes" id="pic3"></div>
@@ -667,7 +685,7 @@
 
     <!-- 4  1Nf.02  one of two equal parts of a SET -->
     <section class="slide" data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>Half is not only for shapes.</s><s>You can take half of a pile of things.</s><s>Two fair shares.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>Say there are six apples and two plates.</s><s>Do not guess.</s><s>Deal them out one at a time, like cards.</s><s>One for this plate, one for that plate.</s><s>Keep going until the pile is empty.</s><s>Three on each plate.</s><s>So half of six is three.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="empathetic" styledegree="1.3"><prosody rate="-6%"><s>Children often stop when a plate looks full, and one plate ends up with more.</s><s>Half only works if both plates finish with exactly the same number.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>So tap one thing at a time and let the plates take turns.</s><s>Empty the pile, then check they match.</s></mstts:express-as>' data-say="Half works on a group of things too. Share them onto the two plates so both plates have the same.">
-      <div class="slide-head"><span class="n">4</span><h2>Half of a group</h2></div>
+      <div class="slide-head"><span class="n">7</span><h2>Half of a group</h2></div>
       <div class="say"><button type="button" class="speak" aria-label="Read it to me">🔊</button><span id="say4">Tap a thing to send it to a plate. Both plates must end up with the <b>same</b>.</span></div>
       <div class="stage">
         <div class="pool" id="pool4"></div>
@@ -679,7 +697,7 @@
 
     <!-- 5  1Nf.03  half as an operator, shown -->
     <section class="slide" data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>Halving a number is the same job as sharing.</s><s>You put the counters into two equal rows, then you read one row.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>Watch with eight.</s><s>Press share, and the eight counters line up in two rows.</s><s>Count the top row.</s><s>One, two, three, four.</s><s>Four in the top row.</s><s>And the bottom row has four as well.</s><s>Four and four make eight.</s><s>So half of eight is four.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="empathetic" styledegree="1.3"><prosody rate="-6%"><s>Here is the trap.</s><s>It is easy to count every counter and answer eight.</s><s>Eight is what you started with.</s><s>The answer is one row.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>So press share.</s><s>Then put your finger on one row only and count it.</s><s>That is your answer.</s></mstts:express-as>' data-say="Half of a number means sharing it into two equal rows. Press share, then read how many are in one row.">
-      <div class="slide-head"><span class="n">5</span><h2>Half of a number</h2></div>
+      <div class="slide-head"><span class="n">8</span><h2>Half of a number</h2></div>
       <div class="say"><button type="button" class="speak" aria-label="Read it to me">🔊</button><span id="say5">Press <b>Share</b> to put them in two equal rows, then count <b>one</b> row.</span></div>
       <div class="stage">
         <p class="halfnum" id="q5">&nbsp;</p>
@@ -693,7 +711,7 @@
 
     <!-- 6  1Nf.03  half of, without the counters -->
     <section class="slide" data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>Same job, no counters this time.</s><s>You are looking for the number that goes twice.</s><s>Two of them, and they make your number.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>Try fourteen.</s><s>Ask yourself, what number and the same number make fourteen?</s><s>Try six.</s><s>Six and six make twelve.</s><s>Too small.</s><s>Try seven.</s><s>Seven and seven make fourteen.</s><s>That fits.</s><s>So half of fourteen is seven.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="empathetic" styledegree="1.3"><prosody rate="-6%"><s>Watch out for one wrong answer that looks very tempting.</s><s>Taking one away is not halving.</s><s>Half of fourteen is not thirteen.</s><s>Thirteen is just fourteen with one gone.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>So say your number, then hunt for the two that match.</s><s>Tap that number.</s></mstts:express-as>' data-say="Now try without the counters. Halving is sharing into two equal parts.">
-      <div class="slide-head"><span class="n">6</span><h2>Halve it in your head</h2></div>
+      <div class="slide-head"><span class="n">9</span><h2>Halve it in your head</h2></div>
       <div class="say"><button type="button" class="speak" aria-label="Read it to me">🔊</button><span id="say6">What is <b>half</b> of this number?</span></div>
       <div class="stage">
         <div id="stage6"></div>
@@ -705,7 +723,7 @@
 
     <!-- 7  1Nf.04  two halves make one whole -->
     <section class="slide" data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>A whole shape was cut into two halves.</s><s>Push those two halves back together and you get the whole shape again.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>Look at the piece already there.</s><s>Half a circle, with a straight edge down the side.</s><s>Now find the piece that fills the empty space exactly.</s><s>It has to be the same size as the piece there, and the same shape.</s><s>A piece of a square will never fit a circle.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="empathetic" styledegree="1.3"><prosody rate="-6%"><s>Children often grab a piece that is nearly right, or one that is too small.</s><s>A big piece and a little piece do not make two halves.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>So look at the gap first.</s><s>Hold that shape in your head.</s><s>Then tap the piece that fits.</s></mstts:express-as>' data-say="Two halves fit back together to make one whole. Tap the half that finishes the shape.">
-      <div class="slide-head"><span class="n">7</span><h2>Two halves make a whole</h2></div>
+      <div class="slide-head"><span class="n">10</span><h2>Two halves make a whole</h2></div>
       <div class="say"><button type="button" class="speak" aria-label="Read it to me">🔊</button><span id="say7">Tap the half that <b>finishes</b> the shape.</span></div>
       <div class="stage">
         <div class="join" id="join7"></div>
@@ -717,7 +735,7 @@
 
     <!-- 8  1Nf.04  counting halves into wholes -->
     <section class="slide" data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>Every whole takes two halves.</s><s>So counting halves is really counting in twos.</s><s>One two for every whole.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>Look at one whole circle with a line down the middle.</s><s>Count the pieces.</s><s>Two.</s><s>So one whole needs two halves.</s><s>Now three whole circles.</s><s>Two, and two, and two.</s><s>Point and count on.</s><s>Two, four, six.</s><s>Three wholes need six halves.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="empathetic" styledegree="1.3"><prosody rate="-6%"><s>Here is the catch.</s><s>Children say three, because they can see three circles.</s><s>Three is how many wholes.</s><s>Halves are smaller pieces, so there are always more of them than there are wholes.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>So point at each whole and say two.</s><s>Count on as you go.</s><s>The number you land on is your answer.</s></mstts:express-as>' data-say="If two halves make one whole, how many halves make more wholes? Count them.">
-      <div class="slide-head"><span class="n">8</span><h2>How many halves?</h2></div>
+      <div class="slide-head"><span class="n">11</span><h2>How many halves?</h2></div>
       <div class="say"><button type="button" class="speak" aria-label="Read it to me">🔊</button><span id="say8">Two halves make <b>one whole</b>. How many halves do you need?</span></div>
       <div class="stage">
         <div class="shapes" id="pic8"></div>
@@ -730,7 +748,7 @@
     <!-- 9  check -->
     <!-- 9  1Nf.01  Spot the mistake -->
 <section class="slide" data-twm="critiquing improving" data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>Today you are the checker.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>Somebody has done some maths and told you what they think.</s><s>Sometimes they are right and sometimes they have slipped.</s><s>Do it yourself first, then look at what they said.</s><s>If it does not match, work out WHICH part went wrong.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="empathetic" styledegree="1.3"><prosody rate="-6%"><s>Children often tap the first answer that sounds like a mistake.</s><s>Look again before you tap.</s><s>And some of these are right.</s><s>Saying right when it is right is just as clever as finding a mistake.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>So read what they say, work it out yourself, and tap what went wrong.</s></mstts:express-as>' data-say="Read what each child says. Work it out yourself. Then tap what went wrong.">
-      <div class="slide-head"><span class="n">9</span><h2>Spot the mistake</h2></div>
+      <div class="slide-head"><span class="n">12</span><h2>Spot the mistake</h2></div>
       <div class="say"><button type="button" class="speak" aria-label="Read it to me">🔊</button><span id="sm9say">Read what each child says, work it out yourself, then tap what went wrong.</span></div>
       <div class="stage" id="sm9st"></div>
       <div class="choices" id="sm9ch"></div>
@@ -740,7 +758,7 @@
     </section>
 <!-- 10  1Nf.02  Story problems -->
 <section class="slide" data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>A story problem is maths hiding inside a story.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>Listen to the whole story first, right to the end.</s><s>Then ask yourself one question.</s><s>Am I putting things together, or taking them away?</s><s>Putting together means adding.</s><s>Taking away, or finding how many more, means subtracting.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="empathetic" styledegree="1.3"><prosody rate="-6%"><s>Children often grab the two numbers and add them, whatever the story said.</s><s>That is why the story comes first and the numbers come second.</s><s>Say the story back to yourself in your own words before you choose.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>So listen to the story, decide what is happening, then tap your answer.</s></mstts:express-as>' data-say="Listen to the whole story. Work out the answer. Then tap it.">
-      <div class="slide-head"><span class="n">10</span><h2>Story problems</h2></div>
+      <div class="slide-head"><span class="n">13</span><h2>Story problems</h2></div>
       <div class="say"><button type="button" class="speak" aria-label="Read it to me">🔊</button><span id="wp10say">Read the story, work out the answer, then tap it.</span></div>
       <div class="stage" id="wp10st"></div>
       <div class="choices" id="wp10ch"></div>
@@ -750,7 +768,7 @@
     </section>
 <!-- 11  1Nf.01  Will it always work? -->
 <section class="slide" data-twm="specialising generalising" data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>Somebody has an idea about numbers. Your job is to test it.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>Testing an idea is not the same as agreeing with it.</s><s>You try it on one example, then on another.</s><s>If it works both times, you ask the big question: does it ALWAYS work?</s><s>And if you find even one example where it does not work, then it does not always work.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="empathetic" styledegree="1.3"><prosody rate="-6%"><s>Children often decide after one try.</s><s>One try is not enough to say always.</s><s>But one try IS enough to say NOT always, if that try breaks the idea.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>So test it twice, then say whether it always works.</s></mstts:express-as>' data-say="Somebody has an idea. Test it on each example, then say whether it always works.">
-      <div class="slide-head"><span class="n">11</span><h2>Will it always work?</h2></div>
+      <div class="slide-head"><span class="n">14</span><h2>Will it always work?</h2></div>
       <div class="say"><button type="button" class="speak" aria-label="Read it to me">🔊</button><span id="at11say">Test the idea on each example. Then say whether it always works.</span></div>
       <div class="stage" id="at11st"></div>
       <div class="choices" id="at11ch"></div>
@@ -789,7 +807,6 @@
         <div class="stickers" id="stickers"></div>
         <p class="fb" id="fbstick" role="status" aria-live="polite"></p>
         <div class="sc-wrap" id="selfcheck"></div>
-      <div id="vocab"></div>
         <div class="bigbtns"><button type="button" class="big ghost small" id="restart">Play again</button></div>
       </div>
     </section>
@@ -2244,7 +2261,7 @@
       $("pic1").innerHTML = ""; $("ch1").innerHTML = ""; $("score1").textContent = "";
       $("fb1").className = "fb good";
       $("fb1").textContent = "You judged " + right1 + " of " + list1.length + ". Equal parts are exactly the same size.";
-      finish(0, "You can see when two parts are equal.");
+      finish(3, "You can see when two parts are equal.");
       return;
     }
     const it = list1[i1];
@@ -2283,7 +2300,7 @@
       $("pic2").innerHTML = ""; $("score2").textContent = "";
       $("fb2").className = "fb good";
       $("fb2").textContent = "You found " + right2 + " of " + list2.length + " fair cuts.";
-      finish(1, "You can find the fair cut.");
+      finish(4, "You can find the fair cut.");
       return;
     }
     const it = list2[i2];
@@ -2315,7 +2332,7 @@
       $("pic3").innerHTML = ""; $("word3").innerHTML = "&nbsp;"; $("score3").textContent = "";
       $("fb3").className = "fb good";
       $("fb3").textContent = "You coloured one half of all " + SH3.length + " shapes.";
-      finish(2, "One of two equal parts is one half.");
+      finish(5, "One of two equal parts is one half.");
       return;
     }
     const [kind, cut] = SH3[i3];
@@ -2368,7 +2385,7 @@
       $("pool4").innerHTML = ""; $("plates4").innerHTML = ""; $("score4").textContent = "";
       $("fb4").className = "fb good";
       $("fb4").textContent = "You shared all " + SETS4.length + " groups fairly. Half of a group is one of two equal parts.";
-      finish(3, "Half works on a group of things too.");
+      finish(6, "Half works on a group of things too.");
       return;
     }
     placed4 = [0, 0]; pool4 = SETS4[i4].n;
@@ -2402,7 +2419,7 @@
       $("share5").hidden = true; $("score5").textContent = "";
       $("fb5").className = "fb good";
       $("fb5").textContent = "You halved " + right5 + " of " + NUM5.length + ".";
-      finish(4, "Halving is sharing into two equal rows.");
+      finish(7, "Halving is sharing into two equal rows.");
       return;
     }
     const n = NUM5[i5];
@@ -2463,7 +2480,7 @@
       $("join7").innerHTML = ""; $("pic7").innerHTML = ""; $("score7").textContent = "";
       $("fb7").className = "fb good";
       $("fb7").textContent = "You made " + right7 + " of " + JOIN7.length + " wholes. Two halves always make one whole.";
-      finish(6, "Two halves make one whole.");
+      finish(9, "Two halves make one whole.");
       return;
     }
     const [kind, cut] = JOIN7[i7];
@@ -2503,7 +2520,7 @@
       $("pic8").innerHTML = ""; $("ch8").innerHTML = ""; $("score8").textContent = "";
       $("fb8").className = "fb good";
       $("fb8").textContent = "You counted " + right8 + " of " + WHOLE8.length + ". Every whole needs two halves.";
-      finish(7, "Every whole takes two halves.");
+      finish(10, "Every whole takes two halves.");
       return;
     }
     const w = WHOLE8[i8];
@@ -2726,7 +2743,7 @@
   });
 
   /* ---- 10: stickers ---- */
-  const STICKERS = [
+  const STICKERS = [["🔎", "What this lesson is about"], ["🎥", "Unit lecture"], ["🗣️", "Math words"], 
     ["⚖️", "Two equal parts"], ["✂️", "The fair cut"], ["🎨", "Colour one half"], ["🍎", "Half of a group"],
     ["🔢", "Half of a number"], ["🧠", "Halve it in my head"], ["🔗", "Two halves, one whole"], ["⭕", "Counting halves"],
     ["🕵️", "Spot the mistake"], ["🎯", "Story problems"], ["🔬", "Testing an idea"], ["✅", "Show what I know"], ["\ud83e\udd14", "How do you know"]
@@ -2855,23 +2872,125 @@
   })();
 
 
-  /* ==== ehel-g1-vocabulary: Math Words for this lesson ====
-     Same insertion pattern as add-self-check.py: an empty host div on
-     the sticker-shelf slide, populated by this script, never scored. */
-  (function () {
-    const VOCAB = [{ w: "equal", d: "Exactly the same size, not just nearly the same." }, { w: "half", d: "One of two equal parts." }, { w: "whole", d: "All of a shape, with no parts missing or taken away." }, { w: "share", d: "Give things out so that everyone gets the same amount." }, { w: "fair", d: "The same for everyone, like two parts the same size." }, { w: "halve", d: "Find half of a number or a shape." }];
-    const host = document.getElementById("vocab");
-    if (!host) return;
-    const esc = (t) => String(t).replace(/&/g, "&amp;").replace(/</g, "&lt;")
-      .replace(/"/g, "&quot;");
-    host.innerHTML = '<p class="vc-head">Math Words</p>'
-      + '<p class="vc-sub">Words from this lesson, explained in one line each.</p>'
-      + '<dl class="vc-list">'
-      + VOCAB.map((it) => '<div class="vc-row"><dt>' + esc(it.w) + '</dt><dd>'
-        + esc(it.d) + "</dd></div>").join("")
-      + "</dl>";
-  })();
+  /* ==== ehel-g1-lesson-opener: three shared step functions, ported from Grade 4's own
+     add-lesson-opener.py in the same idiom - data-say for arrival
+     narration (show() already speaks it), plain finish(i, msg), no
+     ONSHOW/ONLEAVE/reportAttempt. esc() IS OWN, not shared, matching
+     every add-*.py tool in this build - see Grade 4's own docstring for
+     the ReferenceError this avoids. ==== */
+  const esc = (t) => String(t).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/"/g, "&quot;");
+  function lessonAbout(o) {
+    document.getElementById(o.stage).innerHTML =
+      '<div class="ovw"><h3 class="ovw-h">By the end of this lesson you will be able to&hellip;</h3>' +
+      '<ol class="ovw-list">' + o.about.map((t) => '<li>' + esc(t) + '</li>').join('') + '</ol>' +
+      '<div class="bigbtns"><button type="button" class="big small" id="' + o.stage + 'go">Got it, let\'s begin &#10003;</button></div></div>';
+    document.getElementById(o.stage + 'go').addEventListener('click', () => {
+      document.getElementById(o.stage + 'go').disabled = true;
+      finish(o.finish, o.done);
+    });
+  }
 
+  function lessonLecture(o) {
+    const parts = o.parts || [];
+    let k = 0;
+    const id = o.stage + 'l';
+    function paint() {
+      const p = parts[k];
+      document.getElementById(o.stage).innerHTML =
+        '<div class="lec"><p class="phase">Part ' + (k + 1) + ' of ' + parts.length + '</p>' +
+        '<h3 class="lec-h">' + esc(p.title) + '</h3><p class="lec-p">' + esc(p.say) + '</p>' +
+        '<div class="bigbtns">' +
+        '<button type="button" class="big small teal" id="' + id + 'hear">&#128266; Listen</button>' +
+        (k > 0 ? '<button type="button" class="big small ghost" id="' + id + 'back">&#9664; Last part</button>' : '') +
+        '<button type="button" class="big small" id="' + id + 'next">' + (k + 1 < parts.length ? 'Next part &#9654;' : 'I heard it all &#10003;') + '</button>' +
+        '</div><p class="lec-note">Read aloud by the lesson\'s voice. There is no video for this lesson yet.</p></div>';
+      document.getElementById(id + 'hear').addEventListener('click', () => say(p.title + '. ' + p.say));
+      if (k > 0) document.getElementById(id + 'back').addEventListener('click', () => { k--; paint(); say(parts[k].title + '. ' + parts[k].say); });
+      document.getElementById(id + 'next').addEventListener('click', () => {
+        if (k + 1 < parts.length) { k++; paint(); say(parts[k].title + '. ' + parts[k].say); }
+        else { finish(o.finish, o.done); }
+      });
+    }
+    if (!parts.length) return;
+    paint();
+  }
+
+  function lessonWords(o) {
+    const items = o.words || [];
+    const heard = new Set();
+    let open = -1;
+    const id = o.stage + 'w';
+    function paintGrid() {
+      document.getElementById(o.stage).innerHTML =
+        '<div class="cardsgrid" id="' + id + 'g">' + items.map((w, k) =>
+          '<button type="button" class="tapcard' + (heard.has(k) ? ' heard' : '') + '" data-k="' + k + '">' +
+          '<span class="cpic" aria-hidden="true">' + w.pic + '</span>' + esc(w.w) + '</button>').join('') + '</div>' +
+        '<div class="wordpanel" id="' + id + 'p"' + (open < 0 ? ' hidden' : '') + '></div>' +
+        '<div class="bigbtns" id="' + id + 'go" style="' + (heard.size === items.length ? '' : 'display:none') + '">' +
+        '<button type="button" class="big small" id="' + id + 'quiz">Show I know them &#9654;</button></div>';
+      if (open >= 0) paintPanel();
+      document.getElementById(id + 'g').addEventListener('click', (e) => {
+        const b = e.target.closest('.tapcard'); if (!b) return;
+        open = Number(b.dataset.k); heard.add(open);
+        paintGrid();
+        const w = items[open];
+        say(w.w + '. ' + w.meaning + ' ' + (w.uses[0] || ''));
+      });
+      if (heard.size === items.length) {
+        const goBtn = document.getElementById(id + 'quiz');
+        if (goBtn) goBtn.addEventListener('click', () => check());
+      }
+    }
+    function paintPanel() {
+      const w = items[open];
+      const p = document.getElementById(id + 'p');
+      p.hidden = false;
+      p.innerHTML = '<div class="wp-head"><span class="wp-pic" aria-hidden="true">' + w.pic + '</span>' +
+        '<div><p class="wp-word">' + esc(w.w) + '</p><p class="wp-meaning">' + esc(w.meaning) + '</p></div></div>' +
+        '<p class="wp-uses-h">Use it</p><ul class="wp-uses">' + (w.uses || []).map((u) => '<li>' + esc(u) + '</li>').join('') + '</ul>' +
+        '<div class="bigbtns"><button type="button" class="big small teal" id="' + id + 'h">&#128266; Hear it again</button></div>';
+      document.getElementById(id + 'h').addEventListener('click', () => say(w.w + '. ' + w.meaning + ' ' + (w.uses || []).join(' ')));
+    }
+    function check() {
+      const order = shuffle(items.map((_, k) => k));
+      let i = 0, right = 0, lock = false;
+      function draw() {
+        lock = false;
+        const k = order[i], w = items[k];
+        const others = shuffle(items.map((_, j) => j).filter((j) => j !== k)).slice(0, Math.min(2, items.length - 1));
+        const opts = shuffle([k].concat(others));
+        document.getElementById(o.stage).innerHTML =
+          '<div class="mw"><p class="lec-p">Which word means: <b>' + esc(w.meaning) + '</b></p>' +
+          '<div class="wordbtns" id="' + id + 'ch">' + opts.map((j) =>
+            '<button type="button" class="wordbtn" data-ok="' + (j === k ? 1 : 0) + '">' +
+            '<span class="wbpic" aria-hidden="true">' + items[j].pic + '</span>' + esc(items[j].w) + '</button>').join('') + '</div>' +
+          '<p class="lec-note" id="' + id + 'fb"></p></div>';
+        say('Which word means: ' + w.meaning);
+        document.getElementById(id + 'ch').addEventListener('click', (e) => {
+          const b = e.target.closest('.wordbtn'); if (!b || lock) return;
+          lock = true;
+          const ok = b.dataset.ok === '1';
+          document.getElementById(id + 'ch').querySelectorAll('.wordbtn').forEach((c) => { c.disabled = true; if (c.dataset.ok === '1') c.classList.add('right'); });
+          if (!ok) b.classList.add('wrong'); else right++;
+          const msg = ok ? cheer() + ' ' + w.w + '.' : 'That word is ' + w.w + '. ' + w.meaning;
+          document.getElementById(id + 'fb').textContent = msg; say(msg);
+          i++;
+          setTimeout(() => {
+            if (i >= items.length) {
+              document.getElementById(o.stage).innerHTML = '<div class="mw"><p class="lec-p">You know ' + right + ' of ' + items.length + ' math words.</p></div>';
+              finish(o.finish, o.done);
+            } else draw();
+          }, 2200);
+        });
+      }
+      draw();
+    }
+    paintGrid();
+  }
+
+  lessonAbout({ stage: 'stageOvw', about: ["Know that a half means two parts of the same size.", "Colour one half of a shape.", "Find half of a group of things.", "Work out half of a number.", "Know that two halves make one whole."], finish: 0, done: "Let's begin." });
+  lessonLecture({ stage: 'stageLec', parts: [{ title: "Equal parts", say: "A half is one of two parts that are exactly the same size - not just nearly the same. Cutting fairly is what makes a half a half." }, { title: "Half of a group", say: "To find half of a group, share it into two equal groups and count how many are in one group." }, { title: "Two halves make a whole", say: "Put the two halves back together and you have the whole again, with nothing missing and nothing extra." }], finish: 1, done: "You have heard the whole lesson. Now do it yourself." });
+  lessonWords({ stage: 'stageMw', words: [{ w: "equal", pic: "⚖️", meaning: "Exactly the same size, not just nearly the same.", uses: ["Cut the sandwich into two equal parts."] }, { w: "half", pic: "🌓", meaning: "One of two equal parts.", uses: ["Colour one half of the circle."] }, { w: "whole", pic: "🍎", meaning: "All of a shape, with no parts missing or taken away.", uses: ["Two halves put together make one whole apple."] }, { w: "share", pic: "🤝", meaning: "Give things out so that everyone gets the same amount.", uses: ["Share 6 beans fairly between two people."] }, { w: "fair", pic: "👫", meaning: "The same for everyone, like two parts the same size.", uses: ["A fair share means both people get the same amount."] }, { w: "halve", pic: "✂️", meaning: "Find half of a number or a shape.", uses: ["Halve 10 beans between two friends."] }], finish: 2, done: "You know the math words of this lesson." });
   show(0, false);
 
   /* ================= the two header bars =================
@@ -3742,12 +3861,45 @@
   .twm-ch { margin-top: 12px; }
   .twm-sc { margin: 10px 0 0; }
 </style>
-<style>/* ehel-g1-vocabulary - see add-vocabulary.py */
-  #vocab { margin: 18px auto 0; max-width: 46ch; text-align: left; }
-  .vc-head { font-size: 17px; font-weight: 700; margin: 0 0 4px; }
-  .vc-sub { font-size: 13.5px; color: var(--muted, #666); margin: 0 0 12px; line-height: 1.5; }
-  .vc-list { margin: 0; }
-  .vc-row { padding: 9px 0; border-top: 1px solid var(--line, #ddd); }
-  .vc-row dt { margin: 0 0 3px; font-size: 15px; font-weight: 700; }
-  .vc-row dd { margin: 0; font-size: 14px; line-height: 1.45; color: var(--ink, #222); }
+
+<style>/* ehel-g1-lesson-opener - see add-lesson-opener.py */
+  .ovw { width: 100%; max-width: 34em; margin: 0 auto; text-align: center; }
+  .ovw-h { font-size: 19px; margin: 0 0 12px; }
+  .ovw-list { margin: 0; padding-left: 26px; display: flex; flex-direction: column; gap: 11px;
+    font-size: 19px; text-align: left; }
+  .ovw-list li::marker { color: var(--teal); font-weight: 800; }
+  .lec, .mw { width: 100%; max-width: 36em; margin: 0 auto; display: flex; flex-direction: column;
+    align-items: center; gap: 10px; text-align: center; }
+  .phase { color: var(--teal); font-weight: 800; font-size: 12.5px; letter-spacing: .1em;
+    text-transform: uppercase; }
+  .lec-h { font-weight: 800; font-size: clamp(21px, 4vw, 26px); margin: 0; }
+  .lec-p { margin: 0; font-size: 19px; line-height: 1.55; max-width: 34em; }
+  .lec-note { margin: 4px 0 0; color: var(--muted); font-size: 13.5px; }
+  .cardsgrid { display: grid; grid-template-columns: repeat(auto-fit, minmax(128px, 1fr)); gap: 12px;
+    width: 100%; max-width: 640px; }
+  .tapcard { display: flex; flex-direction: column; align-items: center; gap: 6px; padding: 14px 8px 12px;
+    border-radius: 18px; border: 3px solid var(--line); background: var(--card); color: var(--ink);
+    font-weight: 800; font-size: 17px; line-height: 1.2; transition: transform 120ms ease, border-color 120ms ease; }
+  .tapcard .cpic { font-size: clamp(40px, 8vw, 56px); line-height: 1.1; }
+  .tapcard:active { transform: scale(0.96); }
+  .tapcard.heard { border-color: var(--teal); background: var(--teal-soft); }
+  .tapcard.heard::after { content: "\2713"; color: var(--good); font-size: 15px; }
+  .wordpanel { width: 100%; max-width: 560px; padding: 16px 18px; border-radius: 20px;
+    border: 3px solid var(--teal); background: var(--card); text-align: left; }
+  .wp-head { display: flex; align-items: center; gap: 16px; }
+  .wp-pic { font-size: 40px; }
+  .wp-word { margin: 0; font-weight: 800; font-size: 28px; }
+  .wp-meaning { margin: 4px 0 0; font-size: 17.5px; line-height: 1.45; }
+  .wp-uses-h { margin: 12px 0 4px; color: var(--teal); font-weight: 800; font-size: 12.5px;
+    letter-spacing: .1em; text-transform: uppercase; }
+  .wp-uses { margin: 0 0 10px; padding-left: 20px; display: flex; flex-direction: column; gap: 5px;
+    font-size: 16.5px; font-style: italic; }
+  .wordbtns { display: flex; gap: 12px; flex-wrap: wrap; justify-content: center; }
+  .wordbtn { min-width: 118px; padding: 12px 18px; border-radius: 18px; border: 3px solid var(--line);
+    background: var(--card); color: var(--ink); font-weight: 800; cursor: pointer; }
+  .wordbtn .wbpic { display: block; font-size: 40px; line-height: 1.15; }
+  .wordbtn:active { transform: scale(0.96); }
+  .wordbtn.right { background: var(--good-soft); border-color: var(--good); }
+  .wordbtn.wrong { background: var(--bad-soft); border-color: var(--bad); }
+  .wordbtn:disabled { cursor: default; }
 </style>

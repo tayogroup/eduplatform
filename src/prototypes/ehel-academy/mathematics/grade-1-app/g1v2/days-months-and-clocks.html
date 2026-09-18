@@ -622,10 +622,28 @@
   <div class="eh-quiet" id="ehQuiet" role="status" aria-live="polite" hidden><span class="eh-quiet-msg"></span><button type="button" class="eh-quiet-ok">OK</button></div>
   <div class="deck" id="deck" role="main">
 
+    <!-- STEP 0a: what this lesson is about -->
+    <section class="slide" data-say="By the end of this lesson you will be able to: Name the 7 days of the week in order; name the 12 months of the year; say whether something takes a short time or a long time; read a clock at o'clock; read a clock at half past.">
+      <div class="slide-head"><span class="n">1</span><h2>What this lesson is about</h2></div>
+      <div class="say"><button type="button" class="speak" aria-label="Read it to me">&#128266;</button><span id="askOvw">By the end of this lesson you will be able to: Name the 7 days of the week in order; name the 12 months of the year; say whether something takes a short time or a long time; read a clock at o'clock; read a clock at half past.</span></div>
+      <div class="stage" id="stageOvw"></div>
+    </section>
+    <!-- STEP 0b: unit lecture -->
+    <section class="slide" data-say="Watch the lesson told in parts, by the voice.">
+      <div class="slide-head"><span class="n">2</span><h2>Unit lecture</h2></div>
+      <div class="say"><button type="button" class="speak" aria-label="Read it to me">&#128266;</button><span id="askLec">Watch the lesson told in parts, by the voice.</span></div>
+      <div class="stage" id="stageLec"></div>
+    </section>
+    <!-- STEP 0c: math words -->
+    <section class="slide" data-say="Tap each word to hear what it means and how to use it. Then show you know them.">
+      <div class="slide-head"><span class="n">3</span><h2>Math words</h2></div>
+      <div class="say"><button type="button" class="speak" aria-label="Read it to me">&#128266;</button><span id="askMw">Tap each word to hear what it means and how to use it. Then show you know them.</span></div>
+      <div class="stage" id="stageMw"></div>
+    </section>
     <!-- 1  1Gt.02  Days of the week -->
     <section class="slide" data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>The days of the week always come round in the same order, and that order never changes.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>Monday, Tuesday, Wednesday, Thursday, Friday, Saturday, Sunday.</s><s>Seven of them.</s><s>Say them out loud with me, and after Sunday it starts at Monday again, round and round.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="empathetic" styledegree="1.3"><prosody rate="-6%"><s>Children start at whatever day it is today.</s><s>The list on this screen always starts at Monday, whatever day it happens to be outside.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>So say the whole seven out loud from Monday, then tap them in that order.</s></mstts:express-as>' data-say="Seven days make a week. Tap the days in order, starting with Monday.">
       <div class="eh-warm" id="ehWarm"><p class="eh-warm-h">Warm up</p><div class="eh-warm-say"><button type="button" class="speak" aria-label="Read it to me">&#128266;</button><span class="eh-warm-q"></span></div><div class="choices eh-warm-ch"></div><p class="fb" role="status" aria-live="polite"></p></div>
-      <div class="slide-head"><span class="n">1</span><h2>Days of the week</h2></div>
+      <div class="slide-head"><span class="n">4</span><h2>Days of the week</h2></div>
       <div class="say"><button type="button" class="speak" aria-label="Read it to me">🔊</button><span id="say11">Tap the days in order, starting with <b>Monday</b>.</span></div>
       <details class="kit"><summary>For the grown-up: what to have to hand</summary><p>A clock with hands, or one drawn on paper with a split pin, and a calendar if there is one. Turning the hands is what makes o'clock and half past make sense.</p></details>
       <div class="stage" id="stage11"></div>
@@ -635,7 +653,7 @@
     </section>
 <!-- 2  1Gt.02  Months of the year -->
 <section class="slide" data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>Twelve months make one year, and they always come in the same order too.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>January, February, March, April, May, June, July, August, September, October, November, December.</s><s>One is missing from the line.</s><s>Say the months out loud and listen for the one your voice says where the gap is.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="empathetic" styledegree="1.3"><prosody rate="-6%"><s>Children guess from what the missing month sounds like, or pick a month they like.</s><s>Say the list instead.</s><s>Your voice knows the order better than your guess does.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>So start at January and say them out loud until you reach the gap.</s><s>Whatever you say there is the answer.</s></mstts:express-as>' data-say="Twelve months make a year. One month is missing. Tap the one that belongs in the gap.">
-      <div class="slide-head"><span class="n">2</span><h2>Months of the year</h2></div>
+      <div class="slide-head"><span class="n">5</span><h2>Months of the year</h2></div>
       <div class="say"><button type="button" class="speak" aria-label="Read it to me">🔊</button><span id="say12">One month is missing. Which one belongs in the gap?</span></div>
       <div class="stage" id="stage12"></div>
       <div class="choices" id="ch12"></div>
@@ -644,7 +662,7 @@
     </section>
 <!-- 3  1Gt.01  Short times and long times -->
 <section class="slide" data-twm="characterising classifying" data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>Some things take a tiny amount of time and some take a very long time.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>A second is about as long as saying one elephant.</s><s>A minute is sixty of those.</s><s>An hour is long enough for a film.</s><s>A day is one whole sleep to the next.</s><s>A week is seven days, and a year is all twelve months.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="empathetic" styledegree="1.3"><prosody rate="-6%"><s>Children put them in the order they meet them in the day, rather than by how long they last.</s><s>Order them by length of time, from the shortest to the longest.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>So start with the very shortest one you can find, then keep asking which of the ones left is shortest now.</s></mstts:express-as>' data-say="A second is very short. A year is very long. Tap them in order, from the shortest to the longest.">
-      <div class="slide-head"><span class="n">3</span><h2>Short times and long times</h2></div>
+      <div class="slide-head"><span class="n">6</span><h2>Short times and long times</h2></div>
       <div class="say"><button type="button" class="speak" aria-label="Read it to me">🔊</button><span id="say13">Tap them in order, from the <b>shortest</b> to the <b>longest</b>.</span></div>
       <div class="stage" id="stage13"></div>
       <div class="choices" id="ch13"></div>
@@ -655,7 +673,7 @@
     </section>
 <!-- 4  1Gt.03  Telling the time -->
 <section class="slide" data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>A clock has two hands, and they do two different jobs.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>The short hand tells you the hour.</s><s>The long hand tells you how far through the hour you are.</s><s>When the long hand points straight up to twelve, the hour has just begun, and we say o clock.</s><s>If the short hand is on three and the long hand is on twelve, it is three o clock.</s><s>When the long hand points straight down to six, we are halfway through, and we say half past.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="empathetic" styledegree="1.3"><prosody rate="-6%"><s>Children read the long hand as the hour, because it is bigger and easier to see.</s><s>It is the short hand that tells you the hour, every time.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>So find the short hand first and see which number it is nearest.</s><s>Then look at the long hand to see whether it is o clock or half past.</s></mstts:express-as>' data-say="A clock. The short hand tells the hour. When the long hand points to twelve, it is something o'clock. Press next hour.">
-      <div class="slide-head"><span class="n">4</span><h2>Telling the time</h2></div>
+      <div class="slide-head"><span class="n">7</span><h2>Telling the time</h2></div>
       <div class="say"><button type="button" class="speak" aria-label="Read it to me">🔊</button><span id="say14">The <b>short</b> hand tells the hour. When the <b>long</b> hand points to 12, it is something <b>o'clock</b>. Press <b>Next hour</b>.</span></div>
       <div class="stage">
         <svg class="clock big-clock" id="clock14" viewBox="0 0 220 220" role="img" aria-label="A clock face"></svg>
@@ -668,7 +686,7 @@
     </section>
 <!-- 5  1Gt.01  How long does it take? -->
 <section class="slide" data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>We use different words for short times and long times.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>A blink takes less than a second.</s><s>Eating a banana takes a few minutes.</s><s>A night of sleep lasts many hours.</s><s>A school holiday lasts weeks, and there are twelve months in a year.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="empathetic" styledegree="1.3"><prosody rate="-6%"><s>Children think something that feels long must take a long time, like waiting for a treat.</s><s>Waiting can feel long even when it is only a few minutes.</s><s>Think about the clock, not the feeling.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>So picture doing the thing, and ask: is that seconds, minutes, hours, days, or longer?</s></mstts:express-as>' data-say="Seconds, minutes, hours, days, weeks, months and years. Think about how long each thing takes, then tap the answer.">
-      <div class="slide-head"><span class="n">5</span><h2>How long does it take?</h2></div>
+      <div class="slide-head"><span class="n">8</span><h2>How long does it take?</h2></div>
       <div class="say"><button type="button" class="speak" aria-label="Read it to me">🔊</button><span id="ss5say">Think about how long each thing takes: a <b>second</b>, a <b>minute</b>, an <b>hour</b>, a <b>day</b>, a <b>week</b> or a <b>year</b>.</span></div>
       <div class="stage" id="ss5st"></div>
       <div class="choices" id="ss5ch"></div>
@@ -678,7 +696,7 @@
     </section>
 <!-- 6  1Gt.03  Find the clock -->
 <section class="slide" data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>Every clock tells the time the same way, with its two hands.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>The long hand pointing straight up to twelve means o clock.</s><s>The long hand pointing straight down to six means half past.</s><s>The short hand tells you which hour.</s><s>At half past, the short hand sits halfway between two numbers.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="empathetic" styledegree="1.3"><prosody rate="-6%"><s>Children read the long hand as the hour, because it is the bigger hand.</s><s>The long hand only says o clock or half past.</s><s>It is the short hand that tells you the hour.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>So look at the long hand first, to see o clock or half past, and then read the short hand.</s></mstts:express-as>' data-say="Read each clock. The short hand tells the hour, and the long hand says o'clock or half past. Tap the answer.">
-      <div class="slide-head"><span class="n">6</span><h2>Find the clock</h2></div>
+      <div class="slide-head"><span class="n">9</span><h2>Find the clock</h2></div>
       <div class="say"><button type="button" class="speak" aria-label="Read it to me">🔊</button><span id="ss6say">Read each clock. The <b>long</b> hand says <b>o'clock</b> or <b>half past</b>, and the <b>short</b> hand tells the hour.</span></div>
       <div class="stage" id="ss6st"></div>
       <div class="choices" id="ss6ch"></div>
@@ -688,7 +706,7 @@
     </section>
 <!-- 7  1Gt.01  Spot the mistake -->
 <section class="slide" data-twm="critiquing improving" data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>Today you are the checker.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>Somebody has done some maths and told you what they think.</s><s>Sometimes they are right and sometimes they have slipped.</s><s>Do it yourself first, then look at what they said.</s><s>If it does not match, work out WHICH part went wrong.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="empathetic" styledegree="1.3"><prosody rate="-6%"><s>Children often tap the first answer that sounds like a mistake.</s><s>Look again before you tap.</s><s>And some of these are right.</s><s>Saying right when it is right is just as clever as finding a mistake.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>So read what they say, work it out yourself, and tap what went wrong.</s></mstts:express-as>' data-say="Read what each child says. Work it out yourself. Then tap what went wrong.">
-      <div class="slide-head"><span class="n">7</span><h2>Spot the mistake</h2></div>
+      <div class="slide-head"><span class="n">10</span><h2>Spot the mistake</h2></div>
       <div class="say"><button type="button" class="speak" aria-label="Read it to me">🔊</button><span id="sm7say">Read what each child says, work it out yourself, then tap what went wrong.</span></div>
       <div class="stage" id="sm7st"></div>
       <div class="choices" id="sm7ch"></div>
@@ -698,7 +716,7 @@
     </section>
 <!-- 8  1Gt.02  Story problems -->
 <section class="slide" data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>A story problem is maths hiding inside a story.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>Listen to the whole story first, right to the end.</s><s>Then ask yourself one question.</s><s>Am I putting things together, or taking them away?</s><s>Putting together means adding.</s><s>Taking away, or finding how many more, means subtracting.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="empathetic" styledegree="1.3"><prosody rate="-6%"><s>Children often grab the two numbers and add them, whatever the story said.</s><s>That is why the story comes first and the numbers come second.</s><s>Say the story back to yourself in your own words before you choose.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>So listen to the story, decide what is happening, then tap your answer.</s></mstts:express-as>' data-say="Listen to the whole story. Work out the answer. Then tap it.">
-      <div class="slide-head"><span class="n">8</span><h2>Story problems</h2></div>
+      <div class="slide-head"><span class="n">11</span><h2>Story problems</h2></div>
       <div class="say"><button type="button" class="speak" aria-label="Read it to me">🔊</button><span id="wp8say">Read the story, work out the answer, then tap it.</span></div>
       <div class="stage" id="wp8st"></div>
       <div class="choices" id="wp8ch"></div>
@@ -708,7 +726,7 @@
     </section>
 <!-- 9  1Gt.03  Will it always work? -->
 <section class="slide" data-twm="specialising generalising" data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>Somebody has an idea about numbers. Your job is to test it.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>Testing an idea is not the same as agreeing with it.</s><s>You try it on one example, then on another.</s><s>If it works both times, you ask the big question: does it ALWAYS work?</s><s>And if you find even one example where it does not work, then it does not always work.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="empathetic" styledegree="1.3"><prosody rate="-6%"><s>Children often decide after one try.</s><s>One try is not enough to say always.</s><s>But one try IS enough to say NOT always, if that try breaks the idea.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>So test it twice, then say whether it always works.</s></mstts:express-as>' data-say="Somebody has an idea. Test it on each example, then say whether it always works.">
-      <div class="slide-head"><span class="n">9</span><h2>Will it always work?</h2></div>
+      <div class="slide-head"><span class="n">12</span><h2>Will it always work?</h2></div>
       <div class="say"><button type="button" class="speak" aria-label="Read it to me">🔊</button><span id="at9say">Test the idea on each example. Then say whether it always works.</span></div>
       <div class="stage" id="at9st"></div>
       <div class="choices" id="at9ch"></div>
@@ -743,7 +761,6 @@
         <div class="stickers" id="stickers"></div>
         <p class="fb" id="fbstick" role="status" aria-live="polite"></p>
         <div class="sc-wrap" id="selfcheck"></div>
-      <div id="vocab"></div>
         <div class="bigbtns"><button type="button" class="big ghost small" id="restart">Start again</button></div>
       </div>
     </section>
@@ -2300,7 +2317,7 @@
       if (q11 >= DAYQ.length) {
         $("ch11").innerHTML = ""; $("sc11").textContent = "";
         $("fb11").className = "fb good"; $("fb11").textContent = "You know the days of the week.";
-        finish(0, "You know the days of the week. Brilliant!");
+        finish(3, "You know the days of the week. Brilliant!");
       } else ask11();
     }, 2600);
   });
@@ -2339,7 +2356,7 @@
         $("ch12").innerHTML = ""; $("sc12").textContent = "";
         $("stage12").innerHTML = '<div class="picks" style="max-width:640px">' + MONTHS.map((m) => '<span class="fact" style="font-size:16px">' + m + "</span>").join("") + "</div>";
         $("fb12").className = "fb good"; $("fb12").textContent = "Twelve months make one year.";
-        finish(1, "Twelve months make one year. Brilliant!");
+        finish(4, "Twelve months make one year. Brilliant!");
       } else draw12();
     }, 2800);
   });
@@ -2415,7 +2432,7 @@
       if (q13 >= TIMEQ.length) {
         $("ch13").innerHTML = ""; $("sc13").textContent = "";
         $("fb13").className = "fb good"; $("fb13").textContent = "You can talk about short times and long times.";
-        finish(2, "You can talk about short times and long times. Brilliant!");
+        finish(5, "You can talk about short times and long times. Brilliant!");
       } else ask13();
     }, 2800);
   });
@@ -2491,7 +2508,7 @@
     $("say14").innerHTML = "The <b>short</b> hand tells the hour. The <b>long</b> hand on 12 means <b>o'clock</b>, and on 6 it means <b>half past</b>.";
     $("fbtime").className = "fb good"; $("fbtime").textContent = "12 o'clock. Right round the clock and back to the start.";
     say("The short hand tells the hour. The long hand on twelve means o'clock, and on six means half past.");
-    finish(3, "You can read the time to the hour and the half hour. Brilliant!");
+    finish(6, "You can read the time to the hour and the half hour. Brilliant!");
   }
   paintHours();
 
@@ -2547,7 +2564,7 @@
         $("fbck").className = "fb good";
         $("fbck").textContent = "You got " + rightc + " out of " + CHECK.length + "!";
         say("You got " + rightc + " out of " + CHECK.length + "!");
-        if (rightc >= Math.ceil(CHECK.length * 0.75)) finish(9, "Well done!");
+        if (rightc >= Math.ceil(CHECK.length * 0.75)) finish(12, "Well done!");
         else retryCheck($("fbck"), $("chck"), rightc, CHECK.length, function () { qc = 0; rightc = 0; askCheck(); });
       } else askCheck();
     }, 2800);
@@ -2776,7 +2793,7 @@
   });
 
   /* ---- stickers ---- */
-  const STICKERS = [
+  const STICKERS = [["🔎", "What this lesson is about"], ["🎥", "Unit lecture"], ["🗣️", "Math words"], 
     ["📅", "Days of the week"],
     ["🗓️", "Months of the year"],
     ["⏳", "Short and long times"],
@@ -2907,23 +2924,125 @@
   })();
 
 
-  /* ==== ehel-g1-vocabulary: Math Words for this lesson ====
-     Same insertion pattern as add-self-check.py: an empty host div on
-     the sticker-shelf slide, populated by this script, never scored. */
-  (function () {
-    const VOCAB = [{ w: "hour hand", d: "The short hand on a clock. It tells you the hour." }, { w: "minute hand", d: "The long hand on a clock. It tells you how far through the hour you are." }, { w: "o'clock", d: "When the long hand points straight up to twelve." }, { w: "half past", d: "When the long hand points straight down to six." }, { w: "week", d: "Seven days, from Monday round to Sunday." }, { w: "year", d: "Twelve months, from January to December." }];
-    const host = document.getElementById("vocab");
-    if (!host) return;
-    const esc = (t) => String(t).replace(/&/g, "&amp;").replace(/</g, "&lt;")
-      .replace(/"/g, "&quot;");
-    host.innerHTML = '<p class="vc-head">Math Words</p>'
-      + '<p class="vc-sub">Words from this lesson, explained in one line each.</p>'
-      + '<dl class="vc-list">'
-      + VOCAB.map((it) => '<div class="vc-row"><dt>' + esc(it.w) + '</dt><dd>'
-        + esc(it.d) + "</dd></div>").join("")
-      + "</dl>";
-  })();
+  /* ==== ehel-g1-lesson-opener: three shared step functions, ported from Grade 4's own
+     add-lesson-opener.py in the same idiom - data-say for arrival
+     narration (show() already speaks it), plain finish(i, msg), no
+     ONSHOW/ONLEAVE/reportAttempt. esc() IS OWN, not shared, matching
+     every add-*.py tool in this build - see Grade 4's own docstring for
+     the ReferenceError this avoids. ==== */
+  const esc = (t) => String(t).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/"/g, "&quot;");
+  function lessonAbout(o) {
+    document.getElementById(o.stage).innerHTML =
+      '<div class="ovw"><h3 class="ovw-h">By the end of this lesson you will be able to&hellip;</h3>' +
+      '<ol class="ovw-list">' + o.about.map((t) => '<li>' + esc(t) + '</li>').join('') + '</ol>' +
+      '<div class="bigbtns"><button type="button" class="big small" id="' + o.stage + 'go">Got it, let\'s begin &#10003;</button></div></div>';
+    document.getElementById(o.stage + 'go').addEventListener('click', () => {
+      document.getElementById(o.stage + 'go').disabled = true;
+      finish(o.finish, o.done);
+    });
+  }
 
+  function lessonLecture(o) {
+    const parts = o.parts || [];
+    let k = 0;
+    const id = o.stage + 'l';
+    function paint() {
+      const p = parts[k];
+      document.getElementById(o.stage).innerHTML =
+        '<div class="lec"><p class="phase">Part ' + (k + 1) + ' of ' + parts.length + '</p>' +
+        '<h3 class="lec-h">' + esc(p.title) + '</h3><p class="lec-p">' + esc(p.say) + '</p>' +
+        '<div class="bigbtns">' +
+        '<button type="button" class="big small teal" id="' + id + 'hear">&#128266; Listen</button>' +
+        (k > 0 ? '<button type="button" class="big small ghost" id="' + id + 'back">&#9664; Last part</button>' : '') +
+        '<button type="button" class="big small" id="' + id + 'next">' + (k + 1 < parts.length ? 'Next part &#9654;' : 'I heard it all &#10003;') + '</button>' +
+        '</div><p class="lec-note">Read aloud by the lesson\'s voice. There is no video for this lesson yet.</p></div>';
+      document.getElementById(id + 'hear').addEventListener('click', () => say(p.title + '. ' + p.say));
+      if (k > 0) document.getElementById(id + 'back').addEventListener('click', () => { k--; paint(); say(parts[k].title + '. ' + parts[k].say); });
+      document.getElementById(id + 'next').addEventListener('click', () => {
+        if (k + 1 < parts.length) { k++; paint(); say(parts[k].title + '. ' + parts[k].say); }
+        else { finish(o.finish, o.done); }
+      });
+    }
+    if (!parts.length) return;
+    paint();
+  }
+
+  function lessonWords(o) {
+    const items = o.words || [];
+    const heard = new Set();
+    let open = -1;
+    const id = o.stage + 'w';
+    function paintGrid() {
+      document.getElementById(o.stage).innerHTML =
+        '<div class="cardsgrid" id="' + id + 'g">' + items.map((w, k) =>
+          '<button type="button" class="tapcard' + (heard.has(k) ? ' heard' : '') + '" data-k="' + k + '">' +
+          '<span class="cpic" aria-hidden="true">' + w.pic + '</span>' + esc(w.w) + '</button>').join('') + '</div>' +
+        '<div class="wordpanel" id="' + id + 'p"' + (open < 0 ? ' hidden' : '') + '></div>' +
+        '<div class="bigbtns" id="' + id + 'go" style="' + (heard.size === items.length ? '' : 'display:none') + '">' +
+        '<button type="button" class="big small" id="' + id + 'quiz">Show I know them &#9654;</button></div>';
+      if (open >= 0) paintPanel();
+      document.getElementById(id + 'g').addEventListener('click', (e) => {
+        const b = e.target.closest('.tapcard'); if (!b) return;
+        open = Number(b.dataset.k); heard.add(open);
+        paintGrid();
+        const w = items[open];
+        say(w.w + '. ' + w.meaning + ' ' + (w.uses[0] || ''));
+      });
+      if (heard.size === items.length) {
+        const goBtn = document.getElementById(id + 'quiz');
+        if (goBtn) goBtn.addEventListener('click', () => check());
+      }
+    }
+    function paintPanel() {
+      const w = items[open];
+      const p = document.getElementById(id + 'p');
+      p.hidden = false;
+      p.innerHTML = '<div class="wp-head"><span class="wp-pic" aria-hidden="true">' + w.pic + '</span>' +
+        '<div><p class="wp-word">' + esc(w.w) + '</p><p class="wp-meaning">' + esc(w.meaning) + '</p></div></div>' +
+        '<p class="wp-uses-h">Use it</p><ul class="wp-uses">' + (w.uses || []).map((u) => '<li>' + esc(u) + '</li>').join('') + '</ul>' +
+        '<div class="bigbtns"><button type="button" class="big small teal" id="' + id + 'h">&#128266; Hear it again</button></div>';
+      document.getElementById(id + 'h').addEventListener('click', () => say(w.w + '. ' + w.meaning + ' ' + (w.uses || []).join(' ')));
+    }
+    function check() {
+      const order = shuffle(items.map((_, k) => k));
+      let i = 0, right = 0, lock = false;
+      function draw() {
+        lock = false;
+        const k = order[i], w = items[k];
+        const others = shuffle(items.map((_, j) => j).filter((j) => j !== k)).slice(0, Math.min(2, items.length - 1));
+        const opts = shuffle([k].concat(others));
+        document.getElementById(o.stage).innerHTML =
+          '<div class="mw"><p class="lec-p">Which word means: <b>' + esc(w.meaning) + '</b></p>' +
+          '<div class="wordbtns" id="' + id + 'ch">' + opts.map((j) =>
+            '<button type="button" class="wordbtn" data-ok="' + (j === k ? 1 : 0) + '">' +
+            '<span class="wbpic" aria-hidden="true">' + items[j].pic + '</span>' + esc(items[j].w) + '</button>').join('') + '</div>' +
+          '<p class="lec-note" id="' + id + 'fb"></p></div>';
+        say('Which word means: ' + w.meaning);
+        document.getElementById(id + 'ch').addEventListener('click', (e) => {
+          const b = e.target.closest('.wordbtn'); if (!b || lock) return;
+          lock = true;
+          const ok = b.dataset.ok === '1';
+          document.getElementById(id + 'ch').querySelectorAll('.wordbtn').forEach((c) => { c.disabled = true; if (c.dataset.ok === '1') c.classList.add('right'); });
+          if (!ok) b.classList.add('wrong'); else right++;
+          const msg = ok ? cheer() + ' ' + w.w + '.' : 'That word is ' + w.w + '. ' + w.meaning;
+          document.getElementById(id + 'fb').textContent = msg; say(msg);
+          i++;
+          setTimeout(() => {
+            if (i >= items.length) {
+              document.getElementById(o.stage).innerHTML = '<div class="mw"><p class="lec-p">You know ' + right + ' of ' + items.length + ' math words.</p></div>';
+              finish(o.finish, o.done);
+            } else draw();
+          }, 2200);
+        });
+      }
+      draw();
+    }
+    paintGrid();
+  }
+
+  lessonAbout({ stage: 'stageOvw', about: ["Name the 7 days of the week in order.", "Name the 12 months of the year.", "Say whether something takes a short time or a long time.", "Read a clock at o'clock.", "Read a clock at half past."], finish: 0, done: "Let's begin." });
+  lessonLecture({ stage: 'stageLec', parts: [{ title: "Days and months", say: "There are 7 days in a week, from Monday round to Sunday, and 12 months in a year, from January to December." }, { title: "Short times and long times", say: "Some things take a short time, like a blink. Some things take a long time, like a whole day at school." }, { title: "O'clock and half past", say: "At o'clock, the long hand points straight up to twelve. At half past, the long hand points straight down to six." }], finish: 1, done: "You have heard the whole lesson. Now do it yourself." });
+  lessonWords({ stage: 'stageMw', words: [{ w: "hour hand", pic: "🕐", meaning: "The short hand on a clock. It tells you the hour.", uses: ["The hour hand points to the 3."] }, { w: "minute hand", pic: "🕜", meaning: "The long hand on a clock. It tells you how far through the hour you are.", uses: ["The minute hand points straight up at o'clock."] }, { w: "o'clock", pic: "🕛", meaning: "When the long hand points straight up to twelve.", uses: ["It is three o'clock."] }, { w: "half past", pic: "🕡", meaning: "When the long hand points straight down to six.", uses: ["It is half past three."] }, { w: "week", pic: "📅", meaning: "Seven days, from Monday round to Sunday.", uses: ["There are seven days in a week."] }, { w: "year", pic: "🗓️", meaning: "Twelve months, from January to December.", uses: ["There are twelve months in a year."] }], finish: 2, done: "You know the math words of this lesson." });
   show(0, false);
 
   /* ================= the two header bars =================
@@ -3806,12 +3925,45 @@
   .twm-ch { margin-top: 12px; }
   .twm-sc { margin: 10px 0 0; }
 </style>
-<style>/* ehel-g1-vocabulary - see add-vocabulary.py */
-  #vocab { margin: 18px auto 0; max-width: 46ch; text-align: left; }
-  .vc-head { font-size: 17px; font-weight: 700; margin: 0 0 4px; }
-  .vc-sub { font-size: 13.5px; color: var(--muted, #666); margin: 0 0 12px; line-height: 1.5; }
-  .vc-list { margin: 0; }
-  .vc-row { padding: 9px 0; border-top: 1px solid var(--line, #ddd); }
-  .vc-row dt { margin: 0 0 3px; font-size: 15px; font-weight: 700; }
-  .vc-row dd { margin: 0; font-size: 14px; line-height: 1.45; color: var(--ink, #222); }
+
+<style>/* ehel-g1-lesson-opener - see add-lesson-opener.py */
+  .ovw { width: 100%; max-width: 34em; margin: 0 auto; text-align: center; }
+  .ovw-h { font-size: 19px; margin: 0 0 12px; }
+  .ovw-list { margin: 0; padding-left: 26px; display: flex; flex-direction: column; gap: 11px;
+    font-size: 19px; text-align: left; }
+  .ovw-list li::marker { color: var(--teal); font-weight: 800; }
+  .lec, .mw { width: 100%; max-width: 36em; margin: 0 auto; display: flex; flex-direction: column;
+    align-items: center; gap: 10px; text-align: center; }
+  .phase { color: var(--teal); font-weight: 800; font-size: 12.5px; letter-spacing: .1em;
+    text-transform: uppercase; }
+  .lec-h { font-weight: 800; font-size: clamp(21px, 4vw, 26px); margin: 0; }
+  .lec-p { margin: 0; font-size: 19px; line-height: 1.55; max-width: 34em; }
+  .lec-note { margin: 4px 0 0; color: var(--muted); font-size: 13.5px; }
+  .cardsgrid { display: grid; grid-template-columns: repeat(auto-fit, minmax(128px, 1fr)); gap: 12px;
+    width: 100%; max-width: 640px; }
+  .tapcard { display: flex; flex-direction: column; align-items: center; gap: 6px; padding: 14px 8px 12px;
+    border-radius: 18px; border: 3px solid var(--line); background: var(--card); color: var(--ink);
+    font-weight: 800; font-size: 17px; line-height: 1.2; transition: transform 120ms ease, border-color 120ms ease; }
+  .tapcard .cpic { font-size: clamp(40px, 8vw, 56px); line-height: 1.1; }
+  .tapcard:active { transform: scale(0.96); }
+  .tapcard.heard { border-color: var(--teal); background: var(--teal-soft); }
+  .tapcard.heard::after { content: "\2713"; color: var(--good); font-size: 15px; }
+  .wordpanel { width: 100%; max-width: 560px; padding: 16px 18px; border-radius: 20px;
+    border: 3px solid var(--teal); background: var(--card); text-align: left; }
+  .wp-head { display: flex; align-items: center; gap: 16px; }
+  .wp-pic { font-size: 40px; }
+  .wp-word { margin: 0; font-weight: 800; font-size: 28px; }
+  .wp-meaning { margin: 4px 0 0; font-size: 17.5px; line-height: 1.45; }
+  .wp-uses-h { margin: 12px 0 4px; color: var(--teal); font-weight: 800; font-size: 12.5px;
+    letter-spacing: .1em; text-transform: uppercase; }
+  .wp-uses { margin: 0 0 10px; padding-left: 20px; display: flex; flex-direction: column; gap: 5px;
+    font-size: 16.5px; font-style: italic; }
+  .wordbtns { display: flex; gap: 12px; flex-wrap: wrap; justify-content: center; }
+  .wordbtn { min-width: 118px; padding: 12px 18px; border-radius: 18px; border: 3px solid var(--line);
+    background: var(--card); color: var(--ink); font-weight: 800; cursor: pointer; }
+  .wordbtn .wbpic { display: block; font-size: 40px; line-height: 1.15; }
+  .wordbtn:active { transform: scale(0.96); }
+  .wordbtn.right { background: var(--good-soft); border-color: var(--good); }
+  .wordbtn.wrong { background: var(--bad-soft); border-color: var(--bad); }
+  .wordbtn:disabled { cursor: default; }
 </style>

@@ -753,6 +753,7 @@
         <div class="stickers" id="stickers"></div>
         <p class="fb" id="fb12" role="status" aria-live="polite"></p>
         <div class="sc-wrap" id="selfcheck"></div>
+      <div id="vocab"></div>
         <div class="bigbtns"><button type="button" class="big small teal" id="restart">Play again</button></div>
       </div>
     </section>
@@ -2796,6 +2797,24 @@
     paint();
   })();
 
+
+  /* ==== ehel-vocabulary: Math Words for this lesson ====
+     Same insertion pattern as add-self-check.py: an empty host div on
+     the sticker-shelf slide, populated by this script, never scored. */
+  (function () {
+    const VOCAB = [{ w: "side", d: "One of the straight or curved edges of a flat shape." }, { w: "corner", d: "The point where two sides of a shape meet." }, { w: "face", d: "One flat surface of a solid shape, like one side of a cube." }, { w: "edge", d: "The line where two faces of a solid shape meet." }, { w: "symmetry", d: "When one half of a shape is an exact mirror match of the other half." }, { w: "clockwise", d: "Turning the same way the hands of a clock move." }];
+    const host = document.getElementById("vocab");
+    if (!host) return;
+    const esc = (t) => String(t).replace(/&/g, "&amp;").replace(/</g, "&lt;")
+      .replace(/"/g, "&quot;");
+    host.innerHTML = '<p class="vc-head">Math Words</p>'
+      + '<p class="vc-sub">Words from this lesson, explained in one line each.</p>'
+      + '<dl class="vc-list">'
+      + VOCAB.map((it) => '<div class="vc-row"><dt>' + esc(it.w) + '</dt><dd>'
+        + esc(it.d) + "</dd></div>").join("")
+      + "</dl>";
+  })();
+
   show(0, false);
   quiet -= 1;   /* the first draw is over: say() speaks from here on */
 
@@ -3577,4 +3596,13 @@
   .pb-story { font-size: 18px; line-height: 1.5; text-align: center; margin: 0 auto;
     max-width: 30ch; padding: 10px 12px; border-radius: 10px;
     background: var(--cell, var(--card)); border: 1px solid var(--line, #ddd); }
+</style>
+<style>/* ehel-vocabulary - see add-vocabulary.py */
+  #vocab { margin: 18px auto 0; max-width: 46ch; text-align: left; }
+  .vc-head { font-size: 17px; font-weight: 700; margin: 0 0 4px; }
+  .vc-sub { font-size: 13.5px; color: var(--muted, #666); margin: 0 0 12px; line-height: 1.5; }
+  .vc-list { margin: 0; }
+  .vc-row { padding: 9px 0; border-top: 1px solid var(--line, #ddd); }
+  .vc-row dt { margin: 0 0 3px; font-size: 15px; font-weight: 700; }
+  .vc-row dd { margin: 0; font-size: 14px; line-height: 1.45; color: var(--ink, #222); }
 </style>

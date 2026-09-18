@@ -103,7 +103,7 @@ Each level is its own Moodle course (owner, 2026-09-18: new course keys, and the
 - **Playback:** a whole lecture or conversation plays its clips in order, but only when every clip exists. Otherwise the device voice takes the whole thing, so no conversation changes voice halfway.
 - **Letters & Sounds:** sent through the Phonics speech table (`tools/lib/ehel-phonics-speech.js`), unit by unit, so letters are voiced as sounds. Bridge A has a hand-written spoken form.
 - **Clip lookup:** only clips that exist are requested (`LESSON.clips`).
-  - Local builds use `media/audio/tts`.
+  - Local builds use `media/audio/tts`, the folder the whole course shares. So a Letters & Sounds page also lists 64 recordings made for the live Phonics level (its letters and letter groups). The manifest lists them as `reused`: the narrator never records them, and the claim copies them into g10, because a deployed page asks its own folder and no other.
   - Deployed pages use `media/intensive-english/g10–g15`, claimed in `tools/lib/ehel-intensive-narration.js`. That same claim is what the uploader, the audio check and the prune tools read. **Upload the media BEFORE the pages:** a page asks only for clips it lists, and on the CDN a 404 on a media path is cached for a year.
 
 ## Status (2026-09-18)

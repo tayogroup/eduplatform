@@ -108,10 +108,10 @@ def clip_key(text):
     return cyrb53(re.sub(r"\s+", " ", text).strip())
 
 
-def recorded_clips(d):
-    """Keys of every string in the lesson that has a recording on disk. The page
-    requests these and nothing else (see program.js :: clipFor)."""
-    found = set()
+def recorded_texts(d):
+    """{key: text} for every string in the lesson that has a recording on disk.
+    The page requests these and nothing else (see program.js :: clipFor)."""
+    found = {}
 
     def walk(v):
         if isinstance(v, dict):
@@ -122,10 +122,10 @@ def recorded_clips(d):
                 walk(x)
         elif isinstance(v, str) and v.strip():
             k = clip_key(v)
-            if os.path.isfile(os.path.join(TTS, k + ".mp3")):
-                found.add(k)
+            if k not in found and os.path.isfile(os.path.join(TTS, k + ".mp3")):
+                found[k] = re.sub(r"\s+", " ", v).strip()
     walk(d)
-    return sorted(found)
+    return found
 
 
 # --- narration -----------------------------------------------------------------
@@ -211,26 +211,42 @@ def lines_of(text):
 
 
 def write_manifest(level, per_lesson):
-    """kit/narration/<level>.json: every clip the level's pages can play, once."""
-    seen, items = set(), []
-    for label, its in per_lesson:
+    """kit/narration/<level>.json: every clip the level's pages can play, once.
+
+    `items` are the programme's own recordings. `reused` are clips another level
+    already recorded (a Letters & Sounds page lists the Phonics level's
+    recordings of its letters and letter groups): the narrator never records
+    them, but they are claimed for this level's media folder, because a page
+    asks its own folder and no other. Unclaimed, they were never uploaded there,
+    and a page asking for one caches a 404 for a year."""
+    seen, items, reused = set(), [], []
+    for label, its, _ in per_lesson:
         for it in its:
             if it["key"] in seen:
                 continue
             seen.add(it["key"])
             items.append(dict(it, lesson=label))
+    for label, _, rec in per_lesson:
+        for it in rec:
+            if it["key"] in seen:
+                continue
+            seen.add(it["key"])
+            reused.append(dict(it, lesson=label))
     doc = {
         "_about": "Written by build_program.py: every recorded clip the %s pages can play. Read by the narrator "
-                  "(tools/generate-ehel-intensive-programme-audio.js) and by tools/lib/ehel-intensive-narration.js "
-                  "(media folder g%02d; keeps the prune tools off these clips). Do not hand-edit." % (level["name"], COURSE_NUMBER[level["id"]]),
+                  "(tools/generate-ehel-intensive-programme-audio.js, which records `items` only) and by "
+                  "tools/lib/ehel-intensive-narration.js (media folder g%02d for `items` and `reused`; keeps the prune "
+                  "tools off these clips). Do not hand-edit." % (level["name"], COURSE_NUMBER[level["id"]]),
         "level": level["id"], "courseKey": course_key(level["id"]), "mediaGrade": COURSE_NUMBER[level["id"]],
         "items": items,
     }
+    if reused:
+        doc["reused"] = reused
     os.makedirs(NARRATION, exist_ok=True)
     with io.open(os.path.join(NARRATION, level["id"] + ".json"), "w", encoding="utf-8", newline="\n") as fh:
         json.dump(doc, fh, ensure_ascii=False, indent=1)
         fh.write("\n")
-    return len(items)
+    return len(items), len(reused)
 
 
 def on_disk(keys):
@@ -637,10 +653,15 @@ def build_literacy(level, pi, part, les, d, nxt, chart):
         "chart": [c for c in chart if not isinstance(les["number"], int) or c["lesson"] <= les["number"]],
     })
     narr, _ = narration_items(level, les, d)
-    # + any string the Phonics level already recorded (its short readers)
-    data.update(platform_fields(level, les, [it["key"] for it in narr] + recorded_clips(d)))
+    # + any string the Phonics level already recorded (its letters and letter
+    # groups), which the manifest lists as `reused` so they reach this level's
+    # media folder too
+    own = {it["key"] for it in narr}
+    reused = {k: t for k, t in recorded_texts(d).items() if k not in own}
+    data.update(platform_fields(level, les, [it["key"] for it in narr] + list(reused)))
     page = write_page(level, les, d, G, S, data)
     page["narration"] = narr
+    page["reused"] = [dict(key=k, text=t) for k, t in sorted(reused.items())]
     return page
 
 
@@ -911,11 +932,11 @@ def main():
     for lid in ORDER:
         build_hub(LEVELS[lid], built.get(lid, []))
         if built.get(lid):
-            n = write_manifest(LEVELS[lid], [(b["label"], b["narration"]) for b in built[lid]])
+            n, r = write_manifest(LEVELS[lid], [(b["label"], b["narration"], b.get("reused", [])) for b in built[lid]])
             write_app_config(LEVELS[lid], built[lid])
             wired = 0 if "--no-wire" in sys.argv[1:] else wire(lid)
-            print("  %s: narration manifest %d clips, app.config.json -> %s, %s" % (
-                lid, n, course_key(lid), "wired (%d tools)" % wired if wired else "NOT wired (--no-wire)"))
+            print("  %s: narration manifest %d clips%s, app.config.json -> %s, %s" % (
+                lid, n, " + %d reused" % r if r else "", course_key(lid), "wired (%d tools)" % wired if wired else "NOT wired (--no-wire)"))
     # numbered lessons only: the Letters & Sounds bridges are extra, not "of 12"
     build_home({k: sum(1 for b in v if isinstance(b["n"], int)) for k, v in built.items()})
     print("wrote %s" % os.path.relpath(OUT, ACADEMY))

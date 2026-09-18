@@ -382,7 +382,9 @@ function programmeClaims(courseRoot) {
   return fs.readdirSync(dir).filter((f) => f.endsWith(".json")).sort().map((f) => {
     const doc = JSON.parse(fs.readFileSync(path.join(dir, f), "utf8"));
     if (!Number.isInteger(doc.mediaGrade)) throw new Error(`${f}: mediaGrade missing`);
-    return { grade: doc.mediaGrade, keys: doc.items.map((it) => it.key) };
+    // `reused`: clips another level recorded that these pages also play. A page
+    // asks its own folder only, so they are claimed for this grade as well.
+    return { grade: doc.mediaGrade, keys: [...doc.items, ...(doc.reused || [])].map((it) => it.key) };
   });
 }
 

@@ -21,9 +21,15 @@ node tools/upload-media-to-bunny.js intensive-english
 ```
 
 - Programme clips go to `media/intensive-english/g10`–`g15`. They are claimed in `tools/lib/ehel-intensive-narration.js`.
+- The claim includes each manifest's `reused` list: recordings another level made that these pages also play (64 Phonics clips for Letters & Sounds). The first upload, on 2026-09-18, ran before they were claimed; the pages-vs-storage check caught it before any page was deployed.
 - **Media before pages.** A page asks only for the clips it lists. A clip it lists that is not uploaded yet is a 404, and on a media path a 404 is cached for a year.
 
-Claude then verifies from storage: `node tools/verify-course-audio-deployed.mjs intensive-english` must report 0 missing for g10–g15.
+Claude then verifies from storage. Both checks must pass before any page is deployed:
+
+- `node tools/verify-course-audio-deployed.mjs intensive-english`: 0 missing for g10–g15. This checks the claim map.
+- `node src/prototypes/ehel-academy/intensive-english/program/kit/check-clips-on-storage.mjs`: exits 0. This checks every clip each built page lists, against its own folder.
+
+The claim map and the pages are two lists, and on 2026-09-18 they disagreed.
 
 ## 2. The six level apps (owner)
 
@@ -33,6 +39,7 @@ foreach ($l in "letters","starter","level-1","level-2","level-3","level-4") { no
 
 - Each one goes to `Ehel Primary/app/intensive-english/programme/<level>/`, from its `app.config.json` `remote`.
 - The tool uploads the hub, the lessons and the five platform modules, then verifies each file on storage and at the edge.
+- **Not deployed:** the programme home (`app/index.html`) and the Level 5 placeholder (`app/level-5/index.html`). The home shows build counts ("12 built of 12") and the Level 5 page shows the plan's authoring notes. Each level page links to both through its level tabs and back link, but a Moodle launch hides those. Before publishing either page, reword it for learners.
 
 ## 3. The catalogue (owner)
 

@@ -337,7 +337,13 @@ function resolveCourseRef(meta, input) {
   const subject = input?.subject ? String(input.subject) : meta.subject;
   const grade = input?.grade !== undefined && input?.grade !== null ? Number(input.grade) : Number(meta.grade);
   if (!ACADEMY_SUBJECTS.includes(subject)) return { error: `Unknown subject "${subject}". Available: ${ACADEMY_SUBJECTS.join(", ")}.` };
-  if (!Number.isInteger(grade) || grade < 1 || grade > 9) return { error: `Grade ${input?.grade} is not a valid grade (1-8).` };
+  // Intensive English sends its LEVEL as `grade`, and its levels start below
+  // 1: Intro is 0 and Phonics is -1. A floor of 1, written when every subject's
+  // stages were school grades, refused both — so a tutor opened in either could
+  // not read the learner's own course. Mirrors wehel_chat.php and
+  // tools/lib/wehel-dev-chat.js, which carry the same floor.
+  const floor = subject === "intensive-english" ? WEHEL_LOWEST_INTENSIVE_LEVEL : 1;
+  if (!Number.isInteger(grade) || grade < floor || grade > 9) return { error: `Grade ${input?.grade} is not a valid grade (${floor}-9).` };
   return { subject, grade };
 }
 
@@ -463,6 +469,10 @@ export const WEHEL_ATTACH_PER_MESSAGE = 2;
 // 10 minutes"; the last band's 99 is the open top end.
 export const WEHEL_DAILY_BANDS = "2:10,4:15,6:20,8:25,99:30";
 export const WEHEL_INTENSIVE_BANDS = "2:30,99:60";
+// The lowest level Intensive English sends as `grade`: Phonics, at -1 (Intro is
+// 0). The grade floor of 1 in resolveCourseRef, wehel_chat.php and
+// wehel-dev-chat.js refused both; each now uses this number for this subject.
+export const WEHEL_LOWEST_INTENSIVE_LEVEL = -1;
 export const WEHEL_TUTORING_MULTIPLIER = 2;
 
 // The day's SPEND ceiling, derived from the same minutes rather than listed in

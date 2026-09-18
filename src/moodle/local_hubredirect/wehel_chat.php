@@ -359,7 +359,13 @@ if (!isset($promptdata['subjectNotes'][$subject])) {
 }
 
 $grade = (int)($payload['grade'] ?? 0);
-if ($grade < 1 || $grade > 9) {
+// Intensive English sends its LEVEL as grade, and its levels start below 1:
+// Intro is 0 and Phonics is -1. A floor of 1, written when every subject's
+// stages were school grades, answered every Intro learner's question with
+// "Unknown grade." Mirror of WEHEL_LOWEST_INTENSIVE_LEVEL in shell/wehel.js and
+// of tools/lib/wehel-dev-chat.js.
+$pqh_wehel_gradefloor = $subject === 'intensive-english' ? -1 : 1;
+if ($grade < $pqh_wehel_gradefloor || $grade > 9) {
     pqh_wehel_json(400, ['ok' => false, 'message' => 'Unknown grade.']);
 }
 

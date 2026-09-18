@@ -132,7 +132,11 @@ function createWehelChatHandler({ apiKey, model: modelOverride = () => undefined
       const subject = String(payload.subject || "");
       if (!promptData.subjectNotes[subject]) return fail(400, "Unknown subject.");
       const grade = Number(payload.grade);
-      if (!Number.isInteger(grade) || grade < 1 || grade > 9) return fail(400, "Unknown grade.");
+      // Intensive English sends its LEVEL as grade, from -1 (Phonics) and 0
+      // (Intro). Mirror of wehel_chat.php and WEHEL_LOWEST_INTENSIVE_LEVEL in
+      // shell/wehel.js.
+      const floor = subject === "intensive-english" ? -1 : 1;
+      if (!Number.isInteger(grade) || grade < floor || grade > 9) return fail(400, "Unknown grade.");
       const channel = payload.channel === "voice" ? "voice" : "text";
       const clean = (value, max) => String(value ?? "").replace(/\s+/g, " ").trim().slice(0, max);
       // Any advertised tool with a definition in the prompt source gets defined

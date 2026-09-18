@@ -600,7 +600,7 @@ for (const gradeDir of grades) {
 // and the ceiling would fail loudly — good. The silent direction is the
 // opposite, a collapse in what counts as LINKED reporting a happy fall, so the
 // linked count carries its own floor.
-const UNREACHABLE_CEILING = 437;
+const UNREACHABLE_CEILING = 330;
 const LINKED_FLOOR = 15000;
 {
   let linked = 0, exampleOnly = 0;

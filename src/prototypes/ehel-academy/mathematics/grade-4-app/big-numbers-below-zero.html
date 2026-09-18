@@ -1101,6 +1101,14 @@
       <p class="fb" id="fbG4" role="status" aria-live="polite"></p>
       <p class="score" id="scG4"></p>
     </section>
+    <!-- 13  Story problems  (Cambridge Stage 4 word-problem shape) -->
+    <section class="slide" data-twm="specialising" data-say="Read the story, then work out the answer." data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>This one is a story.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>Read it carefully, and work out what it is asking.</s><s>The maths is the same maths you have just been using.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>Have a go.</s></mstts:express-as>'>
+      <div class="slide-head"><span class="n">13</span><h2>Story problems</h2></div>
+      <div class="say"><button type="button" class="speak" aria-label="Read it to me">&#128266;</button><span id="sayWpG4"></span></div>
+      <div id="wpG4"></div>
+      <div class="choices" id="chWpG4"></div>
+      <p class="fb" id="fbWpG4" role="status" aria-live="polite"></p>
+    </section>
     <section class="slide" data-say="Show what you know. Tap the answer." data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>This is the check for big numbers and numbers below zero.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>You will read what digits are worth, round numbers, and put negative numbers in order.</s><s>Get enough right to finish the lesson, and every answer tells you why it is right.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="empathetic" styledegree="1.3"><prosody rate="-6%"><s>If you fall short, press Try again.</s><s>The questions come round again, and the reasons will help.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>For every number, name the column of each digit before you answer.</s></mstts:express-as>'>
       <div class="slide-head"><span class="n">✓</span><h2>Show what you know</h2></div>
       <div class="say"><button type="button" class="speak" aria-label="Read it to me">🔊</button><span id="say11">Tap the answer.</span></div>
@@ -2706,7 +2714,7 @@
       $("stem11").textContent = "That is all of them.";
       $("choices11").innerHTML = "";
       $("score11").textContent = rq + " out of " + Q11.length + " right.";
-      if (rq >= 8) finish(12, "");
+      if (rq >= 8) finish(13, "");
       else retryCheck($("fb11"), $("choices11"), rq, Q11.length, 8, function () { cq = 0; rq = 0; round11(); });
       return;
     }
@@ -2730,7 +2738,7 @@
   round11();
 
   /* ---- 12: stickers ---- */
-  const STICKERS = [["🔢", "Numbers to 10,000"], ["🏷️", "What each digit is worth"], ["🔄", "The same number, regrouped"], ["🔟", "Ten times, a hundred times"], ["👣", "Counting on in steps"], ["❄️", "Below zero"], ["🌡️", "Below zero, in order"], ["📶", "Smallest to largest"], ["🎯", "Which one is it nearer?"], ["🖐️", "One number, five answers"], ["🔍", "Spot the mistake"], ["📝", "Try this one"], ["✅", "Show what you know"], ["\ud83e\udd14", "How do you know"]];
+  const STICKERS = [["🔢", "Numbers to 10,000"], ["🏷️", "What each digit is worth"], ["🔄", "The same number, regrouped"], ["🔟", "Ten times, a hundred times"], ["👣", "Counting on in steps"], ["❄️", "Below zero"], ["🌡️", "Below zero, in order"], ["📶", "Smallest to largest"], ["🎯", "Which one is it nearer?"], ["🖐️", "One number, five answers"], ["🔍", "Spot the mistake"], ["📝", "Try this one"], ["📖", "Story problems"], ["✅", "Show what you know"], ["\ud83e\udd14", "How do you know"]];
   function paintStickers() {
     $("stickers").innerHTML = STICKERS.map((s, i) => '<div class="sticker' + (done[i] ? " got" : "") + '"><span>' + s[0] + "</span><b>" + s[1] + "</b></div>").join("");
   }
@@ -3005,6 +3013,39 @@
       }
     });
     paint();
+  })();
+
+  /* ==== ehel-g4-story: a story problem, one per lesson ====
+     Same idiom as add-differentiation.py's tiered step: the slot is read
+     from the DOM, not hardcoded. ONE question, no tiers - Grade 1 and 2's own
+     word-problem banks are single questions too. */
+  (function () {
+    const host = document.getElementById("wpG4");
+    if (!host) return;
+    const SLOT = [...document.querySelectorAll(".slide")].indexOf(host.closest(".slide"));
+    const esc = (t) => String(t).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/"/g, "&quot;");
+    const IT = { q: "The temperature is -4 degrees in the morning. By afternoon it has risen by 9 degrees. What is the temperature in the afternoon?", why: "Starting at -4 and rising 9 degrees: count up nine steps from -4 and you land on 5 degrees.", opts: [{ t: "5 degrees", ok: true }, { t: "13 degrees", ok: false }, { t: "-13 degrees", ok: false }] };
+    let live = true;
+    document.getElementById("sayWpG4").textContent = IT.q;
+    document.getElementById("chWpG4").innerHTML = shuffle(IT.opts.slice())
+      .map((o) => '<button type="button" class="choice word" data-ok="' + (o.ok ? 1 : 0)
+        + '">' + esc(o.t) + "</button>").join("");
+    document.getElementById("chWpG4").addEventListener("click", (e) => {
+      const b = e.target.closest(".choice");
+      if (!b || !live) return;
+      live = false;
+      const ok = b.dataset.ok === "1";
+      [...document.getElementById("chWpG4").querySelectorAll(".choice")].forEach((x) => {
+        x.disabled = true;
+        if (x.dataset.ok === "1") x.classList.add("right");
+      });
+      if (!ok) b.classList.add("wrong");
+      const fb = document.getElementById("fbWpG4");
+      fb.className = "fb " + (ok ? "good" : "");
+      fb.textContent = (ok ? cheer() + " " : "Not quite. ") + IT.why;
+      say(ok ? cheer() : IT.why);
+      finish(SLOT, "Story problems teach the same maths in a real situation.");
+    });
   })();
 
   show(0, false);
@@ -3899,4 +3940,7 @@
 <style>/* ehel-spiral - see add-spiral-warmup.py */
   .eh-spiral { margin-top: 16px; padding-top: 14px; border-top: 2px dashed var(--line); }
   .eh-spiral .eh-spiral-ch { margin-top: 12px; }
+</style>
+<style>/* ehel-g4-story - see add-story-problems.py */
+  #fbWpG4 { margin-top: 4px; }
 </style>

@@ -342,6 +342,7 @@
       "id": "we02",
       "outcomeId": "lo02",
       "difficulty": "Basic",
+      "twm": "critiquing",
       "title": "Which average is fairest?",
       "prompt": "A small workshop pays five workers 200, 220, 210, 230 and 900 shillings a day. Which average best describes a typical wage?",
       "solution": "The mean is (200 + 220 + 210 + 230 + 900) ÷ 5 = 1760 ÷ 5 = 352 shillings. But four of the five workers earn close to 200–230, and only one earns 900. Ordering the wages — 200, 210, 220, 230, 900 — the median is 220 shillings. The median is the fairer typical wage: the outlier of 900 pulls the mean far above what most workers actually earn."
@@ -358,6 +359,7 @@
       "id": "we04",
       "outcomeId": "lo04",
       "difficulty": "Basic",
+      "twm": "critiquing",
       "title": "Comparing two distributions",
       "prompt": "Class A: median 64, IQR 6. Class B: median 58, IQR 15. Compare the two classes’ test performance.",
       "solution": "‘Class A has a higher median (64 vs 58), so Class A performed better on average. Class A also has a smaller IQR (6 vs 15), so Class A’s marks are more consistent, while Class B’s marks are much more spread out.’ A full comparison names the average and the spread, both in context — that is what earns full marks."
@@ -374,6 +376,7 @@
       "id": "we06",
       "outcomeId": "lo06",
       "difficulty": "Intermediate",
+      "twm": "classifying",
       "title": "Interpolation vs extrapolation",
       "prompt": "Farah’s scatter graph covers revision times from 1 to 5 hours. She uses her line of best fit to predict the score for (a) 3 hours and (b) 12 hours. Which prediction is reliable?",
       "solution": "Prediction (a) at 3 hours is inside the data range (1 to 5 hours), so it is interpolation and is reliable. Prediction (b) at 12 hours is outside the range, so it is extrapolation — unreliable, because there is no evidence the trend continues that far, and the score cannot exceed 100% anyway."
@@ -382,6 +385,7 @@
       "id": "we07",
       "outcomeId": "lo07",
       "difficulty": "Intermediate",
+      "twm": "critiquing improving",
       "title": "Correlation vs causation",
       "prompt": "A newspaper reports: ‘Towns with more mobile phones have more cases of illness — phones are making people sick.’ Critique this conclusion.",
       "solution": "The conclusion mistakes correlation for causation. A likely confounding variable is population size: bigger towns have more of everything — more phones and more illness cases — without one causing the other. A fair comparison would use rates (cases per 1000 people), not raw totals. So the newspaper’s claim is not supported by the evidence given."
@@ -390,6 +394,7 @@
       "id": "we08",
       "outcomeId": "lo08",
       "difficulty": "Intermediate",
+      "twm": "critiquing improving",
       "title": "Critiquing a claim",
       "prompt": "‘A survey outside the Hargeisa sports stadium found that 95% of people exercise daily, so most people in the city are very active.’ What is wrong with this conclusion?",
       "solution": "The sample is biased. People outside a sports stadium are far more likely to exercise than the general public, so this is selection bias — the sample is not representative of the whole city. The 95% figure describes stadium-goers, not everyone. A fair study would sample people from many different places across the city, chosen at random."

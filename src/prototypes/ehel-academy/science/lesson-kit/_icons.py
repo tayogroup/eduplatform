@@ -14,10 +14,11 @@ swaps each Emoji 13+ code point listed in BY_CODEPOINT for the drawing of
 the same object here, and `build-lessons.py` REFUSES a page that still
 carries any Emoji 13+ code point afterwards - so a new one cannot slip in
 unnoticed; it needs a drawing here first. A few drawings (roots, soil,
-watering can, chrysalis, woodlouse, fridge, nail) have no emoji at all; the
-content asks for them by name with `icon("roots")`, because the nearest emoji
-showed something else (a pot plant for "roots", a feather for "chrysalis", an
-ice cube for "fridge", a nut and bolt for "nail").
+watering can, chrysalis, woodlouse, fridge, nail, country, shaker) have no
+emoji at all; the content asks for them by name with `icon("roots")`, because
+the nearest emoji showed something else (a pot plant for "roots", a feather for
+"chrysalis", an ice cube for "fridge", a nut and bolt for "nail", the whole
+world for "your country", a tin of food for "shaker").
 
 Every drawing is 64x64, sized 1em so it takes the size of the text or
 picture box it sits in, and aria-hidden: like the emoji it replaces, it is
@@ -284,6 +285,25 @@ _BODIES = {
         '<path d="M28.5 12 H35.5 V46 L32 59 L28.5 46 Z" fill="#AEB6BE" stroke="#4E5760" stroke-width="2" stroke-linejoin="round"/>'
         '<path d="M30.8 15 V44" stroke="#E3E8EC" stroke-width="1.6" stroke-linecap="round"/>'
         '</g>'),
+    # "Your country" on the zoom from your house to the Earth was the world-map
+    # emoji, which shows every continent, so the step before "the whole Earth"
+    # looked like the whole Earth. One land, its border, and a pin for you.
+    "country": (
+        '<rect x="3" y="3" width="58" height="58" rx="10" fill="#CDE9F7" stroke="#7FB3D5" stroke-width="2"/>'
+        '<path d="M13 23 L22 12 L33 15 L42 9 L52 18 L50 30 L56 41 L46 52 L34 50 L25 57 L15 46 L18 36 L10 30 Z" '
+        'fill="#6CC070" stroke="#2F7D3A" stroke-width="2.2" stroke-linejoin="round"/>'
+        '<circle cx="21" cy="40" r="2.2" fill="#2F7D3A"/><circle cx="46" cy="42" r="2.2" fill="#2F7D3A"/>'
+        '<path d="M33 21 C28 21 26 25 26 28 C26 33 33 40 33 40 C33 40 40 33 40 28 C40 25 38 21 33 21 Z" fill="#E4453A" stroke="#9E2A22" stroke-width="1.5"/>'
+        '<circle cx="33" cy="28" r="2.6" fill="#FFFFFF"/>'),
+    # A homemade shaker: a closed tin with rice inside. The canned-food emoji is
+    # a tin of food (a tomato tin on Windows), so it read as food, not as a
+    # sound maker.
+    "shaker": (
+        '<path d="M11 21 Q7 27 11 33 M6 17 Q0 27 6 37 M53 21 Q57 27 53 33 M58 17 Q64 27 58 37" fill="none" stroke="#35BFB2" stroke-width="2.4" stroke-linecap="round"/>'
+        '<rect x="20" y="14" width="24" height="42" rx="4" fill="#D9DEE3" stroke="#6F7C88" stroke-width="2.2"/>'
+        '<rect x="20" y="29" width="24" height="13" fill="#F4C95D"/>'
+        '<circle cx="26" cy="35.5" r="1.9" fill="#C0583A"/><circle cx="32" cy="35.5" r="1.9" fill="#C0583A"/><circle cx="38" cy="35.5" r="1.9" fill="#C0583A"/>'
+        '<ellipse cx="32" cy="14" rx="12" ry="4" fill="#B7C0C8" stroke="#6F7C88" stroke-width="2"/>'),
 }
 
 ICONS = {name: _OPEN + body + "</svg>" for name, body in _BODIES.items()}

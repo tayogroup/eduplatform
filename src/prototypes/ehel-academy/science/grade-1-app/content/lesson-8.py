@@ -323,7 +323,7 @@ LESSON["lecture"] = [
 # above the parts; build-lessons.py refuses a path that is not on disk AND in
 # app.config.json :: extraPages, and a --draft render.
 LESSON["video"] = {
-    "src": "lecture-video/our-earth-our-sun.66c6a124.mp4",
+    "src": "lecture-video/our-earth-our-sun.f9dcf679.mp4",
     "captions": "lecture-video/our-earth-our-sun.e507a84a.vtt",
     "poster": "lecture-video/our-earth-our-sun.ebe18dc2.jpg",
     "note": "About two and a half minutes. Watch it through, then go back over it a part at a time below.",

@@ -75,6 +75,14 @@
     function pic(cx, cy, size, p, extra) {
       var s = String(p == null ? "" : p);
       if (typeof ART === "object" && ART && ART.icon) s = ART.icon(s);
+      /* markup around one of the kit's drawings (the lesson's zoom scene gives
+         its country as <span><svg ...></span>): draw the drawing. Anything else
+         starting with "<" would break the film's svg, so it is refused. */
+      if (s.charAt(0) === "<" && s.slice(0, 4) !== "<svg") {
+        var inner = s.match(/<svg[\s\S]*<\/svg>/);
+        if (!inner) throw new Error("MK.pic: markup with no drawing in it: " + s.slice(0, 40));
+        s = inner[0];
+      }
       if (s.slice(0, 4) === "<svg") {
         var body = s.replace(/ width="1em" height="1em"/, "").replace(/ style="vertical-align:[^"]*"/, "");
         return G('<svg x="' + n2(cx - size / 2) + '" y="' + n2(cy - size / 2) + '" width="' + n2(size) + '" height="' + n2(size) + '"' + body.slice(4), extra);

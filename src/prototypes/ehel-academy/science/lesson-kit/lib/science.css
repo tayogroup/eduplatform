@@ -27,6 +27,9 @@
   .pic { font-size: clamp(56px, 13vw, 96px); line-height: 1.1; }
   .pic.mid { font-size: clamp(40px, 9vw, 64px); }
   .pic svg { width: clamp(120px, 40vw, 220px); height: auto; display: block; }
+  /* one of the kit's own drawings in a row of emoji (the zoom's "your country",
+     between the town and the Earth) is drawn at their size, not a scene's */
+  .pic .zoompic svg { width: 1em; height: 1em; display: inline-block; vertical-align: -0.125em; }
 
   /* ---- tap cards: hear it, see it, tick it ---- */
   .cardsgrid { display: grid; grid-template-columns: repeat(auto-fit, minmax(128px, 1fr)); gap: 12px; width: 100%; max-width: 640px; }

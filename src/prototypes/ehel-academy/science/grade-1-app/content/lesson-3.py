@@ -225,6 +225,7 @@ LESSON = {
                   "Measuring settles it. Guessing does not."],
                  ["Measure all three friends, then say who is tallest."]),
              {"ask": "How tall is %s in hand spans? Lay down hands from feet to head.",
+              "dim": "tall",
               "unit": {"name": "hand spans", "singular": "hand span", "pic": "\U0001F590️", "button": "Lay down a hand"},
               "objects": [
                   {"pic": "\U0001F467\U0001F3FE", "label": "Amal", "units": 9},

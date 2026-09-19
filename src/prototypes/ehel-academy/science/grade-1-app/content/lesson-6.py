@@ -157,7 +157,7 @@ LESSON = {
              {"items": [
                  {"pic": "\U0001F941", "label": "drum", "sound": "drum", "say": "Hit the drum with the stick, gently. Never bang it next to somebody's ear."},
                  {"pic": icon("whistle"), "label": "whistle", "sound": "whistle", "say": "Blow the whistle outside, and never right next to a friend."},
-                 {"pic": "\U0001F96B", "label": "shaker tin", "sound": "shake", "say": "Hold the shaker tin with both hands and shake it. Do not throw it."},
+                 {"pic": icon("shaker"), "label": "shaker tin", "sound": "shake", "say": "Hold the shaker tin with both hands and shake it. Do not throw it."},
                  {"pic": "\U0001F514", "label": "bell", "sound": "bell", "say": "Ring the bell once and listen. Keep it away from ears."},
                  {"pic": "\U0001F442", "label": "your ears", "say": "If a sound hurts your ears, cover them and move away. Hearing that is damaged does not come back."},
              ], "need": 5,
@@ -269,7 +269,7 @@ LESSON["lecture"] = [
 # above the parts; build-lessons.py refuses a path that is not on disk AND in
 # app.config.json :: extraPages, and a --draft render.
 LESSON["video"] = {
-    "src": "lecture-video/sounds-near-and-far.de70a382.mp4",
+    "src": "lecture-video/sounds-near-and-far.a8294b20.mp4",
     "captions": "lecture-video/sounds-near-and-far.1af33ea2.vtt",
     "poster": "lecture-video/sounds-near-and-far.555e925f.jpg",
     "note": "About two and a half minutes. Watch it through, then go back over it a part at a time below.",

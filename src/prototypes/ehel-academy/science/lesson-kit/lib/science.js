@@ -257,8 +257,13 @@
         '<g stroke="#F4C95D" stroke-width="6" stroke-linecap="round">' + [0, 45, 90, 135, 180, 225, 270, 315].map((a) => '<line x1="160" y1="130" x2="160" y2="30" transform="rotate(' + a + ' 160 130)"/>').join("") + "</g>" +
         '<circle cx="160" cy="130" r="58" fill="#F4C95D"/><text x="160" y="240" text-anchor="middle" fill="#fff" font-size="18" font-family="Inter, sans-serif" font-weight="800">The Sun is a star</text></svg>';
     },
-    /* a house, a town, a country, the planet: how far we zoom out */
-    zoom: (s) => ["\u{1F3E0}", "\u{1F3D8}️", "\u{1F5FA}️", "\u{1F30D}"][s] || "",
+    /* a house, a town, a country, the planet: how far we zoom out. The country
+       is the kit's own map of one land (lesson-kit/_icons.py): the world-map
+       emoji showed every continent, one step before "the whole Earth". It is
+       wrapped in a span so a demo frame draws it as a picture like the three
+       emoji, rather than as a full-width scene, and the span's class sizes it
+       like them (science.css .zoompic: .pic svg alone makes it 120 px or more). */
+    zoom: (s) => ["\u{1F3E0}", "\u{1F3D8}️", '<span class="zoompic">' + ICONS.country + "</span>", "\u{1F30D}"][s] || "",
   };
 
   /* ==================================================================
@@ -281,9 +286,12 @@
       '<g transform="rotate(' + (-droop * 2) + ' ' + x + ' 128)"><path d="' + leafB + '" fill="' + pale + '"/></g></g>' +
       '<text x="' + x + '" y="272" text-anchor="middle" font-size="15" font-family="Inter, sans-serif" font-weight="800" fill="#fff">' + esc(label) + "</text></g>";
   }
+  /* opts.sunA puts the Sun over pot A. The light test sets it: pot A is by the
+     window, and the Sun at the top right sat inside pot B's cupboard (found by
+     the Grade 1 Parts of a Plant film, 2026-09-19). */
   function twoPots(box, a, b, day, opts) {
     box.innerHTML = '<svg viewBox="0 0 320 290" role="img" aria-label="Two plants in pots, ' + esc(opts.labelA) + ' and ' + esc(opts.labelB) + '"><rect width="320" height="290" fill="' + (opts.dark ? "#3A5C74" : "#BFE3F5") + '"/>' +
-      (opts.sun ? '<circle cx="280" cy="40" r="24" fill="#F4C95D"/>' : "") +
+      (opts.sun ? '<circle cx="' + (opts.sunA ? 124 : 280) + '" cy="40" r="24" fill="#F4C95D"/>' : "") +
       '<rect x="0" y="250" width="320" height="40" fill="#8B5A2B"/>' +
       potSvg(90, a, opts.labelA, opts.darkA, opts.coldA) + potSvg(230, b, opts.labelB, opts.darkB, opts.coldB) +
       '<text x="12" y="28" font-size="16" font-family="Inter, sans-serif" font-weight="800" fill="#fff">Day ' + day + "</text></svg>";
@@ -306,13 +314,13 @@
       },
     },
     plantLight: {
-      init(box) { twoPots(box, 0, 0, 1, { sun: true, labelA: "by the window", labelB: "in the cupboard", darkB: true }); },
+      init(box) { twoPots(box, 0, 0, 1, { sun: true, sunA: true, labelA: "by the window", labelB: "in the cupboard", darkB: true }); },
       run(box, api) {
         return new Promise((done) => {
           let day = 1;
           api.controls.innerHTML = '<button type="button" class="big teal small" id="' + api.id + 'day">☀️ Wait a day</button>';
           $(api.id + "day").addEventListener("click", () => {
-            day++; twoPots(box, 0, Math.min(4, day - 1), day, { sun: true, labelA: "by the window", labelB: "in the cupboard", darkB: true });
+            day++; twoPots(box, 0, Math.min(4, day - 1), day, { sun: true, sunA: true, labelA: "by the window", labelB: "in the cupboard", darkB: true });
             SOUND.play("click", 0.4);
             api.say(day < 5 ? "Day " + day + ". " + (day === 2 ? "The plant in the dark is going pale." : day === 3 ? "It is thin and yellow now." : "It is drooping.")
               : "Day 5. The plant by the window is green and strong. The plant in the dark is pale, thin and droopy.");

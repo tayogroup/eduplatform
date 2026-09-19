@@ -54,7 +54,7 @@
   var SN_MAKERS = [
     { pic: "\u{1F941}", name: "drum", x: 176 },
     { pic: "whistle", name: "whistle", x: 448 },
-    { pic: "\u{1F96B}", name: "shaker", x: 720 },
+    { pic: "shaker", name: "shaker", x: 720 },
     { pic: "\u{1F514}", name: "bell", x: 992 }
   ];
   function snMakers(scene, t) {
@@ -64,7 +64,8 @@
       var p = popIn(t, use == null ? null : use + j * 0.16, 0.4);
       if (p <= 0) return;
       var lv = j === 0 ? 1 : lerp(1, 0.35, on(t, gently, 0.4));
-      var pic = m.pic === "whistle" ? ART.ICONS.whistle : m.pic;
+      /* a name is one of the kit's own drawings, as the lesson shows it */
+      var pic = ART.ICONS[m.pic] || m.pic;
       out += G(MK.pop(MK.pic(m.x, 150, 124, pic), m.x, 150, p) + Tx(m.x, 266, m.name, "lab big", "middle", { opacity: Math.min(1, p) }), { opacity: lv });
     });
     out += snBoth(176, 150, t, gently, { r0: 70, reach: 34, n: 2, period: 1.3, w: 4, op: 0.85 });

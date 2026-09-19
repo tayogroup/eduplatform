@@ -45,7 +45,7 @@
     var cTest = c(2, "test"), cTwo = c(2, "two"), cWin = c(3, "window"), cCup = c(3, "cupboard"),
       cBoth = c(4, "both"), cOne = c(4, "one"), cLight = c(4, "light"), cDark = c(5, "dark"), cPale = c(5, "pale"), cEnough = c(5, "enough");
     var b = 4 * on(t, cDark, 2.6), day = 1 + Math.min(4, Math.round(b)), dark = on(t, cCup, 0.7);
-    var opts = function (d) { return { sun: true, labelA: "by the window", labelB: "in the cupboard", darkB: d }; };
+    var opts = function (d) { return { sun: true, sunA: true, labelA: "by the window", labelB: "in the cupboard", darkB: d }; };
     var out = "";
     if (dark < 1) out += ppPotsCard(ART.pots(0, b, day, opts(false)));
     if (dark > 0) out += G(ppPotsCard(ART.pots(0, b, day, opts(true))), dark < 1 ? { opacity: dark } : {});

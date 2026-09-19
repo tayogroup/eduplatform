@@ -124,10 +124,31 @@ request:
 - Grade 3 Lesson 11 pictured a fridge door as an ice cube, in the item and its
   question. They now use `icon("fridge")`.
 
-Still not fixed, each the lesson's to decide: Lesson 2's measure step says "3
-cubes long" where it asks how tall; `twoPots` draws the Sun on the cupboard
-side; the "your country" zoom picture is a world map; the shaker tin draws as a
-tomato tin on Windows.
+And the last four, also that day:
+
+- Lesson 2's measuring step asked "How tall is the seedling?" and answered "The
+  seedling is 3 cubes long", because the step named no height word and the
+  renderer defaults to "long". Lesson 3's hand-span step did the same ("Amal is
+  9 hand spans long"). Both set `"dim": "tall"` now.
+- The two-pot drawing put its Sun at the top right, inside the light test's
+  cupboard. `twoPots` takes `sunA` now, which puts the Sun over pot A, the pot
+  by the window, and the light test sets it. The water test (Lesson 1) is
+  unchanged: its film's frames were compared at every 0.1 s and are identical.
+  The warm-and-cold test (Grade 3) is unchanged too, deliberately: there both
+  pots get the same light, so neither side is the Sun's.
+- "Your country", on the zoom from your house to the Earth, was the world-map
+  emoji, which shows every continent, one step before "the whole Earth". It is
+  the kit's own map of one land with a pin now (`icon("country")`), drawn at
+  the emoji's size beside the house, the town and the Earth (`.zoompic`: a
+  drawing in a picture box is otherwise drawn as a scene, 120 px and up), and
+  the Our Earth film takes its zoom pictures from the lesson's `SCENES.zoom`
+  instead of copying them.
+- The shaker tin was the canned-food emoji, a tin of tomatoes on Windows. It is
+  the kit's own shaker, a tin with shake lines (`icon("shaker")`). The other
+  canned-food pictures are real tins (a steel lid, a food tin) and stay.
+
+The Parts of a Plant, Sounds Near and Far and Our Earth films were rendered
+again for these, for nothing (every clip cached).
 
 ## Remaking a film
 

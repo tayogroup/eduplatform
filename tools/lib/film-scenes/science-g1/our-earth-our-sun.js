@@ -148,10 +148,12 @@
      window, so each "Zoom out" moves L on by one. */
   var EO_ZOOM = { x: 58, y: 4, w: 460, h: 432, cx: 288, cy: 214, base: 258 };
   var EO_HOME = [115, 109];   /* your house on the globe: the middle of its largest land (measured) */
+  /* the lesson's own zoom pictures (SCENES.zoom), so the film shows what the
+     lesson shows: its country is the kit's map of one land since 2026-09-19 */
   var EO_LEVELS = [
-    { pic: "\u{1F3E0}", label: "your house", k: 0, at: "house" },
-    { pic: "\u{1F3D8}️", label: "your town", k: 0, at: "town" },
-    { pic: "\u{1F5FA}️", label: "your country", k: 1, at: "country" },
+    { pic: ART.scene("zoom", 0), label: "your house", k: 0, at: "house" },
+    { pic: ART.scene("zoom", 1), label: "your town", k: 0, at: "town" },
+    { pic: ART.scene("zoom", 2), label: "your country", k: 1, at: "country" },
     { pic: null, label: "the whole Earth", k: 2, at: "earth" }
   ];
   /* the globe is 64 units across its disk, so its drawing is 64 * 320 / 240 units,
@@ -188,7 +190,7 @@
         var gs = EO_GS * z;
         inner += ART.place(eoGlobe(0, "pl"), px(EO_GC[0]) - gs / 2, py(EO_GC[1]) - gs / 2, gs, gs, 'opacity="' + n2(op) + '"');
       } else {
-        inner += Em(px(0), py(0), Math.pow(4, k) * z * 0.94, EO_LEVELS[k === 0 ? 0 : k].pic, { opacity: op });
+        inner += MK.pic(px(0), py(0), Math.pow(4, k) * z * 0.94, EO_LEVELS[k].pic, { opacity: op });
       }
     }
     var home = [px(0), py(0)];
@@ -204,7 +206,7 @@
       var lv = EO_LEVELS[r2], at = sc(scene, lv.k, lv.at), p = popIn(t, at, 0.4);
       if (p <= 0) continue;
       var y = 30 + r2 * 98, now = r2 === lit, x = 590;
-      var icon = lv.pic ? Em(x + 50, y + 40, 50, lv.pic) : ART.place(eoGlobe(0, "ld", true), x + 12, y + 2, 76, 76);
+      var icon = lv.pic ? MK.pic(x + 50, y + 40, 50, lv.pic) : ART.place(eoGlobe(0, "ld", true), x + 12, y + 2, 76, 76);
       var row = R(x, y, 570, 80, 18, now ? "#1B3A52" : P.card, now ? P.good : P.line, now ? 3 : 2) + icon +
         Tx(x + 104, y + 51, lv.label, "lab big" + (now ? "" : " muted"), "start");
       if (r2 > 0) row += Pth("M" + (x + 40) + "," + (y - 14) + " l10,9 l10,-9", null, P.muted, 3);

@@ -21,6 +21,14 @@ BODY_PARTS = [
     {"id": "feet", "label": "feet", "say": "Two feet, with five toes each, for standing on."},
 ]
 
+# Nora wears glasses (the lesson says so, and asks what helps her eyes), and no
+# emoji is a child in glasses, so her picture is the girl with the lesson's own
+# glasses picture beside her. Kept on ONE line, the glasses a little smaller:
+# as two plain emoji the card wrapped them under her chin and pushed her name
+# below the other three friends' names (2026-09-19).
+NORA = ('<span style="white-space:nowrap">\U0001F467\U0001F3FB'
+        '<span style="font-size:0.6em">\U0001F453</span></span>')
+
 LESSON = {
     "slug": "my-body-and-my-senses",
     "title": "My Body and My Senses",
@@ -168,7 +176,7 @@ LESSON = {
              {"items": [
                  {"pic": "\U0001F467\U0001F3FE", "label": "Amal", "say": "Amal has curly black hair and brown eyes. Two eyes, one nose, two hands, like most people."},
                  {"pic": "\U0001F466\U0001F3FD", "label": "Sami", "say": "Sami is the tallest. He has short hair and brown eyes. Two eyes, one nose, two hands, like most people."},
-                 {"pic": "\U0001F467\U0001F3FB", "label": "Nora", "say": "Nora is the shortest and wears glasses. Two eyes, one nose, two hands, like most people."},
+                 {"pic": NORA, "label": "Nora", "say": "Nora is the shortest and wears glasses. Two eyes, one nose, two hands, like most people."},
                  {"pic": "\U0001F466\U0001F3FF", "label": "Omar", "say": "Omar has a gap where a tooth fell out. Two eyes, one nose, two hands, like most people."},
                  {"pic": "\U0001F46F", "label": "Lina and Hana, twins", "say": "Lina and Hana are twins. That means they were born on the same day, to the same mother. These two look very alike. But not all twins do! Some twins look no more alike than any brother and sister, and a brother and a sister can be twins."},
              ], "need": 5,
@@ -221,7 +229,7 @@ LESSON = {
               "objects": [
                   {"pic": "\U0001F467\U0001F3FE", "label": "Amal", "units": 9},
                   {"pic": "\U0001F466\U0001F3FD", "label": "Sami", "units": 10},
-                  {"pic": "\U0001F467\U0001F3FB", "label": "Nora", "units": 8},
+                  {"pic": NORA, "label": "Nora", "units": 8},
               ],
               "compare": {"ask": "Amal is 9 hands, Sami is 10 hands, Nora is 8 hands. Who is tallest?",
                           "opts": [opt("Sami", True), opt("Amal", False), opt("Nora", False)],
@@ -241,7 +249,7 @@ LESSON = {
               "rows": [
                   {"pic": "\U0001F467\U0001F3FE", "label": "Amal", "answer": "9", "why": "Amal measured 9 hand spans."},
                   {"pic": "\U0001F466\U0001F3FD", "label": "Sami", "answer": "10", "why": "Sami measured 10 hand spans."},
-                  {"pic": "\U0001F467\U0001F3FB", "label": "Nora", "answer": "8", "why": "Nora measured 8 hand spans."},
+                  {"pic": NORA, "label": "Nora", "answer": "8", "why": "Nora measured 8 hand spans."},
               ],
               "choices": [{"id": "8", "t": "8 hands", "pic": "\u0038\uFE0F\u20E3"}, {"id": "9", "t": "9 hands", "pic": "\u0039\uFE0F\u20E3"}, {"id": "10", "t": "10 hands", "pic": "\U0001F51F"}],
               "read": [
@@ -372,7 +380,7 @@ LESSON["lecture"] = [
 # above the parts; build-lessons.py refuses a path that is not on disk AND in
 # app.config.json :: extraPages, and a --draft render.
 LESSON["video"] = {
-    "src": "lecture-video/my-body-and-my-senses.ac44bf58.mp4",
+    "src": "lecture-video/my-body-and-my-senses.4415d6e3.mp4",
     "captions": "lecture-video/my-body-and-my-senses.c9f9409e.vtt",
     "poster": "lecture-video/my-body-and-my-senses.f64f4353.jpg",
     "note": "About two and a half minutes. Watch it through, then go back over it a part at a time below.",

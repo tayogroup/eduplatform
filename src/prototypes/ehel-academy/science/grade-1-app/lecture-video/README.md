@@ -108,12 +108,26 @@ everything.
   black hair. It says "This person has blonde hair" now, of the card's own
   picture.
 
-Not fixed, and each is the lesson's to decide: Lesson 3 says Nora wears glasses
-and her picture has none; Lesson 2's measure step says "3 cubes long" where it
-asks how tall; `twoPots` draws the Sun on the cupboard side; the "your country"
-zoom picture is a world map; the shaker tin draws as a tomato tin on Windows.
-Grade 2 Lesson 5 and Grade 3 Lesson 11 picture a nail as a nut and bolt too,
-and Grade 3 Lesson 11 a fridge door as an ice cube.
+Three more of the same kind were fixed the same day, also at the owner's
+request:
+
+- Lesson 3 says Nora wears glasses, and her picture had none. No emoji is a
+  child in glasses, so she is the girl with the lesson's own glasses picture
+  beside her (`NORA` in `content/lesson-3.py`), kept on one line with the
+  glasses a little smaller, because as two plain emoji the card wrapped the
+  glasses under her chin. This film shows her the same way now, in the friends
+  lineup, the height table and the recap card. It was rendered again for
+  nothing (every clip cached), and only its video file changed.
+- Grade 2 Lesson 5 (a nail left outdoors) and Grade 3 Lesson 11 (the iron nail,
+  twice, and its question) pictured a nail as a nut and bolt. They now use
+  `icon("nail")`.
+- Grade 3 Lesson 11 pictured a fridge door as an ice cube, in the item and its
+  question. They now use `icon("fridge")`.
+
+Still not fixed, each the lesson's to decide: Lesson 2's measure step says "3
+cubes long" where it asks how tall; `twoPots` draws the Sun on the cupboard
+side; the "your country" zoom picture is a world map; the shaker tin draws as a
+tomato tin on Windows.
 
 ## Remaking a film
 

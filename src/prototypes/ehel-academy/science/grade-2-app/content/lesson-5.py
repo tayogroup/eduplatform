@@ -5,7 +5,7 @@
 2Cp.03 testing; with 2TWSp.02, 2TWSa.01, 2TWSc.01, 2TWSc.04, 2TWSc.06 and
 2SIC.01.
 """
-from _kit import explain, step, opt, q, part, word, home, cando
+from _kit import explain, step, opt, q, part, word, home, cando, icon
 
 LESSON = {
     "slug": "changing-materials",
@@ -214,7 +214,7 @@ LESSON = {
               "extension": [
                  q("Water freezes hard, then melts again. Has a <b>new material</b> been made?", "\u2744\uFE0F", "No - it is the same water, and you can always get it back", ["Yes, ice is a new material", "Only while it stays frozen"],
                    "The test is whether you can get the first material back. With ice you always can."),
-                 q("A nail left outdoors for a year goes brown and flaky. Same material, or new?", "\U0001F529", "new - and no washing turns the flakes back into a shiny nail", ["the same, it is only dirty", "the same, it just needs a rub"],
+                 q("A nail left outdoors for a year goes brown and flaky. Same material, or new?", icon("nail"),"new - and no washing turns the flakes back into a shiny nail", ["the same, it is only dirty", "the same, it just needs a rub"],
                    "Rust is a different material from the metal it came from. Like cooking, it does not go back."),
                  q("A candle is lit and gets shorter. Where has the wax gone?", "\U0001F56F\uFE0F", "it burned into new materials that went off into the air", ["it melted onto the table", "it shrank into itself"],
                    "Burning is not disappearing. The wax became something new that you cannot see."),

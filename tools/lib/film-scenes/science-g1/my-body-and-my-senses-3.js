@@ -10,10 +10,17 @@
      On the next line the panels step back for the lesson's correction: a
      difference is not better or worse, it is only "not the same". On the last
      line each panel is lit as its word is said. */
+  /* [name, face, cue, what the lesson draws beside the face]: Nora wears
+     glasses, and since 2026-09-19 the lesson draws her as the girl AND its own
+     glasses picture, so the film does too */
   var MB_FRIENDS = [
     ["Amal", "\u{1F467}\u{1F3FE}", "amal"], ["Sami", "\u{1F466}\u{1F3FD}", "sami"],
-    ["Nora", "\u{1F467}\u{1F3FB}", "nora"], ["Omar", "\u{1F466}\u{1F3FF}", "omar"]
+    ["Nora", "\u{1F467}\u{1F3FB}", "nora", "\u{1F453}"], ["Omar", "\u{1F466}\u{1F3FF}", "omar"]
   ];
+  /* a friend's face at (cx, cy), and their glasses beside it if they wear them */
+  function mbFace(cx, cy, size, face, extra, gap) {
+    return MK.pic(cx, cy, size, face) + (extra ? MK.pic(cx + size * (gap || 0.78), cy + size * 0.08, size * 0.5, extra) : "");
+  }
   var MB_HAIR = "#8A5A34";
 
   /* an eye, as the child's eyes are drawn but big: white, a coloured iris, a pupil */
@@ -58,7 +65,7 @@
     MB_FRIENDS.forEach(function (f, k) {
       var cx = 239 + k * 230, p = popIn(t, cue(s0, f[2]), 0.4);
       if (p <= 0) return;
-      out += MK.pop(MK.pic(cx, 58, 86, f[1]) + Tx(cx, 138, f[0], "lab big", "middle"), cx, 90, p);
+      out += MK.pop(mbFace(cx, 58, 86, f[1], f[3]) + Tx(cx, 138, f[0], "lab big", "middle"), cx, 90, p);
       out += MK.tick(cx + 50, 22, 15, popIn(t, two == null ? null : two + k * 0.12, 0.35) * (1 - on(t, BEATS[s0 + 2].start - GAP, 0.3)));
       out += MK.tick(cx + 50, 22, 15, popIn(t, hair == null ? null : hair + k * 0.12, 0.35) * (1 - on(t, BEATS[s0 + 3].start - GAP, 0.3)));
     });
@@ -161,7 +168,7 @@
 
   /* the measuring picture of the last three lines */
   var MB_MEAS_BOX = { x: 150, y: 24, s: 1.04 };
-  var MB_TABLE = [["Amal", "\u{1F467}\u{1F3FE}", "9", 3, "amal"], ["Sami", "\u{1F466}\u{1F3FD}", "10", 4, "sami"], ["Nora", "\u{1F467}\u{1F3FB}", "8", 4, "nora"]];
+  var MB_TABLE = [["Amal", "\u{1F467}\u{1F3FE}", "9", 3, "amal"], ["Sami", "\u{1F466}\u{1F3FD}", "10", 4, "sami"], ["Nora", "\u{1F467}\u{1F3FB}", "8", 4, "nora", "\u{1F453}"]];
   function mbMeasuring(scene, t) {
     var s0 = scene.first, b = MB_MEAS_BOX, out = "";
     var put = cue(s0 + 2, "put"), keep = cue(s0 + 2, "keep"), head = cue(s0 + 2, "head");
@@ -197,7 +204,7 @@
         if (ro <= 0) return;
         var y = 104 + j * 92, win = j === 1 && tall != null && t >= tall;
         out += G(R(tx, y, tw, 78, 16, win ? "#1B3A52" : P.card, win ? P.gold : P.line, win ? 3 : 2) +
-          MK.pic(tx + 42, y + 39, 44, r[1]) + Tx(tx + 76, y + 50, r[0], "lab big", "start") +
+          mbFace(tx + 42, y + 39, 44, r[1], r[5]) + Tx(tx + 76 + (r[5] ? 26 : 0), y + 50, r[0], "lab big", "start") +
           G(Tx(tx + tw - 40, y + 54, r[2], "lab huge", "middle", { fill: j === 1 && most != null && t >= most ? P.gold : P.ink }),
             { transform: around(tx + tw - 40, y + 39, popIn(t, at + 0.3, 0.35) * (1 + (j === 1 ? 0.25 * bump(t, most, 0.8) : 0))) }),
           { opacity: ro });
@@ -237,7 +244,7 @@
     { beat: 1, at: "safe", title: "They keep you safe", sub: "a car, smoke, a cup that is too hot",
       pic: function (cx, cy, size) { return MK.pic(cx - 80, cy, 64, "\u{1F697}") + MK.pic(cx, cy, 64, "\u{1F525}") + MK.pic(cx + 80, cy, 64, "☕"); } },
     { beat: 2, at: "alike", title: "Alike and different", sub: "Amal, Sami, Nora and Omar",
-      pic: function (cx, cy, size) { return MB_FRIENDS.map(function (f, k) { return MK.pic(cx + (k - 1.5) * 70, cy, 60, f[1]); }).join(""); } },
+      pic: function (cx, cy, size) { return MB_FRIENDS.map(function (f, k) { return mbFace(cx + (k - 1.5) * 90, cy, 60, f[1], f[3], 0.7); }).join(""); } },
     { beat: 2, at: "measure", title: "Hand spans", sub: "Sami is ten hand spans tall",
       pic: function (cx, cy, size) { return mbHand(cx, cy + 16, 0.75, MB_ROT_FLAT); } }
   ], { goBeat: 3, goAt: "know" });

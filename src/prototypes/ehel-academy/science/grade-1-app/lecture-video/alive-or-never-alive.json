@@ -1,0 +1,118 @@
+{
+  "_comment": "Storyboard for the Grade 1 Science unit lecture film, Lesson 1 Alive or Never Alive. Rendered by tools/create-ehel-unit-lecture.js. See lecture-video/BRIEF.md. The five lecture parts in their order (what alive means, never alive, what animals need, what plants need, being a scientist), in the lesson's own words and examples: the goat and the four questions, the stone, the spoon, the car and the teddy bear, the cat and the ball of wool, the plant's leaves and roots, and the two pots of the plantWater experiment. The experiment is SET UP and not run: the lecture says 'Today you will find out', and the child predicts before the lesson shows the result.",
+  "slug": "alive-or-never-alive",
+  "lesson": 1,
+  "grade": 1,
+  "stage": 1,
+  "title": "Alive or Never Alive",
+  "subtitle": "Grade 1 Science",
+  "framework": "Cambridge Primary Science 0097",
+  "renderer": {
+    "art": ["science"],
+    "scenes": [
+      "tools/lib/ehel-film-marks.js",
+      "tools/lib/film-scenes/science-g1/alive-or-never-alive.js",
+      "tools/lib/film-scenes/science-g1/alive-or-never-alive-2.js",
+      "tools/lib/film-scenes/science-g1/alive-or-never-alive-3.js"
+    ]
+  },
+  "objectives": [
+    ["1Bp.01", "Identify living things and things that have never been alive."],
+    ["1Bp.02", "Know that animals, including humans, need air, water and suitable food to survive."],
+    ["1Bp.03", "Know that plants need light and water to survive."],
+    ["1TWSp.01", "Ask questions about the world around us and talk about how to find answers."],
+    ["1TWSp.02", "Make predictions about what they think will happen."],
+    ["1TWSc.05", "Collect and record observations and/or measurements by annotating images and completing simple tables."]
+  ],
+  "scenes": [
+    { "id": "title", "kind": "title", "codes": [], "beats": [
+      { "say": "Look at a goat, and look at a stone.",
+        "art": { "at": { "goat": "a goat", "stone": "a stone" } } },
+      { "say": "One of them is alive. One was never alive.",
+        "art": { "at": { "alive": "is alive", "never": "never alive" } } }
+    ] },
+
+    { "id": "alive", "kind": "alive", "heading": "What alive means", "codes": ["1Bp.01"], "beats": [
+      { "say": "Is a goat alive? Let us check four things.",
+        "art": { "at": { "goat": "Is a goat alive", "four": "four things" } } },
+      { "say": "One. It grows. A baby goat, called a kid, grows into a big goat.",
+        "art": { "at": { "one": "One.", "grows": "It grows", "baby": "A baby goat", "kid": "called a kid", "big": "grows into a big goat" } } },
+      { "say": "Two. It needs food, so it eats grass.",
+        "art": { "at": { "two": "Two.", "food": "needs food", "grass": "eats grass" } } },
+      { "say": "Three. It needs water, so it drinks.",
+        "art": { "at": { "three": "Three.", "water": "needs water", "drinks": "it drinks" } } },
+      { "say": "Four. It can have young. A goat has baby goats, called kids.",
+        "art": { "at": { "four": "Four.", "young": "have young", "kids": "baby goats" } } },
+      { "say": "Anything that grows, needs food and water, and can have young is alive.",
+        "art": { "at": { "grows": "Anything that grows", "food": "needs food and water", "young": "can have young", "alive": "is alive" } } }
+    ] },
+
+    { "id": "never", "kind": "never", "heading": "Never alive", "codes": ["1Bp.01"], "beats": [
+      { "say": "Now look at a stone. Does it grow? No.",
+        "art": { "at": { "stone": "a stone", "grow": "Does it grow", "no": "No." } } },
+      { "say": "Does it need food or water? No. Can it have young? No.",
+        "art": { "at": { "food": "need food or water", "no": "No. Can", "young": "Can it have young" } } },
+      { "say": "A stone was never alive. Neither was a spoon, a car or a teddy bear.",
+        "art": { "at": { "never": "never alive", "spoon": "a spoon", "car": "a car", "teddy": "a teddy bear" } } },
+      { "say": "A car moves, but it was never alive. Moving is not the test.",
+        "art": { "at": { "moves": "A car moves", "never": "never alive", "test": "Moving is not the test" } } }
+    ] },
+
+    { "id": "animals", "kind": "animals", "heading": "What animals need", "codes": ["1Bp.02"], "beats": [
+      { "say": "A cat is an animal. Every animal needs three things to stay alive.",
+        "art": { "at": { "cat": "A cat is an animal", "animal": "Every animal", "three": "three things" } } },
+      { "say": "Air to breathe. Water to drink. And the right food.",
+        "art": { "at": { "air": "Air to breathe", "water": "Water to drink", "food": "the right food" } } },
+      { "say": "A cat does not need a ball of wool. It wants one. That is different.",
+        "art": { "at": { "wool": "a ball of wool", "wants": "It wants one", "diff": "That is different" } } },
+      { "say": "You are an animal too. You need air, water and food, just like the cat.",
+        "art": { "at": { "you": "You are an animal too", "air": "air, water", "water": "water and food", "food": "food, just", "cat": "just like the cat" } } }
+    ] },
+
+    { "id": "plants", "kind": "plants", "heading": "What plants need", "codes": ["1Bp.03"], "beats": [
+      { "say": "Plants are alive too. A seed grows into a new plant.",
+        "art": { "at": { "plants": "Plants are alive too", "seed": "A seed", "grows": "grows into a new plant" } } },
+      { "say": "Plants do not eat like animals. They make their own food in their leaves.",
+        "art": { "at": { "eat": "do not eat", "food": "make their own food", "leaves": "in their leaves" } } },
+      { "say": "To make it, they use light from the Sun.",
+        "art": { "at": { "light": "light from the Sun" } } },
+      { "say": "They need water from the soil, and air. They take in water through their roots.",
+        "art": { "at": { "water": "water from the soil", "air": "and air", "roots": "through their roots" } } },
+      { "say": "Today you will find out what happens to a plant with no water.",
+        "art": { "at": { "find": "find out", "none": "with no water" } } }
+    ] },
+
+    { "id": "water", "kind": "water", "heading": "Does a plant need water?", "codes": ["1Bp.03", "1TWSp.01", "1TWSp.02"], "beats": [
+      { "say": "How can you find out? Take two plants that are the same.",
+        "art": { "at": { "how": "How can you find out", "two": "two plants", "same": "the same" } } },
+      { "say": "Water one every day. Give the other no water at all.",
+        "art": { "at": { "water": "Water one", "other": "Give the other", "none": "no water at all" } } },
+      { "say": "Only the water is different. That makes it a fair test.",
+        "art": { "at": { "only": "Only the water", "fair": "a fair test" } } },
+      { "say": "First, you predict: say what you think will happen. It is fine to be wrong.",
+        "art": { "at": { "predict": "you predict", "say": "say what you think", "wrong": "fine to be wrong" } } },
+      { "say": "Then you watch for five days, and see what really happens.",
+        "art": { "at": { "watch": "you watch", "five": "five days", "see": "see what really happens" } } }
+    ] },
+
+    { "id": "scientist", "kind": "scientist", "heading": "Being a scientist", "codes": ["1TWSp.01", "1TWSc.05"], "beats": [
+      { "say": "A scientist looks closely, asks a question, tries something, and writes down what happened.",
+        "art": { "at": { "looks": "looks closely", "asks": "asks a question", "tries": "tries something", "writes": "writes down" } } },
+      { "say": "You will write what you see in a table, so you do not forget.",
+        "art": { "at": { "write": "write what you see", "table": "in a table", "forget": "do not forget" } } },
+      { "say": "Then you say what happened, and if it matched your prediction.",
+        "art": { "at": { "say": "you say what happened", "matched": "if it matched" } } }
+    ] },
+
+    { "id": "recap", "kind": "recap", "heading": "What you now know", "codes": ["1Bp.01", "1Bp.02", "1Bp.03", "1TWSp.01", "1TWSp.02", "1TWSc.05"], "beats": [
+      { "say": "A goat is alive. It grows, needs food and water, and has young.",
+        "art": { "at": { "goat": "A goat is alive" } } },
+      { "say": "A stone was never alive. Animals need air, water and the right food.",
+        "art": { "at": { "stone": "A stone", "animals": "Animals need" } } },
+      { "say": "Plants need water from the soil, and light from the Sun.",
+        "art": { "at": { "plants": "Plants need" } } },
+      { "say": "A scientist looks, asks, tries and writes it down. Ready? Let us go.",
+        "art": { "at": { "sci": "A scientist", "go": "Let us go" } } }
+    ] }
+  ]
+}

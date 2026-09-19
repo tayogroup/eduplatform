@@ -1,0 +1,129 @@
+{
+  "_comment": "Storyboard for the Grade 1 Science unit lecture film, Lesson 4 What Is It Made Of?. Rendered by tools/create-ehel-unit-lecture.js. See lecture-video/BRIEF.md. Every beat is one narration clip; art.at names the phrases a picture waits for, and the page refuses to load if a phrase is not in its beat's say. The five chapters are the five parts of LESSON[\"lecture\"] in content/lesson-4.py, in their order, in the lesson's own words and examples: the spoon and the chair, the seven materials of the explore step, the sponge and the metal spoon of the tester, the clay, elastic band and stone of the shape experiment, and the window and raincoat of the context step.",
+  "slug": "what-is-it-made-of",
+  "lesson": 4,
+  "grade": 1,
+  "stage": 1,
+  "title": "What Is It Made Of?",
+  "subtitle": "Grade 1 Science",
+  "framework": "Cambridge Primary Science 0097",
+  "renderer": {
+    "art": ["science"],
+    "scenes": [
+      "tools/lib/ehel-film-marks.js",
+      "tools/lib/film-scenes/science-g1/what-is-it-made-of.js",
+      "tools/lib/film-scenes/science-g1/what-is-it-made-of-2.js",
+      "tools/lib/film-scenes/science-g1/what-is-it-made-of-3.js",
+      "tools/lib/film-scenes/science-g1/what-is-it-made-of-4.js"
+    ]
+  },
+  "objectives": [
+    ["1Cm.01", "Identify, name, describe, sort and group common materials, including wood, plastic, metal, glass, rock, paper and fabric."],
+    ["1Cm.02", "Understand the difference between an object and a material."],
+    ["1Cp.01", "Understand that all materials have a variety of properties."],
+    ["1Cp.02", "Describe common materials in terms of their properties."],
+    ["1Cc.01", "Describe how materials can be changed by physical action, e.g. stretching, compressing, bending and twisting."],
+    ["1SIC.02", "Talk about how science explains how objects they use, or know about, work."]
+  ],
+  "scenes": [
+    {
+      "id": "title", "kind": "title", "codes": [],
+      "beats": [
+        { "say": "Everything around you is made from a material.",
+          "art": { "at": { "every": "Everything around you", "material": "a material" } } },
+        { "say": "A spoon, a chair, a window. What is each one made of?",
+          "art": { "at": { "spoon": "A spoon", "chair": "a chair", "window": "a window", "what": "What is each one made of?" } } }
+      ]
+    },
+    {
+      "id": "objects", "kind": "objects", "heading": "Object and material", "codes": ["1Cm.02"],
+      "beats": [
+        { "say": "A spoon is an object. An object is a thing you can point at.",
+          "art": { "at": { "spoon": "A spoon", "object": "an object", "point": "point at" } } },
+        { "say": "The spoon is made of metal. Metal is the material.",
+          "art": { "at": { "metal": "made of metal", "material": "the material" } } },
+        { "say": "A chair is an object too. It is made of wood.",
+          "art": { "at": { "chair": "A chair", "wood": "made of wood" } } },
+        { "say": "The object is the thing. The material is what it is made of.",
+          "art": { "at": { "object": "The object", "material": "The material" } } },
+        { "say": "Is the spoon made of spoon? No. Spoon is what it is. It is made of metal.",
+          "art": { "at": { "q": "made of spoon", "no": "No.", "is": "Spoon is what it is", "metal": "made of metal" } } },
+        { "say": "One material can make many objects. Wood makes chairs, pencils and doors.",
+          "art": { "at": { "one": "One material", "many": "many objects", "chairs": "chairs", "pencils": "pencils", "doors": "doors" } } }
+      ]
+    },
+    {
+      "id": "seven", "kind": "seven", "heading": "Seven materials", "codes": ["1Cm.01"],
+      "beats": [
+        { "say": "Wood, metal, plastic, glass, rock, paper and fabric.",
+          "art": { "at": { "wood": "Wood", "metal": "metal", "plastic": "plastic", "glass": "glass", "rock": "rock", "paper": "paper", "fabric": "fabric" } } },
+        { "say": "These are seven materials you see every day.",
+          "art": { "at": { "seven": "seven materials", "every": "every day" } } },
+        { "say": "Outside science, material often means cloth. In science, it means anything a thing is made of.",
+          "art": { "at": { "material": "material often", "cloth": "means cloth", "science": "In science", "anything": "anything a thing is made of" } } },
+        { "say": "Look around the room. Almost everything you see is made of one of these seven.",
+          "art": { "at": { "look": "Look around the room", "almost": "Almost everything", "seven": "these seven" } } }
+      ]
+    },
+    {
+      "id": "testing", "kind": "testing", "heading": "Testing materials", "codes": ["1Cp.01", "1Cp.02"],
+      "beats": [
+        { "say": "Scientists test materials. Each test tells you a property.",
+          "art": { "at": { "test": "test materials", "each": "Each test", "property": "a property" } } },
+        { "say": "Press it. Is it hard or soft? The sponge squashes, so it is soft.",
+          "art": { "at": { "press": "Press it", "squash": "The sponge squashes", "soft": "it is soft" } } },
+        { "say": "Bend it. Does it bend or break? The sponge bends.",
+          "art": { "at": { "bend": "Bend it", "bends": "The sponge bends" } } },
+        { "say": "Wet it. Does the water go through? The sponge soaks it up.",
+          "art": { "at": { "wet": "Wet it", "soaks": "soaks it up" } } },
+        { "say": "Now test a metal spoon. It is hard, stiff and waterproof.",
+          "art": { "at": { "spoon": "a metal spoon", "hard": "hard", "stiff": "stiff", "water": "waterproof" } } },
+        { "say": "Every material has lots of properties at once.",
+          "art": { "at": { "every": "Every material", "lots": "lots of properties" } } }
+      ]
+    },
+    {
+      "id": "shape", "kind": "shape", "heading": "Squash, bend, twist, stretch", "codes": ["1Cc.01"],
+      "beats": [
+        { "say": "Squash it, bend it, twist it, stretch it. Some materials change shape.",
+          "art": { "at": { "squash": "Squash it", "bend": "bend it", "twist": "twist it", "stretch": "stretch it", "change": "change shape" } } },
+        { "say": "Push on clay and it squashes. Bend it, and it bends.",
+          "art": { "at": { "push": "Push on clay", "squash": "it squashes", "bend": "Bend it" } } },
+        { "say": "Pull an elastic band and it stretches. Twist it round and round.",
+          "art": { "at": { "pull": "Pull an elastic band", "stretch": "it stretches", "twist": "Twist it" } } },
+        { "say": "Push on a stone and nothing happens. It keeps its shape.",
+          "art": { "at": { "push": "Push on a stone", "nothing": "nothing happens", "keeps": "keeps its shape" } } },
+        { "say": "Some materials change shape, and some do not.",
+          "art": { "at": { "change": "change shape", "not": "some do not" } } }
+      ]
+    },
+    {
+      "id": "job", "kind": "job", "heading": "The right material for the job", "codes": ["1Cp.02", "1SIC.02"],
+      "beats": [
+        { "say": "People choose a material because of its properties. That is science, used every day.",
+          "art": { "at": { "choose": "choose a material", "props": "its properties", "science": "That is science" } } },
+        { "say": "A window is glass because you can see through it.",
+          "art": { "at": { "window": "A window", "glass": "glass", "see": "see through it" } } },
+        { "say": "A raincoat is plastic because water runs off it.",
+          "art": { "at": { "coat": "A raincoat", "plastic": "plastic", "runs": "water runs off" } } },
+        { "say": "A paper raincoat? Paper soaks up water, so you would get wet.",
+          "art": { "at": { "paper": "A paper raincoat", "soaks": "soaks up water", "wet": "get wet" } } },
+        { "say": "The right material has the right properties for the job.",
+          "art": { "at": { "right": "The right material", "job": "for the job" } } }
+      ]
+    },
+    {
+      "id": "recap", "kind": "recap", "heading": "What you now know", "codes": ["1Cm.01", "1Cm.02", "1Cp.01", "1Cp.02", "1Cc.01", "1SIC.02"],
+      "beats": [
+        { "say": "An object is a thing. A material is what it is made of.",
+          "art": { "at": { "object": "An object", "material": "A material" } } },
+        { "say": "You know seven materials, and tests find their properties.",
+          "art": { "at": { "seven": "seven materials", "tests": "tests find" } } },
+        { "say": "Some materials change shape when you push or pull them.",
+          "art": { "at": { "shape": "change shape" } } },
+        { "say": "Choose the right material for the job. Now go on a material hunt!",
+          "art": { "at": { "right": "the right material", "hunt": "material hunt" } } }
+      ]
+    }
+  ]
+}

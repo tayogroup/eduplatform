@@ -367,6 +367,17 @@ LESSON["lecture"] = [
          "Long ago, people measured with their hands and feet. You can too. A hand span is from your thumb to your little finger. Today you measure your friends in hand spans."),
 ]
 
+# The unit lecture film (tools/create-ehel-unit-lecture.js; storyboard and
+# pictures in lecture-video/my-body-and-my-senses.json). The lecture step draws it
+# above the parts; build-lessons.py refuses a path that is not on disk AND in
+# app.config.json :: extraPages, and a --draft render.
+LESSON["video"] = {
+    "src": "lecture-video/my-body-and-my-senses.ac44bf58.mp4",
+    "captions": "lecture-video/my-body-and-my-senses.c9f9409e.vtt",
+    "poster": "lecture-video/my-body-and-my-senses.f64f4353.jpg",
+    "note": "About two and a half minutes. Watch it through, then go back over it a part at a time below.",
+}
+
 LESSON["words"] = [
     word("senses", "\U0001F440", "The five ways your body finds out about the world: seeing, hearing, smelling, tasting and touching.",
          ["I use my senses to find my way.", "Which sense tells you the soup is hot?"]),

@@ -1,0 +1,129 @@
+{
+  "_comment": "Storyboard for the Grade 1 Science unit lecture film, Lesson 7 Electricity and Magnets. Rendered by tools/create-ehel-unit-lecture.js. See lecture-video/BRIEF.md. Every beat is one narration clip; art.at names the phrases a picture waits for, and the page refuses to load if a phrase is not in its beat's say. The five chapters are the five parts of LESSON[\"lecture\"] in content/lesson-7.py, in their order, in the lesson's own words and examples: the lamp, television, fridge and phone against the book, chair and bicycle; the wall socket, the plug and the battery; the three safety rules; the paperclip and the paper at the lesson's own magnet experiment; and the lesson's record table of five things, with kitchen foil as the metal that is not magnetic.",
+  "slug": "electricity-and-magnets",
+  "lesson": 7,
+  "grade": 1,
+  "stage": 1,
+  "title": "Electricity and Magnets",
+  "subtitle": "Grade 1 Science",
+  "framework": "Cambridge Primary Science 0097",
+  "renderer": {
+    "art": ["science"],
+    "scenes": [
+      "tools/lib/ehel-film-marks.js",
+      "tools/lib/film-scenes/science-g1/electricity-and-magnets.js",
+      "tools/lib/film-scenes/science-g1/electricity-and-magnets-2.js",
+      "tools/lib/film-scenes/science-g1/electricity-and-magnets-3.js"
+    ]
+  },
+  "objectives": [
+    ["1Pe.01", "Identify things that require electricity to work."],
+    ["1Pe.02", "Explore, talk about and describe what happens when magnets approach and touch different materials."],
+    ["1TWSc.04", "Follow instructions safely when doing practical work."],
+    ["1TWSp.02", "Make predictions about what they think will happen."],
+    ["1TWSc.05", "Collect and record observations and/or measurements by annotating images and completing simple tables."]
+  ],
+  "scenes": [
+    {
+      "id": "title", "kind": "title", "codes": [],
+      "beats": [
+        { "say": "Press a switch, and the lamp lights up. Electricity makes it work.",
+          "art": { "at": { "switch": "Press a switch", "lamp": "the lamp lights up", "elec": "Electricity" } } },
+        { "say": "A magnet pulls a paperclip. It does not even have to touch it.",
+          "art": { "at": { "magnet": "A magnet", "pulls": "pulls a paperclip", "touch": "does not even have to touch" } } }
+      ]
+    },
+    {
+      "id": "needs", "kind": "needs", "heading": "What needs electricity", "codes": ["1Pe.01"],
+      "beats": [
+        { "say": "Some things need electricity to work. Some do not.",
+          "art": { "at": { "need": "need electricity", "not": "Some do not" } } },
+        { "say": "A lamp, a television, a fridge and a phone all need electricity.",
+          "art": { "at": { "lamp": "A lamp", "tv": "a television", "fridge": "a fridge", "phone": "a phone" } } },
+        { "say": "A book, a chair and a bicycle do not.",
+          "art": { "at": { "book": "A book", "chair": "a chair", "bike": "a bicycle" } } },
+        { "say": "Here is the test. What if the power went off?",
+          "art": { "at": { "test": "the test", "off": "the power went off" } } },
+        { "say": "The lamp goes out. But you can still read the book.",
+          "art": { "at": { "out": "The lamp goes out", "read": "still read the book" } } },
+        { "say": "If it stops when the power goes off, it needs electricity.",
+          "art": { "at": { "stops": "If it stops", "needs": "it needs electricity" } } }
+      ]
+    },
+    {
+      "id": "source", "kind": "source", "heading": "Where it comes from", "codes": ["1Pe.01"],
+      "beats": [
+        { "say": "Electricity comes into your house through wires.",
+          "art": { "at": { "house": "your house", "wires": "through wires" } } },
+        { "say": "The wires go to the sockets in the wall.",
+          "art": { "at": { "sockets": "the sockets" } } },
+        { "say": "A plug takes it to the lamp. The lamp lights up.",
+          "art": { "at": { "plug": "A plug", "lamp": "to the lamp", "lights": "lights up" } } },
+        { "say": "A battery gives electricity to torches and toys.",
+          "art": { "at": { "battery": "A battery", "torch": "torches", "toys": "toys" } } },
+        { "say": "So look for a plug on a lead, or a battery inside.",
+          "art": { "at": { "plug": "a plug on a lead", "battery": "a battery inside" } } }
+      ]
+    },
+    {
+      "id": "safety", "kind": "safety", "heading": "Three safety rules", "codes": ["1TWSc.04"],
+      "beats": [
+        { "say": "Electricity is very useful. But it can hurt you.",
+          "art": { "at": { "useful": "very useful", "hurt": "it can hurt you" } } },
+        { "say": "Rule one. Only plugs go into sockets. Never fingers or toys.",
+          "art": { "at": { "one": "Rule one", "plugs": "Only plugs", "fingers": "Never fingers", "toys": "toys" } } },
+        { "say": "Rule two. Keep electric things away from water. Wet hands and electricity do not mix.",
+          "art": { "at": { "two": "Rule two", "water": "away from water", "wet": "Wet hands" } } },
+        { "say": "Rule three. If a wire is broken, do not touch it. Tell a grown-up.",
+          "art": { "at": { "three": "Rule three", "broken": "a wire is broken", "touch": "do not touch", "tell": "Tell a grown-up" } } }
+      ]
+    },
+    {
+      "id": "magnet", "kind": "magnet", "heading": "What a magnet does", "codes": ["1Pe.02"],
+      "beats": [
+        { "say": "A magnet attracts some things. Attract means pull towards.",
+          "art": { "at": { "magnet": "A magnet", "attracts": "attracts some things", "pull": "pull towards" } } },
+        { "say": "Bring a magnet near a paperclip. The clip jumps across!",
+          "art": { "at": { "near": "Bring a magnet near", "jumps": "jumps across" } } },
+        { "say": "It jumps before the magnet even touches it.",
+          "art": { "at": { "before": "before the magnet", "touches": "even touches it" } } },
+        { "say": "Bring the magnet near paper. Nothing happens.",
+          "art": { "at": { "bring": "Bring the magnet", "paper": "paper", "nothing": "Nothing happens" } } },
+        { "say": "People often say a magnet sticks. But glue sticks.",
+          "art": { "at": { "sticks": "a magnet sticks", "glue": "glue sticks" } } },
+        { "say": "Pull the clip off, and it comes away easily. A magnet attracts, and lets go again.",
+          "art": { "at": { "pull": "Pull the clip off", "easy": "comes away easily", "attracts": "A magnet attracts", "lets": "lets go again" } } }
+      ]
+    },
+    {
+      "id": "steel", "kind": "steel", "heading": "Iron and steel", "codes": ["1Pe.02", "1TWSp.02", "1TWSc.05"],
+      "beats": [
+        { "say": "Test each thing, and write the results in a table.",
+          "art": { "at": { "test": "Test each thing", "table": "in a table" } } },
+        { "say": "The steel paperclip is attracted. So is the steel tin lid.",
+          "art": { "at": { "clip": "The steel paperclip", "lid": "the steel tin lid" } } },
+        { "say": "The wooden block is not attracted. The plastic cup is not.",
+          "art": { "at": { "block": "The wooden block", "cup": "The plastic cup" } } },
+        { "say": "Kitchen foil is metal. Predict: will the magnet attract it?",
+          "art": { "at": { "foil": "Kitchen foil", "metal": "is metal", "predict": "Predict" } } },
+        { "say": "Test it. Nothing happens. Not every metal is magnetic.",
+          "art": { "at": { "test": "Test it", "nothing": "Nothing happens", "every": "Not every metal" } } },
+        { "say": "Look at the table. A magnet attracts iron and steel.",
+          "art": { "at": { "table": "Look at the table", "iron": "iron and steel" } } }
+      ]
+    },
+    {
+      "id": "recap", "kind": "recap", "heading": "What you now know", "codes": ["1Pe.01", "1Pe.02", "1TWSc.04", "1TWSp.02", "1TWSc.05"],
+      "beats": [
+        { "say": "Some things need electricity. It comes from sockets and batteries.",
+          "art": { "at": { "need": "need electricity", "from": "sockets and batteries" } } },
+        { "say": "Only plugs in sockets. Away from water. Tell a grown-up.",
+          "art": { "at": { "rules": "Only plugs" } } },
+        { "say": "A magnet attracts iron and steel. Not every metal is magnetic.",
+          "art": { "at": { "attracts": "A magnet attracts", "metal": "Not every metal" } } },
+        { "say": "Now predict, then test, and see the pattern for yourself.",
+          "art": { "at": { "go": "predict" } } }
+      ]
+    }
+  ]
+}

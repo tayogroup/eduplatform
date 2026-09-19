@@ -344,6 +344,17 @@ LESSON["lecture"] = [
          "A window is glass because you can see through it. A raincoat is plastic because water runs off it. The right material has the right properties for the job."),
 ]
 
+# The unit lecture film (tools/create-ehel-unit-lecture.js; storyboard and
+# pictures in lecture-video/what-is-it-made-of.json). The lecture step draws it
+# above the parts; build-lessons.py refuses a path that is not on disk AND in
+# app.config.json :: extraPages, and a --draft render.
+LESSON["video"] = {
+    "src": "lecture-video/what-is-it-made-of.8fa14679.mp4",
+    "captions": "lecture-video/what-is-it-made-of.1ebac798.vtt",
+    "poster": "lecture-video/what-is-it-made-of.f599339d.jpg",
+    "note": "About two and a half minutes. Watch it through, then go back over it a part at a time below.",
+}
+
 LESSON["words"] = [
     word("material", "\U0001F9F1", "What a thing is made of, like wood, metal or glass.",
          ["Wood is a material.", "What material is a window made of?"]),

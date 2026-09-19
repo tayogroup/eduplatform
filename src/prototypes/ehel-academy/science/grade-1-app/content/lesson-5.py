@@ -284,6 +284,17 @@ LESSON["lecture"] = [
          "A bicycle moves because you push the pedals. A boat floats because the water pushes up on it. Pushes and pulls are inside everything that moves."),
 ]
 
+# The unit lecture film (tools/create-ehel-unit-lecture.js; storyboard and
+# pictures in lecture-video/pushes-pulls-and-floating.json). The lecture step draws it
+# above the parts; build-lessons.py refuses a path that is not on disk AND in
+# app.config.json :: extraPages, and a --draft render.
+LESSON["video"] = {
+    "src": "lecture-video/pushes-pulls-and-floating.355ed1d3.mp4",
+    "captions": "lecture-video/pushes-pulls-and-floating.23010286.vtt",
+    "poster": "lecture-video/pushes-pulls-and-floating.54dcceb2.jpg",
+    "note": "About two and a half minutes. Watch it through, then go back over it a part at a time below.",
+}
+
 LESSON["words"] = [
     word("push", "\U0001F450", "A force that moves something away from you.",
          ["I push the trolley.", "Kicking a ball is a push."]),

@@ -279,6 +279,17 @@ LESSON["lecture"] = [
          "A magnet attracts iron and steel. It does not attract wood, plastic, paper or kitchen foil, and foil is metal, so not every metal is magnetic. Today you predict, then test, and see the pattern for yourself."),
 ]
 
+# The unit lecture film (tools/create-ehel-unit-lecture.js; storyboard and
+# pictures in lecture-video/electricity-and-magnets.json). The lecture step draws it
+# above the parts; build-lessons.py refuses a path that is not on disk AND in
+# app.config.json :: extraPages, and a --draft render.
+LESSON["video"] = {
+    "src": "lecture-video/electricity-and-magnets.312a7e53.mp4",
+    "captions": "lecture-video/electricity-and-magnets.9ad9c9b3.vtt",
+    "poster": "lecture-video/electricity-and-magnets.dde34708.jpg",
+    "note": "About two and a half minutes. Watch it through, then go back over it a part at a time below.",
+}
+
 LESSON["words"] = [
     word("electricity", "\u26A1", "The power that makes lamps, televisions and fridges work.",
          ["The lamp needs electricity.", "Electricity comes through the wires."]),

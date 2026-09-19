@@ -3,8 +3,9 @@
  *
  *   T=tools/create-ehel-unit-lecture.js
  *   node $T --app <grade app> --slug <film> --dry        # cost, coverage, length; buys nothing
- *   node $T --app ... --slug ... --preview               # one still per beat, both cards; buys nothing
- *   node $T --app ... --slug ... --sample [ids]          # a frame 0.75 s after every spoken cue, as contact sheets
+ *   node $T --app ... --slug ... --preview               # one still per beat, both cards, and contact sheets; buys nothing
+ *   node $T --app ... --slug ... --sample [ids]          # a frame 0.75 s after every spoken cue, as contact sheets; buys nothing
+ *   node $T --app ... --slug ... --sweep                 # every frame drawn once, no pictures: errors, and anything outside the box
  *   node $T --app ... --slug ... --draft                 # the whole film in the free OS voice
  *   node $T --app ... --slug ... --narrate               # BUYS the narration, then stops
  *   node $T --app ... --slug ...                         # BUYS what is not cached, renders
@@ -38,7 +39,13 @@
  *   "renderer": { "scenes": "tools/lib/<the film's pictures>.js", "styles": [optional extra CSS] }
  * The page is ehel-film-engine-head.js + the scenes file + ehel-film-engine-tail.js
  * in one script, over ehel-film-base.css; the head says what a scenes file must
- * define. A new film in any subject writes its pictures and nothing else. The
+ * define. "scenes" may also be a LIST of files, joined in order: the shared
+ * marks (tools/lib/ehel-film-marks.js) first, then the film's pictures, in as
+ * many parts as it needs. "art" names adapters that lift a lesson kit's own
+ * drawings into the film, so the child sees the picture the lesson draws:
+ *   "renderer": { "art": ["science"], "scenes": ["tools/lib/ehel-film-marks.js", "<the film's pictures>.js"] }
+ * An adapter is tools/lib/ehel-film-art-<name>.js; its script goes after the
+ * head and before the scenes. A new film in any subject writes its pictures and nothing else. The
  * science (Bones and Muscles) and maths (Shape and Measures) films predate this
  * and keep their own tools, which this does not touch; their storyboards name no
  * renderer, and this tool refuses them rather than guessing.
@@ -103,7 +110,7 @@ function arg(name, fallback) {
 }
 const has = (name) => ARGV.some((x) => x === `--${name}` || x.startsWith(`--${name}=`));
 
-const KNOWN = new Set(["app", "slug", "dry", "preview", "sample", "draft", "narrate", "calibrate", "limit-seconds", "workers"]);
+const KNOWN = new Set(["app", "slug", "dry", "preview", "sample", "sweep", "draft", "narrate", "calibrate", "limit-seconds", "workers"]);
 for (const a of ARGV) {
   if (!a.startsWith("--")) continue;
   const name = a.slice(2).split("=")[0];
@@ -175,7 +182,10 @@ async function speak(text, out) {
   if (!res.ok) die(`ElevenLabs answered ${res.status}: ${(await res.text()).slice(0, 400)}`);
   const buf = Buffer.from(await res.arrayBuffer());
   if (buf.length < 800) die(`ElevenLabs returned ${buf.length} bytes for ${JSON.stringify(text.slice(0, 40))}.`);
-  fs.writeFileSync(out, buf);
+  /* written aside and renamed, so a run stopped mid-write never leaves a
+     partial clip that a later run would take for a bought one */
+  fs.writeFileSync(out + ".part", buf);
+  fs.renameSync(out + ".part", out);
 }
 
 function duration(file) {
@@ -244,19 +254,38 @@ function fontFace(file, family, weight) {
     `src:url(data:font/woff2;base64,${b64}) format("woff2");font-display:block;}`;
 }
 
-/* the storyboard's renderer: its scenes file and any extra styles, checked */
-function rendererOf(film) {
+/* the storyboard's renderer: its art adapters, scenes files and extra styles,
+   checked. --dry reads only the script, so there a file not written yet is
+   listed rather than refused: a film's words are settled before its pictures. */
+function rendererOf(film, lenient) {
   const r = film.renderer;
-  if (!r || !r.scenes) die("the storyboard names no renderer (\"renderer\": {\"scenes\": ...}). A film made before this tool " +
-    "keeps its own subject's tool; a new one names its scenes file here.");
-  const scenes = path.resolve(ROOT, r.scenes);
-  if (!fs.existsSync(scenes)) die(`the storyboard's renderer.scenes ${r.scenes} does not exist`);
-  const styles = (r.styles || []).map((s) => {
+  if (!r || !r.scenes || (Array.isArray(r.scenes) && !r.scenes.length)) die("the storyboard names no renderer (\"renderer\": {\"scenes\": ...}). " +
+    "A film made before this tool keeps its own subject's tool; a new one names its scenes file here.");
+  const list = (v) => (v == null ? [] : Array.isArray(v) ? v : [v]);
+  const missing = [];
+  const need = (s, what) => {
     const p = path.resolve(ROOT, s);
-    if (!fs.existsSync(p)) die(`the storyboard's renderer.styles names ${s}, which does not exist`);
+    if (!fs.existsSync(p)) {
+      if (!lenient) die(`the storyboard's renderer.${what} names ${s}, which does not exist`);
+      missing.push(s);
+    }
     return p;
+  };
+  const scenes = list(r.scenes).map((s) => need(s, "scenes"));
+  const styles = list(r.styles).map((s) => need(s, "styles"));
+  const art = list(r.art).map((name) => {
+    if (!/^[a-z0-9-]+$/.test(String(name))) die(`renderer.art names ${JSON.stringify(name)}; an art adapter is named by a plain word`);
+    const p = path.join(__dirname, "lib", `ehel-film-art-${name}.js`);
+    if (!fs.existsSync(p)) die(`renderer.art names ${name}, and there is no tools/lib/ehel-film-art-${name}.js`);
+    return { name, file: p };
   });
-  return { scenes, styles };
+  return { scenes, styles, art, missing };
+}
+
+function describeRenderer(renderer) {
+  return renderer.art.map((a) => `art:${a.name}`)
+    .concat(renderer.scenes.map((p) => path.relative(ROOT, p)))
+    .concat(renderer.styles.map((p) => path.relative(ROOT, p))).join(" + ");
 }
 
 function buildPage(film, renderer) {
@@ -265,8 +294,17 @@ function buildPage(film, renderer) {
     fontFace("AtkinsonHyperlegible-normal-700.woff2", "Atkinson Hyperlegible", "700"),
     fontFace("Inter-normal-300-700.woff2", "Inter", "300 700")
   ].join("\n");
-  const css = [BASE_CSS].concat(renderer.styles).map((p) => fs.readFileSync(p, "utf8")).join("\n");
-  const script = [ENGINE_HEAD, renderer.scenes, ENGINE_TAIL].map((p) => fs.readFileSync(p, "utf8")).join("\n");
+  const read = (p) => fs.readFileSync(p, "utf8");
+  const artJs = [], artCss = [];
+  for (const a of renderer.art) {
+    try {
+      const mod = require(a.file);
+      artJs.push(mod.script());
+      if (mod.css) artCss.push(mod.css());
+    } catch (e) { die(e.message); }
+  }
+  const css = [read(BASE_CSS)].concat(artCss, renderer.styles.map(read)).join("\n");
+  const script = [read(ENGINE_HEAD)].concat(artJs, renderer.scenes.map(read), [read(ENGINE_TAIL)]).join("\n");
   return `<!doctype html><html lang="en"><head><meta charset="utf-8">
 <title>${film.title} - unit lecture</title>
 <style>${fonts}</style>
@@ -315,12 +353,40 @@ async function shoot(w, chromium, pagePath, t, file) {
   }
 }
 
+/* Shots as contact sheets, 12 to a sheet: <prefix>-1.png, <prefix>-2.png ... */
+async function contactSheets(w, shots, outDir, prefix) {
+  const made = [];
+  for (let p = 0; p * 12 < shots.length; p++) {
+    const group = shots.slice(p * 12, p * 12 + 12);
+    const html = `<!doctype html><html><body style="margin:0;background:#222;font:13px sans-serif;color:#eee">` +
+      `<div style="display:grid;grid-template-columns:repeat(3,424px);gap:6px;padding:6px">` +
+      group.map((x) => `<figure style="margin:0"><img src="file:///${x.file.replace(/\\/g, "/")}" style="width:424px;display:block">` +
+        `<figcaption style="padding:2px 4px">${x.cap}</figcaption></figure>`).join("") + `</div></body></html>`;
+    const sp = path.join(outDir, `${prefix}-${p + 1}.html`);
+    fs.writeFileSync(sp, html, "utf8");
+    const tab = await w.browser.newPage({ viewport: { width: 1290, height: 400 } });
+    await withTimeout(tab.goto("file:///" + sp.replace(/\\/g, "/")), FRAME_TIMEOUT_MS, "a contact sheet");
+    await tab.screenshot({ path: sp.replace(/\.html$/, ".png"), fullPage: true });
+    await tab.close();
+    made.push(`${prefix}-${p + 1}.png (${group.length})`);
+  }
+  return made;
+}
+
 /* --------------------------------------------------------- the sampler ---
    A frame just after each beat starts, 0.75 s after every phrase the beat's
    art.at names, and just before its voice stops - the moments a picture has
-   to be right at - as contact sheets, 12 to a sheet. */
+   to be right at - as contact sheets, 12 to a sheet. A cue's frame is named
+   -cue-<name>, so a cue called "start" or "end" cannot overwrite the beat's
+   own start or end frame. Sampling some chapters replaces only theirs. */
 async function sample(chromium, pagePath, film, outDir, only) {
-  fs.rmSync(outDir, { recursive: true, force: true });
+  if (only.length && fs.existsSync(outDir)) {
+    for (const f of fs.readdirSync(outDir)) {
+      if (only.some((id) => f.startsWith(`${id}-b`) || f.startsWith(`sheet-${id}-`))) fs.rmSync(path.join(outDir, f), { force: true });
+    }
+  } else {
+    fs.rmSync(outDir, { recursive: true, force: true });
+  }
   fs.mkdirSync(outDir, { recursive: true });
   const w = await openFilm(chromium, pagePath);
   const times = [];
@@ -332,7 +398,7 @@ async function sample(chromium, pagePath, film, outDir, only) {
     for (let i = s.first; i < s.first + s.beats.length; i++) {
       const c = await w.page.evaluate((k) => window.EHEL_FILM.cues(k), i);
       const wanted = [[c.start + 0.3, "start"]];
-      Object.entries(c.cues).sort((a, b) => a[1] - b[1]).forEach(([k, v]) => wanted.push([v + 0.75, k]));
+      Object.entries(c.cues).sort((a, b) => a[1] - b[1]).forEach(([k, v]) => wanted.push([v + 0.75, "cue-" + k]));
       wanted.push([c.spokenEnd - 0.15, "end"]);
       wanted.sort((a, b) => a[0] - b[0]);
       const kept = [];
@@ -342,23 +408,10 @@ async function sample(chromium, pagePath, film, outDir, only) {
         const a = Date.now();
         await shoot(w, chromium, pagePath, t, file);
         times.push(Date.now() - a);
-        shots.push({ file, cap: `beat ${i + 1} · ${why} · ${t.toFixed(2)} s` });
+        shots.push({ file, cap: `beat ${i + 1} · ${why.replace(/^cue-/, "")} · ${t.toFixed(2)} s` });
       }
     }
-    for (let p = 0; p * 12 < shots.length; p++) {
-      const group = shots.slice(p * 12, p * 12 + 12);
-      const html = `<!doctype html><html><body style="margin:0;background:#222;font:13px sans-serif;color:#eee">` +
-        `<div style="display:grid;grid-template-columns:repeat(3,424px);gap:6px;padding:6px">` +
-        group.map((x) => `<figure style="margin:0"><img src="file:///${x.file.replace(/\\/g, "/")}" style="width:424px;display:block">` +
-          `<figcaption style="padding:2px 4px">${x.cap}</figcaption></figure>`).join("") + `</div></body></html>`;
-      const sp = path.join(outDir, `sheet-${s.id}-${p + 1}.html`);
-      fs.writeFileSync(sp, html, "utf8");
-      const tab = await w.browser.newPage({ viewport: { width: 1290, height: 400 } });
-      await withTimeout(tab.goto("file:///" + sp.replace(/\\/g, "/")), FRAME_TIMEOUT_MS, "a contact sheet");
-      await tab.screenshot({ path: sp.replace(/\.html$/, ".png"), fullPage: true });
-      await tab.close();
-      sheets.push(`sheet-${s.id}-${p + 1}.png (${group.length})`);
-    }
+    sheets.push(...await contactSheets(w, shots, outDir, `sheet-${s.id}`));
   }
   if (w.errs.length) die("the film page threw while sampling:\n" + w.errs.slice(0, 5).join("\n"));
   await w.browser.close();
@@ -367,6 +420,108 @@ async function sample(chromium, pagePath, film, outDir, only) {
   console.log(`  ${times.length} frames in ${((Date.now() - t0) / 1000).toFixed(1)} s ` +
     `(a frame took ${med} ms typically, ${times.length ? times[times.length - 1] : 0} ms at worst)`);
   console.log(`  ${sheets.length} contact sheets in ${outDir}:\n    ${sheets.join("\n    ")}`);
+}
+
+/* ----------------------------------------------------------- the sweep ---
+   Every frame the render will draw, drawn once in the page with no screenshot,
+   for two faults a few sampled frames can step over:
+   - a frame that throws. The render would stop there, after the narration is
+     bought; the Parts of a Plant film had one that lived 0.35 s after each
+     part was named, between every sampled frame.
+   - anything drawn outside the scene's 1168 x 440 box, over the heading or the
+     spoken line. Checked every 0.1 s, on what can be seen: an element at
+     opacity under 0.05 is skipped, a lesson drawing nested with ART.place
+     counts as its own box (it clips what is inside it), and an element under a
+     clip-path is skipped (its box overstates what shows). Three of the Grade 1
+     Science films found overflows this way that no contact sheet showed.
+   A throw stops the tool; an overflow is reported and left to the eye. */
+async function sweep(chromium, pagePath, total) {
+  const w = await openFilm(chromium, pagePath);
+  const frames = Math.ceil(total * FPS), t0 = Date.now(), CHUNK = 450;
+  const errors = [], outside = [];
+  for (let f0 = 0; f0 < frames && errors.length < 5; f0 += CHUNK) {
+    const r = await withTimeout(w.page.evaluate(({ f0, f1, fps, box0 }) => {
+      const errors = [], outside = [], SKIP = new Set(["g", "defs", "clippath", "lineargradient", "radialgradient", "stop", "title", "desc", "mask", "filter", "pattern", "tspan", "marker", "symbol"]);
+      const seen = new Set(box0);
+      const shown = (el, root) => {
+        let o = 1;
+        for (let n = el; n && n !== root.parentNode; n = n.parentNode) {
+          const a = n.getAttribute && n.getAttribute("opacity");
+          if (a != null && a !== "") o *= parseFloat(a);
+          if (n.style && n.style.opacity !== "") o *= parseFloat(n.style.opacity);
+          if (n.style && n.style.display === "none") return 0;
+        }
+        return o;
+      };
+      /* A nested drawing clips to its own box, but its box can have empty
+         margins (a lesson drawing whose backdrop a film left out). What counts
+         is the ink inside it: the painted elements' boxes, clipped to its box. */
+      /* under a <defs>-like element, or under a clip-path (the globe's land
+         spins past the Earth's edge and is clipped away there) */
+      const inside = (k, stop, names) => {
+        for (let n = k.parentElement; n && n !== stop; n = n.parentElement) if (names.has(n.tagName.toLowerCase()) || n.hasAttribute("clip-path")) return true;
+        return k.hasAttribute("clip-path");
+      };
+      const HIDDEN = new Set(["clippath", "defs", "mask", "pattern", "marker", "symbol"]);
+      const inkBox = (svgEl, root) => {
+        const vp = svgEl.getBoundingClientRect();
+        let L = Infinity, T = Infinity, R = -Infinity, B = -Infinity;
+        for (const k of svgEl.querySelectorAll("*")) {
+          const kt = k.tagName.toLowerCase();
+          if (SKIP.has(kt) || kt === "svg" || inside(k, svgEl, HIDDEN) || shown(k, root) < 0.05) continue;
+          const cs = getComputedStyle(k);
+          if (cs.display === "none" || cs.visibility === "hidden") continue;
+          if ((cs.fill === "none" || cs.fillOpacity === "0") && (cs.stroke === "none" || cs.strokeOpacity === "0")) continue;
+          const q = k.getBoundingClientRect();
+          if (!q.width && !q.height) continue;
+          L = Math.min(L, q.left); T = Math.min(T, q.top); R = Math.max(R, q.right); B = Math.max(B, q.bottom);
+        }
+        if (L === Infinity) return { width: 0, height: 0 };
+        const out = { left: Math.max(L, vp.left), top: Math.max(T, vp.top), right: Math.min(R, vp.right), bottom: Math.min(B, vp.bottom) };
+        out.width = out.right - out.left; out.height = out.bottom - out.top;
+        return out;
+      };
+      for (let f = f0; f < f1; f++) {
+        const t = f / fps;
+        try { window.EHEL_FILM.frame(t); } catch (e) { errors.push({ t, msg: String((e && e.message) || e) }); if (errors.length >= 5) break; continue; }
+        if (f % 3) continue;
+        const root = document.querySelector(".scene svg.sf");
+        if (!root) continue;
+        const box = root.getBoundingClientRect();
+        for (const el of root.querySelectorAll("*")) {
+          const tag = el.tagName.toLowerCase();
+          if (SKIP.has(tag)) continue;
+          const host = tag === "svg" ? el.parentElement.closest("svg") : el.closest("svg");
+          if (host !== root || (el.parentElement && el.parentElement.closest("[clip-path]"))) continue;
+          if (shown(el, root) < 0.05) continue;
+          const b = tag === "svg" ? inkBox(el, root) : el.getBoundingClientRect();
+          if (!b.width && !b.height) continue;
+          const over = Math.max(box.left - b.left, box.top - b.top, b.right - box.right, b.bottom - box.bottom);
+          if (over <= 2) continue;
+          const what = "<" + tag + (el.getAttribute("class") ? ' class="' + el.getAttribute("class") + '"' : "") + ">" + (el.textContent || "").trim().slice(0, 24);
+          const key = what + "@" + Math.floor(t);
+          if (seen.has(key)) continue;
+          seen.add(key);
+          outside.push({ t, what, over: Math.round(over) });
+        }
+      }
+      return { errors, outside, seen: [...seen] };
+    }, { f0, f1: Math.min(frames, f0 + CHUNK), fps: FPS, box0: [] }), FRAME_TIMEOUT_MS * 20, `frames ${f0} to ${Math.min(frames, f0 + CHUNK)}`);
+    errors.push(...r.errors);
+    outside.push(...r.outside);
+  }
+  if (w.errs.length) errors.push(...w.errs.map((m) => ({ t: NaN, msg: m })));
+  await w.browser.close();
+  console.log(`  swept ${frames} frames, every one the render will draw, in ${((Date.now() - t0) / 1000).toFixed(0)} s`);
+  if (outside.length) {
+    console.log(`  WARNING: drawn outside the 1168 x 440 box at ${outside.length} moment(s) (checked every 0.1 s):`);
+    for (const o of outside.slice(0, 12)) console.log(`    ${o.t.toFixed(2)} s  ${o.over} px out  ${o.what}`);
+    if (outside.length > 12) console.log(`    ... and ${outside.length - 12} more`);
+  } else {
+    console.log("  nothing drawn outside the 1168 x 440 box (checked every 0.1 s)");
+  }
+  if (errors.length) die(`a frame throws, so the render would stop there:\n` + errors.map((e) => `    ${isFinite(e.t) ? e.t.toFixed(2) + " s" : "page"}  ${e.msg}`).join("\n"));
+  console.log("  no frame throws");
 }
 
 /* ------------------------------------------------ content-hashed names --- */
@@ -391,7 +546,7 @@ function publish(tmp, outDir, slug, ext) {
   const board = path.join(appDir, "lecture-video", `${slug}.json`);
   if (!fs.existsSync(board)) die(`no storyboard at ${board}`);
   const film = JSON.parse(fs.readFileSync(board, "utf8"));
-  const renderer = rendererOf(film);
+  const renderer = rendererOf(film, has("dry"));
 
   /* --limit-seconds N: keep only as many whole beats, from the start, as fit
      in about N seconds of speech, always at least one. For smoke-testing the
@@ -429,7 +584,8 @@ function publish(tmp, outDir, slug, ext) {
   const fresh = flat.filter((b) => !fs.existsSync(clipPath(cacheDir, b.say)));
   const freshChars = fresh.reduce((n, b) => n + b.say.length, 0);
   console.log(`${film.title}: ${film.scenes.length} scenes, ${flat.length} beats, ${chars} characters.`);
-  console.log(`  renderer: ${path.relative(ROOT, renderer.scenes)}${renderer.styles.length ? " + " + renderer.styles.map((p) => path.relative(ROOT, p)).join(", ") : ""}`);
+  console.log(`  renderer: ${describeRenderer(renderer)}`);
+  if (renderer.missing.length) console.log(`  not written yet: ${renderer.missing.join(", ")} (--dry reads only the script; every other mode needs them)`);
   console.log(`  cached ${flat.length - fresh.length} clips; ${fresh.length} to ${DRAFT ? "narrate" : "buy"} (${freshChars} characters).`);
 
   const estimate = () => flat.map((b) => b.say.length / CHARS_PER_SECOND + 0.42);
@@ -461,7 +617,9 @@ function publish(tmp, outDir, slug, ext) {
   }
 
   /* ---- narrate: the free modes never buy; --narrate and a render do ---- */
-  const looking = has("preview") || has("sample");
+  /* EVERY free mode that draws must be listed here: anything else falls
+     through to the branch below, which buys. */
+  const looking = has("preview") || has("sample") || has("sweep");
   let durations, measured = false;
   if (looking) {
     if (fresh.length) {
@@ -499,8 +657,15 @@ function publish(tmp, outDir, slug, ext) {
   fs.writeFileSync(pagePath, buildPage(film, renderer), "utf8");
   const { chromium } = require("playwright");
 
+  if (has("sweep")) {
+    await sweep(chromium, pagePath, total);
+    return;
+  }
+
   if (has("sample")) {
     const only = String(arg("sample", "") || "").split(",").map((s) => s.trim()).filter(Boolean);
+    const unknown = only.filter((id) => !film.scenes.some((s) => s.id === id));
+    if (unknown.length) die(`--sample names no such chapter: ${unknown.join(", ")} (the chapters are ${film.scenes.map((s) => s.id).join(", ")})`);
     await sample(chromium, pagePath, film, path.join(scratch, "sample"), only);
     return;
   }
@@ -516,14 +681,21 @@ function publish(tmp, outDir, slug, ext) {
       ["99a-end", film.cards.end.start + 1.6],
       ["99b-end", film.cards.end.end - 0.4]
     ];
-    for (const [name, at] of cardShots) await shoot(w, chromium, pagePath, at, path.join(shots, `${name}.png`));
+    const stills = [];
+    for (const [name, at] of cardShots) {
+      await shoot(w, chromium, pagePath, at, path.join(shots, `${name}.png`));
+      stills.push({ file: path.join(shots, `${name}.png`), cap: `${name.slice(3)} card · ${at.toFixed(2)} s` });
+    }
     for (let i = 0; i < beats.length; i++) {
-      const b = beats[i];
-      await shoot(w, chromium, pagePath, b.start + b.dur * 0.7, path.join(shots, `${String(i + 1).padStart(2, "0")}-${film.scenes[b.scene].id}.png`));
+      const b = beats[i], at = b.start + b.dur * 0.7, file = path.join(shots, `${String(i + 1).padStart(2, "0")}-${film.scenes[b.scene].id}.png`);
+      await shoot(w, chromium, pagePath, at, file);
+      stills.splice(stills.length - 2, 0, { file, cap: `beat ${i + 1} · ${film.scenes[b.scene].id} · ${at.toFixed(2)} s` });
     }
     if (w.errs.length) die("the page threw while rendering:\n" + w.errs.slice(0, 5).join("\n"));
+    const made = await contactSheets(w, stills, shots, "sheet");
     await w.browser.close();
     console.log(`  ${beats.length + cardShots.length} preview stills (both cards included) in ${shots}`);
+    console.log(`  as ${made.length} contact sheets: ${made.join(", ")}`);
     return;
   }
 

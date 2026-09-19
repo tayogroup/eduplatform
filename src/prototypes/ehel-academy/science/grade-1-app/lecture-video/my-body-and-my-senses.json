@@ -1,0 +1,131 @@
+{
+  "_comment": "Storyboard for the Grade 1 Science unit lecture film, Lesson 3 My Body and My Senses. Rendered by tools/create-ehel-unit-lecture.js. See lecture-video/BRIEF.md. Every beat is one narration clip; art.at names the phrases a picture waits for, and the page refuses to load if a phrase is not in its beat's say. The lesson's own words and examples throughout: the ten tap parts of the child the lesson draws, the five senses and what each one detects, the car, the smoke and the hot cup, Amal, Sami, Nora and Omar, and the hand spans (Amal 9, Sami 10, Nora 8). A real render buys narration: read the brief first.",
+  "slug": "my-body-and-my-senses",
+  "lesson": 3,
+  "grade": 1,
+  "stage": 1,
+  "title": "My Body and My Senses",
+  "subtitle": "Grade 1 Science",
+  "framework": "Cambridge Primary Science 0097",
+  "renderer": {
+    "art": ["science"],
+    "scenes": [
+      "tools/lib/ehel-film-marks.js",
+      "tools/lib/film-scenes/science-g1/my-body-and-my-senses.js",
+      "tools/lib/film-scenes/science-g1/my-body-and-my-senses-2.js",
+      "tools/lib/film-scenes/science-g1/my-body-and-my-senses-3.js"
+    ]
+  },
+  "objectives": [
+    ["1Bs.03", "Recognise and name the major external parts of the human body."],
+    ["1Bs.02", "Identify the senses (limited to sight, hearing, taste, smell and touch) and what they detect, linking each to the correct body part."],
+    ["1Bp.04", "Describe how humans are similar to and different from each other."],
+    ["1TWSc.03", "Take measurements in non-standard units."],
+    ["1TWSc.05", "Collect and record observations and/or measurements by annotating images and completing simple tables."]
+  ],
+  "scenes": [
+    {
+      "id": "title", "kind": "title", "codes": [],
+      "beats": [
+        { "say": "Your body has parts, and every part has a name.",
+          "art": { "at": { "name": "every part has a name" } } },
+        { "say": "You have five senses, and they tell you about the world.",
+          "art": { "at": { "senses": "five senses", "world": "about the world" } } }
+      ]
+    },
+    {
+      "id": "body", "kind": "body", "heading": "The parts of your body", "codes": ["1Bs.03"],
+      "beats": [
+        { "say": "Find each part on the child. Touch it on yourself too.",
+          "art": { "at": { "find": "Find each part", "touch": "Touch it on yourself" } } },
+        { "say": "Your head is at the top of your body.",
+          "art": { "at": { "head": "Your head" } } },
+        { "say": "Your arms come out from your shoulders. Your hands are at the end.",
+          "art": { "at": { "arms": "Your arms", "shoulders": "your shoulders", "hands": "Your hands" } } },
+        { "say": "Your tummy is in the middle of your body.",
+          "art": { "at": { "tummy": "Your tummy" } } },
+        { "say": "Your legs are underneath. Your feet are at the end of your legs.",
+          "art": { "at": { "legs": "Your legs", "feet": "Your feet" } } },
+        { "say": "On your face are your eyes, your ears, your nose and your mouth.",
+          "art": { "at": { "face": "On your face", "eyes": "your eyes", "ears": "your ears", "nose": "your nose", "mouth": "your mouth" } } },
+        { "say": "Most people have all of these parts.",
+          "art": { "at": { "all": "all of these parts" } } }
+      ]
+    },
+    {
+      "id": "senses", "kind": "senses", "heading": "Your five senses", "codes": ["1Bs.02"],
+      "beats": [
+        { "say": "You have five senses. Each one uses a part of your body.",
+          "art": { "at": { "five": "five senses", "part": "a part of your body" } } },
+        { "say": "Sight: your eyes see colours, shapes and light.",
+          "art": { "at": { "sense": "Sight", "part": "your eyes", "a": "colours", "b": "shapes", "c": "and light" } } },
+        { "say": "Hearing: your ears hear sounds, loud and quiet.",
+          "art": { "at": { "sense": "Hearing", "part": "your ears", "a": "sounds", "b": "loud", "c": "quiet" } } },
+        { "say": "Smell: your nose smells bread baking, and flowers.",
+          "art": { "at": { "sense": "Smell", "part": "your nose", "a": "bread baking", "b": "flowers" } } },
+        { "say": "Taste: your tongue tastes sweet, salty and sour things.",
+          "art": { "at": { "sense": "Taste", "part": "your tongue", "a": "sweet", "b": "salty", "c": "sour" } } },
+        { "say": "Touch: your skin feels hot, cold, rough and smooth.",
+          "art": { "at": { "sense": "Touch", "part": "your skin", "a": "hot", "b": "cold", "c": "rough", "d": "smooth" } } },
+        { "say": "Touch is not only your hands. Your skin is all over you.",
+          "art": { "at": { "hands": "only your hands", "skin": "Your skin", "all": "all over you" } } }
+      ]
+    },
+    {
+      "id": "safe", "kind": "safe", "heading": "Your senses keep you safe", "codes": ["1Bs.02"],
+      "beats": [
+        { "say": "Your senses tell you about the world, and they keep you safe.",
+          "art": { "at": { "world": "about the world", "safe": "keep you safe" } } },
+        { "say": "Listen! Your ears hear a car coming.",
+          "art": { "at": { "listen": "Listen", "ears": "Your ears", "car": "a car coming" } } },
+        { "say": "Your nose smells smoke, before you see the fire.",
+          "art": { "at": { "nose": "Your nose", "smoke": "smoke", "fire": "the fire" } } },
+        { "say": "Your skin feels that a cup is too hot, before it burns you.",
+          "art": { "at": { "skin": "Your skin", "cup": "a cup", "hot": "too hot", "burns": "before it burns" } } }
+      ]
+    },
+    {
+      "id": "alike", "kind": "alike", "heading": "Alike and different", "codes": ["1Bp.04"],
+      "beats": [
+        { "say": "Look at four friends: Amal, Sami, Nora and Omar.",
+          "art": { "at": { "amal": "Amal", "sami": "Sami", "nora": "Nora", "omar": "Omar" } } },
+        { "say": "Most people have two eyes. Some eyes are brown and some are green.",
+          "art": { "at": { "two": "two eyes", "brown": "brown", "green": "green" } } },
+        { "say": "Most people have hair. Some hair is curly and some is straight.",
+          "art": { "at": { "hair": "have hair", "curly": "curly", "straight": "straight" } } },
+        { "say": "Different does not mean better or worse. It just means not the same.",
+          "art": { "at": { "different": "Different", "better": "better", "worse": "worse", "same": "not the same" } } },
+        { "say": "So we are alike, and we are different.",
+          "art": { "at": { "alike": "alike", "different": "we are different" } } }
+      ]
+    },
+    {
+      "id": "measure", "kind": "measure", "heading": "Measuring in hand spans", "codes": ["1TWSc.03", "1TWSc.05"],
+      "beats": [
+        { "say": "Long ago, people measured with their hands and feet.",
+          "art": { "at": { "long": "Long ago", "hands": "their hands", "feet": "and feet" } } },
+        { "say": "A hand span is from your thumb to your little finger.",
+          "art": { "at": { "span": "A hand span", "thumb": "your thumb", "little": "your little finger" } } },
+        { "say": "Put a hand at the feet. Keep going to the top of the head.",
+          "art": { "at": { "put": "Put a hand", "keep": "Keep going", "head": "top of the head" } } },
+        { "say": "Amal is nine hand spans tall. Write it in a table.",
+          "art": { "at": { "amal": "Amal", "nine": "nine hand spans", "write": "Write it", "table": "in a table" } } },
+        { "say": "Sami is ten, and Nora is eight. Ten is the most, so Sami is tallest.",
+          "art": { "at": { "sami": "Sami is ten", "nora": "Nora is eight", "most": "Ten is the most", "tallest": "Sami is tallest" } } }
+      ]
+    },
+    {
+      "id": "recap", "kind": "recap", "heading": "What you now know", "codes": ["1Bs.03", "1Bs.02", "1Bp.04", "1TWSc.03", "1TWSc.05"],
+      "beats": [
+        { "say": "You know the parts of your body, from your head to your feet.",
+          "art": { "at": { "parts": "the parts of your body" } } },
+        { "say": "Five senses tell you about the world, and they keep you safe.",
+          "art": { "at": { "senses": "Five senses", "safe": "keep you safe" } } },
+        { "say": "People are alike and different. You can measure them in hand spans.",
+          "art": { "at": { "alike": "alike and different", "measure": "measure them" } } },
+        { "say": "Clap your hands. You know your body!",
+          "art": { "at": { "clap": "Clap your hands", "know": "You know your body" } } }
+      ]
+    }
+  ]
+}

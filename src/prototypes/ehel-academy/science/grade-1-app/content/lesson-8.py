@@ -318,6 +318,17 @@ LESSON["lecture"] = [
          "At night the sky is full of tiny lights: stars. Each one is a huge ball of hot, glowing gas, very far away. The Sun is a star too. It looks big because it is the nearest one."),
 ]
 
+# The unit lecture film (tools/create-ehel-unit-lecture.js; storyboard and
+# pictures in lecture-video/our-earth-our-sun.json). The lecture step draws it
+# above the parts; build-lessons.py refuses a path that is not on disk AND in
+# app.config.json :: extraPages, and a --draft render.
+LESSON["video"] = {
+    "src": "lecture-video/our-earth-our-sun.66c6a124.mp4",
+    "captions": "lecture-video/our-earth-our-sun.e507a84a.vtt",
+    "poster": "lecture-video/our-earth-our-sun.ebe18dc2.jpg",
+    "note": "About two and a half minutes. Watch it through, then go back over it a part at a time below.",
+}
+
 LESSON["words"] = [
     word("Earth", "\U0001F30D", "The planet we live on.",
          ["Earth is round.", "Earth is mostly covered in water."]),

@@ -1,0 +1,127 @@
+{
+  "_comment": "Storyboard for the Grade 1 Science unit lecture film, Lesson 6 Sounds Near and Far. Rendered by tools/create-ehel-unit-lecture.js. See lecture-video/BRIEF.md. The five chapters follow LESSON[\"lecture\"] in content/lesson-6.py, part for part, in its own words and examples: the drum, bell, bird and rain; the elastic band and the hum; the bell and the child who walks six steps away (the lesson's soundFar drawing); the loud, medium, quiet table; the sound makers used safely. The film is silent apart from the voice, so every sound is SHOWN as rings spreading from its source.",
+  "slug": "sounds-near-and-far",
+  "lesson": 6,
+  "grade": 1,
+  "stage": 1,
+  "title": "Sounds Near and Far",
+  "subtitle": "Grade 1 Science",
+  "framework": "Cambridge Primary Science 0097",
+  "renderer": {
+    "art": ["science"],
+    "scenes": [
+      "tools/lib/ehel-film-marks.js",
+      "tools/lib/film-scenes/science-g1/sounds-near-and-far.js",
+      "tools/lib/film-scenes/science-g1/sounds-near-and-far-2.js",
+      "tools/lib/film-scenes/science-g1/sounds-near-and-far-3.js",
+      "tools/lib/film-scenes/science-g1/sounds-near-and-far-4.js"
+    ]
+  },
+  "objectives": [
+    ["1Ps.01", "Identify different sources of sound."],
+    ["1Ps.02", "Explore that as sound travels from a source it becomes quieter."],
+    ["1Bs.02", "Identify the senses (limited to sight, hearing, taste, smell and touch) and what they detect, linking each to the correct body part."],
+    ["1TWSc.05", "Collect and record observations and/or measurements by annotating images and completing simple tables."],
+    ["1TWSc.02", "Use given equipment appropriately."],
+    ["1TWSc.04", "Follow instructions safely when doing practical work."]
+  ],
+  "scenes": [
+    {
+      "id": "title", "kind": "title", "codes": [],
+      "beats": [
+        { "say": "A bell rings. Right next to it, the sound is loud. Far away, it is quiet.",
+          "art": { "at": { "bell": "A bell rings", "loud": "loud", "far": "Far away", "quiet": "quiet" } } },
+        { "say": "Where do sounds come from? What makes them? And why do they get quieter?",
+          "art": { "at": { "where": "Where do sounds", "makes": "What makes", "why": "why do they" } } }
+      ]
+    },
+    {
+      "id": "source", "kind": "source", "heading": "Every sound has a source", "codes": ["1Ps.01", "1Bs.02"],
+      "beats": [
+        { "say": "Tap a drum. Ring a bell. A bird sings. Rain falls.",
+          "art": { "at": { "drum": "Tap a drum", "bell": "Ring a bell", "bird": "A bird sings", "rain": "Rain falls" } } },
+        { "say": "Every sound comes from somewhere. The thing that makes it is called the source.",
+          "art": { "at": { "every": "Every sound", "somewhere": "somewhere", "source": "the source" } } },
+        { "say": "Boom. The drum is the source of that sound. Tweet. The bird is the source.",
+          "art": { "at": { "boom": "Boom", "drum": "The drum", "tweet": "Tweet", "bird": "The bird" } } },
+        { "say": "You hear with your ears. That is your sense of hearing.",
+          "art": { "at": { "ears": "your ears", "hearing": "sense of hearing" } } },
+        { "say": "Ears hear the sound. They do not make it. The drum makes it.",
+          "art": { "at": { "hear": "Ears hear", "not": "do not make", "makes": "The drum makes" } } }
+      ]
+    },
+    {
+      "id": "shake", "kind": "shake", "heading": "Sound is shaking", "codes": ["1Ps.01"],
+      "beats": [
+        { "say": "Pluck an elastic band. It shakes so fast it looks blurry.",
+          "art": { "at": { "pluck": "Pluck", "shakes": "It shakes", "blurry": "blurry" } } },
+        { "say": "And you hear a twang. A sound is made when something shakes very fast.",
+          "art": { "at": { "twang": "a twang", "made": "A sound is made" } } },
+        { "say": "Scientists have a word for fast shaking. They call it vibrating.",
+          "art": { "at": { "word": "a word", "vibrating": "vibrating" } } },
+        { "say": "Hum, and put your hand on your throat. You can feel it shaking.",
+          "art": { "at": { "hum": "Hum", "hand": "your hand", "feel": "feel it shaking" } } },
+        { "say": "Touch the band to stop it shaking. No shaking, no sound.",
+          "art": { "at": { "touch": "Touch the band", "noshake": "No shaking", "nosound": "no sound" } } }
+      ]
+    },
+    {
+      "id": "nearfar", "kind": "nearfar", "heading": "Near and far", "codes": ["1Ps.02"],
+      "beats": [
+        { "say": "Stand right next to the bell and ring it. It is loud.",
+          "art": { "at": { "next": "right next to", "ring": "ring it", "loud": "It is loud" } } },
+        { "say": "Take a step back and ring it again. It is quieter.",
+          "art": { "at": { "step": "Take a step back", "again": "ring it again", "quieter": "quieter" } } },
+        { "say": "Keep going, all six steps. Every step, the sound gets quieter.",
+          "art": { "at": { "going": "Keep going", "six": "six steps", "every": "Every step" } } },
+        { "say": "The bell is rung the same every time. It does not make a quieter sound.",
+          "art": { "at": { "same": "the same", "not": "does not" } } },
+        { "say": "The sound gets quieter on its way to you. It spreads out as it travels.",
+          "art": { "at": { "way": "on its way", "spreads": "spreads out" } } },
+        { "say": "The further a sound travels, the quieter it gets.",
+          "art": { "at": { "further": "further", "quieter": "the quieter" } } }
+      ]
+    },
+    {
+      "id": "table", "kind": "table", "heading": "Loud, medium, quiet", "codes": ["1Ps.02", "1TWSc.05"],
+      "beats": [
+        { "say": "Sounds can be loud, medium or quiet. A drum next to you is loud.",
+          "art": { "at": { "loud": "loud,", "medium": "medium", "quiet": "quiet", "drum": "A drum" } } },
+        { "say": "A whisper is quiet. You have to stand close to hear it.",
+          "art": { "at": { "whisper": "A whisper", "close": "stand close" } } },
+        { "say": "You can write it down in a table, like a scientist.",
+          "art": { "at": { "write": "write it down", "table": "a table" } } },
+        { "say": "One step from the bell, it was loud. Three steps, medium.",
+          "art": { "at": { "one": "One step", "loud": "loud", "three": "Three steps", "medium": "medium" } } },
+        { "say": "Six steps, quiet. The further away, the quieter it gets.",
+          "art": { "at": { "six": "Six steps", "quiet": "quiet", "further": "The further away" } } }
+      ]
+    },
+    {
+      "id": "ears", "kind": "ears", "heading": "Look after your ears", "codes": ["1TWSc.02", "1TWSc.04"],
+      "beats": [
+        { "say": "Your ears hear sounds. Very loud sounds can hurt them.",
+          "art": { "at": { "hear": "Your ears hear", "loud": "Very loud", "hurt": "hurt them" } } },
+        { "say": "Never shout into someone's ear. Never bang a drum next to your head.",
+          "art": { "at": { "shout": "shout into", "drum": "bang a drum" } } },
+        { "say": "Use sound makers carefully. Hit a drum gently, with the stick.",
+          "art": { "at": { "use": "Use sound makers", "gently": "gently" } } },
+        { "say": "If a sound hurts, cover your ears and move away.",
+          "art": { "at": { "cover": "cover your ears", "move": "move away" } } }
+      ]
+    },
+    {
+      "id": "recap", "kind": "recap", "heading": "What you now know", "codes": ["1Ps.01", "1Ps.02", "1Bs.02", "1TWSc.05", "1TWSc.02", "1TWSc.04"],
+      "beats": [
+        { "say": "Every sound has a source. A sound is made when something shakes.",
+          "art": { "at": { "source": "a source", "shakes": "shakes" } } },
+        { "say": "The further a sound travels from its source, the quieter it gets.",
+          "art": { "at": { "further": "further" } } },
+        { "say": "You can write loud, medium and quiet in a table.",
+          "art": { "at": { "table": "in a table" } } },
+        { "say": "And your ears hear it all, so look after them.",
+          "art": { "at": { "ears": "your ears", "after": "look after" } } }
+      ]
+    }
+  ]
+}

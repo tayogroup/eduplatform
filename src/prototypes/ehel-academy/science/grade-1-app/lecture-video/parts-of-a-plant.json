@@ -1,0 +1,119 @@
+{
+  "_comment": "Storyboard for the Grade 1 Science unit lecture film, Lesson 2 Parts of a Plant. Rendered by tools/create-ehel-unit-lecture.js. See lecture-video/BRIEF.md. Every beat is one narration clip; art.at names the phrases a picture waits for, and the page refuses to load if a phrase is not in its beat's say. The chapters follow LESSON['lecture'] in order (a seed wakes up; roots and stem; leaves and flower; light and water; tools and measuring, here as two chapters), in the lesson's own words: its seed demo (ART.scene plant 0-2), its tap figure (ART.figure plant, one part named at a time), its light test (ART.pots with darkB, by the window and in the cupboard), its tools and its cubes.",
+  "slug": "parts-of-a-plant",
+  "lesson": 2,
+  "grade": 1,
+  "stage": 1,
+  "title": "Parts of a Plant",
+  "subtitle": "Grade 1 Science",
+  "framework": "Cambridge Primary Science 0097",
+  "renderer": {
+    "art": ["science"],
+    "scenes": [
+      "tools/lib/ehel-film-marks.js",
+      "tools/lib/film-scenes/science-g1/parts-of-a-plant.js",
+      "tools/lib/film-scenes/science-g1/parts-of-a-plant-2.js",
+      "tools/lib/film-scenes/science-g1/parts-of-a-plant-3.js"
+    ]
+  },
+  "objectives": [
+    ["1Bs.01", "Recognise and name the major parts of familiar flowering plants (limited to roots, leaves, stems and flowers)."],
+    ["1Bp.03", "Know that plants need light and water to survive."],
+    ["1TWSc.02", "Use given equipment appropriately."],
+    ["1TWSc.03", "Take measurements in non-standard units."],
+    ["1TWSc.04", "Follow instructions safely when doing practical work."]
+  ],
+  "scenes": [
+    { "id": "title", "kind": "title", "codes": [], "beats": [
+      { "say": "Look at a plant. It has four main parts.",
+        "art": { "at": { "plant": "a plant", "four": "four main parts" } } },
+      { "say": "Each part does a different job. The plant needs all four.",
+        "art": { "at": { "job": "a different job", "all": "needs all four" } } }
+    ] },
+
+    { "id": "seed", "kind": "seed", "heading": "A seed wakes up", "codes": ["1Bs.01"], "beats": [
+      { "say": "A new plant grows from a seed. It looks dead, but it is not.",
+        "art": { "at": { "seed": "a seed", "dead": "looks dead", "not": "it is not" } } },
+      { "say": "A tiny baby plant, and food for it, are packed inside.",
+        "art": { "at": { "baby": "A tiny baby plant", "food": "food for it", "inside": "packed inside" } } },
+      { "say": "Give it water and warmth, and it wakes up.",
+        "art": { "at": { "water": "water", "warmth": "warmth", "wake": "wakes up" } } },
+      { "say": "A root pushes down first. It is hidden in the soil.",
+        "art": { "at": { "root": "A root", "down": "pushes down", "hidden": "hidden in the soil" } } },
+      { "say": "Then a shoot pushes up, out of the soil, towards the light.",
+        "art": { "at": { "shoot": "a shoot", "up": "pushes up", "out": "out of the soil", "light": "the light" } } }
+    ] },
+
+    { "id": "rootstem", "kind": "parts", "heading": "Roots and stem", "codes": ["1Bs.01"], "beats": [
+      { "say": "Here is the whole plant. Let us start at the bottom.",
+        "art": { "at": { "whole": "the whole plant", "bottom": "at the bottom" } } },
+      { "say": "These are the roots. They hold the plant steady in the soil.",
+        "art": { "part": "roots", "at": { "roots": "the roots", "hold": "hold the plant steady" } } },
+      { "say": "The roots drink up water from the soil, like straws.",
+        "art": { "part": "roots", "at": { "drink": "drink up water", "straws": "like straws" } } },
+      { "say": "This is the stem, the tall stalk. It holds the plant up.",
+        "art": { "part": "stem", "at": { "stem": "the stem", "stalk": "the tall stalk", "up": "holds the plant up" } } },
+      { "say": "The stem carries the water up, from the roots to every part.",
+        "art": { "part": "stem", "at": { "carries": "carries the water", "every": "every part" } } }
+    ] },
+
+    { "id": "leafflower", "kind": "parts", "heading": "Leaves and flower", "codes": ["1Bs.01"], "beats": [
+      { "say": "These are the leaves. They are flat and green.",
+        "art": { "part": "leaves", "at": { "leaves": "the leaves", "flat": "flat and green" } } },
+      { "say": "Leaves catch sunlight and use it to make the plant's food.",
+        "art": { "part": "leaves", "at": { "catch": "catch sunlight", "food": "the plant's food" } } },
+      { "say": "A plant makes its own food, in its leaves. It does not eat soil.",
+        "art": { "part": "leaves", "at": { "own": "its own food", "soil": "does not eat soil" } } },
+      { "say": "This is the flower. It is the colourful part at the top.",
+        "art": { "part": "flower", "at": { "flower": "the flower", "colour": "the colourful part" } } },
+      { "say": "The flower makes seeds, so there can be new plants next year.",
+        "art": { "part": "flower", "at": { "seeds": "makes seeds", "new": "new plants" } } },
+      { "say": "The whole thing is a plant. The flower is only one part.",
+        "art": { "whole": true, "at": { "whole": "The whole thing", "one": "only one part" } } }
+    ] },
+
+    { "id": "needs", "kind": "needs", "heading": "Light and water", "codes": ["1Bp.03"], "beats": [
+      { "say": "A plant needs water and light to stay alive.",
+        "art": { "at": { "water": "water", "light": "light", "alive": "stay alive" } } },
+      { "say": "Take away the water, and the plant droops.",
+        "art": { "at": { "away": "Take away the water", "droops": "droops" } } },
+      { "say": "Today you will test the light, with two plants.",
+        "art": { "at": { "test": "test the light", "two": "two plants" } } },
+      { "say": "One goes by the window. One goes in a dark cupboard.",
+        "art": { "at": { "window": "by the window", "cupboard": "a dark cupboard" } } },
+      { "say": "Both get water. Only one thing is different: the light.",
+        "art": { "at": { "both": "Both get water", "one": "Only one thing", "light": "the light" } } },
+      { "say": "In the dark, the plant goes pale and thin. Water is not enough.",
+        "art": { "at": { "dark": "In the dark", "pale": "pale and thin", "enough": "Water is not enough" } } }
+    ] },
+
+    { "id": "tools", "kind": "tools", "heading": "Using tools safely", "codes": ["1TWSc.02", "1TWSc.04"], "beats": [
+      { "say": "Scientists use tools. A magnifying glass helps you look closely.",
+        "art": { "at": { "tools": "use tools", "glass": "A magnifying glass", "closely": "look closely" } } },
+      { "say": "Hold it near your eye, and move the leaf closer.",
+        "art": { "at": { "eye": "near your eye", "leaf": "move the leaf closer" } } },
+      { "say": "Never point it at the sun. It can burn.",
+        "art": { "at": { "never": "Never point it", "burn": "It can burn" } } },
+      { "say": "Gloves keep soil off your hands. Wash your hands afterwards anyway.",
+        "art": { "at": { "gloves": "Gloves keep soil", "wash": "Wash your hands" } } }
+    ] },
+
+    { "id": "measure", "kind": "measure", "heading": "Measuring in cubes", "codes": ["1TWSc.03"], "beats": [
+      { "say": "A ruler or cubes can measure how tall a plant is.",
+        "art": { "at": { "ruler": "A ruler", "cubes": "cubes", "tall": "how tall" } } },
+      { "say": "Stack cubes beside it, one at a time. Stop when they reach the top.",
+        "art": { "at": { "stack": "Stack cubes", "top": "reach the top" } } },
+      { "say": "Count them: one, two, three. The seedling is three cubes tall.",
+        "art": { "at": { "one": "one,", "two": "two,", "three": "three.", "tall": "three cubes tall" } } }
+    ] },
+
+    { "id": "recap", "kind": "recap", "heading": "What you now know", "codes": ["1Bs.01", "1Bp.03", "1TWSc.02", "1TWSc.03", "1TWSc.04"], "beats": [
+      { "say": "Roots drink, the stem carries, leaves make food, the flower makes seeds.",
+        "art": { "at": { "roots": "Roots drink", "stem": "the stem carries", "leaves": "leaves make food", "flower": "the flower makes seeds" } } },
+      { "say": "Plants need light and water. Both.",
+        "art": { "at": { "need": "light and water" } } },
+      { "say": "Scientists use tools safely, and you can measure a plant in cubes.",
+        "art": { "at": { "tools": "use tools safely", "cubes": "in cubes" } } }
+    ] }
+  ]
+}

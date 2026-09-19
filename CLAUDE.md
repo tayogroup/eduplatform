@@ -597,6 +597,15 @@ learned is below, and arrives when you are actually working in that area.
   rendered twice. `--workers` draws frames in several browsers, about 5 times
   faster. [`computing/grade-1-app/lecture-video/README.md`](src/prototypes/ehel-academy/computing/grade-1-app/lecture-video/README.md)
   is the worked example.
+  **Several films at once** (2026-09-18, Science Grade 1's eight): the
+  `ehel-lecture-films` workflow (`.claude/workflows/`) gives one agent per
+  lesson a brief (`science/grade-1-app/lecture-video/BRIEF.md`) and two files
+  each, and `tools/run-ehel-lecture-films.js` runs the tool over every film:
+  `--dry` prints one fingerprint of every line, and `--narrate`/`--render`
+  refuse unless the owner approved that fingerprint. A storyboard's
+  `renderer.art: ["science"]` lifts the lesson kit's own drawings into the film
+  (`tools/lib/ehel-film-art-science.js`), and `tools/lib/ehel-film-marks.js`
+  holds the marks every film shares.
 - [`docs/release-and-repo-history.md`](docs/release-and-repo-history.md) — the
   full 61KB account behind every rule in "Working in this shared checkout":
   the shared-index commit failures, the `git archive` release recipe and its

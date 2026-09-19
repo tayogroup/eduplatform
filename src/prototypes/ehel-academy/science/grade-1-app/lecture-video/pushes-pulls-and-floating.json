@@ -1,0 +1,125 @@
+{
+  "_comment": "Storyboard for the Grade 1 Science unit lecture film, Lesson 5 Pushes, Pulls and Floating. Rendered by tools/create-ehel-unit-lecture.js. See lecture-video/BRIEF.md. The chapters follow LESSON[\"lecture\"] in content/lesson-5.py part by part, in the lesson's own words and examples: the kick and the drawer, the doorbell, the ball on the track pushed gently (3 steps) and hard (9 steps), the ball that stops at a hand and turns when tapped, the apple, stone, log and coin dropped into the tank, and the bicycle, boat and kite. The track and the tank are the lesson's own drawings (ART.sim pushBall, ART.tank).",
+  "slug": "pushes-pulls-and-floating",
+  "lesson": 5,
+  "grade": 1,
+  "stage": 1,
+  "title": "Pushes, Pulls and Floating",
+  "subtitle": "Grade 1 Science",
+  "framework": "Cambridge Primary Science 0097",
+  "renderer": {
+    "art": ["science"],
+    "scenes": [
+      "tools/lib/ehel-film-marks.js",
+      "tools/lib/film-scenes/science-g1/pushes-pulls-and-floating.js",
+      "tools/lib/film-scenes/science-g1/pushes-pulls-and-floating-2.js",
+      "tools/lib/film-scenes/science-g1/pushes-pulls-and-floating-3.js"
+    ]
+  },
+  "objectives": [
+    ["1Pf.01", "Explore, talk about and describe the movement of familiar objects."],
+    ["1Pf.02", "Describe pushes and pulls as forces."],
+    ["1Pf.03", "Explore that some objects float and some sink."],
+    ["1TWSp.02", "Make predictions about what they think will happen."],
+    ["1TWSc.03", "Take measurements in non-standard units."],
+    ["1SIC.02", "Talk about how science explains how objects they use, or know about, work."]
+  ],
+  "scenes": [
+    {
+      "id": "title", "kind": "title", "codes": [],
+      "beats": [
+        { "say": "Things move when you push them, or when you pull them.",
+          "art": { "at": { "push": "push them", "pull": "pull them" } } },
+        { "say": "And in water, some things float, and some things sink.",
+          "art": { "at": { "water": "in water", "float": "some things float", "sink": "some things sink" } } }
+      ]
+    },
+    {
+      "id": "pushpull", "kind": "pushpull", "heading": "Pushes and pulls", "codes": ["1Pf.02"],
+      "beats": [
+        { "say": "A push moves something away from you. Kicking a ball is a push.",
+          "art": { "at": { "push": "A push", "away": "away from you", "kick": "Kicking a ball" } } },
+        { "say": "A pull moves something towards you. Opening a drawer is a pull.",
+          "art": { "at": { "pull": "A pull", "towards": "towards you", "drawer": "Opening a drawer" } } },
+        { "say": "A push does not have to be hard. A gentle tap on a doorbell is still a push.",
+          "art": { "at": { "hard": "have to be hard", "tap": "A gentle tap", "still": "still a push" } } },
+        { "say": "Pushes and pulls are forces. A force can make a thing move, stop or turn.",
+          "art": { "at": { "forces": "are forces", "move": "move", "stop": "stop", "turn": "turn" } } }
+      ]
+    },
+    {
+      "id": "bigger", "kind": "bigger", "heading": "A bigger push", "codes": ["1Pf.02", "1TWSc.03"],
+      "beats": [
+        { "say": "This track is marked in steps. We count the steps to measure how far it rolls.",
+          "art": { "at": { "track": "This track", "steps": "in steps", "measure": "measure how far" } } },
+        { "say": "Push it gently, and it rolls a little way. One, two, three steps.",
+          "art": { "at": { "gently": "Push it gently", "little": "a little way", "one": "One", "two": "two", "three": "three steps" } } },
+        { "say": "Now push it hard. It rolls a long way, all the way to nine steps!",
+          "art": { "at": { "hard": "push it hard", "long": "a long way", "nine": "nine steps" } } },
+        { "say": "Same ball, same floor. The only thing that changed was the push.",
+          "art": { "at": { "ball": "Same ball", "floor": "same floor", "push": "was the push" } } },
+        { "say": "So a bigger push makes a bigger move. Three steps, then nine!",
+          "art": { "at": { "push": "a bigger push", "move": "a bigger move", "three": "Three steps", "nine": "then nine" } } }
+      ]
+    },
+    {
+      "id": "stopturn", "kind": "stopturn", "heading": "Stop it, turn it", "codes": ["1Pf.01", "1Pf.02"],
+      "beats": [
+        { "say": "A ball on the floor stays still. Round things do not move by themselves.",
+          "art": { "at": { "still": "stays still", "round": "Round things", "not": "do not move" } } },
+        { "say": "A push starts it moving. Now the ball is rolling along.",
+          "art": { "at": { "push": "A push starts", "rolling": "rolling along" } } },
+        { "say": "Put your hand in front and push back. The ball stops.",
+          "art": { "at": { "hand": "your hand", "back": "push back", "stops": "ball stops" } } },
+        { "say": "Tap the rolling ball on the side. It turns and goes a new way.",
+          "art": { "at": { "side": "on the side", "turns": "It turns", "way": "a new way" } } },
+        { "say": "So a push can start a thing, stop it, or make it turn.",
+          "art": { "at": { "starts": "start a thing", "stop": "stop it", "turn": "make it turn" } } }
+      ]
+    },
+    {
+      "id": "float", "kind": "float", "heading": "Float or sink", "codes": ["1Pf.03", "1TWSp.02"],
+      "beats": [
+        { "say": "Drop an apple into the water. It floats on the top.",
+          "art": { "at": { "drop": "Drop an apple", "floats": "It floats" } } },
+        { "say": "Drop a stone into the water. It sinks to the bottom.",
+          "art": { "at": { "drop": "Drop a stone", "sinks": "It sinks" } } },
+        { "say": "You cannot always tell by looking. Will this big log float or sink?",
+          "art": { "at": { "looking": "by looking", "log": "this big log", "ask": "float or sink" } } },
+        { "say": "Predict first: say what you think will happen. Then drop it in. The big log floats!",
+          "art": { "at": { "predict": "Predict first", "drop": "drop it in", "floats": "log floats" } } },
+        { "say": "A tiny coin sinks. So do not guess. You have to test it.",
+          "art": { "at": { "coin": "A tiny coin", "guess": "do not guess", "test": "test it" } } }
+      ]
+    },
+    {
+      "id": "around", "kind": "around", "heading": "Forces all around", "codes": ["1SIC.02", "1Pf.02"],
+      "beats": [
+        { "say": "A bicycle moves because your feet push the pedals round.",
+          "art": { "at": { "bike": "A bicycle", "push": "push the pedals" } } },
+        { "say": "Your hands pull the brakes to stop. Push to go, pull to stop.",
+          "art": { "at": { "pull": "pull the brakes", "go": "Push to go", "stop": "pull to stop" } } },
+        { "say": "A boat floats because the water pushes up on it.",
+          "art": { "at": { "boat": "A boat", "up": "pushes up" } } },
+        { "say": "The wind pushes a kite up. The string pulls it back.",
+          "art": { "at": { "wind": "The wind", "kite": "pushes a kite up", "string": "The string", "back": "pulls it back" } } },
+        { "say": "Pushes and pulls are inside everything that moves.",
+          "art": { "at": { "both": "Pushes and pulls", "every": "everything that moves" } } }
+      ]
+    },
+    {
+      "id": "recap", "kind": "recap", "heading": "What you now know",
+      "codes": ["1Pf.01", "1Pf.02", "1Pf.03", "1TWSp.02", "1TWSc.03", "1SIC.02"],
+      "beats": [
+        { "say": "So now you know. A push moves things away. A pull moves them towards you.",
+          "art": { "at": { "push": "A push", "pull": "A pull" } } },
+        { "say": "A bigger push makes a bigger move. A push can start, stop or turn a ball.",
+          "art": { "at": { "bigger": "A bigger push", "stop": "start, stop or turn" } } },
+        { "say": "Some things float, and some things sink. You have to test them to find out.",
+          "art": { "at": { "float": "Some things float", "test": "test them" } } },
+        { "say": "Pushes and pulls are all around you. Go and find some at home!",
+          "art": { "at": { "around": "all around you", "go": "Go and find" } } }
+      ]
+    }
+  ]
+}

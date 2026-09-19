@@ -409,6 +409,11 @@ def check_step(n, k, s, codes, sims, figures, scenes, sounds):
                 if not os.path.isfile(os.path.join(APP, rel)):
                     sys.exit("REFUSED: %s names %s %r and there is no such file in the app"
                              % (where, key, rel))
+                # tools/create-ehel-unit-lecture.js names a --draft render
+                # <slug>.draft.<hash>.*: the free OS voice, never for a lesson.
+                if ".draft." in os.path.basename(rel):
+                    sys.exit("REFUSED: %s names %s %r, a --draft render in the free OS voice"
+                             % (where, key, rel))
                 if rel not in extra:
                     sys.exit("REFUSED: %s names %s %r, which is not in app.config.json extraPages, "
                              "so a deploy would not upload it" % (where, key, rel))

@@ -264,6 +264,17 @@ LESSON["lecture"] = [
          "Very loud sounds can hurt your ears. Never shout into someone's ear. Never bang a drum right next to your head. Use sound makers carefully."),
 ]
 
+# The unit lecture film (tools/create-ehel-unit-lecture.js; storyboard and
+# pictures in lecture-video/sounds-near-and-far.json). The lecture step draws it
+# above the parts; build-lessons.py refuses a path that is not on disk AND in
+# app.config.json :: extraPages, and a --draft render.
+LESSON["video"] = {
+    "src": "lecture-video/sounds-near-and-far.de70a382.mp4",
+    "captions": "lecture-video/sounds-near-and-far.1af33ea2.vtt",
+    "poster": "lecture-video/sounds-near-and-far.555e925f.jpg",
+    "note": "About two and a half minutes. Watch it through, then go back over it a part at a time below.",
+}
+
 LESSON["words"] = [
     word("sound", "\U0001F50A", "Something you hear.",
          ["A drum makes a loud sound.", "Where did that sound come from?"]),

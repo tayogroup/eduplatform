@@ -1,0 +1,115 @@
+{
+  "_comment": "Storyboard for the Grade 1 Science unit lecture film, Lesson 8 Our Earth, Our Sun. Rendered by tools/create-ehel-unit-lecture.js. See lecture-video/BRIEF.md. The five teaching chapters are LESSON[\"lecture\"]'s five parts, in its order and in its words; the pictures are the lesson's own drawings (the zoom, the globe and its catch, the dig, the sky, the sun-and-shade cups). Only the four content objectives are claimed: the film shows the globe catch and the cup test, but it does not teach predicting or recording, so no TWS or SIC code is listed.",
+  "slug": "our-earth-our-sun",
+  "lesson": 8,
+  "grade": 1,
+  "stage": 1,
+  "title": "Our Earth, Our Sun",
+  "subtitle": "Grade 1 Science",
+  "framework": "Cambridge Primary Science 0097",
+  "renderer": {
+    "art": ["science"],
+    "scenes": [
+      "tools/lib/ehel-film-marks.js",
+      "tools/lib/film-scenes/science-g1/our-earth-our-sun.js",
+      "tools/lib/film-scenes/science-g1/our-earth-our-sun-2.js",
+      "tools/lib/film-scenes/science-g1/our-earth-our-sun-3.js"
+    ]
+  },
+  "objectives": [
+    ["1ESs.01", "Know that Earth is the planet on which we live."],
+    ["1ESp.01", "Know that Earth is mostly covered in water."],
+    ["1ESp.02", "Describe land as being made of rock and soil."],
+    ["1ESs.02", "Describe the Sun as a source of heat and light, and as one of many stars."]
+  ],
+  "scenes": [
+    { "id": "title", "kind": "title", "codes": [], "beats": [
+      { "say": "This is our Earth, and this is our Sun.",
+        "art": { "at": { "earth": "our Earth", "sun": "our Sun" } } },
+      { "say": "What is Earth made of? And what does the Sun give us?",
+        "art": { "at": { "made": "Earth made of", "give": "the Sun give us" } } }
+    ] },
+
+    { "id": "planet", "kind": "planet", "heading": "Our planet", "codes": ["1ESs.01"], "beats": [
+      { "say": "Start at your house. Now zoom out, and there is your town.",
+        "art": { "at": { "house": "your house", "zoom": "zoom out", "town": "your town" } } },
+      { "say": "Zoom out again, and there is your whole country.",
+        "art": { "at": { "zoom": "Zoom out again", "country": "your whole country" } } },
+      { "say": "Zoom out once more. There is the whole Earth, a round planet floating in space.",
+        "art": { "at": { "zoom": "Zoom out once more", "earth": "the whole Earth", "round": "a round planet", "space": "floating in space" } } },
+      { "say": "Earth is the planet we live on. Everyone you know lives on it.",
+        "art": { "at": { "planet": "the planet we live on", "everyone": "Everyone you know" } } },
+      { "say": "The ground looks flat, because Earth is so big. From space, it is round.",
+        "art": { "at": { "flat": "looks flat", "big": "so big", "round": "it is round" } } }
+    ] },
+
+    { "id": "water", "kind": "water", "heading": "Mostly water", "codes": ["1ESp.01"], "beats": [
+      { "say": "Look at Earth from space. Most of it is blue.",
+        "art": { "at": { "look": "Look at Earth", "blue": "is blue" } } },
+      { "say": "Blue is water. That is the sea. Green is land.",
+        "art": { "at": { "water": "Blue is water", "sea": "the sea", "land": "Green is land" } } },
+      { "say": "Is there more water, or more land? Catch a globe ten times to find out.",
+        "art": { "at": { "q": "more water, or more land", "catch": "Catch a globe" } } },
+      { "say": "Each time, look under your finger. Is it on blue water, or on green land?",
+        "art": { "at": { "finger": "under your finger", "water": "blue water", "land": "green land" } } },
+      { "say": "Seven catches landed on water, and three on land.",
+        "art": { "at": { "seven": "Seven catches", "three": "three on land" } } },
+      { "say": "There is more water than land. Earth is mostly water.",
+        "art": { "at": { "more": "more water than land", "mostly": "mostly water" } } }
+    ] },
+
+    { "id": "ground", "kind": "ground", "heading": "Under the ground", "codes": ["1ESp.02"], "beats": [
+      { "say": "What is land made of? Dig down through the grass.",
+        "art": { "at": { "what": "What is land made of", "dig": "Dig down", "grass": "the grass" } } },
+      { "say": "First there is soil, dark and crumbly. Plants grow in it.",
+        "art": { "at": { "soil": "there is soil", "dark": "dark and crumbly", "plants": "Plants grow" } } },
+      { "say": "In the soil are small stones. A stone is a tiny piece of rock.",
+        "art": { "at": { "stones": "small stones", "piece": "a tiny piece of rock" } } },
+      { "say": "Dig deeper. The soil runs out, and you hit hard rock.",
+        "art": { "at": { "deeper": "Dig deeper", "out": "soil runs out", "rock": "hard rock" } } },
+      { "say": "So land is soil on top, and rock underneath, everywhere.",
+        "art": { "at": { "soil": "soil on top", "rock": "rock underneath", "every": "everywhere" } } },
+      { "say": "A pebble is a small piece of rock. A mountain is a huge piece of rock.",
+        "art": { "at": { "pebble": "A pebble", "mountain": "A mountain", "huge": "huge piece of rock" } } }
+    ] },
+
+    { "id": "sun", "kind": "sun", "heading": "The Sun gives light and heat", "codes": ["1ESs.02"], "beats": [
+      { "say": "At night there is no Sun. It is dark, and it is cooler.",
+        "art": { "at": { "night": "At night", "dark": "It is dark", "cool": "cooler" } } },
+      { "say": "The Sun rises, and light fills the sky.",
+        "art": { "at": { "rises": "The Sun rises", "light": "light fills the sky" } } },
+      { "say": "At midday the Sun is high. It warms the ground, the sea and your skin.",
+        "art": { "at": { "midday": "At midday", "ground": "the ground", "sea": "the sea", "skin": "your skin" } } },
+      { "say": "Put one cup of water in the sun. Put one in the shade.",
+        "art": { "at": { "sun": "in the sun", "shade": "in the shade" } } },
+      { "say": "Wait an hour. The cup in the sun gets warmer. The shade one stays cool.",
+        "art": { "at": { "wait": "Wait an hour", "warmer": "gets warmer", "cool": "stays cool" } } },
+      { "say": "The Sun is a source of light and heat. Both come from the Sun.",
+        "art": { "at": { "source": "a source of light and heat", "both": "Both come" } } },
+      { "say": "Never look straight at the Sun. It is so bright it can hurt your eyes.",
+        "art": { "at": { "never": "Never look", "eyes": "hurt your eyes" } } }
+    ] },
+
+    { "id": "star", "kind": "star", "heading": "The Sun is a star", "codes": ["1ESs.02", "1ESs.01"], "beats": [
+      { "say": "At night the sky is full of tiny lights. They are stars.",
+        "art": { "at": { "night": "At night", "lights": "tiny lights", "stars": "They are stars" } } },
+      { "say": "Each star is a huge ball of hot, glowing gas, very far away.",
+        "art": { "at": { "ball": "a huge ball", "gas": "glowing gas", "far": "very far away" } } },
+      { "say": "The Sun is a star too. It looks big because it is the nearest one.",
+        "art": { "at": { "star": "The Sun is a star", "big": "looks big", "nearest": "the nearest one" } } },
+      { "say": "Earth is our planet. The Sun is our star.",
+        "art": { "at": { "planet": "Earth is our planet", "star": "The Sun is our star" } } }
+    ] },
+
+    { "id": "recap", "kind": "recap", "heading": "What you now know", "codes": ["1ESs.01", "1ESp.01", "1ESp.02", "1ESs.02"], "beats": [
+      { "say": "Earth is the planet we live on. Most of it is water.",
+        "art": { "at": { "planet": "the planet we live on", "water": "Most of it is water" } } },
+      { "say": "Land is soil on top, and rock underneath.",
+        "art": { "at": { "land": "Land is soil" } } },
+      { "say": "The Sun gives us light and heat. It is our nearest star.",
+        "art": { "at": { "heat": "light and heat", "star": "our nearest star" } } },
+      { "say": "Now you know your Earth and your Sun.",
+        "art": { "at": { "go": "Now you know" } } }
+    ] }
+  ]
+}

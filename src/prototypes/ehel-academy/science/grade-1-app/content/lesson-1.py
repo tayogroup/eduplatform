@@ -312,6 +312,17 @@ LESSON["lecture"] = [
          "A scientist looks closely, asks a question, tries something, and writes down what happened. That is what you will do in this lesson. Ready? Let us go."),
 ]
 
+# The unit lecture film (tools/create-ehel-unit-lecture.js; storyboard and
+# pictures in lecture-video/alive-or-never-alive.json). The lecture step draws it
+# above the parts; build-lessons.py refuses a path that is not on disk AND in
+# app.config.json :: extraPages, and a --draft render.
+LESSON["video"] = {
+    "src": "lecture-video/alive-or-never-alive.264c6bf9.mp4",
+    "captions": "lecture-video/alive-or-never-alive.5caedef0.vtt",
+    "poster": "lecture-video/alive-or-never-alive.4e4126a5.jpg",
+    "note": "About two and a half minutes. Watch it through, then go back over it a part at a time below.",
+}
+
 LESSON["words"] = [
     word("alive", "\U0001F423", "Something that grows, needs food and water, and can have young.",
          ["A chick is alive. It eats, drinks and grows.", "My cat is alive, but my toy cat is not."]),

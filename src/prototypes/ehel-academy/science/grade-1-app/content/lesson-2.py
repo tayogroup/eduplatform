@@ -322,6 +322,17 @@ LESSON["lecture"] = [
          "Scientists use tools. A magnifying glass to look closely. A ruler or cubes to measure. Gloves to keep hands safe. You will measure a plant in cubes."),
 ]
 
+# The unit lecture film (tools/create-ehel-unit-lecture.js; storyboard and
+# pictures in lecture-video/parts-of-a-plant.json). The lecture step draws it
+# above the parts; build-lessons.py refuses a path that is not on disk AND in
+# app.config.json :: extraPages, and a --draft render.
+LESSON["video"] = {
+    "src": "lecture-video/parts-of-a-plant.fbe6ff13.mp4",
+    "captions": "lecture-video/parts-of-a-plant.67f57899.vtt",
+    "poster": "lecture-video/parts-of-a-plant.cdec4118.jpg",
+    "note": "About two and a half minutes. Watch it through, then go back over it a part at a time below.",
+}
+
 LESSON["words"] = [
     word("roots", icon("roots"), "The parts of a plant under the soil. They hold it in the soil and take in water.",
          ["The roots grow down into the soil.", "Pull up a weed and you can see its roots."]),

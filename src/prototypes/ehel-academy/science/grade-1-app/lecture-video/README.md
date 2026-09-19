@@ -91,18 +91,29 @@ morning, the one clip (48 characters) bought, and the film rendered again. A
 search that returns nothing proves nothing until you have seen it return
 everything.
 
-**In the lessons themselves, found by the agents and NOT changed** (they are
-the lessons' content, not the films'):
+**In the lessons themselves, found by the agents.** Three were fixed on
+2026-09-19, at the owner's request:
 
-- Lesson 7 pictures kitchen foil as a fire extinguisher (U+1F9EF), the fridge as
-  an ice cube (U+1F9CA) and the iron nail as a nut and bolt (U+1F529). The film
-  draws foil and the fridge correctly, so there they differ from the lesson.
-- Lesson 6's `soundFar` drawing cuts the child in half at six steps (the child's
-  ink reaches x 324.8 in a 320-wide viewBox). The film reframes its own copy.
-- Lesson 3's word card says "Nora has blonde hair"; the lesson's Nora has black hair.
-- Smaller: Lesson 2's measure step says "3 cubes long" where it asks how tall;
-  `twoPots` draws the Sun on the cupboard side; the "your country" zoom picture
-  is a world map; the shaker tin draws as a tomato tin on Windows.
+- Lesson 7 pictured kitchen foil as a fire extinguisher (U+1F9EF), the fridge
+  as an ice cube (U+1F9CA) and the iron nail as a nut and bolt (U+1F529). There
+  is no fridge or nail emoji, so the kit draws both now (`icon("fridge")`,
+  `icon("nail")` in `lesson-kit/_icons.py`) and foil uses its existing
+  `icon("foil")`. The ice cube and the bolt stay where the lesson means ice or a
+  bolt.
+- Lesson 6's `soundFar` drawing cut the child in half at six steps (the child's
+  ink reaches x 324.8 in a 320-wide viewBox). It is 344 wide now, which is
+  exactly how this film had reframed its own copy, so the film's frames are
+  unchanged (compared at every 0.1 s) and it keeps only a guard on the width.
+- Lesson 3's word card said "Nora has blonde hair", and the lesson's Nora has
+  black hair. It says "This person has blonde hair" now, of the card's own
+  picture.
+
+Not fixed, and each is the lesson's to decide: Lesson 3 says Nora wears glasses
+and her picture has none; Lesson 2's measure step says "3 cubes long" where it
+asks how tall; `twoPots` draws the Sun on the cupboard side; the "your country"
+zoom picture is a world map; the shaker tin draws as a tomato tin on Windows.
+Grade 2 Lesson 5 and Grade 3 Lesson 11 picture a nail as a nut and bolt too,
+and Grade 3 Lesson 11 a fridge door as an ice cube.
 
 ## Remaking a film
 

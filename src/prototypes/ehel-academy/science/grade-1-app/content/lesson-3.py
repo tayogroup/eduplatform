@@ -396,7 +396,7 @@ LESSON["words"] = [
     word("twins", "\U0001F46F", "Two children born on the same day to the same mother. Some twins look alike and some do not.",
          ["Lina and Hana are twins.", "A brother and a sister can be twins."]),
     word("blonde", "\U0001F471", "Yellow hair.",
-         ["Nora has blonde hair.", "Three children in the class are blonde."]),
+         ["This person has blonde hair.", "Three children in the class are blonde."]),
     word("body", "\U0001F9CD", "The whole of a person or an animal.",
          ["Your senses tell you about the world around your body.", "Skin covers your whole body."]),
     word("skin", "\u270B", "The covering over the outside of your body, that you feel with.",

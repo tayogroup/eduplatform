@@ -401,10 +401,13 @@
         });
       },
     },
-    /* a bell, and a child who walks away from it one step at a time */
+    /* a bell, and a child who walks away from it one step at a time. 344 wide,
+       not 320: at six steps the child's ink reaches x 324.8, so a 320 box cut
+       the child in half on the very step the experiment ends on (found by the
+       Grade 1 Sounds film, 2026-09-18, which had reframed its copy the same way). */
     soundFar: {
       draw(box, steps) {
-        box.innerHTML = '<svg viewBox="0 0 320 200" role="img" aria-label="A bell, and a child ' + (steps === 0 ? "next to it" : steps + " steps away") + '"><rect width="320" height="200" fill="#BFE3F5"/><rect x="0" y="150" width="320" height="50" fill="#3E8E4A"/>' +
+        box.innerHTML = '<svg viewBox="0 0 344 200" role="img" aria-label="A bell, and a child ' + (steps === 0 ? "next to it" : steps + " steps away") + '"><rect width="344" height="200" fill="#BFE3F5"/><rect x="0" y="150" width="344" height="50" fill="#3E8E4A"/>' +
           '<text x="22" y="140" font-size="52">\u{1F514}</text>' +
           Array.from({ length: 7 }, (_, i) => '<line x1="' + (80 + i * 34) + '" y1="150" x2="' + (80 + i * 34) + '" y2="160" stroke="#fff" stroke-width="2"/>').join("") +
           '<text x="' + (66 + steps * 34) + '" y="140" font-size="48" style="transition: x 400ms ease">\u{1F9D2}</text>' +

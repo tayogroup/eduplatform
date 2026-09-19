@@ -14,9 +14,10 @@ swaps each Emoji 13+ code point listed in BY_CODEPOINT for the drawing of
 the same object here, and `build-lessons.py` REFUSES a page that still
 carries any Emoji 13+ code point afterwards - so a new one cannot slip in
 unnoticed; it needs a drawing here first. A few drawings (roots, soil,
-watering can, chrysalis, woodlouse) have no emoji at all; the content asks
-for them by name with `icon("roots")`, because the nearest emoji showed
-something else (a pot plant for "roots", a feather for "chrysalis").
+watering can, chrysalis, woodlouse, fridge, nail) have no emoji at all; the
+content asks for them by name with `icon("roots")`, because the nearest emoji
+showed something else (a pot plant for "roots", a feather for "chrysalis", an
+ice cube for "fridge", a nut and bolt for "nail").
 
 Every drawing is 64x64, sized 1em so it takes the size of the text or
 picture box it sits in, and aria-hidden: like the emoji it replaces, it is
@@ -268,6 +269,21 @@ _BODIES = {
         '<path d="M33 45 L29 55 L40 50 Z" fill="#6F7B87"/>'
         '<circle cx="49" cy="24" r="2" fill="#1B1B1B"/><circle cx="55" cy="29" r="1.8" fill="#3A3A3A"/>'
         '<path d="M55 31 l7 -1 M55 32 l7 2" stroke="#3A3A3A" stroke-width="1" stroke-linecap="round"/>'),
+    # There is no fridge emoji and no nail emoji. Grade 1 Lesson 7 had drawn a
+    # fridge as an ice cube and an iron nail as a nut and bolt (2026-09-19);
+    # the ice cube and the bolt stay right where the lesson means ice or a bolt.
+    "fridge": (
+        '<rect x="15" y="3" width="34" height="55" rx="5" fill="#F2F5F8" stroke="#6F7C88" stroke-width="2.5"/>'
+        '<path d="M15 22 H49" stroke="#6F7C88" stroke-width="2.5"/>'
+        '<rect x="19" y="8" width="3.5" height="9" rx="1.75" fill="#56616B"/>'
+        '<rect x="19" y="27" width="3.5" height="15" rx="1.75" fill="#56616B"/>'
+        '<rect x="18" y="58" width="6" height="4" rx="1" fill="#56616B"/><rect x="40" y="58" width="6" height="4" rx="1" fill="#56616B"/>'),
+    "nail": (
+        '<g transform="rotate(38 32 32)">'
+        '<rect x="20" y="5" width="24" height="7" rx="2.5" fill="#8C959E" stroke="#4E5760" stroke-width="2"/>'
+        '<path d="M28.5 12 H35.5 V46 L32 59 L28.5 46 Z" fill="#AEB6BE" stroke="#4E5760" stroke-width="2" stroke-linejoin="round"/>'
+        '<path d="M30.8 15 V44" stroke="#E3E8EC" stroke-width="1.6" stroke-linecap="round"/>'
+        '</g>'),
 }
 
 ICONS = {name: _OPEN + body + "</svg>" for name, body in _BODIES.items()}

@@ -161,11 +161,12 @@
      here reads it when the ring reaches the child. From "the same", a second
      meter shows the bell itself, which never gets quieter.
 
-     The drawing is reframed, not changed: at six steps the lesson's child runs
-     past the drawing's right edge (its ink ends at x 324.8 of 320) and is cut
-     in half, so the viewBox and the two background rects are 24 units wider
-     and everything drawn stays where the lesson draws it. The child slides
-     between steps as the lesson's own 400 ms ease does, and the bell swings. */
+     The lesson's drawing is 344 wide. It was 320, and at six steps the child ran
+     past the right edge (its ink ends at x 324.8) and was cut in half; this
+     film found that and reframed its own copy to 344, and on 2026-09-19 the
+     lesson itself was widened to match, so the film now uses the drawing as it
+     is. The child slides between steps as the lesson's own 400 ms ease does,
+     and the bell swings. */
   var SN_FAR = { x: 20, y: 30, k: 1.9, w: 344, h: 200 };
   function snFarAt(sx, sy) { return [SN_FAR.x + sx * SN_FAR.k, SN_FAR.y + sy * SN_FAR.k]; }
   var SN_BELL = snFarAt(57.5, 121.5);                 /* the bell's ink, measured: x 33.8-81.2, y 96-147 */
@@ -178,9 +179,8 @@
   function snFarSvg(steps, pos, swing) {
     var m = ART.sim("soundFar", "draw", steps);
     var fixes = [
-      ['viewBox="0 0 320 200"', 'viewBox="0 0 ' + SN_FAR.w + ' 200"'],
-      ['<rect width="320" height="200" fill="#BFE3F5"/>', '<rect width="' + SN_FAR.w + '" height="200" fill="#BFE3F5"/>'],
-      ['<rect x="0" y="150" width="320" height="50" fill="#3E8E4A"/>', '<rect x="0" y="150" width="' + SN_FAR.w + '" height="50" fill="#3E8E4A"/>'],
+      /* the lesson's drawing is as wide as this film places it */
+      ['viewBox="0 0 ' + SN_FAR.w + ' 200"', 'viewBox="0 0 ' + SN_FAR.w + ' 200"'],
       /* the child, at its place between two steps; the lesson's own 400 ms
          transition is left out, because a film moves nothing by itself */
       ['<text x="' + (66 + steps * 34) + '" y="140" font-size="48" style="transition: x 400ms ease">', '<text x="' + n2(66 + pos * 34) + '" y="140" font-size="48">'],
@@ -188,7 +188,7 @@
     ];
     fixes.forEach(function (f) {
       if (m.indexOf(f[0]) < 0) throw new Error("sounds-near-and-far: the lesson's soundFar drawing no longer contains " + f[0] +
-        ". The film reframes that drawing, moves its child and swings its bell; look at the drawing again before changing this.");
+        ". The film places that drawing at its width, moves its child and swings its bell; look at the drawing again before changing this.");
       m = m.replace(f[0], f[1]);
     });
     return m;

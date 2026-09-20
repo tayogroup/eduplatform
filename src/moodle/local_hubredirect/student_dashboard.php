@@ -501,6 +501,83 @@ body.pqhsd-page #page,body.pqhsd-page #page-content,body.pqhsd-page #region-main
 <?php // The lesson's own design, over everything above it. Last on the
       // page on purpose -- it wins its ties by position, not by force. ?>
 <style><?php echo pqh_ehel_academy_css('.pqhsd-shell', 'pqhsd-page'); ?></style>
+<style>
+/* ---------------------------------------------------------------------------
+   Light course cards. Owner, 2026-09-11: the dark ones "overwhelm the page".
+   ---------------------------------------------------------------------------
+   pqh_ehel_academy_css() paints .pqhsd-jc as a dark card, and its own comment
+   says what for: "an otherwise unbroken dark ground". The skin draws that
+   ground itself -- .pqhsd-shell goes transparent and a fixed ::before carries
+   the gradient at z-index:-1 -- but on the LIVE page the cards sit on white
+   (owner's screenshot, 2026-09-11), so something in the Moodle chrome around
+   this page paints over that layer. A harness without the theme renders the
+   dark ground and cannot show the problem; do not "fix" this by reading the
+   stylesheet alone. On white the dark cards were slabs, the loudest thing on
+   the page.
+
+   This re-points the skin's own TOKENS on the card instead of restyling its
+   rules one by one. Every rule the skin writes for this card reads --ea-card,
+   --ea-ink, --ea-body, --ea-muted, --ea-line, --ea-cell-2, --ea-teal ...; so
+   redefining them on .pqhsd-jc turns the whole card light -- a rule added to
+   that card next month included -- and leaves the rest of this page, and every
+   other page the skin paints, exactly as they were. Custom properties are not
+   on pqh_css_force_and_specify()'s !important list, so nothing is fought here.
+
+   The values are this page's OWN light palette rather than new ones: the
+   shadow is .pqhsd-panel's, the ink is the old white card's #16324f, and the
+   teal pair is the Quran course's deep/tint from pqhsd_course_face() -- picked,
+   like every `deep` there, to carry text at 4.5:1 on white.
+
+   The surface is a light TINT, not white (owner, same day: white cards on a
+   white page were too stark). It is #edf3fc, the page's own light-blue
+   surface (.pqhsd-side), and ONE tint for every card on purpose: the skin's
+   notes record that a different hue per card "read as noise", and the icon
+   already carries the subject. Moving off white moved three other values with
+   it, each of which would otherwise have vanished INTO the tint -- the bar
+   track (#dbe4ee, darker than the card, where white's #eef1f6 was lighter),
+   the border (#d9e3ef), and --ea-cell, which is Syllabus's HOVER fill: at
+   white it keeps the button white on hover, so the teal hover border is the
+   change a child sees, rather than the button fading into the card.
+
+   Three things no token reaches, so they are written out:
+     - the badge. The dark card tints the BRIGHT subject colour over its cell;
+       on a light card that drops the icon under 3:1 (English's #ff9f1c on a
+       pale orange is about 1.9:1). So it uses the pairing pqhsd_course_face() was
+       built for in the first place: --jct behind, --jcd for the stroke.
+     - Syllabus, whose fill and border are white-alpha LITERALS in the skin
+       (rgba(255,255,255,.07) / .24) and all but vanish on any light card.
+       It is drawn as a solid white button instead, which on the tinted card
+       also makes it read as the secondary action beside the gold one.
+     - the progress fill. The skin paints it --jc, the BRIGHT colour, which
+       stood out on the dark card and does not on a light track: measured
+       against it, English 1.6:1, Maths 1.9:1, Computing 2.6:1 -- under the
+       3:1 a graphic wants (owner, 2026-09-11: "fix them"). It uses --jcd
+       instead, which puts every subject pqhsd_course_face() can return,
+       default included, between 4.0:1 and 6.1:1. The bars are darker for it,
+       which was the stated trade; the "40% done" beside each still carries
+       the number whatever the bar looks like.
+   Each is one class deeper than the skin's own rule, with !important,
+   because the skin's rules are !important once force_and_specify has doubled
+   the scope class: (0,5,0) over (0,4,0), and (0,5,1) over (0,4,1) for the
+   fill. Winning on specificity rather than on position means none of this
+   can quietly start losing if the block is ever moved above the skin.
+*/
+.pqhsd-shell .pqhsd-jc{--ea-card:#EDF3FC;--ea-line:#D9E3EF;--ea-cell:#FFFFFF;--ea-cell-2:#DBE4EE;--ea-ink:#16324F;--ea-body:#43566A;--ea-muted:#5B6B7C;--ea-teal:#0F766E;--ea-teal-soft:#E1F6F3;--ea-teal-line:#A7DFD8;--ea-coral:#A71D21;--ea-shadow-sm:0 1px 2px rgba(15,34,55,.05),0 10px 28px -16px rgba(15,34,55,.14);--ea-shadow:0 2px 4px rgba(15,34,55,.07),0 18px 36px -16px rgba(15,34,55,.24)}
+.pqhsd-shell.pqhsd-shell.pqhsd-shell .pqhsd-jc .pqhsd-jc-badge{background:var(--jct)!important;color:var(--jcd)!important}
+.pqhsd-shell.pqhsd-shell.pqhsd-shell .pqhsd-jc .pqhsd-jc-btn2{background:#FFFFFF!important;border-color:#CBD5E1!important}
+.pqhsd-shell.pqhsd-shell.pqhsd-shell .pqhsd-jc .pqhsd-jc-bar i{background:var(--jcd)!important}
+/* The lesson-mode note ("Focus mode: lessons open in this browser..." or, in
+   Normal mode, "Lessons open normally...") -- black. Owner, 2026-09-11. The
+   skin colours every [class*="-note--warn"] --ea-gold on a transparent
+   ground, which on this page's white measured 1.57:1: a sentence telling a
+   child their teacher can see them leave the lesson, at a contrast most
+   readers cannot read. It is targeted by its own .pqhsd-modenote hook, NOT by
+   the shared class, on purpose: the "You're not finished yet" notice wears
+   the same pqhsd-note--warn and is a real warning, so recolouring the class
+   would have silently taken that signal away as well. (0,5,0) + !important
+   over the skin's (0,4,0) + !important, for the reason given above. */
+.pqhsd-shell.pqhsd-shell.pqhsd-shell .pqhsd-note--warn.pqhsd-modenote{color:#000000!important}
+</style>
 <main class="pqhsd-shell">
 <?php
 echo pqh_design_shell_html('pqhsd-shell', 'dashboard', [
@@ -597,7 +674,7 @@ echo pqh_design_shell_html('pqhsd-shell', 'dashboard', [
         <div class="pqhsd-ccard__meta pqhsd-note--info" style="margin:-4px 0 10px">Saved — lessons will open in <?php echo s($pqhsd_sebmodes[$pqhsd_sebpref][0] ?? $pqhsd_sebpref); ?>.</div>
       <?php endif; ?>
       <?php if ($pqhsd_sebavailable && $pqhsd_sebpref !== 'seb'): ?>
-        <div class="pqhsd-ccard__meta pqhsd-note--warn" style="margin:-4px 0 10px">
+        <div class="pqhsd-ccard__meta pqhsd-note--warn pqhsd-modenote" style="margin:-4px 0 10px">
           <?php echo $pqhsd_sebpref === 'focus'
             ? 'Focus mode: lessons open in this browser and ask for full screen. Your teacher can see if you leave the lesson.'
             : 'Lessons open normally, with no lock and no monitoring. Choose Focus mode or Safe Exam Browser if your teacher asks for it.'; ?>

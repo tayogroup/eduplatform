@@ -2897,7 +2897,7 @@ body.{$prefix}-fullscreen-on {$scope} .{$prefix}-top,
 body.{$prefix}-fullscreen-on {$scope} .{$prefix}-bar .{$prefix}-form,
 body.{$prefix}-fullscreen-on {$scope} .{$prefix}-note{display:none}
 body.{$prefix}-fullscreen-on {$scope}{padding:14px!important}
-body.{$prefix}-fullscreen-on {$scope} .pqlgb,
+body.{$prefix}-fullscreen-on {$scope} .{$prefix},
 body.{$prefix}-fullscreen-on {$scope} .{$prefix}-wrap{max-width:none}
 /* .{$prefix}-chat's top:72px (in the page's own untouched stylesheet) clears the
    sticky app bar -- gone in fullscreen, so the offset is reclaimed the same
@@ -3041,6 +3041,104 @@ CSS;
     return "@import url('https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700&family=Inter:wght@400;600;700;800&display=swap');\n"
         . pqh_css_force_and_specify($css);
 }
+
+/**
+ * The board's fullscreen (declutter) control, as behaviour.
+ *
+ * Extracted from live_group_board.php so the PARENT board can wear the same
+ * control instead of approximating it -- the same move, and the same reason,
+ * as the components sheet above. The CSS half was already shared and already
+ * prefix-parameterised (see the fullscreen block in
+ * pqh_ehel_board_components_css()'s companion above); this was the only half
+ * still welded to one page.
+ *
+ * The extraction is verified byte-identical against the block that was there:
+ * called with 'pqlgb' and the default titles it reproduces the original
+ * exactly, so the working board's behaviour cannot have moved.
+ *
+ * The titles are parameters because they are the one thing that genuinely
+ * differs between the two boards -- a teacher is shown "the student
+ * monitoring data", a parent their own children -- and everything else,
+ * including which elements the body class hides, is decided by the CSS.
+ */
+function pqh_ehel_board_fullscreen_js(
+    string $prefix = 'pqlgb',
+    string $titleoff = 'Show only the student monitoring data',
+    string $titleon = 'Show the full board again'
+): string {
+    return <<<JS
+<script>
+// Fullscreen: hides the rail, app bar, header, filter controls and legend,
+// leaving the totals row, the tiles and the CHAT -- the monitoring data and
+// the line to the room -- alone on the screen. The chat KEEPS its place: it
+// was asked for in fullscreen expressly, and the CSS only reclaims the
+// offset the sticky app bar no longer needs. (This comment said "and chat"
+// among the hidden until 2026-09-20, describing the feature as first built
+// rather than as it shipped.) Deliberately separate from the board's own script
+// above: it needs none of render()'s state and touching nothing there is
+// what keeps this addition from being able to disturb the sort/state code.
+(function () {
+  "use strict";
+  var btn = document.getElementById("{$prefix}-fullscreen-btn");
+  if (!btn) { return; }
+  var ICON_MAXIMIZE = '<path d="M8 3H5a2 2 0 0 0-2 2v3m18 0V5a2 2 0 0 0-2-2h-3m0 18h3a2 2 0 0 0 2-2v-3M3 16v3a2 2 0 0 0 2 2h3"/>';
+  var ICON_MINIMIZE = '<path d="M8 3v3a2 2 0 0 1-2 2H3m18 0h-3a2 2 0 0 1-2-2V3m0 18v-3a2 2 0 0 1 2-2h3M3 16h3a2 2 0 0 1 2 2v3"/>';
+  var icon = btn.querySelector("svg");
+  var label = btn.querySelector("span");
+
+  // The class toggle is the RELIABLE half of this feature and works
+  // everywhere; the real Fullscreen API (hiding the browser's own chrome
+  // too) is a best-effort bonus on top of it, so a refusal here (an iframe
+  // with no allowfullscreen, an older iOS Safari with no element fullscreen)
+  // must not stop the declutter itself.
+  function nativeRequest() {
+    var el = document.documentElement;
+    var fn = el.requestFullscreen || el.webkitRequestFullscreen || el.mozRequestFullScreen || el.msRequestFullscreen;
+    if (!fn) { return; }
+    try { var p = fn.call(el); if (p && p.catch) { p.catch(function () {}); } } catch (e) { /* declutter still applies */ }
+  }
+  function nativeExit() {
+    var native = document.fullscreenElement || document.webkitFullscreenElement || document.mozFullScreenElement || document.msFullscreenElement;
+    if (!native) { return; }
+    var fn = document.exitFullscreen || document.webkitExitFullscreen || document.mozCancelFullScreen || document.msExitFullscreen;
+    if (!fn) { return; }
+    try { var p = fn.call(document); if (p && p.catch) { p.catch(function () {}); } } catch (e) {}
+  }
+  function isOn() { return document.body.classList.contains("{$prefix}-fullscreen-on"); }
+  function setOn(on) {
+    document.body.classList.toggle("{$prefix}-fullscreen-on", on);
+    btn.setAttribute("aria-pressed", on ? "true" : "false");
+    btn.title = on ? "{$titleon}" : "{$titleoff}";
+    if (icon) { icon.innerHTML = on ? ICON_MINIMIZE : ICON_MAXIMIZE; }
+    if (label) { label.textContent = on ? "Exit fullscreen" : "Fullscreen"; }
+  }
+
+  btn.addEventListener("click", function () {
+    if (isOn()) { setOn(false); nativeExit(); } else { setOn(true); nativeRequest(); }
+  });
+
+  // The browser's own Esc handling (or a viewer leaving fullscreen through
+  // window chrome this page does not control) exits NATIVE fullscreen
+  // without ever touching our class, so the class has to follow the
+  // browser's reported state rather than only our own click handler.
+  ["fullscreenchange", "webkitfullscreenchange", "mozfullscreenchange", "MSFullscreenChange"].forEach(function (evt) {
+    document.addEventListener(evt, function () {
+      var native = document.fullscreenElement || document.webkitFullscreenElement || document.mozFullScreenElement || document.msFullscreenElement;
+      if (!native && isOn()) { setOn(false); }
+    });
+  });
+
+  // And Escape has to leave DECLUTTER mode even where native fullscreen
+  // never engaged in the first place -- the fullscreenchange listener above
+  // only fires when there was a native fullscreen element to leave.
+  document.addEventListener("keydown", function (event) {
+    if (event.key === "Escape" && isOn()) { setOn(false); nativeExit(); }
+  });
+})();
+</script>
+JS;
+}
+
 
 /**
  * The consumer landing page's institution/community-hub branch, in the same

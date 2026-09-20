@@ -134,6 +134,26 @@ echo pqh_design_shell_html('pqpb-shell', 'parentboard', [
       <p class="pqpb-sub">Where your children are, what they finished this week, and a line to their teacher — on one page.</p>
     </div>
   </section>
+<?php // The same fullscreen control the live group board carries, and the same
+      // two halves: this button, and pqh_ehel_board_fullscreen_js() near the
+      // end of the file. The CSS half needed nothing added -- the fullscreen
+      // block lives in pqh_ehel_group_board_css(), which this page already
+      // calls with the pqpb prefix, so it has been styling a button that did
+      // not exist yet.
+      //
+      // The bar exists to HOLD the button through fullscreen. The CSS hides
+      // .pqpb-top, so a button placed up there with the heading would vanish
+      // the moment it was pressed and leave Escape as the only way back out;
+      // what the CSS hides inside this bar is the FILTER FORM, which this
+      // page does not have. .pqpb-bar and .pqpb-spacer are both already drawn
+      // by the shared components sheet and re-skinned by the Ehel sheet. ?>
+  <div class="pqpb-bar">
+    <span class="pqpb-spacer"></span>
+    <button type="button" class="pqpb-fullscreen-btn" id="pqpb-fullscreen-btn" aria-pressed="false" title="Show only your children&rsquo;s activity">
+      <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 3H5a2 2 0 0 0-2 2v3m18 0V5a2 2 0 0 0-2-2h-3m0 18h3a2 2 0 0 0 2-2v-3M3 16v3a2 2 0 0 0 2 2h3"/></svg>
+      <span>Fullscreen</span>
+    </button>
+  </div>
   <noscript>
     <div class="pqpb-noscript">This board refreshes itself and needs JavaScript. Without it the tiles would freeze with nothing to tell you they had, so they are not shown.</div>
   </noscript>
@@ -390,5 +410,6 @@ echo pqh_design_shell_html('pqpb-shell', 'parentboard', [
   timers(document.visibilityState === "visible");
 })();
 </script>
+<?php echo pqh_ehel_board_fullscreen_js('pqpb', "Show only your children's activity"); ?>
 <?php
 echo $OUTPUT->footer();

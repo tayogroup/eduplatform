@@ -130,6 +130,42 @@ echo $OUTPUT->header();
 </style>
 <style><?php echo pqh_viewer_chrome_css('.pqlgb-shell'); ?></style>
 <style><?php echo pqh_ehel_group_board_css('.pqlgb-shell', 'pqlgb-page'); ?></style>
+<?php // The tile's type scale. Must stay after the sheet above, and belongs to
+      // THIS page rather than to that sheet -- see the comment inside. ?>
+<style>
+/* ---- the tile's type scale ------------------------------------------------
+   Owner, 2026-09-20: too small to read on the live board. This is a teacher
+   glancing at nine learners while teaching the other nine in the next room --
+   the board is read at arm's length, mid-lesson, not studied. The place line
+   was the worst of it at 11.5px and the chip row at 11px, and those two carry
+   the most words on the tile.
+
+   Every size here comes from pqh_ehel_board_components_css(). It is set on
+   the PAGE because BOTH sheets that draw this tile are shared with the parent
+   board: components is called with prefix pqpb at parent_board.php:86, and
+   pqh_ehel_group_board_css() -- which looks board-specific and is not -- at
+   parent_board.php:106, with .pqpb-shell as its scope. Writing {$scope}
+   rules into that function therefore resizes the parent board too; it was
+   written there first and moved here when that call turned up. The parent
+   board is a parent reading one child's record, not a teacher scanning nine
+   mid-lesson, so it keeps the smaller scale until somebody asks.
+
+   The pills on the place line (.pqlgb-pl) set no size of their own, so they
+   follow -where. (0,4,0) + !important is not needed against the component
+   sheet's single class -- it is here so this still wins if the Ehel sheet
+   above ever starts setting a font-size on these same parts, rather than
+   depending on which block the page emits last. */
+.pqlgb-shell.pqlgb-shell.pqlgb-shell .pqlgb-group-head h3{font-size:18px!important}
+.pqlgb-shell.pqlgb-shell.pqlgb-shell .pqlgb-group-head span{font-size:13.5px!important}
+.pqlgb-shell.pqlgb-shell.pqlgb-shell .pqlgb-golive{font-size:13px!important}
+.pqlgb-shell.pqlgb-shell.pqlgb-shell .pqlgb-avatar{font-size:15px!important}
+.pqlgb-shell.pqlgb-shell.pqlgb-shell .pqlgb-who b{font-size:16.5px!important}
+.pqlgb-shell.pqlgb-shell.pqlgb-shell .pqlgb-where{font-size:13.5px!important}
+.pqlgb-shell.pqlgb-shell.pqlgb-shell .pqlgb-flag{font-size:12.5px!important}
+.pqlgb-shell.pqlgb-shell.pqlgb-shell .pqlgb-quiet b{font-size:20px!important}
+.pqlgb-shell.pqlgb-shell.pqlgb-shell .pqlgb-quiet span{font-size:12px!important}
+.pqlgb-shell.pqlgb-shell.pqlgb-shell .pqlgb-reason{font-size:13px!important}
+</style>
 <main class="pqlgb-shell">
 <?php
 echo pqh_design_shell_html('pqlgb-shell', 'board', [
@@ -1016,70 +1052,6 @@ echo pqh_design_shell_html('pqlgb-shell', 'board', [
   document.addEventListener("visibilitychange", function () { if (!document.hidden) { poll(); } });
 })();
 </script>
-<script>
-// Fullscreen: hides the rail, app bar, header, filter controls, legend and
-// chat, leaving the totals row and the tiles -- the student monitoring data
-// -- alone on the screen. Deliberately separate from the board's own script
-// above: it needs none of render()'s state and touching nothing there is
-// what keeps this addition from being able to disturb the sort/state code.
-(function () {
-  "use strict";
-  var btn = document.getElementById("pqlgb-fullscreen-btn");
-  if (!btn) { return; }
-  var ICON_MAXIMIZE = '<path d="M8 3H5a2 2 0 0 0-2 2v3m18 0V5a2 2 0 0 0-2-2h-3m0 18h3a2 2 0 0 0 2-2v-3M3 16v3a2 2 0 0 0 2 2h3"/>';
-  var ICON_MINIMIZE = '<path d="M8 3v3a2 2 0 0 1-2 2H3m18 0h-3a2 2 0 0 1-2-2V3m0 18v-3a2 2 0 0 1 2-2h3M3 16h3a2 2 0 0 1 2 2v3"/>';
-  var icon = btn.querySelector("svg");
-  var label = btn.querySelector("span");
-
-  // The class toggle is the RELIABLE half of this feature and works
-  // everywhere; the real Fullscreen API (hiding the browser's own chrome
-  // too) is a best-effort bonus on top of it, so a refusal here (an iframe
-  // with no allowfullscreen, an older iOS Safari with no element fullscreen)
-  // must not stop the declutter itself.
-  function nativeRequest() {
-    var el = document.documentElement;
-    var fn = el.requestFullscreen || el.webkitRequestFullscreen || el.mozRequestFullScreen || el.msRequestFullscreen;
-    if (!fn) { return; }
-    try { var p = fn.call(el); if (p && p.catch) { p.catch(function () {}); } } catch (e) { /* declutter still applies */ }
-  }
-  function nativeExit() {
-    var native = document.fullscreenElement || document.webkitFullscreenElement || document.mozFullScreenElement || document.msFullscreenElement;
-    if (!native) { return; }
-    var fn = document.exitFullscreen || document.webkitExitFullscreen || document.mozCancelFullScreen || document.msExitFullscreen;
-    if (!fn) { return; }
-    try { var p = fn.call(document); if (p && p.catch) { p.catch(function () {}); } } catch (e) {}
-  }
-  function isOn() { return document.body.classList.contains("pqlgb-fullscreen-on"); }
-  function setOn(on) {
-    document.body.classList.toggle("pqlgb-fullscreen-on", on);
-    btn.setAttribute("aria-pressed", on ? "true" : "false");
-    btn.title = on ? "Show the full board again" : "Show only the student monitoring data";
-    if (icon) { icon.innerHTML = on ? ICON_MINIMIZE : ICON_MAXIMIZE; }
-    if (label) { label.textContent = on ? "Exit fullscreen" : "Fullscreen"; }
-  }
-
-  btn.addEventListener("click", function () {
-    if (isOn()) { setOn(false); nativeExit(); } else { setOn(true); nativeRequest(); }
-  });
-
-  // The browser's own Esc handling (or a viewer leaving fullscreen through
-  // window chrome this page does not control) exits NATIVE fullscreen
-  // without ever touching our class, so the class has to follow the
-  // browser's reported state rather than only our own click handler.
-  ["fullscreenchange", "webkitfullscreenchange", "mozfullscreenchange", "MSFullscreenChange"].forEach(function (evt) {
-    document.addEventListener(evt, function () {
-      var native = document.fullscreenElement || document.webkitFullscreenElement || document.mozFullScreenElement || document.msFullscreenElement;
-      if (!native && isOn()) { setOn(false); }
-    });
-  });
-
-  // And Escape has to leave DECLUTTER mode even where native fullscreen
-  // never engaged in the first place -- the fullscreenchange listener above
-  // only fires when there was a native fullscreen element to leave.
-  document.addEventListener("keydown", function (event) {
-    if (event.key === "Escape" && isOn()) { setOn(false); nativeExit(); }
-  });
-})();
-</script>
+<?php echo pqh_ehel_board_fullscreen_js('pqlgb'); ?>
 <?php
 echo $OUTPUT->footer();

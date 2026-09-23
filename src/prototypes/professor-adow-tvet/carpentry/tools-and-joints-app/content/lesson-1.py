@@ -36,13 +36,23 @@ LESSON = {
         # reason: the whole job told through once, so that every step after
         # it is a thing being practised rather than a thing being met.
         #
-        # Drawn live rather than filmed. The Ehel builds play a rendered mp4
-        # where one exists and fall back to exactly this shape where none
-        # does; a film costs money per character of narration and needs
-        # somewhere to serve an 11 MB file from, neither of which a
-        # prototype has. The narration is spoken by the browser.
+        # A RENDERED FILM, and the same parts below it. This said the
+        # opposite until the film existed — that a prototype had neither the
+        # budget for narration nor anywhere to serve the file from. The
+        # narration was bought (2,375 characters), the film is 8.31 MB at
+        # 3:01, and the parts remain: Ehel plays the film and keeps the
+        # parts as the way back through it a piece at a time, which is what
+        # a learner wants after watching three minutes once.
         step("lecture", "Unit lecture", ["ADOW-CJ-TJ.02.1", "ADOW-CJ-TJ.03.1"],
              {"w": 420, "h": 240,
+              # The rendered film. Names are content-addressed by the tool that
+              # made them, so a re-render cannot be shadowed by a CDN holding a
+              # path for a year — and a changed film gets a changed name.
+              "video": {
+                  "src": "lecture-video/marking-out-and-cutting-a-halving-joint.a501162d.mp4",
+                  "captions": "lecture-video/marking-out-and-cutting-a-halving-joint.ac61c379.vtt",
+                  "poster": "lecture-video/marking-out-and-cutting-a-halving-joint.bc9fb3fd.jpg",
+              },
               "parts": [
                   {"sequence": "joint", "state": 1,
                    "say": "This is a halving joint. Two pieces of timber cross, and each one has had exactly half its thickness cut away, so the two faces finish flush. By the end of this lesson you will have marked one out and cut it."},
@@ -61,7 +71,7 @@ LESSON = {
                   {"sequence": "joint", "state": 1,
                    "say": "Pare to the line with a chisel, cutting from both faces towards the middle so the edges do not break out. Dry-fit before any glue. Check both diagonals. That is the whole job, and now you are going to do it."},
               ]},
-             ask="The whole job, told through once before you do any of it. Press Next part, or Listen again to hear a part twice.",
+             ask="Watch the film. Then go back through the job a part at a time below.",
              error=("Skipping the lecture and starting at the first thing that looks like doing.",
                     "Every step after this one is a part of the job you have now heard in full, "
                     "which is what makes them practice rather than instructions. Three minutes "

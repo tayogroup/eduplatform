@@ -120,7 +120,9 @@ for (const entry of fs.existsSync(coursesDir) ? fs.readdirSync(coursesDir).sort(
 // Everything under carpentry/ EXCEPT the sources that produce it: the Python
 // builder, the content files and __pycache__ are inputs, not output.
 const SKIP_DIRS = new Set(["content", "__pycache__", "courses"]);
-const APP_EXT = new Set([".html", ".css", ".js", ".svg", ".png", ".woff2"]);
+/* .mp4/.vtt/.jpg are here for the unit lecture films. Without them the
+   walk shipped a page whose <video> pointed at nothing on the zone. */
+const APP_EXT = new Set([".html", ".css", ".js", ".svg", ".png", ".woff2", ".mp4", ".vtt", ".jpg"]);
 
 // Walk the WHOLE school, not carpentry alone. Shapes and Measurements is a
 // cross-trade module and sits beside carpentry rather than inside it, so a

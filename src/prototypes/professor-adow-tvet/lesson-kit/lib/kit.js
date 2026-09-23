@@ -701,6 +701,45 @@
     const wrap = document.createElement("div");
     wrap.className = "carp-stage carp-lecture";
 
+    /* THE FILM, where one has been rendered. The same shape Ehel uses: the
+       lesson is watched once, and the parts below are the same lecture to
+       go back through a piece at a time. The step is done when the film
+       ends — pressing through the parts also finishes it, because a learner
+       who has watched it should not have to click eight more times. */
+    if (data.video && data.video.src) {
+      const v = document.createElement("video");
+      v.className = "carp-film";
+      v.controls = true;
+      v.preload = "metadata";
+      v.playsInline = true;
+      if (data.video.poster) v.poster = data.video.poster;
+      const src = document.createElement("source");
+      src.src = data.video.src;
+      src.type = "video/mp4";
+      v.appendChild(src);
+      if (data.video.captions) {
+        const tr = document.createElement("track");
+        tr.kind = "captions";
+        tr.src = data.video.captions;
+        tr.srclang = "en";
+        tr.label = "English";
+        /* NOT default. The film burns its own narration band into every
+           frame, so a caption track switched on by default draws the same
+           sentence twice — once in the picture and once over it. Ehel's
+           science.js attaches its track the same way and for the same
+           reason. It is here so a learner who wants captions can turn them
+           on, and so the words are in the file at all. */
+        v.appendChild(tr);
+      }
+      v.addEventListener("ended", () => done());
+      wrap.appendChild(v);
+      const under = document.createElement("p");
+      under.className = "carp-caption";
+      under.textContent = data.underFilm ||
+        "Watched it? Go back through it a part at a time below.";
+      wrap.appendChild(under);
+    }
+
     const counter = document.createElement("p");
     counter.className = "score";
     wrap.appendChild(counter);

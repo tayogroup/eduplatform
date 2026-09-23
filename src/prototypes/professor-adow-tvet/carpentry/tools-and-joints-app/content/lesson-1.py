@@ -39,8 +39,8 @@ LESSON = {
         # A RENDERED FILM, and the same parts below it. This said the
         # opposite until the film existed — that a prototype had neither the
         # budget for narration nor anywhere to serve the file from. The
-        # narration was bought (2,375 characters), the film is 8.31 MB at
-        # 3:01, and the parts remain: Ehel plays the film and keeps the
+        # narration was bought (3,097 characters over two passes), the film
+        # is 11.2 MB at 3:52, and the parts remain: Ehel plays the film and keeps the
         # parts as the way back through it a piece at a time, which is what
         # a learner wants after watching three minutes once.
         step("lecture", "Unit lecture", ["ADOW-CJ-TJ.02.1", "ADOW-CJ-TJ.03.1"],
@@ -49,9 +49,9 @@ LESSON = {
               # made them, so a re-render cannot be shadowed by a CDN holding a
               # path for a year — and a changed film gets a changed name.
               "video": {
-                  "src": "lecture-video/marking-out-and-cutting-a-halving-joint.a501162d.mp4",
-                  "captions": "lecture-video/marking-out-and-cutting-a-halving-joint.ac61c379.vtt",
-                  "poster": "lecture-video/marking-out-and-cutting-a-halving-joint.bc9fb3fd.jpg",
+                  "src": "lecture-video/marking-out-and-cutting-a-halving-joint.38840040.mp4",
+                  "captions": "lecture-video/marking-out-and-cutting-a-halving-joint.54b24e37.vtt",
+                  "poster": "lecture-video/marking-out-and-cutting-a-halving-joint.7cfa3a81.jpg",
               },
               "parts": [
                   {"sequence": "joint", "state": 1,

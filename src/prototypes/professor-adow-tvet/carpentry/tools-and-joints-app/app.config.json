@@ -1,0 +1,25 @@
+{
+  "_comment": "The Carpentry Tools & Joints prototype build, described for ../lesson-kit/build.py. This is a CLIENT DEMONSTRATION: one lesson at full depth plus the module hub, not the whole module. Everything a page draws lives in the kit; this file holds only what is specific to the module.",
+
+  "school": "Professor Adow TVET",
+  "module": "tools-joints",
+  "moduleTitle": "Carpentry Tools & Joints",
+
+  "_level": "TVET carries levels, not grades, and levelKind is stated end to end so nothing downstream reads levelNumber as a school year — the trap Intensive English fell into by sending its CEFR level as `grade`. Learners here are at grade 8 to 11 level.",
+  "levelKind": "tvet",
+  "levelNumber": 3,
+  "levelLabel": "Foundation",
+
+  "standards": "src/curriculum/adow-carpentry-foundation.json",
+
+  "hub": "index.html",
+  "hubIntro": "The families of wood joint, how a joint is marked out and cut, and how members are fastened and assembled. Theory, drawings and assessment are done here; every cut is made and signed off at the bench.",
+
+  "leadsNote": "This is foundation work. It is not a unit of the Kenyan Carpentry & Joinery Level 4 qualification — all eight of those units assume you already have tools and joints. What you learn here is what they are built on: marking out, sawing to a line and fitting a joint feed directly into Doors and Windows (0732 351 05D), Timber Furniture Items (0732 351 06D) and Cabinets (0732 351 08D).",
+
+  "endNote": "You have marked out and cut a halving joint on screen. The next one is in timber, at the bench, with an assessor watching — that is where the competency is signed off.",
+
+  "lessons": [
+    { "content": "lesson-1.py" }
+  ]
+}

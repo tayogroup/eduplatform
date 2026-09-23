@@ -213,7 +213,26 @@ Academy is the proof that this path works.
 **Phase 2 — the spine for the first course.** Standards file + validator.
 Reviewed by someone who has actually done the trade.
 
-**Phase 3 — one exemplar course, built deep.** Recommend **Solar Photovoltaic
+**Phase 3 — one exemplar course, built deep.**
+
+> **Amended 2026-09-23, same day: the client asked for CARPENTRY first.** The
+> exemplar is now a prototype of two carpentry modules — Carpentry Foundation
+> and Carpentry Tools & Joints — modelled on the Science Grade 4 standalone
+> lesson app, with the curriculum and materials supplied by the client. Decided
+> at the same time: one lesson built to full depth plus a module hub, UK / East
+> African terminology, all artwork drawn in code, learners at grade 8–11 level.
+> See [`src/prototypes/professor-adow-tvet/carpentry/BRIEF.md`](../src/prototypes/professor-adow-tvet/carpentry/BRIEF.md).
+>
+> Two things this changes in the sections above. The **step vocabulary** needs
+> far less reworking than the "Write fresh" table claims: the kit's `label`,
+> `order`, `sort`, `build`, `demo` and `experiment` already are the operations
+> carpentry wants, and only a `safety` kind is genuinely missing. What does
+> need writing fresh is the **drawing library** — `science.js` separates into
+> step machinery, drawings and sims, so the machinery transfers and the
+> drawings do not. And the Solar PV standards work below moves behind this.
+
+Solar PV remains the right first *qualification* to build out after the
+prototype lands. The original recommendation, for the record: **Solar Photovoltaic
 Installation & Maintenance**. It has the highest proportion of content an app
 can genuinely teach — array sizing, load calculation, wiring diagrams, fault
 finding, safety — so it exercises every renderer the TVET kit will need, and

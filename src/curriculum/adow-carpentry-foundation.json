@@ -1,0 +1,162 @@
+{
+  "framework": "Professor Adow TVET — Carpentry Foundation",
+  "curriculumCode": "ADOW-CJ-F",
+  "level": "Foundation (pre-Level 4)",
+  "published": "2026-09-23",
+  "note": "Authored for the client prototype. These two modules are NOT units of the Kenyan Carpentry & Joinery Level 4 qualification — every one of its eight units assumes the learner already has tools and joints. They are the foundation that feeds it, so each criterion below carries `leadsTo`: the Level 4 unit codes it prepares the learner for. Nothing here claims Level 4 delivery.",
+  "source": [
+    "Sokoine University of Agriculture, Faculty of Agriculture, Department of Agricultural Engineering and Land Planning — Workshop Technology Manual: Carpentry and Joinery, F. C. Kahimba, March 2010. Lessons 1 and 2. Structure and terminology.",
+    "Republic of Kenya Competency Based Curriculum for Carpentry and Joinery Level 4, ISCED 0732 354, Bungoma National Polytechnic / TVET CDACC, first published 2024, first revision 2025. Used ONLY for the unit codes and titles cited in leadsToFramework — no text is reproduced from it; that document is all-rights-reserved."
+  ],
+  "terminology": "UK / East African. Tenon saw, try square, marking gauge, smoothing plane, mm.",
+  "codePrefix": "ADOW-CJ",
+  "codeScheme": "<codePrefix>-<module>.<unit>.<criterion> — e.g. ADOW-CJ-TJ.02.3",
+  "assessmentModes": {
+    "knowledge": "The platform can assess this in full.",
+    "both": "The platform assesses the knowledge half; an assessor signs off the performance at the bench.",
+    "practical": "The platform teaches and rehearses it; competence is assessed ONLY at the bench. The app must never report this as certified."
+  },
+  "weightingNote": "The Level 4 curriculum this feeds sets theory:practical at 30:70 and requires a portfolio of evidence and third-party reports. The assessmentMode split below is written to respect that: the majority of criteria here are `both` or `practical`, and the app is honest about owning the theory.",
+
+  "leadsToFramework": {
+    "code": "0732 354",
+    "title": "Carpentry and Joinery Level 4 (Kenya, TVET CDACC)",
+    "units": [
+      { "code": "0732 251 01D", "title": "Temporary Works", "hours": 130 },
+      { "code": "0732 251 02D", "title": "Door and Window Frames", "hours": 100 },
+      { "code": "0732 251 03D", "title": "Cabinetry Works", "hours": 120 },
+      { "code": "0732 351 04D", "title": "Rough Carpentry", "hours": 80 },
+      { "code": "0732 351 05D", "title": "Doors and Windows", "hours": 120 },
+      { "code": "0732 351 06D", "title": "Timber Furniture Items", "hours": 100 },
+      { "code": "0732 351 07D", "title": "Timber Floors and Framed Structures", "hours": 100 },
+      { "code": "0732 351 08D", "title": "Cabinets", "hours": 80 }
+    ]
+  },
+
+  "modules": [
+    {
+      "key": "foundation",
+      "code": "CF",
+      "title": "Carpentry Foundation",
+      "description": "The hand tools of the trade, how they are kept, how the workshop is kept safe, and how a piece of timber is brought to size.",
+      "units": [
+        {
+          "number": 1,
+          "code": "CF.01",
+          "title": "Identify and group hand tools",
+          "criteria": [
+            { "code": "ADOW-CJ-CF.01.1", "text": "Group hand tools by what they do: measuring and marking, cutting, planing, boring, striking, holding.", "assessmentMode": "knowledge", "evidence": "Sorting task; written test.", "leadsTo": ["0732 251 01D", "0732 351 04D"] },
+            { "code": "ADOW-CJ-CF.01.2", "text": "Name the parts of a tenon saw, a smoothing plane, a firmer chisel, a try square and a marking gauge.", "assessmentMode": "knowledge", "evidence": "Labelling task; oral questioning.", "leadsTo": ["0732 251 02D", "0732 351 06D"] },
+            { "code": "ADOW-CJ-CF.01.3", "text": "Select the right saw for a cut: rip saw along the grain, tenon saw for small accurate cuts and tenons, dovetail saw for fine work, frame saw for straight and curved cuts.", "assessmentMode": "both", "evidence": "Tool selection observed at the bench.", "leadsTo": ["0732 351 05D", "0732 351 06D"] },
+            { "code": "ADOW-CJ-CF.01.4", "text": "Choose a mallet rather than a claw hammer when striking a chisel or a wooden surface, and say why.", "assessmentMode": "knowledge", "evidence": "Written test; oral questioning.", "leadsTo": ["0732 351 06D"] }
+          ]
+        },
+        {
+          "number": 2,
+          "code": "CF.02",
+          "title": "Care for and maintain hand tools",
+          "criteria": [
+            { "code": "ADOW-CJ-CF.02.1", "text": "Inspect a tool for defects before use and decide whether it is repaired, replaced or fit to use.", "assessmentMode": "both", "evidence": "Inspection observed; defect log.", "leadsTo": ["0732 251 01D"] },
+            { "code": "ADOW-CJ-CF.02.2", "text": "Identify a mushroomed striking head, a split handle, a loose head and a blunt edge as faults, and state the risk each carries.", "assessmentMode": "knowledge", "evidence": "Fault identification task.", "leadsTo": ["0732 251 01D"] },
+            { "code": "ADOW-CJ-CF.02.3", "text": "Grind and sharpen a cutting edge to give a clean cut, and protect the edge in storage.", "assessmentMode": "practical", "evidence": "Assessor sign-off at the bench.", "leadsTo": ["0732 351 06D"] },
+            { "code": "ADOW-CJ-CF.02.4", "text": "Store tools clean, dry and free of rust, and carry them safely between bench and site.", "assessmentMode": "both", "evidence": "Housekeeping observed; third-party report.", "leadsTo": ["0732 251 01D"] }
+          ]
+        },
+        {
+          "number": 3,
+          "code": "CF.03",
+          "title": "Work safely in the carpentry workshop",
+          "criteria": [
+            { "code": "ADOW-CJ-CF.03.1", "text": "Select and wear the personal protective equipment a task requires: eye protection, hearing protection, dust mask, gloves, safety boots.", "assessmentMode": "both", "evidence": "Observed before every practical.", "leadsTo": ["0732 251 01D", "0732 351 04D"] },
+            { "code": "ADOW-CJ-CF.03.2", "text": "State and follow the rules for hand tools: cut away from the body, never hold work in the palm, never use a tool for a job it was not made for.", "assessmentMode": "both", "evidence": "Written test; observed practice.", "leadsTo": ["0732 251 01D"] },
+            { "code": "ADOW-CJ-CF.03.3", "text": "State and follow the rules for power machines: guards in position, keys removed, stock checked for nails, push stick used, power isolated before any adjustment.", "assessmentMode": "both", "evidence": "Written test; assessor sign-off before machine access.", "leadsTo": ["0732 251 01D", "0732 351 04D"] },
+            { "code": "ADOW-CJ-CF.03.4", "text": "Identify why loose clothing, jewellery and gloves are hazards near rotating blades.", "assessmentMode": "knowledge", "evidence": "Hazard-spotting task.", "leadsTo": ["0732 251 01D"] },
+            { "code": "ADOW-CJ-CF.03.5", "text": "Keep the work area clear, swept and well lit, and explain how housekeeping prevents slips, trips and falls.", "assessmentMode": "both", "evidence": "Housekeeping observed.", "leadsTo": ["0732 251 01D"] }
+          ]
+        },
+        {
+          "number": 4,
+          "code": "CF.04",
+          "title": "Prepare timber to size",
+          "criteria": [
+            { "code": "ADOW-CJ-CF.04.1", "text": "Select timber for a job, softwood or hardwood, large enough that unnecessary joints are avoided.", "assessmentMode": "both", "evidence": "Selection justified to the assessor.", "leadsTo": ["0732 351 06D", "0732 351 07D"] },
+            { "code": "ADOW-CJ-CF.04.2", "text": "Mark raw timber to the required dimensions, leaving allowance for sawing and planing.", "assessmentMode": "both", "evidence": "Marked stock inspected.", "leadsTo": ["0732 251 02D", "0732 351 06D"] },
+            { "code": "ADOW-CJ-CF.04.3", "text": "Plane a face side straight, then a face edge straight and square to it, and mark both.", "assessmentMode": "practical", "evidence": "Assessor sign-off; checked with try square and straight edge.", "leadsTo": ["0732 351 05D", "0732 351 06D"] },
+            { "code": "ADOW-CJ-CF.04.4", "text": "Set a marking gauge from the face side and face edge to gauge width and thickness.", "assessmentMode": "both", "evidence": "Gauged stock inspected.", "leadsTo": ["0732 351 06D"] },
+            { "code": "ADOW-CJ-CF.04.5", "text": "Plane to the gauge lines to reach final dimensions, sawing first where the waste is heavy.", "assessmentMode": "practical", "evidence": "Finished workpiece measured against specification.", "leadsTo": ["0732 351 06D"] }
+          ]
+        }
+      ]
+    },
+    {
+      "key": "tools-joints",
+      "code": "TJ",
+      "title": "Carpentry Tools & Joints",
+      "description": "The families of wood joint, how a joint is marked out and cut, and how members are fastened and assembled.",
+      "units": [
+        {
+          "number": 1,
+          "code": "TJ.01",
+          "title": "Identify joint families and select a joint",
+          "criteria": [
+            { "code": "ADOW-CJ-TJ.01.1", "text": "Group wood joints into the five families: corner, frame, widening, lengthening and crossing joints.", "assessmentMode": "knowledge", "evidence": "Sorting task; written test.", "leadsTo": ["0732 351 06D", "0732 351 08D"] },
+            { "code": "ADOW-CJ-TJ.01.2", "text": "Name common joints within each family and say what each is used for.", "assessmentMode": "knowledge", "evidence": "Naming and matching task.", "leadsTo": ["0732 351 05D", "0732 351 06D"] },
+            { "code": "ADOW-CJ-TJ.01.3", "text": "Select a joint for a job, giving a reason from strength, appearance and the direction of load.", "assessmentMode": "both", "evidence": "Selection justified; written test.", "leadsTo": ["0732 351 06D", "0732 351 07D"] },
+            { "code": "ADOW-CJ-TJ.01.4", "text": "Explain why a widening joint is used for a table top and a lengthening joint for a truss member.", "assessmentMode": "knowledge", "evidence": "Oral questioning.", "leadsTo": ["0732 351 07D"] }
+          ]
+        },
+        {
+          "number": 2,
+          "code": "TJ.02",
+          "title": "Mark out a joint",
+          "criteria": [
+            { "code": "ADOW-CJ-TJ.02.1", "text": "Work from the face side and face edge for every measurement, and never from a damaged or unprepared end.", "assessmentMode": "both", "evidence": "Marked-out stock inspected.", "leadsTo": ["0732 251 02D", "0732 351 06D"] },
+            { "code": "ADOW-CJ-TJ.02.2", "text": "Square a shoulder line across the face and down both edges with a try square, continuing the line without stepping.", "assessmentMode": "practical", "evidence": "Assessor sign-off; lines checked for step.", "leadsTo": ["0732 351 05D", "0732 351 06D"] },
+            { "code": "ADOW-CJ-TJ.02.3", "text": "Set a marking gauge to a stated dimension and gauge the cheek lines from the face side on both members.", "assessmentMode": "both", "evidence": "Gauge setting checked; marked stock inspected.", "leadsTo": ["0732 351 06D"] },
+            { "code": "ADOW-CJ-TJ.02.4", "text": "Mark the waste clearly on the correct side of every line before any cut is made.", "assessmentMode": "both", "evidence": "Marked stock inspected before cutting.", "leadsTo": ["0732 351 05D", "0732 351 06D"] }
+          ]
+        },
+        {
+          "number": 3,
+          "code": "TJ.03",
+          "title": "Cut a joint",
+          "criteria": [
+            { "code": "ADOW-CJ-TJ.03.1", "text": "Saw on the waste side of the line, leaving the line on the work.", "assessmentMode": "practical", "evidence": "Cut inspected against the line; assessor sign-off.", "leadsTo": ["0732 351 05D", "0732 351 06D"] },
+            { "code": "ADOW-CJ-TJ.03.2", "text": "Start a tenon saw cut with the saw held at a low angle and the thumb guiding the blade clear of the teeth.", "assessmentMode": "practical", "evidence": "Observed at the bench.", "leadsTo": ["0732 351 06D"] },
+            { "code": "ADOW-CJ-TJ.03.3", "text": "Saw down to the shoulder line square in both planes, checking the far face as the cut proceeds.", "assessmentMode": "practical", "evidence": "Cut checked with try square; assessor sign-off.", "leadsTo": ["0732 351 06D"] },
+            { "code": "ADOW-CJ-TJ.03.4", "text": "Pare waste to the line with a chisel, cutting from both faces towards the middle so the edge does not break out.", "assessmentMode": "practical", "evidence": "Finished joint inspected for break-out.", "leadsTo": ["0732 351 06D", "0732 351 08D"] }
+          ]
+        },
+        {
+          "number": 4,
+          "code": "TJ.04",
+          "title": "Fasten members with nails, screws and glue",
+          "criteria": [
+            { "code": "ADOW-CJ-TJ.04.1", "text": "Select a nail for a job from its head and section: wire nail for rough work, oval brad where splitting must be avoided, lost head where the head is to be punched and filled, panel pin for light work with glue.", "assessmentMode": "knowledge", "evidence": "Selection task; written test.", "leadsTo": ["0732 351 04D", "0732 351 07D"] },
+            { "code": "ADOW-CJ-TJ.04.2", "text": "Apply the rule that two thirds of a fastener's length should enter the lower member, and pre-drill in hardwood or near an end to avoid splitting.", "assessmentMode": "both", "evidence": "Work inspected for splitting; written test.", "leadsTo": ["0732 351 06D"] },
+            { "code": "ADOW-CJ-TJ.04.3", "text": "Select a screw by head type for the job: countersunk flush in woodwork, round head for fittings without countersunk holes, coach screw tightened with a spanner for heavy work.", "assessmentMode": "knowledge", "evidence": "Selection task.", "leadsTo": ["0732 351 06D", "0732 351 08D"] },
+            { "code": "ADOW-CJ-TJ.04.4", "text": "Apply glue evenly and sparingly so that it does not spill over when the joint is cramped up.", "assessmentMode": "both", "evidence": "Assembled joint inspected for squeeze-out.", "leadsTo": ["0732 351 06D"] }
+          ]
+        },
+        {
+          "number": 5,
+          "code": "TJ.05",
+          "title": "Assemble and check a joint",
+          "criteria": [
+            { "code": "ADOW-CJ-TJ.05.1", "text": "Dry-fit a joint before glue is applied and correct the fit rather than forcing it.", "assessmentMode": "practical", "evidence": "Dry fit observed; assessor sign-off.", "leadsTo": ["0732 351 06D"] },
+            { "code": "ADOW-CJ-TJ.05.2", "text": "Explain why an over-tight tenon splits the mortise and a slack one gives a weak joint.", "assessmentMode": "knowledge", "evidence": "Oral questioning; written test.", "leadsTo": ["0732 351 05D", "0732 351 06D"] },
+            { "code": "ADOW-CJ-TJ.05.3", "text": "Cramp up an assembly square, checking by measuring both diagonals.", "assessmentMode": "practical", "evidence": "Diagonals measured; assessor sign-off.", "leadsTo": ["0732 351 06D", "0732 351 08D"] },
+            { "code": "ADOW-CJ-TJ.05.4", "text": "Clean up the assembled work and inspect it against the drawing before it is passed on.", "assessmentMode": "both", "evidence": "Finished item inspected against specification.", "leadsTo": ["0732 351 06D", "0732 351 08D"] }
+          ]
+        }
+      ]
+    }
+  ],
+
+  "counts": {
+    "modules": 2,
+    "units": 9,
+    "criteria": 38,
+    "byAssessmentMode": { "knowledge": 11, "both": 17, "practical": 10 }
+  }
+}

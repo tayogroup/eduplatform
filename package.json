@@ -208,7 +208,9 @@
     "check:platform-cors": "node tools/check-platform-cors.mjs",
     "catalog:adow": "node tools/generate-adow-catalog.js",
     "deploy:adow:dry": "node tools/generate-adow-catalog.js --quiet && node tools/upload-adow-to-bunny.js",
-    "deploy:adow": "node tools/generate-adow-catalog.js --quiet && node tools/upload-adow-to-bunny.js --confirm"
+    "deploy:adow": "node tools/generate-adow-catalog.js --quiet && node tools/upload-adow-to-bunny.js --confirm",
+    "validate:adow-standards": "node tools/validate-adow-standards.mjs",
+    "build:adow-carpentry": "cd src/prototypes/professor-adow-tvet/carpentry/lesson-kit && python build.py --app ../tools-and-joints-app && python check_coverage.py --app ../tools-and-joints-app"
   },
   "devDependencies": {
     "@playwright/test": "^1.58.2",

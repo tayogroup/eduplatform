@@ -59,16 +59,22 @@ git clone --filter=blob:none --no-checkout https://github.com/tayogroup/eduplatf
 ```
 
 ```bash
-cd eduplatform && git sparse-checkout set tools .claude docs src/prototypes/ehel-academy/shared src/prototypes/ehel-academy/science && git checkout main
+cd eduplatform && git sparse-checkout set tools .claude docs src/prototypes/ehel-academy/shared src/prototypes/ehel-academy/science/lesson-kit src/prototypes/ehel-academy/science/grade-3-app && git checkout main
 ```
 
 `.claude` is in that list on purpose: `/ehel-lecture-films` is not a separate
 skill directory, it is `.claude/workflows/ehel-lecture-films.js`, which is
 tracked and so arrives with the clone.
 
-Add `src/prototypes/ehel-academy/mathematics` (or another subject) to that
-`sparse-checkout set` line if B will write films for it. Blobs outside the cone
-are fetched lazily, so nothing else downloads unless something reads it.
+**List the grade apps B is writing, never the whole subject.** Measured tracked
+sizes: `science` entire is 2,208 MB, of which `science/media` alone is 1,934 MB
+— per-subject narration audio a film writer never opens. One grade app is 8 MB,
+`lesson-kit` under 1 MB. So the line above costs about 25 MB; naming the subject
+instead costs 2.2 GB for nothing.
+
+Add one path per grade app B will write (`.../mathematics/grade-2-app`, and so
+on). Note Mathematics Grade 1 is `grade-1-app/g1v2`. Blobs outside the cone are
+fetched lazily, so nothing else downloads unless something reads it.
 
 ## 3. Install
 

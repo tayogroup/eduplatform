@@ -159,6 +159,7 @@ PAGE = """<!doctype html>
   </div>
 </div>
 <script src="{lib}/carpentry.js"></script>
+{extrascripts}
 <script>
 (function () {{
   var slides = [].slice.call(document.querySelectorAll('.slide'));
@@ -250,6 +251,9 @@ def build_lesson(lesson, cfg, criteria, out_dir, lib):
         endnote=esc(cfg.get("endNote", "")),
         hub=esc(cfg["hub"]),
         lib=esc(lib),
+        extrascripts="\n".join(
+            '<script src="%s/%s"></script>' % (esc(lib), esc(f))
+            for f in cfg.get("extraScripts", [])),
         stepdata=json.dumps(stepdata, ensure_ascii=False),
     )
     path = os.path.join(out_dir, lesson["slug"] + ".html")
@@ -293,8 +297,36 @@ HUB = """<!doctype html>
 """
 
 
-def build_hub(lessons, cfg, fw, criteria, out_dir, lib):
+def all_claimed(app_dir):
+    """Criteria claimed by EVERY app in the carpentry prototype, not just
+    this one. The two modules are one course to a learner, and a lesson
+    freely cites criteria from the other module — the Tools & Joints
+    lesson teaches five Carpentry Foundation criteria along the way. A
+    hub that counted only its own app's lessons would under-report its
+    own module and read as a bug."""
+    root = os.path.dirname(app_dir)
     claimed = set()
+    for entry in sorted(os.listdir(root)):
+        d = os.path.join(root, entry)
+        cfg_path = os.path.join(d, "app.config.json")
+        if not os.path.isdir(d) or not os.path.exists(cfg_path):
+            continue
+        with open(cfg_path, encoding="utf-8") as fh:
+            hub = json.load(fh)["hub"]
+        for f in sorted(os.listdir(d)):
+            if not f.endswith(".html") or f == hub:
+                continue
+            with open(os.path.join(d, f), encoding="utf-8") as fh:
+                html = fh.read()
+            for m in re.finditer(r'data-criteria="([^"]*)"', html):
+                claimed.update(c for c in m.group(1).split(",") if c)
+    return claimed
+
+
+def build_hub(lessons, cfg, fw, criteria, out_dir, lib):
+    # Read back off the BUILT pages of every app, then add this app's own
+    # lessons — which may not be written to disk yet on a --hub-only run.
+    claimed = all_claimed(out_dir)
     for lesson in lessons:
         for s in lesson["steps"]:
             claimed.update(s["criteria"])
@@ -308,27 +340,42 @@ def build_hub(lessons, cfg, fw, criteria, out_dir, lib):
             '<span class="txt"><b>%s</b><br><span style="color:var(--muted);font-size:16px">%s · %d steps</span></span></a>'
             % (esc(lesson["slug"]), esc(lesson["title"]), esc(lesson["blurb"]), n_steps))
 
+    # A hub shows ITS OWN module's units. Listing all nine on both hubs
+    # made each one look like it belonged to the other module too.
+    mine = [m for m in fw["modules"] if m["key"] == cfg["module"]]
+    if not mine:
+        die('app.config.json module "%s" is not a module of the standards file' % cfg["module"])
+    mod = mine[0]
+
     unit_rows = []
     total = built = 0
-    for mod in fw["modules"]:
-        for unit in mod["units"]:
-            n = len(unit["criteria"])
-            got = sum(1 for c in unit["criteria"] if c["code"] in claimed)
-            total += n
-            built += got
-            state = "ok" if got == n else ""
-            unit_rows.append(
-                '<div class="carp-check %s"><span class="box" aria-hidden="true"></span>'
-                '<span class="txt"><b>%s %s</b><br><span style="color:var(--muted);font-size:16px">'
-                '%s · %d of %d criteria in this prototype</span></span></div>'
-                % (state, esc(unit["code"]), esc(unit["title"]), esc(mod["title"]), got, n))
+    for unit in mod["units"]:
+        n = len(unit["criteria"])
+        got = sum(1 for c in unit["criteria"] if c["code"] in claimed)
+        total += n
+        built += got
+        state = "ok" if got == n else ""
+        unit_rows.append(
+            '<div class="carp-check %s"><span class="box" aria-hidden="true"></span>'
+            '<span class="txt"><b>%s %s</b><br><span style="color:var(--muted);font-size:16px">'
+            '%d of %d criteria taught</span></span></div>'
+            % (state, esc(unit["code"]), esc(unit["title"]), got, n))
 
-    coverage = ("This prototype builds %d of the %d performance criteria in the two modules. "
-                "The rest are written into the standards and not yet taught — a prototype "
-                "shows the shape, not the whole course." % (built, total))
+    whole = sum(len(u["criteria"]) for m in fw["modules"] for u in m["units"])
+    whole_got = sum(1 for m in fw["modules"] for u in m["units"]
+                    for c in u["criteria"] if c["code"] in claimed)
+    if built == total:
+        coverage = ("Every one of this module's %d performance criteria is taught. "
+                    "Across both modules the prototype reaches %d of %d."
+                    % (total, whole_got, whole))
+    else:
+        coverage = ("This prototype teaches %d of this module's %d performance criteria, "
+                    "and %d of %d across both modules. The rest are written into the "
+                    "standards and not yet taught — a prototype shows the shape, not the "
+                    "whole course." % (built, total, whole_got, whole))
 
     html = HUB.format(
-        module=esc(cfg["moduleTitle"]), school=esc(cfg["school"]), level=esc(cfg["levelLabel"]),
+        module=esc(mod["title"]), school=esc(cfg["school"]), level=esc(cfg["levelLabel"]),
         intro=esc(cfg.get("hubIntro", "")), leads=esc(cfg.get("leadsNote", "")),
         lessons="".join(rows), units="".join(unit_rows), coverage=esc(coverage), lib=esc(lib))
     path = os.path.join(out_dir, cfg["hub"])

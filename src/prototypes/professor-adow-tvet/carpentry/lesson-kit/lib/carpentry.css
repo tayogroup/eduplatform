@@ -231,3 +231,51 @@
   font-family: ui-monospace, "Cascadia Mono", Consolas, monospace;
   color: var(--teal);
 }
+
+/* ---- the gauge slider (Foundation: setgauge) ------------------------ */
+/* A continuous control, because a trade of millimetres should be asked
+   for a millimetre at least once rather than offered three options. The
+   control is 44px tall so the whole strip is the target, not just the
+   thumb. */
+.carp-slider {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 100%;
+  max-width: 560px;
+  margin: 0 auto;
+  height: 44px;
+  background: transparent;
+  cursor: pointer;
+}
+.carp-slider:focus-visible { outline: 4px solid var(--teal); outline-offset: 3px; border-radius: 10px; }
+.carp-slider::-webkit-slider-runnable-track {
+  height: 12px;
+  border-radius: 999px;
+  background: var(--cell);
+  border: 1px solid var(--line);
+}
+.carp-slider::-moz-range-track {
+  height: 12px;
+  border-radius: 999px;
+  background: var(--cell);
+  border: 1px solid var(--line);
+}
+.carp-slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 34px;
+  height: 34px;
+  margin-top: -12px;
+  border-radius: 50%;
+  background: var(--gold);
+  border: 3px solid var(--ground);
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.4);
+}
+.carp-slider::-moz-range-thumb {
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  background: var(--gold);
+  border: 3px solid var(--ground);
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.4);
+}

@@ -41,6 +41,19 @@ STANDARDS = os.path.join(REPO, "src", "curriculum", "adow-carpentry-foundation.j
 # worse than no probe. Absent from this map means "not probed", which is
 # reported as such rather than counted as a pass.
 PROBES = {
+    "ADOW-CJ-CF.01.1": ["planing", "striking"],
+    "ADOW-CJ-CF.01.4": ["mallet"],
+    "ADOW-CJ-CF.02.1": ["inspect"],
+    "ADOW-CJ-CF.02.2": ["mushroom", "split"],
+    "ADOW-CJ-CF.02.3": ["hone"],
+    "ADOW-CJ-CF.02.4": ["stored"],
+    "ADOW-CJ-CF.03.3": ["guard", "isolate"],
+    "ADOW-CJ-CF.03.4": ["gloves"],
+    "ADOW-CJ-CF.03.5": ["floor"],
+    "ADOW-CJ-CF.04.1": ["large enough"],
+    "ADOW-CJ-CF.04.2": ["allowance"],
+    "ADOW-CJ-CF.04.4": ["gauge"],
+    "ADOW-CJ-CF.04.5": ["gauge lines"],
     "ADOW-CJ-TJ.02.1": ["face side", "face edge"],
     "ADOW-CJ-TJ.02.2": ["try square", "shoulder"],
     "ADOW-CJ-TJ.02.3": ["gauge"],
@@ -65,8 +78,6 @@ def main():
 
     with open(STANDARDS, encoding="utf-8") as fh:
         fw = json.load(fh)
-    with open(os.path.join(app_dir, "app.config.json"), encoding="utf-8") as fh:
-        cfg = json.load(fh)
 
     published = {}
     for mod in fw["modules"]:
@@ -74,15 +85,29 @@ def main():
             for c in unit["criteria"]:
                 published[c["code"]] = (mod["title"], unit["code"], c["assessmentMode"])
 
-    pages = [f for f in os.listdir(app_dir)
-             if f.endswith(".html") and f != cfg["hub"]]
+    # EVERY app in the prototype, not just the one named. The two modules
+    # are one course and a lesson cites criteria from the other module
+    # freely, so a per-app check would report a module as under-taught
+    # because the teaching lives next door.
+    root = os.path.dirname(app_dir)
+    pages = []
+    for entry in sorted(os.listdir(root)):
+        d = os.path.join(root, entry)
+        cfg_path = os.path.join(d, "app.config.json")
+        if not os.path.isdir(d) or not os.path.exists(cfg_path):
+            continue
+        with open(cfg_path, encoding="utf-8") as fh:
+            hub = json.load(fh)["hub"]
+        for f in sorted(os.listdir(d)):
+            if f.endswith(".html") and f != hub:
+                pages.append(os.path.join(entry, f))
     if not pages:
-        sys.exit("NOT CHECKED: no built lesson pages in %s — run build.py first." % app_dir)
+        sys.exit("NOT CHECKED: no built lesson pages under %s — run build.py first." % root)
 
     claimed = {}
     problems = []
-    for page in sorted(pages):
-        with open(os.path.join(app_dir, page), encoding="utf-8") as fh:
+    for page in pages:
+        with open(os.path.join(root, page), encoding="utf-8") as fh:
             html = fh.read()
         text = re.sub(r"<[^>]+>", " ", html).lower()
         codes = set()

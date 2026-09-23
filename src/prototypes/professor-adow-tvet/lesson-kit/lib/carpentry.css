@@ -282,3 +282,55 @@
   border: 3px solid var(--ground);
   box-shadow: 0 2px 6px rgba(0, 0, 0, 0.4);
 }
+
+/* ---- the calc answer row (Shapes and Measurements) ------------------ */
+/* A typed number, not three options. A trade estimate is a figure
+   somebody has to produce and defend, and multiple choice lets a learner
+   recognise an answer they could not have reached. */
+.sm-answer {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+.sm-input {
+  width: 8ch;
+  min-height: 52px;
+  padding: 8px 12px;
+  border-radius: 12px;
+  border: 2px solid var(--line);
+  background: var(--card);
+  color: var(--ink);
+  font-family: "Inter", "Segoe UI", sans-serif;
+  font-size: 22px;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+  text-align: right;
+}
+.sm-input:focus-visible { outline: 4px solid var(--teal); outline-offset: 2px; }
+.sm-input:disabled { opacity: 0.6; }
+.sm-unit {
+  font-family: "Inter", "Segoe UI", sans-serif;
+  font-weight: 700;
+  font-size: 18px;
+  color: var(--muted);
+  min-width: 3ch;
+}
+
+/* The working, revealed only after the answer is given — showing it
+   first turns a calculation into a reading exercise. */
+.sm-working {
+  margin: 0 auto;
+  padding-left: 26px;
+  max-width: 520px;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  color: var(--ink);
+  font-size: 17px;
+  font-variant-numeric: tabular-nums;
+  line-height: 1.4;
+}
+.sm-working:empty { display: none; }
+.sm-working li::marker { color: var(--teal); font-weight: 700; }

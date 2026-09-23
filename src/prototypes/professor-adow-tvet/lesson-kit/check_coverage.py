@@ -33,14 +33,48 @@ import re
 import sys
 
 HERE = os.path.dirname(os.path.abspath(__file__))
-REPO = os.path.abspath(os.path.join(HERE, "..", "..", "..", "..", ".."))
-STANDARDS = os.path.join(REPO, "src", "curriculum", "adow-carpentry-foundation.json")
+REPO = os.path.abspath(os.path.join(HERE, "..", "..", "..", ".."))
+
+
+def school_root(app_dir):
+    here = app_dir
+    for _ in range(6):
+        if os.path.exists(os.path.join(here, "school.config.json")):
+            return here
+        here = os.path.dirname(here)
+    sys.exit("NOT CHECKED: no school.config.json above %s" % app_dir)
 
 # Criterion -> the words a page must actually use if it teaches it.
 # Deliberately short and deliberately incomplete: a probe that guesses is
 # worse than no probe. Absent from this map means "not probed", which is
 # reported as such rather than counted as a pass.
 PROBES = {
+    # --- Shapes and Measurements ---
+    "ADOW-SM-SM.01.1": ["millimetre"],
+    "ADOW-SM-SM.01.2": ["datum"],
+    "ADOW-SM-SM.01.3": ["tolerance"],
+    "ADOW-SM-SM.01.4": ["sag"],
+    "ADOW-SM-SM.02.1": ["1000 mm"],
+    "ADOW-SM-SM.02.2": ["one unit"],
+    "ADOW-SM-SM.02.3": ["litres"],
+    "ADOW-SM-SM.02.4": ["wrong kind"],
+    "ADOW-SM-SM.03.1": ["perimeter"],
+    "ADOW-SM-SM.03.2": ["triangle", "circle"],
+    "ADOW-SM-SM.03.3": ["split"],
+    "ADOW-SM-SM.03.4": ["openings"],
+    "ADOW-SM-SM.04.1": ["cylinder"],
+    "ADOW-SM-SM.04.2": ["litres"],
+    "ADOW-SM-SM.04.3": ["density"],
+    "ADOW-SM-SM.04.4": ["trench"],
+    "ADOW-SM-SM.05.1": ["plumb"],
+    "ADOW-SM-SM.05.2": ["bubble"],
+    "ADOW-SM-SM.05.3": ["diagonals"],
+    "ADOW-SM-SM.05.4": ["revers"],
+    "ADOW-SM-SM.06.1": ["3-4-5"],
+    "ADOW-SM-SM.06.2": ["tiles"],
+    "ADOW-SM-SM.06.3": ["allowance"],
+    "ADOW-SM-SM.06.4": ["estimate"],
+    # --- Carpentry ---
     "ADOW-CJ-CF.01.1": ["planing", "striking"],
     "ADOW-CJ-CF.01.4": ["mallet"],
     "ADOW-CJ-CF.02.1": ["inspect"],
@@ -88,31 +122,50 @@ def main():
     args = ap.parse_args()
     app_dir = os.path.abspath(os.path.join(os.getcwd(), args.app))
 
-    with open(STANDARDS, encoding="utf-8") as fh:
+    with open(os.path.join(app_dir, "app.config.json"), encoding="utf-8") as fh:
+        app_cfg = json.load(fh)
+    standards = os.path.join(REPO, app_cfg["standards"].replace("/", os.sep))
+    with open(standards, encoding="utf-8") as fh:
         fw = json.load(fh)
 
+    # The named app's standards decide what is REPORTED as coverage.
     published = {}
     for mod in fw["modules"]:
         for unit in mod["units"]:
             for c in unit["criteria"]:
                 published[c["code"]] = (mod["title"], unit["code"], c["assessmentMode"])
 
+    # But this walks every page in the school, and the school has more than
+    # one standards file — Shapes and Measurements is a cross-trade module
+    # with its own. Validating every page against ONE file made each module
+    # fail on the other's codes. A claim is real if ANY of the school's
+    # standards publishes it; coverage is still reported against this app's.
+    known = set()
+    curriculum = os.path.join(REPO, "src", "curriculum")
+    for name in sorted(os.listdir(curriculum)):
+        if not (name.startswith("adow-") and name.endswith(".json")):
+            continue
+        with open(os.path.join(curriculum, name), encoding="utf-8") as fh:
+            other = json.load(fh)
+        for mod in other["modules"]:
+            for unit in mod["units"]:
+                for c in unit["criteria"]:
+                    known.add(c["code"])
+
     # EVERY app in the prototype, not just the one named. The two modules
     # are one course and a lesson cites criteria from the other module
     # freely, so a per-app check would report a module as under-taught
     # because the teaching lives next door.
-    root = os.path.dirname(app_dir)
+    root = school_root(app_dir)
     pages = []
-    for entry in sorted(os.listdir(root)):
-        d = os.path.join(root, entry)
-        cfg_path = os.path.join(d, "app.config.json")
-        if not os.path.isdir(d) or not os.path.exists(cfg_path):
+    for d, _dirs, files in os.walk(root):
+        if "app.config.json" not in files:
             continue
-        with open(cfg_path, encoding="utf-8") as fh:
+        with open(os.path.join(d, "app.config.json"), encoding="utf-8") as fh:
             hub = json.load(fh)["hub"]
-        for f in sorted(os.listdir(d)):
+        for f in sorted(files):
             if f.endswith(".html") and f != hub:
-                pages.append(os.path.join(entry, f))
+                pages.append(os.path.relpath(os.path.join(d, f), root))
     if not pages:
         sys.exit("NOT CHECKED: no built lesson pages under %s — run build.py first." % root)
 
@@ -130,9 +183,11 @@ def main():
         if not codes:
             problems.append("%s claims no criteria at all" % page)
         for code in sorted(codes):
-            if code not in published:
-                problems.append("%s claims %s, which the standards do not publish" % (page, code))
+            if code not in known:
+                problems.append("%s claims %s, which no standards file in this school publishes" % (page, code))
                 continue
+            if code not in published:
+                continue  # a real code, but from the other module's standards
             claimed.setdefault(code, []).append(page)
             for word in PROBES.get(code, []):
                 if word.lower() not in text:

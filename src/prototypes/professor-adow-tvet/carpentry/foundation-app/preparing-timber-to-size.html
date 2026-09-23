@@ -5,8 +5,8 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Preparing Timber to Size · Professor Adow TVET</title>
 <meta name="description" content="Group the hand tools by what they do, name the parts of a smoothing plane, take four damaged tools out of service, choose timber for a job, and take a rough-sawn board to a straight, square, finished size.">
-<link rel="stylesheet" href="../lesson-kit/lib/lesson.css">
-<link rel="stylesheet" href="../lesson-kit/lib/carpentry.css">
+<link rel="stylesheet" href="../../lesson-kit/lib/lesson.css">
+<link rel="stylesheet" href="../../lesson-kit/lib/carpentry.css">
 </head>
 <body>
 <a class="skip" href="#lesson">Skip to the lesson</a>
@@ -106,8 +106,8 @@
     <button class="big" id="next" type="button">Next step</button>
   </div>
 </div>
-<script src="../lesson-kit/lib/carpentry.js"></script>
-<script src="../lesson-kit/lib/carpentry-foundation.js"></script>
+<script src="../../lesson-kit/lib/carpentry.js"></script>
+<script src="../../lesson-kit/lib/carpentry-foundation.js"></script>
 <script>
 (function () {
   var slides = [].slice.call(document.querySelectorAll('.slide'));
@@ -145,8 +145,21 @@
     if (mount && !mount.dataset.built) {
       mount.dataset.built = '1';
       var spec = STEPS[slides[at].dataset.step];
-      if (spec && window.CARP.R[spec.kind]) {
+      /* A step that throws used to leave EMPTY SPACE and a line in a
+         console nobody has open — that is how a `label` pointing at a
+         drawing with no parts shipped. The build gate can see a missing
+         renderer; it cannot see bad data. So the page says so itself. */
+      try {
+        if (!spec) throw new Error('no step data');
+        if (!window.CARP.R[spec.kind]) throw new Error('no renderer for kind "' + spec.kind + '"');
         window.CARP.R[spec.kind](spec.data, mount, function () { mount.dataset.done = '1'; });
+      } catch (err) {
+        mount.dataset.failed = '1';
+        var warn = document.createElement('p');
+        warn.className = 'fb bad';
+        warn.textContent = 'This step did not render: ' + err.message;
+        mount.appendChild(warn);
+        if (window.console) console.error('step ' + slides[at].dataset.step, err);
       }
     }
     document.getElementById('lesson').focus({ preventScroll: true });

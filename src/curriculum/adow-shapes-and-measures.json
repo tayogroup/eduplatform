@@ -1,0 +1,130 @@
+{
+  "framework": "Professor Adow TVET — Shapes and Measurements",
+  "curriculumCode": "ADOW-SM-1",
+  "level": "Core (all departments)",
+  "published": "2026-09-23",
+  "note": "A CROSS-TRADE core module, not a carpentry one. Measuring, setting out, area, volume and estimating are the same skills in a joinery shop, a welding bay, an irrigation trench and a dairy processing room — only the units and the tolerances change, so every worked example below names the trade it comes from. This is the numeracy every department's practical work rests on, and it is taught once.",
+  "source": [
+    "Written for Professor Adow TVET, 2026-09-23. Structure modelled on the Ehel Academy Mathematics Stage 4 Shape and Measures lesson (geometry and measurement taught through drawn, manipulable figures rather than worked symbols), with every context replaced by a trade one.",
+    "Unit codes in leadsToFramework are from the Republic of Kenya Competency Based Curriculum for Carpentry and Joinery Level 4, ISCED 0732 354 (TVET CDACC). Cited, never reproduced."
+  ],
+  "terminology": "UK / East African. Millimetres and metres, square metres, cubic metres and litres. Tape, rule, try square, spirit level, plumb bob.",
+  "codePrefix": "ADOW-SM",
+  "codeScheme": "<codePrefix>-<module>.<unit>.<criterion> — e.g. ADOW-SM-SM.03.2",
+
+  "servesDepartments": [
+    "Construction & Building Trades",
+    "Mechanical & Automotive Engineering",
+    "Electronics & Renewable Energy",
+    "Agriculture & Crop Production",
+    "Livestock & Animal Sciences",
+    "Food & Agro-Processing"
+  ],
+
+  "assessmentModes": {
+    "knowledge": "The platform can assess this in full.",
+    "both": "The platform assesses the knowledge half; an assessor signs off the performance at the bench or on site.",
+    "practical": "The platform teaches and rehearses it; competence is assessed ONLY with real tools on real work. The app must never report this as certified."
+  },
+  "weightingNote": "This module is deliberately MORE app-assessable than a trade module, and that is a fact about measurement rather than a softening of the 30:70 rule. Reading a scale, converting a unit and calculating a quantity are done correctly or not, and a screen can tell which. Holding a tape true over four metres, or reading a level on a real wall, cannot be — those stay practical. The split below reflects that honestly rather than flattering it.",
+
+  "leadsToFramework": {
+    "code": "0732 354",
+    "title": "Carpentry and Joinery Level 4 (Kenya, TVET CDACC)",
+    "note": "The only published framework sourced for this school so far. The other five departments' frameworks are not in hand, so a criterion that plainly serves them carries no leadsTo rather than a guessed one — an empty field here means 'not yet mapped', never 'not relevant'.",
+    "units": [
+      { "code": "0732 251 01D", "title": "Temporary Works", "hours": 130 },
+      { "code": "0732 251 02D", "title": "Door and Window Frames", "hours": 100 },
+      { "code": "0732 251 03D", "title": "Cabinetry Works", "hours": 120 },
+      { "code": "0732 351 04D", "title": "Rough Carpentry", "hours": 80 },
+      { "code": "0732 351 05D", "title": "Doors and Windows", "hours": 120 },
+      { "code": "0732 351 06D", "title": "Timber Furniture Items", "hours": 100 },
+      { "code": "0732 351 07D", "title": "Timber Floors and Framed Structures", "hours": 100 },
+      { "code": "0732 351 08D", "title": "Cabinets", "hours": 80 }
+    ]
+  },
+
+  "modules": [
+    {
+      "key": "shapes-measures",
+      "code": "SM",
+      "title": "Shapes and Measurements",
+      "description": "Reading a measurement, converting between units, working out area and volume, proving a corner square and a surface level, and estimating the materials a job needs.",
+      "units": [
+        {
+          "number": 1,
+          "code": "SM.01",
+          "title": "Read a measurement",
+          "criteria": [
+            { "code": "ADOW-SM-SM.01.1", "text": "Read a steel rule or tape to the nearest millimetre, naming the value rather than the nearest mark.", "assessmentMode": "knowledge", "evidence": "Reading task; written test.", "leadsTo": ["0732 251 02D", "0732 351 06D"] },
+            { "code": "ADOW-SM-SM.01.2", "text": "Take a measurement from a true end or datum, never from a damaged end or the tape's own hook when it is bent.", "assessmentMode": "both", "evidence": "Observed measuring; assessor sign-off.", "leadsTo": ["0732 251 01D"] },
+            { "code": "ADOW-SM-SM.01.3", "text": "State the tolerance a job allows and say whether a given measurement is inside it.", "assessmentMode": "knowledge", "evidence": "Written test against a stated tolerance.", "leadsTo": ["0732 351 06D"] },
+            { "code": "ADOW-SM-SM.01.4", "text": "Hold a tape true over a long span, without sag or twist, and repeat the measurement to check it.", "assessmentMode": "practical", "evidence": "Assessor sign-off on site.", "leadsTo": ["0732 351 07D"] }
+          ]
+        },
+        {
+          "number": 2,
+          "code": "SM.02",
+          "title": "Units and converting between them",
+          "criteria": [
+            { "code": "ADOW-SM-SM.02.1", "text": "Convert between millimetres, centimetres and metres without changing the quantity.", "assessmentMode": "knowledge", "evidence": "Conversion task; written test.", "leadsTo": [] },
+            { "code": "ADOW-SM-SM.02.2", "text": "Work in ONE unit throughout a calculation and state which unit an answer is in.", "assessmentMode": "knowledge", "evidence": "Marked calculation showing units.", "leadsTo": ["0732 351 06D"] },
+            { "code": "ADOW-SM-SM.02.3", "text": "Convert between square metres and square millimetres, and between cubic metres and litres, correctly.", "assessmentMode": "knowledge", "evidence": "Conversion task.", "leadsTo": [] },
+            { "code": "ADOW-SM-SM.02.4", "text": "Recognise an answer whose unit is impossible for the quantity asked, and say why.", "assessmentMode": "knowledge", "evidence": "Error-spotting task.", "leadsTo": [] }
+          ]
+        },
+        {
+          "number": 3,
+          "code": "SM.03",
+          "title": "Perimeter and area",
+          "criteria": [
+            { "code": "ADOW-SM-SM.03.1", "text": "Calculate the perimeter of a rectangle and of an L-shaped room, and say what a perimeter is used for.", "assessmentMode": "knowledge", "evidence": "Calculation; written test.", "leadsTo": ["0732 351 07D"] },
+            { "code": "ADOW-SM-SM.03.2", "text": "Calculate the area of a rectangle, a triangle and a circle, in the unit the job uses.", "assessmentMode": "knowledge", "evidence": "Calculation task.", "leadsTo": ["0732 351 07D"] },
+            { "code": "ADOW-SM-SM.03.3", "text": "Find the area of an irregular shape by splitting it into rectangles, and check the split accounts for the whole.", "assessmentMode": "knowledge", "evidence": "Worked calculation with the split shown.", "leadsTo": ["0732 351 07D"] },
+            { "code": "ADOW-SM-SM.03.4", "text": "Subtract openings — a door, a window, a hatch — from a surface area before ordering material.", "assessmentMode": "both", "evidence": "Take-off sheet checked against a drawing.", "leadsTo": ["0732 251 02D", "0732 351 05D"] }
+          ]
+        },
+        {
+          "number": 4,
+          "code": "SM.04",
+          "title": "Volume, capacity and mass",
+          "criteria": [
+            { "code": "ADOW-SM-SM.04.1", "text": "Calculate the volume of a rectangular solid and of a cylinder.", "assessmentMode": "knowledge", "evidence": "Calculation task.", "leadsTo": ["0732 251 01D"] },
+            { "code": "ADOW-SM-SM.04.2", "text": "Convert a volume in cubic metres to litres, and say where each unit is the one actually used.", "assessmentMode": "knowledge", "evidence": "Conversion task.", "leadsTo": [] },
+            { "code": "ADOW-SM-SM.04.3", "text": "Work out the mass of a quantity of material from its volume and its density.", "assessmentMode": "knowledge", "evidence": "Calculation against a density table.", "leadsTo": [] },
+            { "code": "ADOW-SM-SM.04.4", "text": "Measure a vessel or an excavation and calculate its capacity from the measurements taken.", "assessmentMode": "both", "evidence": "Measurements taken on site, calculation checked.", "leadsTo": ["0732 251 01D"] }
+          ]
+        },
+        {
+          "number": 5,
+          "code": "SM.05",
+          "title": "Square, level and plumb",
+          "criteria": [
+            { "code": "ADOW-SM-SM.05.1", "text": "Name a right angle, and explain what square, level and plumb each mean and which tool proves each.", "assessmentMode": "knowledge", "evidence": "Naming and matching task.", "leadsTo": ["0732 251 01D", "0732 251 02D"] },
+            { "code": "ADOW-SM-SM.05.2", "text": "Read a spirit level, including which way the work must move to bring the bubble central.", "assessmentMode": "both", "evidence": "Reading task; observed on site.", "leadsTo": ["0732 251 02D"] },
+            { "code": "ADOW-SM-SM.05.3", "text": "Prove a rectangle square by measuring both diagonals, and say what an unequal pair means.", "assessmentMode": "both", "evidence": "Diagonals measured and recorded.", "leadsTo": ["0732 251 02D", "0732 351 08D"] },
+            { "code": "ADOW-SM-SM.05.4", "text": "Check a level or a square against a known reference before trusting it, and reverse it to find its own error.", "assessmentMode": "practical", "evidence": "Assessor sign-off.", "leadsTo": [] }
+          ]
+        },
+        {
+          "number": 6,
+          "code": "SM.06",
+          "title": "Setting out and estimating materials",
+          "criteria": [
+            { "code": "ADOW-SM-SM.06.1", "text": "Set out a right angle on the ground using the 3-4-5 rule, and say why any multiple of 3, 4 and 5 works.", "assessmentMode": "both", "evidence": "Set out and checked on site.", "leadsTo": ["0732 251 01D", "0732 351 07D"] },
+            { "code": "ADOW-SM-SM.06.2", "text": "Calculate the number of units — boards, blocks, tiles, plants, containers — a measured area or length requires.", "assessmentMode": "knowledge", "evidence": "Take-off calculation.", "leadsTo": ["0732 351 07D"] },
+            { "code": "ADOW-SM-SM.06.3", "text": "Add an allowance for waste and cutting to an estimate, and state the percentage used.", "assessmentMode": "knowledge", "evidence": "Estimate showing the allowance separately.", "leadsTo": ["0732 351 06D", "0732 351 07D"] },
+            { "code": "ADOW-SM-SM.06.4", "text": "Present an estimate that shows the measurements, the working and the answer, so another person can check it.", "assessmentMode": "both", "evidence": "Take-off sheet checked by an assessor.", "leadsTo": ["0732 351 07D"] }
+          ]
+        }
+      ]
+    }
+  ],
+
+  "counts": {
+    "modules": 1,
+    "units": 6,
+    "criteria": 24,
+    "byAssessmentMode": { "knowledge": 15, "both": 7, "practical": 2 }
+  }
+}

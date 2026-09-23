@@ -26,18 +26,37 @@ import re
 import sys
 
 HERE = os.path.dirname(os.path.abspath(__file__))
-REPO = os.path.abspath(os.path.join(HERE, "..", "..", "..", "..", ".."))
-STANDARDS = os.path.join(REPO, "src", "curriculum", "adow-carpentry-foundation.json")
+REPO = os.path.abspath(os.path.join(HERE, "..", "..", "..", ".."))
+
+
+def school_root(app_dir):
+    """Walk up from an app to the directory holding school.config.json.
+
+    The kit used to live inside carpentry/ and every app was its sibling,
+    so `dirname(app_dir)` was the whole school. It is not any more:
+    Shapes and Measurements is a CROSS-TRADE module and sits beside
+    carpentry rather than inside it. Find the school properly."""
+    here = app_dir
+    for _ in range(6):
+        if os.path.exists(os.path.join(here, "school.config.json")):
+            return here
+        here = os.path.dirname(here)
+    die("no school.config.json above %s" % app_dir)
 
 
 def die(message):
     sys.exit("REFUSED: " + message)
 
 
-def load_standards():
-    if not os.path.exists(STANDARDS):
-        die("the standards file is missing: %s" % STANDARDS)
-    with open(STANDARDS, encoding="utf-8") as fh:
+def load_standards(cfg):
+    """The app names its own standards file. It used to be hard-coded to
+    carpentry's, which a second module could not have used at all."""
+    if not cfg.get("standards"):
+        die("app.config.json names no \"standards\" file")
+    standards = os.path.join(REPO, cfg["standards"].replace("/", os.sep))
+    if not os.path.exists(standards):
+        die("the standards file is missing: %s" % standards)
+    with open(standards, encoding="utf-8") as fh:
         fw = json.load(fh)
     criteria = {}
     for mod in fw["modules"]:
@@ -197,8 +216,21 @@ PAGE = """<!doctype html>
     if (mount && !mount.dataset.built) {{
       mount.dataset.built = '1';
       var spec = STEPS[slides[at].dataset.step];
-      if (spec && window.CARP.R[spec.kind]) {{
+      /* A step that throws used to leave EMPTY SPACE and a line in a
+         console nobody has open — that is how a `label` pointing at a
+         drawing with no parts shipped. The build gate can see a missing
+         renderer; it cannot see bad data. So the page says so itself. */
+      try {{
+        if (!spec) throw new Error('no step data');
+        if (!window.CARP.R[spec.kind]) throw new Error('no renderer for kind "' + spec.kind + '"');
         window.CARP.R[spec.kind](spec.data, mount, function () {{ mount.dataset.done = '1'; }});
+      }} catch (err) {{
+        mount.dataset.failed = '1';
+        var warn = document.createElement('p');
+        warn.className = 'fb bad';
+        warn.textContent = 'This step did not render: ' + err.message;
+        mount.appendChild(warn);
+        if (window.console) console.error('step ' + slides[at].dataset.step, err);
       }}
     }}
     document.getElementById('lesson').focus({{ preventScroll: true }});
@@ -334,16 +366,13 @@ def all_claimed(app_dir):
     lesson teaches five Carpentry Foundation criteria along the way. A
     hub that counted only its own app's lessons would under-report its
     own module and read as a bug."""
-    root = os.path.dirname(app_dir)
     claimed = set()
-    for entry in sorted(os.listdir(root)):
-        d = os.path.join(root, entry)
-        cfg_path = os.path.join(d, "app.config.json")
-        if not os.path.isdir(d) or not os.path.exists(cfg_path):
+    for d, _dirs, files in os.walk(school_root(app_dir)):
+        if "app.config.json" not in files:
             continue
-        with open(cfg_path, encoding="utf-8") as fh:
+        with open(os.path.join(d, "app.config.json"), encoding="utf-8") as fh:
             hub = json.load(fh)["hub"]
-        for f in sorted(os.listdir(d)):
+        for f in sorted(files):
             if not f.endswith(".html") or f == hub:
                 continue
             with open(os.path.join(d, f), encoding="utf-8") as fh:
@@ -423,7 +452,7 @@ def main():
     app_dir = os.path.abspath(os.path.join(os.getcwd(), args.app))
     with open(os.path.join(app_dir, "app.config.json"), encoding="utf-8") as fh:
         cfg = json.load(fh)
-    fw, criteria = load_standards()
+    fw, criteria = load_standards(cfg)
     lib = os.path.relpath(os.path.join(HERE, "lib"), app_dir).replace(os.sep, "/")
 
     lessons = []

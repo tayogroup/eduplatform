@@ -119,10 +119,13 @@ for (const entry of fs.existsSync(coursesDir) ? fs.readdirSync(coursesDir).sort(
 //
 // Everything under carpentry/ EXCEPT the sources that produce it: the Python
 // builder, the content files and __pycache__ are inputs, not output.
-const CARPENTRY = path.join(SCHOOL, "carpentry");
-const SKIP_DIRS = new Set(["content", "__pycache__"]);
+const SKIP_DIRS = new Set(["content", "__pycache__", "courses"]);
 const APP_EXT = new Set([".html", ".css", ".js", ".svg", ".png", ".woff2"]);
 
+// Walk the WHOLE school, not carpentry alone. Shapes and Measurements is a
+// cross-trade module and sits beside carpentry rather than inside it, so a
+// walk rooted at carpentry/ would have shipped the school landing page
+// pointing at a module that was never uploaded.
 (function walkApp(dir, rel) {
   if (!fs.existsSync(dir)) return;
   for (const entry of fs.readdirSync(dir).sort()) {
@@ -131,10 +134,10 @@ const APP_EXT = new Set([".html", ".css", ".js", ".svg", ".png", ".woff2"]);
     if (fs.statSync(full).isDirectory()) {
       if (!SKIP_DIRS.has(entry)) walkApp(full, here);
     } else if (APP_EXT.has(path.extname(entry).toLowerCase())) {
-      plan.push({ local: full, remote: `app/carpentry/${here}` });
+      plan.push({ local: full, remote: `app/${here}` });
     }
   }
-})(CARPENTRY, "");
+})(SCHOOL, "");
 
 // ---- upload ----------------------------------------------------------------
 const manifest = fs.existsSync(MANIFEST_PATH) ? JSON.parse(fs.readFileSync(MANIFEST_PATH, "utf8")) : {};

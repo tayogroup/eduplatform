@@ -209,8 +209,8 @@
     "catalog:adow": "node tools/generate-adow-catalog.js",
     "deploy:adow:dry": "node tools/generate-adow-catalog.js --quiet && node tools/upload-adow-to-bunny.js",
     "deploy:adow": "node tools/generate-adow-catalog.js --quiet && node tools/upload-adow-to-bunny.js --confirm",
-    "validate:adow-standards": "node tools/validate-adow-standards.mjs",
-    "build:adow-carpentry": "cd src/prototypes/professor-adow-tvet/carpentry/lesson-kit && python build.py --app ../foundation-app && python build.py --app ../tools-and-joints-app && python check_coverage.py --app ../tools-and-joints-app"
+    "build:adow": "cd src/prototypes/professor-adow-tvet/lesson-kit && python build.py --app ../shapes-and-measures-app && python build.py --app ../carpentry/foundation-app && python build.py --app ../carpentry/tools-and-joints-app && python check_coverage.py --app ../carpentry/tools-and-joints-app && python check_coverage.py --app ../shapes-and-measures-app",
+    "validate:adow-standards": "node tools/validate-adow-standards.mjs"
   },
   "devDependencies": {
     "@playwright/test": "^1.58.2",

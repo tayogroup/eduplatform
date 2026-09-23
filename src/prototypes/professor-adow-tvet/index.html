@@ -1,0 +1,106 @@
+<title>Professor Adow TVET</title>
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<link rel="stylesheet" href="lesson-kit/lib/lesson.css">
+<link rel="stylesheet" href="lesson-kit/lib/carpentry.css">
+<style>
+  /* No palette of its own — lesson.css's tokens, so the school's front
+     door and every lesson behind it are visibly one product. */
+  .adow-wrap { max-width: 900px; margin: 0 auto; padding-block: 28px 56px; padding-left: 16px; padding-right: 16px; }
+  .adow-head { margin-bottom: 26px; }
+  .adow-head .eyebrow { white-space: normal; }
+  .adow-head h1 { font-size: clamp(32px, 6vw, 52px); margin-bottom: 8px; }
+  .adow-head h1 em { font-style: normal; color: var(--teal); }
+  .adow-lede { color: var(--muted); font-size: 19px; max-width: 62ch; margin-top: 12px; line-height: 1.5; }
+
+  .adow-modules { display: grid; grid-template-columns: repeat(auto-fit, minmax(310px, 1fr)); gap: 16px; margin: 26px 0 30px; }
+  .adow-card {
+    display: flex; flex-direction: column; gap: 10px;
+    background: var(--card); border: 1px solid var(--line); border-radius: 20px;
+    padding: 22px; text-decoration: none; color: var(--ink); box-shadow: var(--shadow);
+  }
+  .adow-card:hover { border-color: var(--teal); }
+  .adow-card .step { font-size: 13px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--teal); }
+  .adow-card h2 { font-size: 25px; }
+  .adow-card p { color: var(--muted); font-size: 17px; line-height: 1.45; }
+  .adow-card .count { margin-top: auto; padding-top: 10px; font-size: 15px; font-weight: 700; color: var(--good); }
+  .adow-card .serves { font-size: 14px; color: var(--gold); font-weight: 700; }
+
+  .adow-facts { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 12px; margin: 26px 0; }
+  .adow-fact { background: var(--cell); border: 1px solid var(--line); border-radius: 14px; padding: 15px 17px; }
+  .adow-fact b { display: block; font-family: "Inter", "Segoe UI", sans-serif; font-size: 27px; color: var(--gold); font-variant-numeric: tabular-nums; }
+  .adow-fact span { display: block; color: var(--muted); font-size: 15px; margin-top: 3px; line-height: 1.35; }
+
+  .adow-note { border-left: 4px solid var(--accent); background: var(--accent-soft); border-radius: 0 14px 14px 0; padding: 16px 20px; margin: 26px 0; font-size: 17px; line-height: 1.5; }
+  .adow-note b { display: block; font-family: "Inter", "Segoe UI", sans-serif; color: var(--accent); margin-bottom: 4px; }
+
+  .adow-foot { color: var(--muted); font-size: 15px; border-top: 1px solid var(--line); padding-top: 18px; margin-top: 34px; line-height: 1.55; }
+  @media (max-width: 620px) { .adow-modules { grid-template-columns: 1fr; } }
+</style>
+
+<div class="adow-wrap">
+  <header class="adow-head">
+    <p class="eyebrow">Professor Adow TVET</p>
+    <h1>Technical &amp; <em>Vocational</em> Training</h1>
+    <p class="adow-lede">
+      A working prototype. Theory, drawings and assessment are done here; every cut,
+      weld, measurement and pour is made and signed off at a bench or on site. Open a
+      module and work through a lesson exactly as a learner would.
+    </p>
+  </header>
+
+  <div class="adow-modules">
+    <a class="adow-card" href="shapes-and-measures-app/index.html">
+      <span class="step">Core · start here</span>
+      <h2>Shapes and Measurements</h2>
+      <p>
+        Reading a measurement, converting units, area and volume, proving a corner
+        square and a surface level, and estimating what a job needs.
+      </p>
+      <span class="serves">Serves all six departments</span>
+      <span class="count">3 lessons · 24 of 24 criteria taught</span>
+    </a>
+
+    <a class="adow-card" href="carpentry/index.html">
+      <span class="step">Trade</span>
+      <h2>Carpentry &amp; Joinery</h2>
+      <p>
+        Hand tools and workshop safety, preparing timber to size, the five families of
+        joint, marking out and cutting, and fastening with nails, screws and glue.
+      </p>
+      <span class="serves">Construction &amp; Building Trades</span>
+      <span class="count">5 lessons · 38 of 38 criteria taught</span>
+    </a>
+  </div>
+
+  <div class="adow-facts">
+    <div class="adow-fact"><b>8</b><span>lessons across two modules</span></div>
+    <div class="adow-fact"><b>62</b><span>performance criteria, all taught</span></div>
+    <div class="adow-fact"><b>33</b><span>tools, joints and figures, drawn not photographed</span></div>
+    <div class="adow-fact"><b>6</b><span>departments the core module serves</span></div>
+  </div>
+
+  <div class="adow-note">
+    <b>What the app assesses, and what it does not</b>
+    Every step states whether the platform can assess it or whether an assessor signs
+    it off. The two modules differ honestly: in <b style="display:inline;color:var(--ink)">Shapes
+    and Measurements</b> 63% is assessed here, because a reading or a calculation is
+    right or it is not. In <b style="display:inline;color:var(--ink)">Carpentry</b>
+    only 29% is — sawing to a line is judged on the work, not on a screen. Neither
+    module claims to deliver a Kenyan Level 4 unit; both name the units they feed.
+  </div>
+
+  <div class="adow-note" style="border-left-color: var(--gold); background: rgba(244,201,93,0.12)">
+    <b style="color: var(--gold)">Not yet trade-reviewed</b>
+    The performance criteria and the teaching were written from published curricula and
+    have not been read by a practising tradesperson or a TVET assessor. That review
+    comes before any of this is put in front of a learner.
+  </div>
+
+  <p class="adow-foot">
+    Built on the Ehel Academy lesson platform. Carpentry content follows the Sokoine
+    University of Agriculture workshop manual; Level 4 unit codes are cited from the
+    Kenya TVET CDACC curriculum only to show where the work leads. UK / East African
+    terminology throughout. Every drawing is vector, drawn in code — nothing here is a
+    photograph.
+  </p>
+</div>

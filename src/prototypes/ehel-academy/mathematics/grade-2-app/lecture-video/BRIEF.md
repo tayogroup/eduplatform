@@ -314,3 +314,27 @@ Say, briefly and plainly:
   something wrong in the LESSON itself — a sum that does not work, a picture
   that contradicts its words — say so in `problems`: do not work around it
   silently, and do not fix it, because the lesson is not yours.
+
+## Every cue you declare must be READ by a picture
+
+A beat names phrases in `art.at`, and a scene reads one with
+`sc(scene, k, "<key>")` or `cue(i, "<key>")`. A key you declare and never read
+is a promise the film does not keep: nothing happens when those words are said.
+
+**No check you run will tell you.** `--dry` counts characters and objectives.
+`--sweep` draws every frame and finds none wrong, because none IS wrong. And
+`--sample` will cheerfully shoot a frame at the dead cue's own moment — the
+frame exists, it simply does not differ from the one before it, which is why
+looking at your sample sheets does not catch this. It was found in a Grade 4
+film by a reviewer that diffed two stills and noticed the brightening between
+them was the ordinary beat fade.
+
+So check it yourself, once, before you report:
+
+```bash
+node tools/check-ehel-film-cues.js <grade>
+```
+
+It lists every declared cue that no scene file names. Then either give the cue
+something to do, or drop the key — and prefer giving it something to do, since
+you declared it because the phrase deserved a picture.

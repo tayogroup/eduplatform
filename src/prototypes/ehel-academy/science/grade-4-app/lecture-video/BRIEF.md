@@ -1,6 +1,6 @@
-# Brief: the Grade 2 Science unit lecture films
+# Brief: the Grade 4 Science unit lecture films
 
-10 films, one per lesson, written at the same time by 10 agents,
+12 films, one per lesson (every lesson but Lesson 1, which has its own film), written at the same time by 12 agents,
 one agent per lesson. This brief is what keeps them one set. Read all of it
 before writing anything. The owner asked for Grades 2, 3 and 4 together on
 2026-09-19 ("do the same for science grades 2, 3 and 4 all in parallel"), after
@@ -9,7 +9,7 @@ before any of it is bought.
 
 ## What you are making
 
-A film of **about 2½ minutes** that plays in your lesson's **Unit lecture** step, above
+A film of **about 3 minutes** that plays in your lesson's **Unit lecture** step, above
 the five parts the lesson's voice reads (`LESSON["lecture"]` in
 `content/lesson-N.py`). It is that step's teaching done as a short animated
 lecture: the same ideas, in the lesson's own words and examples, with the thing
@@ -33,13 +33,18 @@ checks caught. Every one of those faults can happen to you.
 
 | file | what it is |
 | --- | --- |
-| `src/prototypes/ehel-academy/science/grade-2-app/lecture-video/<slug>.json` | the storyboard: the script and its cues |
-| `tools/lib/film-scenes/science-g2/<slug>.js` | your pictures (more parts if needed: `<slug>-2.js`, `<slug>-3.js`) |
+| `src/prototypes/ehel-academy/science/grade-4-app/lecture-video/<slug>.json` | the storyboard: the script and its cues |
+| `tools/lib/film-scenes/science-g4/<slug>.js` | your pictures (more parts if needed: `<slug>-2.js`, `<slug>-3.js`) |
 
-`<slug>` is your lesson's slug, for example `animals-and-their-coverings`. Everything else is
+`<slug>` is your lesson's slug, for example `backbone-or-not`. Everything else is
 read-only for you: the lesson files, the kit, the film tool, the engine, the
 shared marks, the art adapter, and the other lessons' files, in every grade. If
 a shared piece needs changing, do not change it: say so in your report.
+
+**Lesson 1, Bones and Muscles, is not one of these.** It has had its own film
+since 2026-09-17, made by its own tool (`tools/create-ehel-science-unit-lecture.js`),
+and it is not remade. Its files in this folder (`bones-and-muscles.*`) are not
+yours: read them if they help, and never write to them.
 
 **Write big files in parts.** A single write of more than about 300 lines can
 fail. Split your pictures into `<slug>.js`, `<slug>-2.js` and so on, one or two
@@ -52,27 +57,27 @@ into one script, so they share one scope.
 
 ```json
 {
-  "_comment": "Storyboard for the Grade 2 Science unit lecture film, Lesson N <Title>. Rendered by tools/create-ehel-unit-lecture.js. See lecture-video/BRIEF.md.",
+  "_comment": "Storyboard for the Grade 4 Science unit lecture film, Lesson N <Title>. Rendered by tools/create-ehel-unit-lecture.js. See lecture-video/BRIEF.md.",
   "slug": "<slug>",
   "lesson": N,
-  "grade": 2,
-  "stage": 2,
+  "grade": 4,
+  "stage": 4,
   "title": "<the lesson's title, exactly as app.config.json has it>",
-  "subtitle": "Grade 2 Science",
+  "subtitle": "Grade 4 Science",
   "framework": "Cambridge Primary Science 0097",
   "renderer": {
     "art": ["science"],
     "skin": "brown",
-    "scenes": ["tools/lib/ehel-film-marks.js", "tools/lib/film-scenes/science-g2/<slug>.js"]
+    "scenes": ["tools/lib/ehel-film-marks.js", "tools/lib/film-scenes/science-g4/<slug>.js"]
   },
-  "objectives": [["2Bp.01", "<its official wording>"]],
+  "objectives": [["4Bp.01", "<its official wording>"]],
   "scenes": [
     { "id": "title", "kind": "title", "codes": [], "beats": [
       { "say": "<a first line that opens on the idea>", "art": { "at": { "<name>": "<a phrase in that line>" } } },
       { "say": "<a second line>" }
     ] },
-    { "id": "<chapter>", "kind": "<chapter>", "heading": "<a few words>", "codes": ["2Bp.01"], "beats": [ ... ] },
-    { "id": "recap", "kind": "recap", "heading": "What you now know", "codes": ["2Bp.01", "..."], "beats": [ ... ] }
+    { "id": "<chapter>", "kind": "<chapter>", "heading": "<a few words>", "codes": ["4Bp.01"], "beats": [ ... ] },
+    { "id": "recap", "kind": "recap", "heading": "What you now know", "codes": ["4Bp.01", "..."], "beats": [ ... ] }
   ]
 }
 ```
@@ -85,10 +90,10 @@ into one script, so they share one scope.
   official wording. Look it up; do not paraphrase it:
 
   ```bash
-  node -e "const f=require('./src/curriculum/cambridge-science-0097.json');const all=[].concat(...Object.values(f.objectivesByStage));for(const c of process.argv.slice(1)){const o=all.find(o=>o.code===c);console.log(c,o?o.text:'NOT FOUND')}" 2Bp.01 2Bs.01
+  node -e "const f=require('./src/curriculum/cambridge-science-0097.json');const all=[].concat(...Object.values(f.objectivesByStage));for(const c of process.argv.slice(1)){const o=all.find(o=>o.code===c);console.log(c,o?o.text:'NOT FOUND')}" 4Bp.01 4Bs.01
   ```
 
-  List the content objectives your lesson's docstring names (2Bs, 2Bp, 2Be, 2Cm, 2Cp, 2Cc, 2Pf, 2Ps, 2Pe, 2ESp, 2ESs and so
+  List the content objectives your lesson's docstring names (4Bs, 4Bp, 4Be, 4Cm, 4Cp, 4Cc, 4Pf, 4Ps, 4Pe, 4ESp, 4ESs and so
   on). List a TWS or SIC code only if a chapter really teaches it. Every listed
   code must be in some chapter's `codes`, and `--dry` says MISSING if one is
   not.
@@ -100,8 +105,8 @@ into one script, so they share one scope.
 
 ### Length
 
-**1,800 to 2,100 characters of narration**, in **26 to 34 beats**. That is
-about 2:25 to 2:45 of film. `--dry` counts both. The estimate it gives runs about 5 to
+**2,050 to 2,400 characters of narration**, in **28 to 36 beats**. That is
+about 2:45 to 3:05 of film. `--dry` counts both. The estimate it gives runs about 5 to
 10% long: the Grade 1 films measured 14.7 characters a second against the
 estimate's 13.96.
 
@@ -110,11 +115,11 @@ characters lasts under two seconds, and a picture that waits for it flicks past
 (the Computing film's tablet chapter). If a line must be short, its picture
 must not need time.
 
-### Language: a Grade 2 child (about seven), and the lesson's own words
+### Language: a Grade 4 child (about nine), and the lesson's own words
 
-- **Write as the lesson writes.** Its five lecture parts average **7 words
-  a sentence**. Keep yours at 8 or under on average, and no sentence over
-  15.
+- **Write as the lesson writes.** Its five lecture parts average **10 words
+  a sentence**. Keep yours at 11 or under on average, and no sentence over
+  20.
 - **Use the lesson's words and examples**: its animals, its objects, its
   experiment, its vocabulary (`LESSON["words"]`). Name a Cambridge term when the
   lesson does, and say what it means in the same sentence or the next.
@@ -206,26 +211,32 @@ set and the Stage 2, 3 and 4 blocks. Which ones your lesson uses is in your
 lesson file (`"sim": ...`, `"figure": ...`, `"scene": {"id": ...}`). Read a
 drawing's own code in `science.js` for its exact states before you animate it.
 
-Your grade's own drawings (Stage 2):
+Your grade's own drawings (Stage 4):
 
 | | |
 | --- | --- |
-| `ART.figure("mouth")` | the teeth: parts `tongue molars canines incisors` |
-| `ART.figure("circuit")` | a lit circuit: parts `cell wire lamp` |
-| `ART.kit.circuitSvg({cell, lamp, wireTop, wireBottom, gap, on})` | a circuit built part by part, or broken: a missing part is a dashed ghost, and the lamp lights only when the circuit is whole and `on` |
-| `ART.scene("habitat", 0..3)` | a pond, a desert, a forest, the icy Arctic, each with its animals |
-| `ART.scene("extract", 0..3)` | a material taken from the Earth, step by step (read `SCENES.extract`) |
-| `ART.sim("darkRoom", "draw", curtains, lamp)` | a room, the curtains shut or open, the lamp on or off |
-| `ART.sim("sunPath", "draw", 0..4)` | the Sun across the sky from sunrise to sunset, and a stick's shadow |
-| `ART.sim("newMaterial", "draw", heat, cooled)` | an egg in a pan: heat 0 raw, 1 warming, 2 turning white, 3 cooked |
+| `ART.figure("skeleton")` | parts `skull jaw spine ribcage hip armbones legbones` |
+| `ART.figure("earthLayers")` | parts `crust mantle core` |
+| `ART.figure("ray")` | a ray diagram: parts `source ray mirror eye` |
+| `ART.scene("volcano", 0..3)` | 0 magma under the crust, 1 it rises through a crack, 2 eruption, 3 the lava cools to rock |
+| `ART.scene("quake", 0..3)` | 0 two plates side by side, 1 pushing, 2 the sudden slip, 3 the cracked ground after |
+| `ART.kit.armSvg(bent, tricepsOn)` | the arm: the biceps and triceps take turns to pull |
+| `ART.kit.particleSvg(state, jiggle, tick)` | the particle model: 0 cold solid, 1 warm solid, 2 liquid; `tick` slides a liquid's rows |
+| `ART.sim("reaction", "draw", a, b)` | sand in water (a mixture) beside vinegar and bicarbonate of soda fizzing (a new substance) |
+| `ART.sim("energyDrop", "draw", n, y)` | a ball bouncing lower each time, and bars for where its energy went |
+| `ART.sim("rayMirror", "draw", angle, blocked)` | a torch, a mirror that turns, and an eye |
+| `ART.kit.seriesSvg({cells, lamps, open})` | a series circuit: more cells, more lamps, a switch |
+| `ART.sim("conductor", "init")` | a circuit with a gap for a material |
+| `ART.sim("dayNight", "draw", 0..3)` | the spinning Earth: 6 am, midday, 6 pm, midnight |
+| `ART.sim("spinner", "draw", n, y, big, m)` | a paper spinner dropped and timed |
 
 Every grade can use every drawing. The rest, in short:
 
 | | |
 | --- | --- |
 | Stage 1 | `ART.figure("plant")` (roots stem leaves flower), `ART.figure("body")` (head eyes ears nose mouth tummy arms hands legs feet); `ART.scene("plant", 0..5)`, `("ground", 0..3)`, `("globe", turn)`, `("sky", 0..4)`; `ART.pots(a, b, day, {sun, sunA, labelA, labelB, darkA, darkB, coldA, coldB})`; `ART.tank(pic, y)`; `ART.magnet(pic, reach, jump)`; `ART.sim("soundFar", "draw", steps)`, `("pushBall", "draw", x, label, thing)`, `("sunShade", "draw", hour, a, b)` |
+| Stage 2 | `ART.figure("mouth")`, `("circuit")`; `ART.kit.circuitSvg(state)`; `ART.scene("habitat", 0..3)`, `("extract", 0..3)`; `ART.sim("darkRoom", "draw", curtains, lamp)`, `("sunPath", "draw", 0..4)`, `("newMaterial", "draw", heat, cooled)` |
 | Stage 3 | `ART.figure("organs")`, `("insect")`; `ART.scene("gravity", 0..1)`, `("fossil", 0..3)`; `ART.kit.forcemeterSvg`, `magnetPair`, `earthMoonSvg`, `foodChainSvg`; `ART.sim(name, "draw", ...)` for friction, shadowSize, states, moonPhases, `("lightThrough", "init")` |
-| Stage 4 | `ART.figure("skeleton")`, `("earthLayers")`, `("ray")`; `ART.scene("volcano", 0..3)`, `("quake", 0..3)`; `ART.kit.armSvg`, `particleSvg`, `seriesSvg`, `beakerSvg`; `ART.sim(name, "draw", ...)` for reaction, energyDrop, rayMirror, dayNight, spinner, `("conductor", "init")` |
 
 And for all of them:
 
@@ -309,7 +320,7 @@ These are the faults the earlier films shipped, or nearly shipped:
 From the repository root:
 
 ```bash
-T="node tools/create-ehel-unit-lecture.js --app src/prototypes/ehel-academy/science/grade-2-app --slug <slug>"
+T="node tools/create-ehel-unit-lecture.js --app src/prototypes/ehel-academy/science/grade-4-app --slug <slug>"
 $T --dry          # characters, beats, objective coverage, estimated length
 $T --preview      # a still 70% through each beat, and both cards
 $T --sample       # a frame just after each beat starts, 0.75 s after every cue, and just before each line ends
@@ -327,7 +338,7 @@ and three overflows no sheet showed. For each frame, ask:
 
 - Did the thing just named move or appear, and is it the right thing?
 - Is anything clipped, overlapping, off the 1168 x 440 box, or over the words?
-- Is every word readable, and every picture recognisable to a seven-year-old?
+- Is every word readable, and every picture recognisable to a nine-year-old?
 - Does a chapter's last frame show its action finished?
 
 Fix and look again, until a pass finds nothing. Five rounds is plenty; if it is

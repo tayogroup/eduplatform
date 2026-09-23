@@ -106,18 +106,35 @@ for (const entry of fs.existsSync(coursesDir) ? fs.readdirSync(coursesDir).sort(
   }
 }
 
-// THE APP TIER — Phase 3, deliberately not written yet.
+// THE APP TIER — the carpentry prototype.
 //
-// Quraan copies the Ehel shell in at deploy time and rewrites its imports
-// (../../ehel-academy/shell/course-app.js → ../shared/course-app.js), keeping
-// the dev tree Ehel-relative and the deployed tree self-contained. TVET will do
-// the same for shared/progress-client.js, shared/course-shell.js and
-// shared/lesson-gate.js, plus its own lesson kit output.
+// NO PATH TRANSFORMS, and that is worth saying because Quraan needs several.
+// Quraan's app imports the Ehel shell, so its uploader rewrites
+// ../../ehel-academy/shell/course-app.js → ../shared/course-app.js on the way
+// up, and its header records the release where a missed rewrite shipped a page
+// pointing at a stylesheet that was not on the zone. The carpentry build has no
+// such import: every page references only ../lesson-kit/lib/*, which ships
+// beside it here at the same relative depth. The tree is uploaded as it stands
+// on disk, so what a reviewer sees locally is byte-identical to what deploys.
 //
-// It is left empty rather than guessed because the transforms are specific to
-// the files a build actually emits, and an untested rewrite that ships a page
-// pointing at a stylesheet which does not exist on the zone is exactly the bug
-// Quraan's header documents. Add it when Phase 3 emits its first page.
+// Everything under carpentry/ EXCEPT the sources that produce it: the Python
+// builder, the content files and __pycache__ are inputs, not output.
+const CARPENTRY = path.join(SCHOOL, "carpentry");
+const SKIP_DIRS = new Set(["content", "__pycache__"]);
+const APP_EXT = new Set([".html", ".css", ".js", ".svg", ".png", ".woff2"]);
+
+(function walkApp(dir, rel) {
+  if (!fs.existsSync(dir)) return;
+  for (const entry of fs.readdirSync(dir).sort()) {
+    const full = path.join(dir, entry);
+    const here = rel ? `${rel}/${entry}` : entry;
+    if (fs.statSync(full).isDirectory()) {
+      if (!SKIP_DIRS.has(entry)) walkApp(full, here);
+    } else if (APP_EXT.has(path.extname(entry).toLowerCase())) {
+      plan.push({ local: full, remote: `app/carpentry/${here}` });
+    }
+  }
+})(CARPENTRY, "");
 
 // ---- upload ----------------------------------------------------------------
 const manifest = fs.existsSync(MANIFEST_PATH) ? JSON.parse(fs.readFileSync(MANIFEST_PATH, "utf8")) : {};

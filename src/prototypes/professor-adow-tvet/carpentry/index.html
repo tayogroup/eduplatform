@@ -1,0 +1,111 @@
+<title>Professor Adow TVET Carpentry</title>
+<!-- viewport-fit=cover so this same file works both as a published artifact
+     (whose wrapper supplies its own viewport meta and pads for safe areas)
+     and served directly from a CDN, where nothing else would supply one. -->
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<link rel="stylesheet" href="lesson-kit/lib/lesson.css">
+<link rel="stylesheet" href="lesson-kit/lib/carpentry.css">
+<style>
+  /* The landing page carries no palette of its own. Everything below is
+     lesson.css's tokens, so the front door and the lessons behind it are
+     visibly one product — which is the whole point of showing it. */
+  .adow-wrap { max-width: 880px; margin: 0 auto; padding-block: 28px 56px; padding-left: 16px; padding-right: 16px; }
+  .adow-head { margin-bottom: 30px; }
+  /* lesson.css sets .eyebrow { white-space: nowrap } — right for a short
+     subject label in a lesson header, wrong for a school name this long:
+     it pushed the page 50px wider than the screen at phone width. */
+  .adow-head .eyebrow { white-space: normal; }
+  .adow-head h1 { font-size: clamp(32px, 6vw, 50px); margin-bottom: 8px; }
+  .adow-head h1 em { font-style: normal; color: var(--teal); }
+  .adow-lede { color: var(--muted); font-size: 19px; max-width: 62ch; margin-top: 12px; line-height: 1.5; }
+
+  .adow-modules { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 16px; margin: 26px 0 30px; }
+  .adow-card {
+    display: flex; flex-direction: column; gap: 10px;
+    background: var(--card); border: 1px solid var(--line); border-radius: 20px;
+    padding: 22px; text-decoration: none; color: var(--ink);
+    box-shadow: var(--shadow);
+  }
+  .adow-card:hover { border-color: var(--teal); }
+  .adow-card .step { font-size: 13px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--teal); }
+  .adow-card h2 { font-size: 25px; }
+  .adow-card p { color: var(--muted); font-size: 17px; line-height: 1.45; }
+  .adow-card .count { margin-top: auto; padding-top: 10px; font-size: 15px; font-weight: 700; color: var(--good); }
+
+  .adow-facts { display: grid; grid-template-columns: repeat(auto-fit, minmax(170px, 1fr)); gap: 12px; margin: 26px 0; }
+  .adow-fact { background: var(--cell); border: 1px solid var(--line); border-radius: 14px; padding: 15px 17px; }
+  .adow-fact b { display: block; font-family: "Inter", "Segoe UI", sans-serif; font-size: 27px; color: var(--gold); font-variant-numeric: tabular-nums; }
+  .adow-fact span { display: block; color: var(--muted); font-size: 15px; margin-top: 3px; line-height: 1.35; }
+
+  .adow-note { border-left: 4px solid var(--accent); background: var(--accent-soft); border-radius: 0 14px 14px 0; padding: 16px 20px; margin: 26px 0; font-size: 17px; line-height: 1.5; }
+  .adow-note b { display: block; font-family: "Inter", "Segoe UI", sans-serif; color: var(--accent); margin-bottom: 4px; }
+
+  .adow-foot { color: var(--muted); font-size: 15px; border-top: 1px solid var(--line); padding-top: 18px; margin-top: 34px; line-height: 1.55; }
+  @media (max-width: 560px) { .adow-modules { grid-template-columns: 1fr; } }
+</style>
+
+<div class="adow-wrap">
+  <header class="adow-head">
+    <p class="eyebrow">Professor Adow TVET · Foundation</p>
+    <h1>Carpentry &amp; <em>Joinery</em></h1>
+    <p class="adow-lede">
+      A working prototype of two foundation modules. Theory, drawings and assessment
+      are done here; every cut is made and signed off at a bench. Open either module
+      and work through a lesson exactly as a learner would.
+    </p>
+  </header>
+
+  <div class="adow-modules">
+    <a class="adow-card" href="foundation-app/index.html">
+      <span class="step">Start here</span>
+      <h2>Carpentry Foundation</h2>
+      <p>
+        The hand tools of the trade, how they are kept, how a workshop is kept safe,
+        and how a rough board is brought to a straight, square, finished size.
+      </p>
+      <span class="count">1 lesson · 18 of 18 criteria taught</span>
+    </a>
+
+    <a class="adow-card" href="tools-and-joints-app/index.html">
+      <span class="step">Then</span>
+      <h2>Carpentry Tools &amp; Joints</h2>
+      <p>
+        The five families of wood joint, marking out and cutting a joint, sawing and
+        paring to a line, and fastening with nails, screws and glue.
+      </p>
+      <span class="count">4 lessons · 20 of 20 criteria taught</span>
+    </a>
+  </div>
+
+  <div class="adow-facts">
+    <div class="adow-fact"><b>5</b><span>lessons, 42 steps</span></div>
+    <div class="adow-fact"><b>38</b><span>performance criteria, all taught</span></div>
+    <div class="adow-fact"><b>21</b><span>tools and joints, drawn not photographed</span></div>
+    <div class="adow-fact"><b>30:70</b><span>theory to practical, as the qualification sets it</span></div>
+  </div>
+
+  <div class="adow-note">
+    <b>What this is, and what it is not</b>
+    These two modules are foundation work. They are <em>not</em> units of the Kenyan
+    Carpentry &amp; Joinery Level 4 qualification — all eight of those units assume the
+    learner already has tools and joints. Every criterion here names the Level 4 units
+    it feeds instead of claiming to deliver them. Each step also states whether the app
+    can assess it or whether an assessor signs it off at the bench: 29% is assessed
+    here, 45% here and at the bench, and 26% at the bench only.
+  </div>
+
+  <div class="adow-note" style="border-left-color: var(--gold); background: rgba(244,201,93,0.12)">
+    <b style="color: var(--gold)">Not yet trade-reviewed</b>
+    The performance criteria and the teaching were written from published curricula and
+    have not been read by a practising carpenter or a TVET assessor. That review comes
+    before any of this is put in front of a learner.
+  </div>
+
+  <p class="adow-foot">
+    Built on the Ehel Academy lesson platform. Content follows the Sokoine University of
+    Agriculture workshop manual for carpentry and joinery; the Level 4 unit codes cited
+    are from the Kenya TVET CDACC curriculum, referenced only to show where this work
+    leads. UK / East African terminology throughout. Every drawing is vector, drawn in
+    code — nothing here is a photograph.
+  </p>
+</div>

@@ -1,15 +1,11 @@
 /* ====================================================================
    Professor Adow TVET — Shapes and Measurements.
 
-   Loaded after carpentry.js (the core step machinery) and
-   carpentry-joints.js (the drawing registry, browse and drawn
-   questions). NAMING DEBT, stated rather than hidden: carpentry.js holds
-   the shared step renderers as well as carpentry's own drawings, because
-   it was written when carpentry was the only module. A cross-trade page
-   loading a file called carpentry.js is odd. The fix is to split the
-   machinery into kit.js, which is a rename touching every built page,
-   and it is not worth churning a live prototype for. Recorded here so
-   the next person knows it is a known seam, not an accident.
+   Loaded after kit.js, and after nothing else. A Shapes and Measurements
+   page is a cross-trade page and now loads no carpentry file at all —
+   which it did until the kit was split out, purely because carpentry.js
+   happened to hold the shared machinery. The seam recorded here is
+   closed; this note is its receipt.
 
    Adds the measuring tools, the plane shapes and solids, the setting-out
    figures, and two step kinds:
@@ -27,7 +23,7 @@
   "use strict";
 
   const C = window.CARP;
-  if (!C) throw new Error("shapes.js must load after carpentry.js");
+  if (!C) throw new Error("shapes.js must load after kit.js");
   const { el, svg, tok, R } = C;
 
   const STEEL = "#B9C6D0", STEEL_DARK = "#7E8E9B", WOOD = "#C98A4B", WOOD_DARK = "#A96E35";
@@ -255,14 +251,10 @@
     },
   });
 
-  /* Register into the shared drawing registry, and into C.TOOLS as well
-     for anything that carries `parts` — that is the object `label` reads,
-     and a drawing registered only here is invisible to it. */
-  if (!C.DRAW) C.DRAW = {};
-  for (const k in SHAPES) {
-    C.DRAW[k] = SHAPES[k];
-    if (SHAPES[k].parts) C.TOOLS[k] = SHAPES[k];
-  }
+  /* One call. It puts each drawing in the registry and, when it carries
+     `parts`, in the set `label` reads — the two places a drawing has to
+     be, which used to be two separate loops and one forgotten tape. */
+  C.registerAll(SHAPES, { w: 380, h: 200 });
 
   /* ==================================================================
      findmark — tap the rule at a stated measurement.

@@ -143,7 +143,7 @@ PAGE = """<!doctype html>
 <title>{title} · {school}</title>
 <meta name="description" content="{blurb}">
 <link rel="stylesheet" href="{lib}/lesson.css">
-<link rel="stylesheet" href="{lib}/carpentry.css">
+<link rel="stylesheet" href="{lib}/kit.css">
 </head>
 <body>
 <a class="eh-skip" href="#lesson">Skip to the lesson</a>
@@ -207,7 +207,7 @@ PAGE = """<!doctype html>
     <button class="big" id="next" type="button">Next step</button>
   </div>
 </div>
-<script src="{lib}/carpentry.js"></script>
+<script src="{lib}/kit.js"></script>
 {extrascripts}
 <script>
 (function () {{
@@ -401,7 +401,7 @@ def available_renderers(cfg):
     this: the builder cannot know what a browser will have loaded except
     by looking at what it is told to load."""
     kinds = set()
-    for name in ["carpentry.js"] + list(cfg.get("extraScripts", [])):
+    for name in ["kit.js"] + list(cfg.get("extraScripts", [])):
         path = os.path.join(HERE, "lib", name)
         if not os.path.exists(path):
             die("app.config.json lists %s, which is not in lesson-kit/lib" % name)
@@ -477,7 +477,7 @@ HUB = """<!doctype html>
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>{module} · {school}</title>
 <link rel="stylesheet" href="{lib}/lesson.css">
-<link rel="stylesheet" href="{lib}/carpentry.css">
+<link rel="stylesheet" href="{lib}/kit.css">
 </head>
 <body>
 <a class="eh-skip" href="#lessons">Skip to the lessons</a>

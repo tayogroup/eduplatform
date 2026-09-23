@@ -1,29 +1,29 @@
 {
   "_comment": "Shapes and Measurements — the CROSS-TRADE core module. It sits beside carpentry rather than inside it, because reading a rule, converting a unit and working out a quantity are the same skills in a joinery shop, a welding bay, an irrigation trench and a dairy room. Built by ../lesson-kit/build.py.",
-
   "school": "Professor Adow TVET",
   "module": "shapes-measures",
   "moduleTitle": "Shapes and Measurements",
-
   "levelKind": "tvet",
   "levelNumber": 3,
   "levelLabel": "Core",
-
   "standards": "src/curriculum/adow-shapes-and-measures.json",
-
-  "_extraScripts": "carpentry.js carries the shared step machinery as well as carpentry's own drawings — a naming seam recorded at the top of shapes.js. carpentry-joints.js is loaded for the drawing registry, `browse` and drawn questions; shapes.js adds the rules, levels, shapes, solids and the findmark/calc/levelread steps.",
-  "extraScripts": ["carpentry-joints.js", "shapes.js"],
-
+  "_extraScripts": "kit.js loads first and carries the shared machinery - the registry, browse, drawn questions and the sequence engines. shapes.js is this module's own, and NOTHING else is loaded: a cross-trade page now pulls in no carpentry file at all.",
+  "extraScripts": [
+    "shapes.js"
+  ],
   "hub": "index.html",
   "hubIntro": "Reading a measurement, converting between units, working out area and volume, proving a corner square and a surface level, and estimating what a job needs. Every worked example comes from a real trade — none of it is arithmetic for its own sake.",
-
   "leadsNote": "This module serves all six departments. Measurement is the same skill in construction, mechanical engineering, electronics, agriculture, livestock and food processing — only the units and the tolerances change. Where a criterion maps onto the Kenyan Carpentry & Joinery Level 4 units it says so; the other five departments' frameworks are not yet in hand, and a criterion that plainly serves them carries no mapping rather than a guessed one.",
-
   "endNote": "You have measured, calculated and estimated on screen. The measurements that count are taken with a real tape on real work, and checked twice.",
-
   "lessons": [
-    { "content": "lesson-1.py" },
-    { "content": "lesson-2.py" },
-    { "content": "lesson-3.py" }
+    {
+      "content": "lesson-1.py"
+    },
+    {
+      "content": "lesson-2.py"
+    },
+    {
+      "content": "lesson-3.py"
+    }
   ]
 }

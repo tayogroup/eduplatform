@@ -4,12 +4,10 @@
    Loaded after carpentry.js. Adds the five joint families, the
    fasteners, the sawing and paring sequences, and two step kinds.
 
-   ONE DRAWING REGISTRY. carpentry.js grew TOOLS and carpentry-foundation
-   grew FAULTS, and each renderer knew which of the two to look in. That
-   does not survive a third set, so everything registers into C.DRAW and
-   a renderer asks for a name without caring which file drew it. The two
-   older registries are folded in below, so nothing that already worked
-   has to change.
+   THE REGISTRY MOVED TO kit.js. It used to be built here, from whatever
+   happened to exist at the moment this file ran; every drawing now
+   registers itself through C.registerAll and a renderer asks for a name
+   without caring which file drew it.
 
    JOINTS ARE DRAWN IN ELEVATION, slightly apart. A perspective view of a
    dovetail looks better and teaches less: the learner needs to see the
@@ -19,8 +17,8 @@
   "use strict";
 
   const C = window.CARP;
-  if (!C) throw new Error("carpentry-joints.js must load after carpentry.js");
-  const { el, svg, tok, R } = C;
+  if (!C) throw new Error("carpentry-joints.js must load after kit.js and carpentry.js");
+  const { el, svg, tok, R, engines } = C;
 
   const WOOD = "#C98A4B", WOOD_DARK = "#A96E35", GRAIN = "#8A5A28";
   const STEEL = "#B9C6D0", STEEL_DARK = "#7E8E9B", HANDLE = "#7A4A22";
@@ -401,260 +399,6 @@
   /* ==================================================================
      ONE REGISTRY, and a helper that draws any of it to scale.
      ================================================================== */
-  const DRAW = {};
-  for (const k in C.TOOLS) DRAW[k] = { title: C.TOOLS[k].title, w: C.TOOLS[k].w, h: C.TOOLS[k].h, draw: C.TOOLS[k].draw };
-  for (const k in (C.FAULTS || {})) DRAW[k] = { title: C.FAULTS[k].title, w: 300, h: 190, draw: C.FAULTS[k].draw };
-  for (const k in JOINTS) DRAW[k] = { title: JOINTS[k].title, w: W, h: H, draw: JOINTS[k].draw };
-  for (const k in FASTENERS) DRAW[k] = { title: FASTENERS[k].title, w: 340, h: 180, draw: FASTENERS[k].draw };
-  C.DRAW = DRAW;
-
-  function drawNamed(s, name) {
-    const spec = DRAW[name];
-    const g = el("g", {}, s);
-    if (!spec) return g;
-    const vb = s.getAttribute("viewBox").split(" ").map(Number);
-    const scale = Math.min(vb[2] / spec.w, vb[3] / spec.h);
-    g.setAttribute("transform", `scale(${scale.toFixed(3)})`);
-    spec.draw(g);
-    s.setAttribute("aria-label", spec.title);
-    return g;
-  }
-  C.drawNamed = drawNamed;
-
-  /* The older `sort` looked in TOOLS then FAULTS by hand. Point it at the
-     registry so a joint or a fastener can be sorted too.
-
-     THIS WAS GUARDED WITH `if (R.sort)` AND THAT WAS A BUG. R.sort is
-     defined in carpentry-foundation.js, which a Tools & Joints page does
-     not load — so the guard failed, R.sort was never defined here, and
-     the sort step rendered NOTHING. No console error: the page skips a
-     step kind it has no renderer for. Define it unconditionally and keep
-     the older one only if it happens to be there. */
-  const baseSort = R.sort;
-  R.sort = function (data, mount, done) {
-    if (!data.registry && baseSort) return baseSort(data, mount, done);
-    return registrySort(data, mount, done);
-  };
-
-  function registrySort(data, mount, done) {
-    const wrap = document.createElement("div");
-    wrap.className = "carp-stage";
-    const ask = document.createElement("p");
-    ask.className = "carp-ask";
-    wrap.appendChild(ask);
-    const s = svg(360, 200);
-    let g = el("g", {}, s);
-    wrap.appendChild(s);
-    const bins = document.createElement("div");
-    bins.className = "carp-order-pool";
-    wrap.appendChild(bins);
-    const fb = document.createElement("p");
-    fb.className = "fb";
-    wrap.appendChild(fb);
-    const score = document.createElement("p");
-    score.className = "score";
-    wrap.appendChild(score);
-
-    let i = 0;
-    const buttons = data.groups.map((grp) => {
-      const b = document.createElement("button");
-      b.type = "button";
-      b.className = "carp-chip";
-      b.textContent = grp.label;
-      b.addEventListener("click", () => {
-        const item = data.items[i];
-        if (grp.key === item.group) {
-          fb.className = "fb good";
-          fb.textContent = item.say;
-          buttons.forEach((x) => { x.disabled = true; });
-          i += 1;
-          setTimeout(() => (i < data.items.length ? paint() : finish()), 2800);
-        } else {
-          fb.className = "fb bad";
-          fb.textContent = item.no || "Not that family. Ask what the joint is FOR, not what it looks like.";
-        }
-      });
-      bins.appendChild(b);
-      return b;
-    });
-
-    function paint() {
-      const item = data.items[i];
-      buttons.forEach((x) => { x.disabled = false; });
-      ask.textContent = data.ask.replace("%s", DRAW[item.draw] ? DRAW[item.draw].title : item.draw);
-      score.textContent = `${i + 1} of ${data.items.length}`;
-      fb.className = "fb";
-      fb.textContent = "";
-      g.remove();
-      g = drawNamed(s, item.draw);
-    }
-    function finish() {
-      ask.textContent = "All sorted.";
-      bins.remove();
-      score.textContent = "";
-      fb.className = "fb good";
-      fb.textContent = data.finish || "";
-      done();
-    }
-    paint();
-    mount.appendChild(wrap);
-  }
-
-  /* browse — tap each drawn item in turn to be told what it is FOR.
-     Identification without a right answer to get wrong: the learner is
-     meeting a set for the first time, and a quiz on unseen material
-     teaches nothing but discouragement. */
-  R.browse = function (data, mount, done) {
-    const wrap = document.createElement("div");
-    wrap.className = "carp-stage";
-    const ask = document.createElement("p");
-    ask.className = "carp-ask";
-    ask.textContent = data.ask || "Tap each one.";
-    wrap.appendChild(ask);
-    const s = svg(360, 200);
-    let g = drawNamed(s, data.items[0].draw);
-    wrap.appendChild(s);
-    const row = document.createElement("div");
-    row.className = "carp-order-pool";
-    wrap.appendChild(row);
-    const fb = document.createElement("p");
-    fb.className = "fb";
-    fb.textContent = data.items[0].say;
-    wrap.appendChild(fb);
-
-    const seen = new Set([0]);
-    data.items.forEach((item, idx) => {
-      const b = document.createElement("button");
-      b.type = "button";
-      b.className = "carp-chip";
-      b.textContent = DRAW[item.draw] ? DRAW[item.draw].title : item.draw;
-      if (idx === 0) b.classList.add("seen");
-      b.addEventListener("click", () => {
-        g.remove();
-        g = drawNamed(s, item.draw);
-        fb.className = "fb good";
-        fb.textContent = item.say;
-        b.classList.add("seen");
-        seen.add(idx);
-        if (seen.size === data.items.length) {
-          ask.textContent = data.finish || "That is the set.";
-          done();
-        }
-      });
-      row.appendChild(b);
-    });
-    mount.appendChild(wrap);
-  };
-
-  /* `questions` gains an optional drawing per question. */
-  const baseQuestions = R.questions;
-  R.questions = function (data, mount, done) {
-    if (!data.items.some((q) => q.draw)) return baseQuestions(data, mount, done);
-    drawnQuestions(data, mount, done);
-  };
-
-  function drawnQuestions(data, mount, done) {
-    const wrap = document.createElement("div");
-    wrap.className = "carp-stage";
-    const ask = document.createElement("p");
-    ask.className = "carp-ask";
-    wrap.appendChild(ask);
-    const s = svg(340, 180);
-    let g = el("g", {}, s);
-    wrap.appendChild(s);
-    const opts = document.createElement("div");
-    opts.className = "carp-opts";
-    wrap.appendChild(opts);
-    const fb = document.createElement("p");
-    fb.className = "fb";
-    wrap.appendChild(fb);
-    const score = document.createElement("p");
-    score.className = "score";
-    wrap.appendChild(score);
-
-    let i = 0, right = 0;
-    function paint() {
-      const q = data.items[i];
-      ask.textContent = q.ask;
-      score.textContent = `Question ${i + 1} of ${data.items.length}`;
-      fb.className = "fb";
-      fb.textContent = "";
-      g.remove();
-      g = q.draw ? drawNamed(s, q.draw) : el("g", {}, s);
-      s.style.display = q.draw ? "" : "none";
-      opts.innerHTML = "";
-      q.opts.forEach((o) => {
-        const b = document.createElement("button");
-        b.type = "button";
-        b.className = "carp-opt";
-        b.textContent = o.t;
-        b.addEventListener("click", () => {
-          [...opts.children].forEach((x) => { x.disabled = true; });
-          b.classList.add(o.ok ? "chosen-ok" : "chosen-no");
-          if (o.ok) right += 1;
-          fb.className = "fb " + (o.ok ? "good" : "bad");
-          fb.textContent = o.ok ? q.why : (o.why || q.why);
-          setTimeout(() => {
-            i += 1;
-            if (i < data.items.length) paint();
-            else {
-              ask.textContent = "Finished.";
-              opts.innerHTML = "";
-              s.style.display = "none";
-              score.textContent = `${right} of ${data.items.length} correct`;
-              fb.className = "fb " + (right === data.items.length ? "good" : "");
-              fb.textContent = right === data.items.length
-                ? "Every one right." : "Read the reasons again for the ones you missed.";
-              done();
-            }
-          }, 2900);
-        });
-        opts.appendChild(b);
-      });
-    }
-    paint();
-    mount.appendChild(wrap);
-  }
-
-  /* `demo` gains the sawing sequence; `predict` gains paring and gluing. */
-  const baseDemo2 = R.demo;
-  R.demo = function (data, mount, done) {
-    if (data && data.sequence === "saw") return seqDemo(SAW_STATES, drawSaw, 400, 210, mount, done);
-    if (data && data.sequence === "twothirds") return ratioDemo(mount, done);
-    return baseDemo2(data, mount, done);
-  };
-
-  function seqDemo(states, draw, w, h, mount, done) {
-    const wrap = document.createElement("div");
-    wrap.className = "carp-stage";
-    const s = svg(w, h);
-    let g = el("g", {}, s);
-    wrap.appendChild(s);
-    const cap = document.createElement("p");
-    cap.className = "carp-caption";
-    wrap.appendChild(cap);
-    const btns = document.createElement("div");
-    btns.className = "bigbtns";
-    const next = document.createElement("button");
-    next.className = "big";
-    next.type = "button";
-    next.textContent = "Next";
-    btns.appendChild(next);
-    wrap.appendChild(btns);
-    let i = 0;
-    function paint() {
-      g.remove();
-      g = el("g", {}, s);
-      draw(g, i);
-      cap.textContent = states[i].caption;
-      s.setAttribute("aria-label", states[i].caption);
-      if (i >= states.length - 1) { next.disabled = true; next.textContent = "Cut made"; done(); }
-    }
-    next.addEventListener("click", () => { if (i < states.length - 1) { i += 1; paint(); } });
-    paint();
-    mount.appendChild(wrap);
-  }
-
   function ratioDemo(mount, done) {
     const wrap = document.createElement("div");
     wrap.className = "carp-stage";
@@ -693,66 +437,25 @@
     mount.appendChild(wrap);
   }
 
-  const basePredict = R.predict;
-  R.predict = function (data, mount, done) {
-    if (data && data.cases === "pare") return caseChoice(PARE_CASES, drawPare, data, mount, done);
-    if (data && data.cases === "glue") return caseChoice(GLUE_CASES, drawGlue, data, mount, done);
-    return basePredict(data, mount, done);
+  C.registerAll(JOINTS, { w: W, h: H });
+  C.registerAll(FASTENERS, { w: 340, h: 180 });
+
+  /* The sequences and case sets this module adds, each driven by the
+     kit's own engine. `demo` and `predict` are dispatchers: a content
+     file names the sequence or the case set it wants. */
+  const baseDemo = R.demo;
+  R.demo = function (data, mount, done) {
+    if (data && data.sequence === "saw") return engines.seqDemo(SAW_STATES, drawSaw, 400, 210, mount, done);
+    if (data && data.sequence === "twothirds") return ratioDemo(mount, done);
+    return baseDemo(data, mount, done);
   };
 
-  function caseChoice(CASES, draw, data, mount, done) {
-    const wrap = document.createElement("div");
-    wrap.className = "carp-stage";
-    const ask = document.createElement("p");
-    ask.className = "carp-ask";
-    ask.textContent = data.ask;
-    wrap.appendChild(ask);
-    const s = svg(360, 200);
-    let g = el("g", {}, s);
-    draw(g, null);
-    wrap.appendChild(s);
-    const opts = document.createElement("div");
-    opts.className = "carp-opts";
-    wrap.appendChild(opts);
-    const fb = document.createElement("p");
-    fb.className = "fb";
-    wrap.appendChild(fb);
-
-    Object.keys(CASES).forEach((key) => {
-      const c = CASES[key];
-      const b = document.createElement("button");
-      b.type = "button";
-      b.className = "carp-opt";
-      b.textContent = c.label[0].toUpperCase() + c.label.slice(1);
-      b.addEventListener("click", () => {
-        g.remove();
-        g = el("g", {}, s);
-        draw(g, key);
-        fb.className = "fb " + (c.verdict === "good" ? "good" : "bad");
-        fb.textContent = c.why;
-        [...opts.children].forEach((x) => { x.disabled = true; });
-        b.classList.add(c.verdict === "good" ? "chosen-ok" : "chosen-no");
-        if (c.verdict === "good") { done(); return; }
-        const again = document.createElement("button");
-        again.type = "button";
-        again.className = "big small teal";
-        again.textContent = "Show the right way";
-        again.addEventListener("click", () => {
-          const goodKey = Object.keys(CASES).find((k) => CASES[k].verdict === "good");
-          g.remove();
-          g = el("g", {}, s);
-          draw(g, goodKey);
-          fb.className = "fb good";
-          fb.textContent = CASES[goodKey].why;
-          again.remove();
-          done();
-        });
-        wrap.appendChild(again);
-      });
-      opts.appendChild(b);
-    });
-    mount.appendChild(wrap);
-  }
+  const basePredict = R.predict;
+  R.predict = function (data, mount, done) {
+    if (data && data.cases === "pare") return engines.caseChoice(PARE_CASES, drawPare, data, mount, done);
+    if (data && data.cases === "glue") return engines.caseChoice(GLUE_CASES, drawGlue, data, mount, done);
+    return basePredict(data, mount, done);
+  };
 
   C.JOINTS = JOINTS;
   C.FAMILIES = FAMILIES;

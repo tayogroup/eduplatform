@@ -1,27 +1,24 @@
 {
   "_comment": "The Carpentry Foundation prototype build. Its one lesson comes BEFORE the Tools & Joints lesson in the actual workflow — that lesson opens on 'a prepared piece, planed straight, square and gauged to size', and this is how the piece got that way. Built by ../lesson-kit/build.py.",
-
   "school": "Professor Adow TVET",
   "module": "foundation",
   "moduleTitle": "Carpentry Foundation",
-
   "levelKind": "tvet",
   "levelNumber": 3,
   "levelLabel": "Foundation",
-
   "standards": "src/curriculum/adow-carpentry-foundation.json",
-
-  "_extraScripts": "The Foundation step kinds — sort, inspect, setgauge — and the plane, the tool faults and the preparation sequence. Kept out of carpentry.js so a Tools & Joints page does not download a module it never renders.",
-  "extraScripts": ["carpentry-foundation.js"],
-
+  "_extraScripts": "kit.js loads first and carries the shared machinery. These two are carpentry's own: its drawings and step kinds, then the Foundation additions - the plane, the tool faults, the preparation sequence, and sort/inspect/setgauge.",
+  "extraScripts": [
+    "carpentry.js",
+    "carpentry-foundation.js"
+  ],
   "hub": "index.html",
   "hubIntro": "The hand tools of the trade, how they are kept and how a workshop is kept safe, and how a rough board is brought to a straight, square, finished size. Everything here is what the joint lessons assume you already have.",
-
   "leadsNote": "This is foundation work. It is not a unit of the Kenyan Carpentry & Joinery Level 4 qualification — all eight of those units assume you already have tools and joints. Preparing stock to size is behind every one of them, and most directly behind Door and Window Frames (0732 251 02D), Timber Furniture Items (0732 351 06D) and Timber Floors and Framed Structures (0732 351 07D).",
-
   "endNote": "You have taken a rough board to a finished size on screen. The next one is real timber, a real plane and a real edge that either is square or is not — and that is assessed at the bench.",
-
   "lessons": [
-    { "content": "lesson-1.py" }
+    {
+      "content": "lesson-1.py"
+    }
   ]
 }

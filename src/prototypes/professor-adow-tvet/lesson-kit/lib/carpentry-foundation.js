@@ -23,8 +23,8 @@
   "use strict";
 
   const C = window.CARP;
-  if (!C) throw new Error("carpentry-foundation.js must load after carpentry.js");
-  const { el, svg, tok, R } = C;
+  if (!C) throw new Error("carpentry-foundation.js must load after kit.js and carpentry.js");
+  const { el, svg, tok, R, engines } = C;
 
   const WOOD = "#C98A4B", WOOD_DARK = "#A96E35", GRAIN = "#8A5A28";
   const STEEL = "#B9C6D0", STEEL_DARK = "#7E8E9B", BRASS = "#C9A227", HANDLE = "#7A4A22";
@@ -54,7 +54,8 @@
      THE SMOOTHING PLANE. The one major hand tool the Tools & Joints
      lesson never draws.
      ================================================================== */
-  C.TOOLS.plane = {
+  const PLANE = {
+    plane: {
     title: "smoothing plane",
     w: 380, h: 200,
     draw(g) {
@@ -73,6 +74,7 @@
       { id: "knob", label: "knob", box: [56, 66, 58, 40], say: "The front knob. The hand that presses down. At the start of a stroke the pressure is here." },
       { id: "tote", label: "tote", box: [228, 56, 72, 50], say: "The tote, the rear handle. It pushes. At the end of a stroke the pressure moves back to it, so the plane does not tip off the end and round the edge." },
     ],
+  },
   };
 
   /* ==================================================================
@@ -196,8 +198,13 @@
      STEP RENDERERS
      ================================================================== */
 
-  /* sort — one tool at a time into the group it belongs to */
+  /* sort — one tool at a time into the group it belongs to. kit.js owns
+     the REGISTRY variant (data.registry); this is the older one, which
+     takes its items by tool name, and it stays because the Foundation
+     lesson is written against it. */
+  const baseSort = R.sort;
   R.sort = function (data, mount, done) {
+    if (data.registry && baseSort) return baseSort(data, mount, done);
     const wrap = document.createElement("div");
     wrap.className = "carp-stage";
     const ask = document.createElement("p");
@@ -423,6 +430,8 @@
     mount.appendChild(wrap);
   };
 
+  C.registerAll(PLANE, { w: 380, h: 200 });
+  C.registerAll(FAULTS, { w: 300, h: 190 });
   C.FAULTS = FAULTS;
   C.PREP_STATES = PREP_STATES;
   C.drawPrep = drawPrep;

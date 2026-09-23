@@ -19,14 +19,14 @@
         ";transform:scale(" + (1.04 + u * 0.05).toFixed(4) + ')">' + titleMotif({ t: t }) + "</div>" +
       '<div class="cs-in">' +
         '<div class="cs-mark" style="opacity:' + a.toFixed(3) +
-          ";transform:scale(" + (0.86 + a * 0.14).toFixed(3) + ')">E</div>' +
-        '<p class="eyebrow" style="opacity:' + a.toFixed(3) + '">Ehel Academy · ' + esc(F.subtitle) + "</p>" +
+          ";transform:scale(" + (0.86 + a * 0.14).toFixed(3) + ')">' + esc(BRAND_MARK) + "</div>" +
+        '<p class="eyebrow" style="opacity:' + a.toFixed(3) + '">' + esc(BRAND_NAME) + " · " + esc(F.subtitle) + "</p>" +
         '<h1 style="opacity:' + b.toFixed(3) + ";transform:translateY(" + ((1 - b) * 18).toFixed(2) + 'px)">' +
           esc(F.title) + "</h1>" +
         '<div class="cs-rule" style="transform:scaleX(' + d.toFixed(3) + ')"></div>' +
         '<p class="cs-by" style="opacity:' + d.toFixed(3) +
           ";transform:translateY(" + ((1 - d) * 8).toFixed(2) + 'px)">' +
-          "A short unit lecture by the Ehel Academy Virtual Teacher</p>" +
+          esc(BRAND_BY) + "</p>" +
         '<p class="cs-sub" style="opacity:' + inAt(t, c.start + 1.55, 0.8).toFixed(3) +
           '">' + esc(F.framework || "Cambridge Primary Computing 0059") + " · Stage " + esc(F.stage) + "</p>" +
       "</div></div>";
@@ -53,7 +53,7 @@
         '<p class="cs-cap" style="opacity:' + b.toFixed(3) + '">What this lesson covered</p>' +
         '<div class="cs-codes">' + codes + "</div>" +
         '<p class="cs-sign" style="opacity:' + inAt(t, c.start + 2.2, 0.8).toFixed(3) + '">' +
-          '<span class="cs-mark sm">E</span>Ehel Academy · ' + esc(F.subtitle) + "</p>" +
+          '<span class="cs-mark sm">' + esc(BRAND_MARK) + "</span>" + esc(BRAND_NAME) + " · " + esc(F.subtitle) + "</p>" +
       "</div></div>";
   }
 

@@ -419,10 +419,13 @@
       var up = board(0, 0, MW, MH, {}) + R(0, MH / 2, LAP, MH / 2, 0, P.ground, WOOD_D, 2.5);
       out += G(up, { transform: "translate(" + n2(JX + MW - LAP) + "," + n2(JY - MH - gap) + ")" });
       if (diag > 0) {
-        /* corner to corner of the ASSEMBLED work. The first cut measured the
-           lap rather than the assembly, so the lines ran off the left of the
-           joint into empty stage. */
-        var x0 = JX, y0 = JY - MH, x1 = JX + 2 * MW - LAP, y1 = JY + MH;
+        /* ACROSS THE LAP, not across the bounding box. The first cut drew
+           the lap; the second drew corner to corner of the whole assembly,
+           which is worse — two members crossing make a staircase, not a
+           rectangle, so those diagonals ended in empty stage on both sides
+           and measured nothing. The square thing here is the lap, and that
+           is what a carpenter puts a tape across. */
+        var x0 = JX + MW - LAP, y0 = JY - MH, x1 = JX + MW, y1 = JY + MH;
         out += L(x0, y0, x1, y1, P.teal, 2.4, { opacity: diag, "stroke-dasharray": "8 5" });
         out += L(x1, y0, x0, y1, P.teal, 2.4, { opacity: diag, "stroke-dasharray": "8 5" });
         out += cap(584, 396, "equal diagonals — check before any glue", diag, P.teal);

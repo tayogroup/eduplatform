@@ -226,12 +226,26 @@
       } };
   }
 
+  /* ---- the school whose film this is ----------------------------------
+     Hard-coded to Ehel Academy until 2026-09-23, when a Professor Adow TVET
+     film put another school's name and crest on every one of its frames.
+     A storyboard now says who it belongs to:
+
+       "brand": { "name": "…", "mark": "…", "by": "…" }
+
+     EVERY DEFAULT IS THE STRING THAT WAS THERE, so a film that names no
+     brand renders exactly as it did — the nine Ehel films included. */
+  var BRAND = F.brand || {};
+  var BRAND_NAME = BRAND.name || "Ehel Academy";
+  var BRAND_MARK = BRAND.mark || "E";
+  var BRAND_BY = BRAND.by || "A short unit lecture by the Ehel Academy Virtual Teacher";
+
   /* ---- chrome -------------------------------------------------------- */
   function chrome(scene, t) {
     var pct = clamp(t / TOTAL, 0, 1) * 100;
     return '<header class="bar">' +
-      '<span class="mark">E</span>' +
-      '<span class="brand">Ehel Academy<b>' + esc(F.subtitle) + "</b></span>" +
+      '<span class="mark">' + esc(BRAND_MARK) + "</span>" +
+      '<span class="brand">' + esc(BRAND_NAME) + "<b>" + esc(F.subtitle) + "</b></span>" +
       '<span class="unit">' + esc(F.title) + "</span>" +
       "</header>" +
       '<div class="rail"><i style="width:' + pct.toFixed(3) + '%"></i></div>';

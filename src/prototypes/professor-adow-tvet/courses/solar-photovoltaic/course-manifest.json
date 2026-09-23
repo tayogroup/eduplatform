@@ -1,0 +1,29 @@
+{
+  "_comment": "The Phase 1 course. It is deliberately NOT a throwaway placeholder: catalog_sync is get-or-create with no reconciliation pass, so a course it creates stays in Moodle with its enrolments forever — a 'TEST COURSE' would be permanent clutter. This is the real first course (see docs/professor-adow-tvet-setup-plan.md, Phase 3), declared with its units PLANNED and none of them BUILT. The generator lists a unit only when its data file exists, so today this ships a real course with zero grade items, which is exactly the empty-school probe Phase 1 wants.",
+
+  "courseKey": "adow-solar-pv",
+  "title": "Solar Photovoltaic Installation & Maintenance",
+  "department": "electronics",
+
+  "_level": "TVET has levels, not grades. levelKind is carried end to end precisely so nothing downstream reads levelNumber as a school year — the trap Intensive English fell into by sending its CEFR level as `grade`, which is why WEHEL_INTENSIVE_BANDS exists as a separate table. See the plan doc.",
+  "levelKind": "tvet",
+  "levelNumber": 1,
+  "levelLabel": "Level 1",
+
+  "summary": "Sizing, installing, testing and maintaining standalone solar photovoltaic systems. Theory, calculation and fault-finding are studied online; installation and testing competencies are assessed at the centre workshop.",
+
+  "_progressPartition": "Which partition the catalogue's `units` array — and therefore the Moodle grade items — represents. catalog_sync names every grade item `Progress: uNN` from unit.number, so whatever is listed here IS the progress partition and nothing else may claim it. A TVET course has three plausible partitions (modules, units of competency, assessment events); this course uses units of competency.",
+  "progressPartition": "unitOfCompetency",
+
+  "_units": "`data` is relative to this file. A unit joins the catalogue — and gets a grade item — on the day its JSON ships, not before. `assessmentMode` records whether the platform can assess the unit at all (knowledge | practical | both); it is the field that keeps a blended school honest about what it certifies. These titles are a first pass and are NOT trade-reviewed — Phase 2 replaces them from the occupational standards file.",
+  "units": [
+    { "number": 1, "title": "Solar energy and PV fundamentals", "data": "units/unit-1.json", "assessmentMode": "knowledge" },
+    { "number": 2, "title": "Safety, tools and test instruments", "data": "units/unit-2.json", "assessmentMode": "both" },
+    { "number": 3, "title": "Load assessment and system sizing", "data": "units/unit-3.json", "assessmentMode": "knowledge" },
+    { "number": 4, "title": "Batteries, charge controllers and inverters", "data": "units/unit-4.json", "assessmentMode": "knowledge" },
+    { "number": 5, "title": "Mounting and array installation", "data": "units/unit-5.json", "assessmentMode": "practical" },
+    { "number": 6, "title": "Wiring, protection and earthing", "data": "units/unit-6.json", "assessmentMode": "both" },
+    { "number": 7, "title": "Commissioning and testing", "data": "units/unit-7.json", "assessmentMode": "both" },
+    { "number": 8, "title": "Fault finding and maintenance", "data": "units/unit-8.json", "assessmentMode": "both" }
+  ]
+}

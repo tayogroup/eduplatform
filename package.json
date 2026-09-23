@@ -205,7 +205,10 @@
     "fix:verb-agreement": "node tools/fix-ehel-verb-agreement.mjs",
     "check:teacher-scripts": "node tools/check-ehel-teacher-scripts.mjs",
     "check:tutor-lessons": "node tools/check-tutor-lessons.mjs mathematics && node tools/check-tutor-lessons.mjs science",
-    "check:platform-cors": "node tools/check-platform-cors.mjs"
+    "check:platform-cors": "node tools/check-platform-cors.mjs",
+    "catalog:adow": "node tools/generate-adow-catalog.js",
+    "deploy:adow:dry": "node tools/generate-adow-catalog.js --quiet && node tools/upload-adow-to-bunny.js",
+    "deploy:adow": "node tools/generate-adow-catalog.js --quiet && node tools/upload-adow-to-bunny.js --confirm"
   },
   "devDependencies": {
     "@playwright/test": "^1.58.2",

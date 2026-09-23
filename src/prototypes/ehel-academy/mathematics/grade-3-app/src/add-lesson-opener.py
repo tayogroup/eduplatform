@@ -285,6 +285,9 @@ CSS = """/* %s - see add-lesson-opener.py. Lives in g3-css.css, not a
   .lec-h { font-weight: 800; font-size: clamp(21px, 4vw, 26px); margin: 0; }
   .lec-p { margin: 0; font-size: 19px; line-height: 1.55; max-width: 34em; }
   .lec-note { margin: 4px 0 0; color: var(--muted); font-size: 13.5px; }
+  .lec.lec-film { max-width: 760px; }
+  .lec-film video { width: 100%%; display: block; border-radius: 18px; background: #000;
+    aspect-ratio: 16 / 9; box-shadow: var(--shadow); }
   .cardsgrid { display: grid; grid-template-columns: repeat(auto-fit, minmax(128px, 1fr)); gap: 12px;
     width: 100%%; max-width: 640px; }
   .tapcard { display: flex; flex-direction: column; align-items: center; gap: 6px; padding: 14px 8px 12px;
@@ -335,7 +338,25 @@ def js_functions():
     });
   }
 
+  /* A lesson WITH a film plays it here, as Science's lecture() does where
+     LESSON["video"] names one, and the step is done when the film ends. Leaving
+     the step pauses it: show() only swaps the active class, so a hidden slide
+     would otherwise go on talking under the next step. */
+  function lessonFilm(o) {
+    const v = o.video, stage = document.getElementById(o.stage);
+    stage.innerHTML = '<div class="lec lec-film">' +
+      '<video controls playsinline preload="none" poster="' + esc(v.poster) + '" src="' + esc(v.src) + '">' +
+      '<track kind="captions" srclang="en" label="English" src="' + esc(v.vtt) + '"></video>' +
+      '<p class="lec-note">' + esc(v.note) + '</p></div>';
+    const film = stage.querySelector('video'), slide = stage.closest('section.slide');
+    film.addEventListener('ended', () => finish(o.finish, o.done));
+    if (slide && window.MutationObserver) new MutationObserver(() => {
+      if (!slide.classList.contains('active') && !film.paused) film.pause();
+    }).observe(slide, { attributes: true, attributeFilter: ['class'] });
+  }
+
   function lessonLecture(o) {
+    if (o.video) return lessonFilm(o);
     const parts = o.parts || [];
     let k = 0;
     const id = o.stage + 'l';
@@ -493,6 +514,10 @@ for slug in sorted(WORK):
     about_li = data["about"]
     about_say = "By the end of this lesson you will be able to: " + "; ".join(
         t.rstrip(".").lower() if i > 0 else t.rstrip(".") for i, t in enumerate(about_li)) + "."
+    # A lesson with a film plays it in this step instead of the parts
+    # (grade-4-app: shape-and-measures). Same shape, same keys.
+    video_js = ("" if not data.get("video") else ", video: { " + ", ".join(
+        "%s: %s" % (k, jlit(data["video"][k])) for k in ("src", "poster", "vtt", "note")) + " }")
     parts_js = ", ".join("{ title: %s, say: %s }" % (jlit(t), jlit(sy)) for t, sy in data["parts"])
     words_js = ", ".join(
         "{ w: %s, pic: %s, meaning: %s, uses: [%s] }"
@@ -521,6 +546,12 @@ for slug in sorted(WORK):
         '    </section>\n'
         '    ' % (MARK, jlit(about_say), esc(about_say), MARK, MARK)
     )
+    if data.get("video"):
+        # the step shows a film, so it must not say it is read in parts
+        assert new_slides.count("Watch the lesson told in parts, by the voice.") == 2
+        new_slides = new_slides.replace("Watch the lesson told in parts, by the voice.",
+                                        "Watch the lesson film. When it ends, this step is done.")
+
     m2 = re.search(r'(<div class="deck" id="deck">\s*)', new_s)
     new_s = new_s[:m2.end()] + new_slides + new_s[m2.end():]
 
@@ -536,7 +567,7 @@ for slug in sorted(WORK):
     calls = (
         "\n  lessonAbout({ stage: 'stageOvw', about: [" + ", ".join(jlit(t) for t in about_li)
         + "], finish: 0, done: %s });\n" % jlit("Let's begin.")
-        + "  lessonLecture({ stage: 'stageLec', parts: [" + parts_js + "], finish: 1, done: %s });\n"
+        + "  lessonLecture({ stage: 'stageLec', parts: [" + parts_js + "]" + video_js + ", finish: 1, done: %s });\n"
           % jlit("You have heard the whole lesson. Now do it yourself.")
         + "  lessonWords({ stage: 'stageMw', words: [" + words_js + "], finish: 2, done: %s });\n"
           % jlit("You know the math words of this lesson.")

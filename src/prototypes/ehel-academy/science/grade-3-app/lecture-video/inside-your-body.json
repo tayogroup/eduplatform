@@ -1,0 +1,123 @@
+{
+  "_comment": "Storyboard for the Grade 3 Science unit lecture film, Lesson 5 Inside Your Body. Rendered by tools/create-ehel-unit-lecture.js. See lecture-video/BRIEF.md. Every beat is one narration clip; art.at names the phrases a picture waits for, and the page refuses to load if a phrase is not in its beat's say. The chapters follow LESSON['lecture'] in order (organs; the brain and the lungs; the heart; the stomach and the intestine; models of the body, here as the diagram and then the lung model), in the lesson's own words, drawn with the lesson's own picture of the organs (ART.figure 'organs', the figure the child taps in the Organ finder and labels in the Body diagram) and with the bottle-and-balloon model the child builds two steps later.",
+  "slug": "inside-your-body",
+  "lesson": 5,
+  "grade": 3,
+  "stage": 3,
+  "title": "Inside Your Body",
+  "subtitle": "Grade 3 Science",
+  "framework": "Cambridge Primary Science 0097",
+  "renderer": {
+    "art": ["science"],
+    "skin": "brown",
+    "scenes": [
+      "tools/lib/ehel-film-marks.js",
+      "tools/lib/film-scenes/science-g3/inside-your-body.js",
+      "tools/lib/film-scenes/science-g3/inside-your-body-2.js",
+      "tools/lib/film-scenes/science-g3/inside-your-body-3.js",
+      "tools/lib/film-scenes/science-g3/inside-your-body-4.js"
+    ]
+  },
+  "objectives": [
+    ["3Bs.03", "Identify some of the important organs in humans (limited to brain, heart, stomach, intestine and lungs) and describe their functions."],
+    ["3TWSm.01", "Know that there are different types of models in science, including diagrams and physical models that we can touch."],
+    ["3TWSm.02", "Make and use physical models."]
+  ],
+  "scenes": [
+    { "id": "title", "kind": "title", "codes": [], "beats": [
+      { "say": "Inside you, right now, five organs are hard at work.",
+        "art": { "at": { "inside": "Inside you", "five": "five organs", "work": "hard at work" } } },
+      { "say": "Each one has a job. Your body needs every one of them.",
+        "art": { "at": { "job": "has a job", "needs": "needs every one" } } }
+    ] },
+
+    { "id": "organs", "kind": "map", "heading": "Five organs", "codes": ["3Bs.03"], "beats": [
+      { "say": "An organ is a part inside your body with a job to do.",
+        "art": { "at": { "organ": "An organ", "inside": "inside your body", "job": "a job to do" } } },
+      { "say": "You cannot see them with your eyes. Here is where they sit.",
+        "art": { "at": { "cannot": "cannot see them", "where": "where they sit" } } },
+      { "say": "Today you will meet five. The brain, in your head. The lungs, in your chest.",
+        "art": { "at": { "brain": "The brain", "head": "in your head", "lungs": "The lungs", "chest": "in your chest" } } },
+      { "say": "The heart between the lungs, the stomach, and the intestine below.",
+        "art": { "at": { "heart": "The heart", "stomach": "the stomach", "intestine": "the intestine" } } }
+    ] },
+
+    { "id": "brainlungs", "kind": "brainlungs", "heading": "The brain and the lungs", "codes": ["3Bs.03"], "beats": [
+      { "say": "The brain sits in your head, inside your skull.",
+        "art": { "at": { "brain": "The brain", "head": "in your head", "skull": "inside your skull" } } },
+      { "say": "It thinks. It remembers. It feels.",
+        "art": { "at": { "thinks": "It thinks", "remembers": "It remembers", "feels": "It feels" } } },
+      { "say": "And it tells every other part of you what to do.",
+        "art": { "at": { "tells": "it tells every other part", "what": "what to do" } } },
+      { "say": "The lungs are in your chest. They take air in when you breathe in.",
+        "art": { "at": { "lungs": "The lungs", "air": "take air in", "in": "breathe in" } } },
+      { "say": "They push it out again when you breathe out, all day long.",
+        "art": { "at": { "push": "push it out", "out": "breathe out", "allday": "all day long" } } }
+    ] },
+
+    { "id": "heart", "kind": "heart", "heading": "The heart", "codes": ["3Bs.03"], "beats": [
+      { "say": "The heart sits between your two lungs, in the middle of your chest.",
+        "art": { "at": { "heart": "The heart", "between": "between your two lungs", "middle": "in the middle" } } },
+      { "say": "Many children put it on the far left. It is really in the middle.",
+        "art": { "at": { "far": "on the far left", "really": "really in the middle" } } },
+      { "say": "The heart is a pump. About once a second, it squeezes.",
+        "art": { "at": { "pump": "a pump", "second": "once a second", "squeeze": "it squeezes" } } },
+      { "say": "Each squeeze pushes blood round your whole body.",
+        "art": { "at": { "squeeze": "Each squeeze", "blood": "pushes blood", "body": "your whole body" } } },
+      { "say": "Blood carries food, and the goodness from the air, to every part of you.",
+        "art": { "at": { "carries": "Blood carries food", "goodness": "the goodness from the air", "every": "every part" } } },
+      { "say": "Put a hand on your chest and feel it beating.",
+        "art": { "at": { "hand": "Put a hand", "feel": "feel it beating" } } }
+    ] },
+
+    { "id": "gut", "kind": "gut", "heading": "The stomach and the intestine", "codes": ["3Bs.03"], "beats": [
+      { "say": "When you swallow, food goes down to your stomach.",
+        "art": { "at": { "swallow": "you swallow", "stomach": "your stomach" } } },
+      { "say": "The stomach is a stretchy bag. It churns the food into mush.",
+        "art": { "at": { "bag": "a stretchy bag", "churn": "churns the food", "mush": "into mush" } } },
+      { "say": "The stomach is not your whole tummy. It is one bag, up under your ribs.",
+        "art": { "at": { "not": "not your whole tummy", "one": "one bag", "ribs": "under your ribs" } } },
+      { "say": "Then the mush moves into the intestine, a long coiled tube.",
+        "art": { "at": { "moves": "moves into the intestine", "tube": "a long coiled tube" } } },
+      { "say": "The goodness passes through its walls and into your blood.",
+        "art": { "at": { "goodness": "The goodness", "walls": "through its walls", "blood": "into your blood" } } }
+    ] },
+
+    { "id": "diagram", "kind": "diagram", "heading": "A diagram is a model", "codes": ["3TWSm.01"], "beats": [
+      { "say": "We cannot look inside ourselves, so scientists use models.",
+        "art": { "at": { "cannot": "cannot look inside", "models": "use models" } } },
+      { "say": "A diagram is one kind of model. It is a drawing with labels.",
+        "art": { "at": { "diagram": "A diagram", "drawing": "a drawing with labels" } } },
+      { "say": "Today you will put five labels on a picture of the body.",
+        "art": { "at": { "five": "five labels", "body": "a picture of the body" } } },
+      { "say": "Brain, lungs, heart, stomach, intestine. That is a diagram.",
+        "art": { "at": { "brain": "Brain,", "lungs": "lungs,", "heart": "heart,", "stomach": "stomach,", "intestine": "intestine.", "done": "That is a diagram" } } }
+    ] },
+
+    { "id": "model", "kind": "model", "heading": "A model of your lungs", "codes": ["3TWSm.02", "3TWSm.01"], "beats": [
+      { "say": "Another kind of model is one you can make and touch.",
+        "art": { "at": { "other": "Another kind", "make": "make and touch" } } },
+      { "say": "A grown-up cuts the bottom off a bottle. The bottle is your chest.",
+        "art": { "at": { "cuts": "cuts the bottom off", "chest": "your chest" } } },
+      { "say": "A balloon hangs inside it, from the neck. That balloon is a lung.",
+        "art": { "at": { "balloon": "A balloon hangs inside it", "neck": "from the neck", "lung": "is a lung" } } },
+      { "say": "A second balloon stretches across the bottom. That is the breathing muscle.",
+        "art": { "at": { "second": "A second balloon", "across": "across the bottom", "muscle": "the breathing muscle" } } },
+      { "say": "Pull the bottom balloon down, and the lung fills with air. Breathing in.",
+        "art": { "at": { "pull": "Pull the bottom balloon down", "fills": "fills with air", "in": "Breathing in" } } },
+      { "say": "Let go, and the lung empties. Breathing out. Your model breathes.",
+        "art": { "at": { "letgo": "Let go", "empties": "the lung empties", "out": "Breathing out", "breathes": "Your model breathes" } } }
+    ] },
+
+    { "id": "recap", "kind": "recap", "heading": "What you now know", "codes": ["3Bs.03", "3TWSm.01", "3TWSm.02"], "beats": [
+      { "say": "Brain thinks. Lungs breathe. Heart pumps blood.",
+        "art": { "at": { "brain": "Brain thinks", "lungs": "Lungs breathe", "heart": "Heart pumps blood" } } },
+      { "say": "The stomach breaks food down. The intestine takes the goodness.",
+        "art": { "at": { "stomach": "The stomach breaks food down", "intestine": "The intestine takes the goodness" } } },
+      { "say": "A diagram and a bottle of balloons are both models of your body.",
+        "art": { "at": { "models": "both models" } } },
+      { "say": "Five organs, five jobs, all working inside you right now.",
+        "art": { "at": { "five": "Five organs" } } }
+    ] }
+  ]
+}

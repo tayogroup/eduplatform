@@ -212,6 +212,17 @@ LESSON["lecture"] = [
          "Spray the weeds, and the insects and then the birds go hungry. Plant a hedge, and a whole new chain begins. Science shows us what our actions do to living things."),
 ]
 
+# The unit lecture film (tools/create-ehel-unit-lecture.js; storyboard and
+# pictures in lecture-video/food-chains.json). The lecture step draws it
+# above the parts; build-lessons.py refuses a path that is not on disk AND in
+# app.config.json :: extraPages, and a --draft render.
+LESSON["video"] = {
+    "src": "lecture-video/food-chains.e05ae5b9.mp4",
+    "captions": "lecture-video/food-chains.adb85d37.vtt",
+    "poster": "lecture-video/food-chains.3cb6c271.jpg",
+    "note": "About three minutes. Watch it through, then go back over it a part at a time below.",
+}
+
 LESSON["words"] = [
     word("food chain", "➡️", "A diagram showing who eats whom, starting with a plant.",
          ["Grass, rabbit, fox is a food chain.", "Every food chain starts with a plant."]),

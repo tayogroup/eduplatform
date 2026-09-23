@@ -1,0 +1,120 @@
+{
+  "_comment": "Storyboard for the Grade 3 Science unit lecture film, Lesson 4 Growing Up. Rendered by tools/create-ehel-unit-lecture.js. See lecture-video/BRIEF.md. Every beat is one narration clip; art.at names the phrases a picture waits for, and the page refuses to load if a phrase is not in its beat's say. The chapters follow LESSON['lecture'] in order (the frog; the butterfly; babies and chicks; two ways to grow up; two kinds of model), with the lesson's own record step between the last two, and they use the lesson's own pictures: the kit's frogspawn, tadpole, tadpole with legs, froglet, chrysalis and ladybird larva drawings, and the emoji its steps give each animal.",
+  "slug": "growing-up",
+  "lesson": 4,
+  "grade": 3,
+  "stage": 3,
+  "title": "Growing Up",
+  "subtitle": "Grade 3 Science",
+  "framework": "Cambridge Primary Science 0097",
+  "renderer": {
+    "art": ["science"],
+    "skin": "brown",
+    "scenes": [
+      "tools/lib/ehel-film-marks.js",
+      "tools/lib/film-scenes/science-g3/growing-up.js",
+      "tools/lib/film-scenes/science-g3/growing-up-2.js",
+      "tools/lib/film-scenes/science-g3/growing-up-3.js",
+      "tools/lib/film-scenes/science-g3/growing-up-4.js"
+    ]
+  },
+  "objectives": [
+    ["3Bp.04", "Describe and compare how the offspring of different animals grow into adults, including humans, birds, frogs and butterflies."],
+    ["3TWSm.01", "Know that there are different types of models in science, including diagrams and physical models that we can touch."],
+    ["3TWSc.01", "Use observations and tests to sort, group and classify objects."],
+    ["3TWSc.06", "Collect and record observations and/or measurements in tables and diagrams."]
+  ],
+  "scenes": [
+    { "id": "title", "kind": "title", "codes": [], "beats": [
+      { "say": "Every animal starts small and grows up. Some change shape on the way.",
+        "art": { "at": { "small": "starts small", "change": "change shape" } } },
+      { "say": "A tadpole becomes a frog. A caterpillar becomes a butterfly.",
+        "art": { "at": { "tadpole": "A tadpole", "frog": "a frog", "cat": "A caterpillar", "bfly": "a butterfly" } } }
+    ] },
+
+    { "id": "frog", "kind": "frog", "heading": "From frogspawn to frog", "codes": ["3Bp.04"], "beats": [
+      { "say": "A frog starts as eggs in jelly in a pond. This is frogspawn.",
+        "art": { "at": { "eggs": "eggs in jelly", "pond": "a pond", "spawn": "frogspawn" } } },
+      { "say": "A tadpole hatches. It has a tail and no legs, and breathes in the water.",
+        "art": { "at": { "tad": "A tadpole", "tail": "a tail and no legs", "breathes": "breathes in the water" } } },
+      { "say": "Back legs grow first, then front legs. The tail starts to shrink.",
+        "art": { "at": { "back": "Back legs", "front": "front legs", "shrink": "starts to shrink" } } },
+      { "say": "Now it is a froglet: legs front and back, and a stub of tail. It can climb out.",
+        "art": { "at": { "froglet": "a froglet", "legs": "legs front and back", "stub": "a stub of tail", "climb": "climb out" } } },
+      { "say": "An adult frog has no tail and breathes air. It lays eggs of its own.",
+        "art": { "at": { "adult": "An adult frog", "air": "breathes air", "lays": "lays eggs of its own" } } },
+      { "say": "A tadpole is not a baby fish. It is a baby frog that does not look like one.",
+        "art": { "at": { "fish": "not a baby fish", "baby": "a baby frog" } } }
+    ] },
+
+    { "id": "butterfly", "kind": "butterfly", "heading": "From egg to butterfly", "codes": ["3Bp.04"], "beats": [
+      { "say": "A butterfly starts as a tiny egg, laid on a leaf.",
+        "art": { "at": { "egg": "a tiny egg", "leaf": "on a leaf" } } },
+      { "say": "A caterpillar hatches and eats leaves all day, growing and growing.",
+        "art": { "at": { "cat": "A caterpillar", "eats": "eats leaves", "grow": "growing and growing" } } },
+      { "say": "Then it hangs itself up and becomes a chrysalis. It stays very still.",
+        "art": { "at": { "hang": "hangs itself up", "chrys": "a chrysalis", "still": "very still" } } },
+      { "say": "Inside the chrysalis it is changing completely. It has not died.",
+        "art": { "at": { "inside": "changing completely", "alive": "has not died" } } },
+      { "say": "A butterfly comes out, dries its wings, and flies off to lay eggs.",
+        "art": { "at": { "out": "A butterfly comes out", "wings": "dries its wings", "lay": "lay eggs" } } }
+    ] },
+
+    { "id": "bigger", "kind": "bigger", "heading": "Babies and chicks", "codes": ["3Bp.04"], "beats": [
+      { "say": "A human baby cannot walk or talk yet, and it drinks milk.",
+        "art": { "at": { "baby": "A human baby", "cannot": "cannot walk or talk", "milk": "drinks milk" } } },
+      { "say": "But it already has the shape of a person. It only grows bigger.",
+        "art": { "at": { "shape": "the shape of a person", "bigger": "only grows bigger" } } },
+      { "say": "A child, then an adult, fully grown. That takes many years.",
+        "art": { "at": { "child": "A child", "adult": "an adult", "years": "many years" } } },
+      { "say": "A chick hatches fluffy. In a few weeks it has feathers and can fly.",
+        "art": { "at": { "chick": "A chick hatches", "weeks": "a few weeks", "fly": "can fly" } } },
+      { "say": "Same shape, bigger. A bird does not change shape like a frog.",
+        "art": { "at": { "same": "Same shape, bigger", "not": "does not change shape" } } }
+    ] },
+
+    { "id": "twoways", "kind": "twoways", "heading": "Two ways to grow up", "codes": ["3Bp.04", "3TWSc.01"], "beats": [
+      { "say": "So there are two ways to grow up. Sort each baby animal.",
+        "art": { "at": { "two": "two ways", "sort": "Sort each baby animal" } } },
+      { "say": "Keep your shape and get bigger: a puppy, a chick, a foal, a kitten, a baby.",
+        "art": { "at": { "keep": "Keep your shape", "puppy": "a puppy", "chick": "a chick", "foal": "a foal", "kitten": "a kitten", "baby": "a baby" } } },
+      { "say": "Or change shape completely: a tadpole, a caterpillar, a ladybird larva.",
+        "art": { "at": { "change": "change shape completely", "tad": "a tadpole", "cat": "a caterpillar", "larva": "a ladybird larva" } } },
+      { "say": "Do not go by size. Look for the change of shape.",
+        "art": { "at": { "size": "go by size", "look": "the change of shape" } } }
+    ] },
+
+    { "id": "table", "kind": "table", "heading": "How long does it take?", "codes": ["3TWSc.06", "3Bp.04"], "beats": [
+      { "say": "Animals take different times to grow up. A table lets you compare them.",
+        "art": { "at": { "times": "different times", "table": "A table" } } },
+      { "say": "A butterfly: egg to butterfly in only a few weeks.",
+        "art": { "at": { "bfly": "A butterfly", "weeks": "a few weeks" } } },
+      { "say": "A frog: frogspawn to froglet takes a few months.",
+        "art": { "at": { "frog": "A frog", "months": "a few months" } } },
+      { "say": "A human takes many years. The bigger the animal, the longer it takes.",
+        "art": { "at": { "human": "A human", "years": "many years", "bigger": "The bigger the animal", "longer": "the longer it takes" } } }
+    ] },
+
+    { "id": "models", "kind": "models", "heading": "Two kinds of model", "codes": ["3TWSm.01"], "beats": [
+      { "say": "Scientists use models. A model shows an idea clearly, leaving the rest out.",
+        "art": { "at": { "models": "use models", "idea": "shows an idea clearly" } } },
+      { "say": "A drawing of the frog's life cycle, with labels, is a diagram. You read it.",
+        "art": { "at": { "drawing": "A drawing", "labels": "with labels", "diagram": "a diagram", "read": "You read it" } } },
+      { "say": "A plastic butterfly with wings that open is a physical model.",
+        "art": { "at": { "plastic": "A plastic butterfly", "phys": "a physical model" } } },
+      { "say": "A globe, or a toy skeleton. You can hold a physical model and turn it.",
+        "art": { "at": { "globe": "A globe", "skel": "a toy skeleton", "hold": "hold a physical model" } } }
+    ] },
+
+    { "id": "recap", "kind": "recap", "heading": "What you now know", "codes": ["3Bp.04", "3TWSm.01", "3TWSc.01", "3TWSc.06"], "beats": [
+      { "say": "A frog and a butterfly change shape completely as they grow.",
+        "art": { "at": { "frog": "A frog", "bfly": "a butterfly" } } },
+      { "say": "A chick and a baby keep their shape and only get bigger.",
+        "art": { "at": { "keep": "keep their shape" } } },
+      { "say": "Every animal grows up at its own speed: weeks, months or years.",
+        "art": { "at": { "speed": "its own speed" } } },
+      { "say": "A diagram you read. A physical model you hold. Both show an idea.",
+        "art": { "at": { "diagram": "A diagram", "phys": "A physical model" } } }
+    ] }
+  ]
+}

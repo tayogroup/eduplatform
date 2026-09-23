@@ -233,6 +233,17 @@ LESSON["lecture"] = [
          "Digging quarries and mines and pumping oil all change the Earth. Science helps us see the harm and do less of it: recycling metal and glass means less digging. Today you will look it all up."),
 ]
 
+# The unit lecture film (tools/create-ehel-unit-lecture.js; storyboard and
+# pictures in lecture-video/rocks-and-fossils.json). The lecture step draws it
+# above the parts; build-lessons.py refuses a path that is not on disk AND in
+# app.config.json :: extraPages, and a --draft render.
+LESSON["video"] = {
+    "src": "lecture-video/rocks-and-fossils.c277e5c7.mp4",
+    "captions": "lecture-video/rocks-and-fossils.eab3f309.vtt",
+    "poster": "lecture-video/rocks-and-fossils.b577200b.jpg",
+    "note": "About two and a half minutes. Watch it through, then go back over it a part at a time below.",
+}
+
 LESSON["words"] = [
     word("material", "\U0001F9F1", "What a thing is made of.",
          ["Metal is a material.", "Every material comes from the Earth."]),

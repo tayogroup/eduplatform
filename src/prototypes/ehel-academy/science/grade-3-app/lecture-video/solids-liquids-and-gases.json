@@ -1,0 +1,124 @@
+{
+  "_comment": "Storyboard for the Grade 3 Science unit lecture film, Lesson 7 Solids, Liquids and Gases. Rendered by tools/create-ehel-unit-lecture.js. See lecture-video/BRIEF.md. Every beat is one narration clip; art.at names the phrases a picture waits for, and the page refuses to load if a phrase is not in its beat's say. The chapters follow LESSON['lecture'] in order (three states; solids and liquids; gases; standard units; the right equipment), with one chapter for the lesson's own sand and honey misconceptions, in the lesson's own words and with its own drawings: the state tester (ART.sim 'states', the glass, the wooden block and the balloon of air), the kit's own log and stone, and the equipment its 'Choose the equipment' step asks for. The tumbler the film pours into and counts eight centimetres up is drawn by the film (slGlass): the lesson's own glass icon is one fixed picture and the film needs a water level it can set.",
+  "slug": "solids-liquids-and-gases",
+  "lesson": 7,
+  "grade": 3,
+  "stage": 3,
+  "title": "Solids, Liquids and Gases",
+  "subtitle": "Grade 3 Science",
+  "framework": "Cambridge Primary Science 0097",
+  "renderer": {
+    "art": ["science"],
+    "skin": "brown",
+    "scenes": [
+      "tools/lib/ehel-film-marks.js",
+      "tools/lib/film-scenes/science-g3/solids-liquids-and-gases.js",
+      "tools/lib/film-scenes/science-g3/solids-liquids-and-gases-2.js",
+      "tools/lib/film-scenes/science-g3/solids-liquids-and-gases-3.js",
+      "tools/lib/film-scenes/science-g3/solids-liquids-and-gases-4.js",
+      "tools/lib/film-scenes/science-g3/solids-liquids-and-gases-5.js"
+    ]
+  },
+  "objectives": [
+    ["3Cm.01", "Know that materials can be solids, liquids or gases."],
+    ["3Cp.01", "Describe differences in the properties of solids and liquids."],
+    ["3TWSc.01", "Use observations and tests to sort, group and classify objects."],
+    ["3TWSc.02", "Choose equipment from a provided selection and use it appropriately."],
+    ["3TWSc.03", "Take measurements in standard units, describing the advantage of standard units over non-standard units."]
+  ],
+  "scenes": [
+    { "id": "title", "kind": "title", "codes": [], "beats": [
+      { "say": "Look around you. Every material is a solid, a liquid or a gas.",
+        "art": { "at": { "around": "Look around you", "solid": "a solid", "liquid": "a liquid", "gas": "a gas" } } },
+      { "say": "Ice, water and steam are all water, in three different states.",
+        "art": { "at": { "three": "Ice, water and steam", "states": "three different states" } } }
+    ] },
+
+    { "id": "states", "kind": "states", "heading": "Three states", "codes": ["3Cm.01"], "beats": [
+      { "say": "Every material is in one of three states.",
+        "art": { "at": { "every": "Every material", "three": "three states" } } },
+      { "say": "A solid keeps its own shape. Ice, wood and a stone are solids.",
+        "art": { "at": { "solid": "A solid", "shape": "keeps its own shape", "things": "Ice, wood and a stone" } } },
+      { "say": "A liquid flows and takes the shape of its container. Water and milk.",
+        "art": { "at": { "liquid": "A liquid", "flows": "flows", "shape": "takes the shape of its container", "things": "Water and milk" } } },
+      { "say": "A gas spreads out to fill the space it is in. Air is a gas.",
+        "art": { "at": { "gas": "A gas", "spread": "spreads out", "air": "Air is a gas" } } },
+      { "say": "One material can be in different states. Ice, water and steam are all water.",
+        "art": { "at": { "same": "One material", "diff": "different states", "three": "Ice, water and steam" } } }
+    ] },
+
+    { "id": "shapes", "kind": "shapes", "heading": "Solids and liquids", "codes": ["3Cp.01", "3Cm.01"], "beats": [
+      { "say": "A solid keeps its own shape. Turn a block over and it is still a block.",
+        "art": { "at": { "keeps": "keeps its own shape", "turn": "Turn a block over", "still": "still a block" } } },
+      { "say": "Tip it as hard as you like. It does not change shape at all.",
+        "art": { "at": { "tip": "Tip it as hard as you like", "not": "does not change shape" } } },
+      { "say": "A liquid has no shape of its own. Pour it into a glass and it is glass-shaped.",
+        "art": { "at": { "liquid": "A liquid", "none": "no shape of its own", "glass": "into a glass", "shaped": "glass-shaped" } } },
+      { "say": "Pour the same water into a bowl and it is bowl-shaped.",
+        "art": { "at": { "bowl": "into a bowl", "shaped": "bowl-shaped" } } },
+      { "say": "That is the difference. A solid has its own shape. A liquid does not.",
+        "art": { "at": { "diff": "That is the difference", "own": "has its own shape", "not": "A liquid does not" } } }
+    ] },
+
+    { "id": "gases", "kind": "gases", "heading": "Gases", "codes": ["3Cm.01"], "beats": [
+      { "say": "A gas spreads out to fill every bit of space it can.",
+        "art": { "at": { "gas": "A gas", "spread": "spreads out", "space": "every bit of space" } } },
+      { "say": "Untie a balloon. The air rushes out and spreads through the room.",
+        "art": { "at": { "untie": "Untie a balloon", "rush": "rushes out", "room": "the room" } } },
+      { "say": "You cannot see the air, but it is there. Wave your hand and feel it.",
+        "art": { "at": { "cannot": "cannot see the air", "there": "it is there", "wave": "Wave your hand" } } },
+      { "say": "Some children think a gas is nothing. Air is a gas, and it is something.",
+        "art": { "at": { "nothing": "a gas is nothing", "air": "Air is a gas", "something": "it is something" } } }
+    ] },
+
+    { "id": "sand", "kind": "sand", "heading": "Sand and honey", "codes": ["3TWSc.01", "3Cp.01"], "beats": [
+      { "say": "Ask one thing: does it keep its shape, flow, or spread out?",
+        "art": { "at": { "keep": "keep its shape", "flow": "flow,", "spread": "spread out" } } },
+      { "say": "Sand pours. Some children call it a liquid.",
+        "art": { "at": { "pours": "Sand pours", "call": "call it a liquid" } } },
+      { "say": "Pick up one grain. It keeps its shape. Sand is lots of tiny solids.",
+        "art": { "at": { "grain": "one grain", "keeps": "keeps its shape", "tiny": "lots of tiny solids" } } },
+      { "say": "Honey flows slowly, but it flows. So honey is a liquid.",
+        "art": { "at": { "slow": "flows slowly", "but": "but it flows", "liquid": "a liquid" } } }
+    ] },
+
+    { "id": "units", "kind": "units", "heading": "Standard units", "codes": ["3TWSc.03"], "beats": [
+      { "say": "Last year you measured in hands and cubes.",
+        "art": { "at": { "last": "Last year", "hands": "hands and cubes" } } },
+      { "say": "But your hand and my hand are different sizes.",
+        "art": { "at": { "your": "your hand", "my": "my hand", "diff": "different sizes" } } },
+      { "say": "So our answers would not agree, and nobody could check them.",
+        "art": { "at": { "agree": "not agree", "check": "nobody could check them" } } },
+      { "say": "Scientists measure in standard units, like centimetres.",
+        "art": { "at": { "std": "standard units", "cm": "centimetres" } } },
+      { "say": "A centimetre is the same size for everyone, everywhere.",
+        "art": { "at": { "same": "the same size", "every": "everywhere" } } },
+      { "say": "Count them up the glass: the water is eight centimetres deep.",
+        "art": { "at": { "count": "Count them", "eight": "eight centimetres deep" } } }
+    ] },
+
+    { "id": "tools", "kind": "tools", "heading": "The right equipment", "codes": ["3TWSc.02", "3TWSc.03"], "beats": [
+      { "say": "Scientists choose the right equipment for the job.",
+        "art": { "at": { "choose": "choose the right equipment" } } },
+      { "say": "A ruler measures length, in centimetres.",
+        "art": { "at": { "ruler": "A ruler", "length": "length", "cm": "centimetres" } } },
+      { "say": "A measuring jug measures liquid, in millilitres.",
+        "art": { "at": { "jug": "A measuring jug", "ml": "millilitres" } } },
+      { "say": "A thermometer measures how hot. Scales measure how heavy.",
+        "art": { "at": { "therm": "A thermometer", "hot": "how hot", "scales": "Scales", "heavy": "how heavy" } } },
+      { "say": "A ruler cannot tell you how much water is in a jug.",
+        "art": { "at": { "cannot": "A ruler cannot", "much": "how much water", "jug": "in a jug" } } },
+      { "say": "So choose the right tool, and measure in a standard unit.",
+        "art": { "at": { "tool": "the right tool", "unit": "a standard unit" } } }
+    ] },
+
+    { "id": "recap", "kind": "recap", "heading": "What you now know", "codes": ["3Cm.01", "3Cp.01", "3TWSc.01", "3TWSc.02", "3TWSc.03"], "beats": [
+      { "say": "A solid keeps its shape. A liquid takes the shape of its container.",
+        "art": { "at": { "solid": "A solid", "liquid": "A liquid" } } },
+      { "say": "A gas spreads out to fill all the space. Sand is lots of tiny solids.",
+        "art": { "at": { "gas": "A gas", "sand": "Sand is lots of tiny solids" } } },
+      { "say": "Measure in standard units, and choose the right equipment.",
+        "art": { "at": { "units": "standard units", "kit": "the right equipment" } } }
+    ] }
+  ]
+}

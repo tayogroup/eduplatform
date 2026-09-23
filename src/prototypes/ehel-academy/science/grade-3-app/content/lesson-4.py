@@ -234,6 +234,17 @@ LESSON["lecture"] = [
          "A drawing of the frog's life cycle with labels is a diagram. A plastic frog you can hold is a physical model. Both are models: they show the idea clearly and leave the rest out."),
 ]
 
+# The unit lecture film (tools/create-ehel-unit-lecture.js; storyboard and
+# pictures in lecture-video/growing-up.json). The lecture step draws it
+# above the parts; build-lessons.py refuses a path that is not on disk AND in
+# app.config.json :: extraPages, and a --draft render.
+LESSON["video"] = {
+    "src": "lecture-video/growing-up.d952c20f.mp4",
+    "captions": "lecture-video/growing-up.8c888bc8.vtt",
+    "poster": "lecture-video/growing-up.d0aa1d5f.jpg",
+    "note": "About three minutes. Watch it through, then go back over it a part at a time below.",
+}
+
 LESSON["words"] = [
     word("offspring", "\U0001F423", "An animal's young.",
          ["A frog's offspring are tadpoles.", "Offspring grow into adults."]),

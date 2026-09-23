@@ -233,6 +233,17 @@ LESSON["lecture"] = [
          "After an experiment, a scientist asks two things. Did the result support my prediction? And what does it tell me? That second answer is a conclusion. You will make one today."),
 ]
 
+# The unit lecture film (tools/create-ehel-unit-lecture.js; storyboard and
+# pictures in lecture-video/flowering-plants.json). The lecture step draws it
+# above the parts; build-lessons.py refuses a path that is not on disk AND in
+# app.config.json :: extraPages, and a --draft render.
+LESSON["video"] = {
+    "src": "lecture-video/flowering-plants.d93069ec.mp4",
+    "captions": "lecture-video/flowering-plants.f1b3a476.vtt",
+    "poster": "lecture-video/flowering-plants.86649972.jpg",
+    "note": "About two and a half minutes. Watch it through, then go back over it a part at a time below.",
+}
+
 LESSON["words"] = [
     word("roots", icon("roots"), "The parts under the soil that anchor a plant and take in water.",
          ["The roots take in water.", "Roots hold the tree in the ground."]),

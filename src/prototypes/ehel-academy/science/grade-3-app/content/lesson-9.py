@@ -261,6 +261,17 @@ LESSON["lecture"] = [
          "Write your three distances in a table. Then draw them as bars against a scale: that is a bar chart. The tallest bar is the longest slide. Reading the bars, you can see the pattern at a glance."),
 ]
 
+# The unit lecture film (tools/create-ehel-unit-lecture.js; storyboard and
+# pictures in lecture-video/gravity-and-friction.json). The lecture step draws it
+# above the parts; build-lessons.py refuses a path that is not on disk AND in
+# app.config.json :: extraPages, and a --draft render.
+LESSON["video"] = {
+    "src": "lecture-video/gravity-and-friction.1f5211bd.mp4",
+    "captions": "lecture-video/gravity-and-friction.fb9a963e.vtt",
+    "poster": "lecture-video/gravity-and-friction.48c49b80.jpg",
+    "note": "About two and a half minutes. Watch it through, then go back over it a part at a time below.",
+}
+
 LESSON["words"] = [
     word("forcemeter", "\U0001F4CF", "A tool with a spring and a hook that measures a force in newtons.",
          ["Hang the apple on the forcemeter.", "The forcemeter read five newtons."]),

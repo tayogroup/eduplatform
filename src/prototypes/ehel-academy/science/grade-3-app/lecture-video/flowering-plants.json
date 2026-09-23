@@ -1,0 +1,124 @@
+{
+  "_comment": "Storyboard for the Grade 3 Science unit lecture film, Lesson 2 Flowering Plants. Rendered by tools/create-ehel-unit-lecture.js. See lecture-video/BRIEF.md. Every beat is one narration clip; art.at names the phrases a picture waits for, and the page refuses to load if a phrase is not in its beat's say. The chapters follow LESSON['lecture'] in order (roots and stem; leaves and flower; warm or cold; a fair test; a conclusion, here as the lesson's own record table and then the conclusion), in the lesson's own words: its tap figure (ART.figure 'plant', one part named at a time), its warm-and-cold test (ART.pots with coldB, the plantWarm sim's own options) and its record step, two rows and the lesson's own choices.",
+  "slug": "flowering-plants",
+  "lesson": 2,
+  "grade": 3,
+  "stage": 3,
+  "title": "Flowering Plants",
+  "subtitle": "Grade 3 Science",
+  "framework": "Cambridge Primary Science 0097",
+  "renderer": {
+    "art": ["science"],
+    "skin": "brown",
+    "scenes": [
+      "tools/lib/ehel-film-marks.js",
+      "tools/lib/film-scenes/science-g3/flowering-plants.js",
+      "tools/lib/film-scenes/science-g3/flowering-plants-2.js",
+      "tools/lib/film-scenes/science-g3/flowering-plants-3.js",
+      "tools/lib/film-scenes/science-g3/flowering-plants-4.js"
+    ]
+  },
+  "objectives": [
+    ["3Bs.01", "Describe the function of the major parts of flowering plants (limited to roots, leaves, stems and flowers)."],
+    ["3Bp.03", "Know that plants need appropriate conditions, including temperature, light and water, to be healthy."],
+    ["3TWSp.03", "Make a prediction describing some possible outcomes of an enquiry."],
+    ["3TWSc.06", "Collect and record observations and/or measurements in tables and diagrams."],
+    ["3TWSa.01", "Identify whether results support, or do not support, a prediction."],
+    ["3TWSa.03", "Make a conclusion from results and relate it to the scientific question being investigated."]
+  ],
+  "scenes": [
+    { "id": "title", "kind": "title", "codes": [], "beats": [
+      { "say": "A flowering plant has four main parts. Each part has a job to do.",
+        "art": { "at": { "four": "four main parts", "job": "a job to do" } } },
+      { "say": "You will find out what each part does, and what a plant needs.",
+        "art": { "at": { "does": "what each part does", "needs": "what a plant needs" } } }
+    ] },
+
+    { "id": "rootstem", "kind": "parts", "heading": "Roots and stem", "codes": ["3Bs.01"], "beats": [
+      { "say": "Here is a whole flowering plant. Let us start under the soil.",
+        "art": { "at": { "whole": "a whole flowering plant", "soil": "under the soil" } } },
+      { "say": "These are the roots. They anchor the plant in the soil.",
+        "art": { "part": "roots", "at": { "roots": "the roots", "anchor": "anchor the plant" } } },
+      { "say": "They hold it so well that the wind cannot blow it over.",
+        "art": { "part": "roots", "at": { "hold": "hold it so well", "wind": "the wind cannot blow it over" } } },
+      { "say": "The roots also take in water and minerals from the soil.",
+        "art": { "part": "roots", "at": { "water": "take in water", "minerals": "minerals" } } },
+      { "say": "This is the stem. It holds the plant up towards the light.",
+        "art": { "part": "stem", "at": { "stem": "the stem", "up": "holds the plant up" } } },
+      { "say": "The stem carries that water to every leaf and flower.",
+        "art": { "part": "stem", "at": { "carries": "carries that water", "every": "every leaf and flower" } } }
+    ] },
+
+    { "id": "leafflower", "kind": "parts", "heading": "Leaves and flower", "codes": ["3Bs.01"], "beats": [
+      { "say": "These are the leaves. They are wide and flat, to catch as much light as they can.",
+        "art": { "part": "leaves", "at": { "leaves": "the leaves", "flat": "wide and flat", "light": "as much light" } } },
+      { "say": "They catch sunlight and use it to make the plant's food.",
+        "art": { "part": "leaves", "at": { "catch": "catch sunlight", "food": "the plant's food" } } },
+      { "say": "Roots do not eat soil. The food is made in the leaves.",
+        "art": { "part": "leaves", "at": { "soil": "do not eat soil", "made": "made in the leaves" } } },
+      { "say": "This is the flower. Its bright petals attract insects.",
+        "art": { "part": "flower", "at": { "flower": "the flower", "petals": "bright petals", "insects": "attract insects" } } },
+      { "say": "The flower makes seeds, so there can be new plants.",
+        "art": { "part": "flower", "at": { "seeds": "makes seeds", "new": "new plants" } } },
+      { "say": "A flower is one part of a plant, not the whole plant.",
+        "art": { "whole": true, "at": { "one": "one part", "whole": "the whole plant" } } }
+    ] },
+
+    { "id": "warmcold", "kind": "warmcold", "heading": "Warm or cold", "codes": ["3Bp.03", "3TWSp.03"], "beats": [
+      { "say": "A plant needs water and light. It also needs the right temperature.",
+        "art": { "at": { "water": "water", "light": "light", "temperature": "the right temperature" } } },
+      { "say": "Today you will keep one plant warm and put one somewhere very cold.",
+        "art": { "at": { "warm": "keep one plant warm", "cold": "somewhere very cold" } } },
+      { "say": "Both plants get the same water and the same light.",
+        "art": { "at": { "water": "the same water", "light": "the same light" } } },
+      { "say": "What will happen to the cold plant after five days?",
+        "art": { "at": { "happen": "What will happen", "five": "five days" } } },
+      { "say": "Say what you think first. What you think is your prediction.",
+        "art": { "at": { "think": "Say what you think first", "prediction": "your prediction" } } }
+    ] },
+
+    { "id": "fairtest", "kind": "fairtest", "heading": "A fair test", "codes": ["3Bp.03"], "beats": [
+      { "say": "Only one thing changes: the temperature.",
+        "art": { "at": { "one": "Only one thing", "temperature": "the temperature" } } },
+      { "say": "The water and the light stay the same. That is a fair test.",
+        "art": { "at": { "same": "stay the same", "fair": "a fair test" } } },
+      { "say": "Day after day, the warm plant stays healthy and green.",
+        "art": { "at": { "day": "Day after day", "healthy": "healthy and green" } } },
+      { "say": "By day five the cold plant has drooped and gone yellow.",
+        "art": { "at": { "five": "day five", "drooped": "drooped and gone yellow" } } }
+    ] },
+
+    { "id": "record", "kind": "record", "heading": "Your table", "codes": ["3TWSc.06"], "beats": [
+      { "say": "Write down what you saw. A table keeps your results tidy.",
+        "art": { "at": { "write": "Write down what you saw", "table": "A table" } } },
+      { "say": "One row for the warm plant. One row for the cold plant.",
+        "art": { "at": { "warm": "the warm plant", "cold": "the cold plant" } } },
+      { "say": "Warm plant: healthy and green. Cold plant: drooping and yellow.",
+        "art": { "at": { "healthy": "healthy and green", "drooping": "drooping and yellow" } } }
+    ] },
+
+    { "id": "conclude", "kind": "conclude", "heading": "A conclusion", "codes": ["3TWSa.01", "3TWSa.03", "3Bp.03"], "beats": [
+      { "say": "Now a scientist asks two questions about the results.",
+        "art": { "at": { "two": "two questions", "results": "the results" } } },
+      { "say": "The first is this. Did the results support my prediction?",
+        "art": { "at": { "first": "The first", "support": "support my prediction" } } },
+      { "say": "You predicted the cold plant would droop, and it did.",
+        "art": { "at": { "predicted": "You predicted", "did": "and it did" } } },
+      { "say": "The second question is what the results tell you. That is a conclusion.",
+        "art": { "at": { "second": "The second question", "tell": "what the results tell you", "conclusion": "That is a conclusion" } } },
+      { "say": "Plants need the right temperature, as well as water and light.",
+        "art": { "at": { "temperature": "the right temperature", "waterlight": "water and light" } } }
+    ] },
+
+    { "id": "recap", "kind": "recap", "heading": "What you now know", "codes": ["3Bs.01", "3Bp.03", "3TWSp.03", "3TWSc.06", "3TWSa.01", "3TWSa.03"], "beats": [
+      { "say": "Roots take in water. The stem carries it to the leaves.",
+        "art": { "at": { "roots": "Roots take in water", "stem": "The stem carries it" } } },
+      { "say": "Leaves make the food, and the flower makes the seeds.",
+        "art": { "at": { "leaves": "Leaves make the food", "flower": "the flower makes the seeds" } } },
+      { "say": "A plant needs water, light and the right temperature.",
+        "art": { "at": { "needs": "water, light and the right temperature" } } },
+      { "say": "You predicted, you tested, you wrote it down, and you concluded.",
+        "art": { "at": { "predicted": "You predicted", "concluded": "you concluded" } } }
+    ] }
+  ]
+}

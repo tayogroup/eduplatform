@@ -263,6 +263,17 @@ LESSON["lecture"] = [
          "Long ago, some people thought eyes sent out beams to see with. It seemed sensible. But testing showed light comes from a source into the eye. Science changes when people test their ideas."),
 ]
 
+# The unit lecture film (tools/create-ehel-unit-lecture.js; storyboard and
+# pictures in lecture-video/light-and-shadows.json). The lecture step draws it
+# above the parts; build-lessons.py refuses a path that is not on disk AND in
+# app.config.json :: extraPages, and a --draft render.
+LESSON["video"] = {
+    "src": "lecture-video/light-and-shadows.3e4c2a63.mp4",
+    "captions": "lecture-video/light-and-shadows.08975316.vtt",
+    "poster": "lecture-video/light-and-shadows.34658a7a.jpg",
+    "note": "About two and a half minutes. Watch it through, then go back over it a part at a time below.",
+}
+
 LESSON["words"] = [
     word("transparent", "\U0001FA9F", "Lets all the light through, so you can see clearly through it.",
          ["Glass is transparent.", "Clear water is transparent."]),

@@ -218,6 +218,17 @@ LESSON["lecture"] = [
          "Long ago people thought the Earth was flat and the Sun went round it. Careful measuring, telescopes and finally photographs from space changed all that. Science changes when people look more carefully."),
 ]
 
+# The unit lecture film (tools/create-ehel-unit-lecture.js; storyboard and
+# pictures in lecture-video/the-moon.json). The lecture step draws it
+# above the parts; build-lessons.py refuses a path that is not on disk AND in
+# app.config.json :: extraPages, and a --draft render.
+LESSON["video"] = {
+    "src": "lecture-video/the-moon.2b73fb04.mp4",
+    "captions": "lecture-video/the-moon.bc03a559.vtt",
+    "poster": "lecture-video/the-moon.f1124b02.jpg",
+    "note": "About two and a half minutes. Watch it through, then go back over it a part at a time below.",
+}
+
 LESSON["words"] = [
     word("sphere", "\U0001F30D", "A ball shape.",
          ["The Earth is a sphere.", "The Moon is a smaller sphere."]),

@@ -1,0 +1,113 @@
+{
+  "_comment": "Storyboard for the Grade 3 Science unit lecture film, Lesson 13 The Moon. Rendered by tools/create-ehel-unit-lecture.js. See lecture-video/BRIEF.md. Every beat is one narration clip; art.at names the phrases a picture waits for, and the page refuses to load if a phrase is not in its beat's say. The chapters follow LESSON['lecture'] in order (three spheres; the Moon's month; always a ball; round and round; what people used to think), in the lesson's own words and with the lesson's own drawings: ART.scene globe and sky for the Earth and the Sun, ART.sim moonPhases for the month, the lamp-and-ball model of the demo step, ART.kit.earthMoonSvg for the model the child builds, and the four pictures of the lesson's history step.",
+  "slug": "the-moon",
+  "lesson": 13,
+  "grade": 3,
+  "stage": 3,
+  "title": "The Moon",
+  "subtitle": "Grade 3 Science",
+  "framework": "Cambridge Primary Science 0097",
+  "renderer": {
+    "art": ["science"],
+    "skin": "brown",
+    "scenes": [
+      "tools/lib/ehel-film-marks.js",
+      "tools/lib/film-scenes/science-g3/the-moon.js",
+      "tools/lib/film-scenes/science-g3/the-moon-2.js",
+      "tools/lib/film-scenes/science-g3/the-moon-3.js"
+    ]
+  },
+  "objectives": [
+    ["3ESs.01", "Describe the regular change in the position and appearance of the Moon."],
+    ["3ESs.02", "Describe the relative movement of the Earth and Moon."],
+    ["3ESs.03", "Describe the Earth, Sun and Moon as approximately spherical."],
+    ["3TWSm.02", "Make and use physical models."],
+    ["3SIC.01", "Talk about how some of the scientific knowledge and thinking now was different in the past."]
+  ],
+  "scenes": [
+    { "id": "title", "kind": "title", "codes": [], "beats": [
+      { "say": "Look up at the Moon tonight, and again next week. It will look different.",
+        "art": { "at": { "moon": "the Moon", "different": "look different" } } },
+      { "say": "It is the same ball of rock all month, going round the Earth.",
+        "art": { "at": { "ball": "the same ball of rock", "round": "going round the Earth" } } }
+    ] },
+
+    { "id": "spheres", "kind": "spheres", "heading": "Three spheres", "codes": ["3ESs.03"], "beats": [
+      { "say": "The Earth, the Sun and the Moon are all shaped like balls.",
+        "art": { "at": { "earth": "The Earth", "sun": "the Sun", "moon": "the Moon", "balls": "shaped like balls" } } },
+      { "say": "A ball shape is called a sphere. So all three are spheres.",
+        "art": { "at": { "sphere": "a sphere", "three": "all three" } } },
+      { "say": "The Sun is a huge ball of hot, glowing gas. Never look straight at it.",
+        "art": { "at": { "huge": "a huge ball", "gas": "glowing gas", "never": "Never look straight" } } },
+      { "say": "The Earth looks flat from where you stand, because it is so big.",
+        "art": { "at": { "flat": "looks flat", "stand": "where you stand", "big": "so big" } } },
+      { "say": "From space it is a round blue ball, not a flat plate.",
+        "art": { "at": { "space": "From space", "blue": "round blue ball", "plate": "a flat plate" } } }
+    ] },
+
+    { "id": "month", "kind": "month", "heading": "The Moon's month", "codes": ["3ESs.01"], "beats": [
+      { "say": "Look at the Moon night after night, and it seems to change.",
+        "art": { "at": { "look": "Look at the Moon", "change": "seems to change" } } },
+      { "say": "It starts as a new Moon. The side facing us is dark.",
+        "art": { "at": { "new": "a new Moon", "dark": "facing us is dark" } } },
+      { "say": "Then a thin crescent, then a half Moon, then a full circle.",
+        "art": { "at": { "crescent": "a thin crescent", "half": "a half Moon", "full": "a full circle" } } },
+      { "say": "Growing is called waxing. Shrinking back down is called waning.",
+        "art": { "at": { "waxing": "waxing", "waning": "waning" } } },
+      { "say": "The whole pattern takes about four weeks, and then it starts again.",
+        "art": { "at": { "four": "about four weeks", "again": "starts again" } } }
+    ] },
+
+    { "id": "ball", "kind": "ball", "heading": "Always a ball", "codes": ["3ESs.01", "3TWSm.02"], "beats": [
+      { "say": "The Moon does not really change shape. It is always a ball.",
+        "art": { "at": { "not": "does not really change shape", "ball": "always a ball" } } },
+      { "say": "Make a model with a grown-up: a lamp in a dark room, and a ball on a stick.",
+        "art": { "at": { "model": "a model", "grown": "a grown-up", "ball": "a ball on a stick", "lamp": "a lamp" } } },
+      { "say": "The lamp is the Sun. It lights one half of the ball, and the other half stays dark.",
+        "art": { "at": { "sun": "the Sun", "half": "one half of the ball", "dark": "stays dark" } } },
+      { "say": "Your head is the Earth. Hold the ball up, and turn slowly on the spot.",
+        "art": { "at": { "head": "Your head is the Earth", "hold": "Hold the ball up", "turn": "turn slowly" } } },
+      { "say": "You see a thin crescent, then a half, then the whole lit face.",
+        "art": { "at": { "crescent": "a thin crescent", "half": "then a half", "face": "the whole lit face" } } },
+      { "say": "The ball never changed shape. Only how much of its lit half you could see.",
+        "art": { "at": { "never": "never changed shape", "much": "how much of its lit half" } } }
+    ] },
+
+    { "id": "orbit", "kind": "orbit", "heading": "Round and round", "codes": ["3ESs.02"], "beats": [
+      { "say": "The Moon travels round the Earth. That path is called its orbit.",
+        "art": { "at": { "travels": "travels round the Earth", "orbit": "its orbit" } } },
+      { "say": "One trip round takes about four weeks: a month, not a day.",
+        "art": { "at": { "trip": "One trip round", "month": "a month", "day": "not a day" } } },
+      { "say": "The Earth itself spins on the spot, once every day.",
+        "art": { "at": { "spins": "spins on the spot", "day": "once every day" } } },
+      { "say": "That spin is what gives us day and night, over and over.",
+        "art": { "at": { "spin": "That spin", "night": "day and night" } } },
+      { "say": "Today you will build this model on screen, and make it move.",
+        "art": { "at": { "build": "build this model", "move": "make it move" } } }
+    ] },
+
+    { "id": "ideas", "kind": "ideas", "heading": "What people used to think", "codes": ["3SIC.01"], "beats": [
+      { "say": "Long ago, many people thought the Earth was flat, like a plate.",
+        "art": { "at": { "ago": "Long ago", "flat": "was flat", "plate": "like a plate" } } },
+      { "say": "They watched the Sun cross the sky and thought it went round us.",
+        "art": { "at": { "watched": "watched the Sun", "round": "went round us" } } },
+      { "say": "Then telescopes showed the Moon is a rocky ball, with craters.",
+        "art": { "at": { "tele": "telescopes", "rocky": "a rocky ball", "craters": "with craters" } } },
+      { "say": "In 1969 astronauts stood on the Moon and photographed the Earth.",
+        "art": { "at": { "astro": "astronauts", "stood": "stood on the Moon", "photo": "photographed the Earth" } } },
+      { "say": "Science changes when people look more carefully.",
+        "art": { "at": { "changes": "Science changes", "carefully": "look more carefully" } } }
+    ] },
+
+    { "id": "recap", "kind": "recap", "heading": "What you now know", "codes": ["3ESs.01", "3ESs.02", "3ESs.03", "3TWSm.02", "3SIC.01"], "beats": [
+      { "say": "The Earth, the Sun and the Moon are all spheres: ball shapes.",
+        "art": { "at": { "spheres": "all spheres" } } },
+      { "say": "The phases go new, crescent, half, full, and back to new. It is always a ball.",
+        "art": { "at": { "phases": "The phases", "ball": "always a ball" } } },
+      { "say": "It goes round the Earth in a month. The Earth spins once a day.",
+        "art": { "at": { "round": "round the Earth", "spins": "spins once a day" } } },
+      { "say": "And our ideas change when we look more carefully.",
+        "art": { "at": { "change": "ideas change" } } }
+    ] }
+  ]
+}

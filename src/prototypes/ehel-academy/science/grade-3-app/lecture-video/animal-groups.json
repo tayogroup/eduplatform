@@ -1,0 +1,123 @@
+{
+  "_comment": "Storyboard for the Grade 3 Science unit lecture film, Lesson 3 Animal Groups. Rendered by tools/create-ehel-unit-lecture.js. See lecture-video/BRIEF.md. Every beat is one narration clip; art.at names the phrases a picture waits for, and the page refuses to load if a phrase is not in its beat's say. The chapters follow LESSON['lecture'] in order (groups from features; fish and amphibians; reptiles and birds; mammals and insects; look closely, then draw - here as the sorting-and-fact-card chapter and the beetle diagram), in the lesson's own words: its six group cards and their key features, its ten sorting animals and their bins, its reptile-and-amphibian fact card, and its tap figure of a beetle (ART.figure 'insect', one part named at a time).",
+  "slug": "animal-groups",
+  "lesson": 3,
+  "grade": 3,
+  "stage": 3,
+  "title": "Animal Groups",
+  "subtitle": "Grade 3 Science",
+  "framework": "Cambridge Primary Science 0097",
+  "renderer": {
+    "art": ["science"],
+    "skin": "brown",
+    "scenes": [
+      "tools/lib/ehel-film-marks.js",
+      "tools/lib/film-scenes/science-g3/animal-groups.js",
+      "tools/lib/film-scenes/science-g3/animal-groups-2.js",
+      "tools/lib/film-scenes/science-g3/animal-groups-3.js"
+    ]
+  },
+  "objectives": [
+    ["3Bs.02", "Identify the distinguishing features of different groups of animals, including fish, reptiles, mammals, birds, amphibians and insects."],
+    ["3TWSc.01", "Use observations and tests to sort, group and classify objects."],
+    ["3TWSc.05", "Use secondary information sources to research an answer to a question."],
+    ["3TWSm.01", "Know that there are different types of models in science, including diagrams and physical models that we can touch."]
+  ],
+  "scenes": [
+    { "id": "title", "kind": "title", "codes": [], "beats": [
+      { "say": "Look at an animal. What has it got? Scales, feathers, fur?",
+        "art": { "at": { "animal": "an animal", "scales": "Scales", "feathers": "feathers", "fur": "fur" } } },
+      { "say": "Those are features, and features put every animal into a group.",
+        "art": { "at": { "features": "Those are features", "group": "into a group" } } }
+    ] },
+
+    { "id": "features", "kind": "features", "heading": "Groups from features", "codes": ["3Bs.02"], "beats": [
+      { "say": "Scientists sort animals into six groups, by their features.",
+        "art": { "at": { "six": "six groups", "feat": "their features" } } },
+      { "say": "A feature is something the animal has: scales, feathers, fur, six legs.",
+        "art": { "at": { "has": "the animal has", "scales": "scales", "feathers": "feathers", "fur": "fur", "legs": "six legs" } } },
+      { "say": "Not where it lives. Not how it moves. Look at the animal itself.",
+        "art": { "at": { "lives": "where it lives", "moves": "how it moves", "look": "Look at the animal" } } }
+    ] },
+
+    { "id": "fishamph", "kind": "pair", "heading": "Fish and amphibians", "codes": ["3Bs.02"], "beats": [
+      { "say": "Fish have scales and fins, and they breathe through gills.",
+        "art": { "at": { "scales": "scales", "fins": "fins", "gills": "gills" } } },
+      { "say": "A fish lives in water all its life. A salmon. A shark.",
+        "art": { "at": { "water": "lives in water", "life": "all its life", "salmon": "A salmon.", "shark": "A shark." } } },
+      { "say": "Amphibians have smooth, damp skin, with no scales at all.",
+        "art": { "at": { "skin": "smooth, damp skin", "none": "no scales at all" } } },
+      { "say": "They start life in water, as tadpoles. Frogs, toads and newts.",
+        "art": { "at": { "start": "start life in water", "tad": "as tadpoles", "names": "Frogs, toads and newts" } } },
+      { "say": "When they are grown, they come onto land as well.",
+        "art": { "at": { "grown": "they are grown", "land": "onto land" } } }
+    ] },
+
+    { "id": "reptbird", "kind": "pair", "heading": "Reptiles and birds", "codes": ["3Bs.02"], "beats": [
+      { "say": "Reptiles have dry, scaly skin. Snakes, lizards and tortoises.",
+        "art": { "at": { "dry": "dry, scaly skin", "names": "Snakes, lizards and tortoises" } } },
+      { "say": "Most reptiles lay tough eggs on land, not in water.",
+        "art": { "at": { "eggs": "tough eggs", "land": "on land", "water": "not in water" } } },
+      { "say": "Birds have feathers and a beak, and they lay eggs.",
+        "art": { "at": { "feathers": "feathers", "beak": "a beak", "eggs": "lay eggs" } } },
+      { "say": "Every bird has feathers, even a penguin that cannot fly.",
+        "art": { "at": { "every": "Every bird", "peng": "a penguin" } } }
+    ] },
+
+    { "id": "maminsect", "kind": "pair", "heading": "Mammals and insects", "codes": ["3Bs.02"], "beats": [
+      { "say": "Mammals have fur or hair, and they feed their babies milk.",
+        "art": { "at": { "fur": "fur or hair", "milk": "their babies milk" } } },
+      { "say": "Dogs, whales and bats are mammals. So are you.",
+        "art": { "at": { "names": "Dogs, whales and bats", "you": "So are you" } } },
+      { "say": "Insects have six legs. Count them: always six.",
+        "art": { "at": { "six": "six legs", "count": "Count them" } } },
+      { "say": "An insect's body is in three parts: head, thorax and abdomen.",
+        "art": { "at": { "three": "three parts", "head": "head,", "thorax": "thorax", "abdomen": "abdomen" } } },
+      { "say": "Ants, bees and beetles are insects. A spider has eight legs, so it is not.",
+        "art": { "at": { "names": "Ants, bees and beetles", "spider": "A spider", "eight": "eight legs" } } }
+    ] },
+
+    { "id": "sort", "kind": "sort", "heading": "Sort by the features", "codes": ["3TWSc.01", "3TWSc.05"], "beats": [
+      { "say": "Now sort. Ask about the skin, the legs, and how it feeds its young.",
+        "art": { "at": { "sort": "Now sort", "skin": "the skin", "legs": "the legs", "feeds": "how it feeds" } } },
+      { "say": "A whale lives in the sea, but it feeds its calf milk. A mammal.",
+        "art": { "at": { "whale": "A whale", "sea": "in the sea", "milk": "its calf milk", "mammal": "A mammal" } } },
+      { "say": "A penguin swims, and it has feathers. That makes it a bird.",
+        "art": { "at": { "peng": "A penguin", "feathers": "feathers", "bird": "a bird" } } },
+      { "say": "A bat flies, and it has fur and milk. A mammal that flies.",
+        "art": { "at": { "bat": "A bat", "fur": "fur and milk", "mammal": "A mammal that flies" } } },
+      { "say": "Some groups are easy to mix up. Then you look it up.",
+        "art": { "at": { "mix": "easy to mix up", "look": "look it up" } } },
+      { "say": "A fact card is a secondary source: what somebody else wrote down.",
+        "art": { "at": { "card": "A fact card", "source": "a secondary source", "wrote": "somebody else wrote down" } } },
+      { "say": "A crocodile lives in rivers, but it has dry scales. A reptile.",
+        "art": { "at": { "croc": "A crocodile", "rivers": "in rivers", "dry": "dry scales", "rept": "A reptile" } } }
+    ] },
+
+    { "id": "diagram", "kind": "diagram", "heading": "Label a diagram", "codes": ["3TWSm.01"], "beats": [
+      { "say": "A diagram is a drawing with labels that name the parts.",
+        "art": { "at": { "diagram": "A diagram", "labels": "with labels", "parts": "name the parts" } } },
+      { "say": "It is one kind of model in science. You will label a beetle.",
+        "art": { "at": { "model": "one kind of model", "beetle": "a beetle" } } },
+      { "say": "The head has the eyes and the mouth.",
+        "art": { "part": "head", "at": { "head": "The head", "eyes": "the eyes", "mouth": "the mouth" } } },
+      { "say": "The thorax is the middle part, not the whole body. Six legs join there.",
+        "art": { "part": "thorax", "at": { "thorax": "The thorax", "middle": "the middle part", "body": "not the whole body", "legs": "Six legs" } } },
+      { "say": "The abdomen is the back part, where the food goes.",
+        "art": { "part": "abdomen", "at": { "abdomen": "The abdomen", "back": "the back part", "food": "the food goes" } } },
+      { "say": "Two antennae for feeling and smelling, and wings on the thorax.",
+        "art": { "part": "antennae", "at": { "ant": "Two antennae", "feel": "feeling and smelling", "wings": "wings" } } }
+    ] },
+
+    { "id": "recap", "kind": "recap", "heading": "What you now know", "codes": ["3Bs.02", "3TWSc.01", "3TWSc.05", "3TWSm.01"], "beats": [
+      { "say": "Fish breathe with gills. Amphibians have smooth, damp skin.",
+        "art": { "at": { "fish": "Fish breathe with gills", "amph": "Amphibians have smooth, damp skin" } } },
+      { "say": "Reptiles have dry scales. Birds have feathers and a beak.",
+        "art": { "at": { "rept": "Reptiles have dry scales", "bird": "Birds have feathers" } } },
+      { "say": "Mammals feed their babies milk. Insects have six legs.",
+        "art": { "at": { "mam": "Mammals feed their babies milk", "ins": "Insects have six legs" } } },
+      { "say": "Sort by the features. Look up the tricky ones, and label your diagram.",
+        "art": { "at": { "sort": "Sort by the features", "look": "Look up the tricky ones", "label": "label your diagram" } } }
+    ] }
+  ]
+}

@@ -1,0 +1,125 @@
+{
+  "_comment": "Storyboard for the Grade 3 Science unit lecture film, Lesson 8 Mixtures. Rendered by tools/create-ehel-unit-lecture.js. See lecture-video/BRIEF.md. Every beat is one narration clip; art.at names the phrases a picture waits for, and the page refuses to load if a phrase is not in its beat's say. The chapters follow LESSON['lecture'] in order (a mixture; the sieve; the magnet; the filter; dissolving; risks), in the lesson's own words and with its own things: its sand and stones, the kit's sieve drawing, its iron filings and magnet, its filter paper and funnel, its salt and water, and the safe and risky items of its Safe scientist step.",
+  "slug": "mixtures",
+  "lesson": 8,
+  "grade": 3,
+  "stage": 3,
+  "title": "Mixtures",
+  "subtitle": "Grade 3 Science",
+  "framework": "Cambridge Primary Science 0097",
+  "renderer": {
+    "art": ["science"],
+    "skin": "brown",
+    "scenes": [
+      "tools/lib/ehel-film-marks.js",
+      "tools/lib/film-scenes/science-g3/mixtures.js",
+      "tools/lib/film-scenes/science-g3/mixtures-2.js",
+      "tools/lib/film-scenes/science-g3/mixtures-3.js",
+      "tools/lib/film-scenes/science-g3/mixtures-4.js"
+    ]
+  },
+  "objectives": [
+    ["3Cm.02", "Understand that a mixture contains two or more materials, where the materials can be physically separated."],
+    ["3Cp.02", "Understand that materials, generally, retain their properties within a mixture."],
+    ["3Cp.03", "Describe how to separate solid/solid mixtures based on the physical properties of the solids (processes involving dissolving are not required)."],
+    ["3Cp.04", "Describe how to separate a mixture of an insoluble solid and a liquid."],
+    ["3Cc.01", "Know that when a solid dissolves in a liquid the solid is still present, and this is an example of mixing."],
+    ["3TWSp.04", "Identify risks and explain how to stay safe during practical work."],
+    ["3TWSc.04", "Carry out practical work safely."]
+  ],
+  "scenes": [
+    { "id": "title", "kind": "title", "codes": [], "beats": [
+      { "say": "Mix sand and stones together in a bowl. That is a mixture.",
+        "art": { "at": { "sand": "sand", "stones": "stones", "mixture": "a mixture" } } },
+      { "say": "Two materials in one place, and each one stays exactly itself.",
+        "art": { "at": { "two": "Two materials", "stays": "stays exactly itself" } } }
+    ] },
+
+    { "id": "mixture", "kind": "mixture", "heading": "What a mixture is", "codes": ["3Cm.02", "3Cp.02"], "beats": [
+      { "say": "Here is sand. Fine grains that pour through your fingers.",
+        "art": { "at": { "sand": "Here is sand", "fine": "Fine grains", "pour": "pour through your fingers" } } },
+      { "say": "Here are stones. Big and hard. They do not pour at all.",
+        "art": { "at": { "stones": "Here are stones", "big": "Big and hard", "nopour": "do not pour" } } },
+      { "say": "Mix them in a bowl. That is a mixture: two materials together.",
+        "art": { "at": { "mix": "Mix them in a bowl", "mixture": "a mixture", "two": "two materials" } } },
+      { "say": "You might think that mixing makes one new material. It does not.",
+        "art": { "at": { "think": "might think", "newmat": "one new material", "not": "It does not" } } },
+      { "say": "Look closely. The sand is still sand, the stones still stones.",
+        "art": { "at": { "look": "Look closely", "sand": "still sand", "stones": "still stones" } } },
+      { "say": "Nothing changed. Each material keeps its own properties.",
+        "art": { "at": { "nothing": "Nothing changed", "keeps": "keeps its own properties" } } }
+    ] },
+
+    { "id": "sieve", "kind": "sieve", "heading": "The sieve", "codes": ["3Cp.03"], "beats": [
+      { "say": "Each material kept its properties, so you can get them apart.",
+        "art": { "at": { "kept": "kept its properties", "apart": "get them apart" } } },
+      { "say": "Sand and stones are very different sizes. So use a sieve.",
+        "art": { "at": { "sizes": "different sizes", "sieve": "a sieve" } } },
+      { "say": "Shake it. The fine sand falls straight through the holes.",
+        "art": { "at": { "shake": "Shake it", "falls": "falls straight through" } } },
+      { "say": "The stones are too big and stay behind. Separated by size.",
+        "art": { "at": { "big": "too big", "stay": "stay behind", "size": "Separated by size" } } }
+    ] },
+
+    { "id": "magnet", "kind": "magnet", "heading": "The magnet", "codes": ["3Cp.03"], "beats": [
+      { "say": "Iron filings and sand are both tiny. A sieve cannot help.",
+        "art": { "at": { "filings": "Iron filings", "tiny": "both tiny", "nosieve": "A sieve cannot help" } } },
+      { "say": "But only the iron is magnetic. Sweep a magnet over them.",
+        "art": { "at": { "magnetic": "only the iron is magnetic", "sweep": "Sweep a magnet" } } },
+      { "say": "The filings jump onto the magnet. The sand is left behind.",
+        "art": { "at": { "jump": "jump onto the magnet", "left": "sand is left behind" } } },
+      { "say": "Careful: not every metal is magnetic. Iron and steel are; copper wire is not.",
+        "art": { "at": { "careful": "not every metal is magnetic", "steel": "Iron and steel are", "copper": "copper wire is not" } } }
+    ] },
+
+    { "id": "filter", "kind": "filter", "heading": "The filter", "codes": ["3Cp.04"], "beats": [
+      { "say": "Sand in water is a mixture too. Both of them are still there.",
+        "art": { "at": { "sandwater": "Sand in water", "both": "Both of them are still there" } } },
+      { "say": "Put a funnel over a jug. Line it with filter paper. Pour it slowly.",
+        "art": { "at": { "funnel": "a funnel", "jug": "a jug", "paper": "filter paper", "pour": "Pour it slowly" } } },
+      { "say": "The water drips through into the jug below, and it is clear.",
+        "art": { "at": { "drips": "drips through", "clear": "it is clear" } } },
+      { "say": "The sand cannot get through the tiny holes. It stays behind.",
+        "art": { "at": { "cannot": "cannot get through", "holes": "the tiny holes", "stays": "stays behind" } } },
+      { "say": "A funnel only guides the liquid. The paper does the separating.",
+        "art": { "at": { "guides": "only guides the liquid", "separating": "does the separating" } } }
+    ] },
+
+    { "id": "dissolve", "kind": "dissolve", "heading": "Dissolving", "codes": ["3Cc.01"], "beats": [
+      { "say": "Now stir a spoon of salt into water. Watch it disappear.",
+        "art": { "at": { "stir": "stir a spoon of salt", "gone": "Watch it disappear" } } },
+      { "say": "Has the salt gone for ever? No. It is still there.",
+        "art": { "at": { "forever": "gone for ever", "no": "No.", "still": "still there" } } },
+      { "say": "Taste one drop, with a grown-up. The water is salty.",
+        "art": { "at": { "taste": "Taste one drop", "grownup": "a grown-up", "salty": "salty" } } },
+      { "say": "So the salt is still in the glass, in pieces too small to see.",
+        "art": { "at": { "inglass": "still in the glass", "small": "too small to see" } } },
+      { "say": "Dissolving is a kind of mixing. It is not a vanishing.",
+        "art": { "at": { "mixing": "a kind of mixing", "vanishing": "not a vanishing" } } },
+      { "say": "Salt and sugar dissolve. Sand and pebbles do not.",
+        "art": { "at": { "soluble": "Salt and sugar dissolve", "insoluble": "Sand and pebbles do not" } } }
+    ] },
+
+    { "id": "risks", "kind": "risks", "heading": "Spot the risk", "codes": ["3TWSp.04", "3TWSc.04"], "beats": [
+      { "say": "Practical work has risks. A risk is something that could hurt someone.",
+        "art": { "at": { "work": "Practical work", "risks": "has risks", "hurt": "could hurt someone" } } },
+      { "say": "Glass can break. Floors get wet. Some powders can hurt you.",
+        "art": { "at": { "glass": "Glass can break", "floors": "Floors get wet", "powders": "Some powders can hurt" } } },
+      { "say": "A scientist spots the risks first: goggles on, spills wiped.",
+        "art": { "at": { "sci": "A scientist", "spots": "spots the risks first", "goggles": "goggles on", "spills": "spills wiped" } } },
+      { "say": "Hair tied back. And taste nothing unless a grown-up says it is safe.",
+        "art": { "at": { "hair": "Hair tied back", "taste": "taste nothing", "grownup": "a grown-up" } } }
+    ] },
+
+    { "id": "recap", "kind": "recap", "heading": "What you now know", "codes": ["3Cm.02", "3Cp.02", "3Cp.03", "3Cp.04", "3Cc.01", "3TWSp.04", "3TWSc.04"], "beats": [
+      { "say": "A mixture holds two materials, and each keeps its properties.",
+        "art": { "at": { "mixture": "A mixture" } } },
+      { "say": "A sieve separates by size. A magnet pulls the iron out of the sand.",
+        "art": { "at": { "sieve": "A sieve", "magnet": "A magnet" } } },
+      { "say": "A filter holds the sand back and lets the water through.",
+        "art": { "at": { "filter": "A filter" } } },
+      { "say": "Dissolved salt is still there. And a scientist spots the risks.",
+        "art": { "at": { "salt": "Dissolved salt", "risks": "spots the risks" } } }
+    ] }
+  ]
+}

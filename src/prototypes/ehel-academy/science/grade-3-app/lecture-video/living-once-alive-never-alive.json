@@ -1,0 +1,112 @@
+{
+  "_comment": "Storyboard for the Grade 3 Science unit lecture film, Lesson 1 Living, Once Alive, Never Alive. Rendered by tools/create-ehel-unit-lecture.js. See lecture-video/BRIEF.md. The five lecture parts in their order (what every living thing does, once alive, never alive, five ways to find out, a question you can test), in the lesson's own words and examples: the four life processes as its explore step names them, each shown in a cat and in a plant as its explain() pairs them; the tree cut down and made into a chair, the sheep's wool, the paper book and the leather shoe of its demo and its sort; the stone, spoon, drinking glass and plastic cup, and the three bins of its sort; the five enquiries with its own example questions; the snails of its ask step. The misconception it corrects is the lesson's own: wood and paper are not never alive, so ask where a thing came from.",
+  "slug": "living-once-alive-never-alive",
+  "lesson": 1,
+  "grade": 3,
+  "stage": 3,
+  "title": "Living, Once Alive, Never Alive",
+  "subtitle": "Grade 3 Science",
+  "framework": "Cambridge Primary Science 0097",
+  "renderer": {
+    "art": ["science"],
+    "skin": "brown",
+    "scenes": [
+      "tools/lib/ehel-film-marks.js",
+      "tools/lib/film-scenes/science-g3/living-once-alive-never-alive.js",
+      "tools/lib/film-scenes/science-g3/living-once-alive-never-alive-2.js",
+      "tools/lib/film-scenes/science-g3/living-once-alive-never-alive-3.js",
+      "tools/lib/film-scenes/science-g3/living-once-alive-never-alive-4.js"
+    ]
+  },
+  "objectives": [
+    ["3Bp.01", "Describe differences between things that are living, that were once alive and that have never lived."],
+    ["3Bp.02", "Know that life processes common to plants and animals include nutrition, growth, movement and reproduction."],
+    ["3TWSp.02", "Know that there are five main types of scientific enquiry (research, fair testing, observing over time, identifying and classifying, and pattern seeking)."],
+    ["3TWSp.01", "Ask scientific questions that can be investigated."],
+    ["3TWSc.01", "Use observations and tests to sort, group and classify objects."]
+  ],
+  "scenes": [
+    { "id": "title", "kind": "title", "codes": [], "beats": [
+      { "say": "Look at a cat, a wooden chair and a stone.",
+        "art": { "at": { "cat": "a cat", "chair": "a wooden chair", "stone": "a stone" } } },
+      { "say": "The cat is living. The chair was once alive. The stone never was.",
+        "art": { "at": { "living": "is living", "once": "once alive", "never": "never was" } } }
+    ] },
+
+    { "id": "life", "kind": "life", "heading": "What every living thing does", "codes": ["3Bp.02"], "beats": [
+      { "say": "Every living thing does four things. We call them life processes.",
+        "art": { "at": { "every": "Every living thing", "four": "four things", "life": "life processes" } } },
+      { "say": "Nutrition means taking in food. A cat eats. A plant makes its own food from sunlight.",
+        "art": { "at": { "nutrition": "Nutrition", "eats": "A cat eats", "plant": "A plant makes its own food", "sun": "from sunlight" } } },
+      { "say": "Growth means getting bigger. A kitten grows into a cat, a seedling into a tree.",
+        "art": { "at": { "growth": "Growth", "kitten": "A kitten", "cat": "into a cat", "seedling": "a seedling", "tree": "into a tree" } } },
+      { "say": "Movement means moving by itself. A cat runs. A plant turns its leaves towards the light.",
+        "art": { "at": { "movement": "Movement", "runs": "A cat runs", "turns": "A plant turns", "light": "towards the light" } } },
+      { "say": "Reproduction means making more of your own kind. Cats have kittens. Plants make seeds.",
+        "art": { "at": { "reproduction": "Reproduction", "kittens": "Cats have kittens", "seeds": "Plants make seeds" } } },
+      { "say": "A cat does all four. So does a tree, only slowly.",
+        "art": { "at": { "all": "does all four", "tree": "So does a tree", "slowly": "only slowly" } } }
+    ] },
+
+    { "id": "once", "kind": "once", "heading": "Once alive", "codes": ["3Bp.01"], "beats": [
+      { "say": "Some things are not alive now, but they came from something that was.",
+        "art": { "at": { "now": "not alive now", "came": "came from something" } } },
+      { "say": "A tree is cut down. The wood is no longer alive.",
+        "art": { "at": { "tree": "A tree", "cut": "cut down", "wood": "The wood", "no": "no longer alive" } } },
+      { "say": "The wood is made into a chair. The chair was once alive.",
+        "art": { "at": { "made": "made into a chair", "once": "was once alive" } } },
+      { "say": "A woollen jumper was a sheep's coat. A paper book was a tree too.",
+        "art": { "at": { "jumper": "A woollen jumper", "sheep": "a sheep's coat", "book": "A paper book", "tree": "a tree too" } } },
+      { "say": "A leather shoe was once alive too: leather is animal skin.",
+        "art": { "at": { "shoe": "A leather shoe", "skin": "animal skin" } } }
+    ] },
+
+    { "id": "never", "kind": "never", "heading": "Never alive", "codes": ["3Bp.01", "3TWSc.01"], "beats": [
+      { "say": "A stone, a metal spoon, a drinking glass, a plastic cup.",
+        "art": { "at": { "stone": "A stone", "spoon": "a metal spoon", "glass": "a drinking glass", "cup": "a plastic cup" } } },
+      { "say": "None of these ever ate, grew, moved by itself or had young.",
+        "art": { "at": { "ate": "ate", "grew": "grew", "moved": "moved by itself", "young": "had young" } } },
+      { "say": "They were never alive. So there are three groups, not two.",
+        "art": { "at": { "never": "never alive", "three": "three groups", "two": "not two" } } },
+      { "say": "To sort a thing, ask where it came from. Wood and paper come from trees.",
+        "art": { "at": { "sort": "To sort a thing", "ask": "ask where it came from", "wood": "Wood and paper", "trees": "come from trees" } } }
+    ] },
+
+    { "id": "enquiry", "kind": "enquiry", "heading": "Five ways to find out", "codes": ["3TWSp.02"], "beats": [
+      { "say": "Scientists find things out in five ways. These are the five types of enquiry.",
+        "art": { "at": { "five": "five ways", "enquiry": "types of enquiry" } } },
+      { "say": "Research means looking it up. How far away is the Moon?",
+        "art": { "at": { "research": "Research", "moon": "How far away is the Moon?" } } },
+      { "say": "In a fair test, you change one thing. Does more water make a plant grow taller?",
+        "art": { "at": { "fair": "a fair test", "one": "change one thing", "water": "Does more water" } } },
+      { "say": "Observing over time: watch something change. How does a tadpole change each week?",
+        "art": { "at": { "time": "Observing over time", "watch": "watch something change", "tadpole": "How does a tadpole" } } },
+      { "say": "Identifying and classifying: sort things into groups by what they are like.",
+        "art": { "at": { "classify": "Identifying and classifying", "sort": "sort things into groups" } } },
+      { "say": "Pattern seeking: measure lots of things and find a pattern. Do taller children have bigger feet?",
+        "art": { "at": { "pattern": "Pattern seeking", "measure": "measure lots of things", "taller": "Do taller children", "feet": "bigger feet" } } }
+    ] },
+
+    { "id": "question", "kind": "question", "heading": "A question you can test", "codes": ["3TWSp.01"], "beats": [
+      { "say": "A scientist's question is one you can answer by looking, testing or looking up.",
+        "art": { "at": { "question": "A scientist's question", "looking": "by looking", "testing": "testing", "up": "looking up" } } },
+      { "say": "Do snails move faster on wet ground? You can test that.",
+        "art": { "at": { "snails": "Do snails move faster", "wet": "wet ground", "can": "You can test that" } } },
+      { "say": "Time the same snail over the same distance, first on wet ground, then on dry.",
+        "art": { "at": { "time": "Time the same snail", "distance": "the same distance", "wet": "first on wet ground", "dry": "then on dry" } } },
+      { "say": "Are snails nice? You cannot test that.",
+        "art": { "at": { "nice": "Are snails nice", "cannot": "You cannot test that" } } },
+      { "say": "So ask: how would I find out? Today, you will ask a question you can test.",
+        "art": { "at": { "how": "how would I find out", "today": "Today", "test": "a question you can test" } } }
+    ] },
+
+    { "id": "recap", "kind": "recap", "heading": "What you now know", "codes": ["3Bp.01", "3Bp.02", "3TWSp.02", "3TWSp.01", "3TWSc.01"], "beats": [
+      { "say": "Living things take in food, grow, move and make more of their own kind.",
+        "art": { "at": { "living": "Living things" } } },
+      { "say": "Wood, paper, wool and leather were once alive. Rock, metal and glass never were.",
+        "art": { "at": { "once": "Wood, paper", "never": "Rock, metal" } } },
+      { "say": "Scientists find out in five ways, and ask questions they can test.",
+        "art": { "at": { "five": "five ways", "test": "questions they can test" } } }
+    ] }
+  ]
+}

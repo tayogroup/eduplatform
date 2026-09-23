@@ -1,0 +1,119 @@
+{
+  "_comment": "Storyboard for the Grade 3 Science unit lecture film, Lesson 11 Magnets. Rendered by tools/create-ehel-unit-lecture.js. See lecture-video/BRIEF.md. Every beat is one narration clip; art.at names the phrases a picture waits for, and the page refuses to load if a phrase is not in its beat's say. The chapters follow LESSON['lecture'] in order (two poles; the paperclip count that shows where the pull is strongest; attract and repel; magnetic materials; magnets at work), in the lesson's own words and with its own drawings: the kit's two bar magnets (ART.kit.magnetPair, the magnetPoles sim the child drives two steps later), the magnet test scene (ART.magnet, the sim of the 'Will it stick?' step) and the kit's own nail, foil, wire and fridge drawings.",
+  "slug": "magnets",
+  "lesson": 11,
+  "grade": 3,
+  "stage": 3,
+  "title": "Magnets",
+  "subtitle": "Grade 3 Science",
+  "framework": "Cambridge Primary Science 0097",
+  "renderer": {
+    "art": ["science"],
+    "skin": "brown",
+    "scenes": [
+      "tools/lib/ehel-film-marks.js",
+      "tools/lib/film-scenes/science-g3/magnets.js",
+      "tools/lib/film-scenes/science-g3/magnets-2.js"
+    ]
+  },
+  "objectives": [
+    ["3Pe.01", "Describe magnets as having a north pole and a south pole."],
+    ["3Pe.02", "Describe how magnets interact when near each other, using the terms repel and attract."],
+    ["3Pe.03", "Investigate how some materials are magnetic but many are not."],
+    ["3TWSa.02", "Describe simple patterns in results."],
+    ["3TWSa.04", "Present and interpret results using tables and bar charts."],
+    ["3SIC.02", "Talk about how science explains how objects they use, or know about, work."]
+  ],
+  "scenes": [
+    { "id": "title", "kind": "title", "codes": [], "beats": [
+      { "say": "A magnet pulls some things towards it. It has two ends called poles.",
+        "art": { "at": { "magnet": "A magnet", "pulls": "pulls some things", "poles": "two ends called poles" } } },
+      { "say": "Bring two magnets together and they pull, or they push. It depends which poles meet.",
+        "art": { "at": { "two": "two magnets", "pull": "they pull", "push": "they push", "meet": "which poles meet" } } }
+    ] },
+
+    { "id": "poles", "kind": "poles", "heading": "Two poles", "codes": ["3Pe.01"], "beats": [
+      { "say": "Here is a bar magnet. Every magnet has two ends, called poles.",
+        "art": { "at": { "bar": "a bar magnet", "ends": "two ends", "poles": "called poles" } } },
+      { "say": "This end is the north pole, marked N. This end is the south pole, marked S.",
+        "art": { "at": { "north": "the north pole", "n": "marked N", "south": "the south pole", "s": "marked S" } } },
+      { "say": "Bar magnets are often painted red for north and blue for south.",
+        "art": { "at": { "red": "red for north", "blue": "blue for south" } } },
+      { "say": "Some children think only one end of it is a magnet.",
+        "art": { "at": { "think": "Some children think", "one": "only one end" } } },
+      { "say": "Both ends pull. They are just two different poles.",
+        "art": { "at": { "both": "Both ends pull", "different": "two different poles" } } }
+    ] },
+
+    { "id": "count", "kind": "count", "heading": "Where the pull is strongest", "codes": ["3Pe.01", "3TWSa.02", "3TWSa.04"], "beats": [
+      { "say": "Dip the magnet in a pot of paperclips, then lift it out.",
+        "art": { "at": { "dip": "Dip the magnet", "pot": "a pot of paperclips", "lift": "lift it out" } } },
+      { "say": "They cling to the two ends. Hardly any cling to the middle.",
+        "art": { "at": { "ends": "the two ends", "middle": "the middle" } } },
+      { "say": "Count the paperclips at each part. Write the numbers in a table.",
+        "art": { "at": { "count": "Count the paperclips", "table": "Write the numbers" } } },
+      { "say": "North pole, eight. The middle, one. South pole, eight.",
+        "art": { "at": { "north": "North pole, eight", "mid": "The middle, one", "south": "South pole, eight" } } },
+      { "say": "Now show the same numbers as a bar chart.",
+        "art": { "at": { "chart": "a bar chart" } } },
+      { "say": "Two tall bars at the ends, one tiny bar in the middle. That is the pattern.",
+        "art": { "at": { "tall": "Two tall bars", "tiny": "one tiny bar", "pattern": "the pattern" } } }
+    ] },
+
+    { "id": "push", "kind": "push", "heading": "Attract and repel", "codes": ["3Pe.02", "3Pe.01"], "beats": [
+      { "say": "Now take two bar magnets and bring them slowly together.",
+        "art": { "at": { "two": "two bar magnets", "together": "slowly together" } } },
+      { "say": "The north pole of one meets the south pole of the other.",
+        "art": { "at": { "north": "The north pole", "south": "the south pole" } } },
+      { "say": "They snap together. Unlike poles attract: they pull together.",
+        "art": { "at": { "snap": "They snap together", "attract": "Unlike poles attract", "pull": "they pull together" } } },
+      { "say": "Now flip one magnet round, so north faces north.",
+        "art": { "at": { "flip": "flip one magnet round", "faces": "north faces north" } } },
+      { "say": "Push them together and they push back, hard. Like poles repel.",
+        "art": { "at": { "push": "Push them together", "back": "push back", "repel": "Like poles repel" } } },
+      { "say": "Repel means push apart. So magnets do not always stick together.",
+        "art": { "at": { "means": "Repel means push apart", "always": "not always stick" } } }
+    ] },
+
+    { "id": "materials", "kind": "materials", "heading": "Magnetic or not?", "codes": ["3Pe.03"], "beats": [
+      { "say": "Now test some materials. Will the magnet pull them?",
+        "art": { "at": { "test": "test some materials", "pull": "pull them" } } },
+      { "say": "The iron nail jumps across to the magnet. Iron is magnetic.",
+        "art": { "at": { "nail": "The iron nail", "jump": "jumps across", "magnetic": "Iron is magnetic" } } },
+      { "say": "The steel paperclip and the steel scissors are magnetic too.",
+        "art": { "at": { "clip": "The steel paperclip", "scissors": "the steel scissors" } } },
+      { "say": "Now the copper wire. The magnet does nothing at all.",
+        "art": { "at": { "copper": "the copper wire", "nothing": "does nothing" } } },
+      { "say": "The aluminium foil, the plastic ruler and the wooden pencil do nothing either.",
+        "art": { "at": { "foil": "The aluminium foil", "ruler": "the plastic ruler", "pencil": "the wooden pencil" } } },
+      { "say": "So not every metal is magnetic. Copper and aluminium are metals that do nothing.",
+        "art": { "at": { "every": "not every metal", "both": "Copper and aluminium" } } }
+    ] },
+
+    { "id": "work", "kind": "work", "heading": "Magnets at work", "codes": ["3SIC.02", "3Pe.03"], "beats": [
+      { "say": "Magnets do jobs all over your house.",
+        "art": { "at": { "jobs": "do jobs", "house": "your house" } } },
+      { "say": "A compass needle is a tiny magnet that can swing freely.",
+        "art": { "at": { "compass": "A compass needle", "tiny": "a tiny magnet", "swing": "swing freely" } } },
+      { "say": "Its north pole always turns to point north.",
+        "art": { "at": { "north": "Its north pole", "turns": "turns to point north" } } },
+      { "say": "A fridge door has a magnetic strip that pulls it shut.",
+        "art": { "at": { "fridge": "A fridge door", "strip": "a magnetic strip", "shut": "pulls it shut" } } },
+      { "say": "A scrapyard crane lifts a whole steel car with an enormous magnet.",
+        "art": { "at": { "crane": "A scrapyard crane", "car": "a whole steel car", "huge": "an enormous magnet" } } },
+      { "say": "It lifts the steel and leaves the rubber tyres behind. Rubber is not magnetic.",
+        "art": { "at": { "steel": "lifts the steel", "tyres": "the rubber tyres", "rubber": "Rubber is not magnetic" } } }
+    ] },
+
+    { "id": "recap", "kind": "recap", "heading": "What you now know", "codes": ["3Pe.01", "3Pe.02", "3Pe.03", "3TWSa.02", "3TWSa.04", "3SIC.02"], "beats": [
+      { "say": "Every magnet has a north pole and a south pole.",
+        "art": { "at": { "poles": "a north pole and a south pole" } } },
+      { "say": "Unlike poles attract. Like poles repel.",
+        "art": { "at": { "attract": "Unlike poles attract", "repel": "Like poles repel" } } },
+      { "say": "Iron and steel are magnetic. Most things are not, including most metals.",
+        "art": { "at": { "magnetic": "are magnetic", "not": "Most things are not" } } },
+      { "say": "Compasses, fridge doors and cranes all do their job with a magnet.",
+        "art": { "at": { "jobs": "all do their job" } } }
+    ] }
+  ]
+}

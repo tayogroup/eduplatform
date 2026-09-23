@@ -205,6 +205,17 @@ LESSON["lecture"] = [
          "We cannot see inside ourselves with our eyes, so scientists use pictures from scanners, and models. A diagram with labels shows where each organ is. A bottle with balloons shows how the lungs work. Today you will label a diagram and make a lung model."),
 ]
 
+# The unit lecture film (tools/create-ehel-unit-lecture.js; storyboard and
+# pictures in lecture-video/inside-your-body.json). The lecture step draws it
+# above the parts; build-lessons.py refuses a path that is not on disk AND in
+# app.config.json :: extraPages, and a --draft render.
+LESSON["video"] = {
+    "src": "lecture-video/inside-your-body.40c96b3b.mp4",
+    "captions": "lecture-video/inside-your-body.3b8235aa.vtt",
+    "poster": "lecture-video/inside-your-body.b07533e9.jpg",
+    "note": "About two and a half minutes. Watch it through, then go back over it a part at a time below.",
+}
+
 LESSON["words"] = [
     word("organ", "\U0001FAC0", "A part inside the body that has a job.",
          ["The heart is an organ.", "Five organs, five jobs."]),

@@ -239,6 +239,17 @@ LESSON["lecture"] = [
          "Practical work has risks. Glass can break. Floors get wet. Powders can hurt. A scientist spots the risks first: goggles on, spills wiped, hair tied back, nothing tasted unless a grown-up says so."),
 ]
 
+# The unit lecture film (tools/create-ehel-unit-lecture.js; storyboard and
+# pictures in lecture-video/mixtures.json). The lecture step draws it
+# above the parts; build-lessons.py refuses a path that is not on disk AND in
+# app.config.json :: extraPages, and a --draft render.
+LESSON["video"] = {
+    "src": "lecture-video/mixtures.d98f5c75.mp4",
+    "captions": "lecture-video/mixtures.04551a17.vtt",
+    "poster": "lecture-video/mixtures.2e4a06f8.jpg",
+    "note": "About two and a half minutes. Watch it through, then go back over it a part at a time below.",
+}
+
 LESSON["words"] = [
     word("mixture", "\U0001F963", "Two or more materials mixed together that can be separated again.",
          ["Sand and stones make a mixture.", "Salt water is a mixture too."]),

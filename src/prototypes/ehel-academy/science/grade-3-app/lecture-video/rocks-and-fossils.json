@@ -1,0 +1,127 @@
+{
+  "_comment": "Storyboard for the Grade 3 Science unit lecture film, Lesson 12 Rocks and Fossils. Rendered by tools/create-ehel-unit-lecture.js. See lecture-video/BRIEF.md. Every beat is one narration clip; art.at names the phrases a picture waits for, and the page refuses to load if a phrase is not in its beat's say. The chapters follow LESSON['lecture'] in order (only one planet; out of the rocks; oil and gas; a fossil; taking carefully, with the lesson's fact-card step as its own chapter before it), in the lesson's own words and with its own pictures: its six explore items, its two sorting bins, its fossil demo (ART.scene fossil 0-3) and its four Earth-and-us cards.",
+  "slug": "rocks-and-fossils",
+  "lesson": 12,
+  "grade": 3,
+  "stage": 3,
+  "title": "Rocks and Fossils",
+  "subtitle": "Grade 3 Science",
+  "framework": "Cambridge Primary Science 0097",
+  "renderer": {
+    "art": ["science"],
+    "skin": "brown",
+    "scenes": [
+      "tools/lib/ehel-film-marks.js",
+      "tools/lib/film-scenes/science-g3/rocks-and-fossils.js",
+      "tools/lib/film-scenes/science-g3/rocks-and-fossils-2.js",
+      "tools/lib/film-scenes/science-g3/rocks-and-fossils-3.js",
+      "tools/lib/film-scenes/science-g3/rocks-and-fossils-4.js"
+    ]
+  },
+  "objectives": [
+    ["3ESp.01", "Know that planet Earth is the source of all the materials we use and that many useful materials, including oil, natural gas and metals, come from or are found in rocks."],
+    ["3ESp.02", "Know that fossils are impressions, or remains, of things that were once alive."],
+    ["3TWSc.01", "Use observations and tests to sort, group and classify objects."],
+    ["3TWSc.05", "Use secondary information sources to research an answer to a question."],
+    ["3TWSp.04", "Identify risks and explain how to stay safe during practical work."],
+    ["3SIC.03", "Know that everyone uses science and identify people who use science professionally."],
+    ["3SIC.04", "Talk about how science helps us understand our effect on the world around us."]
+  ],
+  "scenes": [
+    { "id": "title", "kind": "title", "codes": [], "beats": [
+      { "say": "A metal spoon, a glass window, a bottle of petrol.",
+        "art": { "at": { "spoon": "A metal spoon", "window": "a glass window", "petrol": "a bottle of petrol" } } },
+      { "say": "All three came out of rocks, deep in planet Earth.",
+        "art": { "at": { "rocks": "out of rocks", "earth": "planet Earth" } } }
+    ] },
+
+    { "id": "planet", "kind": "planet", "heading": "Only one planet", "codes": ["3ESp.01", "3TWSc.01"], "beats": [
+      { "say": "Every material we use comes from planet Earth.",
+        "art": { "at": { "material": "Every material", "earth": "planet Earth" } } },
+      { "say": "There is nowhere else. Not the Moon, not the Sun.",
+        "art": { "at": { "nowhere": "nowhere else", "moon": "the Moon", "sun": "the Sun" } } },
+      { "say": "Wood and wool come from living things.",
+        "art": { "at": { "wood": "Wood", "wool": "wool", "living": "living things" } } },
+      { "say": "Metal, glass, oil and gas come from rocks.",
+        "art": { "at": { "metal": "Metal", "glass": "glass", "oil": "oil", "gas": "gas", "rocks": "rocks" } } },
+      { "say": "So there are two sources: the rocks, and the living things on top.",
+        "art": { "at": { "two": "two sources", "rock": "the rocks", "life": "the living things" } } }
+    ] },
+
+    { "id": "ores", "kind": "ores", "heading": "Out of the rocks", "codes": ["3ESp.01"], "beats": [
+      { "say": "Metal is found inside rocks called ores.",
+        "art": { "at": { "metal": "Metal", "ores": "ores" } } },
+      { "say": "The rock is dug up and heated, and the metal is separated out.",
+        "art": { "at": { "dug": "dug up", "heated": "heated", "out": "separated out" } } },
+      { "say": "That is where the metal in your spoon began.",
+        "art": { "at": { "spoon": "your spoon" } } },
+      { "say": "Glass is melted sand, and sand is tiny bits of rock.",
+        "art": { "at": { "glass": "Glass", "sand": "melted sand", "bits": "tiny bits of rock" } } },
+      { "say": "Bricks are baked clay. Clay is a soft rock.",
+        "art": { "at": { "bricks": "Bricks", "clay": "baked clay", "soft": "a soft rock" } } }
+    ] },
+
+    { "id": "oilgas", "kind": "oilgas", "heading": "Oil and gas", "codes": ["3ESp.01"], "beats": [
+      { "say": "Oil and natural gas are trapped deep in rocks underground.",
+        "art": { "at": { "oil": "Oil", "gas": "natural gas", "deep": "deep in rocks" } } },
+      { "say": "The oil is pumped up to the surface.",
+        "art": { "at": { "pump": "pumped up" } } },
+      { "say": "Some of it is made into petrol, and cars burn it.",
+        "art": { "at": { "petrol": "petrol", "cars": "cars burn it" } } },
+      { "say": "Some becomes plastic. So even a plastic bottle began in the Earth.",
+        "art": { "at": { "plastic": "becomes plastic", "bottle": "a plastic bottle", "earth": "in the Earth" } } }
+    ] },
+
+    { "id": "fossil", "kind": "fossil", "heading": "How a fossil forms", "codes": ["3ESp.02"], "beats": [
+      { "say": "Millions of years ago, a fish swims in the sea.",
+        "art": { "at": { "millions": "Millions of years ago", "fish": "a fish", "sea": "the sea" } } },
+      { "say": "It dies, and sinks into the soft mud at the bottom.",
+        "art": { "at": { "dies": "It dies", "sinks": "sinks", "mud": "the soft mud" } } },
+      { "say": "More mud settles on top, layer after layer.",
+        "art": { "at": { "more": "More mud", "layer": "layer after layer" } } },
+      { "say": "The weight squashes the mud into rock, with the fish's shape pressed inside.",
+        "art": { "at": { "weight": "The weight", "rock": "into rock", "shape": "the fish's shape" } } },
+      { "say": "One day the rock splits open, and there is the fish.",
+        "art": { "at": { "splits": "splits open", "there": "there is the fish" } } },
+      { "say": "Not the fish itself. Its shape, pressed in like a footprint. That is a fossil.",
+        "art": { "at": { "not": "Not the fish itself", "print": "like a footprint", "fossil": "a fossil" } } }
+    ] },
+
+    { "id": "lookitup", "kind": "lookitup", "heading": "Look it up", "codes": ["3TWSc.05", "3TWSp.04"], "beats": [
+      { "say": "Where would you look for a fossil? You can look it up.",
+        "art": { "at": { "where": "look for a fossil", "up": "look it up" } } },
+      { "say": "A fact card is a secondary source. Somebody found it out and wrote it down for you.",
+        "art": { "at": { "card": "A fact card", "source": "a secondary source", "wrote": "wrote it down" } } },
+      { "say": "Fossils are found in rock made of layers of mud or sand, like sandstone.",
+        "art": { "at": { "layers": "layers of mud or sand", "sandstone": "sandstone" } } },
+      { "say": "Most are hard parts: shells, bones and teeth. A jellyfish rarely leaves one.",
+        "art": { "at": { "hard": "hard parts", "shells": "shells, bones and teeth", "jelly": "A jellyfish" } } },
+      { "say": "Look at cliffs and beaches. Go with a grown-up, and never stand under a cliff.",
+        "art": { "at": { "cliffs": "cliffs and beaches", "grown": "a grown-up", "never": "never stand under a cliff" } } }
+    ] },
+
+    { "id": "taking", "kind": "taking", "heading": "Taking carefully", "codes": ["3SIC.04", "3SIC.03"], "beats": [
+      { "say": "A quarry cuts rock out of a hillside, and leaves a huge hole.",
+        "art": { "at": { "quarry": "A quarry", "hole": "a huge hole" } } },
+      { "say": "A spill can cover beaches and birds in oil, so it is done very carefully.",
+        "art": { "at": { "spill": "A spill", "birds": "beaches and birds", "careful": "very carefully" } } },
+      { "say": "Recycle a can, and less rock has to be dug up.",
+        "art": { "at": { "recycle": "Recycle a can", "less": "less rock" } } },
+      { "say": "A geologist studies rocks. A palaeontologist studies fossils.",
+        "art": { "at": { "geo": "A geologist", "pal": "A palaeontologist" } } },
+      { "say": "Science helps us see the harm, and do less of it.",
+        "art": { "at": { "see": "see the harm", "do": "do less of it" } } }
+    ] },
+
+    { "id": "recap", "kind": "recap", "heading": "What you now know", "codes": ["3ESp.01", "3ESp.02", "3TWSc.01", "3TWSc.05", "3TWSp.04", "3SIC.03", "3SIC.04"], "beats": [
+      { "say": "Everything you use comes from planet Earth.",
+        "art": { "at": { "earth": "planet Earth" } } },
+      { "say": "Metal from ore, glass from sand, oil from deep in the rock.",
+        "art": { "at": { "ore": "Metal from ore", "glass": "glass from sand", "oil": "oil from deep" } } },
+      { "say": "A fossil is the shape of something once alive, kept in rock.",
+        "art": { "at": { "fossil": "A fossil" } } },
+      { "say": "Look it up, and recycle. Then less has to be dug up.",
+        "art": { "at": { "look": "Look it up", "recycle": "recycle" } } }
+    ] }
+  ]
+}

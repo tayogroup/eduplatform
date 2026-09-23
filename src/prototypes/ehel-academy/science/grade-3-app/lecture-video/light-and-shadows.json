@@ -1,0 +1,126 @@
+{
+  "_comment": "Storyboard for the Grade 3 Science unit lecture film, Lesson 10 Light and Shadows. Rendered by tools/create-ehel-unit-lecture.js. See lecture-video/BRIEF.md. Every beat is one narration clip; art.at names the phrases a picture waits for, and the page refuses to load if a phrase is not in its beat's say. The chapters follow the five parts of LESSON[lecture] in content/lesson-10.py in order (three kinds of material; a shadow; big and small shadows; light into the eye; what people used to think), with the lesson's ask step as its own chapter after the experiment, where the lesson puts it. The pictures are the lesson's own: its light tester (ART.sim lightThrough, with window glass, tracing paper and a book, and the sort step's three bin pictures beside it), its demo's torch, hand and wall, and its shadow-size experiment (ART.sim shadowSize, the three positions its buttons step through).",
+  "slug": "light-and-shadows",
+  "lesson": 10,
+  "grade": 3,
+  "stage": 3,
+  "title": "Light and Shadows",
+  "subtitle": "Grade 3 Science",
+  "framework": "Cambridge Primary Science 0097",
+  "renderer": {
+    "art": ["science"],
+    "skin": "brown",
+    "scenes": [
+      "tools/lib/ehel-film-marks.js",
+      "tools/lib/film-scenes/science-g3/light-and-shadows.js",
+      "tools/lib/film-scenes/science-g3/light-and-shadows-2.js",
+      "tools/lib/film-scenes/science-g3/light-and-shadows-3.js",
+      "tools/lib/film-scenes/science-g3/light-and-shadows-4.js"
+    ]
+  },
+  "objectives": [
+    ["3Ps.01", "Investigate how light can pass through some materials and is blocked by others, and use the terms transparent, translucent and opaque."],
+    ["3Ps.02", "Know that shadows are formed when light from a source is blocked by an object."],
+    ["3Ps.03", "Investigate how the size of a shadow is affected by the position of the object and the position of the light source."],
+    ["3TWSc.01", "Use observations and tests to sort, group and classify objects."],
+    ["3TWSp.03", "Make a prediction describing some possible outcomes of an enquiry."],
+    ["3TWSa.03", "Make a conclusion from results and relate it to the scientific question being investigated."],
+    ["3TWSp.01", "Ask scientific questions that can be investigated."],
+    ["3SIC.01", "Talk about how some of the scientific knowledge and thinking now was different in the past."]
+  ],
+  "scenes": [
+    { "id": "title", "kind": "title", "codes": [], "beats": [
+      { "say": "Light goes through some things, and is blocked by others.",
+        "art": { "at": { "light": "Light goes through", "blocked": "blocked by others" } } },
+      { "say": "Where the light is blocked, you get a dark shape: a shadow.",
+        "art": { "at": { "where": "Where the light is blocked", "shadow": "a shadow" } } }
+    ] },
+
+    { "id": "materials", "kind": "materials", "heading": "Three kinds of material", "codes": ["3Ps.01", "3TWSc.01"], "beats": [
+      { "say": "Shine a torch at window glass. The light goes straight through.",
+        "art": { "at": { "torch": "Shine a torch", "glass": "window glass", "through": "goes straight through" } } },
+      { "say": "The wall behind is bright. Glass is transparent: you see clearly.",
+        "art": { "at": { "wall": "The wall behind is bright", "word": "transparent", "clear": "you see clearly" } } },
+      { "say": "Now tracing paper. Some light gets through, but it is blurred.",
+        "art": { "at": { "paper": "tracing paper", "some": "Some light gets through", "blurred": "blurred" } } },
+      { "say": "Tracing paper is translucent. You see light, but no clear shapes.",
+        "art": { "at": { "word": "translucent", "light": "You see light", "shapes": "no clear shapes" } } },
+      { "say": "Now a book. No light gets through at all. A book is opaque.",
+        "art": { "at": { "book": "a book", "none": "No light gets through", "word": "opaque" } } },
+      { "say": "Test each material, then sort it: transparent, translucent or opaque.",
+        "art": { "at": { "test": "Test each material", "sort": "sort it", "a": "transparent,", "b": "translucent", "c": "opaque." } } }
+    ] },
+
+    { "id": "shadow", "kind": "shadow", "heading": "A shadow", "codes": ["3Ps.02"], "beats": [
+      { "say": "A torch shines on a wall. The wall is bright.",
+        "art": { "at": { "torch": "A torch", "wall": "on a wall", "bright": "The wall is bright" } } },
+      { "say": "Put your hand in the way. Your hand is opaque, so it blocks the light.",
+        "art": { "at": { "hand": "Put your hand", "opaque": "opaque", "blocks": "blocks the light" } } },
+      { "say": "Where the light is blocked, the wall stays dark.",
+        "art": { "at": { "where": "Where the light is blocked", "dark": "stays dark" } } },
+      { "say": "That dark shape is a shadow. It is the shape of your hand.",
+        "art": { "at": { "shadow": "a shadow", "shape": "the shape of your hand" } } },
+      { "say": "A shadow does not come out of your hand. It is where light cannot reach.",
+        "art": { "at": { "not": "does not come out", "reach": "light cannot reach" } } },
+      { "say": "Switch the torch off. No light, nothing to block, so no shadow.",
+        "art": { "at": { "off": "Switch the torch off", "none": "so no shadow" } } }
+    ] },
+
+    { "id": "size", "kind": "size", "heading": "Big and small shadows", "codes": ["3Ps.03", "3TWSp.03", "3TWSa.03"], "beats": [
+      { "say": "Here is a torch, a toy and a wall.",
+        "art": { "at": { "torch": "a torch", "toy": "a toy", "wall": "a wall" } } },
+      { "say": "Predict first. Will its shadow get bigger, get smaller, or stay the same?",
+        "art": { "at": { "predict": "Predict first", "bigger": "get bigger", "smaller": "get smaller", "same": "stay the same" } } },
+      { "say": "Keep the torch and the wall still. Move only the toy.",
+        "art": { "at": { "keep": "Keep the torch and the wall still", "only": "Move only the toy" } } },
+      { "say": "Move the toy towards the torch, and its shadow grows.",
+        "art": { "at": { "move": "Move the toy towards the torch", "grows": "its shadow grows" } } },
+      { "say": "Move it towards the wall, and its shadow shrinks.",
+        "art": { "at": { "move": "Move it towards the wall", "shrinks": "its shadow shrinks" } } },
+      { "say": "The toy has not changed. Where it is has changed, and that changes how much light it blocks.",
+        "art": { "at": { "toy": "The toy has not changed", "where": "Where it is has changed", "light": "how much light it blocks" } } }
+    ] },
+
+    { "id": "question", "kind": "question", "heading": "Ask your own question", "codes": ["3TWSp.01", "3Ps.03"], "beats": [
+      { "say": "A good scientific question can be tested.",
+        "art": { "at": { "good": "A good scientific question", "tested": "can be tested" } } },
+      { "say": "Does the shadow get bigger if the torch moves further away?",
+        "art": { "at": { "shadow": "Does the shadow", "further": "the torch moves further away" } } },
+      { "say": "Move only the torch back, and look. The shadow gets smaller.",
+        "art": { "at": { "back": "Move only the torch back", "look": "and look", "smaller": "The shadow gets smaller" } } }
+    ] },
+
+    { "id": "eye", "kind": "eye", "heading": "Light into the eye", "codes": [], "beats": [
+      { "say": "A torch and the Sun are light sources. They make their own light.",
+        "art": { "at": { "torch": "A torch", "sun": "the Sun", "sources": "light sources", "own": "their own light" } } },
+      { "say": "Light from a source bounces off things and goes into your eye.",
+        "art": { "at": { "source": "Light from a source", "bounces": "bounces off things", "eye": "into your eye" } } },
+      { "say": "That is how you see. In a completely dark room, you see nothing.",
+        "art": { "at": { "see": "how you see", "dark": "a completely dark room", "nothing": "you see nothing" } } },
+      { "say": "However hard you look, there is no light to see by.",
+        "art": { "at": { "hard": "However hard you look", "nolight": "no light to see by" } } }
+    ] },
+
+    { "id": "then", "kind": "then", "heading": "What people used to think", "codes": ["3SIC.01"], "beats": [
+      { "say": "Long ago, some people thought eyes sent out beams to see with.",
+        "art": { "at": { "long": "Long ago", "beams": "eyes sent out beams" } } },
+      { "say": "It seemed sensible. But it was wrong.",
+        "art": { "at": { "sensible": "It seemed sensible", "wrong": "it was wrong" } } },
+      { "say": "Testing showed light comes from a source into the eye.",
+        "art": { "at": { "testing": "Testing showed", "source": "from a source", "eye": "into the eye" } } },
+      { "say": "Science changes when people test their ideas.",
+        "art": { "at": { "science": "Science changes", "test": "test their ideas" } } }
+    ] },
+
+    { "id": "recap", "kind": "recap", "heading": "What you now know", "codes": ["3Ps.01", "3Ps.02", "3Ps.03", "3TWSc.01", "3TWSp.03", "3TWSa.03", "3TWSp.01", "3SIC.01"], "beats": [
+      { "say": "Transparent lets light through, translucent lets some, opaque lets none.",
+        "art": { "at": { "a": "Transparent", "b": "translucent", "c": "opaque" } } },
+      { "say": "A shadow forms where something opaque blocks the light.",
+        "art": { "at": { "shadow": "A shadow forms" } } },
+      { "say": "Nearer the light source, bigger shadow. Nearer the wall, smaller.",
+        "art": { "at": { "size": "Nearer the light source", "small": "Nearer the wall" } } },
+      { "say": "You see when light goes into your eye. Testing ideas changes science.",
+        "art": { "at": { "eye": "light goes into your eye", "test": "Testing ideas" } } }
+    ] }
+  ]
+}

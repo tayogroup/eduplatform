@@ -228,6 +228,17 @@ LESSON["lecture"] = [
          "A ruler measures length in centimetres. A measuring jug measures liquid in millilitres. A thermometer measures how hot. Scales measure how heavy. Choose the right tool, and measure in a standard unit."),
 ]
 
+# The unit lecture film (tools/create-ehel-unit-lecture.js; storyboard and
+# pictures in lecture-video/solids-liquids-and-gases.json). The lecture step draws it
+# above the parts; build-lessons.py refuses a path that is not on disk AND in
+# app.config.json :: extraPages, and a --draft render.
+LESSON["video"] = {
+    "src": "lecture-video/solids-liquids-and-gases.56b403b2.mp4",
+    "captions": "lecture-video/solids-liquids-and-gases.38584f42.vtt",
+    "poster": "lecture-video/solids-liquids-and-gases.3caba2b0.jpg",
+    "note": "About two and a half minutes. Watch it through, then go back over it a part at a time below.",
+}
+
 LESSON["words"] = [
     word("solid", "\U0001F9CA", "A material that keeps its own shape.",
          ["Ice is a solid.", "A solid does not pour."]),

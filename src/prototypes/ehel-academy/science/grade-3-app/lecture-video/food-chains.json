@@ -1,0 +1,119 @@
+{
+  "_comment": "Storyboard for the Grade 3 Science unit lecture film, Lesson 6 Food Chains. Rendered by tools/create-ehel-unit-lecture.js. See lecture-video/BRIEF.md. Every beat is one narration clip; art.at names the phrases a picture waits for, and the page refuses to load if a phrase is not in its beat's say. The chapters follow LESSON['lecture'] in order (producers; consumers; the arrow; breaking a link; chains and people), with the lesson's sorting step placed after the consumers, in the lesson's own words: its food chain sim (ART.kit.foodChainSvg, grass, rabbit and fox built link by link and then broken), its eight sorting animals and their two bins, its card-and-string physical model, and its four things people do.",
+  "slug": "food-chains",
+  "lesson": 6,
+  "grade": 3,
+  "stage": 3,
+  "title": "Food Chains",
+  "subtitle": "Grade 3 Science",
+  "framework": "Cambridge Primary Science 0097",
+  "renderer": {
+    "art": ["science"],
+    "skin": "brown",
+    "scenes": [
+      "tools/lib/ehel-film-marks.js",
+      "tools/lib/film-scenes/science-g3/food-chains.js",
+      "tools/lib/film-scenes/science-g3/food-chains-2.js",
+      "tools/lib/film-scenes/science-g3/food-chains-3.js"
+    ]
+  },
+  "objectives": [
+    ["3Be.01", "Identify and describe simple food chains, where plants are producers and animals are consumers of plants and/or other animals."],
+    ["3Bp.02", "Know that life processes common to plants and animals include nutrition, growth, movement and reproduction."],
+    ["3TWSc.01", "Use observations and tests to sort, group and classify objects."],
+    ["3TWSm.02", "Make and use physical models."],
+    ["3TWSm.03", "Draw a diagram to represent a real world situation and/or scientific idea."],
+    ["3SIC.04", "Talk about how science helps us understand our effect on the world around us."]
+  ],
+  "scenes": [
+    { "id": "title", "kind": "title", "codes": [], "beats": [
+      { "say": "Every animal has to eat. But where does its food really come from?",
+        "art": { "at": { "eat": "has to eat", "food": "its food", "come": "come from" } } },
+      { "say": "Follow the food back, and every chain starts at the same place: a plant.",
+        "art": { "at": { "follow": "Follow the food back", "start": "starts at the same place", "plant": "a plant" } } }
+    ] },
+
+    { "id": "producers", "kind": "producers", "heading": "The producer", "codes": ["3Be.01", "3Bp.02"], "beats": [
+      { "say": "A plant does not eat. It makes its own food from sunlight, water and air.",
+        "art": { "at": { "noeat": "does not eat", "makes": "makes its own food", "sun": "sunlight", "water": "water", "air": "air" } } },
+      { "say": "Because it produces food, we call it a producer.",
+        "art": { "at": { "produces": "produces food", "producer": "a producer" } } },
+      { "say": "Grass is a producer. It does not eat anything at all.",
+        "art": { "at": { "grass": "Grass", "noeat": "does not eat anything" } } },
+      { "say": "Every food chain starts with a plant, and the plant's food starts with the Sun.",
+        "art": { "at": { "chain": "Every food chain", "plant": "with a plant", "sun": "the Sun" } } }
+    ] },
+
+    { "id": "consumers", "kind": "consumers", "heading": "The consumers", "codes": ["3Be.01"], "beats": [
+      { "say": "An animal cannot make food. It has to eat.",
+        "art": { "at": { "animal": "An animal", "cannot": "cannot make food", "eat": "has to eat" } } },
+      { "say": "A rabbit eats the grass. An animal that eats is a consumer.",
+        "art": { "at": { "rabbit": "A rabbit", "eats": "eats the grass", "consumer": "a consumer" } } },
+      { "say": "A fox eats the rabbit. The fox is a consumer too.",
+        "art": { "at": { "fox": "A fox", "eatsr": "eats the rabbit", "too": "a consumer too" } } },
+      { "say": "Grass, rabbit, fox. A food chain shows who eats whom.",
+        "art": { "at": { "three": "Grass, rabbit, fox", "chain": "A food chain", "whom": "who eats whom" } } }
+    ] },
+
+    { "id": "sort", "kind": "sort", "heading": "Producer, or consumer?", "codes": ["3TWSc.01", "3Be.01"], "beats": [
+      { "say": "Plants are producers. Animals are consumers. That is the whole rule.",
+        "art": { "at": { "plants": "Plants are producers", "animals": "Animals are consumers", "rule": "the whole rule" } } },
+      { "say": "An oak tree, seagrass and a dandelion all make their own food.",
+        "art": { "at": { "oak": "An oak tree", "sea": "seagrass", "dand": "a dandelion", "make": "make their own food" } } },
+      { "say": "An owl, a fish and a rabbit cannot. They have to eat, so they are consumers.",
+        "art": { "at": { "owl": "An owl", "fish": "a fish", "rab": "a rabbit", "cons": "they are consumers" } } },
+      { "say": "A cow makes milk, but it eats grass. Eating makes it a consumer.",
+        "art": { "at": { "cow": "A cow", "milk": "makes milk", "eats": "eats grass", "consumer": "a consumer" } } }
+    ] },
+
+    { "id": "arrow", "kind": "arrow", "heading": "The arrow", "codes": ["3Be.01", "3TWSm.03"], "beats": [
+      { "say": "We draw a food chain with arrows. Grass, arrow, rabbit, arrow, fox.",
+        "art": { "at": { "draw": "We draw", "arrows": "with arrows", "one": "Grass, arrow, rabbit", "two": "arrow, fox" } } },
+      { "say": "The arrow means is eaten by. Grass is eaten by the rabbit.",
+        "art": { "at": { "means": "means is eaten by", "eatenby": "eaten by the rabbit" } } },
+      { "say": "It points from the food to the animal that eats it.",
+        "art": { "at": { "points": "points from the food", "eats": "the animal that eats it" } } },
+      { "say": "So the arrow goes from the grass to the rabbit, never the other way.",
+        "art": { "at": { "from": "from the grass", "to": "to the rabbit", "never": "never the other way" } } },
+      { "say": "A drawing like this is a diagram: a model of who eats whom.",
+        "art": { "at": { "diagram": "a diagram", "model": "a model of who eats whom" } } }
+    ] },
+
+    { "id": "model", "kind": "model", "heading": "A chain you can hold", "codes": ["3TWSm.02", "3Be.01"], "beats": [
+      { "say": "Now make a chain you can hold. Draw grass, a rabbit and a fox on three cards.",
+        "art": { "at": { "make": "make a chain you can hold", "draw": "Draw grass", "cards": "three cards" } } },
+      { "say": "Tie the rabbit card under the grass card, and the fox under the rabbit.",
+        "art": { "at": { "tie": "Tie the rabbit card", "under": "under the grass card", "fox": "the fox under the rabbit" } } },
+      { "say": "Hold up the grass card. The whole chain hangs from it. That is a physical model.",
+        "art": { "at": { "hold": "Hold up the grass card", "hangs": "hangs from it", "model": "a physical model" } } },
+      { "say": "Now let go of the grass card, and watch. The whole chain falls.",
+        "art": { "at": { "letgo": "let go of the grass card", "watch": "watch", "falls": "The whole chain falls" } } },
+      { "say": "No grass, no rabbit. No rabbit, no fox. Every link needs the one before it.",
+        "art": { "at": { "nograss": "No grass, no rabbit", "norabbit": "No rabbit, no fox", "link": "Every link" } } }
+    ] },
+
+    { "id": "people", "kind": "people", "heading": "Chains and people", "codes": ["3SIC.04", "3Be.01"], "beats": [
+      { "say": "Spray the weeds and the plants die. No plants, no caterpillars.",
+        "art": { "at": { "spray": "Spray the weeds", "die": "the plants die", "cats": "no caterpillars" } } },
+      { "say": "No caterpillars, and the birds that eat them go hungry. Three links gone, from one spray.",
+        "art": { "at": { "birds": "the birds that eat them", "hungry": "go hungry", "gone": "Three links gone" } } },
+      { "say": "Oil in the pond blocks the light. The pondweed dies, then the snails, the frogs, the heron.",
+        "art": { "at": { "oil": "Oil in the pond", "light": "blocks the light", "weed": "The pondweed dies", "snails": "the snails", "frogs": "the frogs", "heron": "the heron" } } },
+      { "say": "Plant a hedge and you plant a producer. Insects come, then birds, and a new chain starts.",
+        "art": { "at": { "hedge": "Plant a hedge", "producer": "a producer", "insects": "Insects come", "birds": "then birds", "newchain": "a new chain starts" } } },
+      { "say": "Science shows us what our actions do to the living things around us.",
+        "art": { "at": { "science": "Science shows us", "actions": "our actions", "living": "the living things" } } }
+    ] },
+
+    { "id": "recap", "kind": "recap", "heading": "What you now know", "codes": ["3Be.01", "3Bp.02", "3TWSc.01", "3TWSm.02", "3TWSm.03", "3SIC.04"], "beats": [
+      { "say": "A plant is the producer. It makes its own food from sunlight.",
+        "art": { "at": { "producer": "the producer" } } },
+      { "say": "Every animal is a consumer, because it has to eat.",
+        "art": { "at": { "consumer": "a consumer" } } },
+      { "say": "The arrow means is eaten by. Draw the chain, or hold it on cards.",
+        "art": { "at": { "arrow": "The arrow", "hold": "hold it on cards" } } },
+      { "say": "Take the plant away and the whole chain falls. That is why what we do matters.",
+        "art": { "at": { "falls": "the whole chain falls", "matters": "what we do matters" } } }
+    ] }
+  ]
+}

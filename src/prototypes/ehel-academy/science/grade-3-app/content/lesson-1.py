@@ -267,6 +267,17 @@ LESSON["lecture"] = [
          "A scientist's question is one you can answer by looking, testing or looking up. Do snails move faster on wet ground? You can test that. Are snails nice? You cannot. Today, you will ask a question you can test."),
 ]
 
+# The unit lecture film (tools/create-ehel-unit-lecture.js; storyboard and
+# pictures in lecture-video/living-once-alive-never-alive.json). The lecture step draws it
+# above the parts; build-lessons.py refuses a path that is not on disk AND in
+# app.config.json :: extraPages, and a --draft render.
+LESSON["video"] = {
+    "src": "lecture-video/living-once-alive-never-alive.5ac621f6.mp4",
+    "captions": "lecture-video/living-once-alive-never-alive.71f994df.vtt",
+    "poster": "lecture-video/living-once-alive-never-alive.561f65fd.jpg",
+    "note": "About three minutes. Watch it through, then go back over it a part at a time below.",
+}
+
 LESSON["words"] = [
     word("life process", "\U0001F9EC", "One of the things every living thing does: nutrition, growth, movement and reproduction.",
          ["Growth is a life process.", "Plants and animals share the same life processes."]),

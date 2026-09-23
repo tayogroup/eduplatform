@@ -164,3 +164,26 @@ $R --render --approved <that fingerprint> --films <slug>
 A picture change renders for nothing, and the new file gets a new hashed name:
 update `LESSON["video"]` and `extraPages`, rebuild, and upload the film before
 the page. A changed line changes the fingerprint and goes back to the owner.
+
+## Known, and left: six dead cues
+
+A beat names phrases in `art.at` - "when the voice says this, do that" - and a
+scene reads one with `sc()` or `cue()`. Six keys in these eight films are
+declared and read by nothing, so nothing happens when those words are said:
+`lets` in Electricity and Magnets, `night` twice in Our Earth Our Sun, `droops`
+in Parts of a Plant, and `little` and `long` in Pushes Pulls and Floating.
+
+Found on 2026-09-24, well after these films went live, by a check written for
+the Grade 4 set: `node tools/check-ehel-film-cues.js 1`.
+
+**Nothing in the pipeline could see it.** `--dry` counts characters and
+objectives. `--sweep` draws every frame and finds none wrong, because none IS
+wrong. And `--sample` shoots a frame at the dead cue's own moment, so the
+contact sheet looks complete - the frame simply does not differ from the one
+before it.
+
+They are left. No frame is wrong and no child sees anything broken; the cost is
+a word that gains no picture, and these films are live, so fixing them would
+mean re-rendering and re-uploading eight films for that. Grade 3's README has
+the fuller account, and the rule is in every brief now, so films written after
+this set check themselves - Grade 4 has zero across 1,127 declared cues.

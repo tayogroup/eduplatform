@@ -226,6 +226,17 @@ LESSON["lecture"] = [
          "To put an animal in its group, look at its features. Today you will sort ten animals, look up the tricky ones in a fact card, and label a diagram of a beetle."),
 ]
 
+# The unit lecture film (tools/create-ehel-unit-lecture.js; storyboard and
+# pictures in lecture-video/animal-groups.json). The lecture step draws it
+# above the parts; build-lessons.py refuses a path that is not on disk AND in
+# app.config.json :: extraPages, and a --draft render.
+LESSON["video"] = {
+    "src": "lecture-video/animal-groups.e06068db.mp4",
+    "captions": "lecture-video/animal-groups.fffba919.vtt",
+    "poster": "lecture-video/animal-groups.4a95bacf.jpg",
+    "note": "About three minutes. Watch it through, then go back over it a part at a time below.",
+}
+
 LESSON["words"] = [
     word("feature", "\U0001F50D", "Something an animal has, like scales, fur or six legs, that helps put it in a group.",
          ["Feathers are a feature of birds.", "Look at the features, not where it lives."]),

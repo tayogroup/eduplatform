@@ -243,6 +243,17 @@ LESSON["lecture"] = [
          "A compass needle is a tiny magnet that turns to point north. A fridge door has a magnetic strip to hold it shut. A scrapyard crane lifts whole steel cars with a giant magnet. Today, you test them all."),
 ]
 
+# The unit lecture film (tools/create-ehel-unit-lecture.js; storyboard and
+# pictures in lecture-video/magnets.json). The lecture step draws it
+# above the parts; build-lessons.py refuses a path that is not on disk AND in
+# app.config.json :: extraPages, and a --draft render.
+LESSON["video"] = {
+    "src": "lecture-video/magnets.06b92b6a.mp4",
+    "captions": "lecture-video/magnets.4a457245.vtt",
+    "poster": "lecture-video/magnets.8961b823.jpg",
+    "note": "About two and a half minutes. Watch it through, then go back over it a part at a time below.",
+}
+
 LESSON["words"] = [
     word("magnet", "\U0001F9F2", "An object that pulls iron and steel towards it.",
          ["The magnet picked up the paperclips.", "A fridge magnet holds up a drawing."]),

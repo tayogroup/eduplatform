@@ -9,8 +9,38 @@
 <link rel="stylesheet" href="../lesson-kit/lib/carpentry.css">
 </head>
 <body>
-<a class="skip" href="#lesson">Skip to the lesson</a>
+<a class="eh-skip" href="#lesson">Skip to the lesson</a>
+
+<header class="eh-bar1">
+  <a class="eh-brand" href="index.html">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 20h18"/><path d="M5 20V9l7-5 7 5v11"/><path d="M10 20v-6h4v6"/></svg>
+    <span class="eh-brandtext"><b>Professor Adow TVET</b><i>Shapes and Measurements</i></span>
+  </a>
+  <div class="eh-prog" title="How much of this lesson you have finished">
+    <span class="eh-pct" id="ehPct">0%</span>
+    <span class="eh-progtext">Lesson progress</span>
+    <span class="eh-track"><i id="ehFill"></i></span>
+  </div>
+  <div class="eh-b1right">
+    <label class="eh-find">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6.5"/><path d="M15.4 15.4 21 21"/></svg>
+      <input id="ehFind" type="search" autocomplete="off" spellcheck="false" placeholder="Search the lessons" aria-label="Search the Shapes and Measurements lessons" aria-controls="ehFound" aria-expanded="false">
+    </label>
+    <select class="eh-picker" id="ehPicker" aria-label="Choose a lesson"><option value="reading-a-measurement.html">Reading a Measurement</option><option value="area-volume-and-what-they-cost.html" selected>Area, Volume and What They Cost</option><option value="square-level-and-setting-out.html">Square, Level and Setting Out</option></select>
+  </div>
+</header>
+
+<nav class="eh-bar2" aria-label="Lesson">
+  <a class="eh-round back" href="index.html" aria-label="Back to the lesson list">←</a>
+  <button type="button" class="eh-round" id="ehMenu" aria-expanded="false" aria-controls="ehSteps">☰ Menu</button>
+  <span class="eh-section">Area, Volume and What They Cost</span>
+  <span class="eh-b2right"><button type="button" class="eh-pill" id="ehFull">⛶ Full screen</button></span>
+</nav>
+<div class="eh-steps" id="ehSteps" hidden></div>
+<div class="eh-found" id="ehFound" hidden></div>
+
 <div class="wrap">
+  <a class="lesson-back" href="index.html"><span aria-hidden="true">←</span> Shapes and Measurements</a>
   <div class="hero">
     <div>
       <p class="eyebrow">Shapes and Measurements · Core</p>
@@ -99,6 +129,12 @@
   var at = 0;
   var reached = { 0: true };
   var STEPS = {"1": {"kind": "calc", "data": {"finish": "Perimeter buys skirting, kerbing, fencing and edging — anything sold by the metre that goes round the outside.", "items": [{"ask": "This floor is 4.0 m by 2.5 m. What is its perimeter?", "draw": "rectRoom", "unit": "m", "answer": 13, "tol": 0, "working": ["Perimeter = all four sides added", "4.0 + 2.5 + 4.0 + 2.5", "= 13.0 m"], "why": "Thirteen metres. Two long sides and two short ones — or 2 × (4.0 + 2.5), which is the same sum done faster."}, {"ask": "This L-shaped floor is 5.0 m across the top and 3.6 m down the left. Its perimeter is the whole outside edge. What is it?", "draw": "lRoom", "unit": "m", "answer": 17.2, "tol": 0.1, "working": ["Going round: 5.0 + 3.6 + 2.6 + 1.8 + 2.4 + 1.8", "The two short legs of the step are 1.8 m and 2.4 m", "= 17.2 m"], "why": "17.2 m. An L has six sides, not four — and the perimeter of an L is the SAME as the rectangle it came from, because the step trades the same length back."}]}}, "2": {"kind": "calc", "data": {"finish": "Rectangle: length × width. Triangle: half base × height. Circle: π r². Three formulas cover most of a working day.", "items": [{"ask": "The same floor, 4.0 m by 2.5 m. What is its area?", "draw": "rectRoom", "unit": "m²", "answer": 10, "tol": 0, "working": ["Area of a rectangle = length × width", "4.0 × 2.5", "= 10.0 m²"], "why": "Ten square metres. Note the unit changed on its own: metres times metres gives square metres."}, {"ask": "This gable end is 3.0 m across the base and 1.5 m high. What is its area?", "draw": "triangleGable", "unit": "m²", "answer": 2.25, "tol": 0.01, "working": ["Area of a triangle = ½ × base × height", "½ × 3.0 × 1.5", "= 2.25 m²"], "why": "2.25 m². The height is the PERPENDICULAR height — straight up from the base — not the length of the sloping side."}, {"ask": "A circular tank base has a radius of 1.2 m. What is its area? Use π = 3.14.", "draw": "circleTank", "unit": "m²", "answer": 4.52, "tol": 0.05, "working": ["Area of a circle = π × r × r", "3.14 × 1.2 × 1.2", "= 3.14 × 1.44", "= 4.52 m²"], "why": "About 4.52 m². Square the radius first, then multiply by π — and remember it is the RADIUS, half the width across."}]}}, "3": {"kind": "calc", "data": {"finish": "Cut it into rectangles, do each one, add them up — and check the pieces account for the whole shape and nothing twice.", "items": [{"ask": "This L-shaped floor splits into A (2.4 m × 3.6 m) and B (2.6 m × 1.8 m). What is the total area?", "draw": "lRoom", "unit": "m²", "answer": 13.32, "tol": 0.05, "working": ["A: 2.4 × 3.6 = 8.64 m²", "B: 2.6 × 1.8 = 4.68 m²", "8.64 + 4.68 = 13.32 m²"], "why": "13.32 m². Any split works as long as the pieces cover the whole shape once each — split it the other way and you get the same total, which is the check."}]}}, "4": {"kind": "calc", "data": {"finish": "Gross area, minus the openings, plus a waste allowance. In that order, and each figure written down.", "items": [{"ask": "A wall is 6.0 m × 2.4 m. It has a door 2.0 m × 0.9 m and a window 1.2 m × 1.0 m. What area is left to be covered?", "unit": "m²", "answer": 11.4, "tol": 0.05, "working": ["Wall: 6.0 × 2.4 = 14.4 m²", "Door: 2.0 × 0.9 = 1.8 m²", "Window: 1.2 × 1.0 = 1.2 m²", "14.4 − 1.8 − 1.2 = 11.4 m²"], "why": "11.4 m². Working out the gross area and forgetting the openings is how a job comes in over on material every time."}]}}, "5": {"kind": "calc", "data": {"finish": "Rectangular solid: length × width × depth. Cylinder: π r² × height — the circle's area, then how tall it is.", "items": [{"ask": "This trench is 6.0 m long, 0.5 m wide and 0.8 m deep. How much soil comes out of it?", "draw": "boxTrench", "unit": "m³", "answer": 2.4, "tol": 0.01, "working": ["Volume = length × width × depth", "6.0 × 0.5 × 0.8", "= 2.4 m³"], "why": "2.4 cubic metres. That is also what it takes to backfill — and roughly what a small tipper carries, which is why the figure matters before anybody digs."}, {"ask": "A drum is 0.3 m in radius and 0.9 m tall. What is its volume? Use π = 3.14.", "draw": "cylinderDrum", "unit": "m³", "answer": 0.254, "tol": 0.006, "working": ["Base area = π r² = 3.14 × 0.3 × 0.3 = 0.2826 m²", "Volume = base area × height", "0.2826 × 0.9 = 0.254 m³"], "why": "About 0.254 m³. A cylinder is its circular base, repeated all the way up — which is why you find the area first and multiply by the height."}, {"ask": "How many litres does that drum hold?", "draw": "cylinderDrum", "unit": "litres", "answer": 254, "tol": 6, "working": ["1 m³ = 1000 litres", "0.254 × 1000", "= 254 litres"], "why": "About 254 litres — which is why a standard drum is called a 200-litre drum and this one is bigger than standard. Litres is the unit anyone actually buying liquid will use."}]}}, "6": {"kind": "calc", "data": {"finish": "Mass = volume × density. The density comes from a table, and the units in the table tell you which units the volume must be in.", "items": [{"ask": "Wet concrete has a density of about 2400 kg per cubic metre. What is the mass of 2.4 m³?", "unit": "kg", "answer": 5760, "tol": 0, "working": ["Mass = volume × density", "2.4 × 2400", "= 5760 kg"], "why": "5760 kg — nearly six tonnes. This is the figure that decides whether formwork and a floor will carry the pour, so it is not an academic number."}, {"ask": "Water has a density of 1000 kg per cubic metre. What is the mass of the drum's 0.254 m³?", "unit": "kg", "answer": 254, "tol": 6, "working": ["Mass = volume × density", "0.254 × 1000", "= 254 kg"], "why": "254 kg. Water is the easy one: a litre weighs a kilogram, so the litres and the kilograms are the same number — and it is a quarter of a tonne, which is more than one person moves."}]}}, "7": {"kind": "words", "data": {"items": [{"word": "perimeter", "meaning": "The distance right round the outside of a shape. Buys anything sold by the metre."}, {"word": "area", "meaning": "The size of a surface, in square units. Buys sheet, tile, paint, mesh."}, {"word": "volume", "meaning": "The size of a space, in cubic units. Buys concrete, soil, water, grain."}, {"word": "gross area", "meaning": "The whole surface before openings are taken out."}, {"word": "net area", "meaning": "What is left after the doors and windows are deducted. The figure you order against."}, {"word": "perpendicular height", "meaning": "The height measured straight up from the base at a right angle — not along a slope."}, {"word": "radius", "meaning": "From the centre of a circle to its edge. Half the diameter, and the figure every circle formula wants."}, {"word": "density", "meaning": "Mass per unit of volume, e.g. kilograms per cubic metre. Turns a volume into a weight."}]}}};
+  var LESSONS = [{"t": "Reading a Measurement", "b": "Find a measurement on a rule to the nearest millimetre, learn why a tape's hook is meant to move, convert between millimetres and metres without changing the quantity, and decide whether a measurement is inside the tolerance a job allows.", "h": "reading-a-measurement.html"}, {"t": "Square, Level and Setting Out", "b": "Tell square, level and plumb apart and know which tool proves each, read a spirit level and say which way the work moves, prove a frame square by its diagonals, set out a right angle with 3-4-5, and produce an estimate somebody else can check.", "h": "square-level-and-setting-out.html"}];
+  /* `done` is what the bar-1 percentage and the Menu ticks read. A step is
+     done when its renderer calls back, and a step with nothing to do (the
+     intro, the words list, the end card) is done on arrival — otherwise the
+     bar could never reach 100% and the number would be a lie. */
+  var done = new Array(slides.length).fill(false);
 
   slides.forEach(function (s, i) {
     var b = document.createElement('button');
@@ -124,6 +160,7 @@
     next.textContent = at === slides.length - 1 ? 'Finished' : 'Next step';
     next.disabled = at === slides.length - 1;
     var mount = slides[at].querySelector('[data-mount]');
+    if (!mount) { done[at] = true; ehPaint(); }
     if (mount && !mount.dataset.built) {
       mount.dataset.built = '1';
       var spec = STEPS[slides[at].dataset.step];
@@ -134,7 +171,12 @@
       try {
         if (!spec) throw new Error('no step data');
         if (!window.CARP.R[spec.kind]) throw new Error('no renderer for kind "' + spec.kind + '"');
-        window.CARP.R[spec.kind](spec.data, mount, function () { mount.dataset.done = '1'; });
+        var me = at;
+        window.CARP.R[spec.kind](spec.data, mount, function () {
+          mount.dataset.done = '1';
+          done[me] = true;
+          ehPaint();
+        });
       } catch (err) {
         mount.dataset.failed = '1';
         var warn = document.createElement('p');
@@ -144,14 +186,110 @@
         if (window.console) console.error('step ' + slides[at].dataset.step, err);
       }
     }
+    ehPaint();
     document.getElementById('lesson').focus({ preventScroll: true });
     window.scrollTo({ top: 0, behavior: 'smooth' });
   }
+
+  /* ===================== the two header bars =====================
+     Ported from ehel-academy/mathematics/lesson-app-tools/add-header-bars.py
+     so this build has the same structure and controls as an Ehel lesson.
+     Everything here is answered by this page — nothing calls a server. */
+  var $ = function (id) { return document.getElementById(id); };
+
+  function ehPaint() {
+    var n = done.filter(Boolean).length;
+    var p = slides.length ? Math.round((n / slides.length) * 100) : 0;
+    $('ehPct').textContent = p + '%';
+    $('ehFill').style.width = p + '%';
+    if (!$('ehSteps').hidden) ehSteps();
+  }
+
+  function ehSteps() {
+    $('ehSteps').innerHTML = slides.map(function (s, i) {
+      var h = s.querySelector('h2');
+      return '<button type="button" data-i="' + i + '" class="' +
+        (i === at ? 'now ' : '') + (done[i] ? 'done' : '') + '">' +
+        (i + 1) + '. ' + (h ? h.textContent : 'Step ' + (i + 1)) + '</button>';
+    }).join('');
+  }
+
+  $('ehSteps').addEventListener('click', function (e) {
+    var b = e.target.closest('button[data-i]');
+    if (!b) return;
+    /* Any step, reached or not. The first version guarded on `reached` for
+       fear of an empty card, which was wrong: show() builds a step's mount
+       on arrival, so jumping forward works — and a Menu that silently
+       ignores half its own rows is worse than no Menu. */
+    show(+b.dataset.i);
+    $('ehSteps').hidden = true;
+    $('ehMenu').setAttribute('aria-expanded', 'false');
+  });
+
+  $('ehMenu').addEventListener('click', function () {
+    var box = $('ehSteps'), open = box.hidden;
+    if (open) ehSteps();
+    box.hidden = !open;
+    $('ehFound').hidden = true;
+    $('ehMenu').setAttribute('aria-expanded', open ? 'true' : 'false');
+  });
+
+  $('ehPicker').addEventListener('change', function (e) {
+    if (e.target.value) location.href = e.target.value + location.search;
+  });
+
+  $('ehFull').addEventListener('click', function () {
+    if (document.fullscreenElement) document.exitFullscreen();
+    else if (document.documentElement.requestFullscreen) document.documentElement.requestFullscreen();
+  });
+  document.addEventListener('fullscreenchange', function () {
+    $('ehFull').textContent = document.fullscreenElement ? '⛶ Leave full screen' : '⛶ Full screen';
+  });
+
+  /* Search covers THIS lesson's steps and the other lessons of the module.
+     Ehel's searches a generated lesson-search.json; this prototype has no
+     such index, so it searches what the page can actually see and says so
+     by what it returns rather than pretending to a wider reach. */
+  $('ehFind').addEventListener('input', function (e) {
+    var q = e.target.value.trim().toLowerCase();
+    var box = $('ehFound');
+    if (q.length < 2) { box.hidden = true; e.target.setAttribute('aria-expanded', 'false'); return; }
+    $('ehSteps').hidden = true;
+    var hits = [];
+    slides.forEach(function (s, i) {
+      var h = s.querySelector('h2');
+      var t = (h ? h.textContent : '') + ' ' + s.textContent;
+      if (t.toLowerCase().indexOf(q) >= 0) {
+        hits.push('<a href="#" data-i="' + i + '">' + (i + 1) + '. ' +
+          (h ? h.textContent : 'Step ' + (i + 1)) + '<small>in this lesson</small></a>');
+      }
+    });
+    LESSONS.forEach(function (l) {
+      if ((l.t + ' ' + l.b).toLowerCase().indexOf(q) >= 0) {
+        hits.push('<a href="' + l.h + '">' + l.t + '<small>' + l.b + '</small></a>');
+      }
+    });
+    box.innerHTML = hits.length ? hits.join('') : '<p>Nothing matches that.</p>';
+    box.hidden = false;
+    e.target.setAttribute('aria-expanded', 'true');
+  });
+  $('ehFound').addEventListener('click', function (e) {
+    var a = e.target.closest('a[data-i]');
+    if (!a) return;
+    e.preventDefault();
+    show(+a.dataset.i);
+    $('ehFound').hidden = true;
+  });
 
   prev.addEventListener('click', function () { if (at > 0) show(at - 1); });
   next.addEventListener('click', function () { if (at < slides.length - 1) show(at + 1); });
   paintDots();
   prev.disabled = true;
+  /* Slide 0 is on screen before show() has ever run, so without this the
+     bar read 0% while the learner was already looking at a finished step
+     and the Menu showed no tick against it. */
+  if (!slides[0].querySelector('[data-mount]')) done[0] = true;
+  ehPaint();
 })();
 </script>
 </body>

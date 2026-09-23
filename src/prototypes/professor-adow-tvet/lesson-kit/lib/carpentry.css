@@ -334,3 +334,140 @@
 }
 .sm-working:empty { display: none; }
 .sm-working li::marker { color: var(--teal); font-weight: 700; }
+
+/* ====================================================================
+   THE TWO HEADER BARS, the step menu, the back pill and the hub cards.
+
+   Ported from ehel-academy/mathematics/lesson-app-tools/add-header-bars.py
+   and the Grade 4 hub, so a Professor Adow lesson has the same structure
+   and the same design as an Ehel Academy one: brand and lesson progress
+   in bar 1, back / Menu / lesson name / Full screen in bar 2, and a step
+   list that ticks off what is done.
+
+   THREE THINGS ARE DELIBERATELY NOT PORTED. The Ehel crest image, because
+   this is another school and its bar says its own name. The focus chip,
+   which shared/seb-session.js owns and this prototype does not load. And
+   the voice toggle, which mutes a narrator this build does not have — a
+   control that mutes nothing is worse than no control.
+   ==================================================================== */
+.eh-skip { position: absolute; left: -9999px; top: 0; z-index: 100; }
+.eh-skip:focus {
+  left: 8px; top: 8px; padding: 12px 18px; border-radius: 12px;
+  background: var(--ink); color: var(--ground); font-weight: 700; text-decoration: none;
+}
+
+.eh-bar1, .eh-bar2 {
+  position: sticky; z-index: 40; display: flex; align-items: center; gap: 12px;
+  background: var(--card); border-bottom: 1px solid var(--line);
+}
+.eh-bar1 { top: 0; padding: 8px 16px; }
+.eh-bar2 { top: 56px; padding: 8px 16px; background: var(--cell); }
+
+.eh-brand { display: flex; align-items: center; gap: 10px; text-decoration: none; color: var(--ink); flex: 0 0 auto; }
+.eh-brand svg { width: 30px; height: 32px; color: var(--teal); display: block; flex: 0 0 auto; }
+.eh-brandtext { display: flex; flex-direction: column; line-height: 1.15; }
+.eh-brandtext b { font-size: 17px; font-weight: 800; letter-spacing: -0.01em; }
+.eh-brandtext i { font-style: normal; font-size: 12.5px; font-weight: 700; color: var(--teal); }
+
+.eh-prog {
+  display: flex; align-items: center; gap: 9px; background: var(--cell);
+  border: 1px solid var(--line); border-radius: 999px;
+  padding: 5px 14px 5px 6px; flex: 1 1 auto; max-width: 420px; min-width: 0;
+}
+.eh-pct { background: var(--teal); color: #06231F; font-weight: 800; font-size: 13px; border-radius: 999px; padding: 4px 9px; }
+/* --ink, not --muted: at 13.5px this is normal text and needs 4.5:1, which
+   --muted does not reach on the --cell pill behind it. */
+.eh-progtext { font-size: 13.5px; font-weight: 700; color: var(--ink); white-space: nowrap; }
+.eh-track { flex: 1 1 auto; height: 8px; border-radius: 999px; background: var(--line); overflow: hidden; min-width: 40px; }
+.eh-track i { display: block; height: 100%; width: 0; background: var(--teal); border-radius: 999px; transition: width .3s ease; }
+
+.eh-b1right { margin-left: auto; display: flex; align-items: center; gap: 8px; flex: 0 0 auto; }
+/* min-height 44px on both: the Ehel bars set these by padding alone and
+   land at about 36px, under the target size the rest of this design system
+   argues for at length. The look is unchanged — only the box grows. */
+.eh-find { display: inline-flex; align-items: center; gap: 6px; flex: 0 1 auto; min-width: 0;
+  min-height: 44px; background: var(--card); border: 1px solid var(--line);
+  border-radius: 12px; padding: 7px 10px; }
+.eh-find svg { width: 17px; height: 17px; color: var(--muted); flex: 0 0 auto; }
+.eh-find input { font: inherit; font-size: 14px; font-weight: 700; color: var(--ink);
+  background: none; border: none; min-width: 0; width: 15ch; }
+.eh-find input::placeholder { color: var(--muted); font-weight: 400; }
+.eh-find input:focus { outline: none; }
+.eh-picker { font: inherit; font-size: 14px; font-weight: 700; color: var(--ink); background: var(--card);
+  border: 1px solid var(--line); border-radius: 12px; padding: 8px 10px;
+  max-width: 200px; min-height: 44px; }
+
+.eh-round { display: inline-flex; align-items: center; gap: 7px; border-radius: 999px; border: none;
+  background: var(--teal); color: #06231F; font: inherit; font-size: 15px; font-weight: 700;
+  padding: 9px 15px; cursor: pointer; text-decoration: none; }
+.eh-round.back { padding: 9px 13px; }
+.eh-section { font-size: 15px; font-weight: 700; color: var(--ink); white-space: nowrap;
+  overflow: hidden; text-overflow: ellipsis; }
+.eh-b2right { margin-left: auto; display: flex; gap: 8px; flex: 0 0 auto; }
+.eh-pill { display: inline-flex; align-items: center; gap: 7px; border-radius: 999px; border: 1px solid var(--line);
+  background: var(--card); color: var(--ink); font: inherit; font-size: 15px; font-weight: 700;
+  padding: 9px 15px; cursor: pointer; }
+
+.eh-steps { position: sticky; top: 104px; z-index: 39; background: var(--card);
+  border-bottom: 1px solid var(--line); max-height: 55vh; overflow-y: auto; padding: 8px; }
+.eh-steps button { display: block; width: 100%; text-align: left; font: inherit; font-size: 16px;
+  background: none; border: none; border-radius: 10px; padding: 10px 12px; cursor: pointer; color: var(--ink); }
+.eh-steps button:hover { background: var(--cell); }
+.eh-steps button.now { background: var(--teal); color: #06231F; font-weight: 700; }
+.eh-steps button.done::after { content: " \2713"; color: var(--good); font-weight: 700; }
+.eh-steps button.now.done::after { color: #06231F; }
+
+.eh-found { position: sticky; top: 104px; z-index: 39; background: var(--card);
+  border-bottom: 1px solid var(--line); max-height: 55vh; overflow-y: auto; padding: 8px; }
+.eh-found a { display: block; padding: 10px 12px; border-radius: 10px; color: var(--ink); text-decoration: none; font-size: 16px; font-weight: 700; }
+.eh-found a:hover { background: var(--cell); }
+.eh-found a small { display: block; color: var(--muted); font-size: 14px; font-weight: 400; margin-top: 2px; }
+.eh-found p { padding: 10px 12px; color: var(--muted); margin: 0; }
+
+.lesson-back { display: inline-flex; align-items: center; gap: 7px; margin-bottom: 14px;
+  border-radius: 999px; border: 1px solid var(--line); background: var(--cell); color: var(--ink);
+  font-size: 14px; font-weight: 700; padding: 7px 14px; text-decoration: none; }
+.lesson-back:hover { border-color: var(--teal); }
+
+/* bar 1 spells the module now, so the hero must not say it twice */
+.hero .eyebrow { display: none; }
+
+@media (max-width: 720px) {
+  .eh-progtext, .eh-brandtext { display: none; }
+  .eh-bar2 { top: 52px; }
+  .eh-steps, .eh-found { top: 100px; }
+  .eh-picker { max-width: 130px; }
+  .eh-find input { width: 9ch; }
+}
+
+/* ---- the hub, in the Grade 4 lesson-card format --------------------- */
+.hub-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 18px; }
+a.lesson {
+  display: flex; flex-direction: column; gap: 9px;
+  background: var(--card); border: 1px solid var(--line); border-radius: 20px;
+  padding: 20px; text-decoration: none; color: var(--ink); box-shadow: var(--shadow);
+  transition: transform .15s ease, border-color .15s ease;
+}
+a.lesson:hover, a.lesson:focus-visible { transform: translateY(-3px); border-color: var(--teal); outline: none; }
+a.lesson:active { transform: translateY(0); }
+.lesson .mark { width: 42px; height: 42px; border-radius: 12px; display: grid; place-items: center;
+  background: var(--teal-soft); color: var(--teal); }
+.lesson .mark svg { width: 24px; height: 24px; display: block; }
+.lesson .strand { font-size: 12px; font-weight: 800; letter-spacing: 0.09em; text-transform: uppercase; color: var(--teal); }
+a.lesson h2 { font-size: 24px; font-weight: 800; }
+.lesson .covers { color: var(--muted); font-size: 16px; line-height: 1.45; }
+.lesson .foot { margin-top: auto; padding-top: 12px; display: flex; align-items: flex-end; justify-content: space-between; gap: 10px; }
+.lesson .steps { color: var(--muted); font-size: 13.5px; font-weight: 700; line-height: 1.35; }
+.lesson .go { background: var(--gold); color: #2A1F05; font-weight: 800; font-size: 15px;
+  border-radius: 12px; padding: 9px 18px; box-shadow: 0 3px 0 var(--gold-press, #D0A326); flex: 0 0 auto; }
+a.lesson:active .go { transform: translateY(2px); box-shadow: 0 1px 0 var(--gold-press, #D0A326); }
+
+.grownup { margin: 30px 0 10px; }
+.grownup h3 { font-size: 20px; margin: 0 0 6px; }
+.grownup > p { color: var(--muted); font-size: 15px; line-height: 1.5; margin: 0 0 14px; }
+.lede { color: var(--muted); font-size: 18px; line-height: 1.5; max-width: 62ch; margin-top: 10px; }
+
+@media (prefers-reduced-motion: reduce) {
+  a.lesson { transition: none; }
+  a.lesson:hover, a.lesson:focus-visible { transform: none; }
+}

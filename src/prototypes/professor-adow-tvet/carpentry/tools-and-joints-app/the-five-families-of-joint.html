@@ -9,8 +9,38 @@
 <link rel="stylesheet" href="../../lesson-kit/lib/carpentry.css">
 </head>
 <body>
-<a class="skip" href="#lesson">Skip to the lesson</a>
+<a class="eh-skip" href="#lesson">Skip to the lesson</a>
+
+<header class="eh-bar1">
+  <a class="eh-brand" href="index.html">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 20h18"/><path d="M5 20V9l7-5 7 5v11"/><path d="M10 20v-6h4v6"/></svg>
+    <span class="eh-brandtext"><b>Professor Adow TVET</b><i>Carpentry Tools &amp; Joints</i></span>
+  </a>
+  <div class="eh-prog" title="How much of this lesson you have finished">
+    <span class="eh-pct" id="ehPct">0%</span>
+    <span class="eh-progtext">Lesson progress</span>
+    <span class="eh-track"><i id="ehFill"></i></span>
+  </div>
+  <div class="eh-b1right">
+    <label class="eh-find">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6.5"/><path d="M15.4 15.4 21 21"/></svg>
+      <input id="ehFind" type="search" autocomplete="off" spellcheck="false" placeholder="Search the lessons" aria-label="Search the Carpentry Tools &amp; Joints lessons" aria-controls="ehFound" aria-expanded="false">
+    </label>
+    <select class="eh-picker" id="ehPicker" aria-label="Choose a lesson"><option value="marking-out-and-cutting-a-halving-joint.html">Marking Out and Cutting a Halving Joint</option><option value="the-five-families-of-joint.html" selected>The Five Families of Joint</option><option value="sawing-and-paring-to-the-line.html">Sawing and Paring to the Line</option><option value="nails-screws-and-glue.html">Nails, Screws and Glue</option></select>
+  </div>
+</header>
+
+<nav class="eh-bar2" aria-label="Lesson">
+  <a class="eh-round back" href="index.html" aria-label="Back to the lesson list">←</a>
+  <button type="button" class="eh-round" id="ehMenu" aria-expanded="false" aria-controls="ehSteps">☰ Menu</button>
+  <span class="eh-section">The Five Families of Joint</span>
+  <span class="eh-b2right"><button type="button" class="eh-pill" id="ehFull">⛶ Full screen</button></span>
+</nav>
+<div class="eh-steps" id="ehSteps" hidden></div>
+<div class="eh-found" id="ehFound" hidden></div>
+
 <div class="wrap">
+  <a class="lesson-back" href="index.html"><span aria-hidden="true">←</span> Carpentry Tools &amp; Joints</a>
   <div class="hero">
     <div>
       <p class="eyebrow">Carpentry Tools &amp; Joints · Foundation</p>
@@ -83,6 +113,12 @@
   var at = 0;
   var reached = { 0: true };
   var STEPS = {"1": {"kind": "browse", "data": {"ask": "Four joints. Tap each one to find out what it is for.", "finish": "Corner joints close a box. Frame joints make a flat frame that will not rack.", "items": [{"draw": "butt", "say": "The butt joint. One piece meets another end to face, held by nails or screws. The simplest corner there is — quick, weak, and used everywhere work is going to be covered up."}, {"draw": "dovetail", "say": "The through dovetail. The tails are wider at the end than at the root, so the joint cannot be pulled apart in the direction the drawer is pulled. Drawer fronts and boxes."}, {"draw": "mortiseTenon", "say": "The through mortise and tenon. A tongue on one member goes right through a hole in the other. Doors, windows, tables and chairs are all held together by this one."}, {"draw": "bridle", "say": "The bridle, or open mortise and tenon. The mortise is open at the end so the tenon slides in from the side. Easier to cut, and used at the corner of a frame."}]}}, "2": {"kind": "browse", "data": {"ask": "Five more. Tap each one.", "finish": "Widening makes a board WIDER. Lengthening makes a member LONGER. Crossing joins two members near their middles.", "items": [{"draw": "edgeGlued", "say": "Edge to edge, glued. Two boards planed dead straight on the edge, glued and cramped. This is how a table top is made — almost no table top is one board."}, {"draw": "looseTongue", "say": "The loose tongue. A separate strip sits in a groove in both edges. It keeps the two boards level while the glue sets and adds gluing area."}, {"draw": "scarf", "say": "The scarf joint. Two long tapers overlapping, so a short piece becomes a long one. Roof members, wall plates, formwork and scaffolding."}, {"draw": "fished", "say": "The fished joint. Two ends butted and plated on both sides, bolted through. Quick, strong in tension, and used where appearance does not matter."}, {"draw": "crossHalving", "say": "The cross halving. Two members crossing near their middles, each halved so the two finish flush. Trestles, lamp stands, one-legged tables."}]}}, "3": {"kind": "sort", "data": {"registry": true, "ask": "Which family does the %s belong to?", "finish": "Five families, and every joint in the trade sits in one of them. Ask what the joint is FOR and the family follows.", "groups": [{"key": "corner", "label": "corner"}, {"key": "frame", "label": "frame"}, {"key": "widening", "label": "widening"}, {"key": "lengthening", "label": "lengthening"}, {"key": "crossing", "label": "crossing"}], "items": [{"draw": "dovetail", "group": "corner", "say": "Corner. It closes the corner of a box or a drawer."}, {"draw": "scarf", "group": "lengthening", "say": "Lengthening. Two tapers overlapping to make a short member into a long one."}, {"draw": "edgeGlued", "group": "widening", "say": "Widening. Narrow boards edge to edge, making a wide surface."}, {"draw": "mortiseTenon", "group": "frame", "say": "Frame. A door, a window or a table frame is held square by these."}, {"draw": "crossHalving", "group": "crossing", "say": "Crossing. The members meet near their middles, not at their ends."}, {"draw": "butt", "group": "corner", "say": "Corner. The plainest of them, and still a corner joint."}, {"draw": "fished", "group": "lengthening", "say": "Lengthening. Butted and plated, to make a long member out of two short ones."}, {"draw": "looseTongue", "group": "widening", "say": "Widening. The tongue is there to keep the boards level and add gluing area, but the job is still making a board wider."}]}}, "4": {"kind": "questions", "data": {"items": [{"ask": "A workbench top, 700 mm wide. Your widest board is 225 mm. Which family?", "opts": [{"t": "Widening", "ok": true, "why": null}, {"t": "Lengthening", "ok": false, "why": "That would give you a longer bench, not a wider top."}, {"t": "Frame", "ok": false, "why": "A frame will carry the top. It is not the top."}], "why": "Widening. Three or four boards jointed edge to edge, and the top is as wide as you need."}, {"ask": "A roof member must span 6 metres and the longest timber on site is 4 metres. Which family?", "opts": [{"t": "Lengthening", "ok": true, "why": null}, {"t": "Crossing", "ok": false, "why": "Crossing joins members at their middles. It adds no length."}, {"t": "Corner", "ok": false, "why": "There is no corner here — this is one member that is too short."}], "why": "Lengthening. A scarf or a fished joint, placed where the bending stress is lowest — over a support, never mid-span."}, {"ask": "A drawer front. The handle is pulled straight out, every day, for years. Which joint, and why?", "opts": [{"t": "A through dovetail — the tails cannot pull out in that direction", "ok": true, "why": null}, {"t": "A butt joint with long screws — quicker and the screws hold", "ok": false, "why": "Screws in end grain hold poorly, and a drawer front is pulled in exactly the direction that works them loose."}, {"t": "A mortise and tenon — the strongest joint there is", "ok": false, "why": "Strong, but it resists racking rather than direct withdrawal, and it is the wrong shape for a drawer corner."}], "why": "The dovetail. Its whole point is the ONE direction it cannot be pulled apart in, and that is the direction a drawer is pulled."}, {"ask": "Which question tells you most about which joint to use?", "opts": [{"t": "Which way will the load pull this joint apart?", "ok": true, "why": null}, {"t": "Which joint looks most like skilled work?", "ok": false, "why": "Appearance is one consideration of three, and it is the last one."}, {"t": "Which joint is quickest to cut?", "ok": false, "why": "Speed matters on site and it does not decide the joint. A quick joint that fails is not quick."}], "why": "The direction of the load. Strength, appearance and the way the load pulls are the three, and the load is the one that rules out whole families at a stroke."}]}}, "5": {"kind": "words", "data": {"items": [{"word": "corner joint", "meaning": "Joins two members at a corner — the sides of a box, a drawer, a cupboard."}, {"word": "frame joint", "meaning": "Makes a flat frame that resists racking: doors, windows, table frames."}, {"word": "widening joint", "meaning": "Makes a wide surface out of narrow boards. Runs along the grain."}, {"word": "lengthening joint", "meaning": "Makes a long member out of short ones. Runs across the grain."}, {"word": "crossing joint", "meaning": "Joins members at or near their middles rather than their ends."}, {"word": "racking", "meaning": "A frame going out of square under load, into a parallelogram. What frame joints exist to resist."}, {"word": "tenon", "meaning": "The tongue cut on one member that enters the mortise."}, {"word": "mortise", "meaning": "The hole cut in the other member that the tenon enters."}, {"word": "tail", "meaning": "The wedge-shaped part of a dovetail, wider at its end than at its root."}]}}};
+  var LESSONS = [{"t": "Marking Out and Cutting a Halving Joint", "b": "Name the three tools the job needs, make the workshop safe, put the stages in order, mark out a halving joint one line at a time, decide which side of the line to saw, and close the joint.", "h": "marking-out-and-cutting-a-halving-joint.html"}, {"t": "Sawing and Paring to the Line", "b": "Start a saw cut without it jumping, keep it square in both planes by watching the face you are not looking at, and pare waste with a chisel so the edges do not break out.", "h": "sawing-and-paring-to-the-line.html"}, {"t": "Nails, Screws and Glue", "b": "Tell nails apart by head and section, choose a screw by its head, drive a fastener deep enough to hold, pre-drill where the timber would split, glue a joint without flooding it, and inspect the finished work against the drawing.", "h": "nails-screws-and-glue.html"}];
+  /* `done` is what the bar-1 percentage and the Menu ticks read. A step is
+     done when its renderer calls back, and a step with nothing to do (the
+     intro, the words list, the end card) is done on arrival — otherwise the
+     bar could never reach 100% and the number would be a lie. */
+  var done = new Array(slides.length).fill(false);
 
   slides.forEach(function (s, i) {
     var b = document.createElement('button');
@@ -108,6 +144,7 @@
     next.textContent = at === slides.length - 1 ? 'Finished' : 'Next step';
     next.disabled = at === slides.length - 1;
     var mount = slides[at].querySelector('[data-mount]');
+    if (!mount) { done[at] = true; ehPaint(); }
     if (mount && !mount.dataset.built) {
       mount.dataset.built = '1';
       var spec = STEPS[slides[at].dataset.step];
@@ -118,7 +155,12 @@
       try {
         if (!spec) throw new Error('no step data');
         if (!window.CARP.R[spec.kind]) throw new Error('no renderer for kind "' + spec.kind + '"');
-        window.CARP.R[spec.kind](spec.data, mount, function () { mount.dataset.done = '1'; });
+        var me = at;
+        window.CARP.R[spec.kind](spec.data, mount, function () {
+          mount.dataset.done = '1';
+          done[me] = true;
+          ehPaint();
+        });
       } catch (err) {
         mount.dataset.failed = '1';
         var warn = document.createElement('p');
@@ -128,14 +170,110 @@
         if (window.console) console.error('step ' + slides[at].dataset.step, err);
       }
     }
+    ehPaint();
     document.getElementById('lesson').focus({ preventScroll: true });
     window.scrollTo({ top: 0, behavior: 'smooth' });
   }
+
+  /* ===================== the two header bars =====================
+     Ported from ehel-academy/mathematics/lesson-app-tools/add-header-bars.py
+     so this build has the same structure and controls as an Ehel lesson.
+     Everything here is answered by this page — nothing calls a server. */
+  var $ = function (id) { return document.getElementById(id); };
+
+  function ehPaint() {
+    var n = done.filter(Boolean).length;
+    var p = slides.length ? Math.round((n / slides.length) * 100) : 0;
+    $('ehPct').textContent = p + '%';
+    $('ehFill').style.width = p + '%';
+    if (!$('ehSteps').hidden) ehSteps();
+  }
+
+  function ehSteps() {
+    $('ehSteps').innerHTML = slides.map(function (s, i) {
+      var h = s.querySelector('h2');
+      return '<button type="button" data-i="' + i + '" class="' +
+        (i === at ? 'now ' : '') + (done[i] ? 'done' : '') + '">' +
+        (i + 1) + '. ' + (h ? h.textContent : 'Step ' + (i + 1)) + '</button>';
+    }).join('');
+  }
+
+  $('ehSteps').addEventListener('click', function (e) {
+    var b = e.target.closest('button[data-i]');
+    if (!b) return;
+    /* Any step, reached or not. The first version guarded on `reached` for
+       fear of an empty card, which was wrong: show() builds a step's mount
+       on arrival, so jumping forward works — and a Menu that silently
+       ignores half its own rows is worse than no Menu. */
+    show(+b.dataset.i);
+    $('ehSteps').hidden = true;
+    $('ehMenu').setAttribute('aria-expanded', 'false');
+  });
+
+  $('ehMenu').addEventListener('click', function () {
+    var box = $('ehSteps'), open = box.hidden;
+    if (open) ehSteps();
+    box.hidden = !open;
+    $('ehFound').hidden = true;
+    $('ehMenu').setAttribute('aria-expanded', open ? 'true' : 'false');
+  });
+
+  $('ehPicker').addEventListener('change', function (e) {
+    if (e.target.value) location.href = e.target.value + location.search;
+  });
+
+  $('ehFull').addEventListener('click', function () {
+    if (document.fullscreenElement) document.exitFullscreen();
+    else if (document.documentElement.requestFullscreen) document.documentElement.requestFullscreen();
+  });
+  document.addEventListener('fullscreenchange', function () {
+    $('ehFull').textContent = document.fullscreenElement ? '⛶ Leave full screen' : '⛶ Full screen';
+  });
+
+  /* Search covers THIS lesson's steps and the other lessons of the module.
+     Ehel's searches a generated lesson-search.json; this prototype has no
+     such index, so it searches what the page can actually see and says so
+     by what it returns rather than pretending to a wider reach. */
+  $('ehFind').addEventListener('input', function (e) {
+    var q = e.target.value.trim().toLowerCase();
+    var box = $('ehFound');
+    if (q.length < 2) { box.hidden = true; e.target.setAttribute('aria-expanded', 'false'); return; }
+    $('ehSteps').hidden = true;
+    var hits = [];
+    slides.forEach(function (s, i) {
+      var h = s.querySelector('h2');
+      var t = (h ? h.textContent : '') + ' ' + s.textContent;
+      if (t.toLowerCase().indexOf(q) >= 0) {
+        hits.push('<a href="#" data-i="' + i + '">' + (i + 1) + '. ' +
+          (h ? h.textContent : 'Step ' + (i + 1)) + '<small>in this lesson</small></a>');
+      }
+    });
+    LESSONS.forEach(function (l) {
+      if ((l.t + ' ' + l.b).toLowerCase().indexOf(q) >= 0) {
+        hits.push('<a href="' + l.h + '">' + l.t + '<small>' + l.b + '</small></a>');
+      }
+    });
+    box.innerHTML = hits.length ? hits.join('') : '<p>Nothing matches that.</p>';
+    box.hidden = false;
+    e.target.setAttribute('aria-expanded', 'true');
+  });
+  $('ehFound').addEventListener('click', function (e) {
+    var a = e.target.closest('a[data-i]');
+    if (!a) return;
+    e.preventDefault();
+    show(+a.dataset.i);
+    $('ehFound').hidden = true;
+  });
 
   prev.addEventListener('click', function () { if (at > 0) show(at - 1); });
   next.addEventListener('click', function () { if (at < slides.length - 1) show(at + 1); });
   paintDots();
   prev.disabled = true;
+  /* Slide 0 is on screen before show() has ever run, so without this the
+     bar read 0% while the learner was already looking at a finished step
+     and the Menu showed no tick against it. */
+  if (!slides[0].querySelector('[data-mount]')) done[0] = true;
+  ehPaint();
 })();
 </script>
 </body>

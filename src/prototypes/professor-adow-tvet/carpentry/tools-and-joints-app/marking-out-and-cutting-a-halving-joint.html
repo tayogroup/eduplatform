@@ -9,8 +9,38 @@
 <link rel="stylesheet" href="../../lesson-kit/lib/carpentry.css">
 </head>
 <body>
-<a class="skip" href="#lesson">Skip to the lesson</a>
+<a class="eh-skip" href="#lesson">Skip to the lesson</a>
+
+<header class="eh-bar1">
+  <a class="eh-brand" href="index.html">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 20h18"/><path d="M5 20V9l7-5 7 5v11"/><path d="M10 20v-6h4v6"/></svg>
+    <span class="eh-brandtext"><b>Professor Adow TVET</b><i>Carpentry Tools &amp; Joints</i></span>
+  </a>
+  <div class="eh-prog" title="How much of this lesson you have finished">
+    <span class="eh-pct" id="ehPct">0%</span>
+    <span class="eh-progtext">Lesson progress</span>
+    <span class="eh-track"><i id="ehFill"></i></span>
+  </div>
+  <div class="eh-b1right">
+    <label class="eh-find">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6.5"/><path d="M15.4 15.4 21 21"/></svg>
+      <input id="ehFind" type="search" autocomplete="off" spellcheck="false" placeholder="Search the lessons" aria-label="Search the Carpentry Tools &amp; Joints lessons" aria-controls="ehFound" aria-expanded="false">
+    </label>
+    <select class="eh-picker" id="ehPicker" aria-label="Choose a lesson"><option value="marking-out-and-cutting-a-halving-joint.html" selected>Marking Out and Cutting a Halving Joint</option><option value="the-five-families-of-joint.html">The Five Families of Joint</option><option value="sawing-and-paring-to-the-line.html">Sawing and Paring to the Line</option><option value="nails-screws-and-glue.html">Nails, Screws and Glue</option></select>
+  </div>
+</header>
+
+<nav class="eh-bar2" aria-label="Lesson">
+  <a class="eh-round back" href="index.html" aria-label="Back to the lesson list">←</a>
+  <button type="button" class="eh-round" id="ehMenu" aria-expanded="false" aria-controls="ehSteps">☰ Menu</button>
+  <span class="eh-section">Marking Out and Cutting a Halving Joint</span>
+  <span class="eh-b2right"><button type="button" class="eh-pill" id="ehFull">⛶ Full screen</button></span>
+</nav>
+<div class="eh-steps" id="ehSteps" hidden></div>
+<div class="eh-found" id="ehFound" hidden></div>
+
 <div class="wrap">
+  <a class="lesson-back" href="index.html"><span aria-hidden="true">←</span> Carpentry Tools &amp; Joints</a>
   <div class="hero">
     <div>
       <p class="eyebrow">Carpentry Tools &amp; Joints · Foundation</p>
@@ -117,6 +147,12 @@
   var at = 0;
   var reached = { 0: true };
   var STEPS = {"1": {"kind": "label", "data": {"tool": "trySquare"}}, "2": {"kind": "label", "data": {"tool": "markingGauge"}}, "3": {"kind": "label", "data": {"tool": "tenonSaw"}}, "4": {"kind": "safety", "data": {"ask": "Tick every precaution you must take before sawing. One of these is not a precaution — leave it alone.", "done": "Now the cut can be made.", "items": [{"text": "Put on eye protection.", "required": true, "why": "Sawdust and a sprung splinter both go for the eyes. Eye protection goes on before the tool is picked up, not after the first cut."}, {"text": "Cramp the work to the bench or hold it in the vice.", "required": true, "why": "Work that moves under the saw is what makes a cut wander and a hand slip. If you are holding the work with one hand you have already lost."}, {"text": "Check the saw handle is tight and the teeth are sharp.", "required": true, "why": "A blunt saw has to be forced, and force is what slips. A loose handle turns in the hand mid-stroke."}, {"text": "Keep your free hand behind the line of the cut.", "required": true, "why": "Everything in front of the teeth is in the path of the saw when it jumps out of the kerf at the start of a cut."}, {"text": "Wear gloves so the saw does not blister your hand.", "required": false, "why": "No — this is the one that is not a precaution. Gloves reduce your feel for the tool and near any rotating machine they can be caught and drag the hand in. Bare, dry hands on a hand saw."}, {"text": "Clear the bench of offcuts and tools you are not using.", "required": true, "why": "A chisel under the workpiece tips it as you cut. A clear bench is a safety measure, not tidiness."}]}}, "5": {"kind": "order", "data": {"ask": "A halving joint, from prepared timber to a finished cut. Tap the stages in the order you would do them.", "finish": "That is the order of work. Nothing in it can be swapped without losing accuracy.", "items": ["Plane the face side and face edge, and mark them", "Measure the width of the other member", "Square the shoulder line across the face and down both edges", "Set the gauge to half the thickness and score the cheek line", "Hatch the waste", "Saw down to the shoulder on the waste side", "Pare to the line with a chisel", "Dry-fit the joint and check for square"], "why": ["Yes. Nothing can be measured until there is a face side and a face edge to measure from.", "Yes. The halving must be exactly as wide as the piece that goes into it, so you take the width from the actual member, not from the drawing.", "Yes. The shoulder is squared across while the gauge is still untouched.", "Yes. Half the thickness, scored from the face side on both members, so the two halves meet flush.", "Yes. Marking the waste is the last thing before cutting, and the cheapest insurance in the trade.", "Yes. Down to the shoulder line, never past it.", "Yes. Pare from both faces towards the middle so the edge does not break out.", "Yes. Dry first. Glue commits you to whatever you have made."], "before": ["This has to come first — there is nothing to measure from yet.", "Not yet. You need a face side and face edge before any measurement means anything.", "Not yet. Mark your faces and take the width first.", "Not yet. Square the shoulder before you gauge the cheek.", "Not yet. There is nothing to mark as waste until both lines are on.", "Not yet. Marking out is not finished.", "Not yet. The saw cut comes before the chisel.", "Not yet. There is nothing to fit."]}}, "6": {"kind": "demo", "data": {}}, "7": {"kind": "predict", "data": {"ask": "The saw takes out a kerf about a millimetre wide. Where do you put it?"}}, "8": {"kind": "build", "data": {"ask": "Both members have been cut. Bring them together.", "say": "Each member has lost exactly half its thickness, so the two faces finish flush and the joint is as thick as one piece. Check both diagonals before the glue goes anywhere near it."}}, "9": {"kind": "questions", "data": {"items": [{"ask": "You have squared the shoulder line. What goes on the wood next?", "opts": [{"t": "Hatch the waste", "ok": false, "why": "Not yet — you have not scored the cheek line, so you do not yet know which part is waste."}, {"t": "The gauge line, scored to half the thickness", "ok": true, "why": null}, {"t": "The first saw cut", "ok": false, "why": "Marking out is not finished. A cut made now is a guess."}], "why": "The gauge line. Shoulder first with the try square, then the cheek with the gauge, then the waste."}, {"ask": "Why is the waste hatched before any cut is made?", "opts": [{"t": "So the piece looks finished", "ok": false, "why": "It is not decoration. It is the last check before an irreversible cut."}, {"t": "Because it is required by the drawing", "ok": false, "why": "No drawing asks for it. It is a working habit."}, {"t": "So there is no way to cut the wrong side of the joint", "ok": true, "why": null}], "why": "Once the waste is hatched the cut is unambiguous. Every carpenter who has sawn off the wrong half did it on a piece that was not hatched."}, {"ask": "Your tenon saw takes a kerf one millimetre wide. You saw exactly down the middle of your line. What have you made?", "opts": [{"t": "A joint that is correct — the line is the centre of the cut", "ok": false, "why": "The line marks where the WOOD ends, not where the cut is centred."}, {"t": "A joint half a millimetre undersize, and slack", "ok": true, "why": null}, {"t": "A joint half a millimetre oversize, needing paring", "ok": false, "why": "Oversize could be corrected. This is the other way, and it cannot."}], "why": "Half the kerf came out of the work, so the joint is half a millimetre small. Undersize is the one error you cannot correct."}, {"ask": "Which saw for cutting the shoulder of a halving joint across the grain?", "opts": [{"t": "Rip saw", "ok": false, "why": "Filed for cutting along the grain. Across it, it tears the shoulder."}, {"t": "Tenon saw", "ok": true, "why": null}, {"t": "Frame saw", "ok": false, "why": "For straight and curved cuts in thicker stock, not for a fine shoulder."}], "why": "The tenon saw: fine teeth for a clean cut across the grain, and a stiff back that keeps the cut straight."}, {"ask": "A halving joint you have cut needs a mallet to drive it together. What should you do?", "opts": [{"t": "Drive it home — a tight joint is a strong joint", "ok": false, "why": "A joint driven home under force splits along the grain, and the split usually appears after the glue has set."}, {"t": "Pare a shaving off the cheek and try it again", "ok": true, "why": null}, {"t": "Leave it, the glue will take up the difference", "ok": false, "why": "Glue fills nothing usefully. This joint is too tight, not too slack."}], "why": "Too tight is as much a fault as too slack. Pare a shaving and try again — it should go together by hand."}]}}, "10": {"kind": "words", "data": {"items": [{"word": "face side", "meaning": "The first surface planed true. Marked with a looping f. Every gauge line is scored from it."}, {"word": "face edge", "meaning": "The edge planed straight and square to the face side. Marked so the two marks meet. Every squared line is taken from it."}, {"word": "shoulder", "meaning": "The line across the member where the joint begins, and the surface left when the waste is cut away."}, {"word": "cheek", "meaning": "The long face of the joint, cut along the grain to the gauge line."}, {"word": "kerf", "meaning": "The slot the saw takes out. About a millimetre wide, and it comes out of the waste."}, {"word": "waste", "meaning": "The part that is cut away. Hatched before any cut is made."}, {"word": "halving joint", "meaning": "A joint where each member loses half its thickness so the two finish flush."}, {"word": "dry fit", "meaning": "Assembling a joint without glue to check the fit while it can still be corrected."}]}}};
+  var LESSONS = [{"t": "The Five Families of Joint", "b": "Meet the five families of wood joint, see two from each, sort ten joints into the family they belong to, and choose a joint for a job by asking which way the load pulls.", "h": "the-five-families-of-joint.html"}, {"t": "Sawing and Paring to the Line", "b": "Start a saw cut without it jumping, keep it square in both planes by watching the face you are not looking at, and pare waste with a chisel so the edges do not break out.", "h": "sawing-and-paring-to-the-line.html"}, {"t": "Nails, Screws and Glue", "b": "Tell nails apart by head and section, choose a screw by its head, drive a fastener deep enough to hold, pre-drill where the timber would split, glue a joint without flooding it, and inspect the finished work against the drawing.", "h": "nails-screws-and-glue.html"}];
+  /* `done` is what the bar-1 percentage and the Menu ticks read. A step is
+     done when its renderer calls back, and a step with nothing to do (the
+     intro, the words list, the end card) is done on arrival — otherwise the
+     bar could never reach 100% and the number would be a lie. */
+  var done = new Array(slides.length).fill(false);
 
   slides.forEach(function (s, i) {
     var b = document.createElement('button');
@@ -142,6 +178,7 @@
     next.textContent = at === slides.length - 1 ? 'Finished' : 'Next step';
     next.disabled = at === slides.length - 1;
     var mount = slides[at].querySelector('[data-mount]');
+    if (!mount) { done[at] = true; ehPaint(); }
     if (mount && !mount.dataset.built) {
       mount.dataset.built = '1';
       var spec = STEPS[slides[at].dataset.step];
@@ -152,7 +189,12 @@
       try {
         if (!spec) throw new Error('no step data');
         if (!window.CARP.R[spec.kind]) throw new Error('no renderer for kind "' + spec.kind + '"');
-        window.CARP.R[spec.kind](spec.data, mount, function () { mount.dataset.done = '1'; });
+        var me = at;
+        window.CARP.R[spec.kind](spec.data, mount, function () {
+          mount.dataset.done = '1';
+          done[me] = true;
+          ehPaint();
+        });
       } catch (err) {
         mount.dataset.failed = '1';
         var warn = document.createElement('p');
@@ -162,14 +204,110 @@
         if (window.console) console.error('step ' + slides[at].dataset.step, err);
       }
     }
+    ehPaint();
     document.getElementById('lesson').focus({ preventScroll: true });
     window.scrollTo({ top: 0, behavior: 'smooth' });
   }
+
+  /* ===================== the two header bars =====================
+     Ported from ehel-academy/mathematics/lesson-app-tools/add-header-bars.py
+     so this build has the same structure and controls as an Ehel lesson.
+     Everything here is answered by this page — nothing calls a server. */
+  var $ = function (id) { return document.getElementById(id); };
+
+  function ehPaint() {
+    var n = done.filter(Boolean).length;
+    var p = slides.length ? Math.round((n / slides.length) * 100) : 0;
+    $('ehPct').textContent = p + '%';
+    $('ehFill').style.width = p + '%';
+    if (!$('ehSteps').hidden) ehSteps();
+  }
+
+  function ehSteps() {
+    $('ehSteps').innerHTML = slides.map(function (s, i) {
+      var h = s.querySelector('h2');
+      return '<button type="button" data-i="' + i + '" class="' +
+        (i === at ? 'now ' : '') + (done[i] ? 'done' : '') + '">' +
+        (i + 1) + '. ' + (h ? h.textContent : 'Step ' + (i + 1)) + '</button>';
+    }).join('');
+  }
+
+  $('ehSteps').addEventListener('click', function (e) {
+    var b = e.target.closest('button[data-i]');
+    if (!b) return;
+    /* Any step, reached or not. The first version guarded on `reached` for
+       fear of an empty card, which was wrong: show() builds a step's mount
+       on arrival, so jumping forward works — and a Menu that silently
+       ignores half its own rows is worse than no Menu. */
+    show(+b.dataset.i);
+    $('ehSteps').hidden = true;
+    $('ehMenu').setAttribute('aria-expanded', 'false');
+  });
+
+  $('ehMenu').addEventListener('click', function () {
+    var box = $('ehSteps'), open = box.hidden;
+    if (open) ehSteps();
+    box.hidden = !open;
+    $('ehFound').hidden = true;
+    $('ehMenu').setAttribute('aria-expanded', open ? 'true' : 'false');
+  });
+
+  $('ehPicker').addEventListener('change', function (e) {
+    if (e.target.value) location.href = e.target.value + location.search;
+  });
+
+  $('ehFull').addEventListener('click', function () {
+    if (document.fullscreenElement) document.exitFullscreen();
+    else if (document.documentElement.requestFullscreen) document.documentElement.requestFullscreen();
+  });
+  document.addEventListener('fullscreenchange', function () {
+    $('ehFull').textContent = document.fullscreenElement ? '⛶ Leave full screen' : '⛶ Full screen';
+  });
+
+  /* Search covers THIS lesson's steps and the other lessons of the module.
+     Ehel's searches a generated lesson-search.json; this prototype has no
+     such index, so it searches what the page can actually see and says so
+     by what it returns rather than pretending to a wider reach. */
+  $('ehFind').addEventListener('input', function (e) {
+    var q = e.target.value.trim().toLowerCase();
+    var box = $('ehFound');
+    if (q.length < 2) { box.hidden = true; e.target.setAttribute('aria-expanded', 'false'); return; }
+    $('ehSteps').hidden = true;
+    var hits = [];
+    slides.forEach(function (s, i) {
+      var h = s.querySelector('h2');
+      var t = (h ? h.textContent : '') + ' ' + s.textContent;
+      if (t.toLowerCase().indexOf(q) >= 0) {
+        hits.push('<a href="#" data-i="' + i + '">' + (i + 1) + '. ' +
+          (h ? h.textContent : 'Step ' + (i + 1)) + '<small>in this lesson</small></a>');
+      }
+    });
+    LESSONS.forEach(function (l) {
+      if ((l.t + ' ' + l.b).toLowerCase().indexOf(q) >= 0) {
+        hits.push('<a href="' + l.h + '">' + l.t + '<small>' + l.b + '</small></a>');
+      }
+    });
+    box.innerHTML = hits.length ? hits.join('') : '<p>Nothing matches that.</p>';
+    box.hidden = false;
+    e.target.setAttribute('aria-expanded', 'true');
+  });
+  $('ehFound').addEventListener('click', function (e) {
+    var a = e.target.closest('a[data-i]');
+    if (!a) return;
+    e.preventDefault();
+    show(+a.dataset.i);
+    $('ehFound').hidden = true;
+  });
 
   prev.addEventListener('click', function () { if (at > 0) show(at - 1); });
   next.addEventListener('click', function () { if (at < slides.length - 1) show(at + 1); });
   paintDots();
   prev.disabled = true;
+  /* Slide 0 is on screen before show() has ever run, so without this the
+     bar read 0% while the learner was already looking at a finished step
+     and the Menu showed no tick against it. */
+  if (!slides[0].querySelector('[data-mount]')) done[0] = true;
+  ehPaint();
 })();
 </script>
 </body>

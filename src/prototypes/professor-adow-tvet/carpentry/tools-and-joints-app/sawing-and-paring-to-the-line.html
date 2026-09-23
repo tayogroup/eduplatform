@@ -9,8 +9,38 @@
 <link rel="stylesheet" href="../../lesson-kit/lib/carpentry.css">
 </head>
 <body>
-<a class="skip" href="#lesson">Skip to the lesson</a>
+<a class="eh-skip" href="#lesson">Skip to the lesson</a>
+
+<header class="eh-bar1">
+  <a class="eh-brand" href="index.html">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 20h18"/><path d="M5 20V9l7-5 7 5v11"/><path d="M10 20v-6h4v6"/></svg>
+    <span class="eh-brandtext"><b>Professor Adow TVET</b><i>Carpentry Tools &amp; Joints</i></span>
+  </a>
+  <div class="eh-prog" title="How much of this lesson you have finished">
+    <span class="eh-pct" id="ehPct">0%</span>
+    <span class="eh-progtext">Lesson progress</span>
+    <span class="eh-track"><i id="ehFill"></i></span>
+  </div>
+  <div class="eh-b1right">
+    <label class="eh-find">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6.5"/><path d="M15.4 15.4 21 21"/></svg>
+      <input id="ehFind" type="search" autocomplete="off" spellcheck="false" placeholder="Search the lessons" aria-label="Search the Carpentry Tools &amp; Joints lessons" aria-controls="ehFound" aria-expanded="false">
+    </label>
+    <select class="eh-picker" id="ehPicker" aria-label="Choose a lesson"><option value="marking-out-and-cutting-a-halving-joint.html">Marking Out and Cutting a Halving Joint</option><option value="the-five-families-of-joint.html">The Five Families of Joint</option><option value="sawing-and-paring-to-the-line.html" selected>Sawing and Paring to the Line</option><option value="nails-screws-and-glue.html">Nails, Screws and Glue</option></select>
+  </div>
+</header>
+
+<nav class="eh-bar2" aria-label="Lesson">
+  <a class="eh-round back" href="index.html" aria-label="Back to the lesson list">←</a>
+  <button type="button" class="eh-round" id="ehMenu" aria-expanded="false" aria-controls="ehSteps">☰ Menu</button>
+  <span class="eh-section">Sawing and Paring to the Line</span>
+  <span class="eh-b2right"><button type="button" class="eh-pill" id="ehFull">⛶ Full screen</button></span>
+</nav>
+<div class="eh-steps" id="ehSteps" hidden></div>
+<div class="eh-found" id="ehFound" hidden></div>
+
 <div class="wrap">
+  <a class="lesson-back" href="index.html"><span aria-hidden="true">←</span> Carpentry Tools &amp; Joints</a>
   <div class="hero">
     <div>
       <p class="eyebrow">Carpentry Tools &amp; Joints · Foundation</p>
@@ -84,6 +114,12 @@
   var at = 0;
   var reached = { 0: true };
   var STEPS = {"1": {"kind": "demo", "data": {"sequence": "saw"}}, "2": {"kind": "questions", "data": {"items": [{"ask": "You are sawing down a cheek. You watch the line on the face nearest you and it is perfect. What have you not checked?", "opts": [{"t": "The far face — the cut can be square on one face and running out on the other", "ok": true, "why": null}, {"t": "Nothing, one face is enough", "ok": false, "why": "A saw can lean without the near face showing it at all. By the time you see it on the near face the cut is well out."}, {"t": "The shoulder line", "ok": false, "why": "You will check that as you get near it. It is not the plane that is going wrong here."}], "why": "The far face. A saw that leans stays on the near line and runs off the far one, and you only find out when the joint will not close."}, {"ask": "When should the far face be checked?", "opts": [{"t": "As the cut goes down, every few strokes", "ok": true, "why": null}, {"t": "When the cut is finished", "ok": false, "why": "Then it is a finished cut in the wrong place. Nothing can be put back."}, {"t": "Only if the joint does not fit", "ok": false, "why": "That is finding out at the last possible moment, on work that is already scrap."}], "why": "As you go. A cut corrected in its first ten millimetres is a cut; the same error found at the shoulder is a new piece of timber."}, {"ask": "Your cut has started to lean. What do you do?", "opts": [{"t": "Ease back to the line over several light strokes", "ok": true, "why": null}, {"t": "Twist the saw to bring it back", "ok": false, "why": "Twisting binds the blade in the kerf, and a bound tenon saw kinks."}, {"t": "Finish the cut and pare the error out with a chisel", "ok": false, "why": "Sometimes the only option left, but it is a repair. Correct the cut while it is still correctable."}], "why": "Ease it back gradually. A saw is steered over many strokes, never in one."}]}}, "3": {"kind": "predict", "data": {"cases": "pare", "ask": "The saw cuts are made and waste has to come off with a chisel. Which way do you cut?"}}, "4": {"kind": "questions", "data": {"items": [{"ask": "Why is a saw cut started at a low angle rather than steeply?", "opts": [{"t": "A low angle puts more teeth on the wood and starts where you can see the line", "ok": true, "why": null}, {"t": "A low angle cuts faster", "ok": false, "why": "It cuts more slowly. Speed comes once the groove is made."}, {"t": "It keeps the back of the saw off the wood", "ok": false, "why": "The back only matters at the end of a deep cut, not at the start."}], "why": "More teeth in contact means less chance of the saw jumping, and at a low angle you can see the line you are cutting to."}, {"ask": "Where is the thumb of the free hand while a cut is started?", "opts": [{"t": "Against the side of the blade, above the teeth", "ok": true, "why": null}, {"t": "On top of the saw back, pressing down", "ok": false, "why": "Pressing down is what makes it jump."}, {"t": "Holding the work directly in front of the cut", "ok": false, "why": "That puts a hand in the path of a saw that is about to jump."}], "why": "Against the blade and ABOVE the teeth. It steadies the blade for the first strokes and it is nowhere the teeth can reach."}, {"ask": "You pare a housing straight through from one face. What do you find on the far face?", "opts": [{"t": "The fibres torn out where the chisel came through", "ok": true, "why": null}, {"t": "A clean cut, since the chisel is sharp", "ok": false, "why": "Sharpness helps and does not fix this. The last fibres have nothing supporting them."}, {"t": "Nothing — the far face is not cut", "ok": false, "why": "It is where the chisel exits, which is exactly where the damage appears."}], "why": "Break-out. Cut from both faces towards the middle and the fibres are supported the whole way."}]}}, "5": {"kind": "words", "data": {"items": [{"word": "kerf", "meaning": "The slot the saw takes out. Started as a shallow groove with backward strokes before any forward cut."}, {"word": "run out", "meaning": "A cut that leaves the line, usually on the face the sawyer is not watching."}, {"word": "in both planes", "meaning": "Square across the face AND square down the edge. A cut can be right in one and wrong in the other."}, {"word": "pare", "meaning": "To cut a thin shaving with a chisel, by hand pressure rather than a mallet."}, {"word": "break-out", "meaning": "Fibres torn from the face a cutting tool exits through, because nothing was behind them."}, {"word": "housing", "meaning": "A groove cut across a member to receive the end of another."}]}}};
+  var LESSONS = [{"t": "Marking Out and Cutting a Halving Joint", "b": "Name the three tools the job needs, make the workshop safe, put the stages in order, mark out a halving joint one line at a time, decide which side of the line to saw, and close the joint.", "h": "marking-out-and-cutting-a-halving-joint.html"}, {"t": "The Five Families of Joint", "b": "Meet the five families of wood joint, see two from each, sort ten joints into the family they belong to, and choose a joint for a job by asking which way the load pulls.", "h": "the-five-families-of-joint.html"}, {"t": "Nails, Screws and Glue", "b": "Tell nails apart by head and section, choose a screw by its head, drive a fastener deep enough to hold, pre-drill where the timber would split, glue a joint without flooding it, and inspect the finished work against the drawing.", "h": "nails-screws-and-glue.html"}];
+  /* `done` is what the bar-1 percentage and the Menu ticks read. A step is
+     done when its renderer calls back, and a step with nothing to do (the
+     intro, the words list, the end card) is done on arrival — otherwise the
+     bar could never reach 100% and the number would be a lie. */
+  var done = new Array(slides.length).fill(false);
 
   slides.forEach(function (s, i) {
     var b = document.createElement('button');
@@ -109,6 +145,7 @@
     next.textContent = at === slides.length - 1 ? 'Finished' : 'Next step';
     next.disabled = at === slides.length - 1;
     var mount = slides[at].querySelector('[data-mount]');
+    if (!mount) { done[at] = true; ehPaint(); }
     if (mount && !mount.dataset.built) {
       mount.dataset.built = '1';
       var spec = STEPS[slides[at].dataset.step];
@@ -119,7 +156,12 @@
       try {
         if (!spec) throw new Error('no step data');
         if (!window.CARP.R[spec.kind]) throw new Error('no renderer for kind "' + spec.kind + '"');
-        window.CARP.R[spec.kind](spec.data, mount, function () { mount.dataset.done = '1'; });
+        var me = at;
+        window.CARP.R[spec.kind](spec.data, mount, function () {
+          mount.dataset.done = '1';
+          done[me] = true;
+          ehPaint();
+        });
       } catch (err) {
         mount.dataset.failed = '1';
         var warn = document.createElement('p');
@@ -129,14 +171,110 @@
         if (window.console) console.error('step ' + slides[at].dataset.step, err);
       }
     }
+    ehPaint();
     document.getElementById('lesson').focus({ preventScroll: true });
     window.scrollTo({ top: 0, behavior: 'smooth' });
   }
+
+  /* ===================== the two header bars =====================
+     Ported from ehel-academy/mathematics/lesson-app-tools/add-header-bars.py
+     so this build has the same structure and controls as an Ehel lesson.
+     Everything here is answered by this page — nothing calls a server. */
+  var $ = function (id) { return document.getElementById(id); };
+
+  function ehPaint() {
+    var n = done.filter(Boolean).length;
+    var p = slides.length ? Math.round((n / slides.length) * 100) : 0;
+    $('ehPct').textContent = p + '%';
+    $('ehFill').style.width = p + '%';
+    if (!$('ehSteps').hidden) ehSteps();
+  }
+
+  function ehSteps() {
+    $('ehSteps').innerHTML = slides.map(function (s, i) {
+      var h = s.querySelector('h2');
+      return '<button type="button" data-i="' + i + '" class="' +
+        (i === at ? 'now ' : '') + (done[i] ? 'done' : '') + '">' +
+        (i + 1) + '. ' + (h ? h.textContent : 'Step ' + (i + 1)) + '</button>';
+    }).join('');
+  }
+
+  $('ehSteps').addEventListener('click', function (e) {
+    var b = e.target.closest('button[data-i]');
+    if (!b) return;
+    /* Any step, reached or not. The first version guarded on `reached` for
+       fear of an empty card, which was wrong: show() builds a step's mount
+       on arrival, so jumping forward works — and a Menu that silently
+       ignores half its own rows is worse than no Menu. */
+    show(+b.dataset.i);
+    $('ehSteps').hidden = true;
+    $('ehMenu').setAttribute('aria-expanded', 'false');
+  });
+
+  $('ehMenu').addEventListener('click', function () {
+    var box = $('ehSteps'), open = box.hidden;
+    if (open) ehSteps();
+    box.hidden = !open;
+    $('ehFound').hidden = true;
+    $('ehMenu').setAttribute('aria-expanded', open ? 'true' : 'false');
+  });
+
+  $('ehPicker').addEventListener('change', function (e) {
+    if (e.target.value) location.href = e.target.value + location.search;
+  });
+
+  $('ehFull').addEventListener('click', function () {
+    if (document.fullscreenElement) document.exitFullscreen();
+    else if (document.documentElement.requestFullscreen) document.documentElement.requestFullscreen();
+  });
+  document.addEventListener('fullscreenchange', function () {
+    $('ehFull').textContent = document.fullscreenElement ? '⛶ Leave full screen' : '⛶ Full screen';
+  });
+
+  /* Search covers THIS lesson's steps and the other lessons of the module.
+     Ehel's searches a generated lesson-search.json; this prototype has no
+     such index, so it searches what the page can actually see and says so
+     by what it returns rather than pretending to a wider reach. */
+  $('ehFind').addEventListener('input', function (e) {
+    var q = e.target.value.trim().toLowerCase();
+    var box = $('ehFound');
+    if (q.length < 2) { box.hidden = true; e.target.setAttribute('aria-expanded', 'false'); return; }
+    $('ehSteps').hidden = true;
+    var hits = [];
+    slides.forEach(function (s, i) {
+      var h = s.querySelector('h2');
+      var t = (h ? h.textContent : '') + ' ' + s.textContent;
+      if (t.toLowerCase().indexOf(q) >= 0) {
+        hits.push('<a href="#" data-i="' + i + '">' + (i + 1) + '. ' +
+          (h ? h.textContent : 'Step ' + (i + 1)) + '<small>in this lesson</small></a>');
+      }
+    });
+    LESSONS.forEach(function (l) {
+      if ((l.t + ' ' + l.b).toLowerCase().indexOf(q) >= 0) {
+        hits.push('<a href="' + l.h + '">' + l.t + '<small>' + l.b + '</small></a>');
+      }
+    });
+    box.innerHTML = hits.length ? hits.join('') : '<p>Nothing matches that.</p>';
+    box.hidden = false;
+    e.target.setAttribute('aria-expanded', 'true');
+  });
+  $('ehFound').addEventListener('click', function (e) {
+    var a = e.target.closest('a[data-i]');
+    if (!a) return;
+    e.preventDefault();
+    show(+a.dataset.i);
+    $('ehFound').hidden = true;
+  });
 
   prev.addEventListener('click', function () { if (at > 0) show(at - 1); });
   next.addEventListener('click', function () { if (at < slides.length - 1) show(at + 1); });
   paintDots();
   prev.disabled = true;
+  /* Slide 0 is on screen before show() has ever run, so without this the
+     bar read 0% while the learner was already looking at a finished step
+     and the Menu showed no tick against it. */
+  if (!slides[0].querySelector('[data-mount]')) done[0] = true;
+  ehPaint();
 })();
 </script>
 </body>

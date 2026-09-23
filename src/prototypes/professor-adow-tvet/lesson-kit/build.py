@@ -146,8 +146,38 @@ PAGE = """<!doctype html>
 <link rel="stylesheet" href="{lib}/carpentry.css">
 </head>
 <body>
-<a class="skip" href="#lesson">Skip to the lesson</a>
+<a class="eh-skip" href="#lesson">Skip to the lesson</a>
+
+<header class="eh-bar1">
+  <a class="eh-brand" href="{hub}">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 20h18"/><path d="M5 20V9l7-5 7 5v11"/><path d="M10 20v-6h4v6"/></svg>
+    <span class="eh-brandtext"><b>{school}</b><i>{module}</i></span>
+  </a>
+  <div class="eh-prog" title="How much of this lesson you have finished">
+    <span class="eh-pct" id="ehPct">0%</span>
+    <span class="eh-progtext">Lesson progress</span>
+    <span class="eh-track"><i id="ehFill"></i></span>
+  </div>
+  <div class="eh-b1right">
+    <label class="eh-find">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6.5"/><path d="M15.4 15.4 21 21"/></svg>
+      <input id="ehFind" type="search" autocomplete="off" spellcheck="false" placeholder="Search the lessons" aria-label="Search the {module} lessons" aria-controls="ehFound" aria-expanded="false">
+    </label>
+    <select class="eh-picker" id="ehPicker" aria-label="Choose a lesson">{picker}</select>
+  </div>
+</header>
+
+<nav class="eh-bar2" aria-label="Lesson">
+  <a class="eh-round back" href="{hub}" aria-label="Back to the lesson list">←</a>
+  <button type="button" class="eh-round" id="ehMenu" aria-expanded="false" aria-controls="ehSteps">☰ Menu</button>
+  <span class="eh-section">{h1}</span>
+  <span class="eh-b2right"><button type="button" class="eh-pill" id="ehFull">⛶ Full screen</button></span>
+</nav>
+<div class="eh-steps" id="ehSteps" hidden></div>
+<div class="eh-found" id="ehFound" hidden></div>
+
 <div class="wrap">
+  <a class="lesson-back" href="{hub}"><span aria-hidden="true">←</span> {module}</a>
   <div class="hero">
     <div>
       <p class="eyebrow">{module} · {level}</p>
@@ -188,6 +218,12 @@ PAGE = """<!doctype html>
   var at = 0;
   var reached = {{ 0: true }};
   var STEPS = {stepdata};
+  var LESSONS = {lessonindex};
+  /* `done` is what the bar-1 percentage and the Menu ticks read. A step is
+     done when its renderer calls back, and a step with nothing to do (the
+     intro, the words list, the end card) is done on arrival — otherwise the
+     bar could never reach 100% and the number would be a lie. */
+  var done = new Array(slides.length).fill(false);
 
   slides.forEach(function (s, i) {{
     var b = document.createElement('button');
@@ -213,6 +249,7 @@ PAGE = """<!doctype html>
     next.textContent = at === slides.length - 1 ? 'Finished' : 'Next step';
     next.disabled = at === slides.length - 1;
     var mount = slides[at].querySelector('[data-mount]');
+    if (!mount) {{ done[at] = true; ehPaint(); }}
     if (mount && !mount.dataset.built) {{
       mount.dataset.built = '1';
       var spec = STEPS[slides[at].dataset.step];
@@ -223,7 +260,12 @@ PAGE = """<!doctype html>
       try {{
         if (!spec) throw new Error('no step data');
         if (!window.CARP.R[spec.kind]) throw new Error('no renderer for kind "' + spec.kind + '"');
-        window.CARP.R[spec.kind](spec.data, mount, function () {{ mount.dataset.done = '1'; }});
+        var me = at;
+        window.CARP.R[spec.kind](spec.data, mount, function () {{
+          mount.dataset.done = '1';
+          done[me] = true;
+          ehPaint();
+        }});
       }} catch (err) {{
         mount.dataset.failed = '1';
         var warn = document.createElement('p');
@@ -233,14 +275,110 @@ PAGE = """<!doctype html>
         if (window.console) console.error('step ' + slides[at].dataset.step, err);
       }}
     }}
+    ehPaint();
     document.getElementById('lesson').focus({{ preventScroll: true }});
     window.scrollTo({{ top: 0, behavior: 'smooth' }});
   }}
+
+  /* ===================== the two header bars =====================
+     Ported from ehel-academy/mathematics/lesson-app-tools/add-header-bars.py
+     so this build has the same structure and controls as an Ehel lesson.
+     Everything here is answered by this page — nothing calls a server. */
+  var $ = function (id) {{ return document.getElementById(id); }};
+
+  function ehPaint() {{
+    var n = done.filter(Boolean).length;
+    var p = slides.length ? Math.round((n / slides.length) * 100) : 0;
+    $('ehPct').textContent = p + '%';
+    $('ehFill').style.width = p + '%';
+    if (!$('ehSteps').hidden) ehSteps();
+  }}
+
+  function ehSteps() {{
+    $('ehSteps').innerHTML = slides.map(function (s, i) {{
+      var h = s.querySelector('h2');
+      return '<button type="button" data-i="' + i + '" class="' +
+        (i === at ? 'now ' : '') + (done[i] ? 'done' : '') + '">' +
+        (i + 1) + '. ' + (h ? h.textContent : 'Step ' + (i + 1)) + '</button>';
+    }}).join('');
+  }}
+
+  $('ehSteps').addEventListener('click', function (e) {{
+    var b = e.target.closest('button[data-i]');
+    if (!b) return;
+    /* Any step, reached or not. The first version guarded on `reached` for
+       fear of an empty card, which was wrong: show() builds a step's mount
+       on arrival, so jumping forward works — and a Menu that silently
+       ignores half its own rows is worse than no Menu. */
+    show(+b.dataset.i);
+    $('ehSteps').hidden = true;
+    $('ehMenu').setAttribute('aria-expanded', 'false');
+  }});
+
+  $('ehMenu').addEventListener('click', function () {{
+    var box = $('ehSteps'), open = box.hidden;
+    if (open) ehSteps();
+    box.hidden = !open;
+    $('ehFound').hidden = true;
+    $('ehMenu').setAttribute('aria-expanded', open ? 'true' : 'false');
+  }});
+
+  $('ehPicker').addEventListener('change', function (e) {{
+    if (e.target.value) location.href = e.target.value + location.search;
+  }});
+
+  $('ehFull').addEventListener('click', function () {{
+    if (document.fullscreenElement) document.exitFullscreen();
+    else if (document.documentElement.requestFullscreen) document.documentElement.requestFullscreen();
+  }});
+  document.addEventListener('fullscreenchange', function () {{
+    $('ehFull').textContent = document.fullscreenElement ? '⛶ Leave full screen' : '⛶ Full screen';
+  }});
+
+  /* Search covers THIS lesson's steps and the other lessons of the module.
+     Ehel's searches a generated lesson-search.json; this prototype has no
+     such index, so it searches what the page can actually see and says so
+     by what it returns rather than pretending to a wider reach. */
+  $('ehFind').addEventListener('input', function (e) {{
+    var q = e.target.value.trim().toLowerCase();
+    var box = $('ehFound');
+    if (q.length < 2) {{ box.hidden = true; e.target.setAttribute('aria-expanded', 'false'); return; }}
+    $('ehSteps').hidden = true;
+    var hits = [];
+    slides.forEach(function (s, i) {{
+      var h = s.querySelector('h2');
+      var t = (h ? h.textContent : '') + ' ' + s.textContent;
+      if (t.toLowerCase().indexOf(q) >= 0) {{
+        hits.push('<a href="#" data-i="' + i + '">' + (i + 1) + '. ' +
+          (h ? h.textContent : 'Step ' + (i + 1)) + '<small>in this lesson</small></a>');
+      }}
+    }});
+    LESSONS.forEach(function (l) {{
+      if ((l.t + ' ' + l.b).toLowerCase().indexOf(q) >= 0) {{
+        hits.push('<a href="' + l.h + '">' + l.t + '<small>' + l.b + '</small></a>');
+      }}
+    }});
+    box.innerHTML = hits.length ? hits.join('') : '<p>Nothing matches that.</p>';
+    box.hidden = false;
+    e.target.setAttribute('aria-expanded', 'true');
+  }});
+  $('ehFound').addEventListener('click', function (e) {{
+    var a = e.target.closest('a[data-i]');
+    if (!a) return;
+    e.preventDefault();
+    show(+a.dataset.i);
+    $('ehFound').hidden = true;
+  }});
 
   prev.addEventListener('click', function () {{ if (at > 0) show(at - 1); }});
   next.addEventListener('click', function () {{ if (at < slides.length - 1) show(at + 1); }});
   paintDots();
   prev.disabled = true;
+  /* Slide 0 is on screen before show() has ever run, so without this the
+     bar read 0% while the learner was already looking at a finished step
+     and the Menu showed no tick against it. */
+  if (!slides[0].querySelector('[data-mount]')) done[0] = true;
+  ehPaint();
 }})();
 </script>
 </body>
@@ -272,7 +410,7 @@ def available_renderers(cfg):
     return kinds
 
 
-def build_lesson(lesson, cfg, criteria, out_dir, lib, renderers):
+def build_lesson(lesson, cfg, criteria, out_dir, lib, renderers, siblings):
     steps_html = []
     stepdata = {}
     for i, s in enumerate(lesson["steps"], start=1):
@@ -313,6 +451,14 @@ def build_lesson(lesson, cfg, criteria, out_dir, lib, renderers):
         endnote=esc(cfg.get("endNote", "")),
         hub=esc(cfg["hub"]),
         lib=esc(lib),
+        picker="".join(
+            '<option value="%s.html"%s>%s</option>'
+            % (esc(other["slug"]), " selected" if other["slug"] == lesson["slug"] else "", esc(other["title"]))
+            for other in siblings),
+        lessonindex=json.dumps(
+            [{"t": other["title"], "b": other["blurb"], "h": other["slug"] + ".html"}
+             for other in siblings if other["slug"] != lesson["slug"]],
+            ensure_ascii=False),
         extrascripts="\n".join(
             '<script src="%s/%s"></script>' % (esc(lib), esc(f))
             for f in cfg.get("extraScripts", [])),
@@ -328,29 +474,38 @@ HUB = """<!doctype html>
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>{module} · {school}</title>
 <link rel="stylesheet" href="{lib}/lesson.css">
 <link rel="stylesheet" href="{lib}/carpentry.css">
 </head>
 <body>
-<div class="wrap">
-  <div class="hero">
-    <div>
-      <p class="eyebrow">{school} · {level}</p>
-      <h1>{module}</h1>
-    </div>
+<a class="eh-skip" href="#lessons">Skip to the lessons</a>
+
+<header class="eh-bar1">
+  <a class="eh-brand" href="{up}">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 20h18"/><path d="M5 20V9l7-5 7 5v11"/><path d="M10 20v-6h4v6"/></svg>
+    <span class="eh-brandtext"><b>{school}</b><i>{module}</i></span>
+  </a>
+  <div class="eh-b1right">
+    <a class="eh-pill" href="{up}">All modules</a>
   </div>
+</header>
 
-  <section class="deck" style="min-height:auto">
-    <p class="carp-caption" style="text-align:left">{intro}</p>
-    <div class="carp-error"><b>Where this leads</b>{leads}</div>
+<div class="wrap">
+  <header>
+    <p class="eyebrow">{school} · {level}</p>
+    <h1>{module}</h1>
+    <p class="lede">{intro}</p>
+  </header>
 
-    <h2 style="margin-top:26px;font-size:26px">Lessons</h2>
-    <div class="carp-checks" style="max-width:none">{lessons}</div>
+  <div class="hub-grid" id="lessons" role="main">{lessons}</div>
 
-    <h2 style="margin-top:30px;font-size:26px">What this module covers</h2>
-    <p class="carp-caption" style="text-align:left">{coverage}</p>
+  <div class="carp-error" style="margin-top:26px"><b>Where this leads</b>{leads}</div>
+
+  <section class="grownup">
+    <h3>For trainers and assessors</h3>
+    <p>{coverage}</p>
     <div class="carp-checks" style="max-width:none">{units}</div>
   </section>
 </div>
@@ -390,14 +545,33 @@ def build_hub(lessons, cfg, fw, criteria, out_dir, lib):
         for s in lesson["steps"]:
             claimed.update(s["criteria"])
 
+    # The Ehel Grade 4 lesson-card format: a mark, the strand it belongs to,
+    # the name, what it covers, and a foot that says the size of the job.
+    MARK_SVG = ('<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" '
+                'stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">'
+                '<path d="M4 7h16M4 12h16M4 17h10"/></svg>')
     rows = []
     for lesson in lessons:
         n_steps = len(lesson["steps"])
+        # About three and a half minutes a step, the estimate the Ehel hubs
+        # use, rounded to five. It is a guide to the length of a sitting,
+        # not a timing anybody is held to.
+        minutes = int(round(n_steps * 3.5 / 5.0)) * 5
+        strand = ""
+        for s in lesson["steps"]:
+            if s["criteria"]:
+                strand = criteria[s["criteria"][0]]["unitTitle"]
+                break
         rows.append(
-            '<a class="carp-check" style="text-decoration:none" href="%s.html">'
-            '<span class="box" aria-hidden="true"></span>'
-            '<span class="txt"><b>%s</b><br><span style="color:var(--muted);font-size:16px">%s · %d steps</span></span></a>'
-            % (esc(lesson["slug"]), esc(lesson["title"]), esc(lesson["blurb"]), n_steps))
+            '<a class="lesson" href="%s.html">'
+            '<span class="mark" aria-hidden="true">%s</span>'
+            '<span class="strand">%s</span>'
+            '<h2>%s</h2>'
+            '<p class="covers">%s</p>'
+            '<span class="foot"><span class="steps">%d steps · about %d min · check</span>'
+            '<span class="go">Start</span></span></a>'
+            % (esc(lesson["slug"]), MARK_SVG, esc(strand), esc(lesson["title"]),
+               esc(lesson["blurb"]), n_steps, minutes))
 
     # A hub shows ITS OWN module's units. Listing all nine on both hubs
     # made each one look like it belonged to the other module too.
@@ -433,7 +607,11 @@ def build_hub(lessons, cfg, fw, criteria, out_dir, lib):
                     "standards and not yet taught — a prototype shows the shape, not the "
                     "whole course." % (built, total, whole_got, whole))
 
+    # How far up the school landing page is from this hub: carpentry's hubs
+    # sit two levels down, the cross-trade module's one.
+    up = os.path.relpath(school_root(out_dir), out_dir).replace(os.sep, "/") + "/index.html"
     html = HUB.format(
+        up=esc(up),
         module=esc(mod["title"]), school=esc(cfg["school"]), level=esc(cfg["levelLabel"]),
         intro=esc(cfg.get("hubIntro", "")), leads=esc(cfg.get("leadsNote", "")),
         lessons="".join(rows), units="".join(unit_rows), coverage=esc(coverage), lib=esc(lib))
@@ -462,7 +640,7 @@ def main():
     renderers = available_renderers(cfg)
     if not args.hub_only:
         for lesson in lessons:
-            path, _ = build_lesson(lesson, cfg, criteria, app_dir, lib, renderers)
+            path, _ = build_lesson(lesson, cfg, criteria, app_dir, lib, renderers, lessons)
             print("  lesson  %s  (%d steps)" % (os.path.basename(path), len(lesson["steps"])))
 
     path, built, total = build_hub(lessons, cfg, fw, criteria, app_dir, lib)

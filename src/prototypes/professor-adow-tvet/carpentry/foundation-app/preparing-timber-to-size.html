@@ -9,8 +9,38 @@
 <link rel="stylesheet" href="../../lesson-kit/lib/carpentry.css">
 </head>
 <body>
-<a class="skip" href="#lesson">Skip to the lesson</a>
+<a class="eh-skip" href="#lesson">Skip to the lesson</a>
+
+<header class="eh-bar1">
+  <a class="eh-brand" href="index.html">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 20h18"/><path d="M5 20V9l7-5 7 5v11"/><path d="M10 20v-6h4v6"/></svg>
+    <span class="eh-brandtext"><b>Professor Adow TVET</b><i>Carpentry Foundation</i></span>
+  </a>
+  <div class="eh-prog" title="How much of this lesson you have finished">
+    <span class="eh-pct" id="ehPct">0%</span>
+    <span class="eh-progtext">Lesson progress</span>
+    <span class="eh-track"><i id="ehFill"></i></span>
+  </div>
+  <div class="eh-b1right">
+    <label class="eh-find">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6.5"/><path d="M15.4 15.4 21 21"/></svg>
+      <input id="ehFind" type="search" autocomplete="off" spellcheck="false" placeholder="Search the lessons" aria-label="Search the Carpentry Foundation lessons" aria-controls="ehFound" aria-expanded="false">
+    </label>
+    <select class="eh-picker" id="ehPicker" aria-label="Choose a lesson"><option value="preparing-timber-to-size.html" selected>Preparing Timber to Size</option></select>
+  </div>
+</header>
+
+<nav class="eh-bar2" aria-label="Lesson">
+  <a class="eh-round back" href="index.html" aria-label="Back to the lesson list">←</a>
+  <button type="button" class="eh-round" id="ehMenu" aria-expanded="false" aria-controls="ehSteps">☰ Menu</button>
+  <span class="eh-section">Preparing Timber to Size</span>
+  <span class="eh-b2right"><button type="button" class="eh-pill" id="ehFull">⛶ Full screen</button></span>
+</nav>
+<div class="eh-steps" id="ehSteps" hidden></div>
+<div class="eh-found" id="ehFound" hidden></div>
+
 <div class="wrap">
+  <a class="lesson-back" href="index.html"><span aria-hidden="true">←</span> Carpentry Foundation</a>
   <div class="hero">
     <div>
       <p class="eyebrow">Carpentry Foundation · Foundation</p>
@@ -117,6 +147,12 @@
   var at = 0;
   var reached = { 0: true };
   var STEPS = {"1": {"kind": "sort", "data": {"groups": [{"key": "measure", "label": "measuring & marking"}, {"key": "cut", "label": "cutting"}, {"key": "plane", "label": "planing"}, {"key": "strike", "label": "striking"}], "items": [{"tool": "trySquare", "label": "try square", "group": "measure", "say": "Measuring and marking. It does not cut anything — it tells you where to cut and proves that an edge is square."}, {"tool": "tenonSaw", "label": "tenon saw", "group": "cut", "say": "Cutting. Fine teeth across the grain, and a stiff back that keeps the cut straight."}, {"tool": "plane", "label": "smoothing plane", "group": "plane", "say": "Planing. It takes a controlled shaving off a surface to make it straight, square and smooth. A chisel cuts; a plane makes flat."}, {"tool": "markingGauge", "label": "marking gauge", "group": "measure", "say": "Measuring and marking. It carries one setting and scores that same distance from the face side every time."}, {"draw": "loose", "label": "mallet", "group": "strike", "say": "Striking — and it is the ONLY thing that should strike a chisel handle. A claw hammer's steel face splits the handle; a mallet's wooden face does not."}], "finish": "Tools are grouped by what they DO. That is why a mallet and a claw hammer are both striking tools and still are not interchangeable."}}, "2": {"kind": "label", "data": {"tool": "plane"}}, "3": {"kind": "inspect", "data": {"finish": "A tool is inspected BEFORE it is picked up. Three of those four go to the bench for repair, and one is fit to use.", "items": [{"draw": "mushroom", "ask": "This striking head has spread over at the edges. What is it, and what does it do?", "opts": [{"t": "A mushroomed head — chips can fly off it when struck", "ok": true, "why": null}, {"t": "Normal wear, it can stay in service", "ok": false, "why": "No. The spread metal is work-hardened and brittle, and it is at eye height when you strike."}, {"t": "Rust, which only needs cleaning", "ok": false, "why": "Not rust. The metal has spread under repeated blows."}], "why": "A mushroomed head. The spread lip is hard and brittle, and a fragment can come off at speed towards your face. Dress it back on the grinder before it is used again."}, {"draw": "split", "ask": "This chisel handle has cracks running from the ferrule. Fit to use?", "opts": [{"t": "No — replace the handle before it is used", "ok": true, "why": null}, {"t": "Yes, if you only push it by hand", "ok": false, "why": "A split runs further every time the handle is loaded, and it fails without warning — usually with your hand behind the blade."}, {"t": "Yes, if it is bound with tape", "ok": false, "why": "Tape hides the split and holds nothing. It will still fail."}], "why": "Replace it. A split handle fails suddenly, and the hand driving it goes forward onto the blade."}, {"draw": "loose", "ask": "This mallet head moves on the shaft. What should happen to it?", "opts": [{"t": "Off the rack until the head is refitted tight", "ok": true, "why": null}, {"t": "Use it gently until someone has time to fix it", "ok": false, "why": "A loose head comes off on the swing, and nobody controls where it goes."}, {"t": "It is a mallet, so a loose head is harmless", "ok": false, "why": "A hardwood head at the end of a swing is not harmless."}], "why": "Off the rack. A head that moves will come off, and it leaves the hand at speed."}, {"draw": "sound", "ask": "And this one. Ground square, honed, handle tight, ferrule sound.", "opts": [{"t": "Fit to use — and it should be stored so the edge stays that way", "ok": true, "why": null}, {"t": "Too sharp to be safe", "ok": false, "why": "The opposite. A sharp tool cuts where you put it; a blunt one needs force, and force is what slips."}, {"t": "It needs grinding before every use", "ok": false, "why": "Grinding is for a damaged edge. Honing keeps a good one, and this one is good."}], "why": "Fit to use. Keep it clean, dry and covered at the edge — a chisel dropped loose in a drawer is a blunt chisel by next week."}]}}, "4": {"kind": "questions", "data": {"items": [{"ask": "You need a rail 250 mm long and 60 mm wide. The rack has a piece 260 mm long and a piece 400 mm long. Which do you take?", "opts": [{"t": "The 400 mm piece", "ok": true, "why": null}, {"t": "The 260 mm piece — less waste", "ok": false, "why": "It leaves 10 mm for a saw cut AND all the planing. You will finish under size with nothing left to correct it."}, {"t": "Either, they both exceed 250 mm", "ok": false, "why": "Only one of them exceeds it by enough to saw and plane."}], "why": "The 400 mm piece. Timber is chosen large enough that the allowance for sawing and planing is already in it."}, {"ask": "A workbench top needs to be 600 mm wide and the widest board you have is 200 mm. What does that tell you?", "opts": [{"t": "It needs a widening joint — several boards jointed edge to edge", "ok": true, "why": null}, {"t": "It cannot be made", "ok": false, "why": "Table tops and bench tops are almost never one board. That is what widening joints are for."}, {"t": "Use a 200 mm board and accept a narrow bench", "ok": false, "why": "The specification is 600 mm."}], "why": "A widening joint. Edge-to-edge glued, loose tongue, or dowelled — that family exists precisely to make wide surfaces out of narrow boards."}, {"ask": "Why is timber chosen large enough that unnecessary joints are avoided?", "opts": [{"t": "Every joint is a weak point and a piece of work", "ok": true, "why": null}, {"t": "Because joints are decorative and should be rare", "ok": false, "why": "Some joints are decorative. That is not why you avoid unnecessary ones."}, {"t": "Because glue is expensive", "ok": false, "why": "Glue is the cheapest thing in the workshop."}], "why": "A joint is somewhere the timber can fail and somewhere your time goes. One that the stock size made unnecessary is pure cost."}]}}, "5": {"kind": "order", "data": {"ask": "A rough-sawn board to a finished piece. Tap the stages in the order you would do them.", "finish": "That is the order. Face side, then face edge, then everything else measured from those two.", "items": ["Select timber large enough for the job", "Mark to length, leaving an allowance for sawing and planing", "Saw to the marked length", "Plane one wide face straight — the face side — and mark it", "Plane one edge straight and square to it — the face edge — and mark it", "Set the gauge and score the width and thickness from those two", "Plane down to the gauge lines"], "why": ["Yes. Everything after this depends on having enough wood.", "Yes. The allowance is what the saw and the plane will consume.", "Yes. Still oversize at this point, deliberately.", "Yes. The face side is the first true surface, and it is marked so it can never be confused with the other three.", "Yes. Square to the face side, and the two marks are made to meet so the pair is unmistakable.", "Yes. Both settings are taken from the face side and face edge, never from the sawn faces.", "Yes. Plane to the lines, and the piece is to size."], "before": ["This is the first stage — nothing can happen before it.", "Not yet. Choose the timber first.", "Not yet. Mark it before you cut it.", "Not yet. Saw to length first.", "Not yet. There is no face side to be square to.", "Not yet. The gauge is set from the face side and face edge, and you have not made them both.", "Not yet. There are no gauge lines to plane to."]}}, "6": {"kind": "demo", "data": {"sequence": "prep"}}, "7": {"kind": "setgauge", "data": {"finish": "Set it, lock it, then lay it against the rule again before it touches the wood.", "targets": [{"ask": "Set the marking gauge to 20 millimetres — the thickness of the piece.", "mm": 20, "why": "Twenty millimetres, measured from the fence to the pin. The fence rides on the face side, so that is the distance every line will be from it."}, {"ask": "Now set it to 12 millimetres for the cheek of a joint.", "mm": 12, "why": "Twelve. A gauge carries one setting at a time, and both members are scored from it before it is changed.", "miss": "Both members would be gauged from this one setting, so the error lands on both, in the same direction — and the joint is out by twice it."}]}}, "8": {"kind": "safety", "data": {"ask": "You are about to face a board on the surface planer. Tick every precaution. Two of these are not precautions — leave them alone.", "done": "Now the machine can be started.", "items": [{"text": "Check the guard is in position and covers the block.", "required": true, "why": "The cutter block turns at several thousand revolutions a minute and does not stop for a hand. The guard is the only thing between the two."}, {"text": "Check the stock for nails, screws and grit before it goes on.", "required": true, "why": "A nail meeting the cutters throws metal and wood across the shop and destroys the knives. Look at every piece, especially reclaimed timber."}, {"text": "Use a push block for short pieces, and never plane less than 40 mm.", "required": true, "why": "Below about 40 mm there is not enough board to keep your hand away from the block. The push block is what stands between them."}, {"text": "Tie back loose clothing and remove rings, bracelets and a watch.", "required": true, "why": "Anything that hangs can be caught and it takes the hand with it. This is also why gloves are not worn at a machine."}, {"text": "Wear gloves for a better grip on the board.", "required": false, "why": "No — a glove near rotating machinery is a hazard, not a precaution. If it catches, the hand goes in with it. Bare, dry hands."}, {"text": "Isolate the power before you adjust the fence or the depth of cut.", "required": true, "why": "Switched off is not isolated. A machine that starts while your fingers are at the block does not give you a second chance."}, {"text": "Clear the shavings from the table by hand as you work.", "required": false, "why": "No — never by hand, and never while it runs. A brush, with the machine stopped and the block still."}, {"text": "Sweep the floor and clear the offcuts around the machine.", "required": true, "why": "You will be walking backwards feeding a board. A floor with offcuts on it is where the trip happens."}]}}, "9": {"kind": "questions", "data": {"items": [{"ask": "What makes the face side and the face edge different from the other two surfaces?", "opts": [{"t": "They are planed true on their own, and everything else is measured from them", "ok": true, "why": null}, {"t": "They are the two widest surfaces", "ok": false, "why": "The face side is a wide surface and the face edge is a narrow one. Width is not what makes them."}, {"t": "They are the two that will show in the finished work", "ok": false, "why": "Sometimes true and never the reason. They are the reference surfaces."}], "why": "They are the reference pair. Every measurement, gauge line and squared line comes from them — which is why they are marked and why the marks are made to meet."}, {"ask": "You mark a 250 mm rail at exactly 250 mm and saw on the line. What have you got?", "opts": [{"t": "A rail that will be under size once it is planed", "ok": true, "why": null}, {"t": "A rail of exactly 250 mm", "ok": false, "why": "The saw takes its kerf and the plane takes shavings. Both come out of your 250."}, {"t": "A rail that can be corrected by planing", "ok": false, "why": "Planing removes more wood. It cannot add any."}], "why": "Under size. Mark with an allowance for the saw cut and for the planing, and take the allowance off afterwards."}, {"ask": "Your marking gauge is set one millimetre over. You gauge both members of a joint from it. How far out is the joint?", "opts": [{"t": "Two millimetres — the error lands on both members", "ok": true, "why": null}, {"t": "One millimetre", "ok": false, "why": "One millimetre on each of two members, both in the same direction."}, {"t": "Nothing — the same setting on both makes them match", "ok": false, "why": "They match each other and neither matches the drawing. The joint is still two millimetres out."}], "why": "Two. One setting used twice puts the error in twice, which is why the gauge is checked against the rule after it is locked."}, {"ask": "A striking head has spread and gone bright at the edges. What is the risk?", "opts": [{"t": "The hardened lip can break off and fly", "ok": true, "why": null}, {"t": "It will mark the work", "ok": false, "why": "It might. That is not the reason it is taken out of service."}, {"t": "It has gone soft and will bend", "ok": false, "why": "The opposite — it has work-hardened, which is what makes it brittle."}], "why": "A mushroomed head is brittle, and a fragment leaves it at the speed of the blow, at about eye height. Dress it back before it is used."}]}}, "10": {"kind": "words", "data": {"items": [{"word": "face side", "meaning": "The first wide surface planed true. Marked with a looping f. Every gauge setting is taken from it."}, {"word": "face edge", "meaning": "The edge planed straight and square to the face side. Marked so the two marks meet."}, {"word": "allowance", "meaning": "The extra length and thickness left on for the saw cut and the planing. Marked on, then taken off."}, {"word": "in wind", "meaning": "Twisted, so the board rocks on a flat surface. Sighted down the length before any planing starts."}, {"word": "sole", "meaning": "The flat underside of a plane. The plane can only make a surface as flat as its own sole."}, {"word": "tote", "meaning": "The rear handle of a plane. The pressure moves to it at the end of the stroke."}, {"word": "mushroomed", "meaning": "A striking head spread and hardened at the edges by repeated blows. Brittle, and taken out of service."}, {"word": "push block", "meaning": "The block that feeds short stock over a planer so that a hand never has to."}]}}};
+  var LESSONS = [];
+  /* `done` is what the bar-1 percentage and the Menu ticks read. A step is
+     done when its renderer calls back, and a step with nothing to do (the
+     intro, the words list, the end card) is done on arrival — otherwise the
+     bar could never reach 100% and the number would be a lie. */
+  var done = new Array(slides.length).fill(false);
 
   slides.forEach(function (s, i) {
     var b = document.createElement('button');
@@ -142,6 +178,7 @@
     next.textContent = at === slides.length - 1 ? 'Finished' : 'Next step';
     next.disabled = at === slides.length - 1;
     var mount = slides[at].querySelector('[data-mount]');
+    if (!mount) { done[at] = true; ehPaint(); }
     if (mount && !mount.dataset.built) {
       mount.dataset.built = '1';
       var spec = STEPS[slides[at].dataset.step];
@@ -152,7 +189,12 @@
       try {
         if (!spec) throw new Error('no step data');
         if (!window.CARP.R[spec.kind]) throw new Error('no renderer for kind "' + spec.kind + '"');
-        window.CARP.R[spec.kind](spec.data, mount, function () { mount.dataset.done = '1'; });
+        var me = at;
+        window.CARP.R[spec.kind](spec.data, mount, function () {
+          mount.dataset.done = '1';
+          done[me] = true;
+          ehPaint();
+        });
       } catch (err) {
         mount.dataset.failed = '1';
         var warn = document.createElement('p');
@@ -162,14 +204,110 @@
         if (window.console) console.error('step ' + slides[at].dataset.step, err);
       }
     }
+    ehPaint();
     document.getElementById('lesson').focus({ preventScroll: true });
     window.scrollTo({ top: 0, behavior: 'smooth' });
   }
+
+  /* ===================== the two header bars =====================
+     Ported from ehel-academy/mathematics/lesson-app-tools/add-header-bars.py
+     so this build has the same structure and controls as an Ehel lesson.
+     Everything here is answered by this page — nothing calls a server. */
+  var $ = function (id) { return document.getElementById(id); };
+
+  function ehPaint() {
+    var n = done.filter(Boolean).length;
+    var p = slides.length ? Math.round((n / slides.length) * 100) : 0;
+    $('ehPct').textContent = p + '%';
+    $('ehFill').style.width = p + '%';
+    if (!$('ehSteps').hidden) ehSteps();
+  }
+
+  function ehSteps() {
+    $('ehSteps').innerHTML = slides.map(function (s, i) {
+      var h = s.querySelector('h2');
+      return '<button type="button" data-i="' + i + '" class="' +
+        (i === at ? 'now ' : '') + (done[i] ? 'done' : '') + '">' +
+        (i + 1) + '. ' + (h ? h.textContent : 'Step ' + (i + 1)) + '</button>';
+    }).join('');
+  }
+
+  $('ehSteps').addEventListener('click', function (e) {
+    var b = e.target.closest('button[data-i]');
+    if (!b) return;
+    /* Any step, reached or not. The first version guarded on `reached` for
+       fear of an empty card, which was wrong: show() builds a step's mount
+       on arrival, so jumping forward works — and a Menu that silently
+       ignores half its own rows is worse than no Menu. */
+    show(+b.dataset.i);
+    $('ehSteps').hidden = true;
+    $('ehMenu').setAttribute('aria-expanded', 'false');
+  });
+
+  $('ehMenu').addEventListener('click', function () {
+    var box = $('ehSteps'), open = box.hidden;
+    if (open) ehSteps();
+    box.hidden = !open;
+    $('ehFound').hidden = true;
+    $('ehMenu').setAttribute('aria-expanded', open ? 'true' : 'false');
+  });
+
+  $('ehPicker').addEventListener('change', function (e) {
+    if (e.target.value) location.href = e.target.value + location.search;
+  });
+
+  $('ehFull').addEventListener('click', function () {
+    if (document.fullscreenElement) document.exitFullscreen();
+    else if (document.documentElement.requestFullscreen) document.documentElement.requestFullscreen();
+  });
+  document.addEventListener('fullscreenchange', function () {
+    $('ehFull').textContent = document.fullscreenElement ? '⛶ Leave full screen' : '⛶ Full screen';
+  });
+
+  /* Search covers THIS lesson's steps and the other lessons of the module.
+     Ehel's searches a generated lesson-search.json; this prototype has no
+     such index, so it searches what the page can actually see and says so
+     by what it returns rather than pretending to a wider reach. */
+  $('ehFind').addEventListener('input', function (e) {
+    var q = e.target.value.trim().toLowerCase();
+    var box = $('ehFound');
+    if (q.length < 2) { box.hidden = true; e.target.setAttribute('aria-expanded', 'false'); return; }
+    $('ehSteps').hidden = true;
+    var hits = [];
+    slides.forEach(function (s, i) {
+      var h = s.querySelector('h2');
+      var t = (h ? h.textContent : '') + ' ' + s.textContent;
+      if (t.toLowerCase().indexOf(q) >= 0) {
+        hits.push('<a href="#" data-i="' + i + '">' + (i + 1) + '. ' +
+          (h ? h.textContent : 'Step ' + (i + 1)) + '<small>in this lesson</small></a>');
+      }
+    });
+    LESSONS.forEach(function (l) {
+      if ((l.t + ' ' + l.b).toLowerCase().indexOf(q) >= 0) {
+        hits.push('<a href="' + l.h + '">' + l.t + '<small>' + l.b + '</small></a>');
+      }
+    });
+    box.innerHTML = hits.length ? hits.join('') : '<p>Nothing matches that.</p>';
+    box.hidden = false;
+    e.target.setAttribute('aria-expanded', 'true');
+  });
+  $('ehFound').addEventListener('click', function (e) {
+    var a = e.target.closest('a[data-i]');
+    if (!a) return;
+    e.preventDefault();
+    show(+a.dataset.i);
+    $('ehFound').hidden = true;
+  });
 
   prev.addEventListener('click', function () { if (at > 0) show(at - 1); });
   next.addEventListener('click', function () { if (at < slides.length - 1) show(at + 1); });
   paintDots();
   prev.disabled = true;
+  /* Slide 0 is on screen before show() has ever run, so without this the
+     bar read 0% while the learner was already looking at a finished step
+     and the Menu showed no tick against it. */
+  if (!slides[0].querySelector('[data-mount]')) done[0] = true;
+  ehPaint();
 })();
 </script>
 </body>

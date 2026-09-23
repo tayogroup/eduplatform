@@ -1,0 +1,114 @@
+{
+  "_comment": "Storyboard for the Grade 2 Science unit lecture film, Lesson 2 Teeth and Staying Healthy. Rendered by tools/create-ehel-unit-lecture.js. See lecture-video/BRIEF.md. Every beat is one narration clip; art.at names the phrases a picture waits for, and the page refuses to load if a phrase is not in its beat's say. The chapters follow LESSON['lecture'] in content/lesson-2.py part by part, under its own headings (three kinds of teeth; brushing; sugar and teeth; a healthy body; when you are ill), in the lesson's own words and examples: its tap figure of the mouth (ART.figure mouth, one kind of tooth named at a time), the apple, meat and peanuts of its tooth-jobs step, the pea of paste, gentle circles and two minutes of its brushing demo (the kit's toothbrush), the sweets, fizzy drinks, water and fruit of its sort, and the fever, cough, runny nose and tiredness of its signs of illness, with the faces its demo shows. People are brown (renderer.skin); the lesson's illness faces are smileys and stay yellow.",
+  "slug": "teeth-and-staying-healthy",
+  "lesson": 2,
+  "grade": 2,
+  "stage": 2,
+  "title": "Teeth and Staying Healthy",
+  "subtitle": "Grade 2 Science",
+  "framework": "Cambridge Primary Science 0097",
+  "renderer": {
+    "art": ["science"],
+    "skin": "brown",
+    "scenes": [
+      "tools/lib/ehel-film-marks.js",
+      "tools/lib/film-scenes/science-g2/teeth-and-staying-healthy.js",
+      "tools/lib/film-scenes/science-g2/teeth-and-staying-healthy-2.js",
+      "tools/lib/film-scenes/science-g2/teeth-and-staying-healthy-3.js"
+    ]
+  },
+  "objectives": [
+    ["2Bs.02", "Identify the different types of human teeth, explain how they are suited to their functions and describe how to care for teeth."],
+    ["2Bp.01", "Know that humans need to manage diet, maintain hygiene and move regularly to be healthy."],
+    ["2Bp.02", "Describe what illness is and describe the common signs of illness in humans."],
+    ["2TWSc.02", "Use given equipment appropriately."]
+  ],
+  "scenes": [
+    { "id": "title", "kind": "title", "codes": [], "beats": [
+      { "say": "Your teeth cut, tear and grind your food.",
+        "art": { "at": { "cut": "cut", "tear": "tear", "grind": "grind" } } },
+      { "say": "Look after them, and keep your whole body healthy too.",
+        "art": { "at": { "look": "Look after them", "body": "your whole body" } } }
+    ] },
+
+    { "id": "teeth", "kind": "teeth", "heading": "Three kinds of teeth", "codes": ["2Bs.02"], "beats": [
+      { "say": "Open wide. You have three kinds of teeth. Each has a shape that fits its job.",
+        "art": { "at": { "open": "Open wide", "three": "three kinds of teeth", "shape": "a shape", "job": "fits its job" } } },
+      { "say": "At the front are the incisors. They are flat, and they cut.",
+        "art": { "at": { "front": "At the front", "incisors": "the incisors", "flat": "flat", "cut": "they cut" } } },
+      { "say": "Beside them are the canines. They are pointed, and they tear.",
+        "art": { "at": { "beside": "Beside them", "canines": "the canines", "pointed": "pointed", "tear": "they tear" } } },
+      { "say": "At the back are the molars, big and wide, with bumps.",
+        "art": { "at": { "back": "At the back", "molars": "the molars", "big": "big and wide", "bumps": "with bumps" } } },
+      { "say": "Molars grind and mash your food into small pieces.",
+        "art": { "at": { "grind": "grind and mash", "small": "small pieces" } } },
+      { "say": "Bite an apple. The front teeth cut a piece off. The back teeth chew it.",
+        "art": { "at": { "bite": "Bite an apple", "front": "The front teeth", "off": "cut a piece off", "back": "The back teeth", "chew": "chew it" } } }
+    ] },
+
+    { "id": "brush", "kind": "brush", "heading": "Brushing", "codes": ["2Bs.02", "2TWSc.02"], "beats": [
+      { "say": "A toothbrush is a tool. It only works if you use it the right way.",
+        "art": { "at": { "brush": "A toothbrush", "tool": "a tool", "works": "only works", "right": "the right way" } } },
+      { "say": "Brush twice a day: in the morning, and before bed.",
+        "art": { "at": { "twice": "twice a day", "morning": "the morning", "bed": "before bed" } } },
+      { "say": "Squeeze a pea-sized blob of toothpaste onto the brush.",
+        "art": { "at": { "squeeze": "Squeeze", "pea": "pea-sized", "onto": "onto the brush" } } },
+      { "say": "Brush in small, gentle circles. Do the front teeth, then the sides.",
+        "art": { "at": { "circles": "small, gentle circles", "front": "the front teeth", "sides": "the sides" } } },
+      { "say": "Then the tops of the molars. Keep going for two whole minutes.",
+        "art": { "at": { "tops": "the tops of the molars", "keep": "Keep going", "two": "two whole minutes" } } }
+    ] },
+
+    { "id": "sugar", "kind": "sugar", "heading": "Sugar and teeth", "codes": ["2Bs.02"], "beats": [
+      { "say": "Germs are tiny living things. They are too small to see.",
+        "art": { "at": { "germs": "Germs", "living": "tiny living things", "see": "too small to see" } } },
+      { "say": "Sugar feeds the germs in your mouth. Then they make holes in your teeth.",
+        "art": { "at": { "sugar": "Sugar feeds", "germs": "the germs", "holes": "make holes" } } },
+      { "say": "Having sweets and fizzy drinks every day can cause holes.",
+        "art": { "at": { "sweets": "sweets", "fizzy": "fizzy drinks", "every": "every day", "cause": "cause holes" } } },
+      { "say": "Water and fruit are kinder to your teeth.",
+        "art": { "at": { "water": "Water", "fruit": "fruit", "kinder": "kinder to your teeth" } } },
+      { "say": "A treat now and then is fine. Every day, all day, is not.",
+        "art": { "at": { "treat": "A treat now and then", "fine": "is fine", "every": "Every day, all day", "not": "is not" } } }
+    ] },
+
+    { "id": "healthy", "kind": "healthy", "heading": "A healthy body", "codes": ["2Bp.01"], "beats": [
+      { "say": "Three things keep your body healthy: good food, keeping clean, and moving.",
+        "art": { "at": { "three": "Three things", "food": "good food", "clean": "keeping clean", "moving": "and moving" } } },
+      { "say": "Your diet is everything you eat and drink. Fruit and vegetables are good food.",
+        "art": { "at": { "diet": "Your diet", "all": "everything you eat and drink", "fruit": "Fruit and vegetables" } } },
+      { "say": "Wash your hands before you eat. It keeps germs out of your mouth.",
+        "art": { "at": { "wash": "Wash your hands", "eat": "before you eat", "germs": "keeps germs out" } } },
+      { "say": "Move every day. Run, play and climb! It keeps your heart and muscles strong.",
+        "art": { "at": { "move": "Move every day", "run": "Run", "play": "play", "climb": "climb", "heart": "your heart", "muscles": "muscles strong" } } },
+      { "say": "Then rest. Drink water, and have a good night's sleep.",
+        "art": { "at": { "rest": "Then rest", "water": "Drink water", "sleep": "a good night's sleep" } } }
+    ] },
+
+    { "id": "ill", "kind": "ill", "heading": "When you are ill", "codes": ["2Bp.02"], "beats": [
+      { "say": "Being ill means your body is not working as it should.",
+        "art": { "at": { "ill": "Being ill", "not": "not working" } } },
+      { "say": "Often, germs have got in. There are signs you can see and feel.",
+        "art": { "at": { "germs": "germs have got in", "signs": "signs you can see" } } },
+      { "say": "A hot forehead is a fever. You may feel shivery.",
+        "art": { "at": { "hot": "A hot forehead", "fever": "a fever", "shivery": "shivery" } } },
+      { "say": "A cough, a runny nose, or feeling very tired. These are signs too.",
+        "art": { "at": { "cough": "A cough", "nose": "a runny nose", "tired": "feeling very tired", "too": "signs too" } } },
+      { "say": "Do not hide it. Tell a grown-up, so you get better sooner.",
+        "art": { "at": { "hide": "Do not hide it", "tell": "Tell a grown-up", "better": "better sooner" } } },
+      { "say": "Rest and drink water. Your body will mend.",
+        "art": { "at": { "rest": "Rest", "water": "drink water", "mend": "Your body will mend" } } }
+    ] },
+
+    { "id": "recap", "kind": "recap", "heading": "What you now know", "codes": ["2Bs.02", "2Bp.01", "2Bp.02", "2TWSc.02"], "beats": [
+      { "say": "Incisors cut, canines tear, and molars grind.",
+        "art": { "at": { "teeth": "Incisors cut" } } },
+      { "say": "Brush twice a day for two minutes, and have sweets less often.",
+        "art": { "at": { "brush": "Brush twice a day" } } },
+      { "say": "Good food, keeping clean and moving keep your body healthy.",
+        "art": { "at": { "healthy": "Good food" } } },
+      { "say": "If you feel ill, tell a grown-up. Your body will mend.",
+        "art": { "at": { "ill": "feel ill", "mend": "Your body will mend" } } }
+    ] }
+  ]
+}

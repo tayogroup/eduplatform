@@ -1,0 +1,122 @@
+{
+  "_comment": "Storyboard for the Grade 2 Science unit lecture film, Lesson 10 The Sun Across the Sky. Rendered by tools/create-ehel-unit-lecture.js. See lecture-video/BRIEF.md. The chapters follow LESSON['lecture'] in order (sunrise, midday, sunset, measuring shadows as two chapters, the Earth turns), in the lesson's own sentences. The Sun's path is the film's own drawing in the lesson's colours, because the lesson's sunPath drawing puts every shadow on the Sun's side of the stick; the sky cards of its demo step, its hand spans, its table and its block graph are drawn as the lesson draws them. TWS and SIC codes are listed only where a chapter teaches them: the safety rule and the hand spans (measuring), the table, the block graph and its pattern (a table and a graph), then and now and the astronomers (the Earth turns). Predicting, the shadow clock and the equipment codes are the lesson's steps, not this film's.",
+  "slug": "the-sun-across-the-sky",
+  "lesson": 10,
+  "grade": 2,
+  "stage": 2,
+  "title": "The Sun Across the Sky",
+  "subtitle": "Grade 2 Science",
+  "framework": "Cambridge Primary Science 0097",
+  "renderer": {
+    "art": ["science"],
+    "skin": "brown",
+    "scenes": [
+      "tools/lib/ehel-film-marks.js",
+      "tools/lib/film-scenes/science-g2/the-sun-across-the-sky.js",
+      "tools/lib/film-scenes/science-g2/the-sun-across-the-sky-2.js",
+      "tools/lib/film-scenes/science-g2/the-sun-across-the-sky-3.js",
+      "tools/lib/film-scenes/science-g2/the-sun-across-the-sky-4.js"
+    ]
+  },
+  "objectives": [
+    ["2ESs.01", "Describe the apparent movement of the Sun during the day."],
+    ["2TWSc.03", "Take measurements in non-standard units."],
+    ["2TWSc.04", "Follow instructions safely when doing practical work."],
+    ["2TWSc.06", "Collect and record observations and/or measurements by annotating images and completing simple tables."],
+    ["2TWSa.02", "Identify simple patterns in results, e.g. increasing and decreasing patterns."],
+    ["2TWSa.03", "Present and interpret results using tables and block graphs."],
+    ["2SIC.01", "Talk about how some of the scientific knowledge and thinking now was different in the past."],
+    ["2SIC.03", "Know that everyone uses science and identify people who use science professionally."]
+  ],
+  "scenes": [
+    { "id": "title", "kind": "title", "codes": [], "beats": [
+      { "say": "Every day, the Sun seems to move across the sky.",
+        "art": { "at": { "sun": "the Sun", "move": "move across the sky" } } },
+      { "say": "Where does it rise and set? And what happens to shadows?",
+        "art": { "at": { "rise": "Where does it rise", "set": "and set", "shadows": "what happens to shadows" } } }
+    ] },
+
+    { "id": "sunrise", "kind": "sunrise", "heading": "Sunrise in the east", "codes": ["2ESs.01"], "beats": [
+      { "say": "In the morning, the Sun comes up low in the east.",
+        "art": { "at": { "up": "comes up", "low": "low", "east": "in the east" } } },
+      { "say": "A stick in the ground makes a shadow.",
+        "art": { "at": { "stick": "A stick", "shadow": "makes a shadow" } } },
+      { "say": "A shadow is the dark patch where the stick blocks the light.",
+        "art": { "at": { "dark": "the dark patch", "blocks": "blocks the light" } } },
+      { "say": "The morning shadow is long. It stretches across the ground, pointing west.",
+        "art": { "at": { "long": "is long", "stretch": "stretches across", "west": "pointing west" } } },
+      { "say": "It points away from the Sun, on the opposite side of the stick.",
+        "art": { "at": { "away": "away from the Sun", "opposite": "the opposite side" } } }
+    ] },
+
+    { "id": "midday", "kind": "midday", "heading": "Highest at midday", "codes": ["2ESs.01"], "beats": [
+      { "say": "All morning, the Sun climbs higher in the sky.",
+        "art": { "at": { "morning": "All morning", "climbs": "climbs higher" } } },
+      { "say": "By midday, it has climbed to its highest point.",
+        "art": { "at": { "midday": "By midday", "highest": "its highest point" } } },
+      { "say": "Now the shadow is short. It is the shortest all day.",
+        "art": { "at": { "short": "the shadow is short", "shortest": "the shortest all day" } } },
+      { "say": "The higher the Sun, the shorter the shadow.",
+        "art": { "at": { "higher": "The higher the Sun", "shorter": "the shorter the shadow" } } }
+    ] },
+
+    { "id": "sunset", "kind": "sunset", "heading": "Sunset in the west", "codes": ["2ESs.01"], "beats": [
+      { "say": "In the afternoon, the Sun sinks towards the west.",
+        "art": { "at": { "afternoon": "In the afternoon", "sinks": "sinks towards the west" } } },
+      { "say": "Shadows grow long again. Now they point east.",
+        "art": { "at": { "long": "grow long again", "east": "point east" } } },
+      { "say": "In the evening, it sinks low in the west and disappears.",
+        "art": { "at": { "evening": "In the evening", "low": "sinks low", "gone": "disappears" } } },
+      { "say": "The Sun rises in the east and sets in the west, every day.",
+        "art": { "at": { "east": "rises in the east", "west": "sets in the west", "every": "every day" } } }
+    ] },
+
+    { "id": "measure", "kind": "measure", "heading": "Measuring the shadow", "codes": ["2TWSc.04", "2TWSc.03"], "beats": [
+      { "say": "Never look straight at the Sun. Look at the shadow on the ground instead.",
+        "art": { "at": { "never": "Never look", "shadow": "Look at the shadow" } } },
+      { "say": "Stand a stick in the sun. Measure its shadow at nine, at midday and at three.",
+        "art": { "at": { "stick": "Stand a stick", "nine": "at nine", "midday": "at midday", "three": "at three" } } },
+      { "say": "Lay hand spans along it, end to end. Start at the bottom of the stick.",
+        "art": { "at": { "hands": "Lay hand spans", "end": "end to end", "bottom": "the bottom of the stick" } } },
+      { "say": "At nine, it is three hands long. At midday, one hand. At three, three hands.",
+        "art": { "at": { "nine": "At nine", "midday": "At midday", "three": "At three," } } }
+    ] },
+
+    { "id": "record", "kind": "record", "heading": "A table and a graph", "codes": ["2TWSc.06", "2TWSa.03", "2TWSa.02"], "beats": [
+      { "say": "Write each time and its shadow's length in a table.",
+        "art": { "at": { "time": "each time", "length": "its shadow's length", "table": "in a table" } } },
+      { "say": "Then make a block graph, with one block for each hand span.",
+        "art": { "at": { "graph": "a block graph", "block": "one block" } } },
+      { "say": "Long, short, long. The shadow gets shorter towards midday, then longer again.",
+        "art": { "at": { "l1": "Long,", "s": "short,", "l2": "long.", "shorter": "gets shorter", "longer": "longer again" } } },
+      { "say": "The columns go down, then up again. The pattern is decreasing, then increasing.",
+        "art": { "at": { "down": "go down", "up": "up again", "dec": "decreasing", "inc": "then increasing" } } },
+      { "say": "The shortest shadow marks the highest Sun, at midday.",
+        "art": { "at": { "shortest": "The shortest shadow", "highest": "the highest Sun" } } }
+    ] },
+
+    { "id": "earth", "kind": "earth", "heading": "It is the Earth that turns", "codes": ["2ESs.01", "2SIC.01", "2SIC.03"], "beats": [
+      { "say": "It looks as if the Sun moves across the sky. It does not.",
+        "art": { "at": { "moves": "moves across the sky", "not": "It does not" } } },
+      { "say": "The Earth turns, once a day. That swings us past the Sun.",
+        "art": { "at": { "turns": "The Earth turns", "once": "once a day", "swings": "swings us past" } } },
+      { "say": "On a roundabout, the playground seems to move. It is you that is turning.",
+        "art": { "at": { "round": "a roundabout", "seems": "seems to move", "you": "It is you" } } },
+      { "say": "Long ago, people thought the Sun went round the Earth.",
+        "art": { "at": { "ago": "Long ago", "thought": "people thought", "round": "went round the Earth" } } },
+      { "say": "Astronomers are scientists who study the sky. They worked it out by watching and measuring.",
+        "art": { "at": { "astro": "Astronomers", "sky": "study the sky", "worked": "worked it out", "watching": "watching", "measuring": "measuring" } } }
+    ] },
+
+    { "id": "recap", "kind": "recap", "heading": "What you now know", "codes": ["2ESs.01", "2TWSc.03", "2TWSc.04", "2TWSc.06", "2TWSa.02", "2TWSa.03", "2SIC.01", "2SIC.03"], "beats": [
+      { "say": "The Sun rises in the east, is highest at midday, and sets in the west.",
+        "art": { "at": { "east": "rises in the east", "midday": "highest at midday", "west": "sets in the west" } } },
+      { "say": "Shadows are long, then short, then long again.",
+        "art": { "at": { "shadows": "Shadows are long" } } },
+      { "say": "You can measure a shadow in hand spans. Then record it in a table and a graph.",
+        "art": { "at": { "measure": "measure a shadow", "record": "record it" } } },
+      { "say": "And it is the Earth that turns, not the Sun.",
+        "art": { "at": { "earth": "the Earth that turns" } } }
+    ] }
+  ]
+}

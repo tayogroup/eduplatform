@@ -1,0 +1,133 @@
+{
+  "_comment": "Storyboard for the Grade 2 Science unit lecture film, Lesson 6 Forces Change Things. Rendered by tools/create-ehel-unit-lecture.js. See lecture-video/BRIEF.md. The chapters follow LESSON[\"lecture\"] in content/lesson-6.py part by part, under its own headings and in its own words: the still ball that is kicked, pushed along, pushed back and tapped on the side; the toy car pushed gently, medium and hard (3, 6 and 9 steps) on the lesson's own track (ART.sim pushBall); the results table and the block graph the child builds next; the sponge, the metal paperclip and the wooden block of the shape test (the block's push too small to change it, as the lesson says); and the rolling ball that the floor slows and the wall stops.",
+  "slug": "forces-change-things",
+  "lesson": 6,
+  "grade": 2,
+  "stage": 2,
+  "title": "Forces Change Things",
+  "subtitle": "Grade 2 Science",
+  "framework": "Cambridge Primary Science 0097",
+  "renderer": {
+    "art": ["science"],
+    "skin": "brown",
+    "scenes": [
+      "tools/lib/ehel-film-marks.js",
+      "tools/lib/film-scenes/science-g2/forces-change-things.js",
+      "tools/lib/film-scenes/science-g2/forces-change-things-2.js",
+      "tools/lib/film-scenes/science-g2/forces-change-things-3.js"
+    ]
+  },
+  "objectives": [
+    ["2Pf.01", "Know that forces can change the movement of an object."],
+    ["2Pf.02", "Know that forces can change the shape of an object."],
+    ["2Pf.03", "Recognise that things will only speed up, slow down or change direction when something else causes them to do so."],
+    ["2TWSc.03", "Take measurements in non-standard units."],
+    ["2TWSc.06", "Collect and record observations and/or measurements by annotating images and completing simple tables."],
+    ["2TWSa.02", "Identify simple patterns in results, e.g. increasing and decreasing patterns."],
+    ["2TWSa.03", "Present and interpret results using tables and block graphs."]
+  ],
+  "scenes": [
+    {
+      "id": "title", "kind": "title", "codes": [],
+      "beats": [
+        { "say": "A push or a pull is a force. A force changes how a thing moves.",
+          "art": { "at": { "push": "A push", "pull": "a pull", "force": "is a force", "moves": "how a thing moves" } } },
+        { "say": "A force can change a thing's shape, too. Nothing speeds up or stops by itself.",
+          "art": { "at": { "shape": "a thing's shape", "nothing": "Nothing speeds up", "itself": "by itself" } } }
+      ]
+    },
+    {
+      "id": "move", "kind": "move", "heading": "A force changes movement", "codes": ["2Pf.01"],
+      "beats": [
+        { "say": "A still ball sits there for ever, unless a force acts on it.",
+          "art": { "at": { "still": "A still ball", "ever": "for ever", "force": "a force acts" } } },
+        { "say": "A kick is a force. The kick starts the ball moving.",
+          "art": { "at": { "kick": "A kick", "force": "a force", "kick2": "The kick", "starts": "starts the ball" } } },
+        { "say": "Push it along as it rolls, and it speeds up.",
+          "art": { "at": { "push": "Push it along", "rolls": "as it rolls", "faster": "speeds up" } } },
+        { "say": "Push back against it, and it slows down and stops.",
+          "art": { "at": { "back": "Push back", "slows": "slows down", "stops": "and stops" } } },
+        { "say": "Tap it on the side, and it turns. It changes direction: the way it is going.",
+          "art": { "at": { "tap": "Tap it on the side", "turns": "it turns", "direction": "changes direction", "way": "the way it is going" } } },
+        { "say": "So a force can start, speed up, slow, stop or turn a thing.",
+          "art": { "at": { "begin": "start,", "faster": "speed up", "slow": "slow,", "stop": "stop or", "turn": "turn a thing" } } }
+      ]
+    },
+    {
+      "id": "bigger", "kind": "bigger", "heading": "Bigger push, further roll", "codes": ["2Pf.01", "2TWSc.03", "2TWSa.02"],
+      "beats": [
+        { "say": "Here is a toy car on a track. The distance is how far it rolls. You measure it in steps.",
+          "art": { "at": { "car": "a toy car", "track": "on a track", "distance": "The distance", "far": "how far it rolls", "steps": "in steps" } } },
+        { "say": "Push it gently. It rolls a little way: three steps.",
+          "art": { "at": { "gently": "Push it gently", "little": "a little way", "three": "three steps" } } },
+        { "say": "A medium push. It rolls further: six steps.",
+          "art": { "at": { "medium": "A medium push", "further": "rolls further", "six": "six steps" } } },
+        { "say": "A hard push! It rolls furthest of all: nine steps.",
+          "art": { "at": { "hard": "A hard push", "furthest": "furthest of all", "nine": "nine steps" } } },
+        { "say": "Same car, same floor. Only the push changed.",
+          "art": { "at": { "car": "Same car", "floor": "same floor", "push": "Only the push" } } },
+        { "say": "There is a pattern: a bigger push, a bigger move.",
+          "art": { "at": { "pattern": "a pattern", "bigger": "a bigger push", "move": "a bigger move" } } }
+      ]
+    },
+    {
+      "id": "graph", "kind": "graph", "heading": "Graph it", "codes": ["2TWSc.06", "2TWSa.03", "2TWSa.02"],
+      "beats": [
+        { "say": "Write the three distances in a table. Gentle, three. Medium, six. Hard, nine.",
+          "art": { "at": { "table": "in a table", "gentle": "Gentle, three", "medium": "Medium, six", "hard": "Hard, nine" } } },
+        { "say": "Then build a block graph, with one block for each step.",
+          "art": { "at": { "graph": "a block graph", "block": "one block for each step" } } },
+        { "say": "Three blocks for gentle. Six for medium. Nine for hard.",
+          "art": { "at": { "three": "Three blocks", "six": "Six for medium", "nine": "Nine for hard" } } },
+        { "say": "Look at the columns. Each one is taller than the last.",
+          "art": { "at": { "look": "Look at the columns", "taller": "taller than the last" } } },
+        { "say": "That is an increasing pattern: bigger push, further roll.",
+          "art": { "at": { "increasing": "an increasing pattern", "push": "bigger push", "roll": "further roll" } } },
+        { "say": "An even harder push would make a taller column still.",
+          "art": { "at": { "harder": "An even harder push", "taller": "a taller column" } } }
+      ]
+    },
+    {
+      "id": "shape", "kind": "shape", "heading": "A force changes shape", "codes": ["2Pf.02"],
+      "beats": [
+        { "say": "A force can change a shape, too. Squash a sponge, and it goes flat.",
+          "art": { "at": { "shape": "change a shape", "squash": "Squash a sponge", "flat": "goes flat" } } },
+        { "say": "Let go, and it springs back into shape.",
+          "art": { "at": { "go": "Let go", "back": "springs back" } } },
+        { "say": "Bend a metal paperclip. It changes shape, and it stays bent.",
+          "art": { "at": { "bend": "Bend a metal paperclip", "changes": "It changes shape", "stays": "stays bent" } } },
+        { "say": "Squash a wooden block. Nothing happens. Your push is too small to change it.",
+          "art": { "at": { "try": "Squash a wooden block", "nothing": "Nothing happens", "small": "too small" } } },
+        { "say": "Forces change shape, as well as movement.",
+          "art": { "at": { "shape": "change shape", "movement": "as well as movement" } } }
+      ]
+    },
+    {
+      "id": "cause", "kind": "cause", "heading": "Nothing changes by itself", "codes": ["2Pf.03"],
+      "beats": [
+        { "say": "Why does a rolling ball slow down? It does not run out of go.",
+          "art": { "at": { "rolling": "a rolling ball", "slow": "slow down", "go": "run out of go" } } },
+        { "say": "The floor rubs against it, all the way along. That rubbing is a force called friction.",
+          "art": { "at": { "floor": "The floor rubs", "along": "all the way along", "rubbing": "That rubbing", "friction": "friction" } } },
+        { "say": "It stops at the wall, because the wall pushes back.",
+          "art": { "at": { "wall": "at the wall", "back": "pushes back" } } },
+        { "say": "Nothing speeds up, slows down or turns by itself. Every change has a cause.",
+          "art": { "at": { "faster": "speeds up", "slower": "slows down", "turns": "or turns", "cause": "has a cause" } } }
+      ]
+    },
+    {
+      "id": "recap", "kind": "recap", "heading": "What you now know",
+      "codes": ["2Pf.01", "2Pf.02", "2Pf.03", "2TWSc.03", "2TWSc.06", "2TWSa.02", "2TWSa.03"],
+      "beats": [
+        { "say": "A push or a pull is a force. It changes movement.",
+          "art": { "at": { "force": "is a force", "move": "changes movement" } } },
+        { "say": "A bigger push makes a bigger move. The graph shows the pattern.",
+          "art": { "at": { "bigger": "A bigger push", "graph": "The graph" } } },
+        { "say": "A force can change a shape too, like a squashed sponge.",
+          "art": { "at": { "shape": "change a shape", "sponge": "a squashed sponge" } } },
+        { "say": "Nothing changes by itself. When a ball stops, ask: what made it stop?",
+          "art": { "at": { "nothing": "Nothing changes", "ask": "what made it stop" } } }
+      ]
+    }
+  ]
+}

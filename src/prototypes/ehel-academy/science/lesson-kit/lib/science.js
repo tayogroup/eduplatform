@@ -1326,7 +1326,11 @@
   };
   SCENES.extract = (s) => {
     const parts = [
-      '<path d="M0 200 V90 L60 90 L60 120 L120 120 L120 150 L200 150 L200 180 L320 180 V200z" fill="#7D7F86"/><text x="230" y="140" font-size="40">\u{1F69C}</text><text x="70" y="80" font-size="34">\u{1F477}</text>',
+      /* the worker and the lorry stand ON the terraces they are drawn on: a
+         text baseline is the ground line, and at x 70 the rock's surface is
+         y 120, at x 230 it is y 180. Both used to sit 40 units up in the sky
+         (found by the Grade 2 Rocks and the Earth film, 2026-09-23). */
+      '<path d="M0 200 V90 L60 90 L60 120 L120 120 L120 150 L200 150 L200 180 L320 180 V200z" fill="#7D7F86"/><text x="230" y="180" font-size="40">\u{1F69C}</text><text x="70" y="120" font-size="34">\u{1F477}</text>',
       '<rect x="0" y="80" width="320" height="120" fill="#5B5D63"/><rect x="60" y="80" width="120" height="70" fill="#0B1D2C"/><text x="90" y="135" font-size="34">\u{1F477}</text><text x="220" y="140" font-size="34">\u{1F4A1}</text><rect x="0" y="60" width="320" height="20" fill="#3E8E4A"/>',
       '<path d="M0 120 Q160 80 320 120 V200 H0z" fill="#3B7FD1"/><ellipse cx="80" cy="170" rx="14" ry="8" fill="#B7B7B7"/><ellipse cx="150" cy="185" rx="10" ry="6" fill="#B7B7B7"/><ellipse cx="240" cy="165" rx="16" ry="9" fill="#B7B7B7"/><text x="180" y="120" font-size="34">\u{1F9CD}</text>',
     ][s];

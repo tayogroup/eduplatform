@@ -62,12 +62,12 @@
     var film = document.getElementById("film");
     if (F.cards && t < F.cards.open.end) {
       film.style.setProperty("--hue", HUE.title);
-      film.innerHTML = openCard(t);
+      film.innerHTML = skin(openCard(t));
       return;
     }
     if (F.cards && t >= F.cards.end.start) {
       film.style.setProperty("--hue", HUE.recap);
-      film.innerHTML = endCard(t);
+      film.innerHTML = skin(endCard(t));
       return;
     }
 
@@ -83,7 +83,7 @@
     var span = Math.max(scene.end - scene.start, 0.001);
     var d = clamp((t - scene.start) / span, 0, 1);
 
-    film.innerHTML =
+    film.innerHTML = skin(
       chrome(scene, t) +
       '<main class="stage" style="opacity:' + fade.toFixed(3) +
         ";transform:translateY(" + ((1 - fade) * 14 - d * 4).toFixed(2) +
@@ -91,7 +91,7 @@
         heading(scene, t, i) +
         draw(scene, beat, t, i) +
       "</main>" +
-      band(beat, t);
+      band(beat, t));
   }
 
   /* cues(i) is for checking, not rendering: when each named phrase of beat i

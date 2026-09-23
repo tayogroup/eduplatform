@@ -292,6 +292,17 @@ LESSON["lecture"] = [
          "It looks as if the Sun moves across the sky. It does not. The Earth turns, once a day, and that swings us past the Sun. Scientists worked that out by watching and measuring."),
 ]
 
+# The unit lecture film (tools/create-ehel-unit-lecture.js; storyboard and
+# pictures in lecture-video/the-sun-across-the-sky.json). The lecture step draws it
+# above the parts; build-lessons.py refuses a path that is not on disk AND in
+# app.config.json :: extraPages, and a --draft render.
+LESSON["video"] = {
+    "src": "lecture-video/the-sun-across-the-sky.fb69c6e2.mp4",
+    "captions": "lecture-video/the-sun-across-the-sky.5e7cb61a.vtt",
+    "poster": "lecture-video/the-sun-across-the-sky.c7136f36.jpg",
+    "note": "About two and a half minutes. Watch it through, then go back over it a part at a time below.",
+}
+
 LESSON["words"] = [
     word("sunrise", "\U0001F305", "When the Sun first comes up in the morning, in the east.",
          ["Sunrise was at six o'clock.", "At sunrise the shadows are long."]),

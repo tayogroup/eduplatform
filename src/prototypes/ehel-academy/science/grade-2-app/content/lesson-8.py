@@ -239,6 +239,17 @@ LESSON["lecture"] = [
          "A circuit diagram uses symbols: a long line and a short line for the cell, a circle with a cross for the lamp, straight lines for the wires. It is a model of the real circuit."),
 ]
 
+# The unit lecture film (tools/create-ehel-unit-lecture.js; storyboard and
+# pictures in lecture-video/electricity-and-circuits.json). The lecture step draws it
+# above the parts; build-lessons.py refuses a path that is not on disk AND in
+# app.config.json :: extraPages, and a --draft render.
+LESSON["video"] = {
+    "src": "lecture-video/electricity-and-circuits.cbb48729.mp4",
+    "captions": "lecture-video/electricity-and-circuits.e34b495d.vtt",
+    "poster": "lecture-video/electricity-and-circuits.22998c7c.jpg",
+    "note": "About two and a half minutes. Watch it through, then go back over it a part at a time below.",
+}
+
 LESSON["words"] = [
     word("circuit", "\U0001F501", "A complete loop that electricity can flow round.",
          ["The lamp lights when the circuit is complete.", "A gap breaks the circuit."]),

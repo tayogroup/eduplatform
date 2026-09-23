@@ -1,0 +1,115 @@
+{
+  "_comment": "Storyboard for the Grade 2 Science unit lecture film, Lesson 9 Rocks and the Earth. Rendered by tools/create-ehel-unit-lecture.js. See lecture-video/BRIEF.md. The chapters follow LESSON[\"lecture\"] in content/lesson-9.py part by part and in its words: the six rocks of the explore step (granite, chalk, sandstone, marble, slate, pumice, under the lesson's own tap cards); the coin, water and hand-lens tests of the tester step and the soak-up table of the record step; the quarry, the mine and the riverbed of the demo step (ART.scene extract 0-2); rock doing jobs on a roof, a wall, a path, a floor and a board, and the brick that people make; and the help-or-harm sort, with the old quarry that becomes a lake.",
+  "slug": "rocks-and-the-earth",
+  "lesson": 9,
+  "grade": 2,
+  "stage": 2,
+  "title": "Rocks and the Earth",
+  "subtitle": "Grade 2 Science",
+  "framework": "Cambridge Primary Science 0097",
+  "renderer": {
+    "art": ["science"],
+    "skin": "brown",
+    "scenes": [
+      "tools/lib/ehel-film-marks.js",
+      "tools/lib/film-scenes/science-g2/rocks-and-the-earth.js",
+      "tools/lib/film-scenes/science-g2/rocks-and-the-earth-2.js",
+      "tools/lib/film-scenes/science-g2/rocks-and-the-earth-3.js",
+      "tools/lib/film-scenes/science-g2/rocks-and-the-earth-4.js"
+    ]
+  },
+  "objectives": [
+    ["2ESp.01", "Describe and compare different types of rock."],
+    ["2ESp.02", "Know rocks are extracted from the Earth in different ways, including from quarries, mines and riverbeds."],
+    ["2ESp.03", "Know that human activity can affect the environment."],
+    ["2Cp.03", "Know that materials can be tested to determine their properties."]
+  ],
+  "scenes": [
+    { "id": "title", "kind": "title", "codes": [], "beats": [
+      { "say": "Under the soil, the land is made of rock.",
+        "art": { "at": { "soil": "Under the soil", "land": "the land", "rock": "made of rock" } } },
+      { "say": "There are many kinds of rock. People dig it out and use it.",
+        "art": { "at": { "kinds": "many kinds", "dig": "dig it out", "use": "use it" } } }
+    ] },
+
+    { "id": "kinds", "kind": "kinds", "heading": "Many kinds of rock", "codes": ["2ESp.01"], "beats": [
+      { "say": "Granite is very hard. It has speckles of different colours.",
+        "art": { "rock": "granite", "at": { "granite": "Granite", "hard": "very hard", "speckles": "speckles", "colours": "different colours" } } },
+      { "say": "Chalk is soft and white. It crumbles, and you can write with it.",
+        "art": { "rock": "chalk", "at": { "chalk": "Chalk", "soft": "soft and white", "crumbles": "It crumbles", "write": "write with it" } } },
+      { "say": "Sandstone is grainy, like sand stuck together.",
+        "art": { "rock": "sandstone", "at": { "sandstone": "Sandstone", "grainy": "grainy", "sand": "like sand", "stuck": "stuck together" } } },
+      { "say": "Marble is smooth and shiny when polished.",
+        "art": { "rock": "marble", "at": { "marble": "Marble", "smooth": "smooth", "shiny": "shiny when polished" } } },
+      { "say": "Slate is dark. It splits into thin flat sheets.",
+        "art": { "rock": "slate", "at": { "slate": "Slate", "dark": "is dark", "splits": "It splits", "sheets": "thin flat sheets" } } },
+      { "say": "Pumice is full of holes. It is so light that it floats on water.",
+        "art": { "rock": "pumice", "at": { "pumice": "Pumice", "holes": "full of holes", "light": "so light", "floats": "it floats" } } },
+      { "say": "Not all rock is grey and hard. Not all rock is the same.",
+        "art": { "at": { "grey": "grey and hard", "same": "Not all rock is the same" } } }
+    ] },
+
+    { "id": "testing", "kind": "testing", "heading": "Testing rocks", "codes": ["2ESp.01", "2Cp.03"], "beats": [
+      { "say": "Test a rock to find its properties. A property is what it is like.",
+        "art": { "at": { "test": "Test a rock", "properties": "its properties", "like": "what it is like" } } },
+      { "say": "Scratch it with a coin. Chalk scratches, but granite is too hard.",
+        "art": { "at": { "scratch": "Scratch it", "coin": "a coin", "chalk": "Chalk scratches", "granite": "granite is too hard" } } },
+      { "say": "Drop water on it. Does the water soak in, or run off?",
+        "art": { "at": { "drop": "Drop water", "soak": "soak in", "run": "run off" } } },
+      { "say": "Chalk and sandstone soak it up. Granite and marble do not.",
+        "art": { "at": { "chalk": "Chalk", "sandstone": "sandstone", "granite": "Granite", "marble": "marble", "not": "do not" } } },
+      { "say": "Look with a hand lens. Is it grainy, smooth, or full of holes?",
+        "art": { "at": { "lens": "a hand lens", "grainy": "grainy", "smooth": "smooth", "holes": "full of holes" } } },
+      { "say": "Every rock has its own properties. Testing finds them.",
+        "art": { "at": { "own": "its own properties", "finds": "Testing finds them" } } }
+    ] },
+
+    { "id": "where", "kind": "where", "heading": "Where rock comes from", "codes": ["2ESp.02"], "beats": [
+      { "say": "Rock is not made in a factory. It is dug out of the Earth.",
+        "art": { "at": { "factory": "made in a factory", "dug": "dug out", "earth": "the Earth" } } },
+      { "say": "A quarry is a huge open pit. Rock is cut and blasted out in blocks.",
+        "art": { "at": { "quarry": "A quarry", "pit": "huge open pit", "cut": "cut and blasted", "blocks": "in blocks" } } },
+      { "say": "A mine is tunnels deep underground. Miners with lamps dig the rock out.",
+        "art": { "at": { "mine": "A mine", "deep": "deep underground", "miners": "Miners", "lamps": "lamps", "dig": "dig the rock out" } } },
+      { "say": "A riverbed is where water has worn rock into pebbles.",
+        "art": { "at": { "riverbed": "A riverbed", "water": "water", "worn": "worn rock", "pebbles": "into pebbles" } } },
+      { "say": "The smooth pebbles and gravel are scooped out.",
+        "art": { "at": { "smooth": "smooth pebbles", "gravel": "gravel", "scooped": "scooped out" } } }
+    ] },
+
+    { "id": "around", "kind": "around", "heading": "Rock all around", "codes": ["2ESp.02"], "beats": [
+      { "say": "Look around you. Rock is everywhere, doing jobs.",
+        "art": { "at": { "around": "Look around you", "everywhere": "everywhere", "jobs": "doing jobs" } } },
+      { "say": "Slate on roofs. Stone in walls. Gravel on paths.",
+        "art": { "at": { "slate": "Slate on roofs", "stone": "Stone in walls", "gravel": "Gravel on paths" } } },
+      { "say": "Marble on floors, and chalk on the board.",
+        "art": { "at": { "marble": "Marble on floors", "chalk": "chalk on the board" } } },
+      { "say": "All of it began in a quarry, a mine or a river.",
+        "art": { "at": { "all": "All of it", "quarry": "a quarry", "mine": "a mine", "river": "a river" } } },
+      { "say": "But a brick is not rock. People make bricks.",
+        "art": { "at": { "brick": "a brick", "not": "is not rock", "make": "People make bricks" } } }
+    ] },
+
+    { "id": "helping", "kind": "helping", "heading": "Helping or harming", "codes": ["2ESp.03"], "beats": [
+      { "say": "The environment is everything around us: land, water, air and living things.",
+        "art": { "at": { "environment": "The environment", "land": "land", "water": "water", "air": "air", "living": "living things" } } },
+      { "say": "Dumping rubbish in a river, smoke, concrete on a meadow: these harm.",
+        "art": { "at": { "rubbish": "Dumping rubbish in a river", "smoke": "smoke", "meadow": "concrete on a meadow", "harm": "these harm" } } },
+      { "say": "Planting trees, recycling, keeping streams clean: these help.",
+        "art": { "at": { "trees": "Planting trees", "recycling": "recycling", "clean": "keeping streams clean", "help": "these help" } } },
+      { "say": "A quarry is not only bad. An old one can become a lake for wildlife.",
+        "art": { "at": { "quarry": "A quarry", "bad": "not only bad", "old": "An old one", "lake": "a lake", "wildlife": "wildlife" } } },
+      { "say": "Ask: is the land, water or air better or worse after this?",
+        "art": { "at": { "ask": "Ask", "land": "the land", "water": "water", "air": "air", "better": "better", "worse": "worse" } } }
+    ] },
+
+    { "id": "recap", "kind": "recap", "heading": "What you now know", "codes": ["2ESp.01", "2Cp.03", "2ESp.02", "2ESp.03"], "beats": [
+      { "say": "Rocks are not all the same. Testing finds their properties.",
+        "art": { "at": { "kinds": "not all the same", "testing": "Testing finds" } } },
+      { "say": "Rock is taken from quarries, mines and riverbeds. We use it everywhere.",
+        "art": { "at": { "taken": "taken from quarries", "use": "We use it everywhere" } } },
+      { "say": "What we do changes the Earth. It can help the land, or harm it.",
+        "art": { "at": { "changes": "What we do changes", "help": "help the land", "harm": "harm it" } } }
+    ] }
+  ]
+}

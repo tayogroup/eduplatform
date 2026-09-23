@@ -1,0 +1,117 @@
+{
+  "_comment": "Storyboard for the Grade 2 Science unit lecture film, Lesson 1 Animals and Their Coverings. Rendered by tools/create-ehel-unit-lecture.js. See lecture-video/BRIEF.md. Every beat is one narration clip; art.at names the phrases a picture waits for, and the page refuses to load if a phrase is not in its beat's say. The chapters follow LESSON['lecture'] in order (coverings; alike and different; growing up; like their parents; diagram or picture), with the lesson's sort step as its own chapter after coverings, because 2TWSc.01 is taught there and the lesson's quiz asks the penguin question. Every line is the lesson's own words: its explore animals (cat, bird, fish, frog, you), its sort bins and the dog, duck, crocodile and penguin, its cat and dog, its egg-to-hen order step and its baby, child and grown-up, its spotty mother and brown father and their three puppies, and its own bird diagram (BIRD_DIAGRAM in content/lesson-1.py).",
+  "slug": "animals-and-their-coverings",
+  "lesson": 1,
+  "grade": 2,
+  "stage": 2,
+  "title": "Animals and Their Coverings",
+  "subtitle": "Grade 2 Science",
+  "framework": "Cambridge Primary Science 0097",
+  "renderer": {
+    "art": ["science"],
+    "skin": "brown",
+    "scenes": [
+      "tools/lib/ehel-film-marks.js",
+      "tools/lib/film-scenes/science-g2/animals-and-their-coverings.js",
+      "tools/lib/film-scenes/science-g2/animals-and-their-coverings-2.js",
+      "tools/lib/film-scenes/science-g2/animals-and-their-coverings-3.js",
+      "tools/lib/film-scenes/science-g2/animals-and-their-coverings-4.js"
+    ]
+  },
+  "objectives": [
+    ["2Bs.01", "Compare how animals, including humans, are similar and different in their external body parts and skin covering."],
+    ["2Bp.03", "Describe how the offspring of animals, including humans, change as they become older."],
+    ["2Bp.04", "Know that animals, including humans, produce offspring that have a combination of features from their parents."],
+    ["2TWSc.01", "Sort and group objects, materials and living things based on observations of the similarities and differences between them."],
+    ["2TWSm.03", "Describe the difference between a diagram and a picture."]
+  ],
+  "scenes": [
+    { "id": "title", "kind": "title", "codes": [], "beats": [
+      { "say": "Every animal has a covering on the outside of its body.",
+        "art": { "at": { "animal": "Every animal", "covering": "a covering" } } },
+      { "say": "Fur, feathers, scales or skin. Different animals have different ones.",
+        "art": { "at": { "fur": "Fur", "feathers": "feathers", "scales": "scales", "skin": "skin.", "different": "Different animals" } } }
+    ] },
+
+    { "id": "coverings", "kind": "coverings", "heading": "Coverings", "codes": ["2Bs.01"], "beats": [
+      { "say": "A cat has fur. Soft hair all over, to keep it warm.",
+        "art": { "at": { "cat": "A cat", "fur": "fur.", "soft": "Soft hair", "warm": "keep it warm" } } },
+      { "say": "A bird has feathers. They are light and warm, and help it fly.",
+        "art": { "at": { "bird": "A bird", "feathers": "feathers.", "light": "light and warm", "fly": "help it fly" } } },
+      { "say": "A fish has scales. Small hard plates that overlap.",
+        "art": { "at": { "fish": "A fish", "scales": "scales.", "plates": "Small hard plates", "overlap": "overlap" } } },
+      { "say": "A frog has smooth, wet skin. No fur, no feathers, no scales.",
+        "art": { "at": { "frog": "A frog", "skin": "smooth, wet skin", "nofur": "No fur", "nofeathers": "no feathers", "noscales": "no scales" } } },
+      { "say": "You have skin, with hair on your head. You are an animal too.",
+        "art": { "at": { "you": "You have skin", "hair": "hair on your head", "animal": "You are an animal too" } } }
+    ] },
+
+    { "id": "sort", "kind": "sort", "heading": "Sort by covering", "codes": ["2Bs.01", "2TWSc.01"], "beats": [
+      { "say": "Sorting by covering puts animals with the same kind of outside together.",
+        "art": { "at": { "sort": "Sorting by covering", "animals": "puts animals", "same": "the same kind of outside", "together": "together" } } },
+      { "say": "A dog has fur. A duck has feathers. A crocodile has scales.",
+        "art": { "at": { "dog": "A dog", "fur": "fur.", "duck": "A duck", "feathers": "feathers.", "croc": "A crocodile", "scales": "scales." } } },
+      { "say": "A penguin swims, but it is not a fish. It is a bird, with feathers.",
+        "art": { "at": { "penguin": "A penguin", "swims": "swims", "fish": "not a fish", "bird": "a bird", "feathers": "with feathers" } } },
+      { "say": "Look at the outside of the animal, not where it lives.",
+        "art": { "at": { "look": "Look at the outside", "lives": "not where it lives" } } }
+    ] },
+
+    { "id": "alike", "kind": "alike", "heading": "Alike and different", "codes": ["2Bs.01"], "beats": [
+      { "say": "A cat and a dog both have four legs, two ears and fur.",
+        "art": { "at": { "cat": "A cat", "dog": "a dog", "legs": "four legs", "ears": "two ears", "fur": "and fur" } } },
+      { "say": "But a cat has claws it can pull in. A dog does not.",
+        "art": { "at": { "claws": "claws", "pull": "pull in", "dog": "A dog does not" } } },
+      { "say": "Animals are alike in some ways and different in others.",
+        "art": { "at": { "alike": "alike in some ways", "different": "different in others" } } }
+    ] },
+
+    { "id": "grow", "kind": "grow", "heading": "Growing up", "codes": ["2Bp.03"], "beats": [
+      { "say": "A hen starts as an egg. The egg hatches, and a chick comes out.",
+        "art": { "at": { "egg": "an egg", "hatches": "hatches", "chick": "a chick comes out" } } },
+      { "say": "The chick grows bigger and grows feathers. Now it is a young hen.",
+        "art": { "at": { "bigger": "grows bigger", "feathers": "grows feathers", "young": "a young hen" } } },
+      { "say": "The young hen grows into a grown hen. She lays eggs of her own.",
+        "art": { "at": { "grown": "a grown hen", "eggs": "lays eggs" } } },
+      { "say": "A baby cannot walk or talk. A child can. A grown-up is taller.",
+        "art": { "at": { "baby": "A baby", "cannot": "cannot walk or talk", "child": "A child can", "adult": "A grown-up is taller" } } },
+      { "say": "People change as they grow, just like other animals.",
+        "art": { "at": { "people": "People change", "animals": "just like other animals" } } }
+    ] },
+
+    { "id": "parents", "kind": "parents", "heading": "Like their parents", "codes": ["2Bp.04"], "beats": [
+      { "say": "Puppies look like their parents. A spotty mother, and a brown father.",
+        "art": { "at": { "puppies": "Puppies", "parents": "their parents", "mother": "A spotty mother", "father": "a brown father" } } },
+      { "say": "The puppies: one spotty, one brown, one brown with spots.",
+        "art": { "at": { "spotty": "one spotty", "brown": "one brown,", "both": "brown with spots" } } },
+      { "say": "Not exactly like the mother, and not exactly like the father.",
+        "art": { "at": { "mother": "like the mother", "father": "like the father" } } },
+      { "say": "Each puppy gets its own mix from both parents.",
+        "art": { "at": { "mix": "its own mix", "both": "both parents" } } }
+    ] },
+
+    { "id": "diagram", "kind": "diagram", "heading": "Diagram or picture", "codes": ["2TWSm.03"], "beats": [
+      { "say": "A picture shows what an animal looks like.",
+        "art": { "at": { "picture": "A picture", "looks": "looks like" } } },
+      { "say": "A diagram is a drawing with labels that name the parts.",
+        "art": { "at": { "diagram": "A diagram", "drawing": "a drawing", "labels": "labels", "parts": "name the parts" } } },
+      { "say": "This one names the wing, the beak and the legs.",
+        "art": { "at": { "wing": "the wing", "beak": "the beak", "legs": "the legs" } } },
+      { "say": "It leaves out colours on purpose, so the parts stand out.",
+        "art": { "at": { "colours": "leaves out colours", "purpose": "on purpose", "stand": "stand out" } } },
+      { "say": "Scientists draw diagrams to show what matters.",
+        "art": { "at": { "sci": "Scientists", "draw": "draw diagrams", "matters": "what matters" } } }
+    ] },
+
+    { "id": "recap", "kind": "recap", "heading": "What you now know", "codes": ["2Bs.01", "2Bp.03", "2Bp.04", "2TWSc.01", "2TWSm.03"], "beats": [
+      { "say": "Every animal has a covering: fur, feathers, scales or skin.",
+        "art": { "at": { "covering": "a covering" } } },
+      { "say": "Sort them by covering. They are alike in some ways, and different in others.",
+        "art": { "at": { "sort": "Sort them", "alike": "alike in some ways" } } },
+      { "say": "Young animals change as they grow, and get a mix from both parents.",
+        "art": { "at": { "grow": "change as they grow", "mix": "a mix from both parents" } } },
+      { "say": "A diagram names the parts. A picture shows the look.",
+        "art": { "at": { "diagram": "A diagram names", "look": "shows the look" } } }
+    ] }
+  ]
+}

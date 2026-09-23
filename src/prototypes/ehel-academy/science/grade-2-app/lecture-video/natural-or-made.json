@@ -1,0 +1,115 @@
+{
+  "_comment": "Storyboard for the Grade 2 Science unit lecture film, Lesson 4 Natural or Made?. Rendered by tools/create-ehel-unit-lecture.js. See lecture-video/BRIEF.md. Every beat is one narration clip; art.at names the phrases a picture waits for, and the page refuses to load if a phrase is not in its beat's say. The five teaching chapters are the five parts of LESSON[\"lecture\"] in content/lesson-4.py, in their order and in the lesson's own words: wood, wool and stone (its explore cards); plastic, glass, brick and paper made in factories, glass from melted sand and paper from wood pulp, and the sort step's one question; the material tester's four tests on glass and then wool; the drip test and the record step's table; and the context step's kettle and tyre.",
+  "slug": "natural-or-made",
+  "lesson": 4,
+  "grade": 2,
+  "stage": 2,
+  "title": "Natural or Made?",
+  "subtitle": "Grade 2 Science",
+  "framework": "Cambridge Primary Science 0097",
+  "renderer": {
+    "art": ["science"],
+    "skin": "brown",
+    "scenes": [
+      "tools/lib/ehel-film-marks.js",
+      "tools/lib/film-scenes/science-g2/natural-or-made.js",
+      "tools/lib/film-scenes/science-g2/natural-or-made-2.js",
+      "tools/lib/film-scenes/science-g2/natural-or-made-3.js"
+    ]
+  },
+  "objectives": [
+    ["2Cm.01", "Understand that some materials occur naturally and others are manufactured."],
+    ["2Cp.01", "Describe a property as a characteristic of a material and understand that materials can have more than one property."],
+    ["2Cp.02", "Explain why materials are chosen for specific purposes on the basis of their properties."],
+    ["2Cp.03", "Know that materials can be tested to determine their properties."],
+    ["2TWSc.01", "Sort and group objects, materials and living things based on observations of the similarities and differences between them."],
+    ["2TWSc.06", "Collect and record observations and/or measurements by annotating images and completing simple tables."],
+    ["2SIC.02", "Talk about how science explains how objects they use, or know about, work."]
+  ],
+  "scenes": [
+    { "id": "title", "kind": "title", "codes": [], "beats": [
+      { "say": "Some materials come from nature. Others are made by people.",
+        "art": { "at": { "nature": "come from nature", "people": "made by people" } } },
+      { "say": "You will test materials, and find out why each one is chosen.",
+        "art": { "at": { "test": "test materials", "why": "why each one is chosen" } } }
+    ] },
+
+    { "id": "natural", "kind": "natural", "heading": "Natural materials", "codes": ["2Cm.01"], "beats": [
+      { "say": "Wood comes from trees. It grows, so it is natural.",
+        "art": { "at": { "wood": "Wood comes", "trees": "from trees", "grows": "It grows", "natural": "it is natural" } } },
+      { "say": "Wool comes from sheep. It grows, and is cut off and spun. It is natural.",
+        "art": { "at": { "wool": "Wool comes", "sheep": "from sheep", "grows": "It grows", "cut": "cut off", "spun": "spun", "natural": "It is natural" } } },
+      { "say": "Stone is dug out of the ground. It is natural too.",
+        "art": { "at": { "stone": "Stone", "dug": "dug out of the ground", "too": "natural too" } } },
+      { "say": "A natural material grows, or it is dug up. People do not make it.",
+        "art": { "at": { "natural": "A natural material", "grows": "grows", "dug": "dug up", "people": "People do not make it" } } }
+    ] },
+
+    { "id": "made", "kind": "made", "heading": "Manufactured materials", "codes": ["2Cm.01", "2TWSc.01"], "beats": [
+      { "say": "Plastic, glass, brick and paper are made by people, in factories.",
+        "art": { "at": { "plastic": "Plastic", "glass": "glass", "brick": "brick", "paper": "paper", "people": "made by people", "factories": "in factories" } } },
+      { "say": "Glass is made by melting sand, very hot. The sand becomes glass.",
+        "art": { "at": { "glass": "Glass is made", "melt": "melting sand", "hot": "very hot", "becomes": "becomes glass" } } },
+      { "say": "Paper is made in a factory, by mashing wood into pulp.",
+        "art": { "at": { "paper": "Paper", "factory": "in a factory", "mash": "mashing wood", "pulp": "into pulp" } } },
+      { "say": "These are manufactured: made by people, usually in a factory.",
+        "art": { "at": { "these": "These are manufactured", "people": "made by people", "factory": "in a factory" } } },
+      { "say": "To sort a material, ask one question: could you find it in nature?",
+        "art": { "at": { "sort": "To sort a material", "ask": "ask one question", "nature": "find it in nature" } } }
+    ] },
+
+    { "id": "testing", "kind": "testing", "heading": "Testing for properties", "codes": ["2Cp.01", "2Cp.03"], "beats": [
+      { "say": "A property is what a material is like. You can test for each one.",
+        "art": { "at": { "property": "A property", "like": "what a material is like", "test": "test for each one" } } },
+      { "say": "Test the glass. Press it: it is hard. Bend it: it is stiff.",
+        "art": { "at": { "glass": "Test the glass", "press": "Press it", "hard": "it is hard", "bend": "Bend it", "stiff": "it is stiff" } } },
+      { "say": "Hold it to the light: it is see-through. Pour water on it: waterproof.",
+        "art": { "at": { "light": "Hold it to the light", "see": "see-through", "pour": "Pour water on it", "water": "waterproof" } } },
+      { "say": "Glass is hard, stiff, see-through and waterproof, all at once.",
+        "art": { "at": { "hard": "hard", "stiff": "stiff", "see": "see-through", "water": "waterproof", "all": "all at once" } } },
+      { "say": "Now test wool. It is soft, and it bends easily. Different answers!",
+        "art": { "at": { "wool": "test wool", "soft": "It is soft", "bendy": "bends easily", "different": "Different answers" } } },
+      { "say": "Each test finds one property. A material has several.",
+        "art": { "at": { "each": "Each test", "one": "one property", "several": "has several" } } }
+    ] },
+
+    { "id": "waterproof", "kind": "waterproof", "heading": "Waterproof or not", "codes": ["2Cp.03", "2TWSc.06"], "beats": [
+      { "say": "Drip water on glass, and the water runs off.",
+        "art": { "at": { "drip": "Drip water", "glass": "on glass", "runs": "runs off" } } },
+      { "say": "Drip water on wool, and the water soaks in.",
+        "art": { "at": { "drip": "Drip water", "wool": "on wool", "soaks": "soaks in" } } },
+      { "say": "Glass is waterproof: water does not go through it.",
+        "art": { "at": { "glass": "Glass is waterproof", "through": "does not go through it" } } },
+      { "say": "Wool is absorbent: it soaks water up.",
+        "art": { "at": { "wool": "Wool is absorbent", "soaks": "soaks water up" } } },
+      { "say": "You will record each result in a table. Glass: yes. Wool: no.",
+        "art": { "at": { "record": "record each result", "table": "in a table", "glass": "Glass: yes", "wool": "Wool: no" } } },
+      { "say": "Fill in a row for every material. Then you can compare them.",
+        "art": { "at": { "row": "a row for every material", "compare": "compare them" } } }
+    ] },
+
+    { "id": "job", "kind": "job", "heading": "Chosen for the job", "codes": ["2Cp.02", "2SIC.02"], "beats": [
+      { "say": "People choose a material for a job because of its properties.",
+        "art": { "at": { "choose": "choose a material", "job": "for a job", "props": "its properties" } } },
+      { "say": "A kettle is metal, because metal does not melt when it gets hot.",
+        "art": { "at": { "kettle": "A kettle", "metal": "is metal", "melt": "does not melt", "hot": "gets hot" } } },
+      { "say": "Its handle is plastic. Plastic does not carry the heat to your hand.",
+        "art": { "at": { "handle": "Its handle", "plastic": "is plastic", "heat": "carry the heat", "hand": "your hand" } } },
+      { "say": "A tyre is rubber. Rubber grips the road and bends over bumps.",
+        "art": { "at": { "tyre": "A tyre", "rubber": "is rubber", "grips": "grips the road", "bends": "bends over bumps" } } },
+      { "say": "Every material is chosen for its properties. Science explains why.",
+        "art": { "at": { "every": "Every material", "chosen": "chosen for its properties", "science": "Science explains why" } } }
+    ] },
+
+    { "id": "recap", "kind": "recap", "heading": "What you now know", "codes": ["2Cm.01", "2Cp.01", "2Cp.02", "2Cp.03", "2TWSc.01", "2TWSc.06", "2SIC.02"], "beats": [
+      { "say": "Natural materials grow, or are dug up. People make the manufactured ones.",
+        "art": { "at": { "natural": "Natural materials", "made": "People make the manufactured ones" } } },
+      { "say": "A property is what a material is like. Each test finds one of them.",
+        "art": { "at": { "property": "A property", "test": "Each test finds one" } } },
+      { "say": "Glass is waterproof. Wool is absorbent. You record both in a table.",
+        "art": { "at": { "water": "Glass is waterproof", "table": "in a table" } } },
+      { "say": "Every material is chosen for its properties. Now go on a hunt of your own!",
+        "art": { "at": { "chosen": "chosen for its properties", "hunt": "a hunt of your own" } } }
+    ] }
+  ]
+}

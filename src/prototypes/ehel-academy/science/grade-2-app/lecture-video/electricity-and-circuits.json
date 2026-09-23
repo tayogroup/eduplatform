@@ -1,0 +1,121 @@
+{
+  "_comment": "Storyboard for the Grade 2 Science unit lecture film, Lesson 8 Electricity and Circuits. Rendered by tools/create-ehel-unit-lecture.js. See lecture-video/BRIEF.md. Every beat is one narration clip; art.at names the phrases a picture waits for, and the page refuses to load if a phrase is not in its beat's say. The chapters follow LESSON['lecture'] in content/lesson-8.py part by part, in its own words, and the lesson's steps in their order: its electric helpers (a lamp, a kettle, cooking, a fridge, a toy car, a radio); its safety rules and the Safe / Not safe sort; its circuit, built part by part as its build step builds it (ART.kit.circuitSvg: the cell, a wire, the lamp, the second wire), then broken with a gap and mended; the torch, its picture and its diagram, with the lesson's own symbols; and the torch's switch, a gap you open and close (its 'How a torch works' step, 2SIC.02).",
+  "slug": "electricity-and-circuits",
+  "lesson": 8,
+  "grade": 2,
+  "stage": 2,
+  "title": "Electricity and Circuits",
+  "subtitle": "Grade 2 Science",
+  "framework": "Cambridge Primary Science 0097",
+  "renderer": {
+    "art": ["science"],
+    "skin": "brown",
+    "scenes": [
+      "tools/lib/ehel-film-marks.js",
+      "tools/lib/film-scenes/science-g2/electricity-and-circuits.js",
+      "tools/lib/film-scenes/science-g2/electricity-and-circuits-2.js",
+      "tools/lib/film-scenes/science-g2/electricity-and-circuits-3.js",
+      "tools/lib/film-scenes/science-g2/electricity-and-circuits-4.js",
+      "tools/lib/film-scenes/science-g2/electricity-and-circuits-5.js"
+    ]
+  },
+  "objectives": [
+    ["2Pe.01", "Identify how we use electricity and describe how to be safe with it."],
+    ["2Pe.02", "Recognise the components of simple circuits (limited to cells, wires and lamps)."],
+    ["2Pe.03", "Explore the construction of simple series circuits (limited to cells, wires and lamps)."],
+    ["2TWSc.04", "Follow instructions safely when doing practical work."],
+    ["2TWSm.01", "Know that a model represents an object or idea in a clear way."],
+    ["2TWSm.02", "Make and use a physical model of a familiar system or idea."],
+    ["2TWSm.03", "Describe the difference between a diagram and a picture."],
+    ["2SIC.02", "Talk about how science explains how objects they use, or know about, work."]
+  ],
+  "scenes": [
+    { "id": "title", "kind": "title", "codes": [], "beats": [
+      { "say": "Electricity lights a lamp. It has to flow all the way round a loop.",
+        "art": { "at": { "lamp": "lights a lamp", "flow": "flow all the way", "loop": "round a loop" } } },
+      { "say": "That loop is a circuit. You can build one, and make a lamp light.",
+        "art": { "at": { "circuit": "a circuit", "build": "build one", "light": "make a lamp light" } } }
+    ] },
+
+    { "id": "uses", "kind": "uses", "heading": "What electricity does", "codes": ["2Pe.01"], "beats": [
+      { "say": "Electricity does jobs for us all day. A lamp turns it into light.",
+        "art": { "at": { "jobs": "does jobs", "lamp": "A lamp", "light": "into light" } } },
+      { "say": "A kettle turns it into heat. A cooker cooks our food.",
+        "art": { "at": { "kettle": "A kettle", "heat": "into heat", "cooks": "cooks our food" } } },
+      { "say": "A fridge uses it to keep food cold. A toy car uses it to move.",
+        "art": { "at": { "fridge": "A fridge", "cold": "keep food cold", "toys": "A toy car" } } },
+      { "say": "A radio turns it into sound. Electricity is not only for lights.",
+        "art": { "at": { "radio": "A radio", "sound": "into sound", "only": "not only for lights" } } }
+    ] },
+
+    { "id": "safe", "kind": "safe", "heading": "Staying safe", "codes": ["2Pe.01", "2TWSc.04"], "beats": [
+      { "say": "The electricity in a wall socket is strong. It can hurt you badly.",
+        "art": { "at": { "socket": "a wall socket", "strong": "is strong", "hurt": "hurt you badly" } } },
+      { "say": "Only a plug goes in a socket. Never poke one with a pencil.",
+        "art": { "at": { "plug": "Only a plug", "goes": "goes in a socket", "never": "Never poke one", "pencil": "with a pencil" } } },
+      { "say": "Dry hands on switches. Water lets electricity through to you.",
+        "art": { "at": { "dry": "Dry hands", "switch": "on switches", "water": "Water lets", "through": "through to you" } } },
+      { "say": "Never fly a kite near power lines. If a wire is broken, tell a grown-up.",
+        "art": { "at": { "kite": "fly a kite", "lines": "power lines", "broken": "a wire is broken", "tell": "tell a grown-up" } } },
+      { "say": "A small cell is safe to hold. Never put it in your mouth.",
+        "art": { "at": { "cell": "A small cell", "safe": "safe to hold", "mouth": "in your mouth" } } },
+      { "say": "Follow the rules when you build a circuit, and you are safe.",
+        "art": { "at": { "rules": "Follow the rules", "build": "build a circuit", "safe": "you are safe" } } }
+    ] },
+
+    { "id": "parts", "kind": "parts", "heading": "The parts of a circuit", "codes": ["2Pe.02", "2Pe.03"], "beats": [
+      { "say": "A simple circuit has three parts: a cell, wires and a lamp.",
+        "art": { "at": { "three": "three parts", "cell": "a cell", "wires": "wires", "lamp": "a lamp" } } },
+      { "say": "The cell is a small battery. It pushes the electricity round.",
+        "art": { "at": { "cell": "The cell", "battery": "a small battery", "pushes": "pushes the electricity" } } },
+      { "say": "Add a wire, then the lamp. The lamp is not lit yet.",
+        "art": { "at": { "wire": "Add a wire", "lamp": "then the lamp", "not": "not lit yet" } } },
+      { "say": "Add the second wire to close the loop. Now the lamp lights!",
+        "art": { "at": { "second": "the second wire", "close": "close the loop", "lights": "the lamp lights" } } },
+      { "say": "That loop is a circuit. Electricity flows out of the cell, through the lamp, and back.",
+        "art": { "at": { "circuit": "a circuit", "out": "out of the cell", "through": "through the lamp", "back": "and back" } } }
+    ] },
+
+    { "id": "gap", "kind": "gap", "heading": "A gap breaks it", "codes": ["2Pe.03", "2TWSm.02"], "beats": [
+      { "say": "Your circuit is a model of a torch. Now take one wire out.",
+        "art": { "at": { "model": "a model", "torch": "of a torch", "take": "take one wire out" } } },
+      { "say": "The lamp goes out. There is a gap, so the loop is broken.",
+        "art": { "at": { "out": "The lamp goes out", "gap": "a gap", "broken": "is broken" } } },
+      { "say": "Electricity can only flow round a complete loop. A gap anywhere, and it stops.",
+        "art": { "at": { "flow": "only flow", "complete": "a complete loop", "anywhere": "A gap anywhere", "stops": "it stops" } } },
+      { "say": "Put the wire back. The loop is complete, and the lamp lights again.",
+        "art": { "at": { "back": "Put the wire back", "complete": "The loop is complete", "again": "lights again" } } }
+    ] },
+
+    { "id": "diagram", "kind": "diagram", "heading": "The diagram is a model", "codes": ["2Pe.02", "2TWSm.01", "2TWSm.03"], "beats": [
+      { "say": "Look inside a real torch: a battery, two metal strips and a little lamp.",
+        "art": { "at": { "torch": "a real torch", "battery": "a battery", "strips": "two metal strips", "lamp": "a little lamp" } } },
+      { "say": "A picture shows how the torch looks. It does not show the loop inside.",
+        "art": { "at": { "picture": "A picture", "looks": "how the torch looks", "loop": "the loop inside" } } },
+      { "say": "A diagram uses symbols. A long line and a short line stand for the cell.",
+        "art": { "at": { "diagram": "A diagram", "symbols": "symbols", "long": "A long line", "short": "a short line", "cell": "for the cell" } } },
+      { "say": "A circle with a cross is the lamp. Straight lines are the wires.",
+        "art": { "at": { "circle": "A circle with a cross", "lamp": "the lamp", "lines": "Straight lines", "wires": "the wires" } } },
+      { "say": "The diagram is a model of the torch. It shows the loop clearly.",
+        "art": { "at": { "model": "a model", "loop": "the loop clearly" } } }
+    ] },
+
+    { "id": "switch", "kind": "switch", "heading": "How a torch works", "codes": ["2SIC.02", "2Pe.03"], "beats": [
+      { "say": "A torch has a switch. A switch is a gap you can open and close.",
+        "art": { "at": { "switch": "has a switch", "gap": "a gap", "open": "open and close" } } },
+      { "say": "Switch it on, and the loop closes. The lamp lights.",
+        "art": { "at": { "on": "Switch it on", "closes": "the loop closes", "lights": "The lamp lights" } } },
+      { "say": "Switch it off, and a gap opens. The lamp goes out.",
+        "art": { "at": { "off": "Switch it off", "opens": "a gap opens", "out": "goes out" } } }
+    ] },
+
+    { "id": "recap", "kind": "recap", "heading": "What you now know", "codes": ["2Pe.01", "2Pe.02", "2Pe.03", "2TWSc.04", "2TWSm.01", "2TWSm.02", "2TWSm.03", "2SIC.02"], "beats": [
+      { "say": "Electricity does jobs for us all day. Rules keep you safe with it.",
+        "art": { "at": { "jobs": "does jobs", "rules": "Rules keep you safe" } } },
+      { "say": "A cell, wires and a lamp in a complete loop make a circuit. A gap stops it.",
+        "art": { "at": { "parts": "A cell, wires and a lamp", "loop": "a complete loop", "gap": "A gap stops it" } } },
+      { "say": "A switch opens and closes a gap. A diagram is a model of the circuit.",
+        "art": { "at": { "switch": "A switch", "diagram": "A diagram", "model": "a model" } } }
+    ] }
+  ]
+}

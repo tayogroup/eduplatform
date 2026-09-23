@@ -293,6 +293,17 @@ LESSON["lecture"] = [
          "A picture shows what an animal looks like. A diagram is a drawing with labels that name the parts. Scientists draw diagrams to show what matters."),
 ]
 
+# The unit lecture film (tools/create-ehel-unit-lecture.js; storyboard and
+# pictures in lecture-video/animals-and-their-coverings.json). The lecture step draws it
+# above the parts; build-lessons.py refuses a path that is not on disk AND in
+# app.config.json :: extraPages, and a --draft render.
+LESSON["video"] = {
+    "src": "lecture-video/animals-and-their-coverings.c040b35f.mp4",
+    "captions": "lecture-video/animals-and-their-coverings.5b579f18.vtt",
+    "poster": "lecture-video/animals-and-their-coverings.32569b75.jpg",
+    "note": "About two and a half minutes. Watch it through, then go back over it a part at a time below.",
+}
+
 LESSON["words"] = [
     word("fur", "\U0001F431", "Soft, thick hair all over an animal's body.",
          ["A cat has fur.", "Fur keeps a rabbit warm."]),

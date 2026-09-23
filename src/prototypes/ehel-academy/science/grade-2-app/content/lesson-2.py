@@ -258,6 +258,17 @@ LESSON["lecture"] = [
          "Being ill means your body is not working as it should. A hot forehead, a cough, feeling very tired. Tell a grown-up, rest, drink water. Your body will mend."),
 ]
 
+# The unit lecture film (tools/create-ehel-unit-lecture.js; storyboard and
+# pictures in lecture-video/teeth-and-staying-healthy.json). The lecture step draws it
+# above the parts; build-lessons.py refuses a path that is not on disk AND in
+# app.config.json :: extraPages, and a --draft render.
+LESSON["video"] = {
+    "src": "lecture-video/teeth-and-staying-healthy.85e3ace0.mp4",
+    "captions": "lecture-video/teeth-and-staying-healthy.f2707174.vtt",
+    "poster": "lecture-video/teeth-and-staying-healthy.e6b58e2f.jpg",
+    "note": "About two and a half minutes. Watch it through, then go back over it a part at a time below.",
+}
+
 LESSON["words"] = [
     word("incisors", "\U0001F9B7", "The flat front teeth, for cutting food.",
          ["Incisors bite into an apple.", "You have eight incisors."]),

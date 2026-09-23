@@ -250,6 +250,17 @@ LESSON["lecture"] = [
          "A kettle is metal because metal does not melt when it gets hot. A tyre is rubber because rubber grips and bends. Every material is chosen for its properties."),
 ]
 
+# The unit lecture film (tools/create-ehel-unit-lecture.js; storyboard and
+# pictures in lecture-video/natural-or-made.json). The lecture step draws it
+# above the parts; build-lessons.py refuses a path that is not on disk AND in
+# app.config.json :: extraPages, and a --draft render.
+LESSON["video"] = {
+    "src": "lecture-video/natural-or-made.eada5870.mp4",
+    "captions": "lecture-video/natural-or-made.c83fd33c.vtt",
+    "poster": "lecture-video/natural-or-made.3a0347a2.jpg",
+    "note": "About two and a half minutes. Watch it through, then go back over it a part at a time below.",
+}
+
 LESSON["words"] = [
     word("natural", "\U0001FAB5", "Comes from nature: it grows, or is dug from the ground.",
          ["Wood is a natural material.", "Wool is natural. It comes from sheep."]),

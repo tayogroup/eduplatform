@@ -1,0 +1,113 @@
+{
+  "_comment": "Storyboard for the Grade 2 Science unit lecture film, Lesson 7 Light and Dark. Rendered by tools/create-ehel-unit-lecture.js. See lecture-video/BRIEF.md. Every beat is one narration clip; art.at names the phrases a picture waits for, and the page refuses to load if a phrase is not in its beat's say. The chapters follow LESSON['lecture'] in content/lesson-7.py part by part (light sources; shining back; darkness; a model of light; how ideas changed), in the lesson's own words and examples: the Sun, lamp, candle, torch and fire of its explore step; the Moon, mirror and white paper of its sort, its dark cupboard test and its two bins; its dark room (ART.sim darkRoom: curtains, lamp) with its three predictions; its model of light (the RAY_MODEL drawing, straight lines from the source to the eye) and its globe (ART.scene globe); and the eyes that were once thought to send out beams. People are brown (renderer.skin).",
+  "slug": "light-and-dark",
+  "lesson": 7,
+  "grade": 2,
+  "stage": 2,
+  "title": "Light and Dark",
+  "subtitle": "Grade 2 Science",
+  "framework": "Cambridge Primary Science 0097",
+  "renderer": {
+    "art": ["science"],
+    "skin": "brown",
+    "scenes": [
+      "tools/lib/ehel-film-marks.js",
+      "tools/lib/film-scenes/science-g2/light-and-dark.js",
+      "tools/lib/film-scenes/science-g2/light-and-dark-2.js",
+      "tools/lib/film-scenes/science-g2/light-and-dark-3.js"
+    ]
+  },
+  "objectives": [
+    ["2Ps.01", "Know that there are many light sources, including the Sun."],
+    ["2Ps.02", "Know that darkness is the absence of light."],
+    ["2TWSc.01", "Sort and group objects, materials and living things based on observations of the similarities and differences between them."],
+    ["2TWSp.02", "Make predictions about what they think will happen."],
+    ["2TWSa.01", "Describe what happened during an enquiry and if it matched their predictions."],
+    ["2TWSm.01", "Know that a model represents an object or idea in a clear way."],
+    ["2SIC.01", "Talk about how some of the scientific knowledge and thinking now was different in the past."]
+  ],
+  "scenes": [
+    { "id": "title", "kind": "title", "codes": [], "beats": [
+      { "say": "Light lets you see. It comes from a light source, like the Sun.",
+        "art": { "at": { "see": "Light lets you see", "source": "a light source", "sun": "the Sun" } } },
+      { "say": "Take all the light away, and it is dark. Dark is no light at all.",
+        "art": { "at": { "away": "Take all the light away", "dark": "it is dark", "none": "no light at all" } } }
+    ] },
+
+    { "id": "sources", "kind": "sources", "heading": "Light sources", "codes": ["2Ps.01"], "beats": [
+      { "say": "The Sun, a lamp, a candle, a torch, a fire.",
+        "art": { "at": { "sun": "The Sun", "lamp": "a lamp", "candle": "a candle", "torch": "a torch", "fire": "a fire" } } },
+      { "say": "Each one makes its own light. Each one is a light source.",
+        "art": { "at": { "own": "makes its own light", "source": "a light source" } } },
+      { "say": "Switch it off, or blow it out, and the light stops.",
+        "art": { "at": { "off": "Switch it off", "blow": "blow it out", "stops": "the light stops" } } },
+      { "say": "The Sun is the biggest light source we have. Daylight is sunlight.",
+        "art": { "at": { "biggest": "the biggest light source", "daylight": "Daylight is sunlight" } } }
+    ] },
+
+    { "id": "back", "kind": "back", "heading": "Shining back", "codes": ["2Ps.01", "2TWSc.01"], "beats": [
+      { "say": "The Moon is bright at night. Is it a light source?",
+        "art": { "at": { "moon": "The Moon", "bright": "bright at night", "ask": "Is it a light source?" } } },
+      { "say": "No. It makes no light of its own. It shines back the Sun's light.",
+        "art": { "at": { "no": "No.", "own": "no light of its own", "back": "shines back", "sun": "the Sun's light" } } },
+      { "say": "A mirror and white paper shine light back too.",
+        "art": { "at": { "mirror": "A mirror", "paper": "white paper", "back": "shine light back" } } },
+      { "say": "Put them in a dark cupboard, and they go dark. So they are not sources.",
+        "art": { "at": { "cupboard": "a dark cupboard", "dark": "they go dark", "not": "not sources" } } },
+      { "say": "Now sort them into two groups: makes light, or only shines it back.",
+        "art": { "at": { "sort": "sort them", "makes": "makes light", "back": "only shines it back" } } }
+    ] },
+
+    { "id": "dark", "kind": "dark", "heading": "Darkness", "codes": ["2Ps.02", "2TWSp.02", "2TWSa.01"], "beats": [
+      { "say": "Here is a room. Daylight comes in, and the lamp is on.",
+        "art": { "at": { "room": "a room", "daylight": "Daylight comes in", "lamp": "the lamp is on" } } },
+      { "say": "Predict: with the curtains shut and the lamp off, what will you see?",
+        "art": { "at": { "predict": "Predict", "shut": "the curtains shut", "off": "the lamp off", "see": "what will you see" } } },
+      { "say": "Close the curtains. The lamp still lights the room.",
+        "art": { "at": { "close": "Close the curtains", "still": "The lamp still lights" } } },
+      { "say": "Now switch off the lamp. It is completely dark.",
+        "art": { "at": { "off": "switch off the lamp", "dark": "completely dark" } } },
+      { "say": "You cannot see anything, because there is no light to see by.",
+        "art": { "at": { "nothing": "You cannot see anything", "nolight": "no light to see by" } } },
+      { "say": "Did that match your prediction? Switch the lamp on, and you can see again.",
+        "art": { "at": { "match": "Did that match", "on": "Switch the lamp on", "again": "you can see again" } } },
+      { "say": "Darkness is what is left when there is no light.",
+        "art": { "at": { "darkness": "Darkness", "left": "what is left", "nolight": "no light" } } }
+    ] },
+
+    { "id": "model", "kind": "model", "heading": "A model of light", "codes": ["2TWSm.01"], "beats": [
+      { "say": "We cannot see light travelling. So scientists draw a model of it.",
+        "art": { "at": { "cannot": "We cannot see light travelling", "model": "a model" } } },
+      { "say": "They draw light as straight lines, from the source to your eye.",
+        "art": { "at": { "lines": "straight lines", "source": "the source", "eye": "your eye" } } },
+      { "say": "That drawing is a model: a clear way of showing an idea.",
+        "art": { "at": { "model": "a model", "clear": "a clear way", "idea": "an idea" } } },
+      { "say": "A globe is a model of the Earth. It shows the shape and the seas.",
+        "art": { "at": { "globe": "A globe", "earth": "the Earth", "shape": "the shape", "seas": "the seas" } } },
+      { "say": "It leaves out every house and tree. A model leaves the rest out.",
+        "art": { "at": { "house": "every house", "tree": "tree", "rest": "leaves the rest out" } } }
+    ] },
+
+    { "id": "ideas", "kind": "ideas", "heading": "How ideas changed", "codes": ["2SIC.01"], "beats": [
+      { "say": "Long ago, some people thought eyes sent out beams, like torches.",
+        "art": { "at": { "long": "Long ago", "beams": "sent out beams", "torches": "like torches" } } },
+      { "say": "If that were true, you could see in a dark room. You cannot.",
+        "art": { "at": { "dark": "a dark room", "cannot": "You cannot" } } },
+      { "say": "Testing showed that light comes from a source, into your eye.",
+        "art": { "at": { "testing": "Testing", "source": "from a source", "eye": "into your eye" } } },
+      { "say": "What people know changes when they test it.",
+        "art": { "at": { "changes": "changes", "test": "test it" } } }
+    ] },
+
+    { "id": "recap", "kind": "recap", "heading": "What you now know", "codes": ["2Ps.01", "2Ps.02", "2TWSc.01", "2TWSp.02", "2TWSa.01", "2TWSm.01", "2SIC.01"], "beats": [
+      { "say": "A light source makes its own light. The Sun is the biggest one.",
+        "art": { "at": { "source": "A light source" } } },
+      { "say": "The Moon, a mirror and white paper only shine light back.",
+        "art": { "at": { "back": "only shine light back" } } },
+      { "say": "Darkness is not a thing. It is what is left when there is no light.",
+        "art": { "at": { "dark": "Darkness is not a thing" } } },
+      { "say": "A model shows an idea clearly. Ideas change when people test them.",
+        "art": { "at": { "model": "A model", "change": "Ideas change" } } }
+    ] }
+  ]
+}

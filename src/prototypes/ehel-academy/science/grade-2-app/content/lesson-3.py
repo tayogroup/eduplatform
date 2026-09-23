@@ -260,6 +260,17 @@ LESSON["lecture"] = [
          "Rubbish in a pond, cutting down a forest: what people do changes habitats. Planting flowers and leaving a log pile helps. Science shows us how."),
 ]
 
+# The unit lecture film (tools/create-ehel-unit-lecture.js; storyboard and
+# pictures in lecture-video/habitats.json). The lecture step draws it
+# above the parts; build-lessons.py refuses a path that is not on disk AND in
+# app.config.json :: extraPages, and a --draft render.
+LESSON["video"] = {
+    "src": "lecture-video/habitats.702d3e32.mp4",
+    "captions": "lecture-video/habitats.11379d03.vtt",
+    "poster": "lecture-video/habitats.0184d420.jpg",
+    "note": "About two and a half minutes. Watch it through, then go back over it a part at a time below.",
+}
+
 LESSON["words"] = [
     word("habitat", "\U0001F33F", "The place where a living thing naturally lives.",
          ["A pond is a frog's habitat.", "A desert is a hot, dry habitat."]),

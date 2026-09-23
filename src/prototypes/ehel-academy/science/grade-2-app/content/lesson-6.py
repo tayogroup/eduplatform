@@ -304,6 +304,17 @@ LESSON["lecture"] = [
          "A ball slows down because the floor rubs against it. It stops at the wall because the wall pushes back. Every change in movement has a cause."),
 ]
 
+# The unit lecture film (tools/create-ehel-unit-lecture.js; storyboard and
+# pictures in lecture-video/forces-change-things.json). The lecture step draws it
+# above the parts; build-lessons.py refuses a path that is not on disk AND in
+# app.config.json :: extraPages, and a --draft render.
+LESSON["video"] = {
+    "src": "lecture-video/forces-change-things.aa5ca8eb.mp4",
+    "captions": "lecture-video/forces-change-things.7fdbb205.vtt",
+    "poster": "lecture-video/forces-change-things.e0fe60f2.jpg",
+    "note": "About two and a half minutes. Watch it through, then go back over it a part at a time below.",
+}
+
 LESSON["words"] = [
     word("force", "\U0001F4AA\U0001F3FE", "A push or a pull.",
          ["A kick is a force.", "A force made the ball move."]),

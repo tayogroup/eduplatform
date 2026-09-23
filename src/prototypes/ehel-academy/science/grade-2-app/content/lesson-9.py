@@ -286,6 +286,17 @@ LESSON["lecture"] = [
          "Dumping rubbish, smoke, covering a meadow with concrete: these harm the land. Planting trees, recycling, keeping streams clean: these help. What we do changes the Earth."),
 ]
 
+# The unit lecture film (tools/create-ehel-unit-lecture.js; storyboard and
+# pictures in lecture-video/rocks-and-the-earth.json). The lecture step draws it
+# above the parts; build-lessons.py refuses a path that is not on disk AND in
+# app.config.json :: extraPages, and a --draft render.
+LESSON["video"] = {
+    "src": "lecture-video/rocks-and-the-earth.c1c0c9fe.mp4",
+    "captions": "lecture-video/rocks-and-the-earth.2bb37450.vtt",
+    "poster": "lecture-video/rocks-and-the-earth.1846cbb4.jpg",
+    "note": "About two and a half minutes. Watch it through, then go back over it a part at a time below.",
+}
+
 LESSON["words"] = [
     word("rock", "\U0001FAA8", "The hard material the Earth is made of under the soil.",
          ["Granite is a hard rock.", "Rock is dug from a quarry."]),

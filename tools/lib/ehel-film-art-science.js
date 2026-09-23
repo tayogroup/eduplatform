@@ -19,13 +19,15 @@
  * ehel-film-art-science.page.js, which runs inside the same scope as the
  * slices. What a film may draw with it is listed there.
  *
- * What it slices, and why that is enough for Grade 1: the first FIGURES,
- * SCENES and SIMS objects in science.js are exactly the Grade 1 set (the plant
- * and the body; the seed, the ground, the globe and the sky; plantWater,
- * plantLight, pushBall, floatSink, magnet, soundFar, shapeChange, globeCatch
- * and sunShade). Grades 2-4 add theirs further down the file, one assignment
- * at a time (FIGURES.mouth = ..., SIMS.circuit = ...). A film for those grades
- * adds a slice here, with its own marker check, before it draws them.
+ * What it slices. The first FIGURES, SCENES and SIMS objects in science.js are
+ * the Grade 1 set (the plant and the body; the seed, the ground, the globe and
+ * the sky; plantWater, plantLight, pushBall, floatSink, magnet, soundFar,
+ * shapeChange, globeCatch and sunShade). Grades 2-4 add theirs further down the
+ * file, one assignment at a time (FIGURES.mouth = ..., SIMS.circuit = ...), in
+ * three blocks, one per Stage, each from its "Stage N figures" marker to the
+ * next step kind (2026-09-19, for the Grade 2-4 films). The blocks hold only
+ * those assignments and the plain functions that draw for them (circuitSvg,
+ * magnetPair, armSvg ...), which ART.kit hands to a film.
  */
 "use strict";
 
@@ -46,7 +48,10 @@ const PIECES = [
   ["  const FIGURES = {\n", "\n  };\n", "FIGURES (the plant and the body)", true],
   ["  const SCENES = {\n", "\n  };\n", "SCENES (the seed, the ground, the globe, the sky)", true],
   ["  function potSvg(x, state, label, dark, cold) {", "  const SIMS = {\n", "potSvg and twoPots", false],
-  ["  const SIMS = {\n", "\n  };\n", "SIMS (the Grade 1 experiments)", true]
+  ["  const SIMS = {\n", "\n  };\n", "SIMS (the Grade 1 experiments)", true],
+  ["  /* ---- Stage 2 figures", "  /* ==================================================================\n     STAGE 3 (", "the Stage 2 drawings (Grade 2)", false],
+  ["  /* ---- Stage 3 figures", "  /* ---- make a diagram:", "the Stage 3 drawings (Grade 3)", false],
+  ["  /* ---- Stage 4 figures", "  /* ---- use a key to identify things", "the Stage 4 drawings (Grade 4)", false]
 ];
 
 function slice(src, start, end, what, keepEnd) {

@@ -255,6 +255,17 @@ LESSON["lecture"] = [
          "A grown-up handles the heating. Leave hot things for a grown-up to move. Never touch to test if it is hot. Tie back hair. Wait for things to cool. Heat changes materials, and heat rules keep hands safe."),
 ]
 
+# The unit lecture film (tools/create-ehel-unit-lecture.js; storyboard and
+# pictures in lecture-video/changing-materials.json). The lecture step draws it
+# above the parts; build-lessons.py refuses a path that is not on disk AND in
+# app.config.json :: extraPages, and a --draft render.
+LESSON["video"] = {
+    "src": "lecture-video/changing-materials.bb4d5682.mp4",
+    "captions": "lecture-video/changing-materials.3e1bc17e.vtt",
+    "poster": "lecture-video/changing-materials.1cdfbd7b.jpg",
+    "note": "About two and a half minutes. Watch it through, then go back over it a part at a time below.",
+}
+
 LESSON["words"] = [
     word("melt", "\U0001F9CA", "To change from solid to liquid when heated.",
          ["Ice melts in the sun.", "Chocolate melts in your hand."]),

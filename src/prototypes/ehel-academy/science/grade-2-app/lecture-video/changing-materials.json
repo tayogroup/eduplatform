@@ -1,0 +1,113 @@
+{
+  "_comment": "Storyboard for the Grade 2 Science unit lecture film, Lesson 5 Changing Materials. Rendered by tools/create-ehel-unit-lecture.js. See lecture-video/BRIEF.md. The five chapters are the five parts of LESSON[\"lecture\"] in content/lesson-5.py, in its order and its words: same material back (ice melting and freezing, chocolate melting in the sun and setting in the fridge, both the demo's own frames); a new material (the egg of the experiment, predicted first, heated three times and cooled, drawn by the lesson's own ART.sim newMaterial); burning (wood to ash and smoke, and the candle that gets shorter); baking (dough into bread, cake mix into a cake); and the five heat rules of the Safe with heat step, including its misconception, that a pan which has stopped steaming is still hot. Every chapter ends on the lesson's one question: can you get the first material back?",
+  "slug": "changing-materials",
+  "lesson": 5,
+  "grade": 2,
+  "stage": 2,
+  "title": "Changing Materials",
+  "subtitle": "Grade 2 Science",
+  "framework": "Cambridge Primary Science 0097",
+  "renderer": {
+    "art": ["science"],
+    "skin": "brown",
+    "scenes": [
+      "tools/lib/ehel-film-marks.js",
+      "tools/lib/film-scenes/science-g2/changing-materials.js",
+      "tools/lib/film-scenes/science-g2/changing-materials-2.js",
+      "tools/lib/film-scenes/science-g2/changing-materials-3.js",
+      "tools/lib/film-scenes/science-g2/changing-materials-4.js"
+    ]
+  },
+  "objectives": [
+    ["2Cc.01", "Know that some changes can turn a material into a different material."],
+    ["2TWSp.02", "Make predictions about what they think will happen."],
+    ["2TWSa.01", "Describe what happened during an enquiry and if it matched their predictions."],
+    ["2TWSc.04", "Follow instructions safely when doing practical work."]
+  ],
+  "scenes": [
+    { "id": "title", "kind": "title", "codes": [], "beats": [
+      { "say": "Some changes make a new material. Some changes do not.",
+        "art": { "at": { "new": "make a new material", "not": "Some changes do not" } } },
+      { "say": "Ask one question: can you get the first material back?",
+        "art": { "at": { "ask": "Ask one question", "back": "the first material back" } } }
+    ] },
+
+    { "id": "same", "kind": "same", "heading": "Same material back", "codes": ["2Cc.01"], "beats": [
+      { "say": "Ice is a solid. Heat it and it melts into water, a liquid.",
+        "art": { "at": { "solid": "Ice is a solid", "melts": "it melts", "water": "into water", "liquid": "a liquid" } } },
+      { "say": "Put the water in the freezer, and it is ice again.",
+        "art": { "at": { "freezer": "in the freezer", "again": "ice again" } } },
+      { "say": "Melting and freezing keep the same material. It is water all along.",
+        "art": { "at": { "melting": "Melting", "freezing": "freezing", "same": "the same material", "along": "water all along" } } },
+      { "say": "Chocolate melts in the sun. In the fridge it sets hard again.",
+        "art": { "at": { "melts": "Chocolate melts", "sun": "in the sun", "fridge": "In the fridge", "sets": "sets hard again" } } },
+      { "say": "It looks different, but it is still chocolate. You can get it back.",
+        "art": { "at": { "looks": "It looks different", "still": "still chocolate", "back": "get it back" } } }
+    ] },
+
+    { "id": "egg", "kind": "egg", "heading": "A new material", "codes": ["2Cc.01", "2TWSp.02", "2TWSa.01"], "beats": [
+      { "say": "Here is a raw egg in a pan. The egg white is runny and clear.",
+        "art": { "at": { "egg": "a raw egg in a pan", "white": "The egg white", "runny": "runny and clear" } } },
+      { "say": "Predict first. When the cooked egg cools, will it go back to raw?",
+        "art": { "at": { "predict": "Predict first", "cools": "the cooked egg cools", "raw": "go back to raw" } } },
+      { "say": "Now heat it, three times. The clear part turns white and goes solid.",
+        "art": { "at": { "heat": "Now heat it", "white": "turns white", "solid": "goes solid" } } },
+      { "say": "Now cool it down, and look. It stays cooked.",
+        "art": { "at": { "cool": "cool it down", "stays": "It stays cooked" } } },
+      { "say": "Say what happened, and whether it matched your prediction.",
+        "art": { "at": { "say": "Say what happened", "matched": "it matched your prediction" } } },
+      { "say": "Cooking made a new material. You cannot get the egg back.",
+        "art": { "at": { "new": "a new material", "back": "cannot get the egg back" } } }
+    ] },
+
+    { "id": "burn", "kind": "burn", "heading": "Burning", "codes": ["2Cc.01"], "beats": [
+      { "say": "Wood burns in a fire. What is left is ash and smoke.",
+        "art": { "at": { "burns": "Wood burns", "ash": "ash and", "smoke": "smoke" } } },
+      { "say": "Can you turn the ash back into wood? No, you cannot.",
+        "art": { "at": { "back": "back into wood", "no": "No, you cannot" } } },
+      { "say": "A candle burns, too. It gets shorter as the wax burns away.",
+        "art": { "at": { "candle": "A candle burns", "shorter": "gets shorter", "away": "burns away" } } },
+      { "say": "The wax turns into new materials that go off into the air.",
+        "art": { "at": { "new": "new materials", "air": "into the air" } } },
+      { "say": "Burning always makes a new material. It cannot come back.",
+        "art": { "at": { "always": "Burning always", "back": "cannot come back" } } }
+    ] },
+
+    { "id": "bake", "kind": "bake", "heading": "Baking", "codes": ["2Cc.01"], "beats": [
+      { "say": "Soft dough goes into the oven, and bread comes out.",
+        "art": { "at": { "dough": "Soft dough", "oven": "into the oven", "bread": "bread comes out" } } },
+      { "say": "Bread is a new material. There is no going back to dough.",
+        "art": { "at": { "new": "a new material", "back": "no going back" } } },
+      { "say": "Cake mix does the same. Runny mix goes in, and a cake comes out.",
+        "art": { "at": { "mix": "Cake mix", "runny": "Runny mix goes in", "cake": "a cake comes out" } } },
+      { "say": "A baked cake cannot go back to being runny mix.",
+        "art": { "at": { "baked": "A baked cake", "back": "cannot go back" } } }
+    ] },
+
+    { "id": "safe", "kind": "safe", "heading": "Safe with heat", "codes": ["2TWSc.04"], "beats": [
+      { "say": "Heat can hurt. A grown-up handles the heating, and you watch.",
+        "art": { "at": { "hurt": "Heat can hurt", "grown": "A grown-up handles", "watch": "you watch" } } },
+      { "say": "Leave hot things for a grown-up to move, with oven gloves.",
+        "art": { "at": { "leave": "Leave hot things", "move": "to move", "gloves": "oven gloves" } } },
+      { "say": "Never touch a pan to test if it is hot. Ask, or wait.",
+        "art": { "at": { "never": "Never touch", "test": "to test if it is hot", "ask": "Ask, or wait" } } },
+      { "say": "Tie back long hair, and roll up your sleeves.",
+        "art": { "at": { "hair": "Tie back long hair", "sleeves": "roll up your sleeves" } } },
+      { "say": "The steam stops, but the metal stays hot. Wait for it to cool.",
+        "art": { "at": { "steam": "The steam stops", "hot": "the metal stays hot", "wait": "Wait for it to cool" } } },
+      { "say": "Heat changes materials, and heat rules keep hands safe.",
+        "art": { "at": { "changes": "Heat changes materials", "rules": "heat rules keep hands safe" } } }
+    ] },
+
+    { "id": "recap", "kind": "recap", "heading": "What you now know", "codes": ["2Cc.01", "2TWSp.02", "2TWSa.01", "2TWSc.04"], "beats": [
+      { "say": "So now you know. Melting and freezing keep the same material.",
+        "art": { "at": { "same": "Melting and freezing" } } },
+      { "say": "Cooking, burning and baking make a new material. No going back.",
+        "art": { "at": { "new": "make a new material" } } },
+      { "say": "Predict first, then test it and say what happened.",
+        "art": { "at": { "predict": "Predict first" } } },
+      { "say": "Keep safe with heat. And ask: can you get the first material back?",
+        "art": { "at": { "safe": "Keep safe with heat", "ask": "can you get" } } }
+    ] }
+  ]
+}

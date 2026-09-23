@@ -5,14 +5,30 @@
        glyphAt above are the lesson's own. Every function returns markup and
        changes nothing, so a frame stays a pure function of time.
 
-         ART.figure("plant" | "body")             a tap figure, as an <svg>
+         ART.figure(name)                         a tap figure, as an <svg>: plant, body (Stage 1);
+                                                  mouth, circuit (2); organs, insect (3);
+                                                  skeleton, earthLayers, ray (4)
          ART.scene(name, s)                       SCENES: plant 0-5, ground 0-3, globe(turn), sky 0-4;
-                                                  zoom 0-3 is an emoji, not a drawing
+                                                  zoom 0-3 is an emoji, not a drawing (Stage 1);
+                                                  habitat, extract (2); gravity 0-1, fossil 0-3 (3);
+                                                  volcano 0-3, quake 0-3 (4)
          ART.pots(a, b, day, opts)                two potted plants, 0 fresh to 4 drooped (twoPots)
          ART.pot(x, state, label, dark, cold)     one pot, a <g> in twoPots' 320 x 290 space
          ART.sim(name, "draw" | "init", ...)      a sim's own picture: soundFar draw(steps),
                                                   pushBall draw(x, label, thing), sunShade draw(hour, a, b),
-                                                  shapeChange draw(item, anim) is HTML, not svg
+                                                  shapeChange draw(item, anim) is HTML, not svg;
+                                                  Stages 2-4: darkRoom draw(curtains, lamp), sunPath draw(0-4),
+                                                  newMaterial draw(heat, cooled), friction draw(surface, x),
+                                                  shadowSize draw(pos), separate draw(k) is HTML, states draw(s),
+                                                  moonPhases draw(k), reaction draw(a, b), energyDrop draw(n, y),
+                                                  rayMirror draw(angle, blocked), dayNight draw(h),
+                                                  spinner draw(n, y, big, m); every other sim, init only
+         ART.kit.<fn>(...)                        the kit's own drawing functions, for the states a
+                                                  sim reaches only by running: circuitSvg(state),
+                                                  forcemeterSvg(n, pic, label), magnetPair(gap, flipped),
+                                                  earthMoonSvg(s), foodChainSvg(s), armSvg(bent, tricepsOn),
+                                                  particleSvg(state, jiggle, tick), seriesSvg(s) (each an
+                                                  <svg>); beakerSvg(x, fill, level, fizz, label, extra) (a <g>)
          ART.tank(pic, y)                         floatSink's tank, the thing dropped y px:
                                                   ART.TANK.float is where it floats, .sink the bottom
          ART.magnet(pic, reach, jump)             magnet's scene: the magnet moved reach (0-1),
@@ -45,8 +61,17 @@
       if (how !== "draw" && how !== "init") throw new Error("ART.sim: a film may use a sim's draw or init, never " + JSON.stringify(how) + ": the rest runs the experiment");
       if (typeof S[how] !== "function") throw new Error("ART.sim: " + name + " has no " + how);
       const rest = Array.prototype.slice.call(arguments, 2);
-      return boxed((box) => S[how].apply(S, [box].concat(rest)));
+      /* most draw into the box; sunPath's draw returns its markup instead */
+      let back;
+      const drawn = boxed((box) => { back = S[how].apply(S, [box].concat(rest)); });
+      return drawn || (typeof back === "string" ? back : "");
     }
+
+    /* the kit's drawing functions, sliced with the Stage 2-4 blocks */
+    const kit = {
+      circuitSvg: circuitSvg, forcemeterSvg: forcemeterSvg, magnetPair: magnetPair, earthMoonSvg: earthMoonSvg,
+      foodChainSvg: foodChainSvg, armSvg: armSvg, particleSvg: particleSvg, beakerSvg: beakerSvg, seriesSvg: seriesSvg
+    };
 
     /* the kit's own drawing for an Emoji 13+ picture, as the lesson build swaps it */
     function icon(p) {
@@ -122,10 +147,14 @@
     /* Everything above that edits the lesson's markup depends on that markup's
        exact shape, so it is all tried once as the page loads: a change to the
        lesson stops the render here, by name, instead of drawing something else. */
-    ["plant", "body"].forEach((f) => {
+    /* Every figure the kit has, so a Grade 2-4 figure is checked the same way.
+       A part with no outline of its own is one ring() refuses by name; it is
+       left out here, where a refusal would stop every film. */
+    Object.keys(FIGURES).forEach((f) => {
       const svg = figure(f);
       if (!parts(svg).length) throw new Error("ART: the " + f + " figure has no tap parts any more");
       parts(svg).forEach((p) => {
+        try { ring(svg, p); } catch (e) { return; }
         /* both orders, and twice over: each must leave one opacity and one ring */
         const a = ring(dim(dim(ring(ring(svg, p), p, "#4FD1A0"), p, 0.5), p, 0.3), p);
         const tag = a.slice(partTag(a, p).start, partTag(a, p).end);
@@ -138,5 +167,5 @@
 
     return {
       figure: figure, scene: scene, pots: pots, pot: potSvg, sim: sim, tank: tank, TANK: TANK, magnet: magnet,
-      place: place, ring: ring, dim: dim, parts: parts, icon: icon, glyphAt: glyphAt, esc: esc, ICONS: ICONS
+      kit: kit, place: place, ring: ring, dim: dim, parts: parts, icon: icon, glyphAt: glyphAt, esc: esc, ICONS: ICONS
     };

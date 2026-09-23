@@ -255,6 +255,17 @@ LESSON["lecture"] = [
          "Long ago some people thought eyes sent out beams. Testing showed that light comes from a source, into the eye. What people know changes when they test it."),
 ]
 
+# The unit lecture film (tools/create-ehel-unit-lecture.js; storyboard and
+# pictures in lecture-video/light-and-dark.json). The lecture step draws it
+# above the parts; build-lessons.py refuses a path that is not on disk AND in
+# app.config.json :: extraPages, and a --draft render.
+LESSON["video"] = {
+    "src": "lecture-video/light-and-dark.4979279f.mp4",
+    "captions": "lecture-video/light-and-dark.ecdd3100.vtt",
+    "poster": "lecture-video/light-and-dark.fd5e584a.jpg",
+    "note": "About two and a half minutes. Watch it through, then go back over it a part at a time below.",
+}
+
 LESSON["words"] = [
     word("light", "\u2600\uFE0F", "What lets you see. It comes from a light source.",
          ["Light comes from the Sun.", "Without light you cannot see."]),

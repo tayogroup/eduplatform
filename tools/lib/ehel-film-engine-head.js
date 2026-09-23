@@ -38,6 +38,27 @@
       .replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;");
   };
 
+  /* ---- skin -----------------------------------------------------------
+     With "renderer": {"skin": "brown"} a film draws its people brown (the
+     owner, 2026-09-19, for the Science Grade 2-4 films: "for human faces,
+     make them brown color", and "you can mix yellow and brown faces"). Every
+     emoji that can take a skin tone and has none, so would draw yellow, gets
+     the medium-dark tone: a child, a hand, an ear. A tone the lesson chose is
+     kept, and a smiley has no tone to take, so it stays yellow. A person inside
+     a group of people joined by ZWJ (a family) is left alone, and so are the
+     three that have no one-tone form: family, bunny ears, wrestlers. frame()
+     applies it to every frame; a film without the key is untouched. */
+  var SKIN = F.renderer && F.renderer.skin === "brown" ? "\u{1F3FE}" : "";
+  var SKIN_RE = /(‍?)(\p{Emoji_Modifier_Base})(️?)([\u{1F3FB}-\u{1F3FF}]?)(‍\p{Emoji_Modifier_Base})?/gu;
+  var NO_ONE_TONE = { 0x1F46A: 1, 0x1F46F: 1, 0x1F93C: 1 };
+  function skin(html) {
+    if (!SKIN) return html;
+    return String(html).replace(SKIN_RE, function (m, zwjBefore, base, vs, tone, zwjAfter) {
+      if (tone || zwjBefore || zwjAfter || NO_ONE_TONE[base.codePointAt(0)]) return m;
+      return base + SKIN;   /* a toned emoji takes no FE0F */
+    });
+  }
+
   /* ---- easing ------------------------------------------------------- */
   var clamp = function (v, lo, hi) { return v < lo ? lo : v > hi ? hi : v; };
   var ease = function (v) { v = clamp(v, 0, 1); return v * v * (3 - 2 * v); };

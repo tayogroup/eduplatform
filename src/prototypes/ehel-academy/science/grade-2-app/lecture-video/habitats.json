@@ -1,0 +1,121 @@
+{
+  "_comment": "Storyboard for the Grade 2 Science unit lecture film, Lesson 3 Habitats. Rendered by tools/create-ehel-unit-lecture.js. See lecture-video/BRIEF.md. Every beat is one narration clip; art.at names the phrases a picture waits for, and the page refuses to load if a phrase is not in its beat's say. The chapters follow LESSON['lecture'] in content/lesson-3.py part by part (what a habitat is; the pond; the desert and the Arctic; counting and graphing; looking after habitats), with one chapter for 2Be.03 and the pattern in the class's block graph (the lesson's 'Hot, cold, wet, dry' and 'Count and graph the animals' steps) placed between the last two parts. Pictures are the lesson's own: its four habitat drawings (ART.scene habitat 0-3, the demo's Next place frames), the kit's polar bear, seal, bottle, log and beetle, and the block graph of its graph step (teal blocks, one per animal: pond 8, garden 6, park 4, car park 1). The frog with legs, the rabbit's burrow, the garden and the car park are drawn by the film, because the lesson pictures them only as emoji. People are brown (renderer.skin).",
+  "slug": "habitats",
+  "lesson": 3,
+  "grade": 2,
+  "stage": 2,
+  "title": "Habitats",
+  "subtitle": "Grade 2 Science",
+  "framework": "Cambridge Primary Science 0097",
+  "renderer": {
+    "art": ["science"],
+    "skin": "brown",
+    "scenes": [
+      "tools/lib/ehel-film-marks.js",
+      "tools/lib/film-scenes/science-g2/habitats.js",
+      "tools/lib/film-scenes/science-g2/habitats-2.js",
+      "tools/lib/film-scenes/science-g2/habitats-3.js",
+      "tools/lib/film-scenes/science-g2/habitats-4.js"
+    ]
+  },
+  "objectives": [
+    ["2Be.01", "Know that an environment in which a plant or animal naturally lives is its habitat."],
+    ["2Be.02", "Know that different habitats contain different plants and animals."],
+    ["2Be.03", "Identify similarities and differences between local environments in terms of hot, cold, dry, wet, many plants, few plants, many animals and few animals."],
+    ["2ESp.03", "Know that human activity can affect the environment."],
+    ["2TWSa.02", "Identify simple patterns in results, e.g. increasing and decreasing patterns."],
+    ["2TWSa.03", "Present and interpret results using tables and block graphs."],
+    ["2SIC.04", "Talk about how science helps us understand our effect on the world around us."]
+  ],
+  "scenes": [
+    { "id": "title", "kind": "title", "codes": [], "beats": [
+      { "say": "Where does a frog live? A camel? A deer? A polar bear?",
+        "art": { "at": { "frog": "a frog", "camel": "A camel", "deer": "A deer", "bear": "A polar bear" } } },
+      { "say": "Every plant and animal lives in the habitat that suits it.",
+        "art": { "at": { "every": "Every plant and animal", "habitat": "the habitat", "suits": "suits it" } } }
+    ] },
+
+    { "id": "what", "kind": "what", "heading": "What a habitat is", "codes": ["2Be.01"], "beats": [
+      { "say": "A habitat is where a plant or animal naturally lives.",
+        "art": { "at": { "habitat": "A habitat", "lives": "naturally lives" } } },
+      { "say": "A pond is a habitat. So are a desert, a forest and the icy Arctic.",
+        "art": { "at": { "pond": "A pond", "desert": "a desert", "forest": "a forest", "arctic": "the icy Arctic" } } },
+      { "say": "A pond gives a frog all it needs: water, insects, plants to hide in.",
+        "art": { "at": { "frog": "a frog", "water": "water", "insects": "insects", "plants": "plants to hide in" } } },
+      { "say": "A rabbit sleeps in its burrow. The burrow is its home.",
+        "art": { "at": { "sleeps": "sleeps", "burrow": "its burrow", "home": "its home" } } },
+      { "say": "But its habitat is bigger: the burrow and the field it feeds in.",
+        "art": { "at": { "habitat": "its habitat", "bigger": "bigger", "burrow": "the burrow", "field": "the field", "feeds": "feeds in" } } }
+    ] },
+
+    { "id": "pond", "kind": "pond", "heading": "The pond", "codes": ["2Be.02"], "beats": [
+      { "say": "A pond is wet. Frogs, ducks, fish and water plants live there.",
+        "art": { "at": { "wet": "wet", "frogs": "Frogs", "ducks": "ducks", "fish": "fish", "plants": "water plants" } } },
+      { "say": "A frog's smooth skin and long legs suit a pond.",
+        "art": { "at": { "skin": "smooth skin", "legs": "long legs", "suit": "suit a pond" } } },
+      { "say": "Suit means to be right for. Webbed feet suit a pond, too.",
+        "art": { "at": { "suit": "Suit means", "right": "right for", "webbed": "Webbed feet", "pond": "suit a pond" } } },
+      { "say": "A frog needs water. The dry desert is a camel's habitat, not a frog's.",
+        "art": { "at": { "needs": "needs water", "desert": "The dry desert", "camel": "a camel's habitat", "not": "not a frog's" } } }
+    ] },
+
+    { "id": "desert", "kind": "desert", "heading": "The desert and the Arctic", "codes": ["2Be.02"], "beats": [
+      { "say": "A desert is hot and dry. Camels, lizards and cactus plants live there.",
+        "art": { "at": { "hot": "hot", "dry": "dry", "camels": "Camels", "lizards": "lizards", "cactus": "cactus plants" } } },
+      { "say": "A camel can go for days without water.",
+        "art": { "at": { "camel": "A camel", "days": "for days", "water": "without water" } } },
+      { "say": "The Arctic is icy and very cold. Polar bears and seals live there.",
+        "art": { "at": { "icy": "icy", "cold": "very cold", "bears": "Polar bears", "seals": "seals" } } },
+      { "say": "A polar bear's thick fur keeps it warm.",
+        "art": { "at": { "bear": "A polar bear", "fur": "thick fur", "warm": "keeps it warm" } } },
+      { "say": "Different habitats hold different animals. Each one suits its place.",
+        "art": { "at": { "habitats": "Different habitats", "animals": "different animals", "suits": "Each one suits" } } }
+    ] },
+
+    { "id": "count", "kind": "count", "heading": "Counting and graphing", "codes": ["2TWSa.03"], "beats": [
+      { "say": "Scientists count what lives in a habitat: six frogs, three ducks, eight fish.",
+        "art": { "at": { "count": "count", "frogs": "six frogs", "ducks": "three ducks", "fish": "eight fish" } } },
+      { "say": "A block graph has one block for each animal counted.",
+        "art": { "at": { "graph": "A block graph", "block": "one block", "each": "each animal" } } },
+      { "say": "The tallest column shows the most: eight fish.",
+        "art": { "at": { "tallest": "The tallest column", "most": "the most", "fish": "eight fish" } } },
+      { "say": "The shortest shows the least: three ducks. You see it at a glance.",
+        "art": { "at": { "shortest": "The shortest", "least": "the least", "ducks": "three ducks", "glance": "at a glance" } } }
+    ] },
+
+    { "id": "compare", "kind": "compare", "heading": "Hot, cold, wet, dry", "codes": ["2Be.03", "2TWSa.02"], "beats": [
+      { "say": "Compare places. Is it hot or cold? Is it wet or dry?",
+        "art": { "at": { "compare": "Compare places", "hot": "hot", "cold": "cold", "wet": "wet", "dry": "dry" } } },
+      { "say": "Are there many plants and animals, or few?",
+        "art": { "at": { "many": "many plants and animals", "few": "or few" } } },
+      { "say": "A garden is wet after rain, with many plants. A car park is dry, with few.",
+        "art": { "at": { "garden": "A garden", "rain": "wet after rain", "plants": "many plants", "car": "A car park", "dry": "is dry", "few": "with few" } } },
+      { "say": "A class counted animals in four places. The pond had eight. The car park had one.",
+        "art": { "at": { "class": "A class counted", "four": "four places", "pond": "The pond had eight", "car": "The car park had one" } } },
+      { "say": "Wetter places, with more plants, had more animals.",
+        "art": { "at": { "wetter": "Wetter places", "plants": "more plants", "animals": "more animals" } } }
+    ] },
+
+    { "id": "care", "kind": "care", "heading": "Looking after habitats", "codes": ["2ESp.03", "2SIC.04"], "beats": [
+      { "say": "Rubbish in a pond can hurt the frogs and fish.",
+        "art": { "at": { "rubbish": "Rubbish", "pond": "in a pond", "hurt": "hurt the frogs and fish" } } },
+      { "say": "Cut down a forest, and the deer and the birds lose their habitat.",
+        "art": { "at": { "cut": "Cut down a forest", "deer": "the deer", "birds": "the birds", "lose": "lose their habitat" } } },
+      { "say": "Planting flowers gives bees a habitat. A log pile gives beetles somewhere to live.",
+        "art": { "at": { "flowers": "Planting flowers", "bees": "bees", "logs": "A log pile", "beetles": "beetles" } } },
+      { "say": "What people do changes habitats, for better or for worse. Science shows us how.",
+        "art": { "at": { "people": "What people do", "better": "for better", "worse": "for worse", "science": "Science shows us how" } } }
+    ] },
+
+    { "id": "recap", "kind": "recap", "heading": "What you now know", "codes": ["2Be.01", "2Be.02", "2Be.03", "2TWSa.02", "2TWSa.03", "2ESp.03", "2SIC.04"], "beats": [
+      { "say": "A habitat is where a living thing naturally lives. Each one suits its habitat.",
+        "art": { "at": { "habitat": "A habitat", "suits": "Each one suits" } } },
+      { "say": "Compare places: hot or cold, wet or dry, many or few.",
+        "art": { "at": { "compare": "Compare places" } } },
+      { "say": "A block graph shows the most and the least at a glance.",
+        "art": { "at": { "graph": "A block graph" } } },
+      { "say": "What we do changes habitats. So look after them!",
+        "art": { "at": { "changes": "What we do changes habitats", "look": "look after them" } } }
+    ] }
+  ]
+}

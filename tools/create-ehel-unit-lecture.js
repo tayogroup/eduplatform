@@ -45,7 +45,9 @@
  * drawings into the film, so the child sees the picture the lesson draws:
  *   "renderer": { "art": ["science"], "scenes": ["tools/lib/ehel-film-marks.js", "<the film's pictures>.js"] }
  * An adapter is tools/lib/ehel-film-art-<name>.js; its script goes after the
- * head and before the scenes. A new film in any subject writes its pictures and nothing else. The
+ * head and before the scenes. "skin": "brown" draws every person emoji that has
+ * no skin tone brown (the head's skin(); the Science Grade 2-4 films ask for it).
+ * A new film in any subject writes its pictures and nothing else. The
  * science (Bones and Muscles) and maths (Shape and Measures) films predate this
  * and keep their own tools, which this does not touch; their storyboards name no
  * renderer, and this tool refuses them rather than guessing.
@@ -271,6 +273,8 @@ function rendererOf(film, lenient) {
     }
     return p;
   };
+  /* "brown": every person the film draws is brown (the engine head's skin()) */
+  if (r.skin != null && r.skin !== "brown") die(`renderer.skin is ${JSON.stringify(r.skin)}; the one a film can ask for is "brown"`);
   const scenes = list(r.scenes).map((s) => need(s, "scenes"));
   const styles = list(r.styles).map((s) => need(s, "styles"));
   const art = list(r.art).map((name) => {

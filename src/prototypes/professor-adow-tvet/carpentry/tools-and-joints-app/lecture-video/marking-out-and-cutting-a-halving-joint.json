@@ -1,0 +1,135 @@
+{
+  "_comment": "Storyboard for the unit lecture film of Marking Out and Cutting a Halving Joint (Professor Adow TVET, Carpentry Tools & Joints). One BEAT is one narration clip and one drawing state: the animation is timed from the MEASURED length of each clip, so a line appears exactly as it is named rather than on a guessed schedule — that is what `art.at` is for, each mark keyed to the phrase in the narration that calls it. Rendered by tools/create-ehel-unit-lecture.js. Unlike the Science films this one lifts nothing out of a lesson kit: the carpentry drawings live in the app as SVG DOM and the film engine emits SVG strings at a given time, so every picture is drawn fresh in film-scenes/adow-carpentry/halving-joint.js. The learner is an adult at grade 8-11 level; the narration is a tradesperson explaining a job, not a teacher addressing a child.",
+
+  "slug": "marking-out-and-cutting-a-halving-joint",
+  "lesson": 1,
+  "grade": 3,
+  "stage": 3,
+  "title": "Marking Out and Cutting a Halving Joint",
+  "subtitle": "Carpentry Tools & Joints",
+  "framework": "Professor Adow TVET — Carpentry Foundation (ADOW-CJ)",
+
+  "renderer": {
+    "scenes": [
+      "tools/lib/ehel-film-marks.js",
+      "tools/lib/film-scenes/adow-carpentry/halving-joint.js"
+    ]
+  },
+
+  "objectives": [
+    ["ADOW-CJ-TJ.02.1", "Work from the face side and face edge for every measurement, and never from a damaged or unprepared end."],
+    ["ADOW-CJ-TJ.02.2", "Square a shoulder line across the face and down both edges with a try square, continuing the line without stepping."],
+    ["ADOW-CJ-TJ.02.3", "Set a marking gauge to a stated dimension and gauge the cheek lines from the face side on both members."],
+    ["ADOW-CJ-TJ.02.4", "Mark the waste clearly on the correct side of every line before any cut is made."],
+    ["ADOW-CJ-TJ.03.1", "Saw on the waste side of the line, leaving the line on the work."],
+    ["ADOW-CJ-TJ.05.1", "Dry-fit a joint before glue is applied and correct the fit rather than forcing it."]
+  ],
+
+  "scenes": [
+    {
+      "id": "title",
+      "kind": "title",
+      "heading": "Marking Out and Cutting a Halving Joint",
+      "codes": [],
+      "beats": [
+        { "say": "Two pieces of timber have to cross, and finish flush. This is how that is done.", "art": { "at": { "cross": "have to cross", "flush": "finish flush" } } }
+      ]
+    },
+    {
+      "id": "joint",
+      "kind": "joint",
+      "heading": "What a halving joint is",
+      "codes": [],
+      "beats": [
+        { "say": "A halving joint. Each member loses exactly half its thickness where they meet.", "art": { "at": { "apart": "A halving joint", "half": "half its thickness" } } },
+        { "say": "Take half off one, half off the other, and the two faces come together level. That is the whole idea, and everything else is accuracy.", "art": { "at": { "close": "come together level", "flush": "That is the whole idea" } } }
+      ]
+    },
+    {
+      "id": "tools",
+      "kind": "tools",
+      "heading": "Three tools",
+      "codes": ["ADOW-CJ-CF.01.2"],
+      "beats": [
+        { "say": "Three tools do this job. A try square, to prove a line square.", "art": { "at": { "square": "A try square" } } },
+        { "say": "A marking gauge, to score the same distance from a face every time.", "art": { "at": { "gauge": "A marking gauge" } } },
+        { "say": "And a tenon saw: fine teeth for a clean cut across the grain, and a stiff back that keeps the cut straight.", "art": { "at": { "saw": "a tenon saw", "teeth": "fine teeth", "back": "a stiff back" } } }
+      ]
+    },
+    {
+      "id": "faces",
+      "kind": "faces",
+      "heading": "Face side, face edge",
+      "codes": ["ADOW-CJ-TJ.02.1"],
+      "beats": [
+        { "say": "Start with a prepared piece. Planed straight, planed square, gauged to size.", "art": { "at": { "board": "a prepared piece" } } },
+        { "say": "One wide face is marked as the face side. One edge, square to it, is marked as the face edge.", "art": { "at": { "faceside": "the face side", "faceedge": "the face edge" } } },
+        { "say": "Every measurement from here comes off those two surfaces. Not off a sawn end, and not off whichever side is nearest.", "art": { "at": { "both": "those two surfaces", "no": "not off whichever side is nearest" } } }
+      ]
+    },
+    {
+      "id": "shoulder",
+      "kind": "shoulder",
+      "heading": "The shoulder line",
+      "codes": ["ADOW-CJ-TJ.02.2"],
+      "beats": [
+        { "say": "Take the width from the piece that has to fit, not from the drawing.", "art": { "at": { "measure": "Take the width" } } },
+        { "say": "Square the shoulder line across the face, and down both edges. The stock of the square presses hard against the face edge.", "art": { "at": { "line": "across the face", "edges": "down both edges", "press": "presses hard" } } },
+        { "say": "If the stock lifts even slightly, the line is not square, and neither is anything you cut to it.", "art": { "at": { "lift": "If the stock lifts", "bad": "not square" } } }
+      ]
+    },
+    {
+      "id": "gauge",
+      "kind": "gauge",
+      "heading": "Half the thickness",
+      "codes": ["ADOW-CJ-TJ.02.3"],
+      "beats": [
+        { "say": "Set the gauge to half the thickness. Lock it, then measure it again before it touches the wood.", "art": { "at": { "set": "half the thickness", "lock": "Lock it" } } },
+        { "say": "Score the cheek line with the fence riding on the face side, on both members, from the one setting.", "art": { "at": { "score": "Score the cheek line", "both": "on both members" } } },
+        { "say": "One setting used twice keeps the halves equal. A gauge a millimetre out puts the joint two millimetres out, because the error lands on both.", "art": { "at": { "equal": "keeps the halves equal", "error": "two millimetres out" } } }
+      ]
+    },
+    {
+      "id": "waste",
+      "kind": "waste",
+      "heading": "Mark the waste",
+      "codes": ["ADOW-CJ-TJ.02.4"],
+      "beats": [
+        { "say": "Now hatch the waste. This is the last mark before the first cut that cannot be undone.", "art": { "at": { "hatch": "hatch the waste" } } },
+        { "say": "It takes seconds, and it is why nobody who does it ever saws off the wrong half.", "art": { "at": { "safe": "the wrong half" } } }
+      ]
+    },
+    {
+      "id": "saw",
+      "kind": "saw",
+      "heading": "Which side of the line",
+      "codes": ["ADOW-CJ-TJ.03.1"],
+      "beats": [
+        { "say": "The saw takes out a kerf about a millimetre wide. That millimetre has to come out of the waste.", "art": { "at": { "kerf": "a kerf about a millimetre wide", "waste": "out of the waste" } } },
+        { "say": "Saw on the waste side and the line stays on the work. The joint is full size, and a shaving brings it home.", "art": { "at": { "good": "Saw on the waste side", "line": "stays on the work" } } },
+        { "say": "Saw down the middle of the line and half the kerf comes out of the joint. It is slack, and nothing puts wood back.", "art": { "at": { "bad": "down the middle of the line", "slack": "It is slack" } } }
+      ]
+    },
+    {
+      "id": "fit",
+      "kind": "fit",
+      "heading": "Pare, and fit it dry",
+      "codes": ["ADOW-CJ-TJ.03.4", "ADOW-CJ-TJ.05.1"],
+      "beats": [
+        { "say": "Pare the waste with a chisel, cutting from both faces towards the middle, so the far edge is supported and does not tear out.", "art": { "at": { "pare": "from both faces", "clean": "does not tear out" } } },
+        { "say": "Then fit it dry. If it needs a mallet it is too tight: take a shaving off the cheek and try it again.", "art": { "at": { "dry": "fit it dry", "tight": "it is too tight" } } },
+        { "say": "It should go together by hand and stay there. Check both diagonals before any glue.", "art": { "at": { "closed": "go together by hand", "diag": "both diagonals" } } }
+      ]
+    },
+    {
+      "id": "recap",
+      "kind": "recap",
+      "heading": "The order of work",
+      "codes": [],
+      "beats": [
+        { "say": "Face side and face edge. Shoulder squared, cheek gauged, waste hatched.", "art": { "at": { "one": "Face side and face edge", "two": "Shoulder squared", "three": "cheek gauged", "four": "waste hatched" } } },
+        { "say": "Sawn on the waste side, pared to the line, fitted dry. In that order, every time.", "art": { "at": { "five": "Sawn on the waste side", "six": "pared to the line", "seven": "fitted dry" } } }
+      ]
+    }
+  ]
+}

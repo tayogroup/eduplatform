@@ -61,14 +61,14 @@
   <div class="slide-head"><span class="n">1</span><h2>Find it on the rule</h2></div>
   <p><span class="carp-mode ">Assessed here</span></p>
   <div class="stage" data-mount="1"></div>
-  <div class="carp-error"><b>What goes wrong here</b>Reading to the nearest mark instead of naming the millimetre. &quot;Just under five centimetres&quot; is not a measurement, it is an impression. The rule has a millimetre mark for every millimetre so that a reading can be a number, and a number is the only thing another person can check.</div>
+  <div class="carp-error" data-explain hidden><b>What goes wrong here</b>Reading to the nearest mark instead of naming the millimetre. &quot;Just under five centimetres&quot; is not a measurement, it is an impression. The rule has a millimetre mark for every millimetre so that a reading can be a number, and a number is the only thing another person can check.</div>
   <p class="carp-crit"><code>ADOW-SM-SM.01.1</code></p>
 </section>
 <section class="slide" data-step="2" data-kind="label" data-criteria="ADOW-SM-SM.01.2">
   <div class="slide-head"><span class="n">2</span><h2>The tape, and the hook that moves</h2></div>
   <p><span class="carp-mode both">Assessed here · and at the bench</span></p>
   <div class="stage" data-mount="2"></div>
-  <div class="carp-error"><b>What goes wrong here</b>Finding the hook loose and squeezing it tight to &quot;fix&quot; it. The hook slides by exactly its own thickness on purpose: pushed against a surface it sits back for an inside measurement, hooked over an edge it pulls forward for an outside one. Both then read true. Pinch it tight and every measurement is out by the thickness of the hook, in one direction or the other, for the life of the tape.</div>
+  <div class="carp-error" data-explain hidden><b>What goes wrong here</b>Finding the hook loose and squeezing it tight to &quot;fix&quot; it. The hook slides by exactly its own thickness on purpose: pushed against a surface it sits back for an inside measurement, hooked over an edge it pulls forward for an outside one. Both then read true. Pinch it tight and every measurement is out by the thickness of the hook, in one direction or the other, for the life of the tape.</div>
   <p class="carp-crit"><code>ADOW-SM-SM.01.2</code></p>
 </section>
 <section class="slide" data-step="3" data-kind="questions" data-criteria="ADOW-SM-SM.01.2,ADOW-SM-SM.01.4">
@@ -81,7 +81,7 @@
   <div class="slide-head"><span class="n">4</span><h2>Same length, different units</h2></div>
   <p><span class="carp-mode ">Assessed here</span></p>
   <div class="stage" data-mount="4"></div>
-  <div class="carp-error"><b>What goes wrong here</b>Converting halfway through a calculation instead of at the start. Put everything in ONE unit before you calculate anything. A sum with millimetres and metres mixed into it will produce a number, and the number will be wrong by a factor of a thousand — which is large enough to order a lorry-load of something you needed a bucket of.</div>
+  <div class="carp-error" data-explain hidden><b>What goes wrong here</b>Converting halfway through a calculation instead of at the start. Put everything in ONE unit before you calculate anything. A sum with millimetres and metres mixed into it will produce a number, and the number will be wrong by a factor of a thousand — which is large enough to order a lorry-load of something you needed a bucket of.</div>
   <p class="carp-crit"><code>ADOW-SM-SM.02.1</code> <code>ADOW-SM-SM.02.3</code></p>
 </section>
 <section class="slide" data-step="5" data-kind="questions" data-criteria="ADOW-SM-SM.02.2,ADOW-SM-SM.02.4">
@@ -94,7 +94,7 @@
   <div class="slide-head"><span class="n">6</span><h2>Inside tolerance, or not</h2></div>
   <p><span class="carp-mode ">Assessed here</span></p>
   <div class="stage" data-mount="6"></div>
-  <div class="carp-error"><b>What goes wrong here</b>Treating every job as needing the same accuracy. A fence post within ten millimetres is fine work. A machined shaft ten millimetres out is scrap. Ask what tolerance the job allows BEFORE choosing the measuring tool — that is what decides whether a tape will do or whether it has to be a rule or a gauge.</div>
+  <div class="carp-error" data-explain hidden><b>What goes wrong here</b>Treating every job as needing the same accuracy. A fence post within ten millimetres is fine work. A machined shaft ten millimetres out is scrap. Ask what tolerance the job allows BEFORE choosing the measuring tool — that is what decides whether a tape will do or whether it has to be a rule or a gauge.</div>
   <p class="carp-crit"><code>ADOW-SM-SM.01.3</code></p>
 </section>
 <section class="slide" data-step="7" data-kind="words" data-criteria="ADOW-SM-SM.02.2">
@@ -156,6 +156,26 @@
     prev.disabled = at === 0;
     next.textContent = at === slides.length - 1 ? 'Finished' : 'Next step';
     next.disabled = at === slides.length - 1;
+    /* The voice bar, built once per step: a speaker that reads the step
+       aloud, and Explain, which reveals the "what goes wrong here" note.
+       Both are the Ehel shell's controls; the narration is spoken by the
+       browser rather than played from a recorded clip. */
+    if (!slides[at].dataset.said) {
+      slides[at].dataset.said = '1';
+      var line = slides[at].querySelector('[data-say]');
+      var note = slides[at].querySelector('[data-explain]');
+      var heading = slides[at].querySelector('h2');
+      var spoken = line ? line.textContent
+                        : (heading ? heading.textContent : '') + '. ' +
+                          (slides[at].querySelector('.carp-caption') || { textContent: '' }).textContent;
+      var bar = window.CARP.sayBar(spoken.trim(), note ? function (btn) {
+        note.hidden = !note.hidden;
+        btn.setAttribute('aria-pressed', note.hidden ? 'false' : 'true');
+        if (!note.hidden) window.CARP.voice.say(note.textContent);
+      } : null);
+      if (line) line.replaceWith(bar); else slides[at].querySelector('.slide-head').after(bar);
+    }
+
     var mount = slides[at].querySelector('[data-mount]');
     if (!mount) { done[at] = true; ehPaint(); }
     if (mount && !mount.dataset.built) {

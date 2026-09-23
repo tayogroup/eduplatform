@@ -457,6 +457,21 @@
     return basePredict(data, mount, done);
   };
 
+  /* The unit lecture's sequences, handed to the kit's `lecture` renderer
+     by name so a content file can say "markout, state 3" instead of
+     carrying a drawing of its own. */
+  const baseLecture = R.lecture;
+  R.lecture = function (data, mount, done) {
+    const d = Object.assign({}, data, {
+      sequences: {
+        markout: C.drawMarkOut,
+        kerf: (g, which) => C.drawKerf(g, which),
+        joint: (g, closed) => C.drawHalving(g, !!closed),
+      },
+    });
+    return baseLecture(d, mount, done);
+  };
+
   C.JOINTS = JOINTS;
   C.FAMILIES = FAMILIES;
   C.FASTENERS = FASTENERS;

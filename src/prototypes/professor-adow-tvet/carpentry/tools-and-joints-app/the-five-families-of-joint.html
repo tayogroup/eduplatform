@@ -61,21 +61,21 @@
   <div class="slide-head"><span class="n">1</span><h2>Corner and frame joints</h2></div>
   <p><span class="carp-mode ">Assessed here</span></p>
   <div class="stage" data-mount="1"></div>
-  <div class="carp-error"><b>What goes wrong here</b>Reaching for a dovetail because it looks like good work. A dovetail resists being pulled apart in ONE direction. On a joint that is never pulled that way it is hours of work buying nothing, and a mortise and tenon would have been both quicker and stronger.</div>
+  <div class="carp-error" data-explain hidden><b>What goes wrong here</b>Reaching for a dovetail because it looks like good work. A dovetail resists being pulled apart in ONE direction. On a joint that is never pulled that way it is hours of work buying nothing, and a mortise and tenon would have been both quicker and stronger.</div>
   <p class="carp-crit"><code>ADOW-CJ-TJ.01.2</code></p>
 </section>
 <section class="slide" data-step="2" data-kind="browse" data-criteria="ADOW-CJ-TJ.01.2,ADOW-CJ-TJ.01.4">
   <div class="slide-head"><span class="n">2</span><h2>Widening, lengthening and crossing</h2></div>
   <p><span class="carp-mode ">Assessed here</span></p>
   <div class="stage" data-mount="2"></div>
-  <div class="carp-error"><b>What goes wrong here</b>Trying to make a wide board by lengthening, or a long one by widening. The names describe the DIMENSION they add. A widening joint runs along the grain and makes a board wider; a lengthening joint runs across it and makes a member longer. They are not interchangeable in any direction.</div>
+  <div class="carp-error" data-explain hidden><b>What goes wrong here</b>Trying to make a wide board by lengthening, or a long one by widening. The names describe the DIMENSION they add. A widening joint runs along the grain and makes a board wider; a lengthening joint runs across it and makes a member longer. They are not interchangeable in any direction.</div>
   <p class="carp-crit"><code>ADOW-CJ-TJ.01.2</code> <code>ADOW-CJ-TJ.01.4</code></p>
 </section>
 <section class="slide" data-step="3" data-kind="sort" data-criteria="ADOW-CJ-TJ.01.1">
   <div class="slide-head"><span class="n">3</span><h2>Which family?</h2></div>
   <p><span class="carp-mode ">Assessed here</span></p>
   <div class="stage" data-mount="3"></div>
-  <div class="carp-error"><b>What goes wrong here</b>Sorting by what the joint looks like instead of what it does. A cross halving and a corner halving are cut almost identically and are in different families, because one joins members at their middles and the other makes a frame. The family is the JOB.</div>
+  <div class="carp-error" data-explain hidden><b>What goes wrong here</b>Sorting by what the joint looks like instead of what it does. A cross halving and a corner halving are cut almost identically and are in different families, because one joins members at their middles and the other makes a frame. The family is the JOB.</div>
   <p class="carp-crit"><code>ADOW-CJ-TJ.01.1</code></p>
 </section>
 <section class="slide" data-step="4" data-kind="questions" data-criteria="ADOW-CJ-TJ.01.3,ADOW-CJ-TJ.01.4">
@@ -144,6 +144,26 @@
     prev.disabled = at === 0;
     next.textContent = at === slides.length - 1 ? 'Finished' : 'Next step';
     next.disabled = at === slides.length - 1;
+    /* The voice bar, built once per step: a speaker that reads the step
+       aloud, and Explain, which reveals the "what goes wrong here" note.
+       Both are the Ehel shell's controls; the narration is spoken by the
+       browser rather than played from a recorded clip. */
+    if (!slides[at].dataset.said) {
+      slides[at].dataset.said = '1';
+      var line = slides[at].querySelector('[data-say]');
+      var note = slides[at].querySelector('[data-explain]');
+      var heading = slides[at].querySelector('h2');
+      var spoken = line ? line.textContent
+                        : (heading ? heading.textContent : '') + '. ' +
+                          (slides[at].querySelector('.carp-caption') || { textContent: '' }).textContent;
+      var bar = window.CARP.sayBar(spoken.trim(), note ? function (btn) {
+        note.hidden = !note.hidden;
+        btn.setAttribute('aria-pressed', note.hidden ? 'false' : 'true');
+        if (!note.hidden) window.CARP.voice.say(note.textContent);
+      } : null);
+      if (line) line.replaceWith(bar); else slides[at].querySelector('.slide-head').after(bar);
+    }
+
     var mount = slides[at].querySelector('[data-mount]');
     if (!mount) { done[at] = true; ehPaint(); }
     if (mount && !mount.dataset.built) {

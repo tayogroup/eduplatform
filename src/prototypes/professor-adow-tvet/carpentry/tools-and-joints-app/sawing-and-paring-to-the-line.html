@@ -60,23 +60,23 @@
 <section class="slide" data-step="1" data-kind="demo" data-criteria="ADOW-CJ-TJ.03.2">
   <div class="slide-head"><span class="n">1</span><h2>Starting the cut</h2></div>
   <p><span class="carp-mode bench">Practised here · bench sign-off</span></p>
-  <p class="carp-caption">Press Next. Five stages, and the first three are all about the saw not jumping out of the cut.</p>
+  <p class="carp-caption" data-say>Press Next. Five stages, and the first three are all about the saw not jumping out of the cut.</p>
   <div class="stage" data-mount="1"></div>
-  <div class="carp-error"><b>What goes wrong here</b>Pressing down to make the saw bite. Downward pressure at the start is exactly what makes a saw jump out of the kerf, and it jumps towards the hand holding the work. Let the saw's own weight cut, and pull backwards two or three times to make a groove first.</div>
+  <div class="carp-error" data-explain hidden><b>What goes wrong here</b>Pressing down to make the saw bite. Downward pressure at the start is exactly what makes a saw jump out of the kerf, and it jumps towards the hand holding the work. Let the saw's own weight cut, and pull backwards two or three times to make a groove first.</div>
   <p class="carp-crit"><code>ADOW-CJ-TJ.03.2</code></p>
 </section>
 <section class="slide" data-step="2" data-kind="questions" data-criteria="ADOW-CJ-TJ.03.3">
   <div class="slide-head"><span class="n">2</span><h2>Square in both planes</h2></div>
   <p><span class="carp-mode bench">Practised here · bench sign-off</span></p>
   <div class="stage" data-mount="2"></div>
-  <div class="carp-error"><b>What goes wrong here</b>Sighting only down the near face because that is where the line is. Both faces carry the line — it was squared across and down BOTH edges at marking out for exactly this reason. A carpenter who marks both faces and then watches one has done the work and thrown away the benefit.</div>
+  <div class="carp-error" data-explain hidden><b>What goes wrong here</b>Sighting only down the near face because that is where the line is. Both faces carry the line — it was squared across and down BOTH edges at marking out for exactly this reason. A carpenter who marks both faces and then watches one has done the work and thrown away the benefit.</div>
   <p class="carp-crit"><code>ADOW-CJ-TJ.03.3</code></p>
 </section>
 <section class="slide" data-step="3" data-kind="predict" data-criteria="ADOW-CJ-TJ.03.4">
   <div class="slide-head"><span class="n">3</span><h2>Paring the waste</h2></div>
   <p><span class="carp-mode bench">Practised here · bench sign-off</span></p>
   <div class="stage" data-mount="3"></div>
-  <div class="carp-error"><b>What goes wrong here</b>Chiselling straight through in one go because it is faster. The fibres at the far face have nothing behind them to hold them, so they tear out rather than cut. The break-out lands on the face you were trying to make good, and no amount of cleaning up brings the fibres back.</div>
+  <div class="carp-error" data-explain hidden><b>What goes wrong here</b>Chiselling straight through in one go because it is faster. The fibres at the far face have nothing behind them to hold them, so they tear out rather than cut. The break-out lands on the face you were trying to make good, and no amount of cleaning up brings the fibres back.</div>
   <p class="carp-crit"><code>ADOW-CJ-TJ.03.4</code></p>
 </section>
 <section class="slide" data-step="4" data-kind="questions" data-criteria="ADOW-CJ-TJ.03.2,ADOW-CJ-TJ.03.3,ADOW-CJ-TJ.03.4">
@@ -145,6 +145,26 @@
     prev.disabled = at === 0;
     next.textContent = at === slides.length - 1 ? 'Finished' : 'Next step';
     next.disabled = at === slides.length - 1;
+    /* The voice bar, built once per step: a speaker that reads the step
+       aloud, and Explain, which reveals the "what goes wrong here" note.
+       Both are the Ehel shell's controls; the narration is spoken by the
+       browser rather than played from a recorded clip. */
+    if (!slides[at].dataset.said) {
+      slides[at].dataset.said = '1';
+      var line = slides[at].querySelector('[data-say]');
+      var note = slides[at].querySelector('[data-explain]');
+      var heading = slides[at].querySelector('h2');
+      var spoken = line ? line.textContent
+                        : (heading ? heading.textContent : '') + '. ' +
+                          (slides[at].querySelector('.carp-caption') || { textContent: '' }).textContent;
+      var bar = window.CARP.sayBar(spoken.trim(), note ? function (btn) {
+        note.hidden = !note.hidden;
+        btn.setAttribute('aria-pressed', note.hidden ? 'false' : 'true');
+        if (!note.hidden) window.CARP.voice.say(note.textContent);
+      } : null);
+      if (line) line.replaceWith(bar); else slides[at].querySelector('.slide-head').after(bar);
+    }
+
     var mount = slides[at].querySelector('[data-mount]');
     if (!mount) { done[at] = true; ehPaint(); }
     if (mount && !mount.dataset.built) {

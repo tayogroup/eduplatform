@@ -31,6 +31,42 @@ LESSON = {
     ],
     "steps": [
 
+        # THE UNIT LECTURE, first, before the learner does anything — the
+        # same place the Ehel Science lessons put it, and for the same
+        # reason: the whole job told through once, so that every step after
+        # it is a thing being practised rather than a thing being met.
+        #
+        # Drawn live rather than filmed. The Ehel builds play a rendered mp4
+        # where one exists and fall back to exactly this shape where none
+        # does; a film costs money per character of narration and needs
+        # somewhere to serve an 11 MB file from, neither of which a
+        # prototype has. The narration is spoken by the browser.
+        step("lecture", "Unit lecture", ["ADOW-CJ-TJ.02.1", "ADOW-CJ-TJ.03.1"],
+             {"w": 420, "h": 240,
+              "parts": [
+                  {"sequence": "joint", "state": 1,
+                   "say": "This is a halving joint. Two pieces of timber cross, and each one has had exactly half its thickness cut away, so the two faces finish flush. By the end of this lesson you will have marked one out and cut it."},
+                  {"sequence": "markout", "state": 0,
+                   "say": "It starts with a prepared piece. Planed straight, planed square, and gauged to size. Nothing that follows works on a piece that is not true."},
+                  {"sequence": "markout", "state": 1, "keep": True,
+                   "say": "The face side and the face edge are marked first. Every measurement, every squared line and every gauge line is taken from these two surfaces, and from nothing else."},
+                  {"sequence": "markout", "state": 2, "keep": True,
+                   "say": "The shoulder line is squared across the face and down both edges with a try square. The stock of the square is pressed hard against the face edge. If it lifts, the line is not square, and neither is anything you cut to it."},
+                  {"sequence": "markout", "state": 3, "keep": True,
+                   "say": "Then the gauge line, scored to half the thickness, with the fence of the gauge riding on the face side. Both members are scored from the same setting, so the two halves meet flush."},
+                  {"sequence": "markout", "state": 4, "keep": True,
+                   "say": "The waste is hatched. This is the last thing on the wood before the first thing that cannot be undone, and it is the cheapest insurance in the trade."},
+                  {"sequence": "kerf", "state": "waste",
+                   "say": "Now the cut. The saw takes out a kerf about a millimetre wide, and that millimetre comes out of the waste — never out of the joint. Saw on the waste side, and leave the line on the work."},
+                  {"sequence": "joint", "state": 1,
+                   "say": "Pare to the line with a chisel, cutting from both faces towards the middle so the edges do not break out. Dry-fit before any glue. Check both diagonals. That is the whole job, and now you are going to do it."},
+              ]},
+             ask="The whole job, told through once before you do any of it. Press Next part, or Listen again to hear a part twice.",
+             error=("Skipping the lecture and starting at the first thing that looks like doing.",
+                    "Every step after this one is a part of the job you have now heard in full, "
+                    "which is what makes them practice rather than instructions. Three minutes "
+                    "here saves the piece of timber.")),
+
         step("label", "The tools this job needs", ["ADOW-CJ-CF.01.2"],
              {"tool": "trySquare"},
              error=("Apprentices let the stock lift off the face edge while they draw.",

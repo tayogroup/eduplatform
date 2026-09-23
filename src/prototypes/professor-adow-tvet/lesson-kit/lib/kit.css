@@ -476,3 +476,40 @@ a.lesson:active .go { transform: translateY(2px); box-shadow: 0 1px 0 var(--gold
   a.lesson { transition: none; }
   a.lesson:hover, a.lesson:focus-visible { transform: none; }
 }
+
+/* ---- the unit lecture, and the voice bar ---------------------------- */
+.carp-lecture .carp-narration {
+  min-height: 5.2em;
+  text-align: left;
+  max-width: 60ch;
+  margin: 0 auto;
+  color: var(--ink);
+  font-size: 18px;
+  line-height: 1.5;
+}
+.carp-lecture .score { margin-bottom: 2px; }
+
+/* The Ehel voice bar: speaker, what is being said, Explain. */
+.say {
+  display: flex; align-items: center; gap: 12px;
+  padding: 12px 16px; border-radius: 16px;
+  background: var(--teal-soft); font-size: 19px; line-height: 1.4;
+}
+.say button.speak {
+  flex: 0 0 auto; width: 48px; height: 48px; border-radius: 50%;
+  border: 0; background: var(--teal); color: #06231F; font-size: 21px;
+  display: grid; place-items: center; cursor: pointer;
+}
+.say button.speak:active { transform: scale(0.94); }
+.say button.explain {
+  flex: 0 0 auto; margin-left: auto;
+  display: inline-flex; align-items: center; gap: 6px;
+  min-height: 44px; padding: 8px 14px; border-radius: 999px;
+  border: 1px solid var(--line); background: var(--card); color: var(--ink);
+  font: inherit; font-size: 15px; font-weight: 700; cursor: pointer;
+}
+.say button.explain[aria-pressed="true"] { background: var(--accent-soft); border-color: var(--accent); color: var(--accent); }
+@media (max-width: 560px) {
+  .say { font-size: 17px; gap: 9px; padding: 10px 12px; }
+  .say .explain-t { display: none; }
+}

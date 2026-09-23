@@ -124,11 +124,14 @@ def render_step(n, step, criteria):
     out.append('  <div class="slide-head"><span class="n">%d</span><h2>%s</h2></div>' % (n, esc(step["title"])))
     out.append('  <p><span class="carp-mode %s">%s</span></p>' % (cls, esc(label)))
     if step.get("ask"):
-        out.append('  <p class="carp-caption">%s</p>' % esc(step["ask"]))
+        out.append('  <p class="carp-caption" data-say>%s</p>' % esc(step["ask"]))
     out.append('  <div class="stage" data-mount="%d"></div>' % n)
     if step.get("error"):
         what, why = step["error"]
-        out.append('  <div class="carp-error"><b>What goes wrong here</b>%s %s</div>'
+        # hidden until Explain is pressed. It used to sit open under every
+        # step, which meant the commonest mistake in the trade was on screen
+        # before the learner had tried the thing.
+        out.append('  <div class="carp-error" data-explain hidden><b>What goes wrong here</b>%s %s</div>'
                    % (esc(what), esc(why)))
     out.append('  <p class="carp-crit">%s</p>' % codes)
     out.append('</section>')
@@ -248,6 +251,26 @@ PAGE = """<!doctype html>
     prev.disabled = at === 0;
     next.textContent = at === slides.length - 1 ? 'Finished' : 'Next step';
     next.disabled = at === slides.length - 1;
+    /* The voice bar, built once per step: a speaker that reads the step
+       aloud, and Explain, which reveals the "what goes wrong here" note.
+       Both are the Ehel shell's controls; the narration is spoken by the
+       browser rather than played from a recorded clip. */
+    if (!slides[at].dataset.said) {{
+      slides[at].dataset.said = '1';
+      var line = slides[at].querySelector('[data-say]');
+      var note = slides[at].querySelector('[data-explain]');
+      var heading = slides[at].querySelector('h2');
+      var spoken = line ? line.textContent
+                        : (heading ? heading.textContent : '') + '. ' +
+                          (slides[at].querySelector('.carp-caption') || {{ textContent: '' }}).textContent;
+      var bar = window.CARP.sayBar(spoken.trim(), note ? function (btn) {{
+        note.hidden = !note.hidden;
+        btn.setAttribute('aria-pressed', note.hidden ? 'false' : 'true');
+        if (!note.hidden) window.CARP.voice.say(note.textContent);
+      }} : null);
+      if (line) line.replaceWith(bar); else slides[at].querySelector('.slide-head').after(bar);
+    }}
+
     var mount = slides[at].querySelector('[data-mount]');
     if (!mount) {{ done[at] = true; ehPaint(); }}
     if (mount && !mount.dataset.built) {{

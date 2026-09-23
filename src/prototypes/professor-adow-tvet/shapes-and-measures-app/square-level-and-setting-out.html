@@ -61,35 +61,35 @@
   <div class="slide-head"><span class="n">1</span><h2>Square, level and plumb</h2></div>
   <p><span class="carp-mode ">Assessed here</span></p>
   <div class="stage" data-mount="1"></div>
-  <div class="carp-error"><b>What goes wrong here</b>Checking one corner with a square and calling the frame square. A four-sided frame can have one perfect corner and still be a parallelogram. One corner tells you about one corner; the diagonals tell you about the whole frame, which is what you actually need to know.</div>
+  <div class="carp-error" data-explain hidden><b>What goes wrong here</b>Checking one corner with a square and calling the frame square. A four-sided frame can have one perfect corner and still be a parallelogram. One corner tells you about one corner; the diagonals tell you about the whole frame, which is what you actually need to know.</div>
   <p class="carp-crit"><code>ADOW-SM-SM.05.1</code></p>
 </section>
 <section class="slide" data-step="2" data-kind="levelread" data-criteria="ADOW-SM-SM.05.2,ADOW-SM-SM.05.4">
   <div class="slide-head"><span class="n">2</span><h2>Reading the bubble</h2></div>
   <p><span class="carp-mode bench">Practised here · bench sign-off</span></p>
   <div class="stage" data-mount="2"></div>
-  <div class="carp-error"><b>What goes wrong here</b>Trusting a level that has been dropped. A spirit level is a precision tool with a glass vial in it. Reverse it on a surface you have just read: if the bubble swaps sides, the tool is wrong, not the work — and everything measured with it since the drop is suspect.</div>
+  <div class="carp-error" data-explain hidden><b>What goes wrong here</b>Trusting a level that has been dropped. A spirit level is a precision tool with a glass vial in it. Reverse it on a surface you have just read: if the bubble swaps sides, the tool is wrong, not the work — and everything measured with it since the drop is suspect.</div>
   <p class="carp-crit"><code>ADOW-SM-SM.05.2</code> <code>ADOW-SM-SM.05.4</code></p>
 </section>
 <section class="slide" data-step="3" data-kind="calc" data-criteria="ADOW-SM-SM.05.3">
   <div class="slide-head"><span class="n">3</span><h2>Proving a frame square</h2></div>
   <p><span class="carp-mode both">Assessed here · and at the bench</span></p>
   <div class="stage" data-mount="3"></div>
-  <div class="carp-error"><b>What goes wrong here</b>Measuring the diagonals after the glue has gone off. The diagonals are checked while the assembly can still move. Once the glue has set, an out-of-square frame is out of square permanently.</div>
+  <div class="carp-error" data-explain hidden><b>What goes wrong here</b>Measuring the diagonals after the glue has gone off. The diagonals are checked while the assembly can still move. Once the glue has set, an out-of-square frame is out of square permanently.</div>
   <p class="carp-crit"><code>ADOW-SM-SM.05.3</code></p>
 </section>
 <section class="slide" data-step="4" data-kind="calc" data-criteria="ADOW-SM-SM.06.1">
   <div class="slide-head"><span class="n">4</span><h2>Setting out with 3-4-5</h2></div>
   <p><span class="carp-mode both">Assessed here · and at the bench</span></p>
   <div class="stage" data-mount="4"></div>
-  <div class="carp-error"><b>What goes wrong here</b>Setting out a whole building from a small square held against a peg. A one-degree error on a 300 mm square becomes tens of millimetres by the far corner of a building. Set out the right angle as LARGE as the site and the tape allow — that is the whole reason 3-4-5 exists.</div>
+  <div class="carp-error" data-explain hidden><b>What goes wrong here</b>Setting out a whole building from a small square held against a peg. A one-degree error on a 300 mm square becomes tens of millimetres by the far corner of a building. Set out the right angle as LARGE as the site and the tape allow — that is the whole reason 3-4-5 exists.</div>
   <p class="carp-crit"><code>ADOW-SM-SM.06.1</code></p>
 </section>
 <section class="slide" data-step="5" data-kind="calc" data-criteria="ADOW-SM-SM.06.2,ADOW-SM-SM.06.3">
   <div class="slide-head"><span class="n">5</span><h2>Estimating what to order</h2></div>
   <p><span class="carp-mode ">Assessed here</span></p>
   <div class="stage" data-mount="5"></div>
-  <div class="carp-error"><b>What goes wrong here</b>Dividing the length by the spacing and ordering that number. That counts the gaps, not the posts. There is always one more post than there are gaps in a run with both ends posted — and the missing one is always noticed at the far end of the job, with nothing left to fix it.</div>
+  <div class="carp-error" data-explain hidden><b>What goes wrong here</b>Dividing the length by the spacing and ordering that number. That counts the gaps, not the posts. There is always one more post than there are gaps in a run with both ends posted — and the missing one is always noticed at the far end of the job, with nothing left to fix it.</div>
   <p class="carp-crit"><code>ADOW-SM-SM.06.2</code> <code>ADOW-SM-SM.06.3</code></p>
 </section>
 <section class="slide" data-step="6" data-kind="questions" data-criteria="ADOW-SM-SM.06.4">
@@ -157,6 +157,26 @@
     prev.disabled = at === 0;
     next.textContent = at === slides.length - 1 ? 'Finished' : 'Next step';
     next.disabled = at === slides.length - 1;
+    /* The voice bar, built once per step: a speaker that reads the step
+       aloud, and Explain, which reveals the "what goes wrong here" note.
+       Both are the Ehel shell's controls; the narration is spoken by the
+       browser rather than played from a recorded clip. */
+    if (!slides[at].dataset.said) {
+      slides[at].dataset.said = '1';
+      var line = slides[at].querySelector('[data-say]');
+      var note = slides[at].querySelector('[data-explain]');
+      var heading = slides[at].querySelector('h2');
+      var spoken = line ? line.textContent
+                        : (heading ? heading.textContent : '') + '. ' +
+                          (slides[at].querySelector('.carp-caption') || { textContent: '' }).textContent;
+      var bar = window.CARP.sayBar(spoken.trim(), note ? function (btn) {
+        note.hidden = !note.hidden;
+        btn.setAttribute('aria-pressed', note.hidden ? 'false' : 'true');
+        if (!note.hidden) window.CARP.voice.say(note.textContent);
+      } : null);
+      if (line) line.replaceWith(bar); else slides[at].querySelector('.slide-head').after(bar);
+    }
+
     var mount = slides[at].querySelector('[data-mount]');
     if (!mount) { done[at] = true; ehPaint(); }
     if (mount && !mount.dataset.built) {

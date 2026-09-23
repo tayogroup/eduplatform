@@ -438,5 +438,8 @@
   C.registerAll(TOOLS, { w: 340, h: 200 });
   C.TIMBER = timber;
   C.MARK_STATES = MARK_STATES;
+  C.drawMarkOut = drawMarkOut;
+  C.drawKerf = drawKerf;
+  C.drawHalving = drawHalving;
   C.KERF_CASES = KERF_CASES;
 })();

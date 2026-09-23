@@ -581,7 +581,202 @@
   /* The engines content files drive with their own drawings. A module
      that wants a press-through sequence or a choose-the-outcome step
      brings the states and the draw function; the behaviour is here. */
+
+  /* ==================================================================
+     ANIMATION. The Web Animations API, nothing loaded.
+
+     Every sequence drawing in this kit is ADDITIVE: state N draws
+     everything state N-1 drew and then some. So the new marks are simply
+     the children added after the previous count, and animating them is
+     one call rather than a diff. A line or a path draws itself on, in the
+     direction a hand would draw it; anything else fades up.
+
+     `prefers-reduced-motion` is honoured by skipping to the end state
+     rather than by animating slower — a learner who asks for less motion
+     wants none, not gentler.
+     ================================================================== */
+  const reduced = () =>
+    window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+  function revealNew(g, fromIndex, ms) {
+    const kids = [].slice.call(g.children, fromIndex);
+    if (!kids.length || reduced()) return;
+    const each = ms || 420;
+    kids.forEach((node, i) => {
+      const tag = node.tagName.toLowerCase();
+      const drawable = tag === "line" || tag === "path";
+      let len = 0;
+      if (drawable && node.getTotalLength) {
+        try { len = node.getTotalLength(); } catch (e) { len = 0; }
+      }
+      if (len > 0 && len < 4000) {
+        node.style.strokeDasharray = len;
+        node.style.strokeDashoffset = len;
+        node.animate([{ strokeDashoffset: len }, { strokeDashoffset: 0 }],
+          { duration: each, delay: i * 60, easing: "ease-out", fill: "forwards" })
+          .addEventListener("finish", () => {
+            /* hand the attribute back — a dash array left on a line makes
+               it disappear the moment the element is re-measured */
+            node.style.strokeDasharray = "";
+            node.style.strokeDashoffset = "";
+          });
+      } else {
+        node.animate([{ opacity: 0 }, { opacity: 1 }],
+          { duration: each, delay: i * 45, easing: "ease-out" });
+      }
+    });
+  }
+
+  const anim = { revealNew, reduced };
+
+  /* ==================================================================
+     NARRATION, spoken by the browser.
+
+     The Ehel builds play pre-rendered clips from a CDN, which is the
+     right answer for a shipped course: one voice, one reading, and a
+     caption file measured against the audio. This prototype has no CDN
+     and no budget for a voice, so it speaks with speechSynthesis — free,
+     offline, and available wherever the page opens.
+
+     The seam is `voice.say`. Swapping in recorded clips later means
+     changing this one function, not every step that talks.
+     ================================================================== */
+  const voice = {
+    muted: false,
+    supported: typeof window.speechSynthesis !== "undefined",
+    say(text) {
+      if (!voice.supported || voice.muted || !text) return;
+      try {
+        window.speechSynthesis.cancel();
+        const u = new SpeechSynthesisUtterance(String(text));
+        u.rate = 0.95;
+        u.pitch = 1;
+        window.speechSynthesis.speak(u);
+      } catch (e) { /* a browser that refuses is not an error worth showing */ }
+    },
+    hush() {
+      if (!voice.supported) return;
+      try { window.speechSynthesis.cancel(); } catch (e) {}
+    },
+  };
+
+  /* The voice bar: a speaker, what is being said, and Explain. Same shape
+     as the Ehel `.say` bar, and the Explain button reveals the step's own
+     "what goes wrong here" note rather than opening a second panel. */
+  function sayBar(text, onExplain) {
+    const bar = document.createElement("div");
+    bar.className = "say";
+    const b = document.createElement("button");
+    b.type = "button";
+    b.className = "speak";
+    b.setAttribute("aria-label", "Read it to me");
+    b.textContent = "🔊";
+    b.addEventListener("click", () => voice.say(text));
+    const span = document.createElement("span");
+    span.textContent = text;
+    bar.appendChild(b);
+    bar.appendChild(span);
+    if (onExplain) {
+      const x = document.createElement("button");
+      x.type = "button";
+      x.className = "explain";
+      x.setAttribute("aria-label", "Explain this step to me");
+      x.innerHTML = '<span aria-hidden="true">💬</span><span class="explain-t">Explain</span>';
+      x.addEventListener("click", () => onExplain(x));
+      bar.appendChild(x);
+    }
+    return bar;
+  }
+
+  /* ==================================================================
+     lecture — the unit lecture, told a part at a time.
+
+     Modelled on the Ehel lecture step: the whole lesson before the
+     learner does any of it, one narrated part at a time, with the
+     drawing changing under the words. Ehel plays an mp4 where one has
+     been rendered and falls back to exactly this when none has — so this
+     is that fallback, drawn live rather than filmed.
+     ================================================================== */
+  R.lecture = function (data, mount, done) {
+    const wrap = document.createElement("div");
+    wrap.className = "carp-stage carp-lecture";
+
+    const counter = document.createElement("p");
+    counter.className = "score";
+    wrap.appendChild(counter);
+
+    const s = svg(data.w || 420, data.h || 230);
+    let g = el("g", {}, s);
+    wrap.appendChild(s);
+
+    const cap = document.createElement("p");
+    cap.className = "carp-caption carp-narration";
+    wrap.appendChild(cap);
+
+    const btns = document.createElement("div");
+    btns.className = "bigbtns";
+    const again = document.createElement("button");
+    again.type = "button";
+    again.className = "big small ghost";
+    again.textContent = "🔊 Listen again";
+    const next = document.createElement("button");
+    next.type = "button";
+    next.className = "big";
+    next.textContent = "Next part";
+    btns.appendChild(again);
+    btns.appendChild(next);
+    wrap.appendChild(btns);
+
+    let i = 0;
+    const parts = data.parts;
+
+    function paint(speak) {
+      const p = parts[i];
+      counter.textContent = "Part " + (i + 1) + " of " + parts.length;
+      cap.textContent = p.say;
+
+      /* Redraw from the state the part names. A part either names a
+         drawing in the registry, or a sequence state the module drew. */
+      const before = g.children.length;
+      if (p.sequence && data.sequences && data.sequences[p.sequence]) {
+        const fn = data.sequences[p.sequence];
+        if (p.keep && before) {
+          /* additive within the same sequence: keep what is there and
+             draw the new state over it, so only the new marks animate */
+          fn(g, p.state);
+          anim.revealNew(g, before);
+        } else {
+          g.remove();
+          g = el("g", {}, s);
+          fn(g, p.state);
+          anim.revealNew(g, 0, 300);
+        }
+      } else if (p.draw) {
+        g.remove();
+        g = drawNamed(s, p.draw);
+        anim.revealNew(g, 0, 300);
+      }
+      if (speak !== false) voice.say(p.say);
+
+      next.textContent = i >= parts.length - 1 ? "Lecture finished" : "Next part";
+      next.disabled = i >= parts.length - 1;
+      if (i >= parts.length - 1) done();
+    }
+
+    again.addEventListener("click", () => voice.say(parts[i].say));
+    next.addEventListener("click", () => {
+      if (i < parts.length - 1) { i += 1; paint(true); }
+    });
+
+    /* Do NOT speak on arrival. A page that starts talking the moment a
+       learner reaches a step is startling, and on a shared screen it is
+       worse than startling — the first line is spoken on request. */
+    paint(false);
+    mount.appendChild(wrap);
+  };
+
   const engines = { seqDemo, caseChoice, drawNamed };
 
-  window.CARP = { R, TOOLS, DRAW, engines, register, registerAll, drawNamed, arrowDefs, svg, el, tok };
+  window.CARP = { R, TOOLS, DRAW, engines, register, registerAll, drawNamed, arrowDefs,
+                  anim, voice, sayBar, svg, el, tok };
 })();

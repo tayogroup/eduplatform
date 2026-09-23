@@ -147,6 +147,9 @@
   min-height: 48px;
 }
 .carp-chip:hover { border-color: var(--teal); }
+/* browse: a chip the learner has already opened. Not a score — it is a
+   set being met for the first time, so the mark is "seen", not "right". */
+.carp-chip.seen { border-color: var(--good); color: var(--good); }
 
 .carp-order-done {
   margin: 0;

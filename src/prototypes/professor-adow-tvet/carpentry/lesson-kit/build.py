@@ -216,10 +216,40 @@ PAGE = """<!doctype html>
 """
 
 
-def build_lesson(lesson, cfg, criteria, out_dir, lib):
+META_KINDS = {"intro", "end"}
+
+
+def available_renderers(cfg):
+    """Which step kinds the scripts THIS app loads actually define.
+
+    Bought by a real failure: `sort` is defined in carpentry-foundation.js,
+    a Tools & Joints page does not load that file, and the page JS skips a
+    step kind it has no renderer for — silently, with no console error. A
+    whole step rendered as empty space and the build said nothing.
+
+    Reading the scripts is crude and it is the only thing that can see
+    this: the builder cannot know what a browser will have loaded except
+    by looking at what it is told to load."""
+    kinds = set()
+    for name in ["carpentry.js"] + list(cfg.get("extraScripts", [])):
+        path = os.path.join(HERE, "lib", name)
+        if not os.path.exists(path):
+            die("app.config.json lists %s, which is not in lesson-kit/lib" % name)
+        with open(path, encoding="utf-8") as fh:
+            kinds.update(re.findall(r"^\s*R\.([a-zA-Z]+)\s*=", fh.read(), re.M))
+    return kinds
+
+
+def build_lesson(lesson, cfg, criteria, out_dir, lib, renderers):
     steps_html = []
     stepdata = {}
     for i, s in enumerate(lesson["steps"], start=1):
+        if s["kind"] not in renderers and s["kind"] not in META_KINDS:
+            die("%s step %d (%s) is of kind %r, which none of the scripts this app "
+                "loads defines — it would render as empty space with no error. "
+                "Scripts loaded: carpentry.js, %s"
+                % (lesson["slug"], i, s["title"], s["kind"],
+                   ", ".join(cfg.get("extraScripts", [])) or "(none)"))
         if not s["criteria"]:
             die("%s step %d (%s) names no criterion" % (lesson["slug"], i, s["title"]))
         for code in s["criteria"]:
@@ -400,9 +430,10 @@ def main():
     for entry in cfg["lessons"]:
         lessons.append(load_lesson(os.path.join(app_dir, "content", entry["content"])))
 
+    renderers = available_renderers(cfg)
     if not args.hub_only:
         for lesson in lessons:
-            path, _ = build_lesson(lesson, cfg, criteria, app_dir, lib)
+            path, _ = build_lesson(lesson, cfg, criteria, app_dir, lib, renderers)
             print("  lesson  %s  (%d steps)" % (os.path.basename(path), len(lesson["steps"])))
 
     path, built, total = build_hub(lessons, cfg, fw, criteria, app_dir, lib)

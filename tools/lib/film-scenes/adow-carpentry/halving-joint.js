@@ -77,13 +77,14 @@
   function trySquareFig(cx, cy, s, glow) {
     var out = "";
     if (glow > 0) out += R(cx - 30 * s, cy - 92 * s, 250 * s, 150 * s, 18 * s, P.blue, null, null, { opacity: 0.1 * glow });
-    out += R(cx, cy - 78 * s, 30 * s, 156 * s, 4 * s, HANDLE, "#5C3517", 2.5);      /* stock */
-    out += R(cx + 7 * s, cy - 70 * s, 5 * s, 140 * s, 0, BRASS, null, null, { opacity: 0.85 });
-    out += R(cx + 30 * s, cy - 78 * s, 190 * s, 21 * s, 2, STEEL, STEEL_D, 2.5);    /* blade */
+    out += R(cx, cy - 78 * s, 38 * s, 156 * s, 4 * s, HANDLE, "#5C3517", 3);        /* stock */
+    out += R(cx + 9 * s, cy - 70 * s, 7 * s, 140 * s, 0, BRASS, null, null, { opacity: 0.9 });
+    out += R(cx + 26 * s, cy - 70 * s, 5 * s, 140 * s, 0, BRASS, null, null, { opacity: 0.55 });
+    out += R(cx + 38 * s, cy - 78 * s, 190 * s, 24 * s, 2, STEEL, STEEL_D, 3);      /* blade */
     for (var k = 1; k < 9; k++) {
-      out += L(cx + 30 * s + k * 21 * s, cy - 78 * s, cx + 30 * s + k * 21 * s, cy - 78 * s + (k % 5 === 0 ? 12 : 7) * s, STEEL_D, 1.4);
+      out += L(cx + 38 * s + k * 21 * s, cy - 78 * s, cx + 38 * s + k * 21 * s, cy - 78 * s + (k % 5 === 0 ? 14 : 8) * s, STEEL_D, 1.6);
     }
-    out += Pth("M" + n2(cx + 30 * s) + "," + n2(cy - 40 * s) + " v" + n2(-17 * s) + " h" + n2(17 * s), null, P.teal, 3 * s);
+    out += Pth("M" + n2(cx + 38 * s) + "," + n2(cy - 38 * s) + " v" + n2(-16 * s) + " h" + n2(16 * s), null, P.teal, 3.2 * s);
     return out;
   }
 
@@ -202,18 +203,24 @@
     var teeth = bump(t, cue(b2, "teeth"), 1.4);
     var back = bump(t, cue(b2, "back"), 1.4);
 
+    /* Drawn at 0.78 the three tools sat small in a 1168 x 440 stage with
+       dead space all round them — legible, but nobody would call them
+       drawings of tools. Bigger, and spaced on thirds. */
     var out = "";
-    out += G(trySquareFig(0, 0, 0.78, sq), { transform: "translate(150,150)", opacity: 0.18 + 0.82 * sq });
-    out += Tx(230, 268, "try square", "lab", "middle", { opacity: sq, fill: P.blue });
+    out += G(trySquareFig(0, 0, 1.15, sq), { transform: "translate(120,196)", opacity: 0.18 + 0.82 * sq });
+    out += Tx(255, 356, "try square", "lab big", "middle", { opacity: sq, fill: P.blue });
 
-    out += G(gaugeFig(0, 0, 0.78, ga, 1), { transform: "translate(470,168)", opacity: 0.18 + 0.82 * ga });
-    out += Tx(580, 268, "marking gauge", "lab", "middle", { opacity: ga, fill: P.teal });
+    out += G(gaugeFig(0, 0, 1.15, ga, 1), { transform: "translate(470,214)", opacity: 0.18 + 0.82 * ga });
+    out += Tx(620, 356, "marking gauge", "lab big", "middle", { opacity: ga, fill: P.teal });
 
-    out += G(sawFig(0, 0, 0.72, sa, teeth, back), { transform: "translate(790,150)", opacity: 0.18 + 0.82 * sa });
-    out += Tx(920, 268, "tenon saw", "lab", "middle", { opacity: sa, fill: P.blue });
+    out += G(sawFig(0, 0, 1.0, sa, teeth, back), { transform: "translate(810,196)", opacity: 0.18 + 0.82 * sa });
+    out += Tx(960, 356, "tenon saw", "lab big", "middle", { opacity: sa, fill: P.blue });
 
-    if (teeth > 0) out += cap(584, 372, "fine teeth — a clean cut across the grain", teeth, P.gold);
-    else if (back > 0) out += cap(584, 372, "a stiff back — the cut runs straight", back, P.gold);
+    /* y 372 put this straight through the tool labels once they moved down
+       to 356 and grew. The caption belt for this scene is the bottom of the
+       stage, clear of them. */
+    if (teeth > 0) out += cap(584, 416, "fine teeth — a clean cut across the grain", teeth, P.gold);
+    else if (back > 0) out += cap(584, 416, "a stiff back — the cut runs straight", back, P.gold);
     return svg(out);
   }
 
@@ -267,8 +274,8 @@
     }
     /* the square, riding on the face edge, tilting if it lifts */
     var tilt = lift * 4.5;
-    var sqG = trySquareFig(0, 0, 0.62, 0);
-    out += G(sqG, { transform: "translate(" + n2(SHX - 18) + "," + n2(BY + BH + 4) + ") rotate(" + n2(-90 + tilt) + ")",
+    var sqG = trySquareFig(0, 0, 0.95, 0);
+    out += G(sqG, { transform: "translate(" + n2(SHX - 24) + "," + n2(BY + BH + 10) + ") rotate(" + n2(-90 + tilt) + ")",
       opacity: 0.25 + 0.75 * Math.max(line, lift) });
     if (press > 0) out += C(SHX - 12, BY + BH - 6, 16 + 6 * press, null, P.good, 3, { opacity: press });
 

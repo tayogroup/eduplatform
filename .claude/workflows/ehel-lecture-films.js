@@ -40,7 +40,6 @@ export const meta = {
    script even launches. There is no file access here to build on. Resend the
    args. */
 const A = args || {}
-}
 /* app, brief, scenesDir, grade and example may be set per lesson, so one run
    can carry several grades (and stay under the account's rate limit: a run
    holds at most ten agents at once, where five runs at once held 35 and were

@@ -85,6 +85,13 @@ const BASE_CSS = path.join(__dirname, "lib/ehel-film-base.css");
    film so far (owner's ear, 2026-09-17). One course should not sound
    different from another for no reason. */
 const VOICE_ID = "XfNU2rGpBa01ckF309OY";
+/* A storyboard may name its own `voice`, and then ONLY that film changes.
+   Editing the constant above would re-voice every film in the repo the next
+   time each was rendered, which is never what "this one sounds wrong" means.
+   The clip cache is keyed by voice (see `tag` below), so switching costs a
+   full re-narration of this film and switching BACK costs nothing — the old
+   clips are still on disk. */
+let ACTIVE_VOICE = VOICE_ID;
 const MODEL_ID = "eleven_multilingual_v2";
 const VOICE_SETTINGS = {
   stability: 0.60, similarity_boost: 0.82, style: 0.18,
@@ -154,7 +161,7 @@ const mmss = (s) => `${Math.floor(s / 60)}:${String(Math.round(s % 60)).padStart
    mistakes a free placeholder for a bought clip. */
 const DRAFT = has("draft");
 function clipPath(cacheDir, text) {
-  const tag = DRAFT ? "sapi-draft" : `${VOICE_ID}|${MODEL_ID}|${JSON.stringify(VOICE_SETTINGS)}`;
+  const tag = DRAFT ? "sapi-draft" : `${ACTIVE_VOICE}|${MODEL_ID}|${JSON.stringify(VOICE_SETTINGS)}`;
   const h = crypto.createHash("sha1").update(`${tag}|${text}`).digest("hex").slice(0, 16);
   return path.join(cacheDir, `${h}.${DRAFT ? "wav" : "mp3"}`);
 }
@@ -180,7 +187,7 @@ async function speak(text, out) {
   if (DRAFT) return speakSapi(text, out);
   const key = (process.env.ELEVENLABS_API_KEY || "").trim();
   if (!key) die("ELEVENLABS_API_KEY is not set, so there is no voice to render with.");
-  const res = await fetch(`https://api.elevenlabs.io/v1/text-to-speech/${VOICE_ID}?output_format=mp3_44100_128`, {
+  const res = await fetch(`https://api.elevenlabs.io/v1/text-to-speech/${ACTIVE_VOICE}?output_format=mp3_44100_128`, {
     method: "POST",
     headers: { "Content-Type": "application/json", Accept: "audio/mpeg", "xi-api-key": key },
     body: JSON.stringify({ text, model_id: MODEL_ID, voice_settings: VOICE_SETTINGS })
@@ -591,6 +598,12 @@ function buildNarrationTrack(scratch, clips, beats) {
   if (!fs.existsSync(board)) die(`no storyboard at ${board}`);
   const film = JSON.parse(fs.readFileSync(board, "utf8"));
   const renderer = rendererOf(film, has("dry"));
+  /* One film's voice, not the repo's. Named in the storyboard, reported on
+     every run so a re-narration is never a surprise about WHO is speaking. */
+  if (film.voice) {
+    ACTIVE_VOICE = String(film.voice);
+    if (ACTIVE_VOICE !== VOICE_ID) console.log(`  voice: ${ACTIVE_VOICE} (this film only; the shared voice is ${VOICE_ID})`);
+  }
 
   /* --limit-seconds N: keep only as many whole beats, from the start, as fit
      in about N seconds of speech, always at least one. For smoke-testing the
@@ -713,7 +726,14 @@ function buildNarrationTrack(scratch, clips, beats) {
        and it keeps the whole deck under about a fifth of the film. */
     const track = buildNarrationTrack(scratch, clips, beats);
     const tmpAudio = path.join(scratch, `${slug}.narration.mp3`);
-    run("ffmpeg", ["-y", "-i", track, "-ac", "1", "-b:a", "64k", tmpAudio],
+    /* Levelled and not merely downmixed. The first cut of this was a bare
+       64k mono encode, and it came out at -21.1 LUFS against the film's
+       -17.6 - three and a half decibels quieter than the same narration in
+       the same lecture, which is audible and was read as "hard to hear".
+       loudnorm brings it to the film's neighbourhood; 96k stops speech being
+       starved of bitrate for the sake of a few hundred kilobytes. */
+    run("ffmpeg", ["-y", "-i", track, "-ac", "1",
+                   "-af", "loudnorm=I=-16:TP=-1.5:LRA=11", "-b:a", "96k", tmpAudio],
         { stdio: ["ignore", "ignore", "pipe"] });
     film.narrationAudio = publish(tmpAudio, slidesDir, slug, "narration.mp3");
 
@@ -813,6 +833,16 @@ function buildNarrationTrack(scratch, clips, beats) {
     "-framerate", String(FPS), "-i", path.join(frameDir, "%05d.png"),
     "-i", trackPath,
     "-c:v", "libx264", "-preset", "slow", "-crf", "20", "-pix_fmt", "yuv420p",
+    /* LEVELLED, not merely encoded. The mux used to take whatever loudness
+       the voice happened to deliver, which was invisible while every film
+       used one voice. The moment a storyboard named its own, it showed:
+       the same lecture re-narrated came out at -24.4 LUFS against the
+       previous voice's -17.6 — nearly 7 dB quieter, and the re-narration had
+       been asked for BECAUSE the old one was hard to hear. Raw text-to-speech
+       output simply is not levelled, and it varies by voice.
+       -16 LUFS matches the deck's audio, so a learner hears the same lecture
+       at the same level whether they watch it or step through it. */
+    "-af", "loudnorm=I=-16:TP=-1.5:LRA=11",
     "-c:a", "aac", "-b:a", "160k",
     "-movflags", "+faststart", "-shortest", tmpMp4], { stdio: ["ignore", "ignore", "pipe"] });
 

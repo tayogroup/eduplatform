@@ -48,7 +48,7 @@ const args = process.argv.slice(2);
 const subject = SUBJECTS[args[0]] ? args.shift() : "science";
 const S = SUBJECTS[subject];
 
-let total = 0, unread = 0;
+let total = 0, unread = 0, notChecked = 0;
 for (const grade of args) {
   const sbDir = path.join(ROOT, S.app(grade), "lecture-video");
   const scDir = path.join(ROOT, "tools/lib/film-scenes", S.scenes(grade));
@@ -57,9 +57,24 @@ for (const grade of args) {
     const slug = f.replace(/\.json$/, "");
     let sb; try { sb = JSON.parse(fs.readFileSync(path.join(sbDir, f), "utf8")); } catch (e) { console.log("!! unparseable", f); continue; }
     if (!sb.renderer) continue;
-    let code = marks;
+    /* A film's scenes are USUALLY <slug>.js and <slug>-N.js in the grade's own
+       directory - but a storyboard may name its own file instead, and the older
+       tool's films do: Computing's live computers-everywhere points at
+       tools/lib/ehel-computing-lecture-scenes.js, which is nowhere near
+       film-scenes/computing-g1. Reading only the directory therefore found NONE
+       of its scene code and called all 102 of its cues dead, on a film that is
+       live and correct. Honour renderer.scenes wherever it points. */
+    let code = marks, files = 0;
     if (fs.existsSync(scDir)) for (const s of fs.readdirSync(scDir))
-      if (s === slug + ".js" || s.startsWith(slug + "-")) code += fs.readFileSync(path.join(scDir, s), "utf8");
+      if (s === slug + ".js" || s.startsWith(slug + "-")) { code += fs.readFileSync(path.join(scDir, s), "utf8"); files++; }
+    for (const named of [].concat(sb.renderer.scenes || [])) {
+      const at = path.resolve(ROOT, named);
+      if (fs.existsSync(at)) { code += fs.readFileSync(at, "utf8"); files++; }
+      else console.log("!! " + subject + " G" + grade + "  " + slug + ": renderer.scenes names " + named + ", which is not there");
+    }
+    /* No scene code at all is not a film of 30 dead cues; it is a film this run
+       could not read. Say which, and never count it. */
+    if (!files) { console.log("\n" + subject + " G" + grade + "  " + slug + ": NOT CHECKED - no scene file found"); notChecked++; continue; }
     const bad = [];
     for (const scene of sb.scenes || []) for (const [bi, beat] of (scene.beats || []).entries())
       for (const key of Object.keys((beat.art && beat.art.at) || {})) {
@@ -72,7 +87,8 @@ for (const grade of args) {
     if (bad.length) { console.log("\n" + subject + " G" + grade + "  " + slug); bad.forEach((b) => console.log("   " + b)); }
   }
 }
-console.log("\n" + subject + ": " + total + " declared cues checked, " + unread + " never read by any scene file.");
+console.log("\n" + subject + ": " + total + " declared cues checked, " + unread + " never read by any scene file."
+  + (notChecked ? "\n" + notChecked + " film(s) were NOT checked - see above." : ""));
 
 /* A run that checked nothing reads exactly like a clean one, so it says so
    rather than printing a tick over no work. */

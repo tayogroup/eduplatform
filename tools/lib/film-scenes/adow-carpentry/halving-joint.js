@@ -768,39 +768,26 @@
   }
 
   function sceneSaw(scene, beat, t, i) {
-    var b0 = scene.first, bStart = b0 + 1, bGood = b0 + 2, bBad = b0 + 3, bFar = b0 + 4;
+    /* THREE BEATS, not five. The storyboard went back to the earlier script
+       (owner, 2026-09-24), which drops "start it at a low angle" and "watch
+       the far face". Their indices are what mattered: written for five beats,
+       bFar pointed one past the end of a three-beat scene, so the far-face
+       panel and the low-angle start did not politely vanish — they read cues
+       from a beat that is not there.
+
+       startingCut(), thumbGuide() and farFacePanel() are deliberately LEFT in
+       place, unreached. They are the pictures for two beats that were bought
+       and then withdrawn, and reinstating the script should not also mean
+       redrawing them. */
+    var b0 = scene.first, bGood = b0 + 1, bBad = b0 + 2;
     var kerfAt = cue(b0, "kerf");
     var wasteC = bump(t, cue(b0, "waste"), 1.5);
-    var startAt = cue(bStart, "angle");
     var goodAt = cue(bGood, "good");
     var badAt = cue(bBad, "bad");
     var slack = on(t, cue(bBad, "slack"), 0.7);
-    var farAt = cue(bFar, "far");
-    var leanAt = cue(bFar, "lean");
 
     var W = 330, H = 104, LX = 176;
     var out = "";
-
-    /* BEAT 4 — the far face. Its own picture: the point is a second surface,
-       and there is no second surface in the side-by-side comparison. */
-    if (i >= bFar) {
-      var fa = on(t, farAt, 0.8);
-      var lean = on(t, leanAt, 1.2);
-      out += G(farFacePanel(0, 0, 420, lean), { transform: "translate(300,120)", opacity: 0.25 + 0.75 * fa });
-      out += cap(584, 408, "square on the face you watch, running off the one you do not",
-        on(t, leanAt, 1.4), P.bad);
-      return svg(out);
-    }
-
-    /* BEAT 1 — starting the cut. Low angle, backward strokes, a groove. The
-       film used to jump from a clean board to a finished kerf. */
-    if (i === bStart) {
-      out += G(startingCut(0, 0, 420, 122, 210, t, startAt), { transform: "translate(320,214)" });
-      out += Tx(584, 96, "start at a low angle — backward strokes first", "lab big", "middle", { fill: P.gold });
-      var gr = on(t, cue(bStart, "groove"), 0.8);
-      if (gr > 0) out += cap(584, 404, "two or three strokes cut a groove to run in", gr, P.gold);
-      return svg(out);
-    }
 
     /* BEAT 0 — what a kerf IS, before anything is cut. The cut itself now
        belongs to the beats that name it, so this beat no longer starts one. */

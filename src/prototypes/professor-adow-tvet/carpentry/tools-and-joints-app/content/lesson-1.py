@@ -39,23 +39,28 @@ LESSON = {
         # A RENDERED FILM, and the same parts below it. This said the
         # opposite until the film existed — that a prototype had neither the
         # budget for narration nor anywhere to serve the file from. The
-        # narration was bought (3,097 characters over two passes), the film
-        # is 11.2 MB at 3:52, and the parts remain: Ehel plays the film and keeps the
-        # parts as the way back through it a piece at a time, which is what
-        # a learner wants after watching three minutes once.
+        # narration was bought, the film is 10 MB at 3:42, and the parts
+        # remain: Ehel plays the film and keeps the parts as the way back
+        # through it a piece at a time, which is what a learner wants after
+        # watching it once.
+        #
+        # VOICE: Daniel, named in the storyboard and used by this film alone
+        # (owner, 2026-09-24, after an A/B of four voices levelled to the same
+        # loudness). Film and deck are both levelled to -16 LUFS, so the
+        # lecture sounds the same whether it is watched or stepped through.
         step("lecture", "Unit lecture", ["ADOW-CJ-TJ.02.1", "ADOW-CJ-TJ.03.1"],
              {"w": 420, "h": 240,
               # The rendered film. Names are content-addressed by the tool that
               # made them, so a re-render cannot be shadowed by a CDN holding a
               # path for a year — and a changed film gets a changed name.
               "video": {
-                  "src": "lecture-video/marking-out-and-cutting-a-halving-joint.38840040.mp4",
-                  "captions": "lecture-video/marking-out-and-cutting-a-halving-joint.54b24e37.vtt",
-                  "poster": "lecture-video/marking-out-and-cutting-a-halving-joint.7cfa3a81.jpg",
+                  "src": "lecture-video/marking-out-and-cutting-a-halving-joint.b8c5e186.mp4",
+                  "captions": "lecture-video/marking-out-and-cutting-a-halving-joint.30ec7183.vtt",
+                  "poster": "lecture-video/marking-out-and-cutting-a-halving-joint.d5d13118.jpg",
               },
               # The same lecture, stepped through a beat at a time, built by
               # --slides from this storyboard and these drawings. 229 KB
-              # against the film's 11.2 MB, so it is also what a learner on a
+              # against the film's 10 MB, so it is also what a learner on a
               # thin connection gets. It speaks: the deck loads its own copy
               # of the SAME bought narration (a further 2.7 MB), levelled to
               # -16 LUFS so the lecture sounds the same whether it is watched
@@ -64,7 +69,7 @@ LESSON = {
               # under the film carrying the same words, which is audible. A SIBLING of "video", not a key inside
               # it: the renderer reads data.slides, and nested here it drew
               # nothing at all while every gate stayed green.
-              "slides": "lecture-video/marking-out-and-cutting-a-halving-joint.37a8c1de.slides.html",
+              "slides": "lecture-video/marking-out-and-cutting-a-halving-joint.02ff831b.slides.html",
               # A ten-second demonstration clip of the real thing, between
               # the film and the line that sends the learner back through it.
               # The lecture is DRAWN; this is footage — the drawings say what
@@ -76,7 +81,7 @@ LESSON = {
               # time is faster than a learner can follow. It does not autoplay
               # — it carries sound.
               "demo": {
-                  "src": "lecture-video/wood-cutting-demonstration.901c652c.mp4",
+                  "src": "lecture-video/wood-cutting-demonstration.153371f5.mp4",
                   "caption": "Wood Cutting Demonstration Video",
                   # Narration for footage that has none. The clip carries no
                   # speech — the audio sits flat at about -20 dB throughout,
@@ -84,13 +89,16 @@ LESSON = {
                   # against what is on screen, checked frame by frame, and
                   # worded to tie the footage back to the job just taught.
                   # `at` is in the CLIP's seconds, not wall-clock: at rate 0.6
-                  # these ten seconds take nearly seventeen to watch.
+                  # these twenty seconds take over half a minute to watch.
+                  # Re-timed 2026-09-24 for the owner's longer clip, which is
+                  # the better match: it shows the face marks being written on
+                  # the wood, the chisel paring, and the dry fit.
                   "narration": [
-                      {"at": 0.0, "say": "A prepared piece on the bench. Everything that follows is taken from a face side and a face edge."},
-                      {"at": 2.0, "say": "The three tools this job needs: a try square, a marking gauge and a tenon saw."},
-                      {"at": 4.2, "say": "The marking gauge, worked along the wood, scoring its line from a prepared face."},
-                      {"at": 6.6, "say": "The waste, hatched before any cut — so there is no way to saw off the wrong half."},
-                      {"at": 8.2, "say": "Then the tenon saw: fine teeth for a clean cut across the grain, and a stiff back to keep it straight."},
+                      {"at": 0.0,  "say": "Two pieces of timber that have to cross — the same job, at a real bench."},
+                      {"at": 6.5,  "say": "The face side and the face edge, marked on the wood. Every measurement comes off those two surfaces."},
+                      {"at": 11.5, "say": "Paring the waste away with a chisel, down to the line."},
+                      {"at": 15.0, "say": "Then the two members are offered together — a dry fit, before any glue goes near it."},
+                      {"at": 18.0, "say": "Together by hand, and flush. That is the joint the lecture drew."},
                   ],
                   "rate": 0.6,
               },
@@ -115,7 +123,7 @@ LESSON = {
              ask="Watch the film. Then go back through the job a part at a time below.",
              error=("Skipping the lecture and starting at the first thing that looks like doing.",
                     "Every step after this one is a part of the job you have now heard in full, "
-                    "which is what makes them practice rather than instructions. Three minutes "
+                    "which is what makes them practice rather than instructions. Four minutes "
                     "here saves the piece of timber.")),
 
         step("label", "The tools this job needs", ["ADOW-CJ-CF.01.2"],

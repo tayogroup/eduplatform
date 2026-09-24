@@ -1,0 +1,111 @@
+{
+  "_comment": "Storyboard for the Grade 3 Computing unit lecture film, Lesson 13 Systems, Inputs and Files. Rendered by tools/create-ehel-unit-lecture.js. See lecture-video/BRIEF.md. Chapters follow LESSON[lecture] in order (system; roles; inputs; files), then the recap. The lesson's docstring LESSON['lecture'] carries two more parts appended after the first four ('Automatic inputs that read you': biometric, RFID, a bus pass; 'Hardware and software, working as one system': an e-reader) - both are taught as extra beats on the END of the 'system' and 'inputs' chapters below, not as two new chapters, so the four-chapter shape and its four objective codes stay exactly as the lesson's own lecture order has them. THERE IS NO ART.sim for this lesson's ideas - a working system, hardware vs software roles, manual vs automatic input, file types - so every picture here is drawn in the engine's own idiom. The one kit piece borrowed is ART.figure('laptop'), which already carries a keyboard part and a screen part with their own tap outlines, so the K-press demo rings the lesson's own laptop rather than a laptop drawn from scratch.",
+  "slug": "systems-inputs-and-files",
+  "lesson": 13,
+  "grade": 3,
+  "stage": 3,
+  "title": "Systems, Inputs and Files",
+  "subtitle": "Grade 3 Computing",
+  "framework": "Cambridge Primary Computing 0059",
+  "renderer": {
+    "art": ["computing"],
+    "skin": "brown",
+    "scenes": [
+      "tools/lib/ehel-film-marks.js",
+      "tools/lib/film-scenes/computing-g3/systems-inputs-and-files.js",
+      "tools/lib/film-scenes/computing-g3/systems-inputs-and-files-2.js",
+      "tools/lib/film-scenes/computing-g3/systems-inputs-and-files-3.js"
+    ]
+  },
+  "objectives": [
+    ["3CS.01", "Know that the hardware and software components of computing devices combine to form a working system."],
+    ["3CS.02", "Know the differences between hardware and software, and compare the different roles that they perform in computer systems."],
+    ["3CS.03", "Identify a range of manual and automatic input devices."],
+    ["3CS.04", "Know that different types of file can be stored on a computer's hard drive, including text, audio, image, video and games."]
+  ],
+  "scenes": [
+    { "id": "title", "kind": "title", "codes": [], "beats": [
+      { "say": "You press K on the keyboard, and a letter appears on the screen.",
+        "art": { "at": { "press": "You press K", "keyboard": "the keyboard", "screen": "the screen" } } },
+      { "say": "Hardware, software, hardware: one working system, made of parts with different jobs.",
+        "art": { "at": { "hw1": "Hardware", "sw1": "software", "system": "one working system" } } }
+    ] },
+
+    { "id": "system", "kind": "system", "heading": "One working system", "codes": ["3CS.01"], "beats": [
+      { "say": "A keyboard with no software is just a box of buttons.",
+        "art": { "at": { "kbword": "A keyboard", "nosoftware": "no software", "buttons": "a box of buttons" } } },
+      { "say": "A program with no hardware has nowhere to run.",
+        "art": { "at": { "program": "A program", "nohardware": "no hardware", "nowhere": "nowhere to run" } } },
+      { "say": "Press K, and the keyboard, hardware, sends a signal down the wire.",
+        "art": { "at": { "pressk": "Press K", "kbhw": "the keyboard, hardware", "signal": "sends a signal down the wire" } } },
+      { "say": "The operating system and the app, software, decide what it means.",
+        "art": { "at": { "os": "The operating system", "app": "the app", "decide": "decide what it means" } } },
+      { "say": "The screen, hardware, shows the K. Hardware and software combine into one system.",
+        "art": { "at": { "screenhw": "The screen, hardware", "showsk": "shows the K", "combine": "combine into one system" } } },
+      { "say": "An e-reader is a system too: hardware, plus software that shows the page.",
+        "art": { "at": { "ereader": "An e-reader", "sysT2": "a system too", "hw3": "hardware", "sw4": "software", "page": "the page" } } },
+      { "say": "No software: a screen shows nothing. No screen: software has nowhere to go.",
+        "art": { "at": { "nosoftware2": "No software", "noshow": "a screen shows nothing", "noscreen2": "No screen", "nowhere2": "software has nowhere to go" } } }
+    ] },
+
+    { "id": "roles", "kind": "roles", "heading": "Whose job is it?", "codes": ["3CS.02"], "beats": [
+      { "say": "Hardware is the parts you can touch: it senses, shows, stores and sounds.",
+        "art": { "at": { "touch": "the parts you can touch", "job1": "it senses, shows, stores and sounds" } } },
+      { "say": "Showing a picture: the screen is hardware. Deciding which picture: that is software.",
+        "art": { "at": { "showing": "Showing a picture", "screenhw2": "the screen is hardware", "deciding": "Deciding which picture", "sw2": "that is software" } } },
+      { "say": "Software is the instructions: it decides, calculates and works out what to do.",
+        "art": { "at": { "instructions": "Software is the instructions", "decidecalc": "it decides, calculates" } } },
+      { "say": "Storing a file: the hard drive is hardware. The program that saves it: software.",
+        "art": { "at": { "storing": "Storing a file", "hdhw": "the hard drive is hardware", "programsaves": "The program that saves it", "sw3": "software" } } },
+      { "say": "A program that works out 37 plus 48 is software, running on the processor.",
+        "art": { "at": { "sum": "37 plus 48", "processor": "running on the processor" } } },
+      { "say": "Every job the computer does has a hardware half and a software half.",
+        "art": { "at": { "everyjob": "Every job the computer does", "both": "a hardware half and a software half" } } }
+    ] },
+
+    { "id": "inputs", "kind": "inputs", "heading": "Manual or automatic?", "codes": ["3CS.03"], "beats": [
+      { "say": "An input can be manual: a person does it themself.",
+        "art": { "at": { "manual": "An input can be manual", "person": "a person does it themself" } } },
+      { "say": "A keyboard, a mouse, a touchscreen, a microphone you speak into: all manual.",
+        "art": { "at": { "kb2": "A keyboard", "mouse": "a mouse", "touch2": "a touchscreen", "mic": "a microphone you speak into" } } },
+      { "say": "An input can be automatic: a sensor does it by itself, with no person.",
+        "art": { "at": { "automatic": "An input can be automatic", "sensor": "a sensor does it by itself", "noperson": "with no person" } } },
+      { "say": "A thermometer, a light sensor, a barcode scanner: each senses without being asked.",
+        "art": { "at": { "thermo": "A thermometer", "light": "a light sensor", "barcode": "a barcode scanner", "senses": "senses without being asked" } } },
+      { "say": "The sensor on an automatic door spots you and opens it, all by itself.",
+        "art": { "at": { "door": "The sensor on an automatic door", "spots": "spots you and opens it", "byitself": "all by itself" } } },
+      { "say": "Automatic does not mean better; it just means no person. Each kind is right for its job.",
+        "art": { "at": { "notbetter": "Automatic does not mean better", "noperson2": "it just means no person", "rightjob": "right for its job" } } },
+      { "say": "Automatic inputs read you: a fingerprint or a face. That is biometric.",
+        "art": { "at": { "automatic2": "Automatic inputs", "fingerprint": "a fingerprint", "face": "a face", "biometric": "biometric" } } },
+      { "say": "Others read a tag: RFID. You wave it, like a bus pass, to get on.",
+        "art": { "at": { "tag": "a tag", "rfid": "RFID", "wave": "You wave it", "buspass": "a bus pass" } } }
+    ] },
+
+    { "id": "files", "kind": "files", "heading": "What kind of file?", "codes": ["3CS.04"], "beats": [
+      { "say": "The hard drive keeps files, and every file has a type.",
+        "art": { "at": { "harddrive": "The hard drive keeps files", "type": "every file has a type" } } },
+      { "say": "A text file holds words, like a story. An audio file holds sound, like a song.",
+        "art": { "at": { "text": "A text file holds words", "audio": "An audio file holds sound" } } },
+      { "say": "An image file holds a picture. A video file holds moving pictures with sound.",
+        "art": { "at": { "image": "An image file holds a picture", "video": "A video file holds moving pictures with sound" } } },
+      { "say": "A game file holds a whole game, ready to run.",
+        "art": { "at": { "game": "A game file holds a whole game", "ready": "ready to run" } } },
+      { "say": "Record yourself singing, and the file that is saved is audio: it holds sound.",
+        "art": { "at": { "record": "Record yourself singing", "audiofile": "the file that is saved is audio", "holdssound": "it holds sound" } } },
+      { "say": "The type decides what the file holds, and which program can open it.",
+        "art": { "at": { "decides2": "The type decides what the file holds", "opens": "which program can open it" } } }
+    ] },
+
+    { "id": "recap", "kind": "recap", "heading": "What you now know", "codes": ["3CS.01", "3CS.02", "3CS.03", "3CS.04"], "beats": [
+      { "say": "Hardware and software combine into one working system.",
+        "art": { "at": { "system2": "one working system" } } },
+      { "say": "Hardware senses, shows and stores. Software decides and calculates.",
+        "art": { "at": { "hwrecap": "Hardware senses, shows and stores", "swrecap": "Software decides and calculates" } } },
+      { "say": "Manual inputs need a person. Automatic inputs sense by themselves.",
+        "art": { "at": { "manrecap": "Manual inputs need a person", "autorecap": "Automatic inputs sense by themselves" } } },
+      { "say": "Text, audio, image, video, games: five types of file, on the hard drive.",
+        "art": { "at": { "typesrecap": "Text, audio, image, video, games", "hdrecap": "on the hard drive" } } }
+    ] }
+  ]
+}

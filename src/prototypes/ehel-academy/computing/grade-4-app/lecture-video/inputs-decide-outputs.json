@@ -1,0 +1,110 @@
+{
+  "_comment": "Storyboard for the Grade 4 Computing unit lecture film, Lesson 4 Inputs Decide Outputs. Rendered by tools/create-ehel-unit-lecture.js. See lecture-video/BRIEF.md. Every beat is one narration clip; art.at names the phrases a picture waits for, and the page refuses to load if a phrase is not in its beat's say. The chapters follow LESSON[lecture] in order: one question two answers, inputs decide outputs, writing a branch, building a loop, checking it. Which branch a frame lights is never decided by the film: the lesson's own ART.algo.branchRun is run on the lesson's own round data, and the picture draws what it returns. The unrolled count comes from ART.algo.expandLoop for the same reason.",
+  "slug": "inputs-decide-outputs",
+  "lesson": 4,
+  "grade": 4,
+  "stage": 4,
+  "title": "Inputs Decide Outputs",
+  "subtitle": "Grade 4 Computing",
+  "framework": "Cambridge Primary Computing 0059",
+  "renderer": {
+    "art": ["computing"],
+    "skin": "brown",
+    "scenes": [
+      "tools/lib/ehel-film-marks.js",
+      "tools/lib/film-scenes/computing-g4/inputs-decide-outputs.js",
+      "tools/lib/film-scenes/computing-g4/inputs-decide-outputs-2.js",
+      "tools/lib/film-scenes/computing-g4/inputs-decide-outputs-3.js",
+      "tools/lib/film-scenes/computing-g4/inputs-decide-outputs-4.js"
+    ]
+  },
+  "objectives": [
+    ["4CT.09", "Know how to develop algorithms to produce different outputs based on different inputs."],
+    ["4CT.10", "Know how to develop algorithms that include repetition."],
+    ["4CT.05", "Predict the outcome of algorithms that contain repetition."]
+  ],
+  "scenes": [
+    { "id": "title", "kind": "title", "codes": [], "beats": [
+      { "say": "Is it raining? Yes, take an umbrella. No, take sunglasses.",
+        "art": { "at": { "ask": "Is it raining?", "yes": "take an umbrella", "no": "take sunglasses" } } },
+      { "say": "One question, two answers, and the input decides which steps run.",
+        "art": { "at": { "one": "One question", "two": "two answers", "decides": "the input decides" } } }
+    ] },
+
+    { "id": "fork", "kind": "fork", "heading": "One question, two answers", "codes": ["4CT.09"], "beats": [
+      { "say": "An algorithm can fork. It asks one question about its input.",
+        "art": { "at": { "fork": "can fork", "question": "one question about its input" } } },
+      { "say": "Leaving for school: get dressed, pick up your bag. Then the question.",
+        "art": { "at": { "dress": "get dressed", "bag": "pick up your bag", "question": "Then the question" } } },
+      { "say": "Is it raining? Yes: put on your raincoat and take the umbrella.",
+        "art": { "at": { "ask": "Is it raining?", "yes": "Yes:", "steps": "your raincoat and take the umbrella" } } },
+      { "say": "No: put on sunglasses and take a sun hat. Then walk to school.",
+        "art": { "at": { "no": "No:", "steps": "sunglasses and take a sun hat", "after": "walk to school" } } },
+      { "say": "The steps before and after are the same. Only one answer's steps run.",
+        "art": { "at": { "same": "before and after are the same", "only": "Only one answer's steps run" } } }
+    ] },
+
+    { "id": "inputs", "kind": "inputs", "heading": "Inputs decide outputs", "codes": ["4CT.09"], "beats": [
+      { "say": "Change the input, and the same algorithm gives a different output.",
+        "art": { "at": { "input": "Change the input", "same": "the same algorithm", "output": "a different output" } } },
+      { "say": "Raining in. The yes steps run, and out come the raincoat and the umbrella.",
+        "art": { "at": { "rain": "Raining in", "yes": "The yes steps run", "out": "the raincoat and the umbrella" } } },
+      { "say": "Sunny in. The no steps run, and out come the sunglasses and the sun hat.",
+        "art": { "at": { "sun": "Sunny in", "no": "The no steps run", "out": "the sunglasses and the sun hat" } } },
+      { "say": "A quiz program is the same. A right answer in: a tick, a point and well done.",
+        "art": { "at": { "quiz": "A quiz program", "right": "A right answer in", "out": "a tick, a point and well done" } } },
+      { "say": "A wrong answer in: a cross and a hint. The input decided both times.",
+        "art": { "at": { "wrong": "A wrong answer in", "out": "a cross and a hint", "decided": "The input decided" } } }
+    ] },
+
+    { "id": "write", "kind": "write", "heading": "Writing a branch", "codes": ["4CT.09"], "beats": [
+      { "say": "To write a branch, first choose the question that decides it.",
+        "art": { "at": { "write": "To write a branch", "choose": "choose the question" } } },
+      { "say": "Borrowing a book. The question is: is the book on the shelf?",
+        "art": { "at": { "book": "Borrowing a book", "ask": "is the book on the shelf?" } } },
+      { "say": "You look on the shelf whatever the answer, so that step goes first.",
+        "art": { "at": { "look": "You look on the shelf", "first": "that step goes first" } } },
+      { "say": "On the shelf: take it to the desk and scan your card.",
+        "art": { "at": { "yes": "On the shelf:", "steps": "take it to the desk and scan your card" } } },
+      { "say": "Not there: ask for it to be saved. Thanking the librarian happens either way.",
+        "art": { "at": { "no": "Not there:", "steps": "ask for it to be saved", "after": "Thanking the librarian" } } },
+      { "say": "Now test it both ways. A step in the wrong place turns up for one answer only.",
+        "art": { "at": { "test": "test it both ways", "wrong": "the wrong place" } } }
+    ] },
+
+    { "id": "loop", "kind": "loop", "heading": "Building a loop", "codes": ["4CT.10"], "beats": [
+      { "say": "Water three plants. The same three steps happen for every plant.",
+        "art": { "at": { "water": "Water three plants", "same": "same three steps", "every": "every plant" } } },
+      { "say": "Fill the can, pour on a plant, walk to the next. Those go in the loop.",
+        "art": { "at": { "fill": "Fill the can", "pour": "pour on a plant", "walk": "walk to the next", "loop": "go in the loop" } } },
+      { "say": "Set the count to three, and the loop does those steps three times.",
+        "art": { "at": { "count": "Set the count to three", "times": "three times" } } },
+      { "say": "You get the can out of the shed once, so it stays outside the loop.",
+        "art": { "at": { "can": "get the can out of the shed", "outside": "stays outside the loop" } } },
+      { "say": "Putting the can away happens once too, after the loop has finished.",
+        "art": { "at": { "away": "Putting the can away", "after": "after the loop has finished" } } }
+    ] },
+
+    { "id": "unroll", "kind": "unroll", "heading": "Checking it", "codes": ["4CT.05", "4CT.10"], "beats": [
+      { "say": "To check a loop, unroll it. Write out every step it really does.",
+        "art": { "at": { "check": "To check a loop", "unroll": "unroll it", "every": "every step" } } },
+      { "say": "Three steps, three times round, makes nine steps.",
+        "art": { "at": { "three": "Three steps", "times": "three times round", "nine": "nine steps" } } },
+      { "say": "The can is fetched once before and put away once after. Eleven in all.",
+        "art": { "at": { "before": "fetched once before", "after": "put away once after", "total": "Eleven in all" } } },
+      { "say": "Does it do the whole job and nothing extra? Then the loop is right.",
+        "art": { "at": { "whole": "the whole job", "extra": "nothing extra", "right": "the loop is right" } } },
+      { "say": "Four plants instead? Change the count to four. Nothing else moves.",
+        "art": { "at": { "four": "Four plants instead?", "count": "Change the count to four", "nothing": "Nothing else moves" } } }
+    ] },
+
+    { "id": "recap", "kind": "recap", "heading": "What you now know", "codes": ["4CT.09", "4CT.10", "4CT.05"], "beats": [
+      { "say": "A branch is a fork: one question, and a rule for each answer.",
+        "art": { "at": { "branch": "A branch is a fork", "question": "one question", "rule": "a rule for each answer" } } },
+      { "say": "Different inputs take different branches, so you get different outputs.",
+        "art": { "at": { "outputs": "different outputs" } } },
+      { "say": "Steps that repeat go in a loop, and the count says how many times.",
+        "art": { "at": { "loop": "go in a loop", "count": "the count" } } }
+    ] }
+  ]
+}

@@ -1,0 +1,121 @@
+{
+  "_comment": "Storyboard for the Grade 4 Computing unit lecture film, Lesson 2 Predict and Compare. Rendered by tools/create-ehel-unit-lecture.js. See lecture-video/BRIEF.md. Every beat is one narration clip; art.at names the phrases a picture waits for, and the page refuses to load if a phrase is not in its beat's say. The chapters follow LESSON[lecture] in order (predicting a loop; the stairs loop; folding a repeat; comparing algorithms; the purpose decides; shorter is not the same as better). Robo's routes are walked with the kit's own rules (ART.robo and ART.algo.expandLoop) rather than a copy, and the two computed comparison rounds come from ART.algo.best, so the film and the lesson cannot disagree about where Robo lands or which route wins.",
+  "slug": "predict-and-compare",
+  "lesson": 2,
+  "grade": 4,
+  "stage": 4,
+  "title": "Predict and Compare",
+  "subtitle": "Grade 4 Computing",
+  "framework": "Cambridge Primary Computing 0059",
+  "renderer": {
+    "art": ["computing"],
+    "skin": "brown",
+    "scenes": [
+      "tools/lib/ehel-film-marks.js",
+      "tools/lib/film-scenes/computing-g4/predict-and-compare.js",
+      "tools/lib/film-scenes/computing-g4/predict-and-compare-2.js",
+      "tools/lib/film-scenes/computing-g4/predict-and-compare-3.js",
+      "tools/lib/film-scenes/computing-g4/predict-and-compare-4.js"
+    ]
+  },
+  "objectives": [
+    ["4CT.05", "Predict the outcome of algorithms that contain repetition."],
+    ["4CT.03", "Understand that the use of repetition can make algorithms more concise."],
+    ["4CT.04", "Compare and contrast algorithms designed for the same task to determine which produces the outcome that is best suited to the purpose."]
+  ],
+  "scenes": [
+    { "id": "title", "kind": "title", "codes": [], "beats": [
+      { "say": "Robo's program says repeat two times, forward, forward. Where will it stop?",
+        "art": { "at": { "repeat": "repeat two times", "fwd": "forward, forward", "where": "Where will it stop?" } } },
+      { "say": "Work it out before you press Go. Then compare three ways to school.",
+        "art": { "at": { "work": "Work it out", "go": "press Go", "compare": "compare three ways" } } }
+    ] },
+
+    { "id": "unroll", "kind": "unroll", "heading": "Unroll the loop", "codes": ["4CT.05"], "beats": [
+      { "say": "Robo starts at the bottom, facing up. The flower is four squares away.",
+        "art": { "at": { "robo": "Robo starts at the bottom", "facing": "facing up", "flower": "The flower", "four": "four squares away" } } },
+      { "say": "The program is short: repeat two times, then forward, forward.",
+        "art": { "at": { "program": "The program is short", "repeat": "repeat two times", "body": "forward, forward" } } },
+      { "say": "To predict where it stops, unroll the loop in your head.",
+        "art": { "at": { "predict": "To predict where it stops", "unroll": "unroll the loop" } } },
+      { "say": "Do the body twice, and it unrolls to four forwards in a row.",
+        "art": { "at": { "twice": "Do the body twice", "unrolls": "unrolls to four forwards" } } },
+      { "say": "Tap that square, then press Go. Robo runs and lands on the flower.",
+        "art": { "at": { "tap": "Tap that square", "go": "press Go", "lands": "lands on the flower" } } }
+    ] },
+
+    { "id": "stairs", "kind": "stairs", "heading": "The stairs loop", "codes": ["4CT.05"], "beats": [
+      { "say": "Loop two is longer: repeat three times, forward, turn right, forward, turn left.",
+        "art": { "at": { "loop2": "Loop two is longer", "repeat": "repeat three times", "f1": "forward, turn right", "f2": "forward, turn left" } } },
+      { "say": "Keep track of which way Robo faces. A turn changes the next forward.",
+        "art": { "at": { "track": "which way Robo faces", "turn": "A turn changes the next forward" } } },
+      { "say": "One time round: forward up, turn right, forward along, turn left.",
+        "art": { "at": { "once": "One time round", "up": "forward up", "right": "turn right", "along": "forward along", "back": "turn left" } } },
+      { "say": "That is one up and one along. Each time round climbs like stairs.",
+        "art": { "at": { "step": "one up and one along", "stairs": "climbs like stairs" } } },
+      { "say": "Three times round is three up and three along: Robo reaches the school.",
+        "art": { "at": { "three": "Three times round", "sum": "three up and three along", "school": "reaches the school" } } }
+    ] },
+
+    { "id": "fold", "kind": "fold", "heading": "Folding a repeat", "codes": ["4CT.03"], "beats": [
+      { "say": "Making four pancakes, written out long, is twenty-two steps.",
+        "art": { "at": { "four": "four pancakes", "long": "written out long", "count": "twenty-two steps" } } },
+      { "say": "Mix the batter. Then pour, cook, flip, cook, plate.",
+        "art": { "at": { "mix": "Mix the batter", "five": "pour, cook, flip, cook, plate" } } },
+      { "say": "Those five steps happen again for every pancake. Four times over.",
+        "art": { "at": { "same": "Those five steps", "every": "every pancake", "times": "Four times over" } } },
+      { "say": "Write them once inside repeat four times, then serve at the end.",
+        "art": { "at": { "once": "Write them once", "loop": "repeat four times", "serve": "serve at the end" } } },
+      { "say": "Twenty-two steps become seven. Repetition makes an algorithm concise.",
+        "art": { "at": { "seven": "become seven", "concise": "makes an algorithm concise" } } },
+      { "say": "Change one step inside the loop, and every pancake changes.",
+        "art": { "at": { "change": "Change one step", "all": "every pancake changes" } } }
+    ] },
+
+    { "id": "compare", "kind": "compare", "heading": "Compare and contrast", "codes": ["4CT.04"], "beats": [
+      { "say": "Three algorithms, one task: get from home to school.",
+        "art": { "at": { "three": "Three algorithms", "task": "one task", "school": "home to school" } } },
+      { "say": "The short cut is four steps and twelve minutes, but muddy when wet.",
+        "art": { "at": { "cut": "The short cut", "steps": "four steps", "mins": "twelve minutes", "mud": "muddy when wet" } } },
+      { "say": "The bus is six steps and eight minutes, warm and dry, but it costs money.",
+        "art": { "at": { "bus": "The bus", "steps": "six steps", "mins": "eight minutes", "cost": "costs money" } } },
+      { "say": "The main road is five steps and fifteen minutes. Free, and no mud.",
+        "art": { "at": { "road": "The main road", "steps": "five steps", "mins": "fifteen minutes", "free": "Free, and no mud" } } },
+      { "say": "Compare them on four things: steps, time, cost and outcome.",
+        "art": { "at": { "four": "four things", "steps": "steps,", "time": "time,", "cost": "cost and", "outcome": "outcome" } } },
+      { "say": "Comparing finds what is the same. Contrasting finds what is different.",
+        "art": { "at": { "same": "Comparing finds what is the same", "diff": "Contrasting finds what is different" } } }
+    ] },
+
+    { "id": "purpose", "kind": "purpose", "heading": "The purpose decides", "codes": ["4CT.04"], "beats": [
+      { "say": "There is no best algorithm on its own. The purpose decides.",
+        "art": { "at": { "nobest": "no best algorithm", "decides": "The purpose decides" } } },
+      { "say": "For the fewest steps to remember, the short cut wins.",
+        "art": { "at": { "few": "the fewest steps", "cut": "the short cut wins" } } },
+      { "say": "For getting there quickest, the bus. For staying dry, the bus again.",
+        "art": { "at": { "quick": "getting there quickest", "dry": "For staying dry", "again": "the bus again" } } },
+      { "say": "For no money and no mud, the main road. Read the purpose every time.",
+        "art": { "at": { "money": "For no money and no mud", "road": "the main road", "read": "Read the purpose every time" } } }
+    ] },
+
+    { "id": "shorter", "kind": "shorter", "heading": "Shorter is not always better", "codes": ["4CT.04", "4CT.03"], "beats": [
+      { "say": "It is tempting to pick the shorter algorithm.",
+        "art": { "at": { "tempting": "It is tempting", "shorter": "the shorter algorithm" } } },
+      { "say": "Shorter only wins if it still does the whole job.",
+        "art": { "at": { "wins": "only wins", "job": "the whole job" } } },
+      { "say": "An algorithm that leaves a step out is shorter and wrong.",
+        "art": { "at": { "leaves": "leaves a step out", "wrong": "shorter and wrong" } } },
+      { "say": "So check the purpose first. Then compare steps, time and cost.",
+        "art": { "at": { "purpose": "check the purpose first", "compare": "Then compare" } } }
+    ] },
+
+    { "id": "recap", "kind": "recap", "heading": "What you now know", "codes": ["4CT.05", "4CT.03", "4CT.04"], "beats": [
+      { "say": "Unroll a loop in your head, and predict where it ends.",
+        "art": { "at": { "unroll": "Unroll a loop", "predict": "predict where it ends" } } },
+      { "say": "Repetition written once makes a long algorithm concise.",
+        "art": { "at": { "concise": "concise" } } },
+      { "say": "Compare and contrast the algorithms, then choose for the purpose.",
+        "art": { "at": { "compare": "Compare and contrast", "purpose": "for the purpose" } } }
+    ] }
+  ]
+}

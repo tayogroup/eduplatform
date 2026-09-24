@@ -1,0 +1,120 @@
+{
+  "_comment": "Storyboard for the Grade 2 Computing unit lecture film, Lesson 10 Hardware and Software. Rendered by tools/create-ehel-unit-lecture.js. See lecture-video/BRIEF.md. Every beat is one narration clip; art.at names the phrases a picture waits for, and the page refuses to load if a phrase is not in its beat's say. The chapters follow LESSON[lecture] in order: hardware and software; every part has a job, which is its function; the tablet's easy parts; made so anybody can use it; in and out; and input devices that read instead of typing. The laptop and the tablet are the LESSON'S OWN figures (ART.figure), ringed part by part with ART.ring, so the film points at the same drawing the child will tap.",
+  "slug": "hardware-and-software",
+  "lesson": 10,
+  "grade": 2,
+  "stage": 2,
+  "title": "Hardware and Software",
+  "subtitle": "Grade 2 Computing",
+  "framework": "Cambridge Primary Computing 0059",
+  "renderer": {
+    "art": ["computing"],
+    "skin": "brown",
+    "scenes": [
+      "tools/lib/ehel-film-marks.js",
+      "tools/lib/film-scenes/computing-g2/hardware-and-software.js",
+      "tools/lib/film-scenes/computing-g2/hardware-and-software-2.js",
+      "tools/lib/film-scenes/computing-g2/hardware-and-software-3.js"
+    ]
+  },
+  "objectives": [
+    ["2CS.01", "Use the correct terminology to explain the functions of basic hardware and software."],
+    ["2CS.02", "Identify some features that make digital devices easy to use, including their physical parts and their functions."],
+    ["2CS.03", "Know the difference between input and output devices."]
+  ],
+  "scenes": [
+    { "id": "title", "kind": "title", "codes": [], "beats": [
+      { "say": "You can touch a keyboard. You cannot touch a game.",
+        "art": { "at": { "keyboard": "touch a keyboard", "game": "touch a game" } } },
+      { "say": "One is hardware. One is software. Together they make a computer work.",
+        "art": { "at": { "hardware": "hardware", "software": "software", "work": "make a computer work" } } }
+    ] },
+
+    { "id": "hardware", "kind": "hardware", "heading": "Hardware and software", "codes": ["2CS.01"], "beats": [
+      { "say": "Hardware is the parts you can touch. A screen, a keyboard, a speaker.",
+        "art": { "at": { "hardware": "Hardware", "touch": "you can touch", "screen": "A screen", "keyboard": "a keyboard", "speaker": "a speaker" } } },
+      { "say": "Software is the programs that run on them. A game to play, a drawing app to draw with.",
+        "art": { "at": { "software": "Software", "programs": "the programs", "game": "A game", "app": "a drawing app" } } },
+      { "say": "You can pick up a keyboard. You cannot pick up a game.",
+        "art": { "at": { "pick": "pick up a keyboard", "nopick": "cannot pick up a game" } } },
+      { "say": "Is the drawing app the same thing as the tablet? No, it is not.",
+        "art": { "at": { "ask": "Is the drawing app", "no": "No, it is not" } } },
+      { "say": "The tablet is hardware. The apps are software running on it.",
+        "art": { "at": { "tablet": "The tablet is hardware", "apps": "The apps are software" } } }
+    ] },
+
+    { "id": "job", "kind": "job", "heading": "Every part has a job", "codes": ["2CS.01", "2CS.02"], "beats": [
+      { "say": "Every part of a laptop has a job. That job is called its function.",
+        "art": { "at": { "part": "Every part", "job": "has a job", "function": "its function" } } },
+      { "say": "The screen shows pictures and words. The keyboard puts letters in.",
+        "art": { "at": { "screen": "The screen", "shows": "shows pictures and words", "keyboard": "The keyboard", "letters": "puts letters in" } } },
+      { "say": "The touchpad moves the pointer. The camera takes pictures.",
+        "art": { "at": { "touchpad": "The touchpad", "pointer": "moves the pointer", "camera": "The camera", "photos": "takes pictures" } } },
+      { "say": "The speaker makes sound. The charger plugs into the charging port.",
+        "art": { "at": { "speaker": "The speaker", "sound": "makes sound", "charger": "The charger", "port": "the charging port" } } },
+      { "say": "Six parts, and six jobs. Name a part, then say its function.",
+        "art": { "at": { "six": "Six parts", "jobs": "six jobs", "name": "Name a part", "function": "say its function" } } }
+    ] },
+
+    { "id": "tablet", "kind": "tablet", "heading": "A tablet made to be easy", "codes": ["2CS.02"], "beats": [
+      { "say": "A tablet is made to be easy to use. Look at its parts.",
+        "art": { "at": { "tablet": "A tablet", "easy": "easy to use", "parts": "its parts" } } },
+      { "say": "The touchscreen is the keyboard, the mouse and the screen in one.",
+        "art": { "at": { "touchscreen": "The touchscreen", "keyboard": "the keyboard", "mouse": "the mouse", "screen": "the screen", "one": "in one" } } },
+      { "say": "The home button always takes you back to the start.",
+        "art": { "at": { "home": "The home button", "start": "back to the start" } } },
+      { "say": "The volume buttons stick out, so you can find them without looking.",
+        "art": { "at": { "volume": "The volume buttons", "stick": "stick out", "looking": "without looking" } } }
+    ] },
+
+    { "id": "friendly", "kind": "friendly", "heading": "Made so anybody can use it", "codes": ["2CS.02"], "beats": [
+      { "say": "A device is user-friendly when you can use it without being taught.",
+        "art": { "at": { "friendly": "user-friendly", "taught": "without being taught" } } },
+      { "say": "An icon is the little picture you press to open a program.",
+        "art": { "at": { "icon": "An icon", "press": "you press", "program": "open a program" } } },
+      { "say": "An envelope for mail. A camera for photos. No reading needed.",
+        "art": { "at": { "envelope": "An envelope for mail", "camera": "A camera for photos", "reading": "No reading needed" } } },
+      { "say": "Big buttons you can hit with a finger. A screen you point at.",
+        "art": { "at": { "big": "Big buttons", "finger": "with a finger", "point": "you point at" } } },
+      { "say": "Or a voice you can talk to. Designers work hard on this.",
+        "art": { "at": { "voice": "a voice you can talk to", "designers": "Designers work hard" } } }
+    ] },
+
+    { "id": "inout", "kind": "inout", "heading": "In and out", "codes": ["2CS.03"], "beats": [
+      { "say": "Information goes into a computer, and information comes out again.",
+        "art": { "at": { "in": "goes into a computer", "out": "comes out again" } } },
+      { "say": "An input device sends information in. A keyboard, a mouse, a microphone.",
+        "art": { "at": { "input": "An input device", "sendin": "sends information in", "keyboard": "A keyboard", "mouse": "a mouse", "mic": "a microphone" } } },
+      { "say": "An output device sends it out. A screen, a speaker, a printer.",
+        "art": { "at": { "output": "An output device", "sendout": "sends it out", "screen": "A screen", "speaker": "a speaker", "printer": "a printer" } } },
+      { "say": "Input does not mean plugged in. It means information going in.",
+        "art": { "at": { "plugged": "plugged in", "means": "information going in" } } },
+      { "say": "You press jump on the controller. The printer prints your drawing.",
+        "art": { "at": { "press": "You press jump", "controller": "the controller", "printer": "The printer", "prints": "prints your drawing" } } }
+    ] },
+
+    { "id": "reader", "kind": "reader", "heading": "Reading instead of typing", "codes": ["2CS.03", "2CS.01"], "beats": [
+      { "say": "Not every input device has keys. Some of them just look.",
+        "art": { "at": { "keys": "has keys", "look": "just look" } } },
+      { "say": "A barcode reader looks at the stripes on a packet.",
+        "art": { "at": { "barcode": "A barcode reader", "stripes": "the stripes", "packet": "a packet" } } },
+      { "say": "It puts the number straight into the till. That is faster than typing.",
+        "art": { "at": { "number": "the number", "till": "into the till", "faster": "faster than typing" } } },
+      { "say": "And it never mistypes. A microphone puts your voice in.",
+        "art": { "at": { "never": "never mistypes", "mic": "A microphone", "voice": "your voice in" } } },
+      { "say": "A camera puts a picture in. All of them are input devices.",
+        "art": { "at": { "camera": "A camera", "picture": "a picture in", "all": "All of them are input devices" } } }
+    ] },
+
+    { "id": "recap", "kind": "recap", "heading": "What you now know", "codes": ["2CS.01", "2CS.02", "2CS.03"], "beats": [
+      { "say": "Hardware is the parts you can touch. Software is the programs.",
+        "art": { "at": { "hardware": "Hardware", "software": "Software" } } },
+      { "say": "Every part has a function, which is the job it does.",
+        "art": { "at": { "function": "a function" } } },
+      { "say": "Input devices send information in. Output devices send it out.",
+        "art": { "at": { "input": "Input devices", "output": "Output devices" } } },
+      { "say": "And a user-friendly device is one that anybody can use.",
+        "art": { "at": { "friendly": "user-friendly" } } }
+    ] }
+  ]
+}

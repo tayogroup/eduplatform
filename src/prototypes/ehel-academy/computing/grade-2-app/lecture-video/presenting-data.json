@@ -1,0 +1,118 @@
+{
+  "_comment": "Storyboard for the Grade 2 Computing unit lecture film, Lesson 8 Presenting Data. Rendered by tools/create-ehel-unit-lecture.js. See lecture-video/BRIEF.md. Every beat is one narration clip; art.at names the phrases a picture waits for, and the page refuses to load if a phrase is not in its beat's say. The chapters follow LESSON[lecture] in order (the table; the graph; building it; solving a problem; data at work), with the lesson's own 'Paper, or computer?' step for 2MD.01. EVERY NUMBER IN EVERY PICTURE IS DRAWN FROM ONE COPY OF THE LESSON'S OWN DATA: the party survey (apple 2, banana 4, orange 1, grapes 1) and PLAYGROUND (Monday 9, Tuesday 4, Wednesday 7, Thursday 3, Friday 8), so a column is as many blocks as the table says and the spoken number is the same number. Which fruit won and which day is busiest or quietest are decided by the kit's own ART.sortRows rather than retyped.",
+  "slug": "presenting-data",
+  "lesson": 8,
+  "grade": 2,
+  "stage": 2,
+  "title": "Presenting Data",
+  "subtitle": "Grade 2 Computing",
+  "framework": "Cambridge Primary Computing 0059",
+  "renderer": {
+    "art": ["computing"],
+    "skin": "brown",
+    "scenes": [
+      "tools/lib/ehel-film-marks.js",
+      "tools/lib/film-scenes/computing-g2/presenting-data.js",
+      "tools/lib/film-scenes/computing-g2/presenting-data-2.js",
+      "tools/lib/film-scenes/computing-g2/presenting-data-3.js"
+    ]
+  },
+  "objectives": [
+    ["2MD.02", "Know how to use computing devices to present categorical data."],
+    ["2MD.06", "Understand how data may help to solve problems."],
+    ["2MD.01", "Know the advantages of storing data and information on computers."]
+  ],
+  "scenes": [
+    { "id": "title", "kind": "title", "codes": [], "beats": [
+      { "say": "Apple two. Banana four. Orange one. Grapes one. Which fruit did most children choose?",
+        "art": { "at": { "apple": "Apple two", "banana": "Banana four", "orange": "Orange one", "grapes": "Grapes one", "ask": "Which fruit did most children choose" } } },
+      { "say": "Draw those four numbers as columns, and you can see the answer at a glance.",
+        "art": { "at": { "draw": "Draw those four numbers as columns", "glance": "at a glance" } } }
+    ] },
+
+    { "id": "table", "kind": "table", "heading": "The table", "codes": ["2MD.02"], "beats": [
+      { "say": "Your class answered a survey about party fruit. The answers went into a table.",
+        "art": { "at": { "survey": "answered a survey", "table": "into a table" } } },
+      { "say": "A table holds the numbers in rows. Apple two. Banana four.",
+        "art": { "at": { "rows": "the numbers in rows", "apple": "Apple two", "banana": "Banana four" } } },
+      { "say": "Orange one. Grapes one. Every number in the table is exact.",
+        "art": { "at": { "orange": "Orange one", "grapes": "Grapes one", "exact": "is exact" } } },
+      { "say": "To find the winner you have to read every single number.",
+        "art": { "at": { "read": "read every single number" } } }
+    ] },
+
+    { "id": "graph", "kind": "graph", "heading": "The graph", "codes": ["2MD.02"], "beats": [
+      { "say": "A block graph shows the same data as columns.",
+        "art": { "at": { "graph": "A block graph", "columns": "as columns" } } },
+      { "say": "One column for each fruit. One block for each answer.",
+        "art": { "at": { "one": "One column for each fruit", "block": "One block for each answer" } } },
+      { "say": "Banana is the tallest column, so banana is the answer.",
+        "art": { "at": { "tallest": "the tallest column", "answer": "banana is the answer" } } },
+      { "say": "You saw it before you read a single number.",
+        "art": { "at": { "saw": "You saw it" } } },
+      { "say": "The graph holds no more data than the table. It just makes it easy to see.",
+        "art": { "at": { "same": "no more data than the table", "easy": "easy to see" } } }
+    ] },
+
+    { "id": "build", "kind": "build", "heading": "Building it", "codes": ["2MD.02"], "beats": [
+      { "say": "The computer builds the graph from the table, column by column.",
+        "art": { "at": { "builds": "The computer builds the graph", "bycol": "column by column" } } },
+      { "say": "Apple two: two blocks. Banana four: four blocks.",
+        "art": { "at": { "apple": "Apple two: two blocks", "banana": "Banana four: four blocks" } } },
+      { "say": "Orange one block. Grapes one block. Every column is built.",
+        "art": { "at": { "orange": "Orange one block", "grapes": "Grapes one block", "built": "Every column is built" } } },
+      { "say": "A column stops when it has as many blocks as the table says.",
+        "art": { "at": { "stops": "A column stops", "many": "as many blocks as the table says" } } },
+      { "say": "Now the pattern shows itself, and the tallest column wins.",
+        "art": { "at": { "pattern": "the pattern shows itself", "tallest": "the tallest column" } } }
+    ] },
+
+    { "id": "problem", "kind": "problem", "heading": "Solving a problem", "codes": ["2MD.06"], "beats": [
+      { "say": "The playground is too crowded. That is a problem.",
+        "art": { "at": { "crowded": "too crowded", "problem": "That is a problem" } } },
+      { "say": "So the class counted the children playing football each day.",
+        "art": { "at": { "counted": "the class counted", "each": "each day" } } },
+      { "say": "Monday nine. Tuesday four. Wednesday seven. Thursday three. Friday eight.",
+        "art": { "at": { "mon": "Monday nine", "tue": "Tuesday four", "wed": "Wednesday seven", "thu": "Thursday three", "fri": "Friday eight" } } },
+      { "say": "Monday has nine. That is the biggest number in the table.",
+        "art": { "at": { "most": "That is the biggest number" } } },
+      { "say": "Thursday has three. That is the smallest number.",
+        "art": { "at": { "least": "That is the smallest number" } } },
+      { "say": "So football club moves to Thursday. Read the data, then decide.",
+        "art": { "at": { "moves": "football club moves to Thursday", "decide": "then decide" } } }
+    ] },
+
+    { "id": "work", "kind": "work", "heading": "Data at work", "codes": ["2MD.06"], "beats": [
+      { "say": "Grown-ups solve problems with data every day.",
+        "art": { "at": { "grown": "Grown-ups solve problems with data" } } },
+      { "say": "A shop counts what sells. Bananas sell out, so it orders more.",
+        "art": { "at": { "shop": "A shop counts what sells", "orders": "it orders more" } } },
+      { "say": "A doctor charts a temperature. A city counts cars before building a crossing.",
+        "art": { "at": { "doctor": "A doctor charts a temperature", "city": "A city counts cars" } } },
+      { "say": "A school kitchen counts lunches, so it cooks the right amount.",
+        "art": { "at": { "kitchen": "A school kitchen counts lunches", "right": "cooks the right amount" } } }
+    ] },
+
+    { "id": "paper", "kind": "paper", "heading": "Paper, or computer?", "codes": ["2MD.01"], "beats": [
+      { "say": "Why keep the class data on a computer, not on paper?",
+        "art": { "at": { "ask": "not on paper" } } },
+      { "say": "The paper list got wet. The copy on the computer is still there.",
+        "art": { "at": { "wet": "The paper list got wet", "still": "The copy on the computer" } } },
+      { "say": "Find one name out of five hundred? The computer searches it in a blink.",
+        "art": { "at": { "find": "Find one name out of five hundred", "blink": "in a blink" } } },
+      { "say": "It copies the table, sends it, and draws the graph in a blink.",
+        "art": { "at": { "copies": "It copies the table", "sends": "sends it", "draws": "draws the graph" } } }
+    ] },
+
+    { "id": "recap", "kind": "recap", "heading": "What you now know", "codes": ["2MD.02", "2MD.06", "2MD.01"], "beats": [
+      { "say": "A table holds the numbers. A graph shows them as columns.",
+        "art": { "at": { "table": "A table holds the numbers", "graph": "A graph shows them as columns" } } },
+      { "say": "The tallest column is the most, and you see it at a glance.",
+        "art": { "at": { "tallest": "The tallest column is the most" } } },
+      { "say": "Read the data first, then decide. That is solving a problem.",
+        "art": { "at": { "problem": "solving a problem", "decide": "then decide" } } },
+      { "say": "And a computer keeps it safe, and draws the graph.",
+        "art": { "at": { "computer": "a computer keeps it safe" } } }
+    ] }
+  ]
+}

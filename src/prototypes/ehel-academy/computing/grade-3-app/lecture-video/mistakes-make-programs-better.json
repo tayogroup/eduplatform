@@ -1,0 +1,113 @@
+{
+  "_comment": "Storyboard for the Grade 3 Computing unit lecture film, Lesson 8 Mistakes Make Programs Better. Rendered by tools/create-ehel-unit-lecture.js. See lecture-video/BRIEF.md. Every beat is one narration clip; art.at names the phrases a picture waits for, and the page refuses to load if a phrase is not in its beat's say. The chapters follow LESSON[lecture] in order: the habit, more than one bug, mistakes become rules, a bug written down is an error, and a partner. The two-bug chapter is the lesson's own first round (shrink, jump, hide - programmed as grow, jump, spin) and its sprite sizes come from ART.run, the lesson's own arithmetic. Every mark in this film lands on a BLOCK, never on a person, and a fixed block fades into its own slot so nothing above it is disturbed.",
+  "slug": "mistakes-make-programs-better",
+  "lesson": 8,
+  "grade": 3,
+  "stage": 3,
+  "title": "Mistakes Make Programs Better",
+  "subtitle": "Grade 3 Computing",
+  "framework": "Cambridge Primary Computing 0059",
+  "renderer": {
+    "art": ["computing"],
+    "skin": "brown",
+    "scenes": [
+      "tools/lib/ehel-film-marks.js",
+      "tools/lib/film-scenes/computing-g3/mistakes-make-programs-better.js",
+      "tools/lib/film-scenes/computing-g3/mistakes-make-programs-better-2.js",
+      "tools/lib/film-scenes/computing-g3/mistakes-make-programs-better-3.js"
+    ]
+  },
+  "objectives": [
+    ["3P.09", "Know how to test and debug programs so that they run and produce the desired output."],
+    ["3P.08", "Understand that programmers use their mistakes to inform the programs that they create."],
+    ["3P.07", "Outline the benefits of working with others when creating programs."]
+  ],
+  "scenes": [
+    { "id": "title", "kind": "title", "codes": [], "beats": [
+      { "say": "You run your program, and the cat spins when it should have jumped.",
+        "art": { "at": { "run": "You run your program", "spin": "the cat spins", "jump": "should have jumped" } } },
+      { "say": "That is a bug. Finding it and fixing it is called debugging.",
+        "art": { "at": { "bug": "That is a bug", "debug": "called debugging" } } }
+    ] },
+
+    { "id": "habit", "kind": "habit", "heading": "The debugging habit", "codes": ["3P.09"], "beats": [
+      { "say": "Debugging is not luck. It is a habit with five steps, every time.",
+        "art": { "at": { "habit": "a habit", "five": "five steps" } } },
+      { "say": "Run it first. You cannot fix what you have not seen.",
+        "art": { "at": { "run": "Run it first" } } },
+      { "say": "Look: where did it go wrong? Think: which block did that?",
+        "art": { "at": { "look": "Look:", "think": "Think:" } } },
+      { "say": "Fix that one block, not the whole program. Then run again.",
+        "art": { "at": { "fix": "Fix that one block", "again": "run again" } } },
+      { "say": "It is easy to skip look and change the first block you see.",
+        "art": { "at": { "skip": "skip look", "first": "the first block you see" } } },
+      { "say": "Watch where it went wrong. The bug is there.",
+        "art": { "at": { "watch": "Watch where it went wrong", "bug": "The bug is there" } } }
+    ] },
+
+    { "id": "twobugs", "kind": "twobugs", "heading": "Two bugs, not one", "codes": ["3P.09"], "beats": [
+      { "say": "The cat should shrink, then jump, then hide. That is what you wanted.",
+        "art": { "at": { "goal": "should shrink, then jump, then hide", "wanted": "what you wanted" } } },
+      { "say": "Run it. The cat grows, jumps, and then spins. Two blocks are wrong.",
+        "art": { "at": { "run": "Run it", "grows": "The cat grows", "jumps": "jumps", "spins": "then spins", "two": "Two blocks are wrong" } } },
+      { "say": "The first block grows. You wanted shrink, so that block is the bug.",
+        "art": { "at": { "first": "The first block grows", "bug": "that block is the bug" } } },
+      { "say": "Fix it to shrink and run again. The cat still spins at the end.",
+        "art": { "at": { "fix": "Fix it to shrink", "run": "run again", "still": "still spins at the end" } } },
+      { "say": "The second bug was hiding behind the first one all along.",
+        "art": { "at": { "second": "The second bug", "behind": "hiding behind the first one" } } },
+      { "say": "Change spin to hide, run again, and the cat does what you wanted.",
+        "art": { "at": { "change": "Change spin to hide", "again": "run again", "right": "what you wanted" } } }
+    ] },
+
+    { "id": "rules", "kind": "rules", "heading": "A mistake becomes a rule", "codes": ["3P.08"], "beats": [
+      { "say": "Every programmer makes mistakes. Good ones write them down as rules.",
+        "art": { "at": { "mistakes": "makes mistakes", "rules": "write them down as rules" } } },
+      { "say": "The cat began in the wrong place. The rule: reset first.",
+        "art": { "at": { "place": "began in the wrong place", "reset": "reset first" } } },
+      { "say": "The repeat repeated the wrong block. Check the block after it.",
+        "art": { "at": { "repeat": "The repeat repeated the wrong block", "check": "Check the block after it" } } },
+      { "say": "You fixed a bug and never ran it. Run again after every fix.",
+        "art": { "at": { "never": "never ran it", "again": "Run again after every fix" } } },
+      { "say": "Your next program is better because of the last one's mistakes.",
+        "art": { "at": { "next": "Your next program is better", "last": "the last one's mistakes" } } }
+    ] },
+
+    { "id": "error", "kind": "error", "heading": "A bug written down is an error", "codes": ["3P.09"], "beats": [
+      { "say": "Programmers say bug when they are talking to each other.",
+        "art": { "at": { "say": "say bug", "talking": "talking to each other" } } },
+      { "say": "Written down properly, a mistake in a program is called an error.",
+        "art": { "at": { "written": "Written down properly", "error": "called an error" } } },
+      { "say": "You report the error: what you expected, and what actually happened.",
+        "art": { "at": { "report": "You report the error", "expected": "what you expected", "happened": "what actually happened" } } },
+      { "say": "Then you debug it. The two words go together.",
+        "art": { "at": { "debug": "Then you debug it", "together": "go together" } } },
+      { "say": "Every program ever written has had errors. Somebody kept looking.",
+        "art": { "at": { "every": "Every program ever written", "looking": "Somebody kept looking" } } }
+    ] },
+
+    { "id": "partner", "kind": "partner", "heading": "Two pairs of eyes", "codes": ["3P.07"], "beats": [
+      { "say": "Your partner did not write your program, so they read every block.",
+        "art": { "at": { "partner": "Your partner", "every": "read every block" } } },
+      { "say": "You skip the blocks you are sure about, and one of those is the bug.",
+        "art": { "at": { "skip": "You skip the blocks", "sure": "you are sure about", "bug": "one of those is the bug" } } },
+      { "say": "Explain it to them out loud, block by block.",
+        "art": { "at": { "explain": "Explain it to them out loud", "block": "block by block" } } },
+      { "say": "Halfway through you stop: it should not spin. You found it yourself.",
+        "art": { "at": { "stop": "you stop", "notspin": "it should not spin", "found": "You found it yourself" } } },
+      { "say": "One of you presses Run. The other watches, and sees it go wrong.",
+        "art": { "at": { "run": "presses Run", "watches": "The other watches", "wrong": "sees it go wrong" } } }
+    ] },
+
+    { "id": "recap", "kind": "recap", "heading": "What you now know", "codes": ["3P.09", "3P.08", "3P.07"], "beats": [
+      { "say": "Debugging is a habit: run, look, think, fix, run again.",
+        "art": { "at": { "habit": "a habit" } } },
+      { "say": "A bug is a mistake in a program. Written down, it is an error.",
+        "art": { "at": { "bug": "A bug", "error": "it is an error" } } },
+      { "say": "Every mistake gives you a rule for your next program.",
+        "art": { "at": { "rule": "a rule" } } },
+      { "say": "And fresh eyes find the block you keep skipping. Ask a partner.",
+        "art": { "at": { "fresh": "fresh eyes", "partner": "Ask a partner" } } }
+    ] }
+  ]
+}

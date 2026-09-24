@@ -1,0 +1,115 @@
+{
+  "_comment": "Storyboard for the Grade 3 Computing unit lecture film, Lesson 3 Think It Through. Rendered by tools/create-ehel-unit-lecture.js. See lecture-video/BRIEF.md. Every beat is one narration clip; art.at names the phrases a picture waits for, and the page refuses to load if a phrase is not in its beat's say. The chapters follow LESSON[lecture] in order: logical thinking, predicting a change (the smoothie, then the kite), dividing a big task into sections, why sections are easier to follow and to edit, and a decision. Every changed algorithm is drawn by handing the lesson's OWN scene the changed list - ART.scene(smoothie, [banana, berries, milk, blend]) and ART.scene(kite, [sticks, tie, paper, tail, fly]) - so the kit paints the splattered kitchen and the lost kite and writes its own caption. The film draws no picture of a wrong outcome of its own.",
+  "slug": "think-it-through",
+  "lesson": 3,
+  "grade": 3,
+  "stage": 3,
+  "title": "Think It Through",
+  "subtitle": "Grade 3 Computing",
+  "framework": "Cambridge Primary Computing 0059",
+  "renderer": {
+    "art": ["computing"],
+    "skin": "brown",
+    "scenes": [
+      "tools/lib/ehel-film-marks.js",
+      "tools/lib/film-scenes/computing-g3/think-it-through.js",
+      "tools/lib/film-scenes/computing-g3/think-it-through-2.js",
+      "tools/lib/film-scenes/computing-g3/think-it-through-3.js",
+      "tools/lib/film-scenes/computing-g3/think-it-through-4.js"
+    ]
+  },
+  "objectives": [
+    ["3CT.04", "Know that logical thinking is used in the creation of algorithms."],
+    ["3CT.05", "Predict the outcome of a change to an algorithm that is presented as a sequence of steps."],
+    ["3CT.06", "Know that many tasks can be divided into smaller sections to make them easier to follow and to edit."]
+  ],
+  "scenes": [
+    { "id": "title", "kind": "title", "codes": [], "beats": [
+      { "say": "Swap two steps in an algorithm. What will happen? You can work it out.",
+        "art": { "at": { "swap": "Swap two steps", "what": "What will happen", "work": "work it out" } } },
+      { "say": "Think it through. Every step has a reason, and a big task divides into sections.",
+        "art": { "at": { "reason": "has a reason", "divide": "divides into sections" } } }
+    ] },
+
+    { "id": "logic", "kind": "logic", "heading": "Every step has a reason", "codes": ["3CT.04"], "beats": [
+      { "say": "Every step in a good algorithm is there for a reason.",
+        "art": { "at": { "algorithm": "a good algorithm", "reason": "for a reason" } } },
+      { "say": "Boil the water, then pour it, because you pour boiling water.",
+        "art": { "at": { "boil": "Boil the water", "pour": "then pour it", "because": "because" } } },
+      { "say": "Toast the bread, then butter it. Butter in a toaster would melt and burn.",
+        "art": { "at": { "toast": "Toast the bread", "butter": "then butter it", "burn": "melt and burn" } } },
+      { "say": "Unlock the door, then open it, because a locked door does not open.",
+        "art": { "at": { "unlock": "Unlock the door", "open": "then open it", "locked": "a locked door" } } },
+      { "say": "That reasoning is logical thinking. It is how algorithms are created.",
+        "art": { "at": { "reasoning": "That reasoning", "logic": "logical thinking", "created": "algorithms are created" } } }
+    ] },
+
+    { "id": "predict", "kind": "predict", "heading": "Predict the change", "codes": ["3CT.05"], "beats": [
+      { "say": "Here is the smoothie algorithm from lesson one. Six steps in order.",
+        "art": { "at": { "smoothie": "the smoothie algorithm", "six": "Six steps" } } },
+      { "say": "Now make one change. Swap the lid step and the blending step.",
+        "art": { "at": { "change": "one change", "swap": "Swap the lid step", "blend": "the blending step" } } },
+      { "say": "Before you watch, predict. What happens when the blender starts?",
+        "art": { "at": { "predict": "predict", "starts": "the blender starts" } } },
+      { "say": "The blender runs with no lid on, and the smoothie sprays everywhere.",
+        "art": { "at": { "nolid": "no lid on", "sprays": "sprays everywhere" } } }
+    ] },
+
+    { "id": "kite", "kind": "kite", "heading": "Predict again: the kite", "codes": ["3CT.05"], "beats": [
+      { "say": "The same thinking on another task. Here is the kite algorithm.",
+        "art": { "at": { "same": "The same thinking", "kite": "the kite algorithm" } } },
+      { "say": "Swap the string step and the running step. Predict what will happen.",
+        "art": { "at": { "swap": "Swap the string step", "run": "the running step", "predict": "Predict what will happen" } } },
+      { "say": "You run into the wind, and nothing holds the kite. The wind takes it.",
+        "art": { "at": { "wind": "run into the wind", "nothing": "nothing holds the kite", "takes": "The wind takes it" } } },
+      { "say": "Take the tail step out instead: a kite with no tail, and nothing else changes.",
+        "art": { "at": { "tail": "the tail step out", "notail": "a kite with no tail", "else": "nothing else changes" } } }
+    ] },
+
+    { "id": "divide", "kind": "divide", "heading": "Divide the task", "codes": ["3CT.06"], "beats": [
+      { "say": "Getting ready for school is one big task. Ten steps in one long list.",
+        "art": { "at": { "big": "one big task", "ten": "Ten steps" } } },
+      { "say": "One long list is hard to follow, and hard to edit.",
+        "art": { "at": { "follow": "hard to follow", "edit": "hard to edit" } } },
+      { "say": "So divide it into sections: wash, dress, breakfast, bag.",
+        "art": { "at": { "divide": "divide it into sections", "wash": "wash", "dress": "dress", "breakfast": "breakfast", "bag": "bag" } } },
+      { "say": "Every step goes into one section. Teeth into wash. Shirt into dress.",
+        "art": { "at": { "every": "Every step", "teeth": "Teeth into wash", "shirt": "Shirt into dress" } } },
+      { "say": "Four short lists instead of one long one. Each section is a sub-task.",
+        "art": { "at": { "four": "Four short lists", "subtask": "a sub-task" } } }
+    ] },
+
+    { "id": "edit", "kind": "edit", "heading": "Easier to follow, easier to edit", "codes": ["3CT.06"], "beats": [
+      { "say": "Sections are easier to follow. Each one is short, so you know where you are.",
+        "art": { "at": { "follow": "easier to follow", "short": "Each one is short", "where": "where you are" } } },
+      { "say": "They are easier to edit. Change breakfast from cereal to toast.",
+        "art": { "at": { "edit": "easier to edit", "toast": "from cereal to toast" } } },
+      { "say": "Wash, dress and bag do not change at all. A change stays in its section.",
+        "art": { "at": { "nochange": "do not change at all", "stays": "stays in its section" } } },
+      { "say": "If you are late, you can ask which section took too long.",
+        "art": { "at": { "late": "you are late", "which": "which section took too long" } } }
+    ] },
+
+    { "id": "decide", "kind": "decide", "heading": "A decision goes two ways", "codes": ["3CT.04"], "beats": [
+      { "say": "Logical thinking is mostly about decisions.",
+        "art": { "at": { "decisions": "decisions" } } },
+      { "say": "A decision is a point where a question decides what happens next.",
+        "art": { "at": { "point": "a point", "question": "a question", "next": "what happens next" } } },
+      { "say": "Is it raining? Then take a coat. If it is not, you do not.",
+        "art": { "at": { "raining": "Is it raining?", "coat": "take a coat", "not": "If it is not" } } },
+      { "say": "You make dozens of decisions a day. Writing one down makes it an algorithm.",
+        "art": { "at": { "dozens": "dozens of decisions", "writing": "Writing one down", "algorithm": "an algorithm" } } }
+    ] },
+
+    { "id": "recap", "kind": "recap", "heading": "What you now know", "codes": ["3CT.04", "3CT.05", "3CT.06"], "beats": [
+      { "say": "Logic puts every step where it is, for a reason.",
+        "art": { "at": { "logic": "Logic" } } },
+      { "say": "Predict what a change will do before you make it.",
+        "art": { "at": { "predict": "Predict", "change": "a change" } } },
+      { "say": "Divide a big task into small sections. Each one is a sub-task.",
+        "art": { "at": { "divide": "Divide", "section": "small sections" } } },
+      { "say": "A decision sends an algorithm one way or the other. Think it through.",
+        "art": { "at": { "decision": "A decision" } } }
+    ] }
+  ]
+}

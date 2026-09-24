@@ -1,0 +1,120 @@
+{
+  "_comment": "Storyboard for the Grade 4 Computing unit lecture film, Lesson 7 Bitsy Loops. Rendered by tools/create-ehel-unit-lecture.js. See lecture-video/BRIEF.md. Every beat is one narration clip; art.at names the phrases a picture waits for, and the page refuses to load if a phrase is not in its beat's say. The chapters follow LESSON[lecture] in order (sensors; a sensor program; loops on the device; control systems; not a control system; the LED grid and the real board). Bitsy's board is a closure in the lesson kit and cannot be lifted, so the film DRAWS the board and borrows only the semantics: ART.device.inputs, ART.device.block, ART.device.plan and ART.kit.LED decide every block label and every LED pattern on every pass of the loop, so the film cannot disagree with the lesson about what a program does.",
+  "slug": "bitsy-loops",
+  "lesson": 7,
+  "grade": 4,
+  "stage": 4,
+  "title": "Bitsy Loops",
+  "subtitle": "Grade 4 Computing",
+  "framework": "Cambridge Primary Computing 0059",
+  "renderer": {
+    "art": ["computing"],
+    "skin": "brown",
+    "scenes": [
+      "tools/lib/ehel-film-marks.js",
+      "tools/lib/film-scenes/computing-g4/bitsy-loops.js",
+      "tools/lib/film-scenes/computing-g4/bitsy-loops-2.js",
+      "tools/lib/film-scenes/computing-g4/bitsy-loops-3.js"
+    ]
+  },
+  "objectives": [
+    ["4P.08", "Know how to develop programs for a physical computing device to produce outputs from input devices."],
+    ["4P.09", "Know how to develop programs for a physical computing device using count-controlled and indefinite (forever) loops."],
+    ["4CS.01", "Identify examples where a control system is used."]
+  ],
+  "scenes": [
+    { "id": "title", "kind": "title", "codes": [], "beats": [
+      { "say": "Bitsy's button waits for a press. Its two sensors wait for nothing at all.",
+        "art": { "at": { "button": "Bitsy's button", "press": "a press", "sensors": "two sensors" } } },
+      { "say": "Add a loop, and Bitsy runs round and round all by itself.",
+        "art": { "at": { "loop": "Add a loop", "round": "round and round", "itself": "all by itself" } } }
+    ] },
+
+    { "id": "sensors", "kind": "sensors", "heading": "Bitsy's sensors", "codes": ["4P.08"], "beats": [
+      { "say": "Bitsy has five inputs. Button A, a shake sensor and a microphone.",
+        "art": { "at": { "five": "five inputs", "a": "Button A", "shake": "a shake sensor", "mic": "a microphone" } } },
+      { "say": "Then two more: a temperature sensor and a light sensor.",
+        "art": { "at": { "temp": "a temperature sensor", "light": "a light sensor" } } },
+      { "say": "A sensor is an input that senses by itself. Nobody presses a sensor.",
+        "art": { "at": { "sensor": "A sensor", "itself": "senses by itself", "nobody": "Nobody presses a sensor" } } },
+      { "say": "The temperature sensor feels how warm it is. The light sensor sees how bright it is.",
+        "art": { "at": { "warm": "feels how warm it is", "bright": "sees how bright it is" } } },
+      { "say": "So a program starts with when the sensor senses something.",
+        "art": { "at": { "starts": "a program starts", "when": "when the sensor senses something" } } }
+    ] },
+
+    { "id": "programs", "kind": "programs", "heading": "When it gets hot, when it gets dark", "codes": ["4P.08"], "beats": [
+      { "say": "When it gets hot, turn the motor, show a smile.",
+        "art": { "at": { "hot": "When it gets hot", "motor": "turn the motor", "smile": "show a smile" } } },
+      { "say": "That is a fan that starts itself. Nobody pressed anything.",
+        "art": { "at": { "fan": "a fan that starts itself", "nobody": "Nobody pressed anything" } } },
+      { "say": "When it gets dark, all lights on, beep. That is a night light.",
+        "art": { "at": { "dark": "When it gets dark", "lights": "all lights on", "beep": "beep", "night": "a night light" } } },
+      { "say": "The when block names the input. Press A, and this program does nothing.",
+        "art": { "at": { "block": "The when block", "input": "names the input", "pressa": "Press A", "nothing": "does nothing" } } }
+    ] },
+
+    { "id": "loops", "kind": "loops", "heading": "Loops on the device", "codes": ["4P.09"], "beats": [
+      { "say": "A repeat block repeats the output after it, a counted number of times.",
+        "art": { "at": { "repeat": "A repeat block", "output": "the output after it", "counted": "a counted number of times" } } },
+      { "say": "When A is pressed, repeat 3 times, beep. Count them: one, two, three.",
+        "art": { "at": { "whena": "When A is pressed", "three": "repeat 3 times", "count": "one, two, three" } } },
+      { "say": "Then it stops on its own. That is a count-controlled loop.",
+        "art": { "at": { "stops": "Then it stops", "cc": "a count-controlled loop" } } },
+      { "say": "A forever block repeats everything after it. Lights on, wait, lights off, wait.",
+        "art": { "at": { "forever": "A forever block", "on": "Lights on", "off": "lights off" } } },
+      { "say": "Round and round, a flashing light, until you press Stop.",
+        "art": { "at": { "round": "Round and round", "flash": "a flashing light", "stop": "press Stop" } } }
+    ] },
+
+    { "id": "control", "kind": "control", "heading": "Sense, decide, act", "codes": ["4CS.01"], "beats": [
+      { "say": "A control system senses something, decides with a program, and acts.",
+        "art": { "at": { "sense": "senses something", "decide": "decides with a program", "act": "and acts" } } },
+      { "say": "A thermostat senses the cold and turns the heating on.",
+        "art": { "at": { "thermo": "A thermostat", "cold": "senses the cold", "heat": "turns the heating on" } } },
+      { "say": "A street lamp senses the dark and lights up. Nobody flicks a switch.",
+        "art": { "at": { "lamp": "A street lamp", "dark": "senses the dark", "lights": "lights up", "nobody": "Nobody flicks a switch" } } },
+      { "say": "A greenhouse senses the heat and opens its window.",
+        "art": { "at": { "green": "A greenhouse", "heat": "senses the heat", "window": "opens its window" } } },
+      { "say": "Bitsy's night light does all three: sense, decide, act.",
+        "art": { "at": { "bitsy": "Bitsy's night light", "three": "all three", "sda": "sense, decide, act" } } }
+    ] },
+
+    { "id": "notcontrol", "kind": "notcontrol", "heading": "Not a control system", "codes": ["4CS.01"], "beats": [
+      { "say": "A candle, a pencil, a bicycle. Nothing senses and nothing decides.",
+        "art": { "at": { "candle": "A candle", "pencil": "a pencil", "bike": "a bicycle", "nothing": "Nothing senses" } } },
+      { "say": "A radio you switch on by hand is not one either.",
+        "art": { "at": { "radio": "A radio", "hand": "by hand", "not": "not one either" } } },
+      { "say": "A person decides every time. There is no program in the middle.",
+        "art": { "at": { "person": "A person decides every time", "middle": "no program in the middle" } } },
+      { "say": "A control system decides by itself, from a sensor.",
+        "art": { "at": { "itself": "decides by itself", "sensor": "from a sensor" } } }
+    ] },
+
+    { "id": "board", "kind": "board", "heading": "The lights have a name", "codes": ["4P.08", "4P.09"], "beats": [
+      { "say": "Look closely at Bitsy's screen. It is twenty-five little lights in a grid.",
+        "art": { "at": { "screen": "Bitsy's screen", "twentyfive": "twenty-five little lights", "grid": "in a grid" } } },
+      { "say": "Count them: five across and five down.",
+        "art": { "at": { "count": "Count them", "across": "five across", "down": "five down" } } },
+      { "say": "Each little light is an LED. An LED uses very little power.",
+        "art": { "at": { "each": "Each little light", "led": "is an LED", "power": "very little power" } } },
+      { "say": "Show a heart switches some LEDs on and leaves the rest off.",
+        "art": { "at": { "heart": "Show a heart", "on": "switches some LEDs on", "off": "leaves the rest off" } } },
+      { "say": "A real board called the micro:bit has the same grid of LEDs.",
+        "art": { "at": { "real": "A real board", "micro": "the micro:bit", "same": "the same grid" } } },
+      { "say": "You program it in MakeCode, and its blocks do what yours do.",
+        "art": { "at": { "makecode": "in MakeCode", "blocks": "its blocks do what yours do" } } }
+    ] },
+
+    { "id": "recap", "kind": "recap", "heading": "What you now know", "codes": ["4P.08", "4P.09", "4CS.01"], "beats": [
+      { "say": "A sensor senses by itself. It never needs a press.",
+        "art": { "at": { "sensor": "A sensor" } } },
+      { "say": "A repeat loop counts, then stops. A forever loop runs until Stop.",
+        "art": { "at": { "repeat": "A repeat loop", "forever": "A forever loop" } } },
+      { "say": "Bitsy's screen is twenty-five LEDs, switched on by your program.",
+        "art": { "at": { "led": "twenty-five LEDs" } } },
+      { "say": "Sense, decide, act. That is a control system, and it is all around you.",
+        "art": { "at": { "control": "a control system" } } }
+    ] }
+  ]
+}

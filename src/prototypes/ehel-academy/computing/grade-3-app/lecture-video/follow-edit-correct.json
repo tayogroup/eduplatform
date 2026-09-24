@@ -1,0 +1,115 @@
+{
+  "_comment": "Storyboard for the Grade 3 Computing unit lecture film, Lesson 1 Follow, Edit, Correct. Rendered by tools/create-ehel-unit-lecture.js. See lecture-video/BRIEF.md. Every beat is one narration clip; art.at names the phrases a picture waits for, and the page refuses to load if a phrase is not in its beat's say. The chapters follow LESSON[lecture] in order (linear; following; understanding; correcting; editing), then the lesson's own four-verb sorter. Every wrong algorithm is drawn by handing the LESSON'S OWN scene the wrong list - ART.scene(smoothie, [banana, berries, milk, pour]) and ART.scene(smoothie, [banana, berries, milk, blend]) - so the kit paints the lumps and the splat and writes its own caption, and the film draws no picture of a mistake.",
+  "slug": "follow-edit-correct",
+  "lesson": 1,
+  "grade": 3,
+  "stage": 3,
+  "title": "Follow, Edit, Correct",
+  "subtitle": "Grade 3 Computing",
+  "framework": "Cambridge Primary Computing 0059",
+  "renderer": {
+    "art": ["computing"],
+    "skin": "brown",
+    "scenes": [
+      "tools/lib/ehel-film-marks.js",
+      "tools/lib/film-scenes/computing-g3/follow-edit-correct.js",
+      "tools/lib/film-scenes/computing-g3/follow-edit-correct-2.js",
+      "tools/lib/film-scenes/computing-g3/follow-edit-correct-3.js"
+    ]
+  },
+  "objectives": [
+    ["3CT.01", "Follow, understand, edit and correct linear algorithms."],
+    ["3CT.04", "Know that logical thinking is used in the creation of algorithms."]
+  ],
+  "scenes": [
+    { "id": "title", "kind": "title", "codes": [], "beats": [
+      { "say": "Six steps, in a line: banana, strawberries, milk, lid, blend, pour.",
+        "art": { "at": { "six": "Six steps", "line": "in a line", "banana": "banana", "pour": "pour" } } },
+      { "say": "Follow it. Understand it. Edit it. Correct it. Four things, one algorithm.",
+        "art": { "at": { "follow": "Follow it", "understand": "Understand it", "edit": "Edit it", "correct": "Correct it" } } }
+    ] },
+
+    { "id": "linear", "kind": "linear", "heading": "A line of steps", "codes": ["3CT.01"], "beats": [
+      { "say": "A linear algorithm is a line of steps: a first, a next, a next, and an end.",
+        "art": { "at": { "linear": "A linear algorithm", "line": "a line of steps", "first": "a first", "end": "an end" } } },
+      { "say": "Making a smoothie is linear. Banana first, then strawberries, then milk.",
+        "art": { "at": { "smoothie": "Making a smoothie", "banana": "Banana first", "berries": "then strawberries", "milk": "then milk" } } },
+      { "say": "Then the lid on, then blend, then pour. Six steps, one after another.",
+        "art": { "at": { "lid": "the lid on", "blend": "then blend", "pour": "then pour", "six": "Six steps" } } },
+      { "say": "You go top to bottom. You never jump back up the list.",
+        "art": { "at": { "top": "top to bottom", "jump": "never jump back" } } },
+      { "say": "Linear does not mean short. It means in order, one after another, and it can be long.",
+        "art": { "at": { "short": "does not mean short", "order": "one after another", "long": "can be long" } } }
+    ] },
+
+    { "id": "follow", "kind": "follow", "heading": "Following", "codes": ["3CT.01"], "beats": [
+      { "say": "Following an algorithm means doing the step it names next.",
+        "art": { "at": { "following": "Following an algorithm", "next": "the step it names next" } } },
+      { "say": "And only that step. The algorithm says lid, so you put the lid on.",
+        "art": { "at": { "only": "only that step", "says": "The algorithm says lid", "lid": "you put the lid on" } } },
+      { "say": "Not blend, even if you would like to. Blend comes after the lid.",
+        "art": { "at": { "notblend": "Not blend", "after": "Blend comes after" } } },
+      { "say": "A computer does exactly this. A wrong step makes a wrong thing happen.",
+        "art": { "at": { "computer": "A computer does exactly this", "wrongstep": "A wrong step", "wrongthing": "a wrong thing happen" } } }
+    ] },
+
+    { "id": "understand", "kind": "understand", "heading": "Why each step is there", "codes": ["3CT.01", "3CT.04"], "beats": [
+      { "say": "Understanding is not the same as following. It means knowing why.",
+        "art": { "at": { "understanding": "Understanding", "why": "knowing why" } } },
+      { "say": "Why does the lid go on before you blend it?",
+        "art": { "at": { "lid": "the lid go on before you blend it" } } },
+      { "say": "Take the lid step out and blend anyway. Smoothie round the kitchen!",
+        "art": { "at": { "out": "Take the lid step out", "blend": "blend anyway", "kitchen": "round the kitchen" } } },
+      { "say": "Pour last, because you pour what the blender has made smooth.",
+        "art": { "at": { "pourlast": "Pour last", "smooth": "has made smooth" } } },
+      { "say": "Every step is where it is for a reason. That reasoning is logical thinking.",
+        "art": { "at": { "reason": "for a reason", "logical": "logical thinking" } } }
+    ] },
+
+    { "id": "correct", "kind": "correct", "heading": "Correcting a step", "codes": ["3CT.01"], "beats": [
+      { "say": "Sometimes a step is wrong. Correcting means putting the right step in its place.",
+        "art": { "at": { "wrong": "a step is wrong", "correcting": "Correcting", "place": "in its place" } } },
+      { "say": "This kite algorithm says: cross the sticks, tie them, cut the paper into tiny pieces.",
+        "art": { "at": { "kite": "This kite algorithm", "sticks": "cross the sticks", "tie": "tie them", "tiny": "cut the paper into tiny pieces" } } },
+      { "say": "Tiny pieces? The paper has to cover the sticks. That step is the bug.",
+        "art": { "at": { "tinyq": "Tiny pieces?", "cover": "cover the sticks", "bug": "That step is the bug" } } },
+      { "say": "Take it out and put the right step in. Glue paper over the sticks.",
+        "art": { "at": { "out": "Take it out", "in": "put the right step in", "glue": "Glue paper over the sticks" } } },
+      { "say": "Now run the algorithm again and check. The kite flies!",
+        "art": { "at": { "run": "run the algorithm again", "check": "check", "flies": "The kite flies!" } } }
+    ] },
+
+    { "id": "edit", "kind": "edit", "heading": "Editing on purpose", "codes": ["3CT.01"], "beats": [
+      { "say": "Editing is not correcting. Nothing is wrong: you want something different.",
+        "art": { "at": { "editing": "Editing is not correcting", "nothing": "Nothing is wrong", "different": "something different" } } },
+      { "say": "This tower algorithm is big brick, middle brick, small brick, flag.",
+        "art": { "at": { "tower": "This tower algorithm", "big": "big brick", "middle": "middle brick", "small": "small brick", "flag": "flag" } } },
+      { "say": "You want a red top. Change the small brick step to a red brick.",
+        "art": { "at": { "redtop": "a red top", "change": "Change the small brick step", "red": "a red brick" } } },
+      { "say": "One step changed, and the tower is different. A red brick on top!",
+        "art": { "at": { "one": "One step changed", "diff": "the tower is different", "top": "A red brick on top!" } } },
+      { "say": "Edit is a change you want. Correct is a fix you need.",
+        "art": { "at": { "want": "a change you want", "need": "a fix you need" } } }
+    ] },
+
+    { "id": "four", "kind": "four", "heading": "Four things to do", "codes": ["3CT.01", "3CT.04"], "beats": [
+      { "say": "There are four things you can do with one algorithm.",
+        "art": { "at": { "four": "four things", "one": "one algorithm" } } },
+      { "say": "Follow: do the steps. Understand: know why each step is there.",
+        "art": { "at": { "follow": "Follow: do the steps", "understand": "Understand: know why" } } },
+      { "say": "Edit: change it because you want to. Correct: fix a step that is wrong.",
+        "art": { "at": { "edit": "Edit: change it", "correct": "Correct: fix a step that is wrong" } } },
+      { "say": "Swapping jam for honey because you like honey is editing, not correcting.",
+        "art": { "at": { "jam": "Swapping jam for honey", "editing": "is editing", "notcorrect": "not correcting" } } }
+    ] },
+
+    { "id": "recap", "kind": "recap", "heading": "What you now know", "codes": ["3CT.01", "3CT.04"], "beats": [
+      { "say": "A linear algorithm is a line of steps, from top to bottom.",
+        "art": { "at": { "linear": "A linear algorithm" } } },
+      { "say": "You follow it exactly, and you understand why each step is there.",
+        "art": { "at": { "follow": "follow it exactly", "understand": "understand why" } } },
+      { "say": "You edit it when you want a change, and correct it when a step is wrong.",
+        "art": { "at": { "edit": "edit it", "correct": "correct it" } } }
+    ] }
+  ]
+}

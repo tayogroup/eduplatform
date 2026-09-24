@@ -1,0 +1,118 @@
+{
+  "_comment": "Storyboard for the Grade 3 Computing unit lecture film, Lesson 4 Input Machines. Rendered by tools/create-ehel-unit-lecture.js. See lecture-video/BRIEF.md. Every beat is one narration clip; art.at names the phrases a picture waits for, and the page refuses to load if a phrase is not in its beat's say. The six teaching chapters follow LESSON[lecture] in order (the input; the machine; the output; working it out; finding the rule; straight through, no choices), in the lesson's own words and with the lesson's own numbers. EVERY OUTPUT DRAWN IN THIS FILM COMES FROM ART.rule, the lesson's own ruleOutput mirrored in _rules.py, so the film's machines and the lesson's machines cannot disagree: double 3, double 5, add:3 of 10, add:8 of 4 and of 5, times:3 of 4 and of 5, add:4 of 3. The recipe's ingredients and the finished cake are the kit's own cake scene, painted from a growing list of its ids.",
+  "slug": "input-machines",
+  "lesson": 4,
+  "grade": 3,
+  "stage": 3,
+  "title": "Input Machines",
+  "subtitle": "Grade 3 Computing",
+  "framework": "Cambridge Primary Computing 0059",
+  "renderer": {
+    "art": ["computing"],
+    "skin": "brown",
+    "scenes": [
+      "tools/lib/ehel-film-marks.js",
+      "tools/lib/film-scenes/computing-g3/input-machines.js",
+      "tools/lib/film-scenes/computing-g3/input-machines-2.js",
+      "tools/lib/film-scenes/computing-g3/input-machines-3.js"
+    ]
+  },
+  "objectives": [
+    ["3CT.07", "Identify the inputs to algorithms."],
+    ["3CT.08", "Know how to develop linear algorithms to produce an output based on an input."],
+    ["3CT.04", "Know that logical thinking is used in the creation of algorithms."]
+  ],
+  "scenes": [
+    { "id": "title", "kind": "title", "codes": [], "beats": [
+      { "say": "Put a number into a machine. Out comes a different number.",
+        "art": { "at": { "machine": "a machine", "out": "Out comes a different number" } } },
+      { "say": "What goes in is the input. What comes out is the output.",
+        "art": { "at": { "input": "the input", "output": "the output" } } }
+    ] },
+
+    { "id": "input", "kind": "input", "heading": "What goes in", "codes": ["3CT.07"], "beats": [
+      { "say": "Most algorithms start with an input: the thing they are given to work on.",
+        "art": { "at": { "input": "an input", "work": "given to work on" } } },
+      { "say": "A recipe's input is the ingredients. Eggs, flour and sugar go in.",
+        "art": { "at": { "recipe": "A recipe's input", "ing": "the ingredients" } } },
+      { "say": "A sum's input is the two numbers. Give it 3 and 4.",
+        "art": { "at": { "sum": "A sum's input", "two": "the two numbers", "nums": "3 and 4" } } },
+      { "say": "A search's input is the word you type. You type lions.",
+        "art": { "at": { "search": "A search's input", "type": "the word you type", "word": "You type lions" } } },
+      { "say": "Robo's input is the program of arrows you give it.",
+        "art": { "at": { "robo": "Robo's input", "prog": "the program of arrows" } } },
+      { "say": "The input is not a step. It is what the steps work on.",
+        "art": { "at": { "notstep": "not a step", "workon": "what the steps work on" } } }
+    ] },
+
+    { "id": "machine", "kind": "machine", "heading": "The machine", "codes": ["3CT.08"], "beats": [
+      { "say": "An algorithm can be a machine. Input in one side, output out the other.",
+        "art": { "at": { "machine": "a machine", "in": "Input in one side", "out": "output out the other" } } },
+      { "say": "In the middle are the steps. This is the doubling machine.",
+        "art": { "at": { "steps": "the steps", "name": "the doubling machine" } } },
+      { "say": "Take the number in. Add the number to itself. Send the answer out.",
+        "art": { "at": { "s1": "Take the number in", "s2": "Add the number to itself", "s3": "Send the answer out" } } },
+      { "say": "Put 3 in. 3 added to itself. Out comes 6, every time.",
+        "art": { "at": { "in3": "Put 3 in", "add": "3 added to itself", "out6": "Out comes 6" } } },
+      { "say": "Put 5 in, and the same steps send 10 out instead.",
+        "art": { "at": { "in5": "Put 5 in", "out10": "send 10 out" } } }
+    ] },
+
+    { "id": "output", "kind": "output", "heading": "The output", "codes": ["3CT.07", "3CT.08"], "beats": [
+      { "say": "The output is the result: the answer, the cake, the search results.",
+        "art": { "at": { "result": "the result", "answer": "the answer", "cake": "the cake", "results": "the search results" } } },
+      { "say": "Make a cup of squash. Squash and water go in: they are the input.",
+        "art": { "at": { "squash": "Make a cup of squash", "stuff": "Squash and water", "input": "the input" } } },
+      { "say": "Pour and stir are steps. The output is the cup at the end.",
+        "art": { "at": { "steps": "Pour and stir", "output": "The output" } } },
+      { "say": "Same machine, a different input, a different output.",
+        "art": { "at": { "same": "Same machine", "difin": "a different input", "difout": "a different output" } } }
+    ] },
+
+    { "id": "predict", "kind": "predict", "heading": "Working it out", "codes": ["3CT.04", "3CT.08"], "beats": [
+      { "say": "Once you know the steps, you can work out an output nobody has shown you.",
+        "art": { "at": { "know": "know the steps", "out": "an output" } } },
+      { "say": "Here is the add-3 machine. Take the number in, add 3 to it, send the answer out.",
+        "art": { "at": { "name": "the add-3 machine", "s1": "Take the number in", "s2": "add 3 to it", "s3": "send the answer out" } } },
+      { "say": "Put 10 in. What comes out? Follow the steps in your head.",
+        "art": { "at": { "in10": "Put 10 in", "ask": "What comes out?", "head": "in your head" } } },
+      { "say": "13. You did not have to see it. That is logical thinking.",
+        "art": { "at": { "ans": "13.", "logic": "logical thinking" } } }
+    ] },
+
+    { "id": "rule", "kind": "rule", "heading": "Finding the rule", "codes": ["3CT.04"], "beats": [
+      { "say": "Sometimes nobody tells you the rule. You work it out yourself.",
+        "art": { "at": { "norule": "nobody tells you the rule", "work": "You work it out" } } },
+      { "say": "Put 4 in, and 12 comes out. What is the rule?",
+        "art": { "at": { "in4": "Put 4 in", "out12": "12 comes out", "ask": "What is the rule?" } } },
+      { "say": "Add 8 fits that. Times 3 fits it too. So try another.",
+        "art": { "at": { "add8": "Add 8 fits that", "times3": "Times 3 fits it too", "another": "try another" } } },
+      { "say": "Put 5 in, and 15 comes out. Now add 8 is beaten.",
+        "art": { "at": { "in5": "Put 5 in", "out15": "15 comes out", "beaten": "add 8 is beaten" } } },
+      { "say": "Times 3 survives. One pair of numbers is never enough.",
+        "art": { "at": { "survives": "Times 3 survives", "enough": "never enough" } } }
+    ] },
+
+    { "id": "linear", "kind": "linear", "heading": "Straight through", "codes": ["3CT.08", "3CT.04"], "beats": [
+      { "say": "These machines are linear: no choices, just one step after another.",
+        "art": { "at": { "linear": "linear", "choices": "no choices" } } },
+      { "say": "Input in. Step, step, step. Output out. Straight through.",
+        "art": { "at": { "in": "Input in", "steps": "Step, step, step", "out": "Output out" } } },
+      { "say": "Nothing in the middle asks a question. Nothing sends you a different way.",
+        "art": { "at": { "question": "asks a question", "another": "a different way" } } },
+      { "say": "Later you will meet algorithms that ask questions. They take two routes.",
+        "art": { "at": { "later": "Later", "ask": "ask questions", "routes": "two routes" } } }
+    ] },
+
+    { "id": "recap", "kind": "recap", "heading": "What you now know", "codes": ["3CT.07", "3CT.08", "3CT.04"], "beats": [
+      { "say": "The input goes in. The steps work on it. The output comes out.",
+        "art": { "at": { "input": "The input", "machine": "The steps work on it", "output": "The output comes out" } } },
+      { "say": "The rule is what the machine does to whatever you give it.",
+        "art": { "at": { "rule": "The rule" } } },
+      { "say": "Know the steps, and you can predict the output before you try it.",
+        "art": { "at": { "predict": "predict the output" } } },
+      { "say": "Same steps, a new input, a new answer.",
+        "art": { "at": { "go": "a new answer" } } }
+    ] }
+  ]
+}

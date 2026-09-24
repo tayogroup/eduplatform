@@ -1,0 +1,114 @@
+{
+  "_comment": "Storyboard for the Grade 3 Computing unit lecture film, Lesson 14 Machines, Things and Robots. Rendered by tools/create-ehel-unit-lecture.js. See lecture-video/BRIEF.md. This lesson has no matching ART.scene (the kit keeps no top-level 'machines/robots/factory' drawing), so every picture here is drawn in the engine's own idiom, the way tools/lib/film-scenes/computing-g3/networks-around-us.js draws its hardware: nothing is borrowed from the kit except the word-for-word wording of its explanations. The chapters follow LESSON['lecture'] in order (control; the Internet of Things; the factory line; why robots; a robot's own parts), then the recap.",
+  "slug": "machines-things-and-robots",
+  "lesson": 14,
+  "grade": 3,
+  "stage": 3,
+  "title": "Machines, Things and Robots",
+  "subtitle": "Grade 3 Computing",
+  "framework": "Cambridge Primary Computing 0059",
+  "renderer": {
+    "art": ["computing"],
+    "skin": "brown",
+    "scenes": [
+      "tools/lib/ehel-film-marks.js",
+      "tools/lib/film-scenes/computing-g3/machines-things-and-robots.js",
+      "tools/lib/film-scenes/computing-g3/machines-things-and-robots-2.js",
+      "tools/lib/film-scenes/computing-g3/machines-things-and-robots-3.js",
+      "tools/lib/film-scenes/computing-g3/machines-things-and-robots-4.js"
+    ]
+  },
+  "objectives": [
+    ["3CS.05", "Know that computers can be programmed to control machines and other physical objects."],
+    ["3CS.06", "Identify common 'Internet of Things' devices in a familiar environment."],
+    ["3CS.07", "Explain the role of robots in manufacturing."]
+  ],
+  "scenes": [
+    { "id": "title", "kind": "title", "codes": [], "beats": [
+      { "say": "Some machines have a program deciding what they do.",
+        "art": { "at": { "machines": "Some machines", "program": "a program deciding what they do" } } },
+      { "say": "Some things talk to the internet, and robots build cars in factories.",
+        "art": { "at": { "internet": "talk to the internet", "robots": "robots build cars in factories" } } }
+    ] },
+
+    { "id": "control", "kind": "control", "heading": "A program decides", "codes": ["3CS.05"], "beats": [
+      { "say": "A program controls a machine when a small computer inside decides what it does: it is computer-controlled.",
+        "art": { "at": { "programctl": "A program controls a machine", "computerin": "a small computer inside", "decides1": "decides what it does", "compctrld1": "computer-controlled" } } },
+      { "say": "A washing machine runs a program: it decides when to turn, heat and stop.",
+        "art": { "at": { "washing1": "A washing machine runs a program", "turnheatstop": "turn, heat and stop" } } },
+      { "say": "Traffic lights and a lift have programs too. An automatic door opens for a sensor.",
+        "art": { "at": { "trafficlift": "Traffic lights and a lift", "autodoor": "An automatic door opens", "sensor1": "a sensor" } } },
+      { "say": "A bicycle, a whisk and a broom have no program. You do all the work.",
+        "art": { "at": { "bicyclewhiskbroom": "A bicycle, a whisk and a broom", "noprogram": "have no program", "work1": "You do all the work" } } },
+      { "say": "So ask: is a computer deciding, or are you?",
+        "art": { "at": { "computerdeciding": "is a computer deciding", "areyou": "are you" } } }
+    ] },
+
+    { "id": "iot", "kind": "iot", "heading": "The Internet of Things", "codes": ["3CS.06"], "beats": [
+      { "say": "A bulb, a doorbell, a thermostat, a plug.",
+        "art": { "at": { "bulb1": "A bulb", "doorbell1": "a doorbell", "thermostat1": "a thermostat", "plug1": "a plug" } } },
+      { "say": "Add a small computer inside, connected to the internet.",
+        "art": { "at": { "computer2": "a small computer inside", "internet2": "connected to the internet" } } },
+      { "say": "That is an Internet of Things device: a smart device.",
+        "art": { "at": { "iotdevice": "an Internet of Things device", "smartdev1": "a smart device" } } },
+      { "say": "Smart does not mean clever. It means connected.",
+        "art": { "at": { "notclever": "does not mean clever", "meansconnected": "It means connected" } } },
+      { "say": "A smart watch counts your steps and sends them to your phone.",
+        "art": { "at": { "watch1": "A smart watch", "counts1": "counts your steps", "sendsphone1": "sends them to your phone" } } },
+      { "say": "A smart bulb switches on from your phone, even from another town.",
+        "art": { "at": { "switchesphone": "switches on from your phone", "anothertown": "even from another town" } } },
+      { "say": "The lamp beside it, with a switch, is not smart.",
+        "art": { "at": { "lampbeside": "The lamp beside it", "notsmart1": "is not smart" } } }
+    ] },
+
+    { "id": "line", "kind": "line", "heading": "Robots build a car", "codes": ["3CS.07"], "beats": [
+      { "say": "Robots weld the car's metal body, then paint it.",
+        "art": { "at": { "weld1": "weld the car's metal body", "paint1": "then paint it" } } },
+      { "say": "A robot lifts the engine in, then fits the doors and the wheels.",
+        "art": { "at": { "engine1": "lifts the engine in", "doors1": "fits the doors", "wheels1": "the wheels" } } },
+      { "say": "People test the finished car.",
+        "art": { "at": { "test1": "People test the finished car" } } },
+      { "say": "Six steps, most of them done by a robot.",
+        "art": { "at": { "six1": "Six steps", "robot1": "done by a robot" } } }
+    ] },
+
+    { "id": "why", "kind": "why", "heading": "Why robots?", "codes": ["3CS.07"], "beats": [
+      { "say": "Exact. A robot welds in the same place, to the millimetre, every time.",
+        "art": { "at": { "exact1": "Exact", "millimetre1": "to the millimetre", "everytime1": "every time" } } },
+      { "say": "Heavy. An engine is too heavy to lift. A robot arm lifts it in.",
+        "art": { "at": { "heavy1": "Heavy", "tooheavy1": "too heavy to lift", "liftsin1": "lifts it in" } } },
+      { "say": "Dangerous. Paint fumes and hot metal are safer for a robot.",
+        "art": { "at": { "dangerous1": "Dangerous", "fumesmetal": "Paint fumes and hot metal", "safer1": "safer for a robot" } } },
+      { "say": "Repeated: the same repetitive step, ten thousand times a day, and it never gets tired.",
+        "art": { "at": { "repeated1": "Repeated", "repetitive1": "repetitive", "tenthousand1": "ten thousand times a day", "nottired1": "never gets tired" } } },
+      { "say": "And the people: they program each robot, check every car, and fix what breaks.",
+        "art": { "at": { "people1": "And the people", "program4": "program each robot", "check4": "check every car", "fix4": "fix what breaks" } } },
+      { "say": "Robots did not take all the jobs. They do the steps; people run the factory.",
+        "art": { "at": { "nottakejobs1": "did not take all the jobs", "peoplerun1": "people run the factory" } } }
+    ] },
+
+    { "id": "robotparts", "kind": "robotparts", "heading": "A robot's own parts", "codes": ["3CS.05", "3CS.07"], "beats": [
+      { "say": "The program decides: move here, weld, move back.",
+        "art": { "at": { "programdecides": "The program decides", "movehereweld": "move here, weld, move back" } } },
+      { "say": "The motors are outputs. They move the arm where the program says.",
+        "art": { "at": { "motorsout1": "The motors are outputs", "movearm1": "move the arm" } } },
+      { "say": "The sensors are inputs. They tell the program where the arm is.",
+        "art": { "at": { "sensorsin1": "The sensors are inputs", "tellwhere1": "tell the program where the arm is" } } },
+      { "say": "The stop button is an input too. Press it, and every motor stops.",
+        "art": { "at": { "stopbtn1": "The stop button", "everymotorstops1": "every motor stops" } } },
+      { "say": "A factory robot is a computer controlling a machine, just like the automatic door.",
+        "art": { "at": { "factoryrobot1": "A factory robot", "computercontrolling1": "a computer controlling a machine", "automaticdoor1": "just like the automatic door" } } }
+    ] },
+
+    { "id": "recap", "kind": "recap", "heading": "What you now know", "codes": ["3CS.05", "3CS.06", "3CS.07"], "beats": [
+      { "say": "A program can control a machine, deciding what it does.",
+        "art": { "at": { "control4": "A program can control a machine" } } },
+      { "say": "Everyday things that connect to the internet are the Internet of Things.",
+        "art": { "at": { "iotcap1": "the Internet of Things" } } },
+      { "say": "Robots do the exact, heavy, dangerous and repeated jobs in a factory.",
+        "art": { "at": { "factoryjobs1": "in a factory" } } },
+      { "say": "And a robot is a computer controlling a machine: sensors in, motors out.",
+        "art": { "at": { "sensorsin2": "sensors in", "motorsout2": "motors out" } } }
+    ] }
+  ]
+}

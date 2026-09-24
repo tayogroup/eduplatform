@@ -1,0 +1,112 @@
+{
+  "_comment": "Storyboard for the Grade 4 Computing unit lecture film, Lesson 9 Databases. Rendered by tools/create-ehel-unit-lecture.js. See lecture-video/BRIEF.md. The chapters follow LESSON[lecture] in order: records/fields/data, data types, sorting, answering a question, and the deepened part on whole records. One table carries the whole film - the lesson's own six children with their pets, ages and heights, from the datasort and filter steps, which agree with each other. There is no ART.sim for a database table, so the table is drawn in the engine's idiom; the ORDER of a sorted table comes from ART.sortRows and the rows a filter keeps from ART.rowMatches, so every count the voice says is counted off the lesson's own rule rather than typed in. Rows that move fade while they travel and Amal's record swings out to the right of the table, so no two rows are ever readable on the same spot.",
+  "slug": "databases",
+  "lesson": 9,
+  "grade": 4,
+  "stage": 4,
+  "title": "Databases",
+  "subtitle": "Grade 4 Computing",
+  "framework": "Cambridge Primary Computing 0059",
+  "renderer": {
+    "art": ["computing"],
+    "skin": "brown",
+    "scenes": [
+      "tools/lib/ehel-film-marks.js",
+      "tools/lib/film-scenes/computing-g4/databases.js",
+      "tools/lib/film-scenes/computing-g4/databases-2.js",
+      "tools/lib/film-scenes/computing-g4/databases-3.js"
+    ]
+  },
+  "objectives": [
+    ["4MD.07", "Identify data, records and fields within a data table."],
+    ["4MD.05", "Identify appropriate data types for a field within a data table."],
+    ["4MD.04", "Know how to sort data into a required order, including descending or ascending numerical values and alphabetically."],
+    ["4MD.06", "Know how to use a database to answer a single question."]
+  ],
+  "scenes": [
+    { "id": "title", "kind": "title", "codes": [], "beats": [
+      { "say": "Here is a table of the class pets. One row for each child.",
+        "art": { "at": { "table": "a table of the class pets", "row": "One row for each child" } } },
+      { "say": "A database can sort this table, and answer a question from it.",
+        "art": { "at": { "sort": "sort this table", "answer": "answer a question" } } }
+    ] },
+
+    { "id": "parts", "kind": "parts", "heading": "Records, fields, data", "codes": ["4MD.07"], "beats": [
+      { "say": "A database table has three parts. Meet them one at a time.",
+        "art": { "at": { "three": "three parts", "meet": "Meet them one at a time" } } },
+      { "say": "A record is one row. It holds everything about one thing.",
+        "art": { "at": { "record": "A record is one row", "everything": "everything about one thing" } } },
+      { "say": "This row is Amal's record: cat, 9 years old, 134 centimetres.",
+        "art": { "at": { "amal": "Amal's record", "values": "cat, 9 years old, 134 centimetres" } } },
+      { "say": "A field is one column. It holds one kind of fact about everybody.",
+        "art": { "at": { "field": "A field is one column", "kind": "one kind of fact" } } },
+      { "say": "The pet field holds cat, dog, fish, rabbit, budgie and hamster.",
+        "art": { "at": { "petfield": "The pet field", "list": "cat, dog, fish" } } },
+      { "say": "Data is one cell: one fact about one thing. Amal's pet is cat.",
+        "art": { "at": { "data": "Data is one cell", "cell": "Amal's pet is cat" } } },
+      { "say": "Record goes across. Field goes down. Those two are easy to mix up.",
+        "art": { "at": { "across": "Record goes across", "down": "Field goes down", "mix": "easy to mix up" } } }
+    ] },
+
+    { "id": "types", "kind": "types", "heading": "A type for every field", "codes": ["4MD.05"], "beats": [
+      { "say": "Every field has a data type. It says what kind of thing that field holds.",
+        "art": { "at": { "type": "a data type", "kind": "what kind of thing" } } },
+      { "say": "The pet field holds words, so its type is text.",
+        "art": { "at": { "words": "holds words", "text": "its type is text" } } },
+      { "say": "Age and height are counts and measures, so their type is number.",
+        "art": { "at": { "counts": "counts and measures", "number": "their type is number" } } },
+      { "say": "The day a pet was born is a date. What its food costs is currency.",
+        "art": { "at": { "date": "is a date", "currency": "is currency" } } },
+      { "say": "Store an age as text and the database cannot sort or add it properly.",
+        "art": { "at": { "store": "Store an age as text", "cannot": "cannot sort or add it" } } }
+    ] },
+
+    { "id": "sorting", "kind": "sorting", "heading": "Sorting: up and down", "codes": ["4MD.04"], "beats": [
+      { "say": "Sorting by a field puts every record in that field's order.",
+        "art": { "at": { "sorting": "Sorting by a field", "order": "puts every record in that field's order" } } },
+      { "say": "Ascending goes up: smallest first, or A first.",
+        "art": { "at": { "asc": "Ascending goes up", "small": "smallest first" } } },
+      { "say": "Descending goes down: biggest first, or Z first.",
+        "art": { "at": { "desc": "Descending goes down", "big": "biggest first" } } },
+      { "say": "Sort by height, descending. Zara is tallest at 141, so she goes on top.",
+        "art": { "at": { "sortdesc": "Sort by height, descending", "zara": "Zara is tallest at 141" } } },
+      { "say": "Sort by pet, ascending. That is alphabetical, so budgie comes before cat.",
+        "art": { "at": { "sortasc": "Sort by pet, ascending", "budgie": "budgie comes before cat" } } },
+      { "say": "It is easy to sort the right field the wrong way. Read which way it asks.",
+        "art": { "at": { "wrongway": "the right field the wrong way", "read": "Read which way it asks" } } }
+    ] },
+
+    { "id": "filter", "kind": "filter", "heading": "Answering a question", "codes": ["4MD.06"], "beats": [
+      { "say": "A database answers a question when you filter it.",
+        "art": { "at": { "answers": "answers a question", "filter": "filter it" } } },
+      { "say": "Who is older than 8? Field age, test more than, value 8.",
+        "art": { "at": { "who": "Who is older than 8?", "fld": "Field age", "test": "test more than", "val": "value 8" } } },
+      { "say": "Only the matching records stay. The others are hidden.",
+        "art": { "at": { "stay": "the matching records stay", "hidden": "The others are hidden" } } },
+      { "say": "Amal is 9, Zara is 10, Leo is 9. Three records match.",
+        "art": { "at": { "amal": "Amal is 9", "zara": "Zara is 10", "leo": "Leo is 9", "three": "Three records match" } } },
+      { "say": "Now ask who has a rabbit. Field pet, is, rabbit. One record: Omar.",
+        "art": { "at": { "ask": "who has a rabbit", "spec": "Field pet, is, rabbit", "one": "One record: Omar" } } },
+      { "say": "One question, one filter, one answer, straight from the data.",
+        "art": { "at": { "oneq": "One question", "onef": "one filter", "data": "straight from the data" } } }
+    ] },
+
+    { "id": "whole", "kind": "whole", "heading": "Whole records move", "codes": ["4MD.07", "4MD.04", "4MD.06"], "beats": [
+      { "say": "Sorting rearranges whole records, so each child keeps their own pet.",
+        "art": { "at": { "rearrange": "rearranges whole records", "keeps": "keeps their own pet" } } },
+      { "say": "Filtering hides the records that do not match. It deletes nothing.",
+        "art": { "at": { "hides": "hides the records", "deletes": "deletes nothing" } } },
+      { "say": "Neither one changes what is inside a cell. Amal's pet is still cat.",
+        "art": { "at": { "neither": "changes what is inside a cell", "still": "still cat" } } }
+    ] },
+
+    { "id": "recap", "kind": "recap", "heading": "What you now know", "codes": ["4MD.07", "4MD.05", "4MD.04", "4MD.06"], "beats": [
+      { "say": "A record is a row, a field is a column, and data is one cell.",
+        "art": { "at": { "record": "A record is a row", "field": "a field is a column", "data": "data is one cell" } } },
+      { "say": "Every field needs the right type: text, number, date or currency.",
+        "art": { "at": { "type": "the right type" } } },
+      { "say": "Sort to put records in order. Filter to answer one question.",
+        "art": { "at": { "sort": "Sort to put records in order", "filter": "Filter to answer one question" } } }
+    ] }
+  ]
+}

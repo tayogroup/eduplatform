@@ -1,0 +1,113 @@
+{
+  "_comment": "Storyboard for the Grade 4 Computing unit lecture film, Lesson 8 Data and Information. Rendered by tools/create-ehel-unit-lecture.js. See lecture-video/BRIEF.md. Every beat is one narration clip; art.at names the phrases a picture waits for, and the page refuses to load if a phrase is not in its beat's say. The chapters follow LESSON[lecture] in order (paper and digital databases; forms; data; information; raw data), in the lesson's own words. ONE COUNT RUNS THROUGH THE WHOLE FILM: the lesson's own eight children answer walk, bus, car, bike, walk, bus, walk, car - so walk 3, bus 2, car 2, bike 1, and 3 + 2 + 2 + 1 = 8. Every tally mark, every number and every spoken figure is that one count. Nothing here is a pictogram: one mark is one child.",
+  "slug": "data-and-information",
+  "lesson": 8,
+  "grade": 4,
+  "stage": 4,
+  "title": "Data and Information",
+  "subtitle": "Grade 4 Computing",
+  "framework": "Cambridge Primary Computing 0059",
+  "renderer": {
+    "art": ["computing"],
+    "skin": "brown",
+    "scenes": [
+      "tools/lib/ehel-film-marks.js",
+      "tools/lib/film-scenes/computing-g4/data-and-information.js",
+      "tools/lib/film-scenes/computing-g4/data-and-information-2.js",
+      "tools/lib/film-scenes/computing-g4/data-and-information-3.js"
+    ]
+  },
+  "objectives": [
+    ["4MD.01", "Understand the differences between physical (paper-based) and digital databases."],
+    ["4MD.02", "Understand the advantages and disadvantages of using forms when collecting data."],
+    ["4MD.03", "Identify the differences between data and information."]
+  ],
+  "scenes": [
+    { "id": "title", "kind": "title", "codes": [], "beats": [
+      { "say": "Walk, bus, car, walk. Four words, and no meaning at all.",
+        "art": { "at": { "words": "Four words", "none": "no meaning at all" } } },
+      { "say": "Organise them, count them, and they tell you something. Data in, information out.",
+        "art": { "at": { "organise": "Organise them", "count": "count them", "out": "Data in, information out" } } }
+    ] },
+
+    { "id": "dbase", "kind": "dbase", "heading": "Paper and digital", "codes": ["4MD.01"], "beats": [
+      { "say": "A database is an organised collection of data. It can live on paper, or on a computer.",
+        "art": { "at": { "database": "A database", "organised": "an organised collection", "paper": "on paper", "computer": "on a computer" } } },
+      { "say": "On paper it is a box of cards, or a register of names.",
+        "art": { "at": { "box": "a box of cards", "register": "a register of names" } } },
+      { "say": "On a computer it is the same data, stored digitally.",
+        "art": { "at": { "same": "the same data", "digitally": "stored digitally" } } },
+      { "say": "Digital is fast to search and to sort, easy to share, and very small.",
+        "art": { "at": { "search": "fast to search", "sort": "to sort", "share": "easy to share", "small": "very small" } } },
+      { "say": "Paper needs no power and no login, and cannot be reached from far away.",
+        "art": { "at": { "power": "no power", "login": "no login", "far": "from far away" } } },
+      { "say": "Digital is not better at everything. Each has its place.",
+        "art": { "at": { "better": "not better at everything", "place": "Each has its place" } } }
+    ] },
+
+    { "id": "form", "kind": "form", "heading": "Collecting it with a form", "codes": ["4MD.02"], "beats": [
+      { "say": "A form asks everyone the same question, with the same choices.",
+        "art": { "at": { "form": "A form", "question": "the same question", "choices": "the same choices" } } },
+      { "say": "How do you get to school? Walk, bike, car, or bus.",
+        "art": { "at": { "ask": "How do you get to school?", "four": "Walk, bike, car, or bus" } } },
+      { "say": "Amal walks. Sami takes the bus. Zara comes by car. Omar rides his bike.",
+        "art": { "at": { "amal": "Amal walks", "sami": "Sami takes the bus", "zara": "Zara comes by car", "omar": "Omar rides his bike" } } },
+      { "say": "Eight children answer, and every answer is written down the same way.",
+        "art": { "at": { "eight": "Eight children answer", "sameway": "written down the same way" } } },
+      { "say": "Everyone got the same question, so the answers can be counted. Nothing is missed.",
+        "art": { "at": { "everyone": "Everyone got the same question", "counted": "can be counted", "missed": "Nothing is missed" } } },
+      { "say": "But Hana comes by scooter, and scooter is not a choice.",
+        "art": { "at": { "hana": "Hana comes by scooter", "notchoice": "not a choice" } } },
+      { "say": "A form cannot ask why, and a bad question gives wrong data from everyone.",
+        "art": { "at": { "why": "cannot ask why", "bad": "a bad question", "wrong": "wrong data from everyone" } } }
+    ] },
+
+    { "id": "data", "kind": "data", "heading": "Data: the raw facts", "codes": ["4MD.03"], "beats": [
+      { "say": "Data is the raw facts: 21, walk, cat, size 2.",
+        "art": { "at": { "data": "Data is the raw facts", "facts": "21, walk, cat, size 2" } } },
+      { "say": "On its own, a fact like that means nothing at all.",
+        "art": { "at": { "own": "On its own", "nothing": "means nothing at all" } } },
+      { "say": "Here are the eight answers again, exactly as the children gave them.",
+        "art": { "at": { "eight": "the eight answers", "exactly": "exactly as the children gave them" } } },
+      { "say": "Walk, bus, car, bike, walk, bus, walk, car. Which way do most children come?",
+        "art": { "at": { "list": "Walk, bus, car, bike, walk, bus, walk, car", "which": "Which way do most children come?" } } },
+      { "say": "You cannot tell yet. A list of words is data, and nothing more.",
+        "art": { "at": { "cannot": "You cannot tell yet", "listdata": "A list of words is data" } } }
+    ] },
+
+    { "id": "info", "kind": "info", "heading": "Information: the meaning", "codes": ["4MD.03"], "beats": [
+      { "say": "Now organise it. Put every answer in a table, and count them.",
+        "art": { "at": { "organise": "Now organise it", "table": "in a table", "count": "count them" } } },
+      { "say": "Walk three. Bus two. Car two. Bike one. That is all eight children.",
+        "art": { "at": { "walk3": "Walk three", "bus2": "Bus two", "car2": "Car two", "bike1": "Bike one", "all8": "all eight children" } } },
+      { "say": "Now look at the counts. Most children walk to school.",
+        "art": { "at": { "look": "Now look at the counts", "most": "Most children walk to school" } } },
+      { "say": "Only one child cycles. That is information: what the data means.",
+        "art": { "at": { "one": "Only one child cycles", "means": "what the data means" } } },
+      { "say": "Information is what you act on: a safe crossing, and one bike rack.",
+        "art": { "at": { "acton": "what you act on", "crossing": "a safe crossing", "rack": "one bike rack" } } }
+    ] },
+
+    { "id": "raw", "kind": "raw", "heading": "Raw data says nothing", "codes": ["4MD.03"], "beats": [
+      { "say": "21, 19, 24, 22, 30. Five numbers, and no meaning at all.",
+        "art": { "at": { "five": "Five numbers", "nomeaning": "no meaning at all" } } },
+      { "say": "That is raw data: facts as they were collected, before anybody used them.",
+        "art": { "at": { "rawdata": "raw data", "collected": "as they were collected" } } },
+      { "say": "Now say they are the temperatures in a classroom, at nine o'clock, on five days.",
+        "art": { "at": { "temps": "the temperatures in a classroom", "nine": "at nine o'clock", "days": "on five days" } } },
+      { "say": "The last one was the day the heating stuck on. Now the numbers mean something.",
+        "art": { "at": { "last": "The last one", "heating": "the heating stuck on", "mean": "the numbers mean something" } } },
+      { "say": "Information is raw data that has been given a meaning.",
+        "art": { "at": { "info": "Information is raw data", "given": "given a meaning" } } }
+    ] },
+
+    { "id": "recap", "kind": "recap", "heading": "What you now know", "codes": ["4MD.01", "4MD.02", "4MD.03"], "beats": [
+      { "say": "A database is organised data, on paper or on a computer.",
+        "art": { "at": { "database": "A database" } } },
+      { "say": "A form asks everyone the same question, and it cannot ask why.",
+        "art": { "at": { "form": "A form", "why": "cannot ask why" } } },
+      { "say": "Data is the raw facts. Information is what those facts mean.",
+        "art": { "at": { "data": "Data is the raw facts", "information": "Information is what those facts mean" } } }
+    ] }
+  ]
+}

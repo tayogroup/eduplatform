@@ -1,0 +1,124 @@
+{
+  "_comment": "Storyboard for the Grade 3 Computing unit lecture film, Lesson 7 Press, Shake, Clap. Rendered by tools/create-ehel-unit-lecture.js. See lecture-video/BRIEF.md. The chapters follow LESSON[lecture] in order: the device and its inputs and outputs (with the micro:bit beat the deepened lecture adds), the when block, the outputs one at a time, testing and debugging, computers controlling machines, and sense-decide-act. Bitsy's board is DRAWN here - the kit keeps it inside a closure and there is no ART.sim - but every light pattern comes from ART.leds, every block label and icon from ART.device.block, and the order the outputs run in from ART.device.plan, so no picture can disagree with the lesson.",
+  "slug": "press-shake-clap",
+  "lesson": 7,
+  "grade": 3,
+  "stage": 3,
+  "title": "Press, Shake, Clap",
+  "subtitle": "Grade 3 Computing",
+  "framework": "Cambridge Primary Computing 0059",
+  "renderer": {
+    "art": ["computing"],
+    "skin": "brown",
+    "scenes": [
+      "tools/lib/ehel-film-marks.js",
+      "tools/lib/film-scenes/computing-g3/press-shake-clap.js",
+      "tools/lib/film-scenes/computing-g3/press-shake-clap-2.js",
+      "tools/lib/film-scenes/computing-g3/press-shake-clap-3.js",
+      "tools/lib/film-scenes/computing-g3/press-shake-clap-4.js",
+      "tools/lib/film-scenes/computing-g3/press-shake-clap-5.js",
+      "tools/lib/film-scenes/computing-g3/press-shake-clap-6.js"
+    ]
+  },
+  "objectives": [
+    ["3P.06", "Know how to create programs to produce an output from an input device."],
+    ["3P.10", "Know how to develop programs for a physical computing device to produce outputs."],
+    ["3P.09", "Know how to test and debug programs so that they run and produce the desired output."],
+    ["3CS.05", "Know that computers can be programmed to control machines and other physical objects."]
+  ],
+  "scenes": [
+    { "id": "title", "kind": "title", "codes": [], "beats": [
+      { "say": "Press a button. Shake it. Clap your hands.",
+        "art": { "at": { "press": "Press a button", "shake": "Shake it", "clap": "Clap your hands" } } },
+      { "say": "Bitsy is a small computer you can hold, and it feels all three.",
+        "art": { "at": { "bitsy": "a small computer", "feels": "it feels all three" } } }
+    ] },
+
+    { "id": "board", "kind": "board", "heading": "A computer you can hold", "codes": ["3P.10", "3P.06"], "beats": [
+      { "say": "Bitsy is a physical computing device: a small computer with real parts on it.",
+        "art": { "at": { "bitsy": "Bitsy", "device": "physical computing device", "parts": "real parts on it" } } },
+      { "say": "Button A is an input. Press it, and the program can feel it.",
+        "art": { "at": { "button": "Button A", "input": "an input", "press": "Press it" } } },
+      { "say": "The shake sensor feels a shake. The microphone hears a clap.",
+        "art": { "at": { "shake": "The shake sensor", "mic": "The microphone", "clap": "hears a clap" } } },
+      { "say": "Twenty-five little lights, a speaker, a motor and a bell are outputs.",
+        "art": { "at": { "lights": "Twenty-five little lights", "speaker": "a speaker", "motor": "a motor", "bell": "a bell", "outputs": "are outputs" } } },
+      { "say": "Bitsy has no screen, but it runs programs. It is a computer.",
+        "art": { "at": { "screen": "no screen", "runs": "it runs programs", "computer": "It is a computer" } } },
+      { "say": "The micro:bit is a real board with two buttons and a grid of lights.",
+        "art": { "at": { "microbit": "The micro:bit", "two": "two buttons", "grid": "a grid of lights" } } }
+    ] },
+
+    { "id": "when", "kind": "when", "heading": "The when block", "codes": ["3P.06", "3P.10"], "beats": [
+      { "say": "A device program starts with a when block. It names the input.",
+        "art": { "at": { "start": "starts with a when block", "names": "It names the input" } } },
+      { "say": "When button A is pressed. That is the input this program waits for.",
+        "art": { "at": { "whenA": "When button A is pressed", "waits": "waits for" } } },
+      { "say": "Then come the outputs: show a heart, beep.",
+        "art": { "at": { "outputs": "Then come the outputs", "heart": "show a heart", "beep": "beep" } } },
+      { "say": "Press A, and Bitsy draws a heart and beeps.",
+        "art": { "at": { "press": "Press A", "draws": "draws a heart", "beeps": "beeps" } } },
+      { "say": "Shake it instead and nothing happens. The program is waiting for A.",
+        "art": { "at": { "shake": "Shake it instead", "nothing": "nothing happens", "waiting": "waiting for A" } } }
+    ] },
+
+    { "id": "outputs", "kind": "outputs", "heading": "Outputs, one at a time", "codes": ["3P.10"], "beats": [
+      { "say": "Each output block makes Bitsy do one real thing.",
+        "art": { "at": { "block": "Each output block", "one": "one real thing" } } },
+      { "say": "All lights on turns every one of the twenty-five lights on.",
+        "art": { "at": { "all": "All lights on", "every": "every one of the twenty-five lights" } } },
+      { "say": "Show a smile draws a smile. All lights off makes them dark.",
+        "art": { "at": { "smile": "Show a smile", "off": "All lights off", "dark": "dark" } } },
+      { "say": "Beep uses the speaker. Turn the motor. Ring the bell.",
+        "art": { "at": { "beep": "Beep uses the speaker", "motor": "Turn the motor", "bell": "Ring the bell" } } },
+      { "say": "When the input arrives, the outputs run in order, one after another.",
+        "art": { "at": { "arrives": "When the input arrives", "order": "run in order" } } }
+    ] },
+
+    { "id": "test", "kind": "test", "heading": "Test it, fix it", "codes": ["3P.09", "3P.06"], "beats": [
+      { "say": "The algorithm says show a heart. You pressed A and got a smile.",
+        "art": { "at": { "algorithm": "The algorithm says show a heart", "pressed": "You pressed A", "got": "got a smile" } } },
+      { "say": "Do not give up. Change the smile block for a heart block.",
+        "art": { "at": { "change": "Change the smile block", "heart": "for a heart block" } } },
+      { "say": "Press A again to test it. Now Bitsy shows a heart.",
+        "art": { "at": { "press": "Press A again", "test": "to test it", "shows": "shows a heart" } } },
+      { "say": "Testing a program and fixing it is called debugging.",
+        "art": { "at": { "debug": "called debugging" } } },
+      { "say": "If nothing happens at all, the when block has the wrong input.",
+        "art": { "at": { "nothing": "nothing happens at all", "wrong": "the wrong input" } } }
+    ] },
+
+    { "id": "machines", "kind": "machines", "heading": "Computers control machines", "codes": ["3CS.05"], "beats": [
+      { "say": "A program is not only for screens. It moves real things too.",
+        "art": { "at": { "screens": "not only for screens", "moves": "It moves real things" } } },
+      { "say": "Through a motor or a switch, traffic lights change and a door opens.",
+        "art": { "at": { "motor": "Through a motor or a switch", "traffic": "traffic lights change", "door": "a door opens" } } },
+      { "say": "A washing machine turns its drum. A lift climbs to the floor you pressed.",
+        "art": { "at": { "washing": "A washing machine turns its drum", "lift": "A lift climbs", "floor": "the floor you pressed" } } },
+      { "say": "Inside each one is a small computer following a program.",
+        "art": { "at": { "inside": "Inside each one", "following": "following a program" } } }
+    ] },
+
+    { "id": "system", "kind": "system", "heading": "Sense, decide, act", "codes": ["3CS.05", "3P.06"], "beats": [
+      { "say": "Every control system has the same three parts.",
+        "art": { "at": { "system": "Every control system", "three": "three parts" } } },
+      { "say": "Something senses: a button, a sensor, a microphone.",
+        "art": { "at": { "senses": "Something senses", "button": "a button", "sensor": "a sensor", "mic": "a microphone" } } },
+      { "say": "Something decides: the program says what to do.",
+        "art": { "at": { "decides": "Something decides", "program": "the program says what to do" } } },
+      { "say": "Something acts: a light, a motor, a speaker.",
+        "art": { "at": { "acts": "Something acts", "light": "a light", "motor": "a motor", "speaker": "a speaker" } } },
+      { "say": "Try it on a shop door that opens as you walk up.",
+        "art": { "at": { "shop": "a shop door", "walk": "as you walk up" } } }
+    ] },
+
+    { "id": "recap", "kind": "recap", "heading": "What you now know", "codes": ["3P.06", "3P.10", "3P.09", "3CS.05"], "beats": [
+      { "say": "A press, a shake and a clap are inputs Bitsy can feel.",
+        "art": { "at": { "inputs": "are inputs" } } },
+      { "say": "The when block goes first and names the input. Then the outputs run.",
+        "art": { "at": { "when": "The when block goes first", "outputs": "Then the outputs run" } } },
+      { "say": "Test it, fix it, and a program can control a real machine.",
+        "art": { "at": { "fix": "fix it", "control": "control a real machine" } } }
+    ] }
+  ]
+}

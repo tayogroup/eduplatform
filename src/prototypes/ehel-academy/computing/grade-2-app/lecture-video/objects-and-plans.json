@@ -1,0 +1,117 @@
+{
+  "_comment": "Storyboard for the Grade 2 Computing unit lecture film, Lesson 4 Objects and Plans. Rendered by tools/create-ehel-unit-lecture.js. See lecture-video/BRIEF.md. Every beat is one narration clip; art.at names the phrases a picture waits for, and the page refuses to load if a phrase is not in its beat's say. The chapters follow LESSON[lecture] in order (objects; a plan for each object; build one and test one; repeats for objects too; which object is it; real programs), in the lesson's own words and with the lesson's own cat, dog, tree and ball. Every sprite move on screen is the LESSON'S arithmetic, taken from ART.run - move right is one square capped at three, grow is times 1.4 capped at 2.2, repeat 3 times unrolls to three moves - so the film and the lesson cannot disagree about what a block does.",
+  "slug": "objects-and-plans",
+  "lesson": 4,
+  "grade": 2,
+  "stage": 2,
+  "title": "Objects and Plans",
+  "subtitle": "Grade 2 Computing",
+  "framework": "Cambridge Primary Computing 0059",
+  "renderer": {
+    "art": ["computing"],
+    "skin": "brown",
+    "scenes": [
+      "tools/lib/ehel-film-marks.js",
+      "tools/lib/film-scenes/computing-g2/objects-and-plans.js",
+      "tools/lib/film-scenes/computing-g2/objects-and-plans-2.js",
+      "tools/lib/film-scenes/computing-g2/objects-and-plans-3.js"
+    ]
+  },
+  "objectives": [
+    ["2P.04", "Know how to plan the instructions for objects within programs."],
+    ["2P.02", "Know how to recreate algorithms as programs."],
+    ["2P.06", "Identify the benefits of regularly testing programs throughout their development."],
+    ["2P.01", "Understand that programs instruct computers how to run algorithms."]
+  ],
+  "scenes": [
+    { "id": "title", "kind": "title", "codes": [], "beats": [
+      { "say": "A cat and a dog, on one stage. Two objects, and two different plans.",
+        "art": { "at": { "cat": "A cat", "dog": "a dog", "stage": "one stage", "two": "Two objects", "plans": "two different plans" } } },
+      { "say": "Each object needs its own blocks. Plan each one before you build it.",
+        "art": { "at": { "blocks": "its own blocks", "plan": "Plan each one", "build": "before you build it" } } }
+    ] },
+
+    { "id": "objects", "kind": "objects", "heading": "Two objects, one stage", "codes": ["2P.04", "2P.01"], "beats": [
+      { "say": "A program can have more than one thing inside it.",
+        "art": { "at": { "program": "A program", "more": "more than one thing" } } },
+      { "say": "A cat, a dog, a ball. Each one is called an object.",
+        "art": { "at": { "cat": "A cat", "dog": "a dog", "ball": "a ball", "object": "called an object" } } },
+      { "say": "An object is a thing that can be given its own instructions.",
+        "art": { "at": { "thing": "a thing", "own": "its own instructions" } } },
+      { "say": "The cat's blocks move the cat. The dog's blocks move the dog.",
+        "art": { "at": { "catb": "The cat's blocks", "dogb": "The dog's blocks" } } },
+      { "say": "Blocks make a program. A program tells the computer how to run an algorithm.",
+        "art": { "at": { "make": "Blocks make a program", "tells": "tells the computer", "algo": "how to run an algorithm" } } }
+    ] },
+
+    { "id": "plans", "kind": "plans", "heading": "A plan for each object", "codes": ["2P.04"], "beats": [
+      { "say": "Before you build, plan. What should each object do?",
+        "art": { "at": { "before": "Before you build", "plan": "plan.", "each": "each object" } } },
+      { "say": "The cat walks to the tree, then says hello. That is its plan.",
+        "art": { "at": { "walks": "walks to the tree", "hello": "says hello", "plan": "its plan" } } },
+      { "say": "The dog jumps twice, then spins. That is a different plan.",
+        "art": { "at": { "jumps": "jumps twice", "spins": "spins", "diff": "a different plan" } } },
+      { "say": "The dog is a different object, so it gets different blocks.",
+        "art": { "at": { "other": "a different object", "blocks": "different blocks" } } },
+      { "say": "What should the tree do? Nothing. It gets no blocks at all.",
+        "art": { "at": { "tree": "the tree", "nothing": "Nothing.", "none": "no blocks at all" } } }
+    ] },
+
+    { "id": "build", "kind": "build", "heading": "Build one, test one", "codes": ["2P.02", "2P.06"], "beats": [
+      { "say": "Now build. Turn each plan into blocks, one object at a time.",
+        "art": { "at": { "build": "Now build", "turn": "Turn each plan into blocks", "one": "one object at a time" } } },
+      { "say": "Build the cat's program first: move right, move right, say hello.",
+        "art": { "at": { "catp": "the cat's program", "right": "move right, move right", "say": "say hello" } } },
+      { "say": "Run it. Did the cat do its plan? Yes it did. That was a test.",
+        "art": { "at": { "run": "Run it.", "did": "Did the cat do its plan?", "yes": "Yes it did", "test": "That was a test" } } },
+      { "say": "Now build the dog's program: jump, jump, spin. Run that one too.",
+        "art": { "at": { "dogp": "the dog's program", "jjs": "jump, jump, spin", "runtoo": "Run that one too" } } },
+      { "say": "Test each program as you build it. Then every bug stays small.",
+        "art": { "at": { "test": "Test each program", "small": "every bug stays small" } } }
+    ] },
+
+    { "id": "repeats", "kind": "repeats", "heading": "Repeats for objects too", "codes": ["2P.02", "2P.04"], "beats": [
+      { "say": "An object's plan can use the repeat block, like any other program.",
+        "art": { "at": { "plan": "An object's plan", "repeat": "the repeat block" } } },
+      { "say": "The dog must move left three times. That is three move left blocks.",
+        "art": { "at": { "three": "move left three times", "blocks": "three move left blocks" } } },
+      { "say": "Or use repeat 3 times, then move left. That is only two blocks.",
+        "art": { "at": { "rep": "repeat 3 times", "left": "then move left", "two": "only two blocks" } } },
+      { "say": "Same moves, fewer blocks. The repeat block always goes first.",
+        "art": { "at": { "same": "Same moves", "fewer": "fewer blocks", "first": "always goes first" } } }
+    ] },
+
+    { "id": "which", "kind": "which", "heading": "Which object is it?", "codes": ["2P.06", "2P.04"], "beats": [
+      { "say": "A stage can hold several objects at the same time.",
+        "art": { "at": { "stage": "A stage", "several": "several objects" } } },
+      { "say": "Each one carries its own blocks, and they all run side by side.",
+        "art": { "at": { "own": "its own blocks", "side": "side by side" } } },
+      { "say": "So when something goes wrong, ask which object is doing it.",
+        "art": { "at": { "wrong": "something goes wrong", "which": "which object" } } },
+      { "say": "Check that object's blocks. Leave the other objects alone.",
+        "art": { "at": { "check": "Check that object's blocks", "leave": "Leave the other objects alone" } } }
+    ] },
+
+    { "id": "real", "kind": "real", "heading": "Real programs", "codes": ["2P.01", "2P.04"], "beats": [
+      { "say": "Real programs have lots of objects, each with its own plan.",
+        "art": { "at": { "real": "Real programs", "lots": "lots of objects", "plan": "its own plan" } } },
+      { "say": "A game has a player and enemies. Each one is an object.",
+        "art": { "at": { "game": "A game", "player": "a player", "enemies": "enemies", "object": "an object" } } },
+      { "say": "An animation has several characters. They all run at the same time.",
+        "art": { "at": { "anim": "An animation", "chars": "several characters", "once": "run at the same time" } } },
+      { "say": "A traffic light has three lights: red, amber and green.",
+        "art": { "at": { "traffic": "A traffic light", "three": "three lights", "red": "red,", "amber": "amber", "green": "green" } } },
+      { "say": "Each light is an object with its own plan for when to be on.",
+        "art": { "at": { "each": "Each light", "object": "an object", "plan": "its own plan" } } }
+    ] },
+
+    { "id": "recap", "kind": "recap", "heading": "What you now know", "codes": ["2P.04", "2P.02", "2P.06", "2P.01"], "beats": [
+      { "say": "Every object in a program gets its own plan and its own blocks.",
+        "art": { "at": { "object": "Every object", "plan": "its own plan" } } },
+      { "say": "Plan it, build the program, then run it and test it.",
+        "art": { "at": { "program": "build the program", "test": "test it" } } },
+      { "say": "On one stage, every object quietly does its own job.",
+        "art": { "at": { "stage": "one stage", "job": "its own job" } } }
+    ] }
+  ]
+}

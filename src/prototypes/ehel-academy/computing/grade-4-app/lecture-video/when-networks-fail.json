@@ -1,0 +1,112 @@
+{
+  "_comment": "Storyboard for the Grade 4 Computing unit lecture film, Lesson 11 When Networks Fail. Rendered by tools/create-ehel-unit-lecture.js. See lecture-video/BRIEF.md. Every beat is one narration clip; art.at names the phrases a picture waits for, and the page refuses to load if a phrase is not in its beat's say. The chapters follow LESSON[lecture] in order (a network failure; what stops; encryption; where and why; why anyone bothers to encrypt), and every word is from lesson-11.py: its four causes, its three places, its six encrypted things and its bus timetable. Computing keeps no ART.sim and the lesson's network activity is a closure, so the network is drawn here in the engine's idiom - nothing technical is added, no message hops or is routed, and the only things crossed out are the broken link and the app that stopped, never a person.",
+  "slug": "when-networks-fail",
+  "lesson": 11,
+  "grade": 4,
+  "stage": 4,
+  "title": "When Networks Fail",
+  "subtitle": "Grade 4 Computing",
+  "framework": "Cambridge Primary Computing 0059",
+  "renderer": {
+    "art": ["computing"],
+    "skin": "brown",
+    "scenes": [
+      "tools/lib/ehel-film-marks.js",
+      "tools/lib/film-scenes/computing-g4/when-networks-fail.js",
+      "tools/lib/film-scenes/computing-g4/when-networks-fail-2.js",
+      "tools/lib/film-scenes/computing-g4/when-networks-fail-3.js"
+    ]
+  },
+  "objectives": [
+    ["4DC.04", "Identify issues that may occur as a result of a failure in a network."],
+    ["4DC.05", "Identify where and why encryption is used in digital systems."]
+  ],
+  "scenes": [
+    { "id": "title", "kind": "title", "codes": [], "beats": [
+      { "say": "A cable is cut. The router dies. The network has failed.",
+        "art": { "at": { "cable": "A cable is cut", "router": "The router dies", "failed": "The network has failed" } } },
+      { "say": "What stops working? And where does encryption keep data safe?",
+        "art": { "at": { "stops": "What stops working", "enc": "where does encryption keep data safe" } } }
+    ] },
+
+    { "id": "break", "kind": "break", "heading": "A network failure", "codes": ["4DC.04"], "beats": [
+      { "say": "A network failure is any break in the connection between devices.",
+        "art": { "at": { "failure": "A network failure", "break": "any break in the connection" } } },
+      { "say": "A router with no power. A cut cable. A server switched off.",
+        "art": { "at": { "power": "A router with no power", "cable": "A cut cable", "server": "A server switched off" } } },
+      { "say": "Or the wi-fi password is changed. Any of these breaks the link.",
+        "art": { "at": { "password": "the wi-fi password is changed", "link": "breaks the link" } } },
+      { "say": "Some children think a failure means the computers are broken.",
+        "art": { "at": { "think": "Some children think", "broken": "the computers are broken" } } },
+      { "say": "They are not. The computers are fine. They just cannot reach each other.",
+        "art": { "at": { "not": "They are not", "fine": "The computers are fine", "reach": "cannot reach each other" } } }
+    ] },
+
+    { "id": "stops", "kind": "stops", "heading": "What stops", "codes": ["4DC.04"], "beats": [
+      { "say": "Everything that needed another device stops. Start at school.",
+        "art": { "at": { "needed": "needed another device", "school": "Start at school" } } },
+      { "say": "Nothing prints. Saved work on the server cannot be opened.",
+        "art": { "at": { "prints": "Nothing prints", "server": "Saved work on the server" } } },
+      { "say": "The register cannot be sent. Now the shop: the till cannot ask the bank.",
+        "art": { "at": { "register": "The register cannot be sent", "till": "the till cannot ask the bank" } } },
+      { "say": "So it is cash only. At home videos stop and calls drop.",
+        "art": { "at": { "cash": "cash only", "videos": "videos stop", "calls": "calls drop" } } },
+      { "say": "The smart speaker goes quiet. All of them needed another device.",
+        "art": { "at": { "speaker": "The smart speaker goes quiet", "all": "All of them needed another device" } } },
+      { "say": "Writing a story carries on. The calculator carries on. They need nobody else.",
+        "art": { "at": { "writing": "Writing a story carries on", "calc": "The calculator carries on", "nobody": "need nobody else" } } }
+    ] },
+
+    { "id": "scramble", "kind": "scramble", "heading": "Encryption", "codes": ["4DC.05"], "beats": [
+      { "say": "Encryption scrambles data so only someone with the key can read it.",
+        "art": { "at": { "enc": "Encryption scrambles data", "key": "someone with the key" } } },
+      { "say": "Data on a network passes through many devices on its way.",
+        "art": { "at": { "passes": "passes through many devices" } } },
+      { "say": "Anyone who grabs it in the middle sees only nonsense.",
+        "art": { "at": { "grabs": "grabs it in the middle", "nonsense": "only nonsense" } } },
+      { "say": "Some children think encryption hides that a message was sent.",
+        "art": { "at": { "think": "Some children think", "sent": "a message was sent" } } },
+      { "say": "It hides what the message says. They may see it went, and cannot read it.",
+        "art": { "at": { "says": "what the message says", "went": "see it went", "read": "cannot read it" } } }
+    ] },
+
+    { "id": "where", "kind": "where", "heading": "Where and why", "codes": ["4DC.05"], "beats": [
+      { "say": "Your password is encrypted before it leaves your device.",
+        "art": { "at": { "password": "Your password", "leaves": "before it leaves your device" } } },
+      { "say": "A card number when you pay. A private message to a friend.",
+        "art": { "at": { "card": "A card number", "message": "A private message" } } },
+      { "say": "A medical record. The padlock in the browser: that connection is encrypted.",
+        "art": { "at": { "record": "A medical record", "padlock": "The padlock in the browser", "conn": "that connection is encrypted" } } },
+      { "say": "The password on your wi-fi encrypts what travels through the air.",
+        "art": { "at": { "wifi": "The password on your wi-fi", "air": "through the air" } } },
+      { "say": "Anything that would do harm if a stranger read it is encrypted.",
+        "art": { "at": { "harm": "do harm if a stranger read it" } } },
+      { "say": "A bus timetable is not, because anyone may read it.",
+        "art": { "at": { "bus": "A bus timetable", "anyone": "anyone may read it" } } }
+    ] },
+
+    { "id": "cyber", "kind": "cyber", "heading": "Why anyone bothers", "codes": ["4DC.05"], "beats": [
+      { "say": "Cybercrime is crime done through computers and networks.",
+        "art": { "at": { "cyber": "Cybercrime", "through": "through computers and networks" } } },
+      { "say": "Stealing data. Locking somebody's files and demanding money.",
+        "art": { "at": { "steal": "Stealing data", "lock": "Locking somebody's files" } } },
+      { "say": "Pretending to be a bank to get a password. Encryption is the main defence.",
+        "art": { "at": { "pretend": "Pretending to be a bank", "defence": "the main defence" } } },
+      { "say": "A thief takes a laptop full of encrypted records. They have taken a brick.",
+        "art": { "at": { "thief": "A thief takes a laptop", "brick": "taken a brick" } } },
+      { "say": "The data is there and unreadable. That is why hospitals and schools encrypt.",
+        "art": { "at": { "there": "there and unreadable", "schools": "hospitals and schools encrypt" } } }
+    ] },
+
+    { "id": "recap", "kind": "recap", "heading": "What you now know", "codes": ["4DC.04", "4DC.05"], "beats": [
+      { "say": "A network failure breaks the links, not the devices.",
+        "art": { "at": { "failure": "A network failure", "links": "breaks the links" } } },
+      { "say": "The server is out of reach, so saved work cannot be opened.",
+        "art": { "at": { "server": "The server", "reach": "out of reach" } } },
+      { "say": "Encryption scrambles data, and only the key unscrambles it.",
+        "art": { "at": { "enc": "Encryption scrambles data", "key": "only the key" } } },
+      { "say": "Look for the padlock. Encryption is the main defence against cybercrime.",
+        "art": { "at": { "padlock": "Look for the padlock", "cyber": "cybercrime" } } }
+    ] }
+  ]
+}

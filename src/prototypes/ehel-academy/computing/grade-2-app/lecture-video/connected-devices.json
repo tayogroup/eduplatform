@@ -1,0 +1,123 @@
+{
+  "_comment": "Storyboard for the Grade 2 Computing unit lecture film, Lesson 9 Connected Devices. Rendered by tools/create-ehel-unit-lecture.js. See lecture-video/BRIEF.md. Every beat is one narration clip; art.at names the phrases a picture waits for, and the page refuses to load if a phrase is not in its beat's say. The chapters follow LESSON[lecture] in order: who joins the network, working together, wired and wireless, whether the network is there, sharing, and what you keep to yourself. The devices, the examples and the apps are the lesson's own. The one drawing lifted whole from the kit is ART.figure(tablet), drawn plain and large in the offline test, because the lesson's own offline step runs on a tablet; everything else is drawn here, because Computing keeps its home network, its signal bars and its cables inside closures a film cannot reach. ART.scene(internet) is not used: at states 2 and 3 its caption is wider than its own viewBox and clips, and states 0 and 1 are two computers on a wire, which is not what this lesson teaches.",
+  "slug": "connected-devices",
+  "lesson": 9,
+  "grade": 2,
+  "stage": 2,
+  "title": "Connected Devices",
+  "subtitle": "Grade 2 Computing",
+  "framework": "Cambridge Primary Computing 0059",
+  "renderer": {
+    "art": ["computing"],
+    "skin": "brown",
+    "scenes": [
+      "tools/lib/ehel-film-marks.js",
+      "tools/lib/film-scenes/computing-g2/connected-devices.js",
+      "tools/lib/film-scenes/computing-g2/connected-devices-2.js",
+      "tools/lib/film-scenes/computing-g2/connected-devices-3.js",
+      "tools/lib/film-scenes/computing-g2/connected-devices-4.js"
+    ]
+  },
+  "objectives": [
+    ["2DC.01", "Identify a range of devices that can connect to a network, including to the internet."],
+    ["2DC.02", "Know that two devices working together can achieve things that neither device can achieve on its own."],
+    ["2DC.03", "Know that there are wired and wireless networks."],
+    ["2DC.04", "Know how to recognise when a network is and is not available."],
+    ["2DC.05", "Know that network connected devices share information with each other and that there are risks associated with this."]
+  ],
+  "scenes": [
+    { "id": "title", "kind": "title", "codes": [], "beats": [
+      { "say": "Phones, printers, speakers, consoles, TVs and watches all join the network.",
+        "art": { "at": { "phones": "Phones, printers", "speakers": "speakers, consoles", "screens": "TVs and watches", "join": "join the network" } } },
+      { "say": "Joined together, two devices do what neither can alone.",
+        "art": { "at": { "joined": "Joined together", "neither": "neither can alone" } } }
+    ] },
+
+    { "id": "join", "kind": "join", "heading": "Who joins the network", "codes": ["2DC.01"], "beats": [
+      { "say": "A network is not only computers. Lots of devices can join one.",
+        "art": { "at": { "notonly": "not only computers", "lots": "Lots of devices" } } },
+      { "say": "A laptop browses the web. A tablet plays videos, games and messages.",
+        "art": { "at": { "laptop": "A laptop", "tablet": "A tablet" } } },
+      { "say": "A phone joins at home. A printer prints for every device in the house.",
+        "art": { "at": { "phone": "A phone", "printer": "A printer" } } },
+      { "say": "A smart speaker fetches music. A games console plays with a friend.",
+        "art": { "at": { "speaker": "A smart speaker", "console": "A games console" } } },
+      { "say": "A smart TV streams a film. A smart watch shows messages on your wrist.",
+        "art": { "at": { "tv": "A smart TV", "watch": "A smart watch" } } },
+      { "say": "A wooden chair cannot join, because it has no computer inside.",
+        "art": { "at": { "chair": "A wooden chair", "nocomputer": "no computer inside" } } },
+      { "say": "The others all join through the router, and reach the internet.",
+        "art": { "at": { "router": "through the router", "internet": "reach the internet" } } }
+    ] },
+
+    { "id": "together", "kind": "together", "heading": "Working together", "codes": ["2DC.02"], "beats": [
+      { "say": "A phone takes a photo, but a phone cannot print it.",
+        "art": { "at": { "photo": "takes a photo", "cannot": "cannot print it" } } },
+      { "say": "A printer prints, but a printer cannot take a photo.",
+        "art": { "at": { "prints": "A printer prints", "cannot": "cannot take a photo" } } },
+      { "say": "Join them both to the network. Now the photo can travel.",
+        "art": { "at": { "join": "Join them both", "travel": "the photo can travel" } } },
+      { "say": "The phone sends it. The printer prints it. Neither could do both.",
+        "art": { "at": { "sends": "The phone sends it", "prints": "The printer prints it", "neither": "Neither could do both" } } },
+      { "say": "A phone holds a song, and a speaker plays it loud. Two devices, one job.",
+        "art": { "at": { "song": "A phone holds a song", "loud": "plays it loud", "job": "Two devices, one job" } } }
+    ] },
+
+    { "id": "wires", "kind": "wires", "heading": "Wired and wireless", "codes": ["2DC.03"], "beats": [
+      { "say": "A wired network joins its devices with cables.",
+        "art": { "at": { "wired": "A wired network", "cables": "with cables" } } },
+      { "say": "An office has a cable from every computer to the wall.",
+        "art": { "at": { "office": "An office", "wall": "to the wall" } } },
+      { "say": "A school computer room has cables under the desks.",
+        "art": { "at": { "school": "A school computer room", "desks": "under the desks" } } },
+      { "say": "A wireless network joins them through the air, with wi-fi.",
+        "art": { "at": { "wireless": "A wireless network", "air": "through the air", "wifi": "with wi-fi" } } },
+      { "say": "Tablets at home and phones on a train are wireless. Many places have both.",
+        "art": { "at": { "home": "Tablets at home", "train": "phones on a train", "both": "Many places have both" } } }
+    ] },
+
+    { "id": "signal", "kind": "signal", "heading": "Is the network there?", "codes": ["2DC.04"], "beats": [
+      { "say": "Your device tells you whether the network is there.",
+        "art": { "at": { "tells": "tells you", "there": "the network is there" } } },
+      { "say": "Bars on the phone mean it is available. So does a green light.",
+        "art": { "at": { "bars": "Bars on the phone", "green": "a green light" } } },
+      { "say": "No bars, aeroplane mode or a dark router mean it is not.",
+        "art": { "at": { "nobars": "No bars", "aeroplane": "aeroplane mode", "dark": "a dark router" } } },
+      { "say": "A page that spins and never loads usually means no network.",
+        "art": { "at": { "spins": "spins and never loads", "nonetwork": "no network" } } },
+      { "say": "Then the things that need other devices stop, and the rest carry on.",
+        "art": { "at": { "stop": "need other devices stop", "carry": "the rest carry on" } } }
+    ] },
+
+    { "id": "sharing", "kind": "sharing", "heading": "Sharing on a network", "codes": ["2DC.05"], "beats": [
+      { "say": "Devices on a network share information with each other.",
+        "art": { "at": { "devices": "Devices on a network", "share": "share information" } } },
+      { "say": "What you send is seen by every device it goes to.",
+        "art": { "at": { "send": "What you send", "seen": "seen by every device" } } },
+      { "say": "A message to the class group goes to the whole class. Think before you send.",
+        "art": { "at": { "classgroup": "the class group", "whole": "the whole class", "think": "Think before you send" } } },
+      { "say": "Something posted for anyone to see can be seen by strangers.",
+        "art": { "at": { "posted": "posted for anyone to see", "strangers": "seen by strangers" } } }
+    ] },
+
+    { "id": "private", "kind": "private", "heading": "What you keep private", "codes": ["2DC.05"], "beats": [
+      { "say": "Your full name, your address, your school: that is personal information.",
+        "art": { "at": { "name": "Your full name", "address": "your address", "school": "your school", "personal": "personal information" } } },
+      { "say": "Share it on a network, and you cannot take it back.",
+        "art": { "at": { "share": "Share it on a network", "back": "cannot take it back" } } },
+      { "say": "A password is for you and a grown-up only. Keep it private.",
+        "art": { "at": { "password": "A password", "grownup": "a grown-up only", "private": "Keep it private" } } },
+      { "say": "Some files are malware, made to do harm. Never open one from a stranger.",
+        "art": { "at": { "malware": "Some files are malware", "harm": "made to do harm", "never": "Never open one" } } }
+    ] },
+
+    { "id": "recap", "kind": "recap", "heading": "What you now know", "codes": ["2DC.01", "2DC.02", "2DC.03", "2DC.04", "2DC.05"], "beats": [
+      { "say": "Lots of devices join a network, and through it, the internet.",
+        "art": { "at": { "join": "join a network" } } },
+      { "say": "Two together do what neither can alone. Cables are wired, wi-fi is wireless.",
+        "art": { "at": { "together": "Two together", "wired": "Cables are wired" } } },
+      { "say": "Bars and lights say it is there. Think who will see what you share.",
+        "art": { "at": { "bars": "Bars and lights", "share": "what you share" } } }
+    ] }
+  ]
+}

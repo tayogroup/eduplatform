@@ -1,0 +1,122 @@
+{
+  "_comment": "Storyboard for the Grade 2 Computing unit lecture film, Lesson 6 Bee-Bot Journeys. Rendered by tools/create-ehel-unit-lecture.js. See lecture-video/BRIEF.md. Every beat is one narration clip; art.at names the phrases a picture waits for, and the page refuses to load if a phrase is not in its beat's say. The chapters follow LESSON[lecture] in order: the floor robot and its buttons; CLEAR then GO (with the deepened part on why you clear first folded in); one press one square; a destination with a wall in the way; predicting before GO; robots at work. THE GRID IS DRAWN BY THE FILM, because the lesson keeps Robo's grid inside a closure - but every direction, turn and angle comes from ART.robo (DIRS, TURN_L, TURN_R, ANGLE) and every route is one of the lesson's own levels: Journey 1 (F F F to the shop), Journey 2 (F F R F F to the house), Journey 4 (F L F R F F R F round the wall to school) and Program 1 of the predictor (F F L F from column 1 row 1 facing down).",
+  "slug": "bee-bot-journeys",
+  "lesson": 6,
+  "grade": 2,
+  "stage": 2,
+  "title": "Bee-Bot Journeys",
+  "subtitle": "Grade 2 Computing",
+  "framework": "Cambridge Primary Computing 0059",
+  "renderer": {
+    "art": ["computing"],
+    "skin": "brown",
+    "scenes": [
+      "tools/lib/ehel-film-marks.js",
+      "tools/lib/film-scenes/computing-g2/bee-bot-journeys.js",
+      "tools/lib/film-scenes/computing-g2/bee-bot-journeys-2.js",
+      "tools/lib/film-scenes/computing-g2/bee-bot-journeys-3.js"
+    ]
+  },
+  "objectives": [
+    ["2P.08", "Know how to enter directional instructions in to a physical computing device to enable it to reach a specific destination."],
+    ["2CT.01", "Follow and understand linear algorithms."],
+    ["2CT.05", "Predict the outputs of algorithms."]
+  ],
+  "scenes": [
+    { "id": "title", "kind": "title", "codes": [], "beats": [
+      { "say": "A floor robot drives on a grid of squares on the floor.",
+        "art": { "at": { "robot": "A floor robot", "grid": "a grid of squares" } } },
+      { "say": "Press its buttons, press GO, and off it goes to the shop.",
+        "art": { "at": { "buttons": "Press its buttons", "go": "press GO", "off": "off it goes" } } }
+    ] },
+
+    { "id": "robot", "kind": "robot", "heading": "The floor robot", "codes": ["2P.08"], "beats": [
+      { "say": "This is a floor robot. It drives on a grid of squares.",
+        "art": { "at": { "robot": "This is a floor robot", "grid": "a grid of squares" } } },
+      { "say": "On its back are buttons: forward, backwards, turn left, turn right.",
+        "art": { "at": { "back": "On its back", "f": "forward", "b": "backwards", "l": "turn left", "r": "turn right" } } },
+      { "say": "The shop is three squares ahead, so press forward three times.",
+        "art": { "at": { "three": "three squares ahead", "press": "press forward three times" } } },
+      { "say": "Every press is remembered, in order. That list is the program.",
+        "art": { "at": { "remembered": "remembered, in order", "program": "the program" } } },
+      { "say": "Press GO, and it runs them all, one square at a time.",
+        "art": { "at": { "go": "Press GO", "all": "runs them all", "one": "one square at a time" } } }
+    ] },
+
+    { "id": "clear", "kind": "clear", "heading": "CLEAR, then GO", "codes": ["2P.08", "2CT.01"], "beats": [
+      { "say": "The robot keeps every press you make until you clear it.",
+        "art": { "at": { "keeps": "keeps every press", "clear": "clear it" } } },
+      { "say": "Press CLEAR first. That wipes the old program away.",
+        "art": { "at": { "clear": "Press CLEAR first", "wipes": "wipes the old program" } } },
+      { "say": "Forget CLEAR, and your new presses join on to the old ones.",
+        "art": { "at": { "forget": "Forget CLEAR", "join": "join on to the old ones" } } },
+      { "say": "The robot sets off doing both, and stops in the wrong place.",
+        "art": { "at": { "both": "doing both", "wrong": "the wrong place" } } },
+      { "say": "It is not confused. So clear it, enter the presses, then GO.",
+        "art": { "at": { "confused": "not confused", "clear": "clear it", "enter": "enter the presses", "go": "then GO" } } }
+    ] },
+
+    { "id": "squares", "kind": "squares", "heading": "One press, one square", "codes": ["2P.08", "2CT.01"], "beats": [
+      { "say": "Each press of the forward button moves the robot one square.",
+        "art": { "at": { "forward": "press of the forward button", "one": "one square" } } },
+      { "say": "Each turn spins it a quarter turn. It does not move at all.",
+        "art": { "at": { "turn": "Each turn", "quarter": "a quarter turn", "move": "does not move" } } },
+      { "say": "Count the squares. The house is two up, then two to the right.",
+        "art": { "at": { "count": "Count the squares", "up": "two up", "right": "two to the right" } } },
+      { "say": "Forward, forward, turn right, forward, forward: five presses.",
+        "art": { "at": { "ff": "Forward, forward", "turn": "turn right", "ff2": "forward, forward", "five": "five presses" } } },
+      { "say": "Press GO, and the robot drives all the way to the house.",
+        "art": { "at": { "go": "Press GO", "drives": "drives all the way", "house": "to the house" } } }
+    ] },
+
+    { "id": "wall", "kind": "wall", "heading": "Round the wall", "codes": ["2P.08"], "beats": [
+      { "say": "Every journey has a destination: the shop, home, school.",
+        "art": { "at": { "dest": "a destination", "shop": "the shop", "home": "home", "school": "school" } } },
+      { "say": "This time a wall is in the way. You cannot drive through it.",
+        "art": { "at": { "wall": "a wall is in the way", "through": "drive through it" } } },
+      { "say": "Turn before you reach it, and go round it to the school.",
+        "art": { "at": { "turn": "Turn before you reach it", "round": "go round it" } } },
+      { "say": "Forward, turn left, forward. Turn right, forward, forward.",
+        "art": { "at": { "fl": "Forward, turn left, forward", "rff": "Turn right, forward, forward" } } },
+      { "say": "Turn right, then forward, and the robot is at school.",
+        "art": { "at": { "turn": "Turn right", "forward": "forward", "school": "at school" } } }
+    ] },
+
+    { "id": "predict", "kind": "predict", "heading": "Predict first", "codes": ["2CT.05", "2CT.01"], "beats": [
+      { "say": "Before you press GO, follow the program in your head.",
+        "art": { "at": { "before": "Before you press GO", "head": "in your head" } } },
+      { "say": "Move your finger one square for every forward press.",
+        "art": { "at": { "finger": "Move your finger", "one": "one square", "forward": "every forward" } } },
+      { "say": "This robot faces down. Forward, forward: two squares down.",
+        "art": { "at": { "down": "faces down", "two": "two squares down" } } },
+      { "say": "Turn left. It faces right now, but it has not moved.",
+        "art": { "at": { "turnleft": "Turn left", "right": "faces right now", "moved": "has not moved" } } },
+      { "say": "One more forward, and your finger is on the shop.",
+        "art": { "at": { "more": "One more forward", "shop": "on the shop" } } },
+      { "say": "Now press GO, and the robot stops on the shop too.",
+        "art": { "at": { "go": "press GO", "stops": "stops on the shop" } } }
+    ] },
+
+    { "id": "work", "kind": "work", "heading": "Robots at work", "codes": ["2P.08"], "beats": [
+      { "say": "Big robots follow the same kind of program as yours.",
+        "art": { "at": { "big": "Big robots", "same": "the same kind of program" } } },
+      { "say": "A warehouse robot drives to shelf fourteen, then stops.",
+        "art": { "at": { "warehouse": "A warehouse robot", "shelf": "shelf fourteen" } } },
+      { "say": "A hospital robot turns left at the right ward door.",
+        "art": { "at": { "hospital": "A hospital robot", "door": "the right ward door" } } },
+      { "say": "A robot vacuum turns when it bumps. A delivery robot finds house numbers.",
+        "art": { "at": { "vacuum": "A robot vacuum", "bumps": "when it bumps", "delivery": "A delivery robot", "numbers": "house numbers" } } }
+    ] },
+
+    { "id": "recap", "kind": "recap", "heading": "What you now know", "codes": ["2P.08", "2CT.01", "2CT.05"], "beats": [
+      { "say": "The buttons on its back make up the program.",
+        "art": { "at": { "buttons": "The buttons on its back" } } },
+      { "say": "CLEAR first, then all the presses, then GO.",
+        "art": { "at": { "clear": "CLEAR first" } } },
+      { "say": "One press is one square. A turn only spins.",
+        "art": { "at": { "one": "One press is one square" } } },
+      { "say": "Predict where it will stop, then press GO and see.",
+        "art": { "at": { "predict": "Predict where it will stop", "go": "press GO and see" } } }
+    ] }
+  ]
+}

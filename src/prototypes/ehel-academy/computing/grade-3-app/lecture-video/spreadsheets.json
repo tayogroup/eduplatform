@@ -1,0 +1,114 @@
+{
+  "_comment": "Storyboard for the Grade 3 Computing unit lecture film, Lesson 10 Spreadsheets. Rendered by tools/create-ehel-unit-lecture.js. See lecture-video/BRIEF.md. The chapters follow LESSON[lecture] in order: the grid, the formats, the filter, recording, and a range with its total. The Computing kit has no ART.sim - its spreadsheet is a closure inside its activity - so the grid is drawn in the engine's idiom, with the lesson's OWN data: the class pocket-money sheet, the bake-sale sheet and the six children of the filter table. Every number the voice says is computed in the pictures from those cells, never typed twice.",
+  "slug": "spreadsheets",
+  "lesson": 10,
+  "grade": 3,
+  "stage": 3,
+  "title": "Spreadsheets",
+  "subtitle": "Grade 3 Computing",
+  "framework": "Cambridge Primary Computing 0059",
+  "renderer": {
+    "art": ["computing"],
+    "skin": "brown",
+    "scenes": [
+      "tools/lib/ehel-film-marks.js",
+      "tools/lib/film-scenes/computing-g3/spreadsheets.js",
+      "tools/lib/film-scenes/computing-g3/spreadsheets-2.js",
+      "tools/lib/film-scenes/computing-g3/spreadsheets-3.js"
+    ]
+  },
+  "objectives": [
+    ["3MD.04", "Know that spreadsheets are comprised of rows and columns of cells and that data can be entered into the cells."],
+    ["3MD.05", "Know how to format cells according to their purpose, such as date, currency and text."],
+    ["3MD.06", "Demonstrate how to select data based upon their characteristics to solve problems."],
+    ["3MD.03", "Know how to record discrete and categorical data, using computing devices."]
+  ],
+  "scenes": [
+    { "id": "title", "kind": "title", "codes": [], "beats": [
+      { "say": "A spreadsheet is a grid of cells. Columns go down and rows go across.",
+        "art": { "at": { "grid": "a grid of cells", "columns": "Columns go down", "rows": "rows go across" } } },
+      { "say": "Column B, row 3 is cell B3. That is how every cell gets its name.",
+        "art": { "at": { "colb": "Column B", "row3": "row 3", "b3": "cell B3", "name": "gets its name" } } }
+    ] },
+
+    { "id": "grid", "kind": "grid", "heading": "Rows, columns, cells", "codes": ["3MD.04"], "beats": [
+      { "say": "Here is the class pocket-money sheet. Names, ages and pocket money.",
+        "art": { "at": { "sheet": "pocket-money sheet", "names": "Names", "ages": "ages", "money": "pocket money." } } },
+      { "say": "Each column has a letter across the top: A, B and C.",
+        "art": { "at": { "column": "Each column", "letter": "a letter", "abc": "A, B and C" } } },
+      { "say": "Each row has a number down the side. One, two, three, four.",
+        "art": { "at": { "row": "Each row", "number": "a number", "count": "One, two, three, four." } } },
+      { "say": "A cell is named by its column letter and then its row number.",
+        "art": { "at": { "named": "is named", "col": "column letter", "rw": "row number" } } },
+      { "say": "Column B, row 3 is cell B3. It holds Sami's age: seven.",
+        "art": { "at": { "colb": "Column B", "row3": "row 3", "b3": "cell B3", "seven": "seven" } } },
+      { "say": "Letter first, then number. B3 is a cell. 3B is not a cell.",
+        "art": { "at": { "first": "Letter first", "b3": "B3 is a cell", "no": "3B is not a cell" } } }
+    ] },
+
+    { "id": "formats", "kind": "formats", "heading": "Format for the purpose", "codes": ["3MD.05"], "beats": [
+      { "say": "The bake-sale sheet. A cell's format says what kind of thing it holds.",
+        "art": { "at": { "sheet": "bake-sale sheet", "format": "format", "kind": "what kind of thing" } } },
+      { "say": "Column B holds dates. Format it as date and the sheet can sort them.",
+        "art": { "at": { "colb": "Column B holds dates", "date": "Format it as date", "sort": "sort them" } } },
+      { "say": "Column C holds money. Format it as currency to show pounds and pence.",
+        "art": { "at": { "colc": "Column C holds money", "currency": "as currency", "pp": "pounds and pence" } } },
+      { "say": "Cell D4 holds the word Books, and a word is text.",
+        "art": { "at": { "d4": "Cell D4", "books": "the word Books", "text": "a word is text" } } },
+      { "say": "Format everything as text and the sheet cannot sort dates or add money.",
+        "art": { "at": { "all": "Format everything as text", "sort": "cannot sort dates", "add": "add money" } } }
+    ] },
+
+    { "id": "filter", "kind": "filter", "heading": "Pick out the rows you need", "codes": ["3MD.06"], "beats": [
+      { "say": "Six children, one row each, with their pet, their age and their club.",
+        "art": { "at": { "six": "Six children", "row": "one row each", "pet": "their pet", "age": "their age", "club": "their club" } } },
+      { "say": "A filter selects the rows that share a characteristic, in a blink.",
+        "art": { "at": { "filter": "A filter", "share": "share a characteristic", "blink": "in a blink" } } },
+      { "say": "Who has a dog? Choose the field pet, choose dog, and press Filter.",
+        "art": { "at": { "ask": "Who has a dog?", "field": "the field pet", "dog": "choose dog", "press": "press Filter" } } },
+      { "say": "Zara's row and Omar's row light up. Two children have a dog.",
+        "art": { "at": { "zara": "Zara's row", "omar": "Omar's row", "two": "Two children" } } },
+      { "say": "Now filter age, more than 7. Four rows match: Amal, Zara, Leo, Nora.",
+        "art": { "at": { "age": "filter age", "more": "more than 7", "four": "Four rows match" } } }
+    ] },
+
+    { "id": "record", "kind": "record", "heading": "Recording data", "codes": ["3MD.03", "3MD.04"], "beats": [
+      { "say": "Typing a value into a cell is recording data on a computing device.",
+        "art": { "at": { "typing": "Typing a value", "recording": "recording data", "device": "a computing device" } } },
+      { "say": "Zara gets four pounds. Tap cell C4 on the tablet and put a 4 in it.",
+        "art": { "at": { "tap": "Tap cell C4", "tablet": "the tablet", "four": "put a 4 in it" } } },
+      { "say": "Some data is a number you count. Some is a word that says which kind.",
+        "art": { "at": { "number": "a number you count", "word": "a word that says which kind" } } },
+      { "say": "Cell C4 holds a number. Cell A4 holds a word. Both are data.",
+        "art": { "at": { "c4": "Cell C4", "a4": "Cell A4", "both": "Both are data" } } },
+      { "say": "Now the sheet can do the work. Format it, filter it, sort it, add it up.",
+        "art": { "at": { "work": "do the work", "format": "Format it", "filter": "filter it", "sort": "sort it", "add": "add it up" } } },
+      { "say": "That is why so much of the world's data lives in spreadsheets.",
+        "art": { "at": { "world": "the world's data" } } }
+    ] },
+
+    { "id": "range", "kind": "range", "heading": "A range of cells", "codes": ["3MD.04", "3MD.05"], "beats": [
+      { "say": "One cell has one name. A range is a block of cells from one to another.",
+        "art": { "at": { "one": "One cell has one name", "range": "A range", "block": "a block of cells" } } },
+      { "say": "You write it with a colon. C2 to C4 means every cell from C2 down to C4.",
+        "art": { "at": { "colon": "a colon", "c2c4": "C2 to C4", "every": "every cell" } } },
+      { "say": "Select the range and format all three cells as currency in one go.",
+        "art": { "at": { "select": "Select the range", "three": "all three cells", "go": "in one go" } } },
+      { "say": "Ask for the total. Eighteen, twenty-five and thirty make seventy-three.",
+        "art": { "at": { "total": "the total", "n18": "Eighteen", "n25": "twenty-five", "n30": "thirty", "sum": "seventy-three" } } },
+      { "say": "Change the thirty to forty and the total changes on its own: eighty-three.",
+        "art": { "at": { "change": "Change the thirty to forty", "newtotal": "eighty-three" } } },
+      { "say": "A paper table cannot do that. The answer keeps itself right.",
+        "art": { "at": { "paper": "A paper table", "right": "keeps itself right" } } }
+    ] },
+
+    { "id": "recap", "kind": "recap", "heading": "What you now know", "codes": ["3MD.04", "3MD.05", "3MD.06", "3MD.03"], "beats": [
+      { "say": "A cell has a column letter and a row number, and data goes in it.",
+        "art": { "at": { "cell": "A cell", "data": "data goes in it" } } },
+      { "say": "Format each cell for its purpose, and filter to pick the rows you need.",
+        "art": { "at": { "format": "Format each cell", "filter": "filter to pick" } } },
+      { "say": "Select a range, ask for the total, and the sheet keeps the answer right.",
+        "art": { "at": { "range": "Select a range", "total": "the total" } } }
+    ] }
+  ]
+}

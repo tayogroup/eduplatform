@@ -1,0 +1,120 @@
+{
+  "_comment": "Storyboard for the Grade 4 Computing unit lecture film, Lesson 5 Programs with Loops. Rendered by tools/create-ehel-unit-lecture.js. See lecture-video/BRIEF.md. Every beat is one narration clip; art.at names the phrases a picture waits for, and the page refuses to load if a phrase is not in its beat's say. The chapters follow LESSON[lecture] in order - the repeat block and iteration, building a program from an algorithm that says how many times, folding a long program, what a comment is, why comments help, and where these blocks really live - then the recap. Every sprite end state in the film comes from ART.run on the lesson's own stage, so the cat ends where the kit says it ends and never where the film's own arithmetic says.",
+  "slug": "programs-with-loops",
+  "lesson": 5,
+  "grade": 4,
+  "stage": 4,
+  "title": "Programs with Loops",
+  "subtitle": "Grade 4 Computing",
+  "framework": "Cambridge Primary Computing 0059",
+  "renderer": {
+    "art": ["computing"],
+    "skin": "brown",
+    "scenes": [
+      "tools/lib/ehel-film-marks.js",
+      "tools/lib/film-scenes/computing-g4/programs-with-loops.js",
+      "tools/lib/film-scenes/computing-g4/programs-with-loops-2.js",
+      "tools/lib/film-scenes/computing-g4/programs-with-loops-3.js",
+      "tools/lib/film-scenes/computing-g4/programs-with-loops-4.js"
+    ]
+  },
+  "objectives": [
+    ["4P.02", "Know how to develop programs with repetition."],
+    ["4P.03", "Know how to develop programs with iteration."],
+    ["4P.04", "Know how to develop programs that produce a desired output, which includes the use of the repeat command."],
+    ["4P.01", "Know how to add comments to blocks of code and explain the benefits of these comments."]
+  ],
+  "scenes": [
+    { "id": "title", "kind": "title", "codes": [], "beats": [
+      { "say": "Grow, grow, grow. That is the same block written out three times.",
+        "art": { "at": { "grows": "Grow, grow, grow", "same": "the same block", "three": "three times" } } },
+      { "say": "One repeat block does the same job, and a comment says why it is there.",
+        "art": { "at": { "repeat": "One repeat block", "job": "the same job", "comment": "a comment says why" } } }
+    ] },
+
+    { "id": "repeat", "kind": "repeat", "heading": "The repeat block", "codes": ["4P.02", "4P.03"], "beats": [
+      { "say": "A program can repeat too. The repeat block runs the block after it.",
+        "art": { "at": { "repeat": "The repeat block", "after": "the block after it" } } },
+      { "say": "Repeat 3 times, jump. The cat jumps three times in a row.",
+        "art": { "at": { "three": "Repeat 3 times", "jumps": "jumps three times" } } },
+      { "say": "Each time round is called an iteration. That is three iterations.",
+        "art": { "at": { "iteration": "an iteration", "three": "three iterations" } } },
+      { "say": "It repeats the one block after it, not the whole program.",
+        "art": { "at": { "one": "the one block after it", "whole": "not the whole program" } } },
+      { "say": "When the count is done, the program carries on. Say hello runs once.",
+        "art": { "at": { "done": "the count is done", "hello": "Say hello runs once" } } }
+    ] },
+
+    { "id": "build", "kind": "build", "heading": "Build it from the algorithm", "codes": ["4P.04", "4P.02"], "beats": [
+      { "say": "The algorithm says: go home, move right 3 times, then grow.",
+        "art": { "at": { "home": "go home", "right": "move right 3 times", "grow": "then grow" } } },
+      { "say": "Move right 3 times is not three move blocks. It is a repeat and a move.",
+        "art": { "at": { "notthree": "not three move blocks", "oneeach": "a repeat and a move" } } },
+      { "say": "So the program is four blocks: go home, repeat 3 times, move right, grow.",
+        "art": { "at": { "four": "four blocks", "prog": "go home, repeat 3 times, move right, grow" } } },
+      { "say": "Run it. The cat goes home, then one square right each time round.",
+        "art": { "at": { "run": "Run it", "homeblk": "The cat goes home", "each": "one square right each time round" } } },
+      { "say": "Three squares, then it grows. That is the output the algorithm asked for.",
+        "art": { "at": { "three": "Three squares", "grows": "then it grows", "output": "the output" } } }
+    ] },
+
+    { "id": "fold", "kind": "fold", "heading": "Folding a program", "codes": ["4P.02", "4P.04"], "beats": [
+      { "say": "Here is a longer program: grow, grow, grow, wait, say hello.",
+        "art": { "at": { "longer": "a longer program", "grows": "grow, grow, grow", "wait": "wait", "say": "say hello" } } },
+      { "say": "The same block three times in a row can fold into one repeat.",
+        "art": { "at": { "same": "The same block three times", "fold": "fold into one repeat" } } },
+      { "say": "Repeat 3 times, grow. Same output, fewer blocks.",
+        "art": { "at": { "folded": "Repeat 3 times, grow", "output": "Same output, fewer blocks" } } },
+      { "say": "The wait does nothing, so it goes as well. Five blocks become three.",
+        "art": { "at": { "waitgo": "it goes as well", "count": "Five blocks become three" } } },
+      { "say": "Only the same block, back to back, folds. Jump, spin, jump cannot.",
+        "art": { "at": { "only": "Only the same block", "cannot": "Jump, spin, jump cannot" } } }
+    ] },
+
+    { "id": "comment", "kind": "comment", "heading": "Comments", "codes": ["4P.01"], "beats": [
+      { "say": "A comment is a note beside a block. It says what the block is for.",
+        "art": { "at": { "note": "a note beside a block", "forwhat": "what the block is for" } } },
+      { "say": "It is written for people. The computer skips it completely.",
+        "art": { "at": { "people": "written for people", "skips": "The computer skips it" } } },
+      { "say": "Beside go home: reset the cat, so every run starts the same.",
+        "art": { "at": { "gohome": "Beside go home", "reset": "reset the cat" } } },
+      { "say": "Beside the repeat: one jump for each wall in the level.",
+        "art": { "at": { "rep": "Beside the repeat", "wall": "one jump for each wall" } } },
+      { "say": "A comment that just says jump helps nobody. Say why: jump over the wall.",
+        "art": { "at": { "justjump": "just says jump", "why": "Say why", "wall": "jump over the wall" } } }
+    ] },
+
+    { "id": "why", "kind": "why", "heading": "Why comments help", "codes": ["4P.01"], "beats": [
+      { "say": "Next week you will have forgotten why that wait block is there.",
+        "art": { "at": { "next": "Next week", "forgotten": "forgotten why that wait block is there" } } },
+      { "say": "The comment remembers: give the player time to read the message.",
+        "art": { "at": { "remembers": "The comment remembers", "give": "give the player time to read the message" } } },
+      { "say": "A partner reading your program understands it without asking you.",
+        "art": { "at": { "partner": "A partner", "understands": "understands it without asking you" } } },
+      { "say": "A comment says jump three times, the block says repeat 2: a bug you have found.",
+        "art": { "at": { "says": "A comment says jump three times", "block": "the block says repeat 2", "bug": "a bug", "found": "you have found" } } }
+    ] },
+
+    { "id": "scratch", "kind": "scratch", "heading": "Where these blocks live", "codes": ["4P.02", "4P.01"], "beats": [
+      { "say": "These blocks work like Scratch, which most schools use at your age.",
+        "art": { "at": { "these": "These blocks", "scratch": "like Scratch", "schools": "most schools use" } } },
+      { "say": "Your blocks have Scratch names. Jump is change y by 50.",
+        "art": { "at": { "names": "Scratch names", "jump": "change y by 50" } } },
+      { "say": "Move right is move 10 steps. Repeat 4 times is repeat 4.",
+        "art": { "at": { "move": "move 10 steps", "rep": "Repeat 4 times is repeat 4" } } },
+      { "say": "Scratch has a comment beside any block too, just as this does.",
+        "art": { "at": { "comment": "a comment beside any block", "just": "just as this does" } } }
+    ] },
+
+    { "id": "recap", "kind": "recap", "heading": "What you now know", "codes": ["4P.02", "4P.03", "4P.04", "4P.01"], "beats": [
+      { "say": "A repeat block runs the one block after it. Each time round is an iteration.",
+        "art": { "at": { "repeat": "A repeat block", "iteration": "an iteration" } } },
+      { "say": "The same block, back to back, folds into one repeat with the same output.",
+        "art": { "at": { "fold": "folds into one repeat", "output": "the same output" } } },
+      { "say": "A comment is a note for people. It says why the block is there.",
+        "art": { "at": { "comment": "A comment" } } },
+      { "say": "Now build a program with a repeat in it, and comment it.",
+        "art": { "at": { "go": "Now build a program" } } }
+    ] }
+  ]
+}

@@ -1,0 +1,111 @@
+{
+  "_comment": "Storyboard for the Grade 4 Computing unit lecture film, Lesson 6 Inputs, Outputs and Parts. Rendered by tools/create-ehel-unit-lecture.js. See lecture-video/BRIEF.md. Every beat is one narration clip; art.at names the phrases a picture waits for, and the page refuses to load if a phrase is not in its beat's say. The five chapters follow LESSON[lecture] in order (inputs to a program; planning an object; testing part by part; fix then run again; debugging systematically), in the lesson's own words and with the lesson's own objects: the cat, the door, the score sign, and the three-part program whose part 2 spins when it should jump. The hardware in the first chapter is the lesson kit's own laptop and tablet figures, rung part by part; the blocks in every program box are the kit's own BLOCKS, and the counts (two jumps, three moves right) come from ART.program.expand rather than from a copy in the film.",
+  "slug": "inputs-outputs-and-parts",
+  "lesson": 6,
+  "grade": 4,
+  "stage": 4,
+  "title": "Inputs, Outputs and Parts",
+  "subtitle": "Grade 4 Computing",
+  "framework": "Cambridge Primary Computing 0059",
+  "renderer": {
+    "art": ["computing"],
+    "skin": "brown",
+    "scenes": [
+      "tools/lib/ehel-film-marks.js",
+      "tools/lib/film-scenes/computing-g4/inputs-outputs-and-parts.js",
+      "tools/lib/film-scenes/computing-g4/inputs-outputs-and-parts-2.js",
+      "tools/lib/film-scenes/computing-g4/inputs-outputs-and-parts-3.js"
+    ]
+  },
+  "objectives": [
+    ["4P.05", "Know how to develop programs that produce different outputs from different inputs."],
+    ["4P.06", "Know how to plan the instructions for objects within programs, including identifying inputs and outputs."],
+    ["4P.07", "Know how to test different parts of a program systematically, to identify and debug errors."]
+  ],
+  "scenes": [
+    { "id": "title", "kind": "title", "codes": [], "beats": [
+      { "say": "Press A and the cat jumps. Press B and the very same cat spins.",
+        "art": { "at": { "pressA": "Press A", "jumps": "the cat jumps", "pressB": "Press B", "spins": "spins" } } },
+      { "say": "One sprite, two inputs, two scripts, two different outputs.",
+        "art": { "at": { "two": "two inputs", "scripts": "two scripts", "outputs": "two different outputs" } } }
+    ] },
+
+    { "id": "inputs", "kind": "inputs", "heading": "Inputs to a program", "codes": ["4P.05"], "beats": [
+      { "say": "A program can wait for an input: a key, a button, a click on a sprite.",
+        "art": { "at": { "key": "a key", "button": "a button", "click": "a click on a sprite" } } },
+      { "say": "Press A. That input has a script of its own, and the cat jumps.",
+        "art": { "at": { "pressA": "Press A", "script": "a script of its own", "jumps": "the cat jumps" } } },
+      { "say": "Press B. A different script runs, and the same cat spins.",
+        "art": { "at": { "pressB": "Press B", "script": "A different script", "spins": "the same cat spins" } } },
+      { "say": "Click the cat and it says hello. Press the space bar and it hides.",
+        "art": { "at": { "click": "Click the cat", "hello": "says hello", "space": "the space bar", "hides": "it hides" } } },
+      { "say": "Four inputs, four scripts, four different outputs, from one sprite.",
+        "art": { "at": { "four": "Four inputs", "scripts": "four scripts", "outputs": "four different outputs", "one": "one sprite" } } }
+    ] },
+
+    { "id": "plan", "kind": "plan", "heading": "Planning an object", "codes": ["4P.06"], "beats": [
+      { "say": "Before you build an object, plan it. What is its input? What is its output?",
+        "art": { "at": { "plan": "plan it", "input": "What is its input?", "output": "What is its output?" } } },
+      { "say": "The cat's input is the A key. Its output is a jump.",
+        "art": { "at": { "cat": "The cat's input", "akey": "the A key", "jump": "a jump" } } },
+      { "say": "The door's input is the player walking into it.",
+        "art": { "at": { "door": "The door's input", "touch": "the player walking into it" } } },
+      { "say": "Its output is the door opening and playing a creak.",
+        "art": { "at": { "opening": "the door opening", "creak": "a creak" } } },
+      { "say": "The score sign waits for the ball to hit the goal, then adds one.",
+        "art": { "at": { "sign": "The score sign", "ball": "the ball to hit the goal", "adds": "adds one" } } },
+      { "say": "Nothing happens without an input, so plan both.",
+        "art": { "at": { "nothing": "Nothing happens", "both": "plan both" } } }
+    ] },
+
+    { "id": "parts", "kind": "parts", "heading": "Testing part by part", "codes": ["4P.07"], "beats": [
+      { "say": "This program is in three named parts: the reset, the jumps, the greeting.",
+        "art": { "at": { "three": "three named parts", "reset": "the reset", "jumps": "the jumps", "greeting": "the greeting" } } },
+      { "say": "Run part one on its own. The cat goes home. That part is fine.",
+        "art": { "at": { "run1": "Run part one", "home": "The cat goes home", "fine": "That part is fine" } } },
+      { "say": "Run part two. The cat spins, and we wanted two jumps.",
+        "art": { "at": { "run2": "Run part two", "spins": "The cat spins", "wanted": "two jumps" } } },
+      { "say": "So the bug is in part two, and nowhere else in the program.",
+        "art": { "at": { "bug": "the bug", "part2": "in part two", "nowhere": "nowhere else" } } },
+      { "say": "Testing one part at a time tells you where, instead of leaving you to guess.",
+        "art": { "at": { "onepart": "one part at a time", "where": "tells you where", "guess": "leaving you to guess" } } }
+    ] },
+
+    { "id": "fix", "kind": "fix", "heading": "Fix, then run again", "codes": ["4P.07"], "beats": [
+      { "say": "Fix the block in the part that failed. Take out spin, put in jump.",
+        "art": { "at": { "fix": "Fix the block", "out": "Take out spin", "in": "put in jump" } } },
+      { "say": "Now run part two again. Two jumps. That part passes.",
+        "art": { "at": { "again": "run part two again", "two": "Two jumps", "passes": "That part passes" } } },
+      { "say": "Only when every part passes does the whole program pass.",
+        "art": { "at": { "every": "every part passes", "whole": "the whole program" } } },
+      { "say": "The next program had two bugs, hiding in two different parts.",
+        "art": { "at": { "next": "The next program", "twobugs": "two bugs", "parts": "two different parts" } } },
+      { "say": "Part by part found them one at a time, which is far easier.",
+        "art": { "at": { "onetime": "one at a time", "easier": "far easier" } } }
+    ] },
+
+    { "id": "system", "kind": "system", "heading": "Debugging systematically", "codes": ["4P.07"], "beats": [
+      { "say": "There is a bad way to find a bug: changing things until it works.",
+        "art": { "at": { "badway": "a bad way", "changing": "changing things until it works" } } },
+      { "say": "That sometimes works, and it teaches you nothing at all.",
+        "art": { "at": { "sometimes": "sometimes works", "nothing": "teaches you nothing" } } },
+      { "say": "The good way is debugging systematically. Split the program into parts.",
+        "art": { "at": { "good": "The good way", "systematically": "debugging systematically", "split": "Split the program into parts" } } },
+      { "say": "Run one part. Check its result against what you expected.",
+        "art": { "at": { "runone": "Run one part", "check": "Check its result", "expected": "what you expected" } } },
+      { "say": "Move on only when that part is right. The error has nowhere to hide.",
+        "art": { "at": { "moveon": "Move on only when that part is right", "error": "The error", "hide": "nowhere to hide" } } }
+    ] },
+
+    { "id": "recap", "kind": "recap", "heading": "What you now know", "codes": ["4P.05", "4P.06", "4P.07"], "beats": [
+      { "say": "Each input runs its own script, so a different input gives a different output.",
+        "art": { "at": { "input": "Each input", "output": "a different output" } } },
+      { "say": "Plan an object by naming its input and its output before you build.",
+        "art": { "at": { "plan": "Plan an object" } } },
+      { "say": "Test one part at a time. The part that fails holds the bug.",
+        "art": { "at": { "test": "Test one part at a time" } } },
+      { "say": "Fix that block, run the part again, and the error has nowhere to hide.",
+        "art": { "at": { "fix": "Fix that block", "nowhere": "nowhere to hide" } } }
+    ] }
+  ]
+}

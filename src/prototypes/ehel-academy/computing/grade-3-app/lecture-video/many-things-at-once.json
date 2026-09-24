@@ -1,0 +1,118 @@
+{
+  "_comment": "Storyboard for the Grade 3 Computing unit lecture film, Lesson 6 Many Things at Once. Rendered by tools/create-ehel-unit-lecture.js. See lecture-video/BRIEF.md. Every beat is one narration clip; art.at names the phrases a picture waits for, and the page refuses to load if a phrase is not in its beat's say. The chapters follow LESSON[lecture] in order (at the same time; static objects; working with others; mistakes), with the lesson's own tab step between the first two, because 'whose program are you building' is the misconception that step exists to correct. The sprite stage is drawn by the film - Computing keeps no ART.sim - but every rule it obeys is borrowed: ART.run gives move-right-is-one-square and grow-is-times-1.4, ART.block gives every block its label and icon, and ART.program.expand unrolls the repeat that repeated the wrong block.",
+  "slug": "many-things-at-once",
+  "lesson": 6,
+  "grade": 3,
+  "stage": 3,
+  "title": "Many Things at Once",
+  "subtitle": "Grade 3 Computing",
+  "framework": "Cambridge Primary Computing 0059",
+  "renderer": {
+    "art": ["computing"],
+    "skin": "brown",
+    "scenes": [
+      "tools/lib/ehel-film-marks.js",
+      "tools/lib/film-scenes/computing-g3/many-things-at-once.js",
+      "tools/lib/film-scenes/computing-g3/many-things-at-once-2.js",
+      "tools/lib/film-scenes/computing-g3/many-things-at-once-3.js"
+    ]
+  },
+  "objectives": [
+    ["3P.03", "Know how to create programs with more than one algorithm running at the same time."],
+    ["3P.04", "Know how to develop programs that contain more than one object, including a static object."],
+    ["3P.07", "Outline the benefits of working with others when creating programs."],
+    ["3P.08", "Understand that programmers use their mistakes to inform the programs that they create."]
+  ],
+  "scenes": [
+    { "id": "title", "kind": "title", "codes": [], "beats": [
+      { "say": "Press Run once, and the cat and the dog both start moving.",
+        "art": { "at": { "run": "Press Run once", "cat": "the cat", "dog": "the dog", "move": "both start moving" } } },
+      { "say": "Nobody waits for anybody. Two algorithms, running at the same time.",
+        "art": { "at": { "waits": "Nobody waits", "two": "Two algorithms", "same": "at the same time" } } }
+    ] },
+
+    { "id": "same", "kind": "same", "heading": "At the same time", "codes": ["3P.03"], "beats": [
+      { "say": "Two objects are standing on the stage: a cat and a dog.",
+        "art": { "at": { "objects": "Two objects", "cat": "a cat", "dog": "a dog" } } },
+      { "say": "Each object has its own script. The cat moves right, then jumps.",
+        "art": { "at": { "own": "its own script", "right": "moves right", "jump": "then jumps" } } },
+      { "say": "The dog's script is different. It jumps, and then jumps again.",
+        "art": { "at": { "dogs": "The dog's script", "jump1": "It jumps", "jump2": "jumps again" } } },
+      { "say": "Press Run. In beat one the cat moves right while the dog jumps.",
+        "art": { "at": { "run": "Press Run", "beat1": "beat one", "move": "the cat moves right", "jump": "the dog jumps" } } },
+      { "say": "In beat two they both jump. The dog never waits for the cat.",
+        "art": { "at": { "beat2": "beat two", "both": "they both jump", "waits": "never waits" } } }
+    ] },
+
+    { "id": "tabs", "kind": "tabs", "heading": "Whose script is this?", "codes": ["3P.03", "3P.04"], "beats": [
+      { "say": "Every object keeps its own script, on a tab of its own.",
+        "art": { "at": { "tab": "a tab of its own" } } },
+      { "say": "Tap the cat's tab, and build the cat's two blocks there.",
+        "art": { "at": { "tapcat": "Tap the cat's tab", "build": "build the cat's two blocks" } } },
+      { "say": "Tap the dog's tab, and build the dog's two blocks too.",
+        "art": { "at": { "tapdog": "Tap the dog's tab", "build": "build the dog's two blocks" } } },
+      { "say": "Now press Run, and both scripts go at once.",
+        "art": { "at": { "run": "press Run", "go": "both scripts go at once" } } },
+      { "say": "Build both scripts on the cat, and the dog does nothing at all.",
+        "art": { "at": { "both": "Build both scripts on the cat", "nothing": "the dog does nothing" } } },
+      { "say": "So check the tab first. Whose program are you building?",
+        "art": { "at": { "check": "check the tab first", "whose": "Whose program" } } }
+    ] },
+
+    { "id": "static", "kind": "static", "heading": "A static object", "codes": ["3P.04"], "beats": [
+      { "say": "Now a tree joins the cat and the dog on the stage.",
+        "art": { "at": { "tree": "a tree", "others": "the cat and the dog" } } },
+      { "say": "A tree is static. Static means it stays where it is.",
+        "art": { "at": { "static": "A tree is static", "stays": "it stays where it is" } } },
+      { "say": "A static object can still have a script of its own.",
+        "art": { "at": { "script": "a script of its own" } } },
+      { "say": "The tree says hello and grows bigger. It never moves.",
+        "art": { "at": { "say": "says hello", "grow": "grows bigger", "never": "It never moves" } } },
+      { "say": "Its palette has no move blocks. That is what static means.",
+        "art": { "at": { "nomove": "no move blocks", "means": "what static means" } } },
+      { "say": "All three run at once: two movers and one static object.",
+        "art": { "at": { "three": "All three run at once", "movers": "two movers", "one": "one static object" } } }
+    ] },
+
+    { "id": "together", "kind": "together", "heading": "Working with others", "codes": ["3P.07"], "beats": [
+      { "say": "Programmers often work in pairs, and it brings four benefits.",
+        "art": { "at": { "pairs": "work in pairs", "four": "four benefits" } } },
+      { "say": "Two people have more ideas than one person working on their own.",
+        "art": { "at": { "ideas": "more ideas" } } },
+      { "say": "Your partner is a second pair of eyes, and spots the bug you missed.",
+        "art": { "at": { "eyes": "a second pair of eyes", "bug": "spots the bug" } } },
+      { "say": "Share the work: you build the cat, your partner builds the dog.",
+        "art": { "at": { "share": "Share the work", "cat": "you build the cat", "dog": "your partner builds the dog" } } },
+      { "say": "Say your plan out loud, and it gets clearer in your own head.",
+        "art": { "at": { "loud": "out loud", "clear": "clearer in your own head" } } },
+      { "say": "Asking for help does not mean you cannot do it. Real programmers ask all the time.",
+        "art": { "at": { "ask": "Asking for help", "real": "Real programmers ask" } } }
+    ] },
+
+    { "id": "mistakes", "kind": "mistakes", "heading": "Mistakes teach you", "codes": ["3P.08"], "beats": [
+      { "say": "Every programmer makes mistakes, and good ones use them.",
+        "art": { "at": { "makes": "makes mistakes", "use": "use them" } } },
+      { "say": "The cat started in the wrong place. Nothing had reset it.",
+        "art": { "at": { "wrong": "the wrong place", "nothing": "Nothing had reset it" } } },
+      { "say": "Now you know: reset first. A go home block at the top.",
+        "art": { "at": { "reset": "reset first", "home": "A go home block" } } },
+      { "say": "The repeat repeated a spin, not a jump. Check the block after it.",
+        "art": { "at": { "repeat": "repeated a spin", "check": "Check the block after it" } } },
+      { "say": "Programmers write their mistakes down in a notebook.",
+        "art": { "at": { "write": "write their mistakes down", "book": "a notebook" } } },
+      { "say": "Then the next program does not have them. A mistake is information.",
+        "art": { "at": { "next": "the next program", "info": "A mistake is information" } } }
+    ] },
+
+    { "id": "recap", "kind": "recap", "heading": "What you now know", "codes": ["3P.03", "3P.04", "3P.07", "3P.08"], "beats": [
+      { "say": "More than one script can run at the same time, from one Run.",
+        "art": { "at": { "same": "at the same time", "run": "one Run" } } },
+      { "say": "A static object stays where it is, and it still has a script.",
+        "art": { "at": { "static": "A static object" } } },
+      { "say": "Work with a partner, and you get a second pair of eyes.",
+        "art": { "at": { "partner": "a partner", "eyes": "a second pair of eyes" } } },
+      { "say": "And every mistake tells you what to change next time.",
+        "art": { "at": { "mistake": "every mistake", "change": "what to change" } } }
+    ] }
+  ]
+}

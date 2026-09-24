@@ -1,0 +1,109 @@
+{
+  "_comment": "Storyboard for the Grade 4 Computing unit lecture film, Lesson 14 Computer Scientists and Service Robots. Rendered by tools/create-ehel-unit-lecture.js. See lecture-video/BRIEF.md. Every beat is one narration clip; art.at names the phrases a picture waits for, and the page refuses to load if a phrase is not in its beat's say. The chapters follow LESSON[lecture] in order: what a computer scientist does and the hospital and the farm; the bank, the games studio and the weather station, and the misconception that they only work at computer companies; robots that deliver; robots that move people and help patients; and a robot as a control system. Every industry, robot and rule named here is one the lesson names - nothing about how a sensor works, how fast a robot goes or what any job pays, because the lesson does not say.",
+  "slug": "computer-scientists-and-service-robots",
+  "lesson": 14,
+  "grade": 4,
+  "stage": 4,
+  "title": "Computer Scientists and Service Robots",
+  "subtitle": "Grade 4 Computing",
+  "framework": "Cambridge Primary Computing 0059",
+  "renderer": {
+    "art": ["computing"],
+    "skin": "brown",
+    "scenes": [
+      "tools/lib/ehel-film-marks.js",
+      "tools/lib/film-scenes/computing-g4/computer-scientists-and-service-robots.js",
+      "tools/lib/film-scenes/computing-g4/computer-scientists-and-service-robots-2.js",
+      "tools/lib/film-scenes/computing-g4/computer-scientists-and-service-robots-3.js"
+    ]
+  },
+  "objectives": [
+    ["4CS.06", "Describe the role of computer scientists in a range of industries."],
+    ["4CS.07", "Identify the role of robots in service industries, including for delivery services, public transport and health care."],
+    ["4CS.01", "Identify examples where a control system is used."]
+  ],
+  "scenes": [
+    { "id": "title", "kind": "title", "codes": [], "beats": [
+      { "say": "A computer scientist writes the programs a whole industry runs on.",
+        "art": { "at": { "scientist": "A computer scientist", "programs": "the programs", "industry": "a whole industry" } } },
+      { "say": "Service robots bring your parcel, drive the train and help in hospitals.",
+        "art": { "at": { "robots": "Service robots", "parcel": "bring your parcel", "train": "drive the train", "hospitals": "help in hospitals" } } }
+    ] },
+
+    { "id": "scientists", "kind": "scientists", "heading": "Computer scientists", "codes": ["4CS.06"], "beats": [
+      { "say": "A computer scientist studies how computers solve problems.",
+        "art": { "at": { "studies": "studies", "problems": "solve problems" } } },
+      { "say": "Then they build the program that does it. Every industry has problems.",
+        "art": { "at": { "build": "build the program", "industry": "Every industry" } } },
+      { "say": "In a hospital, they build the system that holds patient records.",
+        "art": { "at": { "hospital": "In a hospital", "records": "patient records" } } },
+      { "say": "It keeps every record safe, and finds the right one in a second.",
+        "art": { "at": { "safe": "safe", "second": "in a second" } } },
+      { "say": "On a farm, their program reads soil sensors and waters the dry fields.",
+        "art": { "at": { "farm": "On a farm", "sensors": "soil sensors", "waters": "waters the dry fields" } } }
+    ] },
+
+    { "id": "industries", "kind": "industries", "heading": "In every industry", "codes": ["4CS.06"], "beats": [
+      { "say": "In a bank, they design the encryption that keeps money safe.",
+        "art": { "at": { "bank": "In a bank", "encryption": "the encryption", "money": "keeps money safe" } } },
+      { "say": "In a games studio, computer scientists write the game itself.",
+        "art": { "at": { "games": "In a games studio", "game": "write the game itself" } } },
+      { "say": "At a weather station, a model turns millions of readings into tomorrow's forecast.",
+        "art": { "at": { "weather": "At a weather station", "readings": "millions of readings", "forecast": "tomorrow's forecast" } } },
+      { "say": "You might think they only work at computer companies. They do not.",
+        "art": { "at": { "think": "You might think", "companies": "computer companies", "not": "They do not" } } },
+      { "say": "They work wherever a problem can be solved by a program. That is everywhere.",
+        "art": { "at": { "wherever": "wherever a problem", "everywhere": "That is everywhere" } } }
+    ] },
+
+    { "id": "deliver", "kind": "deliver", "heading": "Robots that deliver", "codes": ["4CS.07"], "beats": [
+      { "say": "A service robot does a job for people. Most do not look like people.",
+        "art": { "at": { "service": "A service robot", "job": "a job for people", "notlike": "do not look like people" } } },
+      { "say": "Most are boxes on wheels, or arms, or trains. A program controls each one.",
+        "art": { "at": { "boxes": "boxes on wheels", "arms": "or arms", "trains": "or trains", "program": "A program controls" } } },
+      { "say": "A delivery robot rolls along the pavement with your shopping.",
+        "art": { "at": { "delivery": "A delivery robot", "pavement": "along the pavement", "shopping": "your shopping" } } },
+      { "say": "It crosses at the lights, and it stops at your door.",
+        "art": { "at": { "lights": "crosses at the lights", "door": "stops at your door" } } },
+      { "say": "A drone flies a parcel to an island. A warehouse robot fetches your order.",
+        "art": { "at": { "drone": "A drone", "island": "to an island", "warehouse": "A warehouse robot" } } }
+    ] },
+
+    { "id": "people", "kind": "people", "heading": "Moving people, helping patients", "codes": ["4CS.07"], "beats": [
+      { "say": "Some service robots move people. That work is public transport.",
+        "art": { "at": { "move": "move people", "transport": "public transport" } } },
+      { "say": "A driverless train runs the airport shuttle. It has no driver.",
+        "art": { "at": { "train": "A driverless train", "shuttle": "the airport shuttle", "nodriver": "no driver" } } },
+      { "say": "A self-driving shuttle bus steers slowly round a park.",
+        "art": { "at": { "bus": "A self-driving shuttle bus", "park": "round a park" } } },
+      { "say": "In a hospital, a robot carries medicines from the store to the ward.",
+        "art": { "at": { "hospital": "In a hospital", "medicines": "carries medicines", "ward": "to the ward" } } },
+      { "say": "A surgical robot holds instruments steadier than any hand. That is health care.",
+        "art": { "at": { "surgical": "A surgical robot", "steadier": "steadier than any hand", "health": "health care" } } }
+    ] },
+
+    { "id": "control", "kind": "control", "heading": "Sense, decide, act", "codes": ["4CS.01", "4CS.07"], "beats": [
+      { "say": "Every service robot is a control system. It senses, decides and acts.",
+        "art": { "at": { "control": "a control system", "senses": "senses", "decides": "decides", "acts": "acts" } } },
+      { "say": "Cameras and a distance sensor see the pavement and the people.",
+        "art": { "at": { "cameras": "Cameras", "sensor": "a distance sensor", "people": "the people" } } },
+      { "say": "The program decides. If a person is close, stop. If the light is green, cross.",
+        "art": { "at": { "program": "The program decides", "close": "If a person is close, stop", "green": "If the light is green, cross" } } },
+      { "say": "A computer scientist wrote every one of those rules.",
+        "art": { "at": { "scientist": "A computer scientist", "rules": "those rules" } } },
+      { "say": "Then the motors act. Round and round in a forever loop, until the job is done.",
+        "art": { "at": { "motors": "the motors act", "loop": "a forever loop", "done": "the job is done" } } }
+    ] },
+
+    { "id": "recap", "kind": "recap", "heading": "What you now know", "codes": ["4CS.06", "4CS.07", "4CS.01"], "beats": [
+      { "say": "A computer scientist builds the programs an industry needs.",
+        "art": { "at": { "scientist": "A computer scientist", "industry": "an industry" } } },
+      { "say": "Service robots deliver parcels, move people and help in hospitals.",
+        "art": { "at": { "deliver": "deliver parcels", "move": "move people", "help": "help in hospitals" } } },
+      { "say": "Every one of them senses, decides and acts. That is a control system.",
+        "art": { "at": { "control": "a control system" } } },
+      { "say": "Wherever you go, ask what program is working there. Someone wrote it.",
+        "art": { "at": { "ask": "ask what program" } } }
+    ] }
+  ]
+}

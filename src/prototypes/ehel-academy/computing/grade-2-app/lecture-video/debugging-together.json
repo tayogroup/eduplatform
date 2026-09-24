@@ -1,0 +1,117 @@
+{
+  "_comment": "Storyboard for the Grade 2 Computing unit lecture film, Lesson 5 Debugging Together. Rendered by tools/create-ehel-unit-lecture.js. See lecture-video/BRIEF.md. Every beat is one narration clip; art.at names the phrases a picture waits for, and the page refuses to load if a phrase is not in its beat's say. The chapters follow LESSON[lecture] in order: run it first, two bugs, two heads, say it out loud, programmers do it too. The two debugging chapters are the lesson's own first two rounds, block for block - grow/spin/jump against the goal 'grow, then jump twice', and left/right/spin against 'move left twice, then say hello' - with every block label and the dog's end state taken from the kit (ART.block, ART.run), so the film and the lesson cannot disagree about what a block does. A CROSS NEVER LANDS ON A CHILD: every mark in this film sits on a block or on what the program produced.",
+  "slug": "debugging-together",
+  "lesson": 5,
+  "grade": 2,
+  "stage": 2,
+  "title": "Debugging Together",
+  "subtitle": "Grade 2 Computing",
+  "framework": "Cambridge Primary Computing 0059",
+  "renderer": {
+    "art": ["computing"],
+    "skin": "brown",
+    "scenes": [
+      "tools/lib/ehel-film-marks.js",
+      "tools/lib/film-scenes/computing-g2/debugging-together.js",
+      "tools/lib/film-scenes/computing-g2/debugging-together-2.js",
+      "tools/lib/film-scenes/computing-g2/debugging-together-3.js"
+    ]
+  },
+  "objectives": [
+    ["2P.07", "Know how to debug programs so that they will run and will produce the desired output."],
+    ["2P.06", "Identify the benefits of regularly testing programs throughout their development."],
+    ["2P.05", "Understand the benefits of working with others when debugging programs."]
+  ],
+  "scenes": [
+    { "id": "title", "kind": "title", "codes": [], "beats": [
+      { "say": "Your program runs, and the dog does the wrong thing. That is a bug.",
+        "art": { "at": { "wrong": "the wrong thing", "bug": "That is a bug" } } },
+      { "say": "Run it, find it, fix it, and run it again. Ask a friend to look.",
+        "art": { "at": { "run": "Run it", "fix": "fix it", "again": "run it again", "friend": "Ask a friend to look" } } }
+    ] },
+
+    { "id": "run", "kind": "run", "heading": "Run it first", "codes": ["2P.07", "2P.06"], "beats": [
+      { "say": "The goal is written at the top: grow, then jump twice.",
+        "art": { "at": { "top": "written at the top", "goal": "grow, then jump twice" } } },
+      { "say": "Here is the program. Run it first and watch what the dog does.",
+        "art": { "at": { "program": "Here is the program", "run": "Run it first", "watch": "watch what the dog does" } } },
+      { "say": "The dog grows. Then it spins. Then it jumps once.",
+        "art": { "at": { "grow": "The dog grows", "spin": "it spins", "jump": "it jumps once" } } },
+      { "say": "That is not the goal. Watching it told us where to look.",
+        "art": { "at": { "notgoal": "not the goal", "look": "where to look" } } },
+      { "say": "The second block spins. We wanted a jump. That block is the bug.",
+        "art": { "at": { "second": "The second block spins", "wanted": "We wanted a jump", "bug": "That block is the bug" } } },
+      { "say": "Take the spin block out. Put a jump block in its place.",
+        "art": { "at": { "out": "Take the spin block out", "in": "Put a jump block in" } } },
+      { "say": "Now run it again. Grow, jump, jump. That is what we wanted.",
+        "art": { "at": { "again": "run it again", "moves": "Grow, jump, jump", "done": "is what we wanted" } } }
+    ] },
+
+    { "id": "two", "kind": "two", "heading": "Two bugs", "codes": ["2P.07", "2P.06"], "beats": [
+      { "say": "Some programs have two bugs. The goal: move left twice, then say hello.",
+        "art": { "at": { "two": "two bugs", "goal": "move left twice, then say hello" } } },
+      { "say": "Run it. The dog goes left, then right, then it spins.",
+        "art": { "at": { "run": "Run it", "left": "goes left", "right": "then right", "spin": "it spins" } } },
+      { "say": "The second block goes right. We wanted a second move left.",
+        "art": { "at": { "second": "The second block goes right", "wanted": "a second move left" } } },
+      { "say": "Fix that block. It is better now. But is it right?",
+        "art": { "at": { "fix": "Fix that block", "better": "better now", "right": "But is it right?" } } },
+      { "say": "Only running it again can tell you. Left, left, and then a spin.",
+        "art": { "at": { "again": "running it again", "moves": "Left, left", "spin": "then a spin" } } },
+      { "say": "Still not hello. The last block spins: a second bug.",
+        "art": { "at": { "still": "Still not hello", "last": "The last block spins", "secondbug": "a second bug" } } },
+      { "say": "Fix it, run it again, and the dog says hello. Test after every fix.",
+        "art": { "at": { "fix": "Fix it", "again": "run it again", "hello": "the dog says hello", "test": "Test after every fix" } } }
+    ] },
+
+    { "id": "heads", "kind": "heads", "heading": "Two heads", "codes": ["2P.05"], "beats": [
+      { "say": "Sami has read his program ten times. He cannot see the bug.",
+        "art": { "at": { "sami": "Sami has read his program ten times", "cannot": "cannot see the bug" } } },
+      { "say": "Amal looks at it once. Fresh eyes see what tired eyes miss.",
+        "art": { "at": { "amal": "Amal looks at it once", "fresh": "Fresh eyes see what tired eyes miss" } } },
+      { "say": "One of you can read the blocks. The other watches the dog.",
+        "art": { "at": { "read": "read the blocks", "watch": "watches the dog" } } },
+      { "say": "If you are stuck, press Ask. Your partner gives you a hint.",
+        "art": { "at": { "ask": "press Ask", "hint": "gives you a hint" } } },
+      { "say": "Asking is not failing. Programmers ask each other all day.",
+        "art": { "at": { "notfail": "Asking is not failing", "allday": "ask each other all day" } } }
+    ] },
+
+    { "id": "aloud", "kind": "aloud", "heading": "Say it out loud", "codes": ["2P.05"], "beats": [
+      { "say": "Explaining your program out loud is a way of debugging.",
+        "art": { "at": { "explain": "Explaining your program out loud", "debug": "a way of debugging" } } },
+      { "say": "Sami reads his blocks, one at a time. Move right. Jump. Spin.",
+        "art": { "at": { "read": "reads his blocks", "right": "Move right", "jump": "Jump.", "spin": "Spin." } } },
+      { "say": "Spin? We wanted jump. He hears the wrong block himself.",
+        "art": { "at": { "spinq": "Spin?", "wanted": "We wanted jump", "hears": "He hears the wrong block" } } },
+      { "say": "Your ears can catch a bug your eyes walked straight past.",
+        "art": { "at": { "ears": "Your ears", "eyes": "your eyes walked straight past" } } },
+      { "say": "Say each block slowly. Does it match the goal?",
+        "art": { "at": { "slowly": "Say each block slowly", "match": "match the goal" } } }
+    ] },
+
+    { "id": "pros", "kind": "pros", "heading": "Programmers do it too", "codes": ["2P.05", "2P.07"], "beats": [
+      { "say": "Real programmers work in pairs and in teams.",
+        "art": { "at": { "pairs": "in pairs", "teams": "in teams" } } },
+      { "say": "Two of them share one screen. One types, and one watches for bugs.",
+        "art": { "at": { "share": "share one screen", "types": "One types", "watches": "one watches for bugs" } } },
+      { "say": "They read each other's programs, to find bugs the writer missed.",
+        "art": { "at": { "read": "read each other's programs", "missed": "bugs the writer missed" } } },
+      { "say": "In a games team, one person's whole job is to find bugs.",
+        "art": { "at": { "team": "In a games team", "job": "whole job is to find bugs" } } },
+      { "say": "Debugging together is how big programs get made. So can you.",
+        "art": { "at": { "together": "Debugging together", "big": "big programs get made", "you": "So can you" } } }
+    ] },
+
+    { "id": "recap", "kind": "recap", "heading": "What you now know", "codes": ["2P.07", "2P.06", "2P.05"], "beats": [
+      { "say": "Run it first, and find the block that is wrong.",
+        "art": { "at": { "run": "Run it first", "find": "find the block that is wrong" } } },
+      { "say": "A program can have two bugs, so test after every fix.",
+        "art": { "at": { "test": "test after every fix" } } },
+      { "say": "Ask a partner to look, and explain your blocks out loud.",
+        "art": { "at": { "ask": "Ask a partner to look", "explain": "explain your blocks out loud" } } },
+      { "say": "Two heads find a bug faster than one.",
+        "art": { "at": { "faster": "faster than one" } } }
+    ] }
+  ]
+}

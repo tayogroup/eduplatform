@@ -1,0 +1,112 @@
+{
+  "_comment": "Storyboard for the Grade 4 Computing unit lecture film, Lesson 12 Caesar and Pigpen. Rendered by tools/create-ehel-unit-lecture.js. See lecture-video/BRIEF.md. Every beat is one narration clip; art.at names the phrases a picture waits for, and the page refuses to load if a phrase is not in its beat's say. The chapters follow LESSON[lecture] in order (the Caesar cipher; the Pigpen cipher; the key; encryption today; the round trip and its four names). EVERY ENCIPHERED LETTER ON SCREEN IS THE LESSON'S OWN RULE: the strip, the word tiles, the twenty-five tries and the round trip all call ART.caesar, and every Pigpen glyph and the pen it sits in come from ART.pigpen, so a letter the film shows and a letter the lesson makes cannot disagree. The scenes file checks the spoken claims (cat is fdw, y shifted 3 is b, kl says hi) against those rules as the page loads.",
+  "slug": "caesar-and-pigpen",
+  "lesson": 12,
+  "grade": 4,
+  "stage": 4,
+  "title": "Caesar and Pigpen",
+  "subtitle": "Grade 4 Computing",
+  "framework": "Cambridge Primary Computing 0059",
+  "renderer": {
+    "art": ["computing"],
+    "skin": "brown",
+    "scenes": [
+      "tools/lib/ehel-film-marks.js",
+      "tools/lib/film-scenes/computing-g4/caesar-and-pigpen.js",
+      "tools/lib/film-scenes/computing-g4/caesar-and-pigpen-2.js",
+      "tools/lib/film-scenes/computing-g4/caesar-and-pigpen-3.js"
+    ]
+  },
+  "objectives": [
+    ["4DC.06", "Know how to write and decode messages using the Caesar Cipher and the Pigpen Cipher."],
+    ["4DC.05", "Identify where and why encryption is used in digital systems."]
+  ],
+  "scenes": [
+    { "id": "title", "kind": "title", "codes": [], "beats": [
+      { "say": "Julius Caesar wanted to send orders that nobody else could read.",
+        "art": { "at": { "orders": "send orders", "nobody": "nobody else could read" } } },
+      { "say": "So he hid them in a cipher: a rule that turns a message into secret code.",
+        "art": { "at": { "cipher": "a cipher", "rule": "a rule that turns a message into secret code" } } }
+    ] },
+
+    { "id": "caesar", "kind": "caesar", "heading": "The Caesar cipher", "codes": ["4DC.06"], "beats": [
+      { "say": "Caesar moved every letter the same number of places along the alphabet.",
+        "art": { "at": { "every": "every letter", "same": "the same number of places", "alphabet": "along the alphabet" } } },
+      { "say": "That number is the key. With a shift of three, a becomes d.",
+        "art": { "at": { "key": "That number is the key", "three": "a shift of three", "ad": "a becomes d" } } },
+      { "say": "So cat becomes f d w. Each letter has moved three places along.",
+        "art": { "at": { "cat": "cat becomes f d w", "moved": "moved three places along" } } },
+      { "say": "At the end of the alphabet you wrap round to the start. y shifted three is b.",
+        "art": { "at": { "wrap": "wrap round to the start", "y": "y shifted three is b" } } },
+      { "say": "To read it, shift back by the same number. f d w says cat again.",
+        "art": { "at": { "back": "shift back", "same": "the same number", "cat": "says cat again" } } }
+    ] },
+
+    { "id": "pigpen", "kind": "pigpen", "heading": "The Pigpen cipher", "codes": ["4DC.06"], "beats": [
+      { "say": "Pigpen does not shift letters. It swaps each one for a shape.",
+        "art": { "at": { "noshift": "does not shift letters", "shape": "for a shape" } } },
+      { "say": "Draw a grid like noughts and crosses. Put a to i in its nine pens.",
+        "art": { "at": { "grid": "a grid like noughts and crosses", "ai": "Put a to i", "pens": "nine pens" } } },
+      { "say": "A letter's symbol is the shape of the lines round its pen.",
+        "art": { "at": { "symbol": "A letter's symbol", "lines": "the lines round its pen" } } },
+      { "say": "a is in the top-left pen, so a is a corner, open at the top and left.",
+        "art": { "at": { "pen": "the top-left pen", "corner": "a corner" } } },
+      { "say": "e sits in the middle pen, with lines all round, so e is a closed box.",
+        "art": { "at": { "middle": "the middle pen", "box": "a closed box" } } },
+      { "say": "A second grid holds j to r, each pen with a dot. Two X shapes hold s to z.",
+        "art": { "at": { "second": "A second grid", "dot": "with a dot", "x": "Two X shapes" } } },
+      { "say": "Write cat in Pigpen and you get three shapes. Read them back: cat.",
+        "art": { "at": { "write": "Write cat in Pigpen", "three": "three shapes", "read": "Read them back" } } }
+    ] },
+
+    { "id": "key", "kind": "key", "heading": "The key is everything", "codes": ["4DC.05", "4DC.06"], "beats": [
+      { "say": "A cipher is only as secret as its key. Whoever holds the key reads it.",
+        "art": { "at": { "secret": "only as secret as its key", "whoever": "Whoever holds the key" } } },
+      { "say": "Caesar had to tell his generals the shift in advance.",
+        "art": { "at": { "generals": "tell his generals", "advance": "in advance" } } },
+      { "say": "If a messenger carrying the key was caught, every message was open.",
+        "art": { "at": { "caught": "was caught", "open": "every message was open" } } },
+      { "say": "A Caesar cipher has only twenty-five shifts to try.",
+        "art": { "at": { "only": "only twenty-five shifts" } } },
+      { "say": "Try them one by one until words appear. It is a good puzzle and a weak lock.",
+        "art": { "at": { "one": "one by one", "appear": "until words appear", "weak": "a weak lock" } } }
+    ] },
+
+    { "id": "today", "kind": "today", "heading": "Encryption today", "codes": ["4DC.05"], "beats": [
+      { "say": "Your browser and your messages use the very same idea.",
+        "art": { "at": { "browser": "Your browser", "messages": "your messages", "same": "the very same idea" } } },
+      { "say": "Scramble the message with a key. Unscramble it with the key.",
+        "art": { "at": { "scramble": "Scramble the message", "unscramble": "Unscramble it" } } },
+      { "say": "The difference is the key. Today's keys are enormously long.",
+        "art": { "at": { "difference": "The difference is the key", "long": "enormously long" } } },
+      { "say": "Trying every one would take longer than the age of the universe.",
+        "art": { "at": { "trying": "Trying every one", "universe": "the age of the universe" } } },
+      { "say": "That is why your password and your card number are safe on the way.",
+        "art": { "at": { "password": "your password", "card": "your card number", "safe": "safe on the way" } } }
+    ] },
+
+    { "id": "roundtrip", "kind": "roundtrip", "heading": "The round trip", "codes": ["4DC.05", "4DC.06"], "beats": [
+      { "say": "Every cipher makes the same journey, and each stage has a name.",
+        "art": { "at": { "journey": "the same journey", "name": "each stage has a name" } } },
+      { "say": "You start with plain text: the message anybody could read.",
+        "art": { "at": { "plain": "plain text", "read": "anybody could read" } } },
+      { "say": "You encrypt it with the key, and out comes ciphertext.",
+        "art": { "at": { "encrypt": "You encrypt it with the key", "ciphertext": "out comes ciphertext" } } },
+      { "say": "It travels. At the other end the key decrypts it.",
+        "art": { "at": { "travels": "It travels", "decrypt": "the key decrypts it" } } },
+      { "say": "The plain text is back. Caesar and Pigpen both make that trip.",
+        "art": { "at": { "back": "The plain text is back", "both": "Caesar and Pigpen both" } } }
+    ] },
+
+    { "id": "recap", "kind": "recap", "heading": "What you now know", "codes": ["4DC.06", "4DC.05"], "beats": [
+      { "say": "Caesar shifts every letter along the alphabet by the key.",
+        "art": { "at": { "caesar": "Caesar shifts every letter" } } },
+      { "say": "Pigpen gives every letter the shape of the pen it sits in.",
+        "art": { "at": { "pigpen": "Pigpen gives every letter" } } },
+      { "say": "The key is the secret, and twenty-five shifts is a weak secret.",
+        "art": { "at": { "key": "The key is the secret" } } },
+      { "say": "Plain text in, ciphertext out, and the key brings it back.",
+        "art": { "at": { "trip": "ciphertext out" } } }
+    ] }
+  ]
+}

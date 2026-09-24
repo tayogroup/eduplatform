@@ -1,0 +1,120 @@
+{
+  "_comment": "Storyboard for the Grade 4 Computing unit lecture film, Lesson 1 Loops in Algorithms. Rendered by tools/create-ehel-unit-lecture.js. See lecture-video/BRIEF.md. Every beat is one narration clip; art.at names the phrases a picture waits for, and the page refuses to load if a phrase is not in its beat's say. The chapters follow LESSON[lecture] in order (a loop; count-controlled and its counter; forever; a wrong step inside a loop; concise; the third kind of loop), in the lesson's own examples: the watering can, the teeth and the traffic lights. Every expansion and every turn count is taken from the lesson's OWN rules through the adapter - ART.algo.flatten for the turns of a repeat and a forever box, ART.algo.expandLoop for the nine and twelve steps written out - so a count in this film cannot disagree with the lesson that runs it.",
+  "slug": "loops-in-algorithms",
+  "lesson": 1,
+  "grade": 4,
+  "stage": 4,
+  "title": "Loops in Algorithms",
+  "subtitle": "Grade 4 Computing",
+  "framework": "Cambridge Primary Computing 0059",
+  "renderer": {
+    "art": ["computing"],
+    "skin": "brown",
+    "scenes": [
+      "tools/lib/ehel-film-marks.js",
+      "tools/lib/film-scenes/computing-g4/loops-in-algorithms.js",
+      "tools/lib/film-scenes/computing-g4/loops-in-algorithms-2.js",
+      "tools/lib/film-scenes/computing-g4/loops-in-algorithms-3.js"
+    ]
+  },
+  "objectives": [
+    ["4CT.01", "Follow, understand, edit and correct algorithms that use repetition, including indefinite (forever) loops."],
+    ["4CT.02", "Follow, understand, edit and correct algorithms that use iteration, including count-controlled loops."],
+    ["4CT.03", "Understand that the use of repetition can make algorithms more concise."]
+  ],
+  "scenes": [
+    { "id": "title", "kind": "title", "codes": [], "beats": [
+      { "say": "Repeat four times: brush the top, brush the bottom. Round and round it goes.",
+        "art": { "at": { "repeat": "Repeat four times", "top": "brush the top", "bottom": "brush the bottom", "round": "Round and round" } } },
+      { "say": "That is a loop. A loop can count its turns, or never stop at all.",
+        "art": { "at": { "loop": "a loop", "count": "count its turns", "never": "never stop at all" } } }
+    ] },
+
+    { "id": "loop", "kind": "loop", "heading": "Going round a loop", "codes": ["4CT.01", "4CT.02"], "beats": [
+      { "say": "A loop is a part of an algorithm that happens again and again.",
+        "art": { "at": { "loop": "A loop", "again": "again and again" } } },
+      { "say": "These three steps water one plant. Fill the can, pour on a plant, walk to the next.",
+        "art": { "at": { "three": "These three steps", "fill": "Fill the can", "pour": "pour on a plant", "walk": "walk to the next" } } },
+      { "say": "When you reach the last step in the loop, you go back to the first.",
+        "art": { "at": { "last": "the last step", "back": "go back to the first" } } },
+      { "say": "And you keep count of the turns. This loop goes round three times.",
+        "art": { "at": { "count": "keep count of the turns", "three": "three times" } } }
+    ] },
+
+    { "id": "count", "kind": "count", "heading": "Counting the turns", "codes": ["4CT.02"], "beats": [
+      { "say": "Repeat four times: brush the top, brush the bottom. Then rinse.",
+        "art": { "at": { "repeat": "Repeat four times", "top": "brush the top", "bottom": "brush the bottom", "rinse": "Then rinse" } } },
+      { "say": "A count-controlled loop has something you cannot see. It has a counter.",
+        "art": { "at": { "cc": "A count-controlled loop", "counter": "a counter" } } },
+      { "say": "The counter starts at one, and goes up by one every time round.",
+        "art": { "at": { "one": "starts at one", "up": "goes up by one" } } },
+      { "say": "When the counter reaches four, the loop stops. Then you rinse.",
+        "art": { "at": { "four": "reaches four", "stops": "the loop stops", "rinse": "Then you rinse" } } },
+      { "say": "That is iteration with a count-controlled loop.",
+        "art": { "at": { "iter": "iteration", "ccLoop": "a count-controlled loop" } } },
+      { "say": "Two steps, four turns. That is eight brushing steps in all.",
+        "art": { "at": { "two": "Two steps", "turns": "four turns", "eight": "eight brushing steps" } } }
+    ] },
+
+    { "id": "forever", "kind": "forever", "heading": "A loop with no count", "codes": ["4CT.01"], "beats": [
+      { "say": "Traffic lights run a loop too. Red, red and amber, green, amber.",
+        "art": { "at": { "lights": "Traffic lights", "red": "Red,", "ra": "red and amber", "green": "green,", "amber": "amber." } } },
+      { "say": "The box says forever. There is no count in it at all.",
+        "art": { "at": { "forever": "says forever", "nocount": "no count" } } },
+      { "say": "So the loop has no end of its own. Something outside has to stop it.",
+        "art": { "at": { "noend": "no end of its own", "outside": "Something outside" } } },
+      { "say": "A switch, a person, a power cut. That is an indefinite loop.",
+        "art": { "at": { "sw": "A switch", "pers": "a person", "pow": "a power cut", "indef": "an indefinite loop" } } },
+      { "say": "Forever does not mean broken. Clocks and games are meant to keep going.",
+        "art": { "at": { "broken": "not mean broken", "clocks": "Clocks and games", "going": "keep going" } } }
+    ] },
+
+    { "id": "inside", "kind": "inside", "heading": "A wrong step inside", "codes": ["4CT.01", "4CT.02"], "beats": [
+      { "say": "A wrong step outside a loop goes wrong once. Inside, it goes wrong every turn.",
+        "art": { "at": { "outside": "outside a loop", "once": "goes wrong once", "every": "every turn" } } },
+      { "say": "Repeat three times: fill the can, pour on a plant, tip the can upside down.",
+        "art": { "at": { "repeat": "Repeat three times", "fill": "fill the can", "pour": "pour on a plant", "tip": "tip the can upside down" } } },
+      { "say": "Tipping the can empties it on the floor, every time round.",
+        "art": { "at": { "floor": "on the floor", "every": "every time round" } } },
+      { "say": "Change that one step to walk to the next plant.",
+        "art": { "at": { "change": "Change that one step", "walk": "walk to the next plant" } } },
+      { "say": "One fix inside the loop, and all three turns are fixed.",
+        "art": { "at": { "fix": "One fix inside the loop", "all": "all three turns" } } }
+    ] },
+
+    { "id": "concise", "kind": "concise", "heading": "Written once", "codes": ["4CT.03"], "beats": [
+      { "say": "Fill, pour, walk, three times over, is nine steps written out.",
+        "art": { "at": { "three": "three times over", "nine": "nine steps" } } },
+      { "say": "Repeat three times, fill, pour, walk, is three steps and a count.",
+        "art": { "at": { "repeat": "Repeat three times", "steps": "three steps and a count" } } },
+      { "say": "Shorter to read, and shorter to write. You see it all at once.",
+        "art": { "at": { "read": "Shorter to read", "write": "shorter to write", "once": "all at once" } } },
+      { "say": "Four plants instead of three? Change the three to a four.",
+        "art": { "at": { "four": "Four plants", "change": "Change the three to a four" } } },
+      { "say": "Written out long, you would add three more steps. A loop is concise.",
+        "art": { "at": { "add": "add three more steps", "concise": "A loop is concise" } } }
+    ] },
+
+    { "id": "third", "kind": "third", "heading": "A third kind of loop", "codes": ["4CT.01", "4CT.02"], "beats": [
+      { "say": "There is a third kind of loop, waiting for you in Scratch.",
+        "art": { "at": { "third": "a third kind of loop", "scratch": "in Scratch" } } },
+      { "say": "A condition-controlled loop has no count, but it does have an end.",
+        "art": { "at": { "cond": "A condition-controlled loop", "nocount": "no count", "end": "have an end" } } },
+      { "say": "It goes round until something becomes true. Repeat until the down arrow is pressed.",
+        "art": { "at": { "true": "becomes true", "arrow": "the down arrow is pressed" } } },
+      { "say": "One stops after a number, one when something happens, and forever never stops.",
+        "art": { "at": { "number": "after a number", "happens": "when something happens", "never": "forever never stops" } } }
+    ] },
+
+    { "id": "recap", "kind": "recap", "heading": "What you now know", "codes": ["4CT.01", "4CT.02", "4CT.03"], "beats": [
+      { "say": "A loop is a part of an algorithm that happens again and again.",
+        "art": { "at": { "loop": "A loop" } } },
+      { "say": "A count-controlled loop has a counter. It counts its turns, then stops.",
+        "art": { "at": { "cc": "A count-controlled loop", "counter": "a counter" } } },
+      { "say": "A forever loop has no counter, so something outside has to stop it.",
+        "art": { "at": { "forever": "A forever loop" } } },
+      { "say": "And a loop is concise: written once, done many times.",
+        "art": { "at": { "concise": "concise", "once": "written once" } } }
+    ] }
+  ]
+}

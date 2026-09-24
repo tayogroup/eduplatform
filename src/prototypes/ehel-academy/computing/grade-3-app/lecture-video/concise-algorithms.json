@@ -1,0 +1,111 @@
+{
+  "_comment": "Storyboard for the Grade 3 Computing unit lecture film, Lesson 2 Concise Algorithms. Rendered by tools/create-ehel-unit-lecture.js. See lecture-video/BRIEF.md. Every beat is one narration clip; art.at names the phrases a picture waits for, and the page refuses to load if a phrase is not in its beat's say. The chapters follow LESSON[lecture] in order (efficient means concise; cutting the waste, in the lesson's own cake and present; the steps that repeat, in its three plants and its table for four; why concise is better). THE COMPARISON IS THE WHOLE LESSON, so every before-and-after is drawn by handing the LESSON'S OWN scene both lists - ART.scene(cake, ...) and ART.scene(present, ...) - and the film's pictures file asserts at load that the long list and the short list draw the same cake and the same present, aria-label aside. Every count said out loud (ten, seven, nine, six, eleven, five, eighteen, six) is the number of rows actually drawn.",
+  "slug": "concise-algorithms",
+  "lesson": 2,
+  "grade": 3,
+  "stage": 3,
+  "title": "Concise Algorithms",
+  "subtitle": "Grade 3 Computing",
+  "framework": "Cambridge Primary Computing 0059",
+  "renderer": {
+    "art": ["computing"],
+    "skin": "brown",
+    "scenes": [
+      "tools/lib/ehel-film-marks.js",
+      "tools/lib/film-scenes/computing-g3/concise-algorithms.js",
+      "tools/lib/film-scenes/computing-g3/concise-algorithms-2.js",
+      "tools/lib/film-scenes/computing-g3/concise-algorithms-3.js"
+    ]
+  },
+  "objectives": [
+    ["3CT.02", "Understand that efficient algorithms are concise."],
+    ["3CT.03", "Identify steps that are repeated within everyday tasks."],
+    ["3CT.01", "Follow, understand, edit and correct linear algorithms."]
+  ],
+  "scenes": [
+    { "id": "title", "kind": "title", "codes": [], "beats": [
+      { "say": "This list has ten steps. This one has seven. Both bake the same cake.",
+        "art": { "at": { "ten": "ten steps", "seven": "has seven", "same": "the same cake" } } },
+      { "say": "The seven-step one is concise. It does the whole job with no waste.",
+        "art": { "at": { "concise": "is concise", "job": "the whole job", "waste": "no waste" } } }
+    ] },
+
+    { "id": "efficient", "kind": "efficient", "heading": "Efficient means concise", "codes": ["3CT.02"], "beats": [
+      { "say": "Efficient means doing the whole job with no waste.",
+        "art": { "at": { "job": "the whole job", "waste": "no waste" } } },
+      { "say": "Open the door. Open the door. Walk in. The door is already open.",
+        "art": { "at": { "first": "Open the door. Open", "second": "Open the door. Walk in.", "walkin": "Walk in.", "already": "already open" } } },
+      { "say": "Step two is waste. Cut it, and you still walk in.",
+        "art": { "at": { "waste": "Step two is waste", "cut": "Cut it", "still": "you still walk in" } } },
+      { "say": "Get a cup. Wave at the cat. Pour the juice. The wave does nothing for the juice.",
+        "art": { "at": { "cup": "Get a cup", "wave": "Wave at the cat", "pour": "Pour the juice", "nothing": "does nothing" } } },
+      { "say": "Cut the wave, and the juice still gets poured. That is concise.",
+        "art": { "at": { "cutwave": "Cut the wave", "poured": "still gets poured", "concise": "That is concise" } } }
+    ] },
+
+    { "id": "cake", "kind": "cake", "heading": "Cut the waste: a cake", "codes": ["3CT.02", "3CT.01"], "beats": [
+      { "say": "Here is an algorithm for baking a cake. It has ten steps.",
+        "art": { "at": { "algorithm": "an algorithm for baking a cake", "ten": "ten steps" } } },
+      { "say": "Phone a friend is a nice call, but it does nothing for the cake.",
+        "art": { "at": { "phone": "Phone a friend", "nothing": "does nothing for the cake" } } },
+      { "say": "Mix it all together. Mix it again, the same way. It is already mixed.",
+        "art": { "at": { "mix": "Mix it all together", "again": "Mix it again", "already": "already mixed" } } },
+      { "say": "The second mix is waste. So is the funny hat. Cut all three.",
+        "art": { "at": { "second": "The second mix is waste", "hat": "the funny hat", "cut": "Cut all three" } } },
+      { "say": "Ten steps became seven, and every one of the seven does something.",
+        "art": { "at": { "seven": "Ten steps became seven", "every": "every one of the seven" } } },
+      { "say": "Ask it of every step: cut this, and does the cake still get baked?",
+        "art": { "at": { "ask": "Ask it of every step", "baked": "still get baked" } } }
+    ] },
+
+    { "id": "present", "kind": "present", "heading": "Wrap, unwrap, wrap again", "codes": ["3CT.02", "3CT.01"], "beats": [
+      { "say": "Now wrap a present for Nora. Nine steps, with waste in them.",
+        "art": { "at": { "nora": "wrap a present for Nora", "nine": "Nine steps", "waste": "with waste in them" } } },
+      { "say": "Wrap the box in paper. Unwrap it to check the teddy. Wrap it again.",
+        "art": { "at": { "wrap": "Wrap the box in paper", "unwrap": "Unwrap it to check", "again": "Wrap it again" } } },
+      { "say": "Those two steps undo each other. Cut both, and the paper stays on.",
+        "art": { "at": { "undo": "undo each other", "cutboth": "Cut both", "stays": "the paper stays on" } } },
+      { "say": "Counting to one hundred does nothing for the present. Cut that too.",
+        "art": { "at": { "count": "Counting to one hundred", "nothing": "does nothing", "cutit": "Cut that too" } } },
+      { "say": "Nine steps became six: box, lid, paper, tape, ribbon, tag.",
+        "art": { "at": { "six": "Nine steps became six", "list": "box, lid, paper", "tag": "tag" } } }
+    ] },
+
+    { "id": "repeat", "kind": "repeat", "heading": "Steps that repeat", "codes": ["3CT.03"], "beats": [
+      { "say": "Water three plants. Fill the can, pour on a plant, walk to the next one.",
+        "art": { "at": { "three": "three plants", "fill": "Fill the can", "pour": "pour on a plant", "walk": "walk to the next one" } } },
+      { "say": "That run of three steps comes round again for the second plant, and for the third.",
+        "art": { "at": { "run": "That run of three steps", "second": "the second plant", "third": "for the third" } } },
+      { "say": "Written out long, that is eleven steps on the page.",
+        "art": { "at": { "eleven": "eleven steps" } } },
+      { "say": "Instead, write the run once and say repeat three times.",
+        "art": { "at": { "once": "write the run once", "repeat": "repeat three times" } } },
+      { "say": "Eleven steps become five, and the three plants still get watered.",
+        "art": { "at": { "five": "become five", "watered": "still get watered" } } },
+      { "say": "Laying the table for four is the same. Plate, fork, knife, cup, four times over.",
+        "art": { "at": { "table": "Laying the table for four", "plate": "Plate, fork, knife, cup", "four": "four times over" } } },
+      { "say": "Eighteen steps become six with a repeat.",
+        "art": { "at": { "eighteen": "Eighteen steps", "six": "six with a repeat" } } }
+    ] },
+
+    { "id": "better", "kind": "better", "heading": "Why concise is better", "codes": ["3CT.02", "3CT.03", "3CT.01"], "beats": [
+      { "say": "A concise algorithm is easier to follow, because there is less to read.",
+        "art": { "at": { "concise": "A concise algorithm", "follow": "easier to follow", "less": "less to read" } } },
+      { "say": "It is easier to understand, because every step matters.",
+        "art": { "at": { "understand": "easier to understand", "matters": "every step matters" } } },
+      { "say": "And it is easier to edit. Change the repeated run once, and all three change.",
+        "art": { "at": { "edit": "easier to edit", "once": "Change the repeated run once", "all": "all three change" } } },
+      { "say": "Computers like it too. Fewer steps is less work.",
+        "art": { "at": { "computers": "Computers like it too", "fewer": "Fewer steps", "work": "less work" } } }
+    ] },
+
+    { "id": "recap", "kind": "recap", "heading": "What you now know", "codes": ["3CT.02", "3CT.03", "3CT.01"], "beats": [
+      { "say": "An efficient algorithm is concise: only the steps the task needs.",
+        "art": { "at": { "efficient": "efficient", "concise": "concise", "task": "the task needs" } } },
+      { "say": "Waste is a step done twice, or one that does nothing at all.",
+        "art": { "at": { "waste": "Waste" } } },
+      { "say": "Steps that come round again are written once with a repeat.",
+        "art": { "at": { "repeat": "a repeat" } } }
+    ] }
+  ]
+}

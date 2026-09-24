@@ -1,0 +1,109 @@
+{
+  "_comment": "Storyboard for the Grade 3 Computing unit lecture film, Lesson 5 Tidy Programs. Rendered by tools/create-ehel-unit-lecture.js. See lecture-video/BRIEF.md. Every beat is one narration clip; art.at names the phrases a picture waits for, and the page refuses to load if a phrase is not in its beat's say. The chapters follow LESSON[lecture] in order (tidy programs; reset first; change the number; test then test again; the Scratch names and the number inside a block), in the lesson's own examples: the five-block jump program, the cat left two squares along and big, the flower at square 3, and the repeat that repeats a spin. Where a program ends is the LESSON'S OWN arithmetic, not the film's: ART.run and ART.walkEnd are asked once, beside the constants, so the tidy version and the untidy one are shown ending in the same place by the kit.",
+  "slug": "tidy-programs",
+  "lesson": 5,
+  "grade": 3,
+  "stage": 3,
+  "title": "Tidy Programs",
+  "subtitle": "Grade 3 Computing",
+  "framework": "Cambridge Primary Computing 0059",
+  "renderer": {
+    "art": ["computing"],
+    "skin": "brown",
+    "scenes": [
+      "tools/lib/ehel-film-marks.js",
+      "tools/lib/film-scenes/computing-g3/tidy-programs.js",
+      "tools/lib/film-scenes/computing-g3/tidy-programs-2.js",
+      "tools/lib/film-scenes/computing-g3/tidy-programs-3.js",
+      "tools/lib/film-scenes/computing-g3/tidy-programs-4.js"
+    ]
+  },
+  "objectives": [
+    ["3P.01", "Understand the benefit of editing programs to make them clear and concise, including removing unused commands or combining duplicated commands."],
+    ["3P.02", "Know how to develop programs that include code to reset objects to their original state (initialisation)."],
+    ["3P.05", "Know how to make a change within a block of code to achieve desired outcomes in programs, such as changing the number of steps a sprite moves."],
+    ["3P.09", "Know how to test and debug programs so that they run and produce the desired output."]
+  ],
+  "scenes": [
+    { "id": "title", "kind": "title", "codes": [], "beats": [
+      { "say": "Jump, jump, jump, wait, say hello. That program has five blocks, and one does nothing.",
+        "art": { "at": { "long": "Jump, jump, jump, wait, say hello", "five": "five blocks", "nothing": "one does nothing" } } },
+      { "say": "Repeat 3 times, jump, say hello. Three blocks, and the cat does exactly the same.",
+        "art": { "at": { "short": "Repeat 3 times, jump, say hello", "three": "Three blocks", "same": "exactly the same" } } }
+    ] },
+
+    { "id": "tidy", "kind": "tidy", "heading": "Same job, fewer blocks", "codes": ["3P.01"], "beats": [
+      { "say": "Here is a program with five blocks: jump, jump, jump, wait, say hello.",
+        "art": { "at": { "prog": "a program with five blocks", "list": "jump, jump, jump, wait, say hello" } } },
+      { "say": "The wait block does nothing here. It is an unused command, so take it out.",
+        "art": { "at": { "wait": "The wait block", "unused": "an unused command", "out": "take it out" } } },
+      { "say": "Jump, jump, jump is the same block three times. Combine them into repeat 3 times, jump.",
+        "art": { "at": { "same": "the same block three times", "combine": "Combine them", "repeat": "repeat 3 times, jump" } } },
+      { "say": "Three blocks now. The cat jumps three times and says hello, exactly as before.",
+        "art": { "at": { "three": "Three blocks now", "does": "jumps three times and says hello" } } },
+      { "say": "Shorter does not mean it does less. It is easier to read and to change.",
+        "art": { "at": { "less": "it does less", "easier": "easier to read" } } }
+    ] },
+
+    { "id": "reset", "kind": "reset", "heading": "Go home first", "codes": ["3P.02", "3P.09"], "beats": [
+      { "say": "The last program left the cat two squares along, and bigger than it started.",
+        "art": { "at": { "leftit": "left the cat", "two": "two squares along", "big": "bigger than it started" } } },
+      { "say": "Run move right, then jump. The moves are right, but the place is wrong.",
+        "art": { "at": { "run": "Run move right, then jump", "moves": "The moves are right", "wrong": "the place is wrong" } } },
+      { "say": "Put a go home block at the top. The cat is back at the start, normal size.",
+        "art": { "at": { "home": "a go home block", "top": "at the top", "back": "back at the start" } } },
+      { "say": "Now move right, jump ends where it should, every single time.",
+        "art": { "at": { "now": "Now move right, jump", "ends": "ends where it should", "every": "every single time" } } },
+      { "say": "Putting things back to their starting state is called initialisation.",
+        "art": { "at": { "back": "back to their starting state", "init": "called initialisation" } } }
+    ] },
+
+    { "id": "number", "kind": "number", "heading": "Change the number", "codes": ["3P.05", "3P.09"], "beats": [
+      { "say": "Sometimes the blocks are right and only a number is wrong.",
+        "art": { "at": { "blocks": "the blocks are right", "number": "only a number is wrong" } } },
+      { "say": "The flower is at square 3. Move right 1, jump, move right 1 stops at square 2.",
+        "art": { "at": { "flower": "The flower is at square 3", "prog": "Move right 1, jump, move right 1", "stops": "stops at square 2" } } },
+      { "say": "Change the first number from 1 to 2. Change one number, and nothing else.",
+        "art": { "at": { "change": "Change the first number from 1 to 2", "one": "Change one number" } } },
+      { "say": "Run it again. Right 2, jump, right 1 stops at 3, right on the flower.",
+        "art": { "at": { "run": "Run it again", "three": "stops at 3", "onit": "right on the flower" } } },
+      { "say": "No block moved. Only the number inside one block changed.",
+        "art": { "at": { "nomove": "No block moved", "inside": "inside one block" } } }
+    ] },
+
+    { "id": "test", "kind": "test", "heading": "Test and debug", "codes": ["3P.09"], "beats": [
+      { "say": "Testing is running a program to see what it really does.",
+        "art": { "at": { "testing": "Testing is running a program", "really": "what it really does" } } },
+      { "say": "Debugging is finding what went wrong, and then fixing it.",
+        "art": { "at": { "debug": "Debugging", "finding": "finding what went wrong", "fixing": "fixing it" } } },
+      { "say": "This one says repeat 3 times, spin, say hello. We wanted three jumps.",
+        "art": { "at": { "prog": "repeat 3 times, spin", "wanted": "We wanted three jumps" } } },
+      { "say": "The repeat repeats a spin. That block is the bug, so change spin to jump.",
+        "art": { "at": { "repeats": "repeats a spin", "bug": "That block is the bug", "change": "change spin to jump" } } },
+      { "say": "Now run it again. A fix you have not tested is a fix you do not know works.",
+        "art": { "at": { "run": "run it again", "tested": "you have not tested", "works": "do not know works" } } }
+    ] },
+
+    { "id": "scratch", "kind": "scratch", "heading": "Real block names", "codes": ["3P.05"], "beats": [
+      { "say": "Your blocks have other names too. Scratch is the program most schools use.",
+        "art": { "at": { "other": "other names too", "scratch": "Scratch" } } },
+      { "say": "Move right is move 10 steps. Jump is change y by 50. Spin is turn 90 degrees.",
+        "art": { "at": { "move": "move 10 steps", "jump": "change y by 50", "spin": "turn 90 degrees" } } },
+      { "say": "Go home is go to x: 0 y: 0. Repeat 3 times is repeat 3. Same jobs, real names.",
+        "art": { "at": { "home": "go to x: 0 y: 0", "repeat": "Repeat 3 times is repeat 3", "same": "Same jobs, real names" } } },
+      { "say": "Some blocks hold a number you can change. Move holds steps. Wait holds seconds.",
+        "art": { "at": { "hold": "hold a number", "steps": "Move holds steps", "seconds": "Wait holds seconds" } } },
+      { "say": "Set volume holds one too. Volume is how loud a sound is, from 0 to 100.",
+        "art": { "at": { "volume": "Set volume", "loud": "how loud a sound is", "range": "from 0 to 100" } } }
+    ] },
+
+    { "id": "recap", "kind": "recap", "heading": "What you now know", "codes": ["3P.01", "3P.02", "3P.05", "3P.09"], "beats": [
+      { "say": "A tidy program has no unused block and no duplicate left written out.",
+        "art": { "at": { "unused": "no unused block", "duplicate": "no duplicate" } } },
+      { "say": "Go home first: that is initialisation. Then change one number inside a block.",
+        "art": { "at": { "init": "that is initialisation", "number": "one number inside a block" } } },
+      { "say": "Test after every change you make. The run is the test.",
+        "art": { "at": { "test": "Test after every change" } } }
+    ] }
+  ]
+}

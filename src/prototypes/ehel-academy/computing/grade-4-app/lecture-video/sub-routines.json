@@ -1,0 +1,113 @@
+{
+  "_comment": "Storyboard for the Grade 4 Computing unit lecture film, Lesson 3 Sub-routines. Rendered by tools/create-ehel-unit-lecture.js. See lecture-video/BRIEF.md. Every beat is one narration clip; art.at names the phrases a picture waits for, and the page refuses to load if a phrase is not in its beat's say. The chapters follow LESSON[lecture] in order (decomposition; the main algorithm; following a call; written once used many times; changed in one place and shared). THE SAME-THING CLAIM IS THE KIT'S, NOT THE FILM'S: the 'Following a call' chapter builds its ribbon of finished steps from ART.algo.subExpand(main, subs) - the lesson's own expansion rule, mirrored in _rules.py - so the five-line main algorithm and the steps it ends up doing cannot disagree with the lesson. No count is spoken, because the lesson's own 'twenty steps' line does not match the steps it lists (see the film's report).",
+  "slug": "sub-routines",
+  "lesson": 3,
+  "grade": 4,
+  "stage": 4,
+  "title": "Sub-routines",
+  "subtitle": "Grade 4 Computing",
+  "framework": "Cambridge Primary Computing 0059",
+  "renderer": {
+    "art": ["computing"],
+    "skin": "brown",
+    "scenes": [
+      "tools/lib/ehel-film-marks.js",
+      "tools/lib/film-scenes/computing-g4/sub-routines.js",
+      "tools/lib/film-scenes/computing-g4/sub-routines-2.js",
+      "tools/lib/film-scenes/computing-g4/sub-routines-3.js"
+    ]
+  },
+  "objectives": [
+    ["4CT.06", "Understand that decomposition is a process that is used to break tasks into different parts (sub-routines)."],
+    ["4CT.07", "Know how to use decomposition to break tasks into different parts, represented as algorithms."],
+    ["4CT.08", "Follow and understand algorithms that use a sub-routine."]
+  ],
+  "scenes": [
+    { "id": "title", "kind": "title", "codes": [], "beats": [
+      { "say": "Getting ready for school is a big job. Break it into named parts.",
+        "art": { "at": { "big": "a big job", "parts": "named parts" } } },
+      { "say": "Each part is a sub-routine: a small algorithm with a name.",
+        "art": { "at": { "sub": "a sub-routine", "name": "with a name" } } }
+    ] },
+
+    { "id": "decompose", "kind": "decompose", "heading": "Big task, named parts", "codes": ["4CT.06", "4CT.07"], "beats": [
+      { "say": "A big task is easier in parts. Here is one: a school morning.",
+        "art": { "at": { "task": "A big task", "easier": "easier in parts", "morning": "a school morning" } } },
+      { "say": "Decomposition breaks it into four parts: wash, dress, breakfast and bag.",
+        "art": { "at": { "decomposition": "Decomposition", "four": "four parts", "names": "wash, dress, breakfast and bag" } } },
+      { "say": "In an algorithm each part becomes a sub-routine with a name.",
+        "art": { "at": { "each": "each part", "sub": "a sub-routine", "name": "with a name" } } },
+      { "say": "A sub-routine is a small algorithm. WASH is face, teeth and hair.",
+        "art": { "at": { "small": "a small algorithm", "wash": "WASH", "steps": "face, teeth and hair" } } },
+      { "say": "It skips nothing. All the steps are still there.",
+        "art": { "at": { "skips": "It skips nothing", "still": "still there" } } }
+    ] },
+
+    { "id": "main", "kind": "main", "heading": "The main algorithm", "codes": ["4CT.07"], "beats": [
+      { "say": "The main algorithm is the short list at the top.",
+        "art": { "at": { "main": "The main algorithm", "short": "the short list" } } },
+      { "say": "It has one line for each part, in the order they happen.",
+        "art": { "at": { "line": "one line for each part", "order": "in the order they happen" } } },
+      { "say": "The first line is do WASH. Then do DRESS, do BREAKFAST and do BAG.",
+        "art": { "at": { "wash": "do WASH", "dress": "do DRESS", "breakfast": "do BREAKFAST", "bag": "do BAG" } } },
+      { "say": "Then leave the house. That is five lines you can read at a glance.",
+        "art": { "at": { "leave": "leave the house", "five": "five lines", "glance": "at a glance" } } },
+      { "say": "Each do is a call. A call runs the sub-routine with that name.",
+        "art": { "at": { "each": "Each do", "call": "is a call", "runs": "runs the sub-routine" } } },
+      { "say": "Behind those five lines sits all the detail, tucked away.",
+        "art": { "at": { "behind": "Behind those five lines", "detail": "all the detail", "tucked": "tucked away" } } }
+    ] },
+
+    { "id": "follow", "kind": "follow", "heading": "Following a call", "codes": ["4CT.08"], "beats": [
+      { "say": "Now follow it. You reach do WASH, so jump into that sub-routine.",
+        "art": { "at": { "reach": "You reach do WASH", "jump": "jump into that sub-routine" } } },
+      { "say": "Do every one of its steps: face, then teeth, then hair.",
+        "art": { "at": { "every": "every one of its steps", "face": "face,", "teeth": "then teeth", "hair": "then hair" } } },
+      { "say": "Then jump back to the line after the call, and carry on.",
+        "art": { "at": { "back": "jump back", "after": "the line after the call", "carry": "carry on" } } },
+      { "say": "The next line is do DRESS, so jump in again: shirt, trousers, socks, shoes.",
+        "art": { "at": { "dress": "do DRESS", "again": "jump in again", "clothes": "shirt, trousers, socks, shoes" } } },
+      { "say": "Back once more, on through BREAKFAST and BAG, then leave the house.",
+        "art": { "at": { "backagain": "Back once more", "rest": "BREAKFAST and BAG", "leave": "leave the house" } } },
+      { "say": "Five lines did every step in the parts. Nothing was skipped.",
+        "art": { "at": { "five": "Five lines", "every": "every step in the parts", "skipped": "Nothing was skipped" } } }
+    ] },
+
+    { "id": "reuse", "kind": "reuse", "heading": "Written once, used many times", "codes": ["4CT.06", "4CT.08"], "beats": [
+      { "say": "Bedtime has a main algorithm too: pyjamas, do WASH, do STORY, lights off.",
+        "art": { "at": { "bedtime": "Bedtime", "pyjamas": "pyjamas", "wash": "do WASH", "story": "do STORY", "lights": "lights off" } } },
+      { "say": "There is do WASH again. The same sub-routine, in a different routine.",
+        "art": { "at": { "again": "do WASH again", "same": "The same sub-routine" } } },
+      { "say": "Both lists point at the same box of steps, written out only once.",
+        "art": { "at": { "point": "point at the same box", "written": "written out only once" } } },
+      { "say": "It is called in the morning, and called again at bedtime.",
+        "art": { "at": { "morning": "in the morning", "bed": "at bedtime" } } },
+      { "say": "One copy of the steps. Two calls to it. That is what reuse means.",
+        "art": { "at": { "copy": "One copy", "calls": "Two calls", "reuse": "reuse" } } }
+    ] },
+
+    { "id": "once", "kind": "once", "heading": "One change, shared work", "codes": ["4CT.06"], "beats": [
+      { "say": "Now add flossing to the WASH sub-routine, and watch both routines.",
+        "art": { "at": { "add": "add flossing", "wash": "the WASH sub-routine", "look": "watch both routines" } } },
+      { "say": "Both of them get flossing, and you edited neither of them.",
+        "art": { "at": { "both": "Both of them get flossing", "neither": "edited neither" } } },
+      { "say": "You change one list, not three. That is three chances not to miss one.",
+        "art": { "at": { "one": "one list", "three": "not three", "chances": "three chances" } } },
+      { "say": "Sub-routines share the work too. One person writes WASH.",
+        "art": { "at": { "share": "share the work", "person": "One person writes WASH" } } },
+      { "say": "Another writes DRESS, and the main algorithm joins them.",
+        "art": { "at": { "another": "Another writes DRESS", "joins": "joins them" } } }
+    ] },
+
+    { "id": "recap", "kind": "recap", "heading": "What you now know", "codes": ["4CT.06", "4CT.07", "4CT.08"], "beats": [
+      { "say": "Decomposition breaks one big task into smaller named parts.",
+        "art": { "at": { "decomposition": "Decomposition" } } },
+      { "say": "Each part is a sub-routine, and the main algorithm calls them in order.",
+        "art": { "at": { "sub": "a sub-routine", "main": "the main algorithm" } } },
+      { "say": "A call jumps into a sub-routine. A return brings you back.",
+        "art": { "at": { "call": "A call", "ret": "A return" } } },
+      { "say": "Written once, used many times, and changed in one place.",
+        "art": { "at": { "once": "Written once" } } }
+    ] }
+  ]
+}

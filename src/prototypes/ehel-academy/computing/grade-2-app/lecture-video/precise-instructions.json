@@ -1,0 +1,116 @@
+{
+  "_comment": "Storyboard for the Grade 2 Computing unit lecture film, Lesson 1 Precise Instructions. Rendered by tools/create-ehel-unit-lecture.js. See lecture-video/BRIEF.md. Every beat is one narration clip; art.at names the phrases a picture waits for, and the page refuses to load if a phrase is not in its beat's say. The chapters follow LESSON[lecture] in order (exactly what you say; what, how big, where; a linear algorithm; only the steps you need; building and drawing). Every picture of what Robo actually draws is the LESSON'S OWN drawing, given the list of instruction ids it was told - ART.drawing(house, [walls, roof-corner]) puts the roof in the corner, ART.scene(tea, [water]) paints the puddle and captions it, ART.scene(tower, [red, blue]) stacks the bricks - so the film draws no picture of a mistake of its own.",
+  "slug": "precise-instructions",
+  "lesson": 1,
+  "grade": 2,
+  "stage": 2,
+  "title": "Precise Instructions",
+  "subtitle": "Grade 2 Computing",
+  "framework": "Cambridge Primary Computing 0059",
+  "renderer": {
+    "art": ["computing"],
+    "skin": "brown",
+    "scenes": [
+      "tools/lib/ehel-film-marks.js",
+      "tools/lib/film-scenes/computing-g2/precise-instructions.js",
+      "tools/lib/film-scenes/computing-g2/precise-instructions-2.js",
+      "tools/lib/film-scenes/computing-g2/precise-instructions-3.js"
+    ]
+  },
+  "objectives": [
+    ["2CT.03", "Know that an algorithm is a precise set of instructions."],
+    ["2CT.06", "Know how to develop precise sets of instructions to complete simple tasks, such as drawing a picture of a particular object or building a brick tower."],
+    ["2CT.01", "Follow and understand linear algorithms."],
+    ["2CT.04", "Identify the steps needed to undertake tasks, in order to develop simple algorithms."]
+  ],
+  "scenes": [
+    { "id": "title", "kind": "title", "codes": [], "beats": [
+      { "say": "Tell Robo to draw a shape, and Robo draws any shape at all.",
+        "art": { "at": { "shape": "draw a shape", "any": "any shape at all" } } },
+      { "say": "Say a big square in the middle, and you get exactly that.",
+        "art": { "at": { "square": "a big square in the middle", "exact": "exactly that" } } }
+    ] },
+
+    { "id": "exact", "kind": "exact", "heading": "Exactly what you say", "codes": ["2CT.03"], "beats": [
+      { "say": "Robo can draw. But Robo does exactly what it is told, and nothing more.",
+        "art": { "at": { "draw": "Robo can draw", "told": "exactly what it is told", "nothing": "nothing more" } } },
+      { "say": "You say: draw a shape. Robo draws a squiggle, and that is a shape.",
+        "art": { "at": { "say": "draw a shape", "squiggle": "a squiggle" } } },
+      { "say": "A shape is any shape, anywhere. Robo did exactly what you said.",
+        "art": { "at": { "any": "any shape, anywhere", "did": "exactly what you said" } } },
+      { "say": "Try again. Say: draw a big square in the middle.",
+        "art": { "at": { "again": "Try again", "square": "a big square in the middle" } } },
+      { "say": "That one is precise. It says what, how big, and where.",
+        "art": { "at": { "precise": "is precise", "what": "what, how big, and where" } } },
+      { "say": "So an algorithm is a precise set of instructions, with nothing left to guess.",
+        "art": { "at": { "algorithm": "an algorithm", "set": "a precise set of instructions", "guess": "nothing left to guess" } } }
+    ] },
+
+    { "id": "where", "kind": "where", "heading": "What, how big, where", "codes": ["2CT.06", "2CT.03"], "beats": [
+      { "say": "A precise instruction says what to draw, how big, and where.",
+        "art": { "at": { "what": "what to draw", "big": "how big", "where": "and where" } } },
+      { "say": "Draw a big square in the middle. Robo draws the walls.",
+        "art": { "at": { "square": "Draw a big square in the middle", "walls": "the walls" } } },
+      { "say": "Say draw a roof somewhere, and Robo puts the roof anywhere it likes.",
+        "art": { "at": { "somewhere": "draw a roof somewhere", "anywhere": "anywhere it likes" } } },
+      { "say": "Say a triangle on top of the square, and the roof goes where a roof belongs.",
+        "art": { "at": { "triangle": "a triangle on top of the square", "belongs": "where a roof belongs" } } },
+      { "say": "A small door at the bottom. A window on the wall, at the top left.",
+        "art": { "at": { "door": "A small door at the bottom", "window": "A window on the wall" } } },
+      { "say": "The sun in the top right of the sky. Nothing is left for Robo to guess.",
+        "art": { "at": { "sun": "The sun in the top right", "nothing": "Nothing is left" } } }
+    ] },
+
+    { "id": "linear", "kind": "linear", "heading": "A linear algorithm", "codes": ["2CT.01"], "beats": [
+      { "say": "A cup of tea has five steps. Making it is an algorithm too.",
+        "art": { "at": { "tea": "A cup of tea", "five": "five steps" } } },
+      { "say": "Step one: get a cup. Step two: put a tea bag in the cup.",
+        "art": { "at": { "cup": "get a cup", "bag": "put a tea bag in the cup" } } },
+      { "say": "Step three: pour in the hot water. The tea goes brown.",
+        "art": { "at": { "water": "pour in the hot water", "brown": "The tea goes brown" } } },
+      { "say": "Step four: add a little milk. Step five: stir it with a spoon.",
+        "art": { "at": { "milk": "add a little milk", "stir": "stir it with a spoon" } } },
+      { "say": "Pour the water first and you get a puddle on the table.",
+        "art": { "at": { "first": "Pour the water first", "puddle": "a puddle on the table" } } },
+      { "say": "Follow it exactly as it is written, one step after another. That is a linear algorithm.",
+        "art": { "at": { "follow": "Follow it exactly", "after": "one step after another", "linear": "a linear algorithm" } } }
+    ] },
+
+    { "id": "need", "kind": "need", "heading": "Only the steps you need", "codes": ["2CT.04"], "beats": [
+      { "say": "Before you write an algorithm, work out which steps the task needs.",
+        "art": { "at": { "before": "Before you write an algorithm", "needs": "which steps the task needs" } } },
+      { "say": "Taking a photo needs the tablet switched on, and the camera open.",
+        "art": { "at": { "tablet": "the tablet switched on", "camera": "the camera open" } } },
+      { "say": "Point it at the cat. Tap the round button. Look at your photo.",
+        "art": { "at": { "point": "Point it at the cat", "button": "Tap the round button", "look": "Look at your photo" } } },
+      { "say": "It does not need a coat, a song, or a watered plant.",
+        "art": { "at": { "coat": "a coat", "song": "a song", "plant": "a watered plant" } } },
+      { "say": "A step the task does not need is a step that does not belong.",
+        "art": { "at": { "step": "A step the task does not need", "belong": "does not belong" } } },
+      { "say": "Put the needed steps in order, and you have written an algorithm.",
+        "art": { "at": { "order": "in order", "written": "written an algorithm" } } }
+    ] },
+
+    { "id": "build", "kind": "build", "heading": "Building and drawing", "codes": ["2CT.06", "2CT.03"], "beats": [
+      { "say": "The same rule builds a tower. Robo puts the red brick down first.",
+        "art": { "at": { "tower": "builds a tower", "red": "the red brick" } } },
+      { "say": "Add a brick is vague: any brick, anywhere. Robo could give you any of these.",
+        "art": { "at": { "add": "Add a brick", "vague": "is vague", "any": "any brick, anywhere" } } },
+      { "say": "Put the blue brick on top of the red brick. Now only one tower fits.",
+        "art": { "at": { "blue": "the blue brick on top of the red brick", "one": "only one tower fits" } } },
+      { "say": "Precise steps, in the right order, and nothing that does not belong.",
+        "art": { "at": { "precise": "Precise steps", "order": "the right order", "nothing": "nothing that does not belong" } } }
+    ] },
+
+    { "id": "recap", "kind": "recap", "heading": "What you now know", "codes": ["2CT.03", "2CT.06", "2CT.01", "2CT.04"], "beats": [
+      { "say": "Precise means exact, with nothing left to guess. Vague leaves things to guess.",
+        "art": { "at": { "precise": "Precise means exact", "vague": "Vague leaves things to guess" } } },
+      { "say": "An algorithm is a precise set of instructions to do a job.",
+        "art": { "at": { "algorithm": "An algorithm" } } },
+      { "say": "A linear algorithm is a straight line of steps. Follow every one.",
+        "art": { "at": { "linear": "A linear algorithm" } } },
+      { "say": "Work out which steps the task needs, and leave the others out.",
+        "art": { "at": { "needed": "which steps the task needs", "go": "leave the others out" } } }
+    ] }
+  ]
+}

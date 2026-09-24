@@ -1,0 +1,120 @@
+{
+  "_comment": "Storyboard for the Grade 2 Computing unit lecture film, Lesson 11 Computers, Devices and Robots. Rendered by tools/create-ehel-unit-lecture.js. See lecture-video/BRIEF.md. Every beat is one narration clip; art.at names the phrases a picture waits for, and the page refuses to load if a phrase is not in its beat's say. The chapters follow LESSON[lecture] in order: what computers do better; what people do better; the right device; portable or powerful; and the two robot parts joined into one chapter, because they teach the same contrast. This lesson SORTS things into kinds, so every contrast is drawn side by side in its own region and nothing correct is ever crossed out: the people chapter carries no cross at all, the two device sizes both end with a tick, and the story and the real robots stand in the lesson's own two bins. The laptop is the LESSON'S OWN figure (ART.figure).",
+  "slug": "computers-devices-and-robots",
+  "lesson": 11,
+  "grade": 2,
+  "stage": 2,
+  "title": "Computers, Devices and Robots",
+  "subtitle": "Grade 2 Computing",
+  "framework": "Cambridge Primary Computing 0059",
+  "renderer": {
+    "art": ["computing"],
+    "skin": "brown",
+    "scenes": [
+      "tools/lib/ehel-film-marks.js",
+      "tools/lib/film-scenes/computing-g2/computers-devices-and-robots.js",
+      "tools/lib/film-scenes/computing-g2/computers-devices-and-robots-2.js",
+      "tools/lib/film-scenes/computing-g2/computers-devices-and-robots-3.js",
+      "tools/lib/film-scenes/computing-g2/computers-devices-and-robots-4.js"
+    ]
+  },
+  "objectives": [
+    ["2CS.04", "Identify tasks that computers can complete more effectively than humans."],
+    ["2CS.05", "Understand that people use different types of computer device depending on a range of factors, including their location or their purpose."],
+    ["2CS.06", "Compare the representation of robots in fiction with real robots that have a real world purpose."]
+  ],
+  "scenes": [
+    { "id": "title", "kind": "title", "codes": [], "beats": [
+      { "say": "A computer adds up a hundred numbers before you can blink.",
+        "art": { "at": { "adds": "adds up a hundred numbers", "blink": "before you can blink" } } },
+      { "say": "It cannot comfort a sad friend. Fast is not the same as kind.",
+        "art": { "at": { "comfort": "comfort a sad friend", "kind": "not the same as kind" } } }
+    ] },
+
+    { "id": "faster", "kind": "faster", "heading": "What computers do better", "codes": ["2CS.04"], "beats": [
+      { "say": "Here are five sums. You and the computer race to answer them.",
+        "art": { "at": { "sums": "five sums", "race": "race to answer them" } } },
+      { "say": "The computer finishes all five before you have finished one.",
+        "art": { "at": { "five": "all five", "one": "finished one" } } },
+      { "say": "Every answer is right. Accurate means right every time.",
+        "art": { "at": { "right": "Every answer is right", "accurate": "Accurate" } } },
+      { "say": "It can sort a thousand names before you have said one name.",
+        "art": { "at": { "sort": "sort a thousand names", "said": "said one name" } } },
+      { "say": "It can count every car on a road, all day and all night.",
+        "art": { "at": { "count": "count every car", "night": "all day and all night" } } },
+      { "say": "A computer never gets tired and it never gets bored.",
+        "art": { "at": { "tired": "never gets tired", "bored": "never gets bored" } } }
+    ] },
+
+    { "id": "people", "kind": "people", "heading": "What people do better", "codes": ["2CS.04"], "beats": [
+      { "say": "Now here are some jobs a computer cannot do at all.",
+        "art": { "at": { "cannot": "cannot do at all" } } },
+      { "say": "It cannot comfort a friend who has fallen over and is sad.",
+        "art": { "at": { "comfort": "comfort a friend", "sad": "is sad" } } },
+      { "say": "It cannot choose a present that Grandma will love.",
+        "art": { "at": { "present": "a present", "grandma": "Grandma will love" } } },
+      { "say": "It cannot be fair when two friends want the same toy.",
+        "art": { "at": { "fair": "be fair", "toy": "the same toy" } } },
+      { "say": "Fast is not the same as kind. Those jobs are ours.",
+        "art": { "at": { "fast": "Fast is not the same as kind", "ours": "Those jobs are ours" } } }
+    ] },
+
+    { "id": "device", "kind": "device", "heading": "The right device", "codes": ["2CS.05"], "beats": [
+      { "say": "A device is a machine with a computer inside it.",
+        "art": { "at": { "device": "A device", "inside": "a computer inside it" } } },
+      { "say": "Two things choose a device: where you are, and what it is for.",
+        "art": { "at": { "where": "where you are", "forwhat": "what it is for" } } },
+      { "say": "A phone fits in a pocket and works anywhere you go.",
+        "art": { "at": { "phone": "A phone", "pocket": "fits in a pocket" } } },
+      { "say": "A laptop is for lots of typing, at a desk or on your knees.",
+        "art": { "at": { "laptop": "A laptop", "typing": "lots of typing" } } },
+      { "say": "A desktop computer stays at one desk with a big screen.",
+        "art": { "at": { "desktop": "A desktop computer", "screen": "a big screen" } } },
+      { "say": "A smart speaker is for when your hands are busy.",
+        "art": { "at": { "speaker": "A smart speaker", "hands": "your hands are busy" } } },
+      { "say": "On the bus, the phone. Cooking with messy hands, the speaker.",
+        "art": { "at": { "bus": "On the bus", "cooking": "Cooking with messy hands" } } }
+    ] },
+
+    { "id": "portable", "kind": "portable", "heading": "Portable, or powerful", "codes": ["2CS.05"], "beats": [
+      { "say": "Portable means small and light enough to carry about with you.",
+        "art": { "at": { "portable": "Portable", "carry": "carry about with you" } } },
+      { "say": "A phone is portable. A desktop computer is not portable.",
+        "art": { "at": { "phone": "A phone is portable", "desktop": "A desktop computer is not" } } },
+      { "say": "A portable device goes wherever you go, in a pocket.",
+        "art": { "at": { "goes": "goes wherever you go", "pocket": "in a pocket" } } },
+      { "say": "A bigger computer does more, once you have got there.",
+        "art": { "at": { "bigger": "A bigger computer", "more": "does more" } } },
+      { "say": "Which one is better? It depends on the job you are doing.",
+        "art": { "at": { "better": "Which one is better?", "depends": "depends on the job" } } }
+    ] },
+
+    { "id": "robots", "kind": "robots", "heading": "Story robots, real robots", "codes": ["2CS.06"], "beats": [
+      { "say": "A robot is a machine, programmed to move and do a job.",
+        "art": { "at": { "robot": "A robot", "job": "do a job" } } },
+      { "say": "In stories, robots have feelings and find things funny.",
+        "art": { "at": { "stories": "In stories", "feelings": "have feelings", "funny": "find things funny" } } },
+      { "say": "Fictional means made up for a story. Those robots are fictional.",
+        "art": { "at": { "fictional": "Fictional", "madeup": "made up for a story" } } },
+      { "say": "Real robots have a program and a job. An arm welds cars.",
+        "art": { "at": { "program": "a program and a job", "arm": "An arm welds cars" } } },
+      { "say": "A vacuum turns when it bumps. A rover drives on Mars.",
+        "art": { "at": { "vacuum": "A vacuum turns when it bumps", "rover": "A rover drives on Mars" } } },
+      { "say": "A real robot notices the world with sensors, not feelings.",
+        "art": { "at": { "sensors": "with sensors", "feelings": "not feelings" } } },
+      { "say": "Real robots are more boring than film robots, and far more useful.",
+        "art": { "at": { "boring": "more boring", "useful": "far more useful" } } }
+    ] },
+
+    { "id": "recap", "kind": "recap", "heading": "What you now know", "codes": ["2CS.04", "2CS.05", "2CS.06"], "beats": [
+      { "say": "Computers are fast and accurate. People are kind and fair.",
+        "art": { "at": { "fast": "fast and accurate", "kind": "kind and fair" } } },
+      { "say": "The place and the purpose choose the device you use.",
+        "art": { "at": { "choose": "choose the device" } } },
+      { "say": "Story robots feel. Real robots have a program and a job.",
+        "art": { "at": { "feel": "Story robots feel", "program": "a program and a job" } } },
+      { "say": "The computer wins the sums. You win the kindness.",
+        "art": { "at": { "sums": "wins the sums", "kindness": "You win the kindness" } } }
+    ] }
+  ]
+}

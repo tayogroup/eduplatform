@@ -1,0 +1,124 @@
+{
+  "_comment": "Storyboard for the Grade 4 Computing unit lecture film, Lesson 13 Software, Sensors and Files. Rendered by tools/create-ehel-unit-lecture.js. See lecture-video/BRIEF.md. The chapters follow LESSON[lecture] in order: application software, systems software (with the deepened part that it runs the machine and you never open it), data in, information out, file sizes and the order smallest to biggest (with the deepened part that the file format decides the size). Every device, reading and file size is the lesson's own - the keyboard's h e l l o, the sensor's 21 degrees, the logger's readings all night, the screen's 22 degrees, battery low, the class list, the fridge light, and 20 KB / 3 MB / 5 MB / 2 GB / a few MB to 50 GB. The computer itself is the lesson kit's own laptop figure, and its screen and keyboard are rung with the kit's own outlines as they are named. 4CS.05 names GAMES, so the game file is a beat of its own rather than a sixth row nobody says.",
+  "slug": "software-sensors-and-files",
+  "lesson": 13,
+  "grade": 4,
+  "stage": 4,
+  "title": "Software, Sensors and Files",
+  "subtitle": "Grade 4 Computing",
+  "framework": "Cambridge Primary Computing 0059",
+  "renderer": {
+    "art": ["computing"],
+    "skin": "brown",
+    "scenes": [
+      "tools/lib/ehel-film-marks.js",
+      "tools/lib/film-scenes/computing-g4/software-sensors-and-files.js",
+      "tools/lib/film-scenes/computing-g4/software-sensors-and-files-2.js",
+      "tools/lib/film-scenes/computing-g4/software-sensors-and-files-3.js",
+      "tools/lib/film-scenes/computing-g4/software-sensors-and-files-4.js"
+    ]
+  },
+  "objectives": [
+    ["4CS.02", "Know the functions of application and systems software."],
+    ["4CS.03", "Identify a range of data recorded by input devices in computer systems, including data that is collected through sensors and data loggers."],
+    ["4CS.04", "Identify a range of information communicated by output devices in computer systems."],
+    ["4CS.05", "Identify that different types of file have different sizes, including text, audio, image, video and games."]
+  ],
+  "scenes": [
+    { "id": "title", "kind": "title", "codes": [], "beats": [
+      { "say": "You open Paint to draw. You never open the operating system.",
+        "art": { "at": { "paint": "open Paint to draw", "os": "the operating system" } } },
+      { "say": "Both are software. One does a job for you; the other runs the machine.",
+        "art": { "at": { "both": "Both are software", "job": "does a job for you", "runs": "runs the machine" } } }
+    ] },
+
+    { "id": "apps", "kind": "apps", "heading": "Applications do jobs", "codes": ["4CS.02"], "beats": [
+      { "say": "An application is a program you open to do a job.",
+        "art": { "at": { "application": "An application", "open": "you open", "job": "to do a job" } } },
+      { "say": "Paint to draw. A browser to read pages. A game to play.",
+        "art": { "at": { "paint": "Paint to draw", "browser": "A browser to read pages", "game": "A game to play" } } },
+      { "say": "A writing program to write. All four are applications.",
+        "art": { "at": { "writing": "A writing program to write", "all": "All four are applications" } } }
+    ] },
+
+    { "id": "systems", "kind": "systems", "heading": "Systems software underneath", "codes": ["4CS.02"], "beats": [
+      { "say": "Systems software runs the computer itself. You never open it.",
+        "art": { "at": { "runs": "runs the computer itself", "never": "You never open it" } } },
+      { "say": "The operating system starts when you press power.",
+        "art": { "at": { "os": "The operating system", "power": "press power" } } },
+      { "say": "It runs the screen, the keyboard and the mouse.",
+        "art": { "at": { "screen": "the screen", "keyboard": "the keyboard", "mouse": "the mouse" } } },
+      { "say": "It keeps your files in folders and shares the machine between applications.",
+        "art": { "at": { "folders": "files in folders", "shares": "shares the machine" } } },
+      { "say": "A driver lets it talk to the printer or the camera.",
+        "art": { "at": { "driver": "A driver", "printer": "the printer", "camera": "the camera" } } },
+      { "say": "It is not just the desktop picture. It runs everything else.",
+        "art": { "at": { "desktop": "just the desktop picture", "everything": "runs everything else" } } }
+    ] },
+
+    { "id": "inputs", "kind": "inputs", "heading": "Input devices record data", "codes": ["4CS.03"], "beats": [
+      { "say": "Input devices record data. The data goes in.",
+        "art": { "at": { "record": "record data", "in": "goes in" } } },
+      { "say": "A keyboard records the letters a person types.",
+        "art": { "at": { "keyboard": "A keyboard", "letters": "the letters a person types" } } },
+      { "say": "A camera records a picture. A microphone records sound.",
+        "art": { "at": { "camera": "A camera", "mic": "A microphone" } } },
+      { "say": "A temperature sensor records how warm it is, all by itself.",
+        "art": { "at": { "sensor": "A temperature sensor", "warm": "how warm it is", "itself": "all by itself" } } },
+      { "say": "A motion sensor records that something moved in front of it.",
+        "art": { "at": { "motion": "A motion sensor", "moved": "something moved" } } },
+      { "say": "A data logger is a sensor with a memory.",
+        "art": { "at": { "logger": "A data logger", "memory": "a sensor with a memory" } } },
+      { "say": "It records a reading every minute all night, and keeps them all.",
+        "art": { "at": { "every": "every minute all night", "keeps": "keeps them all" } } }
+    ] },
+
+    { "id": "outputs", "kind": "outputs", "heading": "Output devices communicate", "codes": ["4CS.04"], "beats": [
+      { "say": "Output devices communicate information. It comes out, to you.",
+        "art": { "at": { "communicate": "communicate information", "out": "comes out, to you" } } },
+      { "say": "The screen shows the weather: today it is 22 degrees.",
+        "art": { "at": { "screen": "The screen", "weather": "the weather", "degrees": "22 degrees" } } },
+      { "say": "The speaker says battery low. A voice note is information as sound.",
+        "art": { "at": { "speaker": "The speaker", "low": "battery low", "voice": "A voice note" } } },
+      { "say": "The printer puts the class list on paper, for you to keep.",
+        "art": { "at": { "printer": "The printer", "list": "the class list", "paper": "on paper" } } },
+      { "say": "A red light warns you the fridge door is open: one light, one piece of information.",
+        "art": { "at": { "red": "A red light", "fridge": "the fridge door is open", "one": "one light, one piece of information" } } }
+    ] },
+
+    { "id": "sizes", "kind": "sizes", "heading": "How big is a file?", "codes": ["4CS.05"], "beats": [
+      { "say": "File size is measured in bytes. A kilobyte is about a thousand.",
+        "art": { "at": { "bytes": "measured in bytes", "kb": "A kilobyte", "thousand": "about a thousand" } } },
+      { "say": "A megabyte is about a million. A gigabyte is a thousand million.",
+        "art": { "at": { "mb": "A megabyte", "gb": "A gigabyte" } } },
+      { "say": "A ten-page story is about twenty kilobytes. Letters are tiny.",
+        "art": { "at": { "story": "A ten-page story", "twenty": "twenty kilobytes", "tiny": "Letters are tiny" } } },
+      { "say": "A photo is about three megabytes: millions of coloured dots.",
+        "art": { "at": { "photo": "A photo", "three": "three megabytes", "dots": "millions of coloured dots" } } },
+      { "say": "A song is about five megabytes. A film is about two gigabytes.",
+        "art": { "at": { "song": "A song", "film": "A film", "two": "two gigabytes" } } },
+      { "say": "A game can be a few megabytes, or as much as fifty gigabytes.",
+        "art": { "at": { "game": "A game", "few": "a few megabytes", "fifty": "fifty gigabytes" } } }
+    ] },
+
+    { "id": "order", "kind": "order", "heading": "Smallest to biggest", "codes": ["4CS.05"], "beats": [
+      { "say": "Now put them in order, smallest first: text, image, audio, video.",
+        "art": { "at": { "order": "in order, smallest first", "four": "text, image, audio, video" } } },
+      { "say": "You might think a long story is bigger than a photo.",
+        "art": { "at": { "think": "You might think", "longer": "a long story", "photo": "a photo" } } },
+      { "say": "It is not. A whole book of text is smaller than one photo.",
+        "art": { "at": { "not": "It is not", "book": "A whole book of text", "smaller": "smaller than one photo" } } },
+      { "say": "The file format decides the size, not the number of pages.",
+        "art": { "at": { "format": "The file format", "decides": "decides the size", "pages": "the number of pages" } } }
+    ] },
+
+    { "id": "recap", "kind": "recap", "heading": "What you now know", "codes": ["4CS.02", "4CS.03", "4CS.04", "4CS.05"], "beats": [
+      { "say": "Applications do jobs for you. Systems software runs the machine.",
+        "art": { "at": { "app": "Applications", "systems": "Systems software" } } },
+      { "say": "Input devices record data. Output devices communicate information.",
+        "art": { "at": { "input": "Input devices", "output": "Output devices" } } },
+      { "say": "Text, image, audio, video, games: files come in very different sizes.",
+        "art": { "at": { "sizes": "very different sizes" } } }
+    ] }
+  ]
+}

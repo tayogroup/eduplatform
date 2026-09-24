@@ -1,0 +1,111 @@
+{
+  "_comment": "Storyboard for the Grade 3 Computing unit lecture film, Lesson 11 Networks Around Us. Rendered by tools/create-ehel-unit-lecture.js. See lecture-video/BRIEF.md. Every beat is one narration clip; art.at names the phrases a picture waits for, and the page refuses to load if a phrase is not in its beat's say. The chapters follow LESSON[lecture] in order: the hardware (with the home router), the networked hardware around the classroom, the services, the advantages, what a network costs. The school network diagram is drawn here, in the engine's idiom, because the lesson keeps its network inside a closure; the laptop and the tablet in it are the lesson kit's own figures (ART.figure).",
+  "slug": "networks-around-us",
+  "lesson": 11,
+  "grade": 3,
+  "stage": 3,
+  "title": "Networks Around Us",
+  "subtitle": "Grade 3 Computing",
+  "framework": "Cambridge Primary Computing 0059",
+  "renderer": {
+    "art": ["computing"],
+    "skin": "brown",
+    "scenes": [
+      "tools/lib/ehel-film-marks.js",
+      "tools/lib/film-scenes/computing-g3/networks-around-us.js",
+      "tools/lib/film-scenes/computing-g3/networks-around-us-2.js",
+      "tools/lib/film-scenes/computing-g3/networks-around-us-3.js"
+    ]
+  },
+  "objectives": [
+    ["3DC.01", "Identify networked hardware in a familiar environment, including the school and home."],
+    ["3DC.02", "Identify services that are available on familiar networks, including digital files, printed documents and the World Wide Web."],
+    ["3DC.03", "Understand the advantages and disadvantages of a network."]
+  ],
+  "scenes": [
+    { "id": "title", "kind": "title", "codes": [], "beats": [
+      { "say": "Every cable in your school goes to one box in a cupboard.",
+        "art": { "at": { "cable": "Every cable", "box": "one box in a cupboard" } } },
+      { "say": "That box is a switch. It joins them all up into one network.",
+        "art": { "at": { "switch": "a switch", "network": "one network" } } }
+    ] },
+
+    { "id": "hardware", "kind": "hardware", "heading": "Hardware you can point at", "codes": ["3DC.01"], "beats": [
+      { "say": "A school network is hardware you can point at.",
+        "art": { "at": { "hardware": "hardware you can point at" } } },
+      { "say": "The switch is the box every cable in the building comes to.",
+        "art": { "at": { "switch": "The switch", "cables": "every cable in the building" } } },
+      { "say": "The server is a computer with no screen. It stores everyone's files.",
+        "art": { "at": { "server": "The server", "files": "stores everyone's files" } } },
+      { "say": "An access point sits on the ceiling. The wi-fi comes from there.",
+        "art": { "at": { "ap": "An access point", "wifi": "The wi-fi comes from there" } } },
+      { "say": "Laptops, tablets, the printer and the whiteboard all join through them.",
+        "art": { "at": { "laptop": "Laptops", "tablet": "tablets", "printer": "the printer", "board": "the whiteboard" } } },
+      { "say": "At home you have a router. It does the switch's job.",
+        "art": { "at": { "home": "At home", "router": "a router", "job": "the switch's job" } } }
+    ] },
+
+    { "id": "classroom", "kind": "classroom", "heading": "Around your classroom", "codes": ["3DC.01"], "beats": [
+      { "say": "Look around your classroom and count what is on the network.",
+        "art": { "at": { "look": "Look around your classroom", "count": "count what is on the network" } } },
+      { "say": "The computers, of course. And the interactive smartboard at the front.",
+        "art": { "at": { "computers": "The computers", "board": "the interactive smartboard" } } },
+      { "say": "That is the big screen the teacher writes on. It is on the network like any computer.",
+        "art": { "at": { "screen": "the big screen", "network": "on the network" } } },
+      { "say": "By the door is the multifunction device. One machine prints, scans and copies.",
+        "art": { "at": { "mfd": "the multifunction device", "jobs": "prints, scans and copies" } } },
+      { "say": "Everybody shares it, instead of three machines in three rooms.",
+        "art": { "at": { "share": "Everybody shares it", "three": "three machines in three rooms" } } }
+    ] },
+
+    { "id": "services", "kind": "services", "heading": "What being joined lets you do", "codes": ["3DC.02"], "beats": [
+      { "say": "Being on the network gives you services: things you can do because you are connected.",
+        "art": { "at": { "services": "gives you services", "because": "because you are connected" } } },
+      { "say": "Digital files. Save your work on the server and open it on any device in school.",
+        "art": { "at": { "files": "Digital files", "save": "Save your work on the server" } } },
+      { "say": "Printed documents. Press print on a tablet, and the school printer prints it.",
+        "art": { "at": { "printed": "Printed documents", "print": "Press print on a tablet" } } },
+      { "say": "The World Wide Web. Pages stored on computers all over the world.",
+        "art": { "at": { "web": "The World Wide Web", "world": "all over the world" } } },
+      { "say": "Email and video calls too: messages and faces across the network.",
+        "art": { "at": { "email": "Email", "calls": "video calls" } } }
+    ] },
+
+    { "id": "good", "kind": "good", "heading": "What a network gives you", "codes": ["3DC.03"], "beats": [
+      { "say": "A network is mostly good. Think what it gives you.",
+        "art": { "at": { "good": "mostly good", "gives": "what it gives you" } } },
+      { "say": "Everyone can share files. Everyone can share one printer.",
+        "art": { "at": { "files": "share files", "printer": "share one printer" } } },
+      { "say": "Every laptop and tablet can reach the World Wide Web.",
+        "art": { "at": { "web": "reach the World Wide Web" } } },
+      { "say": "Two classes can work on one document at the same time.",
+        "art": { "at": { "classes": "Two classes", "document": "one document" } } },
+      { "say": "It keeps a backup: a second copy, so a broken computer loses nothing.",
+        "art": { "at": { "backup": "a backup", "copy": "a second copy" } } }
+    ] },
+
+    { "id": "cost", "kind": "cost", "heading": "What a network costs you", "codes": ["3DC.03"], "beats": [
+      { "say": "A network costs you things too. It is good to know both sides.",
+        "art": { "at": { "costs": "costs you things", "both": "both sides" } } },
+      { "say": "When the network is down, nobody can save and nobody can print.",
+        "art": { "at": { "down": "the network is down", "nobody": "nobody can save" } } },
+      { "say": "Cables, switches and servers cost money. Somebody has to look after them.",
+        "art": { "at": { "money": "cost money", "after": "look after them" } } },
+      { "say": "A file you share can be seen by people you did not mean.",
+        "art": { "at": { "seen": "can be seen", "mean": "you did not mean" } } },
+      { "say": "It can share a computer virus: a program that copies itself and does harm.",
+        "art": { "at": { "virus": "a computer virus", "harm": "copies itself and does harm" } } },
+      { "say": "When it stops, everybody stops at once, not just one person.",
+        "art": { "at": { "stops": "When it stops", "everybody": "everybody stops at once" } } }
+    ] },
+
+    { "id": "recap", "kind": "recap", "heading": "What you now know", "codes": ["3DC.01", "3DC.02", "3DC.03"], "beats": [
+      { "say": "A network is hardware: a switch, a server and access points.",
+        "art": { "at": { "switch": "a switch", "server": "a server", "access": "access points" } } },
+      { "say": "Being on it gives you services: files, printing and the World Wide Web.",
+        "art": { "at": { "services": "gives you services" } } },
+      { "say": "It has advantages and disadvantages. Knowing both is understanding a network.",
+        "art": { "at": { "both": "advantages and disadvantages" } } }
+    ] }
+  ]
+}

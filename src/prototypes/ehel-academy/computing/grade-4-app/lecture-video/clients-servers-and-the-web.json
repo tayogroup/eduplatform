@@ -1,0 +1,118 @@
+{
+  "_comment": "Storyboard for the Grade 4 Computing unit lecture film, Lesson 10 Clients, Servers and the Web. Rendered by tools/create-ehel-unit-lecture.js. See lecture-video/BRIEF.md. Every beat is one narration clip; art.at names the phrases a picture waits for, and the page refuses to load if a phrase is not in its beat's say. The chapters follow LESSON[lecture] in order: clients and servers, the five kinds of server, the internet against the web, the hyperlink, the two ways to join, and the trade between them. Every technical claim here is the lesson's own - nothing about how a message travels or how many hops it takes, because the lesson does not say.",
+  "slug": "clients-servers-and-the-web",
+  "lesson": 10,
+  "grade": 4,
+  "stage": 4,
+  "title": "Clients, Servers and the Web",
+  "subtitle": "Grade 4 Computing",
+  "framework": "Cambridge Primary Computing 0059",
+  "renderer": {
+    "art": ["computing"],
+    "skin": "brown",
+    "scenes": [
+      "tools/lib/ehel-film-marks.js",
+      "tools/lib/film-scenes/computing-g4/clients-servers-and-the-web.js",
+      "tools/lib/film-scenes/computing-g4/clients-servers-and-the-web-2.js",
+      "tools/lib/film-scenes/computing-g4/clients-servers-and-the-web-3.js"
+    ]
+  },
+  "objectives": [
+    ["4DC.01", "Explain the role of servers and clients in a network."],
+    ["4DC.02", "Describe the differences between the World Wide Web and the internet."],
+    ["4DC.03", "Describe the differences between wi-fi and ethernet, including speed, security and the use of wires."]
+  ],
+  "scenes": [
+    { "id": "title", "kind": "title", "codes": [], "beats": [
+      { "say": "Your tablet asks for a web page. A computer far away answers.",
+        "art": { "at": { "tablet": "Your tablet", "ask": "asks for a web page", "far": "A computer far away answers" } } },
+      { "say": "The asker is a client. The answerer is a server.",
+        "art": { "at": { "client": "a client", "server": "a server" } } }
+    ] },
+
+    { "id": "clients", "kind": "clients", "heading": "Clients ask, servers serve", "codes": ["4DC.01"], "beats": [
+      { "say": "On a network, some devices ask and one computer answers.",
+        "art": { "at": { "ask": "some devices ask", "answer": "one computer answers" } } },
+      { "say": "The asker is a client: a tablet wanting a page, a laptop wanting a file.",
+        "art": { "at": { "client": "The asker is a client", "tablet": "a tablet wanting a page", "laptop": "a laptop wanting a file" } } },
+      { "say": "The answerer is a server. It stores things and serves them when asked.",
+        "art": { "at": { "server": "The answerer is a server", "stores": "It stores things", "serves": "serves them when asked" } } },
+      { "say": "One server can answer hundreds of clients, all day long.",
+        "art": { "at": { "hundreds": "hundreds of clients", "allday": "all day long" } } },
+      { "say": "Is the server the biggest, or the boss? No. It is the one that answers.",
+        "art": { "at": { "biggest": "the biggest", "boss": "the boss", "no": "No.", "answers": "the one that answers" } } }
+    ] },
+
+    { "id": "servers", "kind": "servers", "heading": "Five kinds of server", "codes": ["4DC.01"], "beats": [
+      { "say": "A server is a computer whose job is to serve other computers.",
+        "art": { "at": { "job": "whose job is to serve" } } },
+      { "say": "Big networks have several servers. Each one has its own job.",
+        "art": { "at": { "several": "several servers", "own": "its own job" } } },
+      { "say": "A file server keeps everybody's files. An application server runs programs.",
+        "art": { "at": { "file": "A file server", "app": "An application server" } } },
+      { "say": "A web server holds web pages. A print server queues the printing.",
+        "art": { "at": { "web": "A web server", "print": "A print server" } } },
+      { "say": "A mail server passes messages. All five wait to be asked, then answer.",
+        "art": { "at": { "mail": "A mail server", "five": "All five", "answer": "then answer" } } }
+    ] },
+
+    { "id": "internet", "kind": "internet", "heading": "The internet and the web", "codes": ["4DC.02"], "beats": [
+      { "say": "The internet is the network of networks. Millions of them, joined.",
+        "art": { "at": { "internet": "The internet", "networks": "the network of networks", "millions": "Millions of them" } } },
+      { "say": "Cables under the sea, routers passing data, servers: all joined together.",
+        "art": { "at": { "cables": "Cables under the sea", "routers": "routers passing data", "servers": "servers" } } },
+      { "say": "The World Wide Web is pages, linked to each other and read in a browser.",
+        "art": { "at": { "web": "The World Wide Web", "pages": "pages", "linked": "linked to each other", "browser": "a browser" } } },
+      { "say": "The internet is the roads. The web is one kind of traffic on them.",
+        "art": { "at": { "roads": "the roads", "traffic": "one kind of traffic" } } },
+      { "say": "Email, calls and games are not the web. They use the internet too.",
+        "art": { "at": { "email": "Email, calls and games", "not": "not the web", "uses": "use the internet too" } } }
+    ] },
+
+    { "id": "links", "kind": "links", "heading": "Made of hyperlinks", "codes": ["4DC.02"], "beats": [
+      { "say": "What makes it a web, and not just a pile of pages?",
+        "art": { "at": { "web": "a web", "pile": "a pile of pages" } } },
+      { "say": "The hyperlink. Words you press to jump to another page.",
+        "art": { "at": { "hyperlink": "The hyperlink", "press": "Words you press", "jump": "jump to another page" } } },
+      { "say": "That page may be on another server, in another country.",
+        "art": { "at": { "server": "another server", "country": "another country" } } },
+      { "say": "One page points to another, until the pages of the world are joined.",
+        "art": { "at": { "points": "points to another", "world": "the pages of the world" } } }
+    ] },
+
+    { "id": "wires", "kind": "wires", "heading": "Ethernet and wi-fi", "codes": ["4DC.03"], "beats": [
+      { "say": "Devices join a network in two ways: ethernet, or wi-fi.",
+        "art": { "at": { "two": "two ways", "eth": "ethernet", "wifi": "wi-fi" } } },
+      { "say": "Ethernet is a cable, from your computer to the router.",
+        "art": { "at": { "cable": "a cable", "router": "the router" } } },
+      { "say": "Wi-fi is wireless: no wire at all. It carries your data on radio waves.",
+        "art": { "at": { "wireless": "wireless", "nowire": "no wire at all", "radio": "radio waves" } } },
+      { "say": "Those are the same waves that bring music to a radio.",
+        "art": { "at": { "same": "the same waves", "music": "bring music to a radio" } } }
+    ] },
+
+    { "id": "trade", "kind": "trade", "heading": "Speed, safety and wires", "codes": ["4DC.03"], "beats": [
+      { "say": "A wire is faster and steadier. It carries more, with no interference.",
+        "art": { "at": { "faster": "faster and steadier", "more": "carries more", "none": "no interference" } } },
+      { "say": "A wire is safer. A stranger outside cannot join without plugging in.",
+        "art": { "at": { "safer": "safer", "stranger": "A stranger outside", "plug": "plugging in" } } },
+      { "say": "Wi-fi goes where you go: a tablet in the garden, a phone in your hand.",
+        "art": { "at": { "goes": "goes where you go", "garden": "a tablet in the garden", "phone": "a phone in your hand" } } },
+      { "say": "But thick walls weaken it, and anyone in range can try to join.",
+        "art": { "at": { "walls": "thick walls", "range": "anyone in range" } } },
+      { "say": "So wi-fi needs a password. That is the trade, and a school has both.",
+        "art": { "at": { "password": "a password", "both": "a school has both" } } }
+    ] },
+
+    { "id": "recap", "kind": "recap", "heading": "What you now know", "codes": ["4DC.01", "4DC.02", "4DC.03"], "beats": [
+      { "say": "A client asks. A server stores things and serves them.",
+        "art": { "at": { "client": "A client asks", "server": "A server" } } },
+      { "say": "The internet is the network. The web is the pages that travel over it.",
+        "art": { "at": { "internet": "The internet", "web": "The web" } } },
+      { "say": "Ethernet is a cable: faster, safer, and you must plug in to join.",
+        "art": { "at": { "ethernet": "Ethernet" } } },
+      { "say": "Wi-fi is radio: no wire, so it goes wherever you go.",
+        "art": { "at": { "wifi": "Wi-fi" } } }
+    ] }
+  ]
+}

@@ -1,0 +1,109 @@
+{
+  "_comment": "Storyboard for the Grade 3 Computing unit lecture film, Lesson 9 Data Problems. Rendered by tools/create-ehel-unit-lecture.js. See lecture-video/BRIEF.md. Every beat is one narration clip; art.at names the phrases a picture waits for, and the page refuses to load if a phrase is not in its beat's say. REORDERING REVIEWED 2026-09-24: the film plays 'named' third (right after twokinds), where LESSON['lecture'] has it fifth, appended after 'choose' (lesson-9.py lines 187-196 give the first four parts, 243-249 append the fifth). Kept deliberately, not by default: twokinds and named teach the SAME distinction twice in different words (discrete/categorical, then named/numerical) over the SAME eight-children pet data, so grouping them lets the reinforcement land while the examples are still on screen; moving 'named' to the lesson's own position would break the views-then-choose pair with an unrelated return to vocabulary immediately before the recap. Every figure spoken is the lesson's own data - the pets count 2,3,2,1 and the favourite pet 4,2,1,1, both of eight children - and the film's table, bar chart and pictogram are all drawn from one array each, so the words, the tally, the bars and the axis cannot disagree. The only wrong cases shown are marked as wrong: a story is not a data problem, one and a half pets does not exist, and a cat cannot be added to a dog. OBJECTIVES REVIEWED 2026-09-24: 'named' carries no codes - it is pure classification (name cards vs a numerical panel, no device drawn) and does not teach 3MD.03 ('using computing devices'); twokinds already earns 3MD.03 properly, drawing ART.figure('tablet') running the lesson's own form.",
+  "slug": "data-problems",
+  "lesson": 9,
+  "grade": 3,
+  "stage": 3,
+  "title": "Data Problems",
+  "subtitle": "Grade 3 Computing",
+  "framework": "Cambridge Primary Computing 0059",
+  "renderer": {
+    "art": ["computing"],
+    "skin": "brown",
+    "scenes": [
+      "tools/lib/ehel-film-marks.js",
+      "tools/lib/film-scenes/computing-g3/data-problems.js",
+      "tools/lib/film-scenes/computing-g3/data-problems-2.js",
+      "tools/lib/film-scenes/computing-g3/data-problems-3.js"
+    ]
+  },
+  "objectives": [
+    ["3MD.01", "Identify problems that can be solved through the collection and interpretation of data."],
+    ["3MD.03", "Know how to record discrete and categorical data, using computing devices."],
+    ["3MD.02", "Identify and investigate different ways of representing discrete and categorical data, using a digital tool."]
+  ],
+  "scenes": [
+    { "id": "title", "kind": "title", "codes": [], "beats": [
+      { "say": "Which snack should the tuck shop sell? Ask every child, and count.",
+        "art": { "at": { "snack": "Which snack", "ask": "Ask every child", "count": "count." } } },
+      { "say": "Some problems are solved by collecting data and reading what it says.",
+        "art": { "at": { "collect": "collecting data", "read": "reading what it says" } } }
+    ] },
+
+    { "id": "problems", "kind": "problems", "heading": "Problems data solves", "codes": ["3MD.01"], "beats": [
+      { "say": "Three school problems. Which snack should the tuck shop sell?",
+        "art": { "at": { "three": "Three school problems", "snack": "Which snack" } } },
+      { "say": "How many chairs for the concert? Count the parents who are coming.",
+        "art": { "at": { "chairs": "How many chairs", "count": "Count the parents" } } },
+      { "say": "When is the playground busiest? Count the children at each break.",
+        "art": { "at": { "playground": "When is the playground busiest", "count": "Count the children" } } },
+      { "say": "Collecting data means asking or counting. Interpreting it means reading what the numbers say.",
+        "art": { "at": { "collecting": "Collecting data", "interpreting": "Interpreting it" } } },
+      { "say": "Not every problem is a data problem. What your story is about is not a count.",
+        "art": { "at": { "not": "Not every problem", "story": "What your story is about" } } }
+    ] },
+
+    { "id": "twokinds", "kind": "twokinds", "heading": "Discrete and categorical", "codes": ["3MD.03"], "beats": [
+      { "say": "Eight children answered two questions on a tablet. How many pets do you have?",
+        "art": { "at": { "eight": "Eight children", "tablet": "a tablet", "howmany": "How many pets do you have?" } } },
+      { "say": "Discrete data is whole numbers you count. Zero pets, one pet, two pets.",
+        "art": { "at": { "discrete": "Discrete data", "whole": "whole numbers you count" } } },
+      { "say": "Never one and a half. You cannot have half a cat.",
+        "art": { "at": { "never": "Never one and a half", "half": "half a cat" } } },
+      { "say": "The second question: which pet would you most like? Cat, dog, fish or rabbit.",
+        "art": { "at": { "second": "The second question", "like": "which pet would you most like", "four": "Cat, dog, fish or rabbit" } } },
+      { "say": "Those are categories, not counts. That is categorical data.",
+        "art": { "at": { "categories": "Those are categories", "categorical": "categorical data" } } },
+      { "say": "The form on the tablet counted each answer as it came in.",
+        "art": { "at": { "form": "The form", "counted": "counted each answer" } } }
+    ] },
+
+    { "id": "named", "kind": "named", "heading": "Named or numerical", "codes": [], "beats": [
+      { "say": "Some data is a name. Red, blue, dog, cat, came by bus.",
+        "art": { "at": { "name": "a name", "examples": "Red, blue, dog, cat" } } },
+      { "say": "You cannot add a cat to a dog. You can only count how many of each.",
+        "art": { "at": { "cannot": "cannot add a cat to a dog", "count": "count how many of each" } } },
+      { "say": "Other data is numerical. It is a number you counted or measured.",
+        "art": { "at": { "numerical": "numerical", "number": "a number you counted or measured" } } },
+      { "say": "How many pets, how tall, how many minutes. Numbers can be added and put in order.",
+        "art": { "at": { "howmany": "How many pets", "added": "added and put in order" } } }
+    ] },
+
+    { "id": "views", "kind": "views", "heading": "The same data, three ways", "codes": ["3MD.02"], "beats": [
+      { "say": "Here is the pet data, and a digital tool can show it three ways.",
+        "art": { "at": { "petdata": "the pet data", "three": "three ways" } } },
+      { "say": "A table gives the exact numbers. Two children have no pets, three have one.",
+        "art": { "at": { "table": "A table", "two": "Two children have no pets", "three": "three have one" } } },
+      { "say": "A bar chart shows the biggest at a glance. One pet has the tallest bar.",
+        "art": { "at": { "bar": "A bar chart", "tallest": "the tallest bar" } } },
+      { "say": "A pictogram draws one picture for each answer. You count the pictures.",
+        "art": { "at": { "picto": "A pictogram", "count": "count the pictures" } } },
+      { "say": "Categories work too. Four children chose a cat, and two chose a dog.",
+        "art": { "at": { "categories": "Categories work too", "four": "Four children chose a cat", "two": "two chose a dog" } } },
+      { "say": "The three views never disagree. They are the same eight answers.",
+        "art": { "at": { "disagree": "never disagree", "same": "the same eight answers" } } }
+    ] },
+
+    { "id": "choose", "kind": "choose", "heading": "Which view for which question?", "codes": ["3MD.02"], "beats": [
+      { "say": "Each view is best for a different question.",
+        "art": { "at": { "each": "Each view", "different": "a different question" } } },
+      { "say": "Exactly how many children have two pets? The table says two.",
+        "art": { "at": { "exactly": "Exactly how many", "table": "The table says two" } } },
+      { "say": "Which pet is the class favourite? The bar chart shows it at a glance: cat.",
+        "art": { "at": { "which": "Which pet is the class favourite", "bar": "The bar chart" } } },
+      { "say": "Count them by eye? The pictogram. Interpreting is reading the right view.",
+        "art": { "at": { "eye": "Count them by eye", "picto": "The pictogram", "interpret": "Interpreting is reading the right view" } } }
+    ] },
+
+    { "id": "recap", "kind": "recap", "heading": "What you now know", "codes": ["3MD.01", "3MD.03", "3MD.02"], "beats": [
+      { "say": "Collect the data, then read what it says. That is a problem solved with data.",
+        "art": { "at": { "collect": "Collect the data", "read": "read what it says" } } },
+      { "say": "Counts are discrete data. Categories are categorical data.",
+        "art": { "at": { "discrete": "discrete data", "categorical": "categorical data" } } },
+      { "say": "A table gives the exact numbers. A bar chart shows the biggest at a glance.",
+        "art": { "at": { "table": "A table", "bar": "A bar chart" } } },
+      { "say": "A pictogram gives one picture for each one, so you can count them by eye.",
+        "art": { "at": { "picto": "A pictogram" } } }
+    ] }
+  ]
+}

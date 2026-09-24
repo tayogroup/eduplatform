@@ -1,0 +1,118 @@
+{
+  "_comment": "Storyboard for the Grade 2 Computing unit lecture film, Lesson 7 Collecting Data. Rendered by tools/create-ehel-unit-lecture.js. See lecture-video/BRIEF.md. Every beat is one narration clip; art.at names the phrases a picture waits for, and the page refuses to load if a phrase is not in its beat's say. The chapters follow LESSON[lecture] in order (why computers keep data; a purpose first; ways of collecting; statistical or not; three kinds; a backup). EVERY NUMBER IN THIS FILM IS THE LESSON'S OWN: the eight children of the survey step answer banana 4, apple 2, orange 1, grapes 1, which is the lesson's own tally line 'Apple || Banana |||| Orange | Grapes |', and 4 + 2 + 1 + 1 = 8. The tally marks drawn, the counts on the form and the total all come from one table in the scenes file, so no two of them can disagree.",
+  "slug": "collecting-data",
+  "lesson": 7,
+  "grade": 2,
+  "stage": 2,
+  "title": "Collecting Data",
+  "subtitle": "Grade 2 Computing",
+  "framework": "Cambridge Primary Computing 0059",
+  "renderer": {
+    "art": ["computing"],
+    "skin": "brown",
+    "scenes": [
+      "tools/lib/ehel-film-marks.js",
+      "tools/lib/film-scenes/computing-g2/collecting-data.js",
+      "tools/lib/film-scenes/computing-g2/collecting-data-2.js",
+      "tools/lib/film-scenes/computing-g2/collecting-data-3.js",
+      "tools/lib/film-scenes/computing-g2/collecting-data-4.js"
+    ]
+  },
+  "objectives": [
+    ["2MD.01", "Know the advantages of storing data and information on computers."],
+    ["2MD.03", "Investigate different ways of using computing devices to collect categorical data for a particular purpose."],
+    ["2MD.04", "Identify types of statistical data that can be manually recorded using computing devices."],
+    ["2MD.05", "Discuss the different types of data that a question may generate, limited to statistical and non-statistical."]
+  ],
+  "scenes": [
+    { "id": "title", "kind": "title", "codes": [], "beats": [
+      { "say": "Which fruit should we buy for the class party? We have to ask.",
+        "art": { "at": { "party": "the class party", "ask": "to ask" } } },
+      { "say": "Eight children answer. Four of them choose banana. Now we know.",
+        "art": { "at": { "eight": "Eight children answer", "four": "Four of them choose banana" } } }
+    ] },
+
+    { "id": "keep", "kind": "keep", "heading": "Why computers keep data", "codes": ["2MD.01"], "beats": [
+      { "say": "Data is what people answered. Keep it on paper, or on a computer.",
+        "art": { "at": { "data": "Data is what people answered", "paper": "on paper", "computer": "on a computer" } } },
+      { "say": "Paper gets lost, torn and spilt on. The computer's copy is safe.",
+        "art": { "at": { "spilt": "lost, torn and spilt on", "safe": "copy is safe" } } },
+      { "say": "You can search it, copy it, and send it to Grandma far away.",
+        "art": { "at": { "search": "search it", "copy": "copy it", "send": "send it to Grandma" } } },
+      { "say": "And the computer counts it in a blink, and never miscounts.",
+        "art": { "at": { "count": "counts it", "blink": "in a blink" } } }
+    ] },
+
+    { "id": "purpose", "kind": "purpose", "heading": "A purpose first", "codes": ["2MD.03"], "beats": [
+      { "say": "Collecting data starts with a purpose. What do we need to find out?",
+        "art": { "at": { "purpose": "a purpose", "find": "find out" } } },
+      { "say": "Our purpose: to choose which fruit to buy for the class party.",
+        "art": { "at": { "party": "the class party" } } },
+      { "say": "The purpose decides the question we ask everybody.",
+        "art": { "at": { "question": "the question" } } },
+      { "say": "Which fruit do you like best: apple, banana, orange or grapes?",
+        "art": { "at": { "apple": "apple", "banana": "banana", "orange": "orange", "grapes": "grapes" } } }
+    ] },
+
+    { "id": "ways", "kind": "ways", "heading": "Ways of collecting", "codes": ["2MD.03", "2MD.04"], "beats": [
+      { "say": "Now choose a way to collect the answers. Not every way works.",
+        "art": { "at": { "choose": "choose a way", "works": "Not every way works" } } },
+      { "say": "Everyone shouts at once. Nobody could count anything. That is noise.",
+        "art": { "at": { "shouts": "Everyone shouts at once", "noise": "That is noise" } } },
+      { "say": "Just guess? A guess is not data. Data is answers you can count.",
+        "art": { "at": { "guess": "Just guess?", "count": "answers you can count" } } },
+      { "say": "A tally on paper works: four marks for banana, two for apple.",
+        "art": { "at": { "tally": "A tally on paper", "four": "four marks for banana", "two": "two for apple" } } },
+      { "say": "A form on the tablet records every answer and counts them as they arrive.",
+        "art": { "at": { "form": "A form on the tablet", "records": "records every answer", "counts": "counts them" } } },
+      { "say": "Cars cannot fill in a form. Tap a tally app as each one passes.",
+        "art": { "at": { "cars": "Cars cannot fill in a form", "app": "a tally app" } } }
+    ] },
+
+    { "id": "stat", "kind": "stat", "heading": "Statistical, or not?", "codes": ["2MD.05"], "beats": [
+      { "say": "A statistical question gives answers you can count or measure.",
+        "art": { "at": { "statistical": "A statistical question", "count": "count or measure" } } },
+      { "say": "How many pets do you have? A number. That one is statistical.",
+        "art": { "at": { "pets": "How many pets do you have?", "number": "A number" } } },
+      { "say": "Which fruit do you like best? A category we can count. Statistical too.",
+        "art": { "at": { "fruit": "Which fruit do you like best?", "category": "A category" } } },
+      { "say": "Why do you like your dog? That gives a story, different for everyone.",
+        "art": { "at": { "dog": "Why do you like your dog?", "story": "a story" } } },
+      { "say": "Stories cannot be counted. Ask: could I make a table of the answers?",
+        "art": { "at": { "cannot": "Stories cannot be counted", "table": "a table" } } }
+    ] },
+
+    { "id": "kinds", "kind": "kinds", "heading": "Three kinds", "codes": ["2MD.04"], "beats": [
+      { "say": "Statistical data comes in three kinds a form can record.",
+        "art": { "at": { "three": "three kinds" } } },
+      { "say": "A count is how many: how many pets you have.",
+        "art": { "at": { "count": "A count", "pets": "how many pets you have" } } },
+      { "say": "A measurement is how much: how tall you are.",
+        "art": { "at": { "measurement": "A measurement", "tall": "how tall you are" } } },
+      { "say": "A category is one choice from a list: your favourite fruit.",
+        "art": { "at": { "category": "A category", "fruit": "your favourite fruit" } } },
+      { "say": "Think about the kind before you ask your question.",
+        "art": { "at": { "think": "Think about the kind" } } }
+    ] },
+
+    { "id": "backup", "kind": "backup", "heading": "A backup", "codes": ["2MD.01"], "beats": [
+      { "say": "Here is something paper cannot do. A computer can make a backup.",
+        "art": { "at": { "cannot": "paper cannot do", "backup": "a backup" } } },
+      { "say": "A backup is a second copy of your data, kept somewhere else.",
+        "art": { "at": { "copy": "a second copy", "else": "somewhere else" } } },
+      { "say": "Spill water on a paper chart and it is gone for ever.",
+        "art": { "at": { "spill": "Spill water", "gone": "gone for ever" } } },
+      { "say": "If the school computer breaks, the backup still has everybody's work.",
+        "art": { "at": { "breaks": "the school computer breaks", "still": "still has everybody's work" } } }
+    ] },
+
+    { "id": "recap", "kind": "recap", "heading": "What you now know", "codes": ["2MD.01", "2MD.03", "2MD.04", "2MD.05"], "beats": [
+      { "say": "Collecting data starts with a purpose, and the purpose decides the question.",
+        "art": { "at": { "purpose": "a purpose", "question": "the question" } } },
+      { "say": "A form on a tablet records every answer and counts them for you.",
+        "art": { "at": { "form": "A form on a tablet" } } },
+      { "say": "Count it or measure it: statistical. A story is not. Keep a backup.",
+        "art": { "at": { "statistical": "statistical", "backup": "a backup" } } }
+    ] }
+  ]
+}

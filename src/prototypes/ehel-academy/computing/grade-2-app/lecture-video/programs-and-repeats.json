@@ -1,0 +1,120 @@
+{
+  "_comment": "Storyboard for the Grade 2 Computing unit lecture film, Lesson 3 Programs and Repeats. Rendered by tools/create-ehel-unit-lecture.js. See lecture-video/BRIEF.md. Every beat is one narration clip; art.at names the phrases a picture waits for, and the page refuses to load if a phrase is not in its beat's say. The chapters follow LESSON[lecture] in order: the plan and the program, building and running, the repeat block, same output fewer blocks, test as you go, and where children really build these. Every count a repeat makes and every place the cat ends up comes from the kit - ART.program.expand and ART.run - so the film cannot disagree with the lesson about what a repeat does.",
+  "slug": "programs-and-repeats",
+  "lesson": 3,
+  "grade": 2,
+  "stage": 2,
+  "title": "Programs and Repeats",
+  "subtitle": "Grade 2 Computing",
+  "framework": "Cambridge Primary Computing 0059",
+  "renderer": {
+    "art": ["computing"],
+    "skin": "brown",
+    "scenes": [
+      "tools/lib/ehel-film-marks.js",
+      "tools/lib/film-scenes/computing-g2/programs-and-repeats.js",
+      "tools/lib/film-scenes/computing-g2/programs-and-repeats-2.js",
+      "tools/lib/film-scenes/computing-g2/programs-and-repeats-3.js",
+      "tools/lib/film-scenes/computing-g2/programs-and-repeats-4.js"
+    ]
+  },
+  "objectives": [
+    ["2P.01", "Understand that programs instruct computers how to run algorithms."],
+    ["2P.02", "Know how to recreate algorithms as programs."],
+    ["2P.03", "Know how to develop programs to produce desired outputs, including the use of the repeat command."],
+    ["2P.06", "Identify the benefits of regularly testing programs throughout their development."]
+  ],
+  "scenes": [
+    { "id": "title", "kind": "title", "codes": [], "beats": [
+      { "say": "Jump, jump, jump. Three blocks to make the cat jump three times.",
+        "art": { "at": { "jumps": "Jump, jump, jump.", "blocks": "Three blocks", "three": "three times" } } },
+      { "say": "Now say it with a repeat block. Repeat 3 times, jump. Two blocks.",
+        "art": { "at": { "repeat": "a repeat block", "say": "Repeat 3 times, jump.", "two": "Two blocks" } } }
+    ] },
+
+    { "id": "plan", "kind": "plan", "heading": "The plan and the program", "codes": ["2P.01"], "beats": [
+      { "say": "An algorithm is the plan. It is the steps, written for a person.",
+        "art": { "at": { "algorithm": "An algorithm is the plan", "steps": "the steps, written for a person" } } },
+      { "say": "Move right. Jump. Say hello. That is an algorithm, in words.",
+        "art": { "at": { "right": "Move right.", "jump": "Jump.", "hello": "Say hello.", "words": "in words" } } },
+      { "say": "A program is the same plan, built out of blocks the computer can follow.",
+        "art": { "at": { "program": "A program", "blocks": "built out of blocks" } } },
+      { "say": "The move right block, the jump block, the say hello block.",
+        "art": { "at": { "one": "The move right block", "two": "the jump block", "three": "the say hello block" } } },
+      { "say": "Now a computer can run it. The program says how to run the algorithm.",
+        "art": { "at": { "run": "Now a computer can run it", "how": "how to run the algorithm" } } }
+    ] },
+
+    { "id": "build", "kind": "build", "heading": "Build it and run it", "codes": ["2P.02", "2P.01"], "beats": [
+      { "say": "Write the algorithm first, in words. Then build it in blocks.",
+        "art": { "at": { "write": "Write the algorithm first", "build": "build it in blocks" } } },
+      { "say": "Take each step of the algorithm and place its block, in order.",
+        "art": { "at": { "each": "Take each step", "place": "place its block", "order": "in order" } } },
+      { "say": "Jump, jump, move left. Two jump blocks, then the move left block.",
+        "art": { "at": { "algo": "Jump, jump, move left.", "two": "Two jump blocks", "left": "the move left block" } } },
+      { "say": "Then press Run. The cat does the blocks one at a time.",
+        "art": { "at": { "run": "press Run", "one": "one at a time" } } },
+      { "say": "Watching it run is how you test it. Did the cat do exactly that?",
+        "art": { "at": { "test": "how you test it", "did": "Did the cat do exactly that?" } } }
+    ] },
+
+    { "id": "repeat", "kind": "repeat", "heading": "The repeat block", "codes": ["2P.03"], "beats": [
+      { "say": "Here is a new kind of block. This one is the repeat block.",
+        "art": { "at": { "new": "a new kind of block", "repeat": "the repeat block" } } },
+      { "say": "The repeat block repeats the block that comes after it.",
+        "art": { "at": { "repeats": "repeats the block", "after": "after it" } } },
+      { "say": "Repeat 3 times, jump. The cat jumps three times, from two blocks.",
+        "art": { "at": { "say": "Repeat 3 times, jump.", "three": "jumps three times", "two": "two blocks" } } },
+      { "say": "The repeat block always goes before the block it repeats.",
+        "art": { "at": { "before": "before the block it repeats" } } },
+      { "say": "Put it after the jump, and nothing is repeated. It needs a block after it.",
+        "art": { "at": { "after": "after the jump", "needs": "needs a block after it" } } },
+      { "say": "Some apps have a repeat that holds several blocks. This one repeats just the next one.",
+        "art": { "at": { "some": "Some apps", "several": "several blocks", "just": "just the next one" } } }
+    ] },
+
+    { "id": "same", "kind": "same", "heading": "Same output, fewer blocks", "codes": ["2P.03"], "beats": [
+      { "say": "Jump, jump, jump and repeat 3 times, jump do exactly the same thing.",
+        "art": { "at": { "long": "Jump, jump, jump", "short": "repeat 3 times, jump", "same": "the same thing" } } },
+      { "say": "The output is what a program makes happen. Three jumps, both ways.",
+        "art": { "at": { "output": "The output", "three": "Three jumps, both ways" } } },
+      { "say": "The second program is shorter, and shorter is easier to read and fix.",
+        "art": { "at": { "shorter": "is shorter", "fix": "easier to read and fix" } } },
+      { "say": "Careful, though. Repeat 2 times, move right is only two moves.",
+        "art": { "at": { "careful": "Careful, though.", "prog": "Repeat 2 times, move right", "two": "only two moves" } } },
+      { "say": "Move right, move right, move right is three. Count what the cat does.",
+        "art": { "at": { "moves": "Move right, move right, move right", "three": "is three", "count": "Count what the cat does" } } }
+    ] },
+
+    { "id": "test", "kind": "test", "heading": "Test as you go", "codes": ["2P.06"], "beats": [
+      { "say": "Build ten blocks, run it once at the end, and it goes wrong.",
+        "art": { "at": { "ten": "Build ten blocks", "wrong": "it goes wrong" } } },
+      { "say": "The bug could be in any of the ten. That is ten places to look.",
+        "art": { "at": { "any": "any of the ten", "places": "ten places to look" } } },
+      { "say": "Now build two blocks, run it, check. Build two more, and run it again.",
+        "art": { "at": { "two": "build two blocks", "check": "run it, check", "more": "Build two more" } } },
+      { "say": "If it goes wrong now, the bug can only be in the last two.",
+        "art": { "at": { "wrong": "goes wrong now", "last": "the last two" } } },
+      { "say": "Programmers test regularly, all the way through. The bug is in the newest bit.",
+        "art": { "at": { "regularly": "test regularly", "newest": "the newest bit" } } }
+    ] },
+
+    { "id": "scratchjr", "kind": "scratchjr", "heading": "Where you really build these", "codes": ["2P.01"], "beats": [
+      { "say": "These blocks work like the ones in ScratchJr, a real app on a tablet.",
+        "art": { "at": { "like": "work like the ones", "scratchjr": "ScratchJr", "tablet": "a tablet" } } },
+      { "say": "You choose a character, you choose a background, then you drag blocks together.",
+        "art": { "at": { "character": "choose a character", "background": "choose a background", "drag": "drag blocks together" } } },
+      { "say": "Your repeat 3 times is a loop block with a 3 in it. The green flag is Go.",
+        "art": { "at": { "loop": "a loop block with a 3", "flag": "The green flag" } } }
+    ] },
+
+    { "id": "recap", "kind": "recap", "heading": "What you now know", "codes": ["2P.01", "2P.02", "2P.03", "2P.06"], "beats": [
+      { "say": "A program tells the computer how to run an algorithm.",
+        "art": { "at": { "program": "A program", "algorithm": "an algorithm" } } },
+      { "say": "The repeat block goes before the block it repeats.",
+        "art": { "at": { "repeat": "The repeat block" } } },
+      { "say": "Same output, fewer blocks. And test as you go, every time.",
+        "art": { "at": { "output": "Same output", "test": "test as you go" } } }
+    ] }
+  ]
+}

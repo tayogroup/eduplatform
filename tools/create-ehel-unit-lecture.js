@@ -547,6 +547,40 @@ function publish(tmp, outDir, slug, ext) {
   return name;
 }
 
+/* The narration, laid out on the MEASURED timeline: lead silence, then each
+   clip at its beat's start with the gaps between. Used by the render, which
+   muxes it under the frames, and by --slides, which ships it beside the page
+   so a learner stepping through hears the same voice. Both must use this one
+   function: a second implementation would drift from the timeline the marks
+   are cued off, and the drift would be silent. */
+function buildNarrationTrack(scratch, clips, beats) {
+  const wavDir = path.join(scratch, "wav");
+  fs.mkdirSync(wavDir, { recursive: true });
+  const parts = [];
+  const silence = (secs, tag) => {
+    const p = path.join(wavDir, `sil-${tag}.wav`);
+    run("ffmpeg", ["-y", "-f", "lavfi", "-i", `anullsrc=r=44100:cl=stereo`, "-t", secs.toFixed(3), p],
+        { stdio: ["ignore", "ignore", "pipe"] });
+    return p;
+  };
+  parts.push(silence(LEAD + OPEN_HOLD, "lead"));
+  for (let i = 0; i < clips.length; i++) {
+    const w = path.join(wavDir, `c${String(i).padStart(3, "0")}.wav`);
+    run("ffmpeg", ["-y", "-i", clips[i], "-ar", "44100", "-ac", "2", w], { stdio: ["ignore", "ignore", "pipe"] });
+    parts.push(w);
+    const nextBeat = beats[i + 1];
+    if (nextBeat) parts.push(silence(nextBeat.start - (beats[i].start + beats[i].dur), `g${i}`));
+  }
+  parts.push(silence(TAIL + END_HOLD, "tail"));
+
+  const listFile = path.join(scratch, "audio.txt");
+  fs.writeFileSync(listFile, parts.map((p) => `file '${p.replace(/\\/g, "/")}'`).join("\n"), "utf8");
+  const trackPath = path.join(scratch, "track.wav");
+  run("ffmpeg", ["-y", "-f", "concat", "-safe", "0", "-i", listFile, "-c", "copy", trackPath],
+      { stdio: ["ignore", "ignore", "pipe"] });
+  return trackPath;
+}
+
 /* ---------------------------------------------------------------- main --- */
 (async function main() {
   loadEnv();
@@ -670,13 +704,29 @@ function publish(tmp, outDir, slug, ext) {
      sits here and not before the narration is priced. */
   if (has("slides")) {
     const slidesDir = path.join(appDir, "lecture-video");
+
+    /* THE SAME NARRATION, and it is the whole point of doing this rather than
+       shipping stills: a deck with no voice is not the lecture, it is a
+       picture book of it. One file on the MEASURED timeline, so the driver
+       plays beat i by seeking to its start and stopping at its spoken end —
+       the timeline the marks are already cued off. Mono 64k: it is speech,
+       and it keeps the whole deck under about a fifth of the film. */
+    const track = buildNarrationTrack(scratch, clips, beats);
+    const tmpAudio = path.join(scratch, `${slug}.narration.mp3`);
+    run("ffmpeg", ["-y", "-i", track, "-ac", "1", "-b:a", "64k", tmpAudio],
+        { stdio: ["ignore", "ignore", "pipe"] });
+    film.narrationAudio = publish(tmpAudio, slidesDir, slug, "narration.mp3");
+
     const tmpSlides = path.join(scratch, `${slug}.slides.html`);
     fs.writeFileSync(tmpSlides, buildPage(film, renderer, { slides: true }), "utf8");
     const name = publish(tmpSlides, slidesDir, slug, "slides.html");
     const kb = fs.statSync(path.join(slidesDir, name)).size / 1024;
+    const akb = fs.statSync(path.join(slidesDir, film.narrationAudio)).size / 1024;
     console.log(`\n  ${name}  ${kb.toFixed(0)} KB  ${beats.length} slides`);
+    console.log(`  ${film.narrationAudio}  ${akb.toFixed(0)} KB  the same narration`);
     console.log("  The same film, stepped through a beat at a time. No video file.");
     console.log(`\n  For the lecture step:\n    "slides": "lecture-video/${name}"`);
+    console.log("  (the deck loads its own audio; the lesson needs only the one path)");
     return;
   }
 
@@ -755,30 +805,7 @@ function publish(tmp, outDir, slug, ext) {
   }
 
   /* ---- audio ---- */
-  const wavDir = path.join(scratch, "wav");
-  fs.mkdirSync(wavDir, { recursive: true });
-  const parts = [];
-  const silence = (secs, tag) => {
-    const p = path.join(wavDir, `sil-${tag}.wav`);
-    run("ffmpeg", ["-y", "-f", "lavfi", "-i", `anullsrc=r=44100:cl=stereo`, "-t", secs.toFixed(3), p],
-        { stdio: ["ignore", "ignore", "pipe"] });
-    return p;
-  };
-  parts.push(silence(LEAD + OPEN_HOLD, "lead"));
-  for (let i = 0; i < clips.length; i++) {
-    const w = path.join(wavDir, `c${String(i).padStart(3, "0")}.wav`);
-    run("ffmpeg", ["-y", "-i", clips[i], "-ar", "44100", "-ac", "2", w], { stdio: ["ignore", "ignore", "pipe"] });
-    parts.push(w);
-    const nextBeat = beats[i + 1];
-    if (nextBeat) parts.push(silence(nextBeat.start - (beats[i].start + beats[i].dur), `g${i}`));
-  }
-  parts.push(silence(TAIL + END_HOLD, "tail"));
-
-  const listFile = path.join(scratch, "audio.txt");
-  fs.writeFileSync(listFile, parts.map((p) => `file '${p.replace(/\\/g, "/")}'`).join("\n"), "utf8");
-  const trackPath = path.join(scratch, "track.wav");
-  run("ffmpeg", ["-y", "-f", "concat", "-safe", "0", "-i", listFile, "-c", "copy", trackPath],
-      { stdio: ["ignore", "ignore", "pipe"] });
+  const trackPath = buildNarrationTrack(scratch, clips, beats);
 
   /* ---- mux, into scratch first; lecture-video/ receives hashed names ---- */
   const tmpMp4 = path.join(scratch, `${slug}.mp4`);

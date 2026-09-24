@@ -104,10 +104,11 @@
       return b ? b.textContent.replace(/\s+/g, " ").trim() : "";
     }
 
-    var HOLD = [];
+    var HOLD = [], SPOKEN = [];
     (function measureHolds() {
       for (var i = 0; i < N; i++) {
         var c = EF.cues(i);
+        SPOKEN.push(c.spokenEnd);
         var mine = bandOf(c.spokenEnd - 0.05);
         var limit = (i < N - 1 ? EF.cues(i + 1).start : EF.total) - 0.05;
         var t = c.spokenEnd - 0.05, best = t;
@@ -119,6 +120,47 @@
         HOLD.push(best);
       }
     })();
+
+    /* ---- THE NARRATION, the same voice the film speaks ---------------------
+       A deck with no voice is not the lecture, it is a picture book of it.
+       One audio file on the MEASURED timeline — the same timeline the marks
+       are cued off — so a beat is played by seeking to its start and stopping
+       when its sentence ends. Nothing is re-bought and nothing is re-timed. */
+    var audio = null, stopAt = null;
+    /* window.FILM, not the engine's `F`: that name lives inside the engine's
+       own IIFE and this driver is a separate one appended after it. Reaching
+       for it threw a ReferenceError that took the WHOLE driver down - no
+       bar, no slides, no narration - while the page still looked like a
+       film, because the engine had already drawn frame zero. */
+    if (window.FILM.narrationAudio) {
+      audio = new Audio(window.FILM.narrationAudio);
+      audio.preload = "auto";
+      audio.addEventListener("timeupdate", function () {
+        if (stopAt != null && audio.currentTime >= stopAt) { audio.pause(); stopAt = null; }
+      });
+    }
+    function playAudio(i) {
+      if (!audio) return;
+      try { audio.currentTime = BE[i].start; } catch (e) { /* not seekable yet */ }
+      stopAt = SPOKEN[i];
+      /* Browsers refuse sound before the viewer has interacted, so the very
+         first slide on load is usually silent. That is a rejected promise,
+         not an error, and pressing Again or Next plays it. */
+      var p = audio.play();
+      if (p && p.catch) p.catch(function () {});
+    }
+    function stopAudio() { if (audio) { audio.pause(); stopAt = null; } }
+
+    /* A click anywhere on the stage counts as the gesture that unblocks
+       sound, so a learner who just presses play on slide one is not left
+       wondering. Clicks on the bar are excluded: those buttons start their
+       own slide's audio a moment later, and starting the old one first would
+       clip a fraction of the previous sentence. */
+    addEventListener("pointerdown", function (e) {
+      if (!audio || !audio.paused) return;
+      if (e.target && e.target.closest && e.target.closest(".sl-bar")) return;
+      playAudio(at);
+    });
 
     /* ---- the controls ---------------------------------------------------- */
     var bar = document.createElement("div");
@@ -141,6 +183,11 @@
     function play(i) {
       cancelAnimationFrame(raf);
       at = i;
+      /* The drawing and the voice both run in real time from the beat's
+         start, so they stay together without being coupled: the sentence
+         stops at its spoken end, the picture carries on to its hold. That is
+         exactly what the film does. */
+      playAudio(i);
       var from = BE[i].start, to = HOLD[i];
       var t0 = performance.now();
       (function step(now) {
@@ -175,6 +222,7 @@
        wanting the settled picture should not have to sleep for it. */
     function settle(i) {
       cancelAnimationFrame(raf);
+      stopAudio();   /* an instant jump has no sentence to speak */
       at = Math.max(0, Math.min(N - 1, i | 0));
       EF.frame(HOLD[at]);
       paint();
@@ -187,7 +235,8 @@
       if (d.ehelSlide != null) (d.settle ? settle : play)(Math.max(0, Math.min(N - 1, d.ehelSlide | 0)));
     });
 
-    window.EHEL_SLIDES = { play: play, settle: settle, count: N, hold: HOLD, at: function () { return at; } };
+    window.EHEL_SLIDES = { play: play, settle: settle, count: N, hold: HOLD,
+                           audio: audio, at: function () { return at; } };
 
     fit();
     play(0);

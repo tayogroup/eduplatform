@@ -59,7 +59,7 @@ LESSON = {
               # thin connection gets. A SIBLING of "video", not a key inside
               # it: the renderer reads data.slides, and nested here it drew
               # nothing at all while every gate stayed green.
-              "slides": "lecture-video/marking-out-and-cutting-a-halving-joint.310a3160.slides.html",
+              "slides": "lecture-video/marking-out-and-cutting-a-halving-joint.3bcf8556.slides.html",
               # A ten-second demonstration clip of the real thing, between
               # the film and the line that sends the learner back through it.
               # The lecture is DRAWN; this is footage — the drawings say what

@@ -620,15 +620,26 @@ def build_hub(lessons, cfg, fw, criteria, out_dir, lib):
     whole = sum(len(u["criteria"]) for m in fw["modules"] for u in m["units"])
     whole_got = sum(1 for m in fw["modules"] for u in m["units"]
                     for c in u["criteria"] if c["code"] in claimed)
+    # "Across both modules" was hard-coded, and only carpentry's standards
+    # file has two. On a single-module file the second figure is the SAME
+    # module counted again, so the shipped Shapes hub read "Every one of this
+    # module's 32 criteria is taught. Across both modules the prototype
+    # reaches 32 of 32" — a comparison of a thing with itself, presented to
+    # trainers as a second, corroborating number.
+    siblings = len(fw["modules"])
     if built == total:
-        coverage = ("Every one of this module's %d performance criteria is taught. "
-                    "Across both modules the prototype reaches %d of %d."
-                    % (total, whole_got, whole))
+        coverage = "Every one of this module's %d performance criteria is taught." % total
+        if siblings > 1:
+            coverage += (" Across the framework's %d modules the prototype reaches %d of %d."
+                         % (siblings, whole_got, whole))
     else:
-        coverage = ("This prototype teaches %d of this module's %d performance criteria, "
-                    "and %d of %d across both modules. The rest are written into the "
-                    "standards and not yet taught — a prototype shows the shape, not the "
-                    "whole course." % (built, total, whole_got, whole))
+        coverage = ("This prototype teaches %d of this module's %d performance criteria."
+                    % (built, total))
+        if siblings > 1:
+            coverage += (" Across the framework's %d modules it reaches %d of %d."
+                         % (siblings, whole_got, whole))
+        coverage += (" The rest are written into the standards and not yet taught — a "
+                     "prototype shows the shape, not the whole course.")
 
     # How far up the school landing page is from this hub: carpentry's hubs
     # sit two levels down, the cross-trade module's one.

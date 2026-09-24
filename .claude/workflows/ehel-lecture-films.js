@@ -28,7 +28,20 @@ export const meta = {
                   so no line may change: pictures and cues only, checked on the
                   MEASURED timeline. */
 
-const A = args || {}
+/* args can be a FILE instead of a literal. A resume does NOT keep the args of
+   the run it resumes - it throws "args need app, brief, scenesDir ..." - so
+   every retry had to resend the whole lessons array, which for one grade is
+   several thousand words. Three retries were forced in one afternoon (a network
+   outage, then the session limit twice), so the args live in a file and a retry
+   is {argsFile}. The file must hold exactly what args would have held. */
+let A = args || {}
+if (typeof A.argsFile === "string") {
+  let read
+  try { read = require("fs").readFileSync(A.argsFile, "utf8") }
+  catch (e) { throw new Error("argsFile could not be read (" + A.argsFile + "): " + e.message) }
+  try { A = JSON.parse(read) }
+  catch (e) { throw new Error("argsFile is not valid JSON (" + A.argsFile + "): " + e.message) }
+}
 /* app, brief, scenesDir, grade and example may be set per lesson, so one run
    can carry several grades (and stay under the account's rate limit: a run
    holds at most ten agents at once, where five runs at once held 35 and were

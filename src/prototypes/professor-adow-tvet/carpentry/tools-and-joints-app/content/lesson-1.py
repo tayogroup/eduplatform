@@ -89,7 +89,7 @@ LESSON = {
               # time is faster than a learner can follow. It does not autoplay
               # — it carries sound.
               "demo": {
-                  "src": "lecture-video/wood-cutting-demonstration.ef39e7aa.mp4",
+                  "src": "lecture-video/wood-cutting-demonstration.5fe57aeb.mp4",
                   "caption": "Wood Cutting Demonstration Video",
                   # THE CLIP IS NARRATED, and its OWN audio is discarded.
                   # Seven lines written against the picture and spoken in
@@ -104,10 +104,26 @@ LESSON = {
                   # message anyway. The result was two voices over the first
                   # ten seconds, which the owner heard immediately.
                   #
-                  # The source track is now not an input to the mix at all,
-                  # which removes the old narration by construction rather
-                  # than by another measurement. The cost is the bench sound:
-                  # the saw and chisel are gone with it.
+                  # THE BENCH SOUND IS BACK, FILTERED. Dropping the source
+                  # track entirely did remove the old narration, and took the
+                  # saw and the chisel with it - half the reason for putting
+                  # footage beside a drawn diagram. So the source is mixed
+                  # back under the voice through a 5 kHz high-pass, twice
+                  # applied, which keeps the rasp and the tap and leaves the
+                  # speech thin and far down.
+                  #
+                  # IT DOES NOT REMOVE THE OLD VOICE, and nothing available
+                  # here could. The clip's audio is effectively mono - L minus
+                  # R measures -87 dB against L plus R at -28.5, a 59 dB gap -
+                  # so centre-channel removal, the usual way to lift a centred
+                  # voice out, is not available. Frequency separation only
+                  # thins speech, and sibilants sit above 4 kHz where the saw
+                  # does. A ghost of the original narration remains, loudest
+                  # in the gaps between lines. The owner chose this over a
+                  # silent bench, having heard both.
+                  #
+                  # A clean-audio version of the footage, or the tool noise as
+                  # a separate stem, would remove the trade entirely.
                   #
                   # The lines are short because SPEECH IS NOT A CAPTION. The
                   # first draft of them ran 548 characters - about 39 seconds

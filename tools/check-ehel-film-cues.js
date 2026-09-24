@@ -48,7 +48,7 @@ const args = process.argv.slice(2);
 const subject = SUBJECTS[args[0]] ? args.shift() : "science";
 const S = SUBJECTS[subject];
 
-let total = 0, unread = 0, notChecked = 0;
+let total = 0, unread = 0, notChecked = 0, sites = 0, unanswerable = 0;
 for (const grade of args) {
   const sbDir = path.join(ROOT, S.app(grade), "lecture-video");
   const scDir = path.join(ROOT, "tools/lib/film-scenes", S.scenes(grade));
@@ -75,20 +75,63 @@ for (const grade of args) {
     /* No scene code at all is not a film of 30 dead cues; it is a film this run
        could not read. Say which, and never count it. */
     if (!files) { console.log("\n" + subject + " G" + grade + "  " + slug + ": NOT CHECKED - no scene file found"); notChecked++; continue; }
-    const bad = [];
+    const bad = [], answerable = new Set();
     for (const scene of sb.scenes || []) for (const [bi, beat] of (scene.beats || []).entries())
       for (const key of Object.keys((beat.art && beat.art.at) || {})) {
         total++;
+        answerable.add(bi + "|" + key);
         if (!code.includes('"' + key + '"') && !code.includes("'" + key + "'")) {
           bad.push(scene.id + " beat " + bi + ': "' + key + '" -> ' + JSON.stringify(beat.art.at[key]));
           unread++;
         }
       }
+
+    /* THE OTHER DIRECTION, and it is the one that bit hardest. The check above
+       asks whether every DECLARED cue is read. This asks whether every cue a
+       scene file READS can ever be answered. sc() and cue() return null for a
+       miss - no error, no warning - so a call naming a beat its scene does not
+       have, or a key nothing declares, draws nothing and reports nothing.
+       Two interrupted Computing films carried about fifty of these between
+       them: one chapter's payoff panel referenced beats 5 and 6 of a five-beat
+       scene and could never render at all, and a whole second decision diagram
+       was keyed to names no beat declared. --dry, --sweep and --sample all
+       passed them, and so did the check above, because those cues were
+       declared somewhere and read somewhere - just never in the same beat.
+
+       Only LITERAL call sites are checked, and that is what makes it sound. A
+       data-driven site - sc(scene, 1, a.at) in a loop over a table - has no
+       literal to test and is skipped rather than guessed at. That is the same
+       restraint a stricter version of the check above got wrong and had to be
+       reverted for crying wolf.
+
+       It is deliberately WEAK about scope: a pair passes if ANY scene in the
+       film has that beat with that key, not only the scene the call belongs to,
+       because resolving which scene a helper draws would need a call graph. So
+       a call with the right beat and key in the WRONG scene still passes.
+       Sound, not complete - it proves a call CAN be answered, never that the
+       right beat answers it. */
+    for (const re of [
+      /\bsc\s*\(\s*[A-Za-z_$][\w$]*\s*,\s*(\d+)\s*,\s*["']([^"']+)["']\s*\)/g,
+      /\bcue\s*\(\s*(\d+)\s*,\s*["']([^"']+)["']\s*\)/g,
+      /\bbeat\s*:\s*(\d+)\s*,\s*at\s*:\s*["']([^"']+)["']/g,
+      /\bgoBeat\s*:\s*(\d+)\s*,\s*goAt\s*:\s*["']([^"']+)["']/g,
+    ]) {
+      let m;
+      while ((m = re.exec(code))) {
+        sites++;
+        if (!answerable.has(m[1] + "|" + m[2])) {
+          bad.push('READS beat ' + m[1] + ' "' + m[2] + '", which no beat of this film declares');
+          unanswerable++;
+        }
+      }
+    }
     if (bad.length) { console.log("\n" + subject + " G" + grade + "  " + slug); bad.forEach((b) => console.log("   " + b)); }
   }
 }
 console.log("\n" + subject + ": " + total + " declared cues checked, " + unread + " never read by any scene file."
   + (notChecked ? "\n" + notChecked + " film(s) were NOT checked - see above." : ""));
+console.log(subject + ": " + sites + " literal call site(s) checked, " + unanswerable
+  + " that no beat of their own film can answer.");
 
 /* A run that checked nothing reads exactly like a clean one, so it says so
    rather than printing a tick over no work. */

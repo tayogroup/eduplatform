@@ -31,6 +31,7 @@ const marks = fs.readFileSync(path.join(ROOT, "tools/lib/ehel-film-marks.js"), "
    keeps its app under g1v2, so the app path is listed rather than derived. */
 const SUBJECTS = {
   science: { app: (g) => "src/prototypes/ehel-academy/science/grade-" + g + "-app", scenes: (g) => "science-g" + g },
+  computing: { app: (g) => "src/prototypes/ehel-academy/computing/grade-" + g + "-app", scenes: (g) => "computing-g" + g },
   mathematics: {
     app: (g) => "src/prototypes/ehel-academy/mathematics/grade-" + g + "-app" + (g === "1" ? "/g1v2" : ""),
     scenes: (g) => "math-g" + g,

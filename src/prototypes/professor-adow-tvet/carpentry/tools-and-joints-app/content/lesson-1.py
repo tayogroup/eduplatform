@@ -73,6 +73,20 @@ LESSON = {
               "demo": {
                   "src": "lecture-video/wood-cutting-demonstration.901c652c.mp4",
                   "caption": "Wood Cutting Demonstration Video",
+                  # Narration for footage that has none. The clip carries no
+                  # speech — the audio sits flat at about -20 dB throughout,
+                  # which is tool and room noise — so these lines are written
+                  # against what is on screen, checked frame by frame, and
+                  # worded to tie the footage back to the job just taught.
+                  # `at` is in the CLIP's seconds, not wall-clock: at rate 0.6
+                  # these ten seconds take nearly seventeen to watch.
+                  "narration": [
+                      {"at": 0.0, "say": "A prepared piece on the bench. Everything that follows is taken from a face side and a face edge."},
+                      {"at": 2.0, "say": "The three tools this job needs: a try square, a marking gauge and a tenon saw."},
+                      {"at": 4.2, "say": "The marking gauge, worked along the wood, scoring its line from a prepared face."},
+                      {"at": 6.6, "say": "The waste, hatched before any cut — so there is no way to saw off the wrong half."},
+                      {"at": 8.2, "say": "Then the tenon saw: fine teeth for a clean cut across the grain, and a stiff back to keep it straight."},
+                  ],
                   "rate": 0.6,
               },
               "parts": [

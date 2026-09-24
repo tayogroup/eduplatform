@@ -768,6 +768,34 @@
         setRate();
         wrap.appendChild(dv);
 
+        /* A NARRATION BAND, under the clip, the way the lecture film carries
+           its own. The footage has NO SPEECH — measured, not assumed: after
+           the first half-second the level sits flat at about -20 dB for the
+           whole clip, which is tool and room noise, where speech would drop
+           between phrases. So there is nothing to transcribe, and these lines
+           are narration written against what is on screen, in the lesson's
+           own words, to tie the footage to the job it has just been taught.
+
+           Cue times are in the clip's OWN seconds, not wall-clock: at rate
+           0.6 ten seconds of video takes nearly seventeen to watch, and
+           currentTime counts the former. Getting that wrong would drift the
+           captions further behind the picture the longer it played. */
+        if (Array.isArray(data.demo.narration) && data.demo.narration.length) {
+          const cues = data.demo.narration.slice().sort((a, b) => a.at - b.at);
+          const band = document.createElement("p");
+          band.className = "carp-caption carp-demo-band";
+          band.setAttribute("aria-live", "polite");
+          const show = () => {
+            let line = cues[0];
+            for (const c of cues) if (dv.currentTime >= c.at) line = c;
+            if (band.textContent !== line.say) band.textContent = line.say;
+          };
+          dv.addEventListener("timeupdate", show);
+          dv.addEventListener("seeked", show);
+          show();
+          wrap.appendChild(band);
+        }
+
         /* The caption is used verbatim. An earlier version appended
            "· playing at 0.75× speed" to it, which is useful to a learner and
            is still not the caption that was asked for. */

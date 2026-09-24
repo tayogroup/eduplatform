@@ -526,6 +526,25 @@ a.lesson:active .go { transform: translateY(2px); box-shadow: 0 1px 0 var(--gold
   aspect-ratio: 16 / 9;
 }
 
+/* The demonstration clip's narration, under it, echoing the band the lecture
+   film burns into its own frames. min-height is load-bearing: the lines differ
+   in length and one of them wraps to two rows, so without it the page jogs
+   every time a cue changes under the reader's eye. */
+.carp-demo-band {
+  max-width: 760px;
+  margin: 8px auto 0;
+  min-height: 2.9em;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  border-left: 3px solid var(--gold);
+  padding: 8px 14px;
+  background: var(--cell);
+  border-radius: 0 10px 10px 0;
+  color: var(--ink);
+}
+
 /* An author `display` beats the browser's own [hidden] rule, so `el.hidden =
    true` on either of these left it on screen — the film went on playing under
    the slide deck that had just replaced it. Say it explicitly. */

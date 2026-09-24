@@ -17,6 +17,20 @@ mitre, a chamfer or a roof pitch.
 """
 from _kit import step, opt, q, word
 
+import base64, os
+
+# THE CAPTION TRACK IS INLINED, not linked. A <track src> takes a data URI
+# as happily as a path, and this removes the one file type a published
+# artifact refuses to serve whatever content type it is given - a linked
+# .vtt 404s there, silently, leaving a film with no captions and nothing
+# on screen to say so. The .vtt on disk stays the source of truth; it is
+# read here at build time rather than copied by hand, so editing the
+# captions cannot drift from what the page ships. 5.9 KB, ~7.8 KB encoded.
+_VTT = os.path.join(os.path.dirname(os.path.abspath(__file__)),
+                    "..", "lecture-video", "shape-and-measures.2613b081.vtt")
+with open(_VTT, "rb") as _fh:
+    CAPTIONS = "data:text/vtt;base64," + base64.b64encode(_fh.read()).decode("ascii")
+
 LESSON = {
     "slug": "solids-nets-and-angles",
     "title": "Solids, Nets and Angles",
@@ -60,7 +74,7 @@ LESSON = {
         step("lecture", "Unit lecture", ["ADOW-SM-SM.07.1", "ADOW-SM-SM.08.1"],
              {"video": {
                   "src": "lecture-video/shape-and-measures.534e9a4a.mp4",
-                  "captions": "lecture-video/shape-and-measures.2613b081.vtt",
+                  "captions": CAPTIONS,
                   "poster": "lecture-video/shape-and-measures.29644ff7.jpg"},
               "underFilm": "An introduction to solids, nets and angles. The trade work — allowing for thickness, the circumference of a duct, halving a mitre — is in the steps below."},
              ask="Watch the film first. It introduces the ideas; the steps after it put them on the bench.",

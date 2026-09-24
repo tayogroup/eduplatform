@@ -1,7 +1,7 @@
 # Remaking the halving-joint film
 
 Everything needed to rebuild *Marking Out and Cutting a Halving Joint*
-(3:52, 1280×720) from nothing. Three parts: the **commands**, the
+(3:42, 1280×720) from nothing. Three parts: the **commands**, the
 **scenes**, and the **script**.
 
 Made on 2026-09-23. Narration bought once, film rendered once.
@@ -23,7 +23,7 @@ S=marking-out-and-cutting-a-halving-joint
 | --- | --- | --- | --- |
 | 1 | `node tools/create-ehel-unit-lecture.js --app $A --slug $S --dry` | free | character count, objective coverage, estimated length. Reads only the script — the scenes file need not exist yet. |
 | 2 | `… --preview` | free | one still per beat plus both cards, as contact sheets. **The scenes file must exist.** |
-| 3 | `… --narrate` | **BUYS** | buys every clip whose TEXT has changed, and stops. 3,097 characters over two passes. |
+| 3 | `… --narrate` | **BUYS** | buys every clip whose TEXT has changed, and stops. 2,375 characters as it stands; three passes and one voice change cost 3,418 in all. |
 | 4 | `… --sample` | free | a frame 0.75 s after every spoken cue, on the **measured** timeline. |
 | 4b | `… --sweep` | free | draws EVERY frame the render will draw, and refuses if one throws or paints outside the box. |
 | 5 | `… --workers 4` | render | draws every frame and muxes. 6,956 frames, ~4 min on four browsers. |
@@ -52,18 +52,24 @@ by their text, so nothing is re-bought unless the words change.
 ```
 pass 1 (10 scenes, 25 beats)
 --dry       2,375 characters, estimated 3:19
---narrate   25 clips bought, measured 3:01 (the real voice runs shorter)
-render      a501162d.mp4  8.31 MB
+--narrate   25 clips bought, measured 3:01
 
-pass 2 (11 scenes, 30 beats — a safety scene and four added beats)
---dry       3,097 characters; 24 clips CACHED, 6 to buy (829 characters)
---narrate   6 clips bought, measured 3:52
---sweep     6,956 frames; refused twice, and both refusals were real
---sample    116 frames, 12 contact sheets
-render      marking-out-and-cutting-a-halving-joint.38840040.mp4  11.20 MB
-            marking-out-and-cutting-a-halving-joint.54b24e37.vtt  30 cues
-            marking-out-and-cutting-a-halving-joint.7cfa3a81.jpg  poster
-            6,956 frames drawn in 5.7 min by 4 browsers
+pass 2 (11 scenes, 30 beats - a safety scene and four added beats)
+--narrate   6 clips bought (829 characters), measured 3:52
+
+pass 3 (back to 10 scenes, 25 beats; voice changed to Daniel)
+--narrate   1 clip bought (107 characters) - the rest were already cached
+            against that voice from a cancelled attempt
+--sweep     6,661 frames, no throws, nothing outside the box
+--sample    99 frames, 10 contact sheets
+render      marking-out-and-cutting-a-halving-joint.b8c5e186.mp4  10 MB, 3:42
+            marking-out-and-cutting-a-halving-joint.30ec7183.vtt  25 cues
+            marking-out-and-cutting-a-halving-joint.d5d13118.jpg  poster
+--slides    marking-out-and-cutting-a-halving-joint.02ff831b.slides.html  230 KB
+            marking-out-and-cutting-a-halving-joint.f9f2cdf9.narration.mp3  2.6 MB
+
+CLIPS ARE CACHED PER VOICE. The 25 beats exist in both voices on disk, so
+moving between them costs a render and no characters.
 ```
 
 Names are content-addressed: a re-render gets a different hash and therefore a
@@ -105,23 +111,22 @@ in the bought clip and the drawing changes as the word is spoken. `cue(beat,
 Academy, and a Professor Adow film carried another school's crest on every
 frame.
 
-### The eleven scenes
+### The ten scenes
 
 | id | heading | marks |
 | --- | --- | --- |
 | title | Marking Out and Cutting a Halving Joint | cross, flush |
 | joint | What a halving joint is | apart, half, close, flush |
-| tools | Three tools | square, gauge, saw, teeth, back, rip |
+| tools | Three tools | square, gauge, saw, teeth, back |
 | faces | Face side, face edge | board, faceside, faceedge, both, no |
 | shoulder | The shoulder line | measure, line, edges, press, lift, bad |
 | gauge | Half the thickness | set, lock, score, both, equal, error |
 | waste | Mark the waste | hatch, safe |
-| safety | Before you cut | cramp, shift, eyes, after, sharp, force |
-| saw | Which side of the line | kerf, waste, angle, thumb, groove, good, line, bad, slack, far, lean |
+| saw | Which side of the line | kerf, waste, good, line, bad, slack |
 | fit | Pare, and fit it dry | pare, clean, dry, tight, closed, diag |
 | recap | The order of work | one, two, three, four, five, six, seven |
 
-61 marks in all. Every one must be implemented by the scenes file, or it
+49 marks in all. Every one must be implemented by the scenes file, or it
 simply never draws.
 
 ### The scenes file
@@ -150,12 +155,15 @@ fresh here, in the lesson's colours.
 
 ## 3. The script
 
-3,097 characters, 30 clips. Also in `SCRIPT.txt`, which is what to read
+2,375 characters, 25 clips. Also in `SCRIPT.txt`, which is what to read
 before buying a voice — corrections are free before step 3 and cost the whole
 narration after it.
 
-The voice and its settings are fixed in the tool so one course does not sound
-different from another: ElevenLabs `eleven_multilingual_v2`, voice
+The settings are fixed in the tool so one course does not sound different from
+another. THE VOICE IS NOT: this storyboard names `voice`, and this film alone
+uses Daniel (`onwK4e9ZLuTAKqWW03F9`), chosen by the owner after an A/B of four
+voices levelled to the same loudness. The shared voice below is what every
+other film still uses. ElevenLabs `eleven_multilingual_v2`, voice
 `XfNU2rGpBa01ckF309OY`, stability 0.60, similarity 0.82, style 0.18, speed
 0.88.
 
@@ -170,7 +178,7 @@ different from another: ElevenLabs `eleven_multilingual_v2`, voice
 [TOOLS] Three tools
    Three tools do this job. A try square, to prove a line square.
    A marking gauge, to score the same distance from a face every time.
-   And a tenon saw: fine teeth for a clean cut across the grain, and a stiff back that keeps the cut straight. A rip saw is filed to cut along the grain, and would tear this shoulder to pieces.
+   And a tenon saw: fine teeth for a clean cut across the grain, and a stiff back that keeps the cut straight.
 
 [FACES] Face side, face edge
    Start with a prepared piece. Planed straight, planed square, gauged to size.
@@ -191,17 +199,10 @@ different from another: ElevenLabs `eleven_multilingual_v2`, voice
    Now hatch the waste. This is the last mark before the first cut that cannot be undone.
    It takes seconds, and it is why nobody who does it ever saws off the wrong half.
 
-[SAFETY] Before you cut
-   Before any cut, the work is cramped to the bench. Work that shifts under a saw is what makes a cut wander and a hand slip.
-   Eye protection goes on before the tool is picked up, not after the first cut. Sawdust and a sprung splinter both go for the eyes.
-   And the saw is sharp. A blunt one has to be forced, and force is what slips, so the sharp tool is the safer tool.
-
 [SAW] Which side of the line
    The saw takes out a kerf about a millimetre wide. That millimetre has to come out of the waste.
-   Start it at a low angle, thumb of the free hand against the blade above the teeth, and two or three backward strokes to cut a groove.
    Saw on the waste side and the line stays on the work. The joint is full size, and a shaving brings it home.
    Saw down the middle of the line and half the kerf comes out of the joint. It is slack, and nothing puts wood back.
-   Watch the far face as well as the near one. A saw can lean and stay true on the line you are looking at while it runs off the one you are not.
 
 [FIT] Pare, and fit it dry
    Pare the waste with a chisel, cutting from both faces towards the middle, so the far edge is supported and does not tear out.

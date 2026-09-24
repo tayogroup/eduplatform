@@ -56,10 +56,15 @@ LESSON = {
               # The same lecture, stepped through a beat at a time, built by
               # --slides from this storyboard and these drawings. 229 KB
               # against the film's 11.2 MB, so it is also what a learner on a
-              # thin connection gets. A SIBLING of "video", not a key inside
+              # thin connection gets. It speaks: the deck loads its own copy
+              # of the SAME bought narration (a further 2.7 MB), levelled to
+              # -16 LUFS so the lecture sounds the same whether it is watched
+              # or stepped through. The first build of that audio was a bare
+              # 64k mono encode at -21.1 LUFS - three and a half decibels
+              # under the film carrying the same words, which is audible. A SIBLING of "video", not a key inside
               # it: the renderer reads data.slides, and nested here it drew
               # nothing at all while every gate stayed green.
-              "slides": "lecture-video/marking-out-and-cutting-a-halving-joint.3bcf8556.slides.html",
+              "slides": "lecture-video/marking-out-and-cutting-a-halving-joint.37a8c1de.slides.html",
               # A ten-second demonstration clip of the real thing, between
               # the film and the line that sends the learner back through it.
               # The lecture is DRAWN; this is footage — the drawings say what

@@ -75,6 +75,10 @@ const ROOT = path.resolve(__dirname, "..");
 const FONT_DIR = path.join(ROOT, "src/prototypes/ehel-academy/shared/fonts");
 const ENGINE_HEAD = path.join(__dirname, "lib/ehel-film-engine-head.js");
 const ENGINE_TAIL = path.join(__dirname, "lib/ehel-film-engine-tail.js");
+/* Appended after the tail for --slides only. It drives the SAME film through
+   window.EHEL_FILM, which the tail already publishes, so it needs no change to
+   the engine and works for every film in the repo. */
+const ENGINE_SLIDES = path.join(__dirname, "lib/ehel-film-slides.js");
 const BASE_CSS = path.join(__dirname, "lib/ehel-film-base.css");
 
 /* the platform voice, and the same slower, teacher-like settings as every
@@ -112,7 +116,7 @@ function arg(name, fallback) {
 }
 const has = (name) => ARGV.some((x) => x === `--${name}` || x.startsWith(`--${name}=`));
 
-const KNOWN = new Set(["app", "slug", "dry", "preview", "sample", "sweep", "draft", "narrate", "calibrate", "limit-seconds", "workers"]);
+const KNOWN = new Set(["app", "slug", "dry", "preview", "sample", "sweep", "slides", "draft", "narrate", "calibrate", "limit-seconds", "workers"]);
 for (const a of ARGV) {
   if (!a.startsWith("--")) continue;
   const name = a.slice(2).split("=")[0];
@@ -292,7 +296,7 @@ function describeRenderer(renderer) {
     .concat(renderer.styles.map((p) => path.relative(ROOT, p))).join(" + ");
 }
 
-function buildPage(film, renderer) {
+function buildPage(film, renderer, opts) {
   const fonts = [
     fontFace("AtkinsonHyperlegible-normal-400.woff2", "Atkinson Hyperlegible", "400"),
     fontFace("AtkinsonHyperlegible-normal-700.woff2", "Atkinson Hyperlegible", "700"),
@@ -308,7 +312,9 @@ function buildPage(film, renderer) {
     } catch (e) { die(e.message); }
   }
   const css = [read(BASE_CSS)].concat(artCss, renderer.styles.map(read)).join("\n");
-  const script = [read(ENGINE_HEAD)].concat(artJs, renderer.scenes.map(read), [read(ENGINE_TAIL)]).join("\n");
+  const parts = [read(ENGINE_HEAD)].concat(artJs, renderer.scenes.map(read), [read(ENGINE_TAIL)]);
+  if (opts && opts.slides) parts.push(read(ENGINE_SLIDES));
+  const script = parts.join("\n");
   return `<!doctype html><html lang="en"><head><meta charset="utf-8">
 <title>${film.title} - unit lecture</title>
 <style>${fonts}</style>
@@ -657,6 +663,23 @@ function publish(tmp, outDir, slug, ext) {
   /* ---- the page ---- */
   film.beats = beats;
   film.total = total;
+  /* --slides: the same film, as something a learner steps through. No video,
+     no render, no browser — the page carries the drawings and replays one
+     beat at a time, so it costs a file write and about 200 KB against the
+     mp4's several megabytes. It needs the MEASURED timeline, which is why it
+     sits here and not before the narration is priced. */
+  if (has("slides")) {
+    const slidesDir = path.join(appDir, "lecture-video");
+    const tmpSlides = path.join(scratch, `${slug}.slides.html`);
+    fs.writeFileSync(tmpSlides, buildPage(film, renderer, { slides: true }), "utf8");
+    const name = publish(tmpSlides, slidesDir, slug, "slides.html");
+    const kb = fs.statSync(path.join(slidesDir, name)).size / 1024;
+    console.log(`\n  ${name}  ${kb.toFixed(0)} KB  ${beats.length} slides`);
+    console.log("  The same film, stepped through a beat at a time. No video file.");
+    console.log(`\n  For the lecture step:\n    "slides": "lecture-video/${name}"`);
+    return;
+  }
+
   const pagePath = path.join(scratch, "film.html");
   fs.writeFileSync(pagePath, buildPage(film, renderer), "utf8");
   const { chromium } = require("playwright");

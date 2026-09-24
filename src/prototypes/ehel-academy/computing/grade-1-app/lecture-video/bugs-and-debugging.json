@@ -18,7 +18,6 @@
     ]
   },
   "objectives": [
-    ["1P.03", "Predict what is likely to happen when programs are run."],
     ["1P.04", "Know that programs can contain errors."],
     ["1P.05", "Know how to run programs to test whether they produce the desired result."],
     ["1P.06", "Identify why a program does not produce the desired result."],
@@ -46,17 +45,17 @@
         "art": { "at": { "stuck": "stuck the moth in their notebook", "famous": "made the word famous" } } }
     ] },
 
-    { "id": "runit", "kind": "run", "heading": "Run it to test it", "codes": ["1P.03", "1P.05"], "beats": [
+    { "id": "runit", "kind": "run", "heading": "Run it to test it", "codes": ["1P.05"], "beats": [
       { "say": "We want the dog to move right twice, and then jump.",
         "art": { "at": { "want": "We want the dog", "twice": "move right twice", "jump": "then jump" } } },
       { "say": "Here is the program for it. Does it work? You cannot tell just by looking.",
         "art": { "at": { "program": "Here is the program", "work": "Does it work", "look": "tell just by looking" } } },
-      { "say": "First say what you think the dog will do. Then press Run.",
-        "art": { "at": { "say": "say what you think", "run": "press Run" } } },
+      { "say": "So you run it, and watch closely. Press Run to find out.",
+        "art": { "at": { "watch": "watch closely", "run": "Press Run" } } },
       { "say": "The dog moves right. Then it moves left. Then it jumps.",
         "art": { "at": { "right": "moves right", "left": "moves left", "jump": "it jumps" } } },
-      { "say": "That is not what you said. So this program has a bug in it.",
-        "art": { "at": { "not": "not what you said", "bug": "a bug" } } }
+      { "say": "That is not what we wanted. So this program has a bug in it.",
+        "art": { "at": { "not": "not what we wanted", "bug": "a bug" } } }
     ] },
 
     { "id": "find", "kind": "find", "heading": "Find the bug", "codes": ["1P.06"], "beats": [
@@ -111,7 +110,7 @@
         "art": { "at": { "rocket": "A rocket", "tested": "tested again and again" } } }
     ] },
 
-    { "id": "recap", "kind": "recap", "heading": "What you now know", "codes": ["1P.03", "1P.04", "1P.05", "1P.06", "1P.07", "1CT.02"], "beats": [
+    { "id": "recap", "kind": "recap", "heading": "What you now know", "codes": ["1P.04", "1P.05", "1P.06", "1P.07", "1CT.02"], "beats": [
       { "say": "A bug is a mistake in the program, not in the computer.",
         "art": { "at": { "bug": "A bug", "computer": "not in the computer" } } },
       { "say": "Run it and watch it. Compare what happened with what you wanted.",

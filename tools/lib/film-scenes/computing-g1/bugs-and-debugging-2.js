@@ -97,7 +97,7 @@
     var c = function (k, n) { return sc(scene, k, n); };
     var cWant = c(0, "want"), cTwice = c(0, "twice"), cJump0 = c(0, "jump");
     var cProgram = c(1, "program"), cWork = c(1, "work"), cLook = c(1, "look");
-    var cSay = c(2, "say"), cRunIt = c(2, "run");
+    var cWatch = c(2, "watch"), cRunIt = c(2, "run");
     var cRight = c(3, "right"), cLeft = c(3, "left"), cJump3 = c(3, "jump");
     var cNot = c(4, "not"), cBug = c(4, "bug");
     var out = "";
@@ -128,9 +128,13 @@
     var look = on(t, cLook, 0.5) * bdOnly(t, scene, 1);
     if (look > 0) out += G(Em(0, 0, 66, "\u{1F50D}"), { transform: tr(BD_PANEL.mark, lerp(180, 350, on(t, cLook, 1.6))), opacity: look });
 
-    /* "say what you think the dog will do" */
-    var pred = on(t, cSay, 0.5) * (1 - on(t, cRight, 0.4));
-    out += MK.bubble(706, 136, 338, 66, "right, right, jump?", pred, BD_STAGE.cx, 246);
+    /* "watch closely": eyes over the stage, watching for the result - there is
+       no prediction bubble here on purpose (review note, 2026-09-24): the
+       lesson's own misconception line for this step is "children guess the
+       bug before running the program: run it first", so the film does not
+       show the child guessing before the dog moves */
+    var watching = on(t, cWatch, 0.4) * (1 - on(t, cRight, 0.4));
+    if (watching > 0) out += G(Em(0, 0, 56, "\u{1F440}"), { transform: tr(BD_STAGE.x + BD_STAGE.w / 2, BD_STAGE.y - 34), opacity: watching });
 
     /* the Run button, pressed */
     var rb = on(t, cRunIt, 0.4);

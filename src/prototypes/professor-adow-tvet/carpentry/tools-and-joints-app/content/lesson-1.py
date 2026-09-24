@@ -70,13 +70,18 @@ LESSON = {
               # it: the renderer reads data.slides, and nested here it drew
               # nothing at all while every gate stayed green.
               "slides": "lecture-video/marking-out-and-cutting-a-halving-joint.02ff831b.slides.html",
-              # A ten-second demonstration clip of the real thing, between
+              # A twenty-second demonstration clip of the real thing, between
               # the film and the line that sends the learner back through it.
               # The lecture is DRAWN; this is footage — the drawings say what
-              # to do and why, and ten seconds of a saw in timber says what it
-              # looks and sounds like.
+              # to do and why, and the bench says what it looks and sounds
+              # like. The owner's longer version replaced a ten-second one and
+              # is the better match: it shows the face side and face edge
+              # being written on the timber, a chisel paring the joint, the
+              # two members offered together, and the finished work — which is
+              # the lesson's own order of work, filmed.
               #
-              # Played at 0.6: shipped at 0.75 and slowed on the owner's word,
+              # Played at 0.65: shipped at 0.75, slowed to 0.6, then eased back
+              # to 0.65 on the owner's word once the clip doubled in length,
               # because the point of a demonstration is to see HOW, and real
               # time is faster than a learner can follow. It does not autoplay
               # — it carries sound.
@@ -100,7 +105,7 @@ LESSON = {
                       {"at": 15.0, "say": "Then the two members are offered together — a dry fit, before any glue goes near it."},
                       {"at": 18.0, "say": "Together by hand, and flush. That is the joint the lecture drew."},
                   ],
-                  "rate": 0.6,
+                  "rate": 0.65,
               },
               "parts": [
                   {"sequence": "joint", "state": 1,

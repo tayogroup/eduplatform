@@ -78,6 +78,19 @@ PROBES = {
     "ADOW-DS-DS.03.7": ["one change at a time"],
 
     # --- Shapes and Measurements ---
+    # SM.07 and SM.08 added 2026-09-24 with lesson 4. Each probe is a word
+    # the teaching cannot avoid, and none of them is a word from the
+    # criterion's own title: SM.07.3 probes "thickness" rather than
+    # "development", because a page can satisfy the latter by naming the
+    # step it is on.
+    "ADOW-SM-SM.07.1": ["vertex"],
+    "ADOW-SM-SM.07.2": ["circumference"],
+    "ADOW-SM-SM.07.3": ["thickness"],
+    "ADOW-SM-SM.07.4": ["bend"],
+    "ADOW-SM-SM.08.1": ["obtuse"],
+    "ADOW-SM-SM.08.2": ["protractor"],
+    "ADOW-SM-SM.08.3": ["sliding bevel"],
+    "ADOW-SM-SM.08.4": ["halve"],
     "ADOW-SM-SM.01.1": ["millimetre"],
     "ADOW-SM-SM.01.2": ["datum"],
     "ADOW-SM-SM.01.3": ["tolerance"],

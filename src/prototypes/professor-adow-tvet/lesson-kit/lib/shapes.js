@@ -251,6 +251,130 @@
     },
   });
 
+  /* ==================================================================
+     SOLIDS, DEVELOPMENTS AND ANGLES — units SM.07 and SM.08.
+
+     Added after the Ehel Stage 4 shape-and-measures module was compared
+     against this one: reading a scale, perimeter, area and the right
+     angle were already here, and faces, nets and the angles that are not
+     90 degrees were not. Both earn their place in a trade school rather
+     than arriving as school geometry — a NET is how a duct, a guard or a
+     hopper is marked out flat before anything is bent, and an angle that
+     is not a right angle is a mitre, a chamfer or a roof pitch.
+     ================================================================== */
+  const ISO = { f: "#C98A4B", t: "#DBA463", s: "#A96E35" };
+
+  function angleFig(g, deg, label, colour) {
+    const cx = 60, cy = 168, r = 112;
+    const rad = (deg * Math.PI) / 180;
+    el("line", { x1: cx, y1: cy, x2: cx + r, y2: cy, stroke: ink(), "stroke-width": 4 }, g);
+    el("line", { x1: cx, y1: cy, x2: cx + r * Math.cos(rad), y2: cy - r * Math.sin(rad),
+                 stroke: ink(), "stroke-width": 4 }, g);
+    el("path", { d: `M ${cx + 40} ${cy} A 40 40 0 0 0 ${cx + 40 * Math.cos(rad)} ${cy - 40 * Math.sin(rad)}`,
+                 fill: "none", stroke: colour, "stroke-width": 3 }, g);
+    el("text", { x: cx + 74, y: cy - 28, fill: colour, "font-size": 15, "font-weight": 700 }, g)
+      .textContent = label;
+  }
+
+  Object.assign(SHAPES, {
+    solidBox: {
+      title: "a solid, and what its parts are called", w: 380, h: 250,
+      draw(g) {
+        el("path", { d: "M 80 96 h 150 v 110 h -150 z", fill: ISO.f, stroke: ISO.s, "stroke-width": 2 }, g);
+        el("path", { d: "M 80 96 l 58 -42 h 150 l -58 42 z", fill: ISO.t, stroke: ISO.s, "stroke-width": 2 }, g);
+        el("path", { d: "M 230 96 l 58 -42 v 110 l -58 42 z", fill: ISO.s, stroke: ISO.s, "stroke-width": 2 }, g);
+        el("circle", { cx: 80, cy: 96, r: 6, fill: gold() }, g);
+      },
+      parts: [
+        { id: "face", label: "a face", box: [82, 98, 146, 106],
+          say: "A face — one flat surface. This box has six. On a development every face becomes one panel of the flat pattern, which is why counting them first tells you how much sheet you need." },
+        { id: "edge", label: "an edge", box: [74, 88, 162, 16],
+          say: "An edge — where two faces meet. This box has twelve. On the flat pattern an edge is either a fold line or a cut line, and telling those apart is the whole skill." },
+        { id: "vertex", label: "a vertex", box: [66, 82, 28, 28],
+          say: "A vertex — a corner where edges meet. This box has eight. On sheet work a vertex is where a notch is cut, so the metal does not bunch when the folds come up." },
+      ],
+    },
+
+    netTray: {
+      title: "the development of an open tray", w: 380, h: 250,
+      draw(g) {
+        el("rect", { x: 140, y: 96, width: 110, height: 78, fill: ISO.f, stroke: ISO.s, "stroke-width": 2 }, g);
+        el("rect", { x: 140, y: 42, width: 110, height: 54, fill: ISO.t, stroke: ISO.s, "stroke-width": 2 }, g);
+        el("rect", { x: 140, y: 174, width: 110, height: 54, fill: ISO.t, stroke: ISO.s, "stroke-width": 2 }, g);
+        el("rect", { x: 78, y: 96, width: 62, height: 78, fill: ISO.t, stroke: ISO.s, "stroke-width": 2 }, g);
+        el("rect", { x: 250, y: 96, width: 62, height: 78, fill: ISO.t, stroke: ISO.s, "stroke-width": 2 }, g);
+        [[140, 96, 250, 96], [140, 174, 250, 174], [140, 96, 140, 174], [250, 96, 250, 174]].forEach(
+          ([a, b, c, d2]) => el("line", { x1: a, y1: b, x2: c, y2: d2, stroke: teal(),
+                                          "stroke-width": 2, "stroke-dasharray": "6 4" }, g));
+        el("text", { x: 195, y: 240, fill: teal(), "font-size": 12, "text-anchor": "middle", "font-weight": 700 }, g)
+          .textContent = "dashed = fold, solid = cut";
+      },
+    },
+
+    netCylinder: {
+      title: "the development of a duct", w: 380, h: 230,
+      draw(g) {
+        el("rect", { x: 118, y: 74, width: 170, height: 90, fill: ISO.f, stroke: ISO.s, "stroke-width": 2 }, g);
+        el("circle", { cx: 84, cy: 119, r: 30, fill: ISO.t, stroke: ISO.s, "stroke-width": 2 }, g);
+        el("circle", { cx: 322, cy: 119, r: 30, fill: ISO.t, stroke: ISO.s, "stroke-width": 2 }, g);
+        el("text", { x: 203, y: 196, fill: gold(), "font-size": 12, "text-anchor": "middle", "font-weight": 700 }, g)
+          .textContent = "the long side = the circumference, not the diameter";
+      },
+    },
+
+    netNoFold: {
+      title: "six squares that fold into nothing", w: 380, h: 160,
+      draw(g) {
+        for (let i = 0; i < 6; i++) {
+          el("rect", { x: 28 + i * 54, y: 54, width: 54, height: 54, fill: ISO.f, stroke: ISO.s, "stroke-width": 2 }, g);
+        }
+        el("text", { x: 190, y: 134, fill: bad(), "font-size": 13, "text-anchor": "middle", "font-weight": 700 }, g)
+          .textContent = "six faces, and it still will not close";
+      },
+    },
+
+    /* ITS OWN try square. lesson-3 has always had a browse item for one,
+       and the drawing lives in carpentry.js — which this cross-trade app
+       deliberately does not load. The item therefore rendered an empty
+       stage AND fell back to showing the raw key "trySquare" as its
+       label, in shipped content, because `browse` has no way to know a
+       name it was handed does not resolve. */
+    trySquare: {
+      title: "try square", w: 360, h: 210,
+      draw(g) {
+        el("rect", { x: 70, y: 40, width: 34, height: 140, rx: 3, fill: "#7A4A22", stroke: "#5C3517", "stroke-width": 2 }, g);
+        el("rect", { x: 78, y: 48, width: 6, height: 124, fill: "#C9A227", opacity: 0.9 }, g);
+        el("rect", { x: 104, y: 40, width: 172, height: 24, rx: 2, fill: STEEL, stroke: STEEL_DARK, "stroke-width": 2 }, g);
+        for (let i = 1; i < 8; i++) {
+          el("line", { x1: 104 + i * 20, y1: 40, x2: 104 + i * 20, y2: 40 + (i % 5 === 0 ? 14 : 8),
+                       stroke: STEEL_DARK, "stroke-width": 1.4 }, g);
+        }
+        el("path", { d: "M 104 78 v -14 h 14", fill: "none", stroke: teal(), "stroke-width": 3 }, g);
+        el("text", { x: 190, y: 120, fill: teal(), "font-size": 13, "font-weight": 700, "text-anchor": "middle" }, g)
+          .textContent = "90° — proved, not judged";
+      },
+    },
+
+    angleAcute:  { title: "acute", w: 300, h: 210, draw(g) { angleFig(g, 38, "38° acute", good()); } },
+    angleRight:  { title: "right", w: 300, h: 210, draw(g) {
+      angleFig(g, 90, "90° right", teal());
+      el("path", { d: "M 60 148 h 20 v 20", fill: "none", stroke: teal(), "stroke-width": 3 }, g);
+    } },
+    angleObtuse: { title: "obtuse", w: 300, h: 210, draw(g) { angleFig(g, 133, "133° obtuse", gold()); } },
+
+    bevel: {
+      title: "sliding bevel", w: 360, h: 200,
+      draw(g) {
+        el("rect", { x: 60, y: 60, width: 30, height: 116, rx: 4, fill: "#7A4A22", stroke: "#5C3517", "stroke-width": 2 }, g);
+        el("path", { d: "M 90 150 l 190 -76 l 10 18 l -190 76 z", fill: STEEL, stroke: STEEL_DARK, "stroke-width": 2 }, g);
+        el("circle", { cx: 92, cy: 142, r: 7, fill: "#C9A227", stroke: "#8A6E12", "stroke-width": 2 }, g);
+        el("text", { x: 200, y: 186, fill: tok("--muted", "#93AABE"), "font-size": 12, "text-anchor": "middle" }, g)
+          .textContent = "it copies an angle without naming it";
+      },
+    },
+
+  });
+
   /* One call. It puts each drawing in the registry and, when it carries
      `parts`, in the set `label` reads — the two places a drawing has to
      be, which used to be two separate loops and one forgotten tape. */

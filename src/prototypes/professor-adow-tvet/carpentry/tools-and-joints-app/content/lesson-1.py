@@ -62,13 +62,18 @@ LESSON = {
               "slides": "lecture-video/marking-out-and-cutting-a-halving-joint.310a3160.slides.html",
               # A ten-second demonstration clip of the real thing, between
               # the film and the line that sends the learner back through it.
-              # The lecture is DRAWN; this is footage. Played at 0.75 so the
-              # cut can be followed, and it does not autoplay because it
-              # carries sound.
+              # The lecture is DRAWN; this is footage — the drawings say what
+              # to do and why, and ten seconds of a saw in timber says what it
+              # looks and sounds like.
+              #
+              # Played at 0.6: shipped at 0.75 and slowed on the owner's word,
+              # because the point of a demonstration is to see HOW, and real
+              # time is faster than a learner can follow. It does not autoplay
+              # — it carries sound.
               "demo": {
                   "src": "lecture-video/wood-cutting-demonstration.901c652c.mp4",
                   "caption": "Wood Cutting Demonstration Video",
-                  "rate": 0.75,
+                  "rate": 0.6,
               },
               "parts": [
                   {"sequence": "joint", "state": 1,

@@ -89,15 +89,25 @@ LESSON = {
               # time is faster than a learner can follow. It does not autoplay
               # — it carries sound.
               "demo": {
-                  "src": "lecture-video/wood-cutting-demonstration.b2001ff4.mp4",
+                  "src": "lecture-video/wood-cutting-demonstration.ef39e7aa.mp4",
                   "caption": "Wood Cutting Demonstration Video",
-                  # THE CLIP IS NARRATED. The footage arrived silent of
-                  # speech - the audio sat flat at about -20 dB, which is tool
-                  # and room noise - so seven lines were written against it and
-                  # spoken in Daniel, the film's own voice, then mixed OVER the
-                  # bench sound rather than replacing it: the saw and the
-                  # chisel are half of why footage earns its place beside a
-                  # drawn diagram. 180 characters.
+                  # THE CLIP IS NARRATED, and its OWN audio is discarded.
+                  # Seven lines written against the picture and spoken in
+                  # Daniel, the film's voice. 180 characters.
+                  #
+                  # The first build MIXED them over the source audio, on the
+                  # belief that the footage carried no speech. It does. That
+                  # belief came from measuring the PREVIOUS ten-second clip
+                  # and carrying the result forward; the command that would
+                  # have measured this one failed and was never re-run, and
+                  # "no speech - measured, not assumed" went into a commit
+                  # message anyway. The result was two voices over the first
+                  # ten seconds, which the owner heard immediately.
+                  #
+                  # The source track is now not an input to the mix at all,
+                  # which removes the old narration by construction rather
+                  # than by another measurement. The cost is the bench sound:
+                  # the saw and chisel are gone with it.
                   #
                   # The lines are short because SPEECH IS NOT A CAPTION. The
                   # first draft of them ran 548 characters - about 39 seconds

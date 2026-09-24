@@ -1,0 +1,123 @@
+{
+  "_comment": "Storyboard for the Grade 1 Computing unit lecture film, Lesson 5 Bugs and Debugging. Rendered by tools/create-ehel-unit-lecture.js. See lecture-video/BRIEF.md. Every beat is one narration clip; art.at names the phrases a picture waits for, and the page refuses to load if a phrase is not in its beat's say. The chapters follow LESSON['lecture'] in order (the first bug; run it to test it; find the bug; fix it and run again; everyone debugs) with the lesson's everyday-algorithm bug hunt (1CT.02) between the fix and the last part, in the lesson's own words: its moth story, its dog program right-left-jump with the bug in the second block, its block labels and colours from ART.block, and its own handwash scene (ART.scene 'handwash', built from a growing list of step ids). The wrong program is shown by passing the wrong list, never by drawing a separate picture of a mistake, and every cross in this film marks a step or a block, never a person.",
+  "slug": "bugs-and-debugging",
+  "lesson": 5,
+  "grade": 1,
+  "stage": 1,
+  "title": "Bugs and Debugging",
+  "subtitle": "Grade 1 Computing",
+  "framework": "Cambridge Primary Computing 0059",
+  "renderer": {
+    "art": ["computing"],
+    "skin": "brown",
+    "scenes": [
+      "tools/lib/ehel-film-marks.js",
+      "tools/lib/film-scenes/computing-g1/bugs-and-debugging.js",
+      "tools/lib/film-scenes/computing-g1/bugs-and-debugging-2.js",
+      "tools/lib/film-scenes/computing-g1/bugs-and-debugging-3.js"
+    ]
+  },
+  "objectives": [
+    ["1P.03", "Predict what is likely to happen when programs are run."],
+    ["1P.04", "Know that programs can contain errors."],
+    ["1P.05", "Know how to run programs to test whether they produce the desired result."],
+    ["1P.06", "Identify why a program does not produce the desired result."],
+    ["1P.07", "Know that 'debugging' is the correction of errors in programs."],
+    ["1CT.02", "Identify single errors in algorithms that represent everyday events or tasks."]
+  ],
+  "scenes": [
+    { "id": "title", "kind": "title", "codes": [], "beats": [
+      { "say": "A program can have a mistake in it. We call that mistake a bug.",
+        "art": { "at": { "mistake": "a mistake", "bug": "a bug" } } },
+      { "say": "Finding the bug and fixing it is called debugging.",
+        "art": { "at": { "find": "Finding the bug", "fix": "fixing it", "debug": "debugging" } } }
+    ] },
+
+    { "id": "moth", "kind": "moth", "heading": "The first bug", "codes": ["1P.04", "1P.07"], "beats": [
+      { "say": "Long ago, a computer was as big as a whole room.",
+        "art": { "at": { "long": "Long ago", "room": "as big as a whole room" } } },
+      { "say": "One day it stopped working, and nobody knew why.",
+        "art": { "at": { "stopped": "stopped working", "why": "nobody knew why" } } },
+      { "say": "Inside the machine, the people found a real insect. A moth!",
+        "art": { "at": { "inside": "Inside the machine", "insect": "a real insect", "moth": "A moth" } } },
+      { "say": "People already called a mistake a bug. Now they had a real one!",
+        "art": { "at": { "called": "called a mistake a bug", "real": "a real one" } } },
+      { "say": "They stuck the moth in their notebook. That story made the word famous.",
+        "art": { "at": { "stuck": "stuck the moth in their notebook", "famous": "made the word famous" } } }
+    ] },
+
+    { "id": "runit", "kind": "run", "heading": "Run it to test it", "codes": ["1P.03", "1P.05"], "beats": [
+      { "say": "We want the dog to move right twice, and then jump.",
+        "art": { "at": { "want": "We want the dog", "twice": "move right twice", "jump": "then jump" } } },
+      { "say": "Here is the program for it. Does it work? You cannot tell just by looking.",
+        "art": { "at": { "program": "Here is the program", "work": "Does it work", "look": "tell just by looking" } } },
+      { "say": "First say what you think the dog will do. Then press Run.",
+        "art": { "at": { "say": "say what you think", "run": "press Run" } } },
+      { "say": "The dog moves right. Then it moves left. Then it jumps.",
+        "art": { "at": { "right": "moves right", "left": "moves left", "jump": "it jumps" } } },
+      { "say": "That is not what you said. So this program has a bug in it.",
+        "art": { "at": { "not": "not what you said", "bug": "a bug" } } }
+    ] },
+
+    { "id": "find", "kind": "find", "heading": "Find the bug", "codes": ["1P.06"], "beats": [
+      { "say": "Why did it go wrong? Compare the program with what we wanted, block by block.",
+        "art": { "at": { "why": "Why did it go wrong", "compare": "Compare the program", "block": "block by block" } } },
+      { "say": "Block one says move right. We wanted move right. That one is fine.",
+        "art": { "at": { "one": "Block one", "fine": "That one is fine" } } },
+      { "say": "Block two says move left. But we wanted move right.",
+        "art": { "at": { "two": "Block two", "left": "says move left", "wanted": "we wanted move right" } } },
+      { "say": "Block three says jump. We wanted jump. That one is fine too.",
+        "art": { "at": { "three": "Block three", "fine": "fine too" } } },
+      { "say": "So the second block is the bug. It says left instead of right.",
+        "art": { "at": { "second": "the second block", "bug": "the bug", "instead": "left instead of right" } } }
+    ] },
+
+    { "id": "fix", "kind": "fix", "heading": "Fix it and run again", "codes": ["1P.07", "1P.05"], "beats": [
+      { "say": "Now fix it. Take the wrong block out and put the right one in.",
+        "art": { "at": { "fix": "Now fix it", "out": "Take the wrong block out", "in": "the right one in" } } },
+      { "say": "Move right, move right, jump. That is what we wanted.",
+        "art": { "at": { "words": "Move right, move right, jump", "wanted": "what we wanted" } } },
+      { "say": "Now run it again. Always test again after you fix something.",
+        "art": { "at": { "again": "run it again", "test": "Always test again" } } },
+      { "say": "The dog moves right, right, and jumps. The bug has gone.",
+        "art": { "at": { "moves": "moves right, right, and jumps", "gone": "The bug has gone" } } },
+      { "say": "You found the bug and you fixed it. That is what debugging means.",
+        "art": { "at": { "found": "found the bug", "fixed": "you fixed it", "debug": "what debugging means" } } }
+    ] },
+
+    { "id": "everyday", "kind": "everyday", "heading": "Bugs in everyday steps", "codes": ["1CT.02"], "beats": [
+      { "say": "An everyday algorithm can have a bug too. Here is washing your hands.",
+        "art": { "at": { "everyday": "An everyday algorithm", "hands": "washing your hands" } } },
+      { "say": "Turn the tap on. Put soap on your hands. Then eat the soap?",
+        "art": { "at": { "tap": "Turn the tap on", "soap": "Put soap on your hands", "eat": "eat the soap" } } },
+      { "say": "Eating the soap does not belong here. That step is the bug.",
+        "art": { "at": { "belong": "does not belong here", "bug": "That step is the bug" } } },
+      { "say": "Take it out. Rub your hands together instead, then rinse and dry them.",
+        "art": { "at": { "out": "Take it out", "rub": "Rub your hands together", "dry": "rinse and dry them" } } },
+      { "say": "Sometimes a good step is just in the wrong place.",
+        "art": { "at": { "good": "a good step", "place": "the wrong place" } } },
+      { "say": "Rinsing before you rub washes the soap away.",
+        "art": { "at": { "rinsing": "Rinsing before you rub", "away": "washes the soap away" } } }
+    ] },
+
+    { "id": "everyone", "kind": "everyone", "heading": "Everyone debugs", "codes": ["1P.04", "1P.07"], "beats": [
+      { "say": "Even expert programmers write bugs. Everybody does, every day.",
+        "art": { "at": { "expert": "Even expert programmers", "every": "Everybody does" } } },
+      { "say": "A games maker tests her own game. A door will not open.",
+        "art": { "at": { "games": "A games maker", "door": "A door will not open" } } },
+      { "say": "An app keeps closing by itself. The programmers send a fix.",
+        "art": { "at": { "app": "An app keeps closing", "fix": "send a fix" } } },
+      { "say": "A rocket's programs are tested again and again before it flies.",
+        "art": { "at": { "rocket": "A rocket", "tested": "tested again and again" } } }
+    ] },
+
+    { "id": "recap", "kind": "recap", "heading": "What you now know", "codes": ["1P.03", "1P.04", "1P.05", "1P.06", "1P.07", "1CT.02"], "beats": [
+      { "say": "A bug is a mistake in the program, not in the computer.",
+        "art": { "at": { "bug": "A bug", "computer": "not in the computer" } } },
+      { "say": "Run it and watch it. Compare what happened with what you wanted.",
+        "art": { "at": { "run": "Run it and watch it", "compare": "Compare what happened" } } },
+      { "say": "Find the wrong block, fix it, and run it again. That is debugging.",
+        "art": { "at": { "find": "Find the wrong block", "debug": "That is debugging" } } }
+    ] }
+  ]
+}

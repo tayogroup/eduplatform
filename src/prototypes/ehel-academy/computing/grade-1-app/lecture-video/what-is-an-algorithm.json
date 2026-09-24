@@ -1,0 +1,120 @@
+{
+  "_comment": "Storyboard for the Grade 1 Computing unit lecture film, Lesson 1 What Is an Algorithm? Rendered by tools/create-ehel-unit-lecture.js. See lecture-video/BRIEF.md. Every beat is one narration clip; art.at names the phrases a picture waits for, and the page refuses to load if a phrase is not in its beat's say. The chapters follow LESSON['lecture'] in order (Robo needs steps; algorithms all around; following an algorithm; making an algorithm; computers follow algorithms; the same steps, every time), in the lesson's own words and with the lesson's own drawings: the toast demo's five steps, ART.scene dress and teeth for the everyday algorithms, ART.scene handwash built one step at a time, ART.scene tower and plant for the ordering steps (and each of them in the WRONG order, which the kit's own scene draws), and ART.figure laptop for the program.",
+  "slug": "what-is-an-algorithm",
+  "lesson": 1,
+  "grade": 1,
+  "stage": 1,
+  "title": "What Is an Algorithm?",
+  "subtitle": "Grade 1 Computing",
+  "framework": "Cambridge Primary Computing 0059",
+  "renderer": {
+    "art": ["computing"],
+    "skin": "brown",
+    "scenes": [
+      "tools/lib/ehel-film-marks.js",
+      "tools/lib/film-scenes/computing-g1/what-is-an-algorithm.js",
+      "tools/lib/film-scenes/computing-g1/what-is-an-algorithm-2.js",
+      "tools/lib/film-scenes/computing-g1/what-is-an-algorithm-3.js"
+    ]
+  },
+  "objectives": [
+    ["1CT.05", "Know that an algorithm is a set of instructions to complete a task or to solve a problem."],
+    ["1CT.01", "Follow the steps in algorithms for everyday tasks."],
+    ["1CT.04", "Suggest sets of ordered instructions to complete simple tasks, such as drawing a picture of a particular object or building a brick tower."],
+    ["1CT.06", "Know that the order of instructions is important when creating algorithms."],
+    ["1P.01", "Know that algorithms can be recreated as code on computers."]
+  ],
+  "scenes": [
+    { "id": "title", "kind": "title", "codes": [], "beats": [
+      { "say": "A job done in steps, one after another, is an algorithm.",
+        "art": { "at": { "steps": "in steps", "order": "one after another", "algo": "an algorithm" } } },
+      { "say": "You follow algorithms every day. So does a computer.",
+        "art": { "at": { "you": "You follow", "computer": "So does a computer" } } }
+    ] },
+
+    { "id": "robo", "kind": "robo", "heading": "Robo needs steps", "codes": ["1CT.05"], "beats": [
+      { "say": "Robo wants toast. But Robo cannot guess.",
+        "art": { "at": { "robo": "Robo wants toast", "guess": "cannot guess" } } },
+      { "say": "Robo only does what it is told. You tell it every step.",
+        "art": { "at": { "told": "what it is told", "every": "every step" } } },
+      { "say": "Take the bread. Put it in the toaster. Push the lever down.",
+        "art": { "at": { "bread": "Take the bread", "toaster": "in the toaster", "lever": "Push the lever" } } },
+      { "say": "Wait for it to pop up. Then spread the butter.",
+        "art": { "at": { "wait": "Wait for it", "butter": "spread the butter" } } },
+      { "say": "Toast! Those five steps are an algorithm: a set of steps to do a job.",
+        "art": { "at": { "toast": "Toast!", "five": "five steps", "algo": "an algorithm" } } }
+    ] },
+
+    { "id": "everyday", "kind": "everyday", "heading": "Algorithms all around", "codes": ["1CT.05"], "beats": [
+      { "say": "Algorithms are not only for robots. You follow them every day.",
+        "art": { "at": { "robots": "not only for robots", "day": "every day" } } },
+      { "say": "Getting dressed is one. Socks, then shoes, then your coat.",
+        "art": { "at": { "dressed": "Getting dressed", "socks": "Socks,", "shoes": "then shoes,", "coat": "your coat" } } },
+      { "say": "Brushing your teeth is one. Paste on the brush. Brush. Rinse.",
+        "art": { "at": { "teeth": "Brushing your teeth", "paste": "Paste on the brush", "brush": "Brush.", "rinse": "Rinse." } } },
+      { "say": "A recipe is one. So is a dance: step, step, clap, turn.",
+        "art": { "at": { "recipe": "A recipe", "dance": "a dance" } } },
+      { "say": "An algorithm does not have to be hard. Three steps can be enough.",
+        "art": { "at": { "hard": "have to be hard", "three": "Three steps" } } }
+    ] },
+
+    { "id": "follow", "kind": "follow", "heading": "Following an algorithm", "codes": ["1CT.01"], "beats": [
+      { "say": "To follow an algorithm you do step one, then step two, then step three.",
+        "art": { "at": { "one": "step one", "two": "step two", "three": "step three" } } },
+      { "say": "You never skip a step, and you never jump ahead.",
+        "art": { "at": { "skip": "never skip", "jump": "never jump ahead" } } },
+      { "say": "Here are five steps for washing your hands. Turn the tap on.",
+        "art": { "at": { "five": "five steps", "tap": "Turn the tap on" } } },
+      { "say": "Soap. Rub your hands together. Rinse the bubbles away.",
+        "art": { "at": { "soap": "Soap.", "rub": "Rub your hands", "rinse": "Rinse the bubbles" } } },
+      { "say": "Dry them. Five steps, in order, and your hands are clean.",
+        "art": { "at": { "dry": "Dry them", "order": "in order", "clean": "hands are clean" } } }
+    ] },
+
+    { "id": "order", "kind": "order", "heading": "Making an algorithm", "codes": ["1CT.04", "1CT.06"], "beats": [
+      { "say": "You can write an algorithm too. Think what has to happen first.",
+        "art": { "at": { "write": "write an algorithm", "first": "happen first" } } },
+      { "say": "Build a tower. The big brick goes at the bottom, or the tower falls.",
+        "art": { "at": { "tower": "Build a tower", "big": "The big brick", "bottom": "at the bottom" } } },
+      { "say": "Then the middle brick, then the small one. The flag goes on last.",
+        "art": { "at": { "middle": "the middle brick", "small": "the small one", "flag": "The flag" } } },
+      { "say": "Start with the flag, and it has nothing under it. It lands on the floor.",
+        "art": { "at": { "start": "Start with the flag", "nothing": "nothing under it", "floor": "on the floor" } } },
+      { "say": "Now plant a seed. Get a pot, put soil in it, plant the seed, water it.",
+        "art": { "at": { "pot": "Get a pot", "soil": "put soil in it", "seed": "plant the seed", "water": "water it" } } },
+      { "say": "Water it first? Water what? There is no seed yet.",
+        "art": { "at": { "wfirst": "Water it first?", "what": "Water what?", "noseed": "no seed yet" } } }
+    ] },
+
+    { "id": "computers", "kind": "computers", "heading": "Computers follow them too", "codes": ["1CT.05", "1P.01"], "beats": [
+      { "say": "Lots of people follow algorithms at work. A cook follows a recipe.",
+        "art": { "at": { "people": "Lots of people", "cook": "A cook" } } },
+      { "say": "A builder follows a plan. A nurse follows steps to check you are well.",
+        "art": { "at": { "builder": "A builder", "nurse": "A nurse" } } },
+      { "say": "A computer follows algorithms too. Somebody always writes the steps.",
+        "art": { "at": { "computer": "A computer", "somebody": "Somebody always writes" } } },
+      { "say": "The steps are written in code, and then the algorithm is a program.",
+        "art": { "at": { "code": "written in code", "program": "a program" } } }
+    ] },
+
+    { "id": "same", "kind": "same", "heading": "The same steps, every time", "codes": ["1CT.05"], "beats": [
+      { "say": "An algorithm gives the same answer every time.",
+        "art": { "at": { "same": "the same answer", "every": "every time" } } },
+      { "say": "Clean your teeth this way on Monday. Do it again on Friday.",
+        "art": { "at": { "monday": "on Monday", "friday": "on Friday" } } },
+      { "say": "Your teeth get clean both times. That is why we write algorithms down.",
+        "art": { "at": { "both": "both times", "down": "write algorithms down" } } },
+      { "say": "Anybody can pick it up, follow it, and get the same result.",
+        "art": { "at": { "anybody": "Anybody can pick", "result": "the same result" } } }
+    ] },
+
+    { "id": "recap", "kind": "recap", "heading": "What you now know", "codes": ["1CT.05", "1CT.01", "1CT.04", "1CT.06", "1P.01"], "beats": [
+      { "say": "An algorithm is a set of steps to do a job, or to solve a problem.",
+        "art": { "at": { "algo": "An algorithm" } } },
+      { "say": "You follow one step at a time, and when you write one the order has to work.",
+        "art": { "at": { "follow": "You follow one step", "order": "the order has to work" } } },
+      { "say": "Written in code, your algorithm is a program a computer can run.",
+        "art": { "at": { "code": "Written in code" } } }
+    ] }
+  ]
+}

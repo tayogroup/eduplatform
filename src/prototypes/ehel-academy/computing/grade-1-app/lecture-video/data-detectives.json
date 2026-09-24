@@ -1,0 +1,117 @@
+{
+  "_comment": "Storyboard for the Grade 1 Computing unit lecture film, Lesson 6 Data Detectives. Rendered by tools/create-ehel-unit-lecture.js. See lecture-video/BRIEF.md. Every beat is one narration clip; art.at names the phrases a picture waits for, and the page refuses to load if a phrase is not in its beat's say. The chapters follow LESSON['lecture'] in order (data; asking a computer; a form; a table; sorting; across and down), in the lesson's own words and with the lesson's own numbers: six friends, apple 2, banana 3, mango 1, orange 0, and the twelve things of the sorting machine (red 2, yellow 4, green 3, orange 3; fruit 7, vegetable 5). The tablet is the kit's own figure (ART.figure 'tablet'); everything else is drawn here, because the Computing kit keeps its table, its form and its sorter inside closures a film cannot reach.",
+  "slug": "data-detectives",
+  "lesson": 6,
+  "grade": 1,
+  "stage": 1,
+  "title": "Data Detectives",
+  "subtitle": "Grade 1 Computing",
+  "framework": "Cambridge Primary Computing 0059",
+  "renderer": {
+    "art": ["computing"],
+    "skin": "brown",
+    "scenes": [
+      "tools/lib/ehel-film-marks.js",
+      "tools/lib/film-scenes/computing-g1/data-detectives.js",
+      "tools/lib/film-scenes/computing-g1/data-detectives-2.js",
+      "tools/lib/film-scenes/computing-g1/data-detectives-3.js"
+    ]
+  },
+  "objectives": [
+    ["1MD.01", "Know that computing devices can be used in different ways to answer many different types of question."],
+    ["1MD.02", "Know that computing devices can help to sort and organise data."],
+    ["1MD.03", "Know how to use computing devices to manually record data, including using a form."],
+    ["1MD.04", "Identify questions that can be answered using data tables, limited to categorical data."]
+  ],
+  "scenes": [
+    { "id": "title", "kind": "title", "codes": [], "beats": [
+      { "say": "Data is facts and numbers we collect.",
+        "art": { "at": { "data": "Data", "facts": "facts and numbers" } } },
+      { "say": "Today you are a data detective. You read it, and a computer sorts it.",
+        "art": { "at": { "detective": "a data detective", "read": "You read it", "sorts": "a computer sorts it" } } }
+    ] },
+
+    { "id": "data", "kind": "data", "heading": "What data is", "codes": ["1MD.01"], "beats": [
+      { "say": "Your name is data. Your favourite colour is data too.",
+        "art": { "at": { "name": "Your name", "colour": "Your favourite colour" } } },
+      { "say": "How many pets you have is data. So is how tall you are.",
+        "art": { "at": { "pets": "How many pets", "tall": "how tall you are" } } },
+      { "say": "Some children think data must be numbers. It can be words as well.",
+        "art": { "at": { "numbers": "must be numbers", "words": "It can be words" } } },
+      { "say": "Once we have collected data, a computer can help us look at it.",
+        "art": { "at": { "collected": "collected data", "computer": "a computer" } } }
+    ] },
+
+    { "id": "ask", "kind": "ask", "heading": "Asking a computer", "codes": ["1MD.01"], "beats": [
+      { "say": "A computer can answer many kinds of question. Each kind a different way.",
+        "art": { "at": { "many": "many kinds of question", "each": "a different way" } } },
+      { "say": "Will it rain tomorrow? That is a question for the weather app.",
+        "art": { "at": { "rain": "Will it rain tomorrow?", "weather": "the weather app" } } },
+      { "say": "Which way is the park? The map app knows the way.",
+        "art": { "at": { "park": "Which way is the park?", "map": "The map app" } } },
+      { "say": "How do you spell elephant? Search the web for that.",
+        "art": { "at": { "spell": "How do you spell elephant?", "search": "Search the web" } } },
+      { "say": "The web does not know what our class likes. Only our own table knows that.",
+        "art": { "at": { "notknow": "does not know", "ourtable": "our own table" } } }
+    ] },
+
+    { "id": "form", "kind": "form", "heading": "Recording on a form", "codes": ["1MD.03"], "beats": [
+      { "say": "A form is a page where we put data into a computer.",
+        "art": { "at": { "form": "A form", "into": "into a computer" } } },
+      { "say": "Amal says bananas. You tap Banana on the form, then press Submit.",
+        "art": { "at": { "amal": "Amal says bananas", "tap": "tap Banana", "submit": "press Submit" } } },
+      { "say": "Record what the person said. Your own favourite is not their data.",
+        "art": { "at": { "said": "what the person said", "own": "Your own favourite" } } },
+      { "say": "Six friends, six answers. The computer keeps every single one.",
+        "art": { "at": { "six": "Six friends, six answers", "keeps": "keeps every single one" } } }
+    ] },
+
+    { "id": "table", "kind": "table", "heading": "Reading the table", "codes": ["1MD.04"], "beats": [
+      { "say": "The computer puts every answer into a table for us.",
+        "art": { "at": { "puts": "every answer", "table": "a table" } } },
+      { "say": "Apple two. Banana three. Mango one. Orange none.",
+        "art": { "at": { "apple": "Apple two", "banana": "Banana three", "mango": "Mango one", "orange": "Orange none" } } },
+      { "say": "Which fruit did the most children choose? Banana, with three.",
+        "art": { "at": { "most": "the most children", "banana": "Banana, with three" } } },
+      { "say": "Did anyone choose orange? No. The orange row says nobody chose it.",
+        "art": { "at": { "orange": "choose orange", "nobody": "No." } } },
+      { "say": "A table only knows what is in it. Amal's favourite song is not in the table.",
+        "art": { "at": { "only": "only knows what is in it", "song": "favourite song" } } }
+    ] },
+
+    { "id": "sorting", "kind": "sort", "heading": "Sorting into groups", "codes": ["1MD.02"], "beats": [
+      { "say": "Sorting means putting things into groups that belong together.",
+        "art": { "at": { "sorting": "Sorting", "groups": "into groups" } } },
+      { "say": "Here are twelve things, all mixed up. Sort them by colour.",
+        "art": { "at": { "twelve": "twelve things", "colour": "by colour" } } },
+      { "say": "Reds together, yellows together, greens, oranges. Done in a blink.",
+        "art": { "at": { "reds": "Reds together", "yellows": "yellows together", "greens": "greens", "oranges": "oranges", "blink": "in a blink" } } },
+      { "say": "Now sort the same things by type. Fruit here, vegetables there.",
+        "art": { "at": { "type": "by type", "fruit": "Fruit here", "veg": "vegetables there" } } },
+      { "say": "There is no one right way. Computers help us sort and organise data.",
+        "art": { "at": { "noway": "no one right way", "organise": "sort and organise data" } } }
+    ] },
+
+    { "id": "rowscols", "kind": "rows", "heading": "Across and down", "codes": ["1MD.04"], "beats": [
+      { "say": "A table has rows and columns. Rows go across.",
+        "art": { "at": { "rowscols": "rows and columns", "across": "Rows go across" } } },
+      { "say": "Columns go down. One column holds one fact about everybody.",
+        "art": { "at": { "down": "Columns go down", "fact": "one fact about everybody" } } },
+      { "say": "Want to know what Amal likes? Read along Amal's row.",
+        "art": { "at": { "amal": "what Amal likes", "row": "Amal's row" } } },
+      { "say": "Knowing which way to read is most of the job of a data detective.",
+        "art": { "at": { "way": "which way to read" } } }
+    ] },
+
+    { "id": "recap", "kind": "recap", "heading": "What you now know", "codes": ["1MD.01", "1MD.02", "1MD.03", "1MD.04"], "beats": [
+      { "say": "Data is the facts and numbers we collect.",
+        "art": { "at": { "data": "Data is the facts" } } },
+      { "say": "Ask a computer the right way, and record the answers on a form.",
+        "art": { "at": { "ask": "Ask a computer the right way", "form": "on a form" } } },
+      { "say": "Read the table across a row, or down a column, and it answers you.",
+        "art": { "at": { "table": "Read the table" } } },
+      { "say": "A computer sorts and organises data in a blink. You are a data detective.",
+        "art": { "at": { "sort": "sorts and organises", "detective": "a data detective" } } }
+    ] }
+  ]
+}

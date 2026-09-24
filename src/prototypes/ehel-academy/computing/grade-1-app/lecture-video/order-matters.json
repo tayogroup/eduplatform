@@ -1,0 +1,120 @@
+{
+  "_comment": "Storyboard for the Grade 1 Computing unit lecture film, Lesson 2 Order Matters. Rendered by tools/create-ehel-unit-lecture.js. See lecture-video/BRIEF.md. Every beat is one narration clip; art.at names the phrases a picture waits for, and the page refuses to load if a phrase is not in its beat's say. The chapters follow LESSON[lecture] in order (socks and shoes; a sandwich in order; a bug; fixing it; changing the outcome), then the lesson's own crossing-the-road step for 1CT.04, in the lesson's own words. Every wrong order is drawn by passing the WRONG LIST to the lesson's own scene - ART.scene(dress, [shoes, socks]) and ART.scene(sandwich, [bread, butter, top, jam]) - so the kit labels its own consequence and the film draws no picture of a mistake.",
+  "slug": "order-matters",
+  "lesson": 2,
+  "grade": 1,
+  "stage": 1,
+  "title": "Order Matters",
+  "subtitle": "Grade 1 Computing",
+  "framework": "Cambridge Primary Computing 0059",
+  "renderer": {
+    "art": ["computing"],
+    "skin": "brown",
+    "scenes": [
+      "tools/lib/ehel-film-marks.js",
+      "tools/lib/film-scenes/computing-g1/order-matters.js",
+      "tools/lib/film-scenes/computing-g1/order-matters-2.js",
+      "tools/lib/film-scenes/computing-g1/order-matters-3.js"
+    ]
+  },
+  "objectives": [
+    ["1CT.06", "Know that the order of instructions is important when creating algorithms."],
+    ["1CT.02", "Identify single errors in algorithms that represent everyday events or tasks."],
+    ["1CT.07", "Suggest ways that algorithms can be changed to affect the outcome."],
+    ["1CT.01", "Follow the steps in algorithms for everyday tasks."],
+    ["1CT.04", "Suggest sets of ordered instructions to complete simple tasks, such as drawing a picture of a particular object or building a brick tower."]
+  ],
+  "scenes": [
+    { "id": "title", "kind": "title", "codes": [], "beats": [
+      { "say": "Put on your socks, then your shoes. Now try it the other way round.",
+        "art": { "at": { "socks": "your socks", "shoes": "your shoes", "other": "the other way round" } } },
+      { "say": "Same two steps, a different order, and a very silly outcome.",
+        "art": { "at": { "same": "Same two steps", "order": "a different order", "outcome": "a very silly outcome" } } }
+    ] },
+
+    { "id": "socks", "kind": "socks", "heading": "Socks and shoes", "codes": ["1CT.06"], "beats": [
+      { "say": "Sami is getting dressed. The algorithm has two steps: socks, then shoes.",
+        "art": { "at": { "sami": "Sami is getting dressed", "two": "two steps", "socks": "socks,", "shoes": "then shoes" } } },
+      { "say": "Follow it in that order, and Sami is ready to go outside.",
+        "art": { "at": { "follow": "Follow it in that order", "ready": "ready to go outside" } } },
+      { "say": "Now swap the two steps round. Shoes first, then socks.",
+        "art": { "at": { "swap": "swap the two steps round", "first": "Shoes first", "socks": "then socks" } } },
+      { "say": "Oh no! The socks are on the outside of the shoes.",
+        "art": { "at": { "ohno": "Oh no!", "outside": "on the outside of the shoes" } } },
+      { "say": "Same two steps. A different order. A different outcome.",
+        "art": { "at": { "same": "Same two steps", "order": "A different order", "outcome": "A different outcome" } } }
+    ] },
+
+    { "id": "sandwich", "kind": "sandwich", "heading": "A sandwich in order", "codes": ["1CT.01", "1CT.06"], "beats": [
+      { "say": "A jam sandwich is an algorithm too. It has four steps to follow.",
+        "art": { "at": { "sandwich": "A jam sandwich", "four": "four steps" } } },
+      { "say": "Bread on the plate. Then butter on the bread.",
+        "art": { "at": { "bread": "Bread on the plate", "butter": "butter on the bread" } } },
+      { "say": "Then jam on the butter, and the top slice on the jam.",
+        "art": { "at": { "jam": "jam on the butter", "top": "the top slice on the jam" } } },
+      { "say": "Every step has its place. Now put the top slice on before the jam.",
+        "art": { "at": { "place": "has its place", "early": "before the jam" } } },
+      { "say": "The jam ends up on the outside of the sandwich, and on your fingers.",
+        "art": { "at": { "outside": "on the outside", "fingers": "on your fingers" } } }
+    ] },
+
+    { "id": "bug", "kind": "bug", "heading": "Finding the bug", "codes": ["1CT.02"], "beats": [
+      { "say": "A mistake in an algorithm is called a bug.",
+        "art": { "at": { "mistake": "A mistake in an algorithm", "bug": "a bug" } } },
+      { "say": "Read this one. Bread. Pour milk on the bread. Jam. Top slice.",
+        "art": { "at": { "read": "Read this one", "bread": "Bread.", "milk": "Pour milk on the bread", "jam": "Jam.", "top": "Top slice." } } },
+      { "say": "Milk does not belong in a jam sandwich. That step is the bug.",
+        "art": { "at": { "belong": "does not belong", "step": "That step is the bug" } } },
+      { "say": "A bug can also be a right step that sits in the wrong place.",
+        "art": { "at": { "also": "can also be", "place": "the wrong place" } } },
+      { "say": "The top slice before the jam is one of those. Finding the bug comes first.",
+        "art": { "at": { "top": "The top slice before the jam", "first": "comes first" } } }
+    ] },
+
+    { "id": "fix", "kind": "fix", "heading": "Fixing it", "codes": ["1CT.02", "1CT.01"], "beats": [
+      { "say": "When you have found the bug, the next job is to fix it.",
+        "art": { "at": { "found": "found the bug", "fix": "fix it" } } },
+      { "say": "Take the wrong step out, and put the right step in.",
+        "art": { "at": { "out": "Take the wrong step out", "in": "put the right step in" } } },
+      { "say": "The milk step goes out. The butter step goes in.",
+        "art": { "at": { "milk": "The milk step goes out", "butter": "The butter step goes in" } } },
+      { "say": "Or take that early top slice and move it to where it belongs.",
+        "art": { "at": { "top": "that early top slice", "move": "move it", "belongs": "where it belongs" } } },
+      { "say": "Then run the algorithm again and check. A jam sandwich!",
+        "art": { "at": { "run": "run the algorithm again", "check": "check", "done": "A jam sandwich!" } } }
+    ] },
+
+    { "id": "change", "kind": "change", "heading": "Changing the outcome", "codes": ["1CT.07"], "beats": [
+      { "say": "You can change an algorithm on purpose, to make something new.",
+        "art": { "at": { "change": "change an algorithm", "purpose": "on purpose", "new": "something new" } } },
+      { "say": "Swap the jam step for cheese, and you get a cheese sandwich.",
+        "art": { "at": { "swap": "Swap the jam step for cheese", "cheese": "a cheese sandwich" } } },
+      { "say": "Add a step at the end, cut it in half, and you get two halves.",
+        "art": { "at": { "add": "Add a step at the end", "cut": "cut it in half", "halves": "two halves" } } },
+      { "say": "The steps decide what you get. What you get is the outcome.",
+        "art": { "at": { "decide": "decide what you get", "outcome": "the outcome" } } },
+      { "say": "Change a step, and you change the outcome.",
+        "art": { "at": { "change": "Change a step", "outcome": "change the outcome" } } }
+    ] },
+
+    { "id": "safe", "kind": "safe", "heading": "The safe order", "codes": ["1CT.04", "1CT.06"], "beats": [
+      { "say": "Some algorithms keep you safe. Then the order really matters.",
+        "art": { "at": { "safe": "keep you safe", "really": "really matters" } } },
+      { "say": "Crossing the road has four steps, and you can put them in order.",
+        "art": { "at": { "cross": "Crossing the road", "four": "four steps", "order": "put them in order" } } },
+      { "say": "Stop at the kerb. Look both ways. Listen for cars. Then walk across.",
+        "art": { "at": { "stop": "Stop at the kerb", "look": "Look both ways", "listen": "Listen for cars", "walk": "Then walk across" } } },
+      { "say": "Walk first and you are already in the road. Stop, look, listen, walk.",
+        "art": { "at": { "wfirst": "Walk first", "road": "already in the road", "order": "Stop, look, listen, walk" } } }
+    ] },
+
+    { "id": "recap", "kind": "recap", "heading": "What you now know", "codes": ["1CT.06", "1CT.02", "1CT.07", "1CT.01", "1CT.04"], "beats": [
+      { "say": "The same steps in a different order do a different thing.",
+        "art": { "at": { "order": "a different order" } } },
+      { "say": "A bug is a mistake in the steps. Find it, and then fix it.",
+        "art": { "at": { "bug": "A bug", "fix": "fix it" } } },
+      { "say": "Change one step, and the outcome changes too.",
+        "art": { "at": { "change": "Change one step", "outcome": "the outcome" } } }
+    ] }
+  ]
+}

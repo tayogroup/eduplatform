@@ -1,0 +1,121 @@
+{
+  "_comment": "Storyboard for the Grade 1 Computing unit lecture film, Lesson 4 Algorithm to Program. Rendered by tools/create-ehel-unit-lecture.js. See lecture-video/BRIEF.md. The chapters follow LESSON[lecture] in order (words and code; blocks; building a program; predicting; running and testing, which carries 'a computer cannot think for itself'), and close on the lesson's Programs everywhere step (1CS.05). Every beat is one narration clip; art.at names the phrases a picture waits for, and the page refuses to load if a phrase is not in its beat's say. The cat's positions and sizes are the lesson's own: ART.run gives the end state of every prefix of each script, so move right stopping at three and grow capping at 2.2 come from the kit and not from a copy here.",
+  "slug": "algorithm-to-program",
+  "lesson": 4,
+  "grade": 1,
+  "stage": 1,
+  "title": "Algorithm to Program",
+  "subtitle": "Grade 1 Computing",
+  "framework": "Cambridge Primary Computing 0059",
+  "renderer": {
+    "art": ["computing"],
+    "skin": "brown",
+    "scenes": [
+      "tools/lib/ehel-film-marks.js",
+      "tools/lib/film-scenes/computing-g1/algorithm-to-program.js",
+      "tools/lib/film-scenes/computing-g1/algorithm-to-program-2.js",
+      "tools/lib/film-scenes/computing-g1/algorithm-to-program-3.js"
+    ]
+  },
+  "objectives": [
+    ["1CT.05", "Know that an algorithm is a set of instructions to complete a task or to solve a problem."],
+    ["1P.01", "Know that algorithms can be recreated as code on computers."],
+    ["1P.02", "Know how to recreate algorithms as programs to perform simple tasks."],
+    ["1P.03", "Predict what is likely to happen when programs are run."],
+    ["1P.05", "Know how to run programs to test whether they produce the desired result."],
+    ["1CS.05", "Know that there are many everyday devices that use computers to control what they do."]
+  ],
+  "scenes": [
+    { "id": "title", "kind": "title", "codes": [], "beats": [
+      { "say": "An algorithm is steps in words. A computer needs code.",
+        "art": { "at": { "algorithm": "An algorithm", "words": "steps in words", "code": "needs code" } } },
+      { "say": "Blocks are code. Blocks in a row are a program.",
+        "art": { "at": { "blocks": "Blocks are code", "program": "are a program" } } }
+    ] },
+
+    { "id": "words", "kind": "words", "heading": "Words and code", "codes": ["1CT.05", "1P.01"], "beats": [
+      { "say": "An algorithm is a set of steps in words. Move right. Jump. Say hello.",
+        "art": { "at": { "algorithm": "An algorithm", "steps": "a set of steps in words", "one": "Move right.", "two": "Jump.", "three": "Say hello." } } },
+      { "say": "A computer cannot read our sentences. It needs the steps as code.",
+        "art": { "at": { "cannot": "cannot read our sentences", "code": "the steps as code" } } },
+      { "say": "Code is instructions in a form the computer understands.",
+        "art": { "at": { "code": "Code is instructions", "form": "a form the computer understands" } } },
+      { "say": "So we use blocks. One block is one instruction. Blocks are code.",
+        "art": { "at": { "blocks": "we use blocks", "one": "One block is one instruction", "iscode": "Blocks are code" } } },
+      { "say": "Blocks in a row are a program. A program is code a computer runs.",
+        "art": { "at": { "row": "Blocks in a row", "program": "are a program", "runs": "code a computer runs" } } }
+    ] },
+
+    { "id": "blocks", "kind": "blocks", "heading": "One block, one job", "codes": ["1P.01", "1P.02"], "beats": [
+      { "say": "These are the seven blocks the cat understands.",
+        "art": { "at": { "blocks": "the seven blocks", "cat": "the cat understands" } } },
+      { "say": "Move right slides the cat one space. Move left slides it back.",
+        "art": { "at": { "right": "Move right", "left": "Move left" } } },
+      { "say": "Jump makes it hop. Say hello gives it a speech bubble.",
+        "art": { "at": { "jump": "Jump makes it hop", "say": "Say hello" } } },
+      { "say": "Spin turns it round. Grow makes it bigger and shrink makes it smaller.",
+        "art": { "at": { "spin": "Spin turns it round", "grow": "Grow makes it bigger", "shrink": "shrink makes it smaller" } } },
+      { "say": "One block does one thing. Two things need two blocks.",
+        "art": { "at": { "one": "One block does one thing", "two": "Two things need two blocks" } } }
+    ] },
+
+    { "id": "build", "kind": "build", "heading": "Building a program", "codes": ["1P.02"], "beats": [
+      { "say": "To build a program, read the algorithm first.",
+        "art": { "at": { "build": "build a program", "read": "read the algorithm" } } },
+      { "say": "It says move right, then jump. Two steps, so two blocks.",
+        "art": { "at": { "says": "move right, then jump", "two": "Two steps, so two blocks" } } },
+      { "say": "Pick the move right block first. That is step one.",
+        "art": { "at": { "pick": "the move right block", "first": "step one" } } },
+      { "say": "Then pick the jump block. That is step two.",
+        "art": { "at": { "then": "the jump block", "second": "step two" } } },
+      { "say": "The computer does the blocks in the order you place them. Match the algorithm.",
+        "art": { "at": { "order": "in the order you place them", "match": "Match the algorithm" } } }
+    ] },
+
+    { "id": "predict", "kind": "predict", "heading": "Predicting", "codes": ["1P.03"], "beats": [
+      { "say": "Here is a program you did not build. What will the cat do?",
+        "art": { "at": { "program": "a program you did not build", "what": "What will the cat do" } } },
+      { "say": "Read every block, left to right. Do not read just the first one.",
+        "art": { "at": { "every": "Read every block", "first": "just the first one" } } },
+      { "say": "Move right. Move right again. Then jump.",
+        "art": { "at": { "one": "Move right.", "two": "Move right again.", "three": "Then jump." } } },
+      { "say": "Saying what will happen before it runs is predicting. Programmers do it all the time.",
+        "art": { "at": { "predict": "is predicting", "all": "all the time" } } }
+    ] },
+
+    { "id": "test", "kind": "test", "heading": "Running and testing", "codes": ["1P.05", "1P.01"], "beats": [
+      { "say": "Now press Run. The computer does the blocks in order.",
+        "art": { "at": { "run": "press Run", "order": "the blocks in order" } } },
+      { "say": "Watch the cat. Did it do what the algorithm said?",
+        "art": { "at": { "watch": "Watch the cat", "did": "what the algorithm said" } } },
+      { "say": "Running a program to check it is called testing.",
+        "art": { "at": { "check": "to check it", "testing": "called testing" } } },
+      { "say": "If it did the wrong thing, change the blocks and run it again.",
+        "art": { "at": { "wrong": "the wrong thing", "change": "change the blocks", "again": "run it again" } } },
+      { "say": "A computer cannot think for itself. It does what it is told.",
+        "art": { "at": { "think": "cannot think for itself", "told": "what it is told" } } }
+    ] },
+
+    { "id": "everywhere", "kind": "everywhere", "heading": "Programs everywhere", "codes": ["1CS.05"], "beats": [
+      { "say": "A program does not only run on a tablet. Look around your home.",
+        "art": { "at": { "tablet": "on a tablet", "home": "around your home" } } },
+      { "say": "Many everyday things have a small computer inside.",
+        "art": { "at": { "many": "Many everyday things", "inside": "a small computer inside" } } },
+      { "say": "A traffic light runs a program: red, then amber, then green.",
+        "art": { "at": { "traffic": "A traffic light", "red": "red,", "amber": "amber,", "green": "green" } } },
+      { "say": "A washing machine runs one too: fill, wash, spin, drain.",
+        "art": { "at": { "washing": "A washing machine", "fill": "fill,", "wash": "wash,", "spin": "spin,", "drain": "drain" } } },
+      { "say": "A robot vacuum runs a program. A game is a program too.",
+        "art": { "at": { "robot": "A robot vacuum", "game": "A game" } } }
+    ] },
+
+    { "id": "recap", "kind": "recap", "heading": "What you now know", "codes": ["1CT.05", "1P.01", "1P.02", "1P.03", "1P.05", "1CS.05"], "beats": [
+      { "say": "An algorithm in words becomes code. Code a computer runs is a program.",
+        "art": { "at": { "code": "becomes code", "program": "is a program" } } },
+      { "say": "Build it, predict it, then run it to test it.",
+        "art": { "at": { "build": "Build it", "predict": "predict it", "test": "test it" } } },
+      { "say": "A computer does what your program says. Programs are everywhere.",
+        "art": { "at": { "everywhere": "Programs are everywhere" } } }
+    ] }
+  ]
+}

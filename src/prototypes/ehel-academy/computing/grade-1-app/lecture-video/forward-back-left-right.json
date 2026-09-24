@@ -1,0 +1,118 @@
+{
+  "_comment": "Storyboard for the Grade 1 Computing unit lecture film, Lesson 3 Forward, Back, Left, Right. Rendered by tools/create-ehel-unit-lecture.js. See lecture-video/BRIEF.md. Every beat is one narration clip; art.at names the phrases a picture waits for, and the page refuses to load if a phrase is not in its beat's say. The chapters follow LESSON['lecture'] in order (four instructions; Robo on the grid; a turn is not a move; a program for Robo; predict first; test it, fix it), in the lesson's own words and on the lesson's own grid: 5 columns by 4 rows, Robo with its yellow arrow, the flower, a wall. The Computing kit keeps Robo's grid inside an activity closure, so the film DRAWS the grid itself in the engine's idiom and takes the RULES from ART.robo - the four facings, the two turn tables, the angles and the four commands - so no route here can disagree with the lesson's own.",
+  "slug": "forward-back-left-right",
+  "lesson": 3,
+  "grade": 1,
+  "stage": 1,
+  "title": "Forward, Back, Left, Right",
+  "subtitle": "Grade 1 Computing",
+  "framework": "Cambridge Primary Computing 0059",
+  "renderer": {
+    "art": ["computing"],
+    "skin": "brown",
+    "scenes": [
+      "tools/lib/ehel-film-marks.js",
+      "tools/lib/film-scenes/computing-g1/forward-back-left-right.js",
+      "tools/lib/film-scenes/computing-g1/forward-back-left-right-2.js",
+      "tools/lib/film-scenes/computing-g1/forward-back-left-right-3.js"
+    ]
+  },
+  "objectives": [
+    ["1CT.03", "Know how to give simple instructions, using directional language (forward, backwards, left, right), to navigate a path."],
+    ["1CT.06", "Know that the order of instructions is important when creating algorithms."],
+    ["1P.02", "Know how to recreate algorithms as programs to perform simple tasks."],
+    ["1P.03", "Predict what is likely to happen when programs are run."],
+    ["1P.05", "Know how to run programs to test whether they produce the desired result."]
+  ],
+  "scenes": [
+    { "id": "title", "kind": "title", "codes": [], "beats": [
+      { "say": "Robo is a robot on a grid of squares. It only does what it is told.",
+        "art": { "at": { "robo": "Robo is a robot", "grid": "a grid of squares", "told": "what it is told" } } },
+      { "say": "You give it four instructions: forward, backwards, turn left, turn right.",
+        "art": { "at": { "four": "four instructions", "forward": "forward", "back": "backwards", "left": "turn left", "right": "turn right" } } }
+    ] },
+
+    { "id": "four", "kind": "four", "heading": "Four instructions", "codes": ["1CT.03"], "beats": [
+      { "say": "Robo knows four instructions, and only four. Here they are.",
+        "art": { "at": { "four": "four instructions", "only": "only four", "here": "Here they are" } } },
+      { "say": "Forward moves Robo one square the way it is facing.",
+        "art": { "at": { "forward": "Forward", "one": "one square", "facing": "the way it is facing" } } },
+      { "say": "Backwards moves it one square the other way, without turning round.",
+        "art": { "at": { "back": "Backwards", "other": "the other way", "turning": "without turning round" } } },
+      { "say": "Turn left spins Robo to its left. It stays on the same square.",
+        "art": { "at": { "left": "Turn left", "spins": "spins Robo to its left", "stays": "stays on the same square" } } },
+      { "say": "Turn right spins it the other way. Now Robo faces right again.",
+        "art": { "at": { "right": "Turn right", "other": "the other way", "again": "faces right again" } } }
+    ] },
+
+    { "id": "robo", "kind": "robo", "heading": "Robo and its arrow", "codes": ["1CT.03"], "beats": [
+      { "say": "Here is Robo on the grid. The flower is what it must reach.",
+        "art": { "at": { "robo": "Here is Robo", "grid": "the grid", "flower": "The flower", "reach": "must reach" } } },
+      { "say": "The yellow arrow shows which way Robo is facing. Look at it first.",
+        "art": { "at": { "arrow": "The yellow arrow", "facing": "which way Robo is facing", "look": "Look at it first" } } },
+      { "say": "Forward moves Robo one square the way the arrow points.",
+        "art": { "at": { "forward": "Forward", "one": "one square", "points": "the arrow points" } } },
+      { "say": "Turn left. The arrow spins round, and Robo stays on its square.",
+        "art": { "at": { "turn": "Turn left", "spins": "The arrow spins round", "stays": "stays on its square" } } },
+      { "say": "Now forward goes up the grid, because Robo is facing a new way.",
+        "art": { "at": { "now": "Now forward", "up": "up the grid", "new": "a new way" } } }
+    ] },
+
+    { "id": "turn", "kind": "turn", "heading": "A turn is not a move", "codes": ["1CT.03"], "beats": [
+      { "say": "A turn arrow spins Robo on the spot. It moves nowhere at all.",
+        "art": { "at": { "spins": "spins Robo on the spot", "nowhere": "moves nowhere" } } },
+      { "say": "A forward arrow sends it one square. Those are two different jobs.",
+        "art": { "at": { "forward": "A forward arrow", "one": "one square", "jobs": "two different jobs" } } },
+      { "say": "Count a turn as a square, and Robo stops one square short.",
+        "art": { "at": { "count": "Count a turn as a square", "short": "one square short" } } },
+      { "say": "So look at the arrow every time. Turn first, then move.",
+        "art": { "at": { "arrow": "look at the arrow", "turn": "Turn first", "move": "then move" } } }
+    ] },
+
+    { "id": "program", "kind": "program", "heading": "A program for Robo", "codes": ["1P.02", "1CT.06"], "beats": [
+      { "say": "First count the squares to the flower. Two across, then two up.",
+        "art": { "at": { "count": "count the squares", "across": "Two across", "up": "two up" } } },
+      { "say": "Now tap the arrows. The list you build is called a program.",
+        "art": { "at": { "tap": "tap the arrows", "list": "The list you build", "program": "a program" } } },
+      { "say": "Press Go. Robo runs one instruction at a time, and reaches the flower.",
+        "art": { "at": { "go": "Press Go", "one": "one instruction at a time", "reaches": "reaches the flower" } } },
+      { "say": "The order matters. Put the turn first, and Robo ends up somewhere else.",
+        "art": { "at": { "order": "The order matters", "first": "Put the turn first", "else": "somewhere else" } } },
+      { "say": "Robo also stops early if it bumps into a wall. Bump!",
+        "art": { "at": { "early": "stops early", "wall": "bumps into a wall", "bump": "Bump!" } } }
+    ] },
+
+    { "id": "predict", "kind": "predict", "heading": "Predict, then press Go", "codes": ["1P.03"], "beats": [
+      { "say": "A good programmer knows where Robo will stop before pressing Go.",
+        "art": { "at": { "knows": "knows where Robo will stop", "before": "before pressing Go" } } },
+      { "say": "That is called predicting. Read the program with your finger.",
+        "art": { "at": { "predicting": "predicting", "finger": "with your finger" } } },
+      { "say": "Forward, forward. Your finger goes up two squares.",
+        "art": { "at": { "forward": "Forward, forward", "up": "up two squares" } } },
+      { "say": "Turn right. The arrow points a new way, but your finger does not move.",
+        "art": { "at": { "right": "Turn right", "points": "points a new way", "nomove": "does not move" } } },
+      { "say": "One more forward, and your finger lands on the flower. Now press Go.",
+        "art": { "at": { "one": "One more forward", "lands": "lands on the flower", "go": "press Go" } } }
+    ] },
+
+    { "id": "fix", "kind": "fix", "heading": "Test it, fix it", "codes": ["1P.05"], "beats": [
+      { "say": "Test another program. This time Robo stops beside the flower, not on it.",
+        "art": { "at": { "test": "Test another program", "beside": "stops beside the flower" } } },
+      { "say": "So the program is not right yet. Read it again, slowly.",
+        "art": { "at": { "notright": "not right yet", "again": "Read it again" } } },
+      { "say": "There is one forward too many. Take that one away.",
+        "art": { "at": { "toomany": "one forward too many", "away": "Take that one away" } } },
+      { "say": "Press Go again. Robo lands on the flower. Programmers do this all day.",
+        "art": { "at": { "again": "Press Go again", "lands": "lands on the flower", "allday": "all day" } } }
+    ] },
+
+    { "id": "recap", "kind": "recap", "heading": "What you now know", "codes": ["1CT.03", "1CT.06", "1P.02", "1P.03", "1P.05"], "beats": [
+      { "say": "Forward, backwards, turn left and turn right. Those are the four.",
+        "art": { "at": { "forward": "Forward", "back": "backwards", "turns": "turn left and turn right" } } },
+      { "say": "A list of them is a program, and the order matters every time.",
+        "art": { "at": { "program": "a program", "order": "the order matters" } } },
+      { "say": "Predict where Robo stops. Then press Go, and fix what went wrong.",
+        "art": { "at": { "predict": "Predict where Robo stops", "fix": "fix what went wrong" } } }
+    ] }
+  ]
+}

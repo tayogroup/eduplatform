@@ -1,0 +1,117 @@
+{
+  "_comment": "Storyboard for the Grade 1 Computing unit lecture film, Lesson 7 Networks and the Internet. Rendered by tools/create-ehel-unit-lecture.js. See lecture-video/BRIEF.md. Every beat is one narration clip; art.at names the phrases a picture waits for, and the page refuses to load if a phrase is not in its beat's say. The chapters follow LESSON['lecture'] in order (a network; the router; wired and wireless; the internet; when it is not there), in the lesson's own words and with its own things: the kit's internet scene at states 0 and 1 for one computer and two joined, the Network builder's router and its five devices, the Wire spotter's two bins, and the Offline tester's apps.",
+  "slug": "networks-and-the-internet",
+  "lesson": 7,
+  "grade": 1,
+  "stage": 1,
+  "title": "Networks and the Internet",
+  "subtitle": "Grade 1 Computing",
+  "framework": "Cambridge Primary Computing 0059",
+  "renderer": {
+    "art": ["computing"],
+    "skin": "brown",
+    "scenes": [
+      "tools/lib/ehel-film-marks.js",
+      "tools/lib/film-scenes/computing-g1/networks-and-the-internet.js",
+      "tools/lib/film-scenes/computing-g1/networks-and-the-internet-2.js",
+      "tools/lib/film-scenes/computing-g1/networks-and-the-internet-3.js",
+      "tools/lib/film-scenes/computing-g1/networks-and-the-internet-4.js"
+    ]
+  },
+  "objectives": [
+    ["1DC.01", "Know that some devices can connect to each other to make a network."],
+    ["1DC.02", "Know that the internet consists of many computers that are connected together around the world."],
+    ["1DC.03", "Identify that some devices are connected by wires and that other devices are not."],
+    ["1DC.04", "Know that there are times when the internet is not available."]
+  ],
+  "scenes": [
+    { "id": "title", "kind": "title", "codes": [], "beats": [
+      { "say": "Look at one computer, sitting on its own. It cannot send anything anywhere.",
+        "art": { "at": { "one": "one computer", "alone": "on its own", "nowhere": "anything anywhere" } } },
+      { "say": "Join it to another, and the two of them can share.",
+        "art": { "at": { "join": "Join it to another", "share": "can share" } } }
+    ] },
+
+    { "id": "network", "kind": "network", "heading": "A network", "codes": ["1DC.01"], "beats": [
+      { "say": "Here is one computer, on its own.",
+        "art": { "at": { "comp": "one computer", "own": "on its own" } } },
+      { "say": "It cannot send anything anywhere.",
+        "art": { "at": { "cannot": "It cannot send", "nowhere": "anywhere" } } },
+      { "say": "Now take a cable, and join it to another computer.",
+        "art": { "at": { "cable": "take a cable", "join": "join it to another computer" } } },
+      { "say": "Straight away they can send each other messages and pictures.",
+        "art": { "at": { "send": "send each other", "pictures": "messages and pictures" } } },
+      { "say": "Devices joined together so they can share are called a network.",
+        "art": { "at": { "joined": "joined together", "network": "a network" } } }
+    ] },
+
+    { "id": "router", "kind": "router", "heading": "The router at home", "codes": ["1DC.01", "1DC.03"], "beats": [
+      { "say": "At home, every device joins the network through one box.",
+        "art": { "at": { "home": "At home", "every": "every device", "box": "one box" } } },
+      { "say": "It is called a router, and it has little blinking lights.",
+        "art": { "at": { "router": "a router", "lights": "blinking lights" } } },
+      { "say": "The laptop and the printer plug into it with a wire.",
+        "art": { "at": { "laptop": "The laptop", "printer": "the printer", "wire": "with a wire" } } },
+      { "say": "The tablet and the phone join with no wire at all.",
+        "art": { "at": { "tablet": "The tablet", "phone": "the phone", "nowire": "no wire at all" } } },
+      { "say": "Now the tablet can send a picture to the printer, through the router.",
+        "art": { "at": { "picture": "send a picture", "through": "through the router" } } }
+    ] },
+
+    { "id": "wires", "kind": "wires", "heading": "Wired and wireless", "codes": ["1DC.03"], "beats": [
+      { "say": "A wired device has a cable carrying its connection.",
+        "art": { "at": { "wired": "A wired device", "cable": "a cable" } } },
+      { "say": "A desktop computer with a cable into the wall is wired. So are headphones.",
+        "art": { "at": { "desktop": "A desktop computer", "head": "headphones" } } },
+      { "say": "A wireless device connects through the air, with no cable at all.",
+        "art": { "at": { "wireless": "A wireless device", "air": "through the air" } } },
+      { "say": "A tablet is wireless. So is a phone, and so is a smart watch.",
+        "art": { "at": { "tablet": "A tablet", "phone": "a phone", "watch": "a smart watch" } } },
+      { "say": "Both are connected. You just cannot see the wireless one.",
+        "art": { "at": { "both": "Both are connected", "see": "cannot see" } } }
+    ] },
+
+    { "id": "world", "kind": "world", "heading": "The internet", "codes": ["1DC.02"], "beats": [
+      { "say": "Your home network is one of millions, all around the world.",
+        "art": { "at": { "home": "Your home network", "millions": "one of millions", "around": "around the world" } } },
+      { "say": "Join all of those networks together, and you have the internet.",
+        "art": { "at": { "many": "Join all of those networks", "internet": "the internet" } } },
+      { "say": "Your home joins it through the router.",
+        "art": { "at": { "joins": "joins it through the router" } } },
+      { "say": "So does a school far away. So does Grandma's phone.",
+        "art": { "at": { "school": "a school far away", "grandma": "Grandma's phone" } } },
+      { "say": "Send Grandma a message, and it crosses the whole world in about a second.",
+        "art": { "at": { "send": "Send Grandma a message", "crosses": "crosses the whole world", "second": "about a second" } } },
+      { "say": "The internet is not one big computer. It is millions of them, joined.",
+        "art": { "at": { "notone": "not one big computer", "lots": "millions of them" } } }
+    ] },
+
+    { "id": "off", "kind": "off", "heading": "When it is not there", "codes": ["1DC.04"], "beats": [
+      { "say": "Sometimes the internet is not available at all.",
+        "art": { "at": { "sometimes": "Sometimes", "notavail": "not available" } } },
+      { "say": "On a plane, in a tunnel, or when the router at home breaks.",
+        "art": { "at": { "plane": "On a plane", "tunnel": "in a tunnel", "breaks": "the router at home breaks" } } },
+      { "say": "Switch it off, and try each thing on the tablet.",
+        "art": { "at": { "off": "Switch it off", "try": "try each thing" } } },
+      { "say": "A video online stops. A video call stops. A message cannot go.",
+        "art": { "at": { "video": "A video online", "call": "A video call", "message": "A message" } } },
+      { "say": "All three need other computers, and they cannot be reached.",
+        "art": { "at": { "need": "need other computers", "reached": "cannot be reached" } } },
+      { "say": "Drawing still works. A saved game still works. Your photos still work.",
+        "art": { "at": { "draw": "Drawing", "game": "A saved game", "photos": "Your photos" } } },
+      { "say": "They are already on the tablet, so they need nobody else.",
+        "art": { "at": { "already": "already on the tablet", "nobody": "need nobody else" } } }
+    ] },
+
+    { "id": "recap", "kind": "recap", "heading": "What you now know", "codes": ["1DC.01", "1DC.02", "1DC.03", "1DC.04"], "beats": [
+      { "say": "A network is devices joined together so they can share.",
+        "art": { "at": { "network": "A network" } } },
+      { "say": "At home they join through the router, some with a wire and some with none.",
+        "art": { "at": { "router": "the router", "wire": "with a wire", "none": "with none" } } },
+      { "say": "The internet is many computers joined together around the world.",
+        "art": { "at": { "internet": "The internet" } } },
+      { "say": "And there are times when it is not there. Then everything else carries on.",
+        "art": { "at": { "gone": "not there", "carries": "carries on" } } }
+    ] }
+  ]
+}

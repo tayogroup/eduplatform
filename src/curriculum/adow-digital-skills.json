@@ -1,0 +1,217 @@
+{
+  "framework": "Professor Adow TVET — Digital Skills for the Workshop",
+  "curriculumCode": "ADOW-DS",
+  "level": "Core (serves all six departments)",
+  "published": "2026-09-24",
+  "note": "A CORE module, not a trade one. Every department in this school now meets a computer at work — a moisture meter in agriculture, an inverter in welding, a diagnostic tool in automotive, a controller on a chiller — and none of them is called a computer. The module teaches what is common to all of them rather than any one manufacturer's menus, because the menus change and input-process-store-output does not.",
+  "source": "Topic scope follows the Ehel Academy Computing modules for Stages 1 and 2 (computers everywhere; networks and the internet; connected devices; hardware, software and robots). NOTHING is ported: those are written for six- and seven-year-olds, and every criterion here is rewritten for an adult at grade 8-11 working in a trade.",
+  "terminology": "UK / East African.",
+  "codePrefix": "ADOW-DS",
+  "codeScheme": "ADOW-DS-<unit>.<n>",
+  "servesDepartments": [
+    "construction",
+    "mechanical",
+    "electronics",
+    "agriculture",
+    "livestock",
+    "agroprocessing"
+  ],
+  "assessmentModes": {
+    "knowledge": "Assessable by the platform: identification, reasoning, written answer.",
+    "both": "Taught and practised here; signed off on real equipment by an assessor.",
+    "practical": "Bench or site only. The platform can teach it and cannot assess it."
+  },
+  "weightingNote": "Digital skills sit at the opposite end from carpentry: most of this module IS assessable on screen, because naming a part, choosing wired over wireless and ordering a diagnosis are judgements rather than hand skills. The one criterion that can only be signed off at a machine is the safety one, and that is the right one to be strict about.",
+  "leadsToFramework": {
+    "name": "Not yet mapped",
+    "units": []
+  },
+  "modules": [
+    {
+      "key": "digital-skills",
+      "code": "DS",
+      "title": "Digital Skills for the Workshop",
+      "description": "What a computer is and where it hides in trade equipment; how a site gets connected and what to do when it does not; hardware, software and the machines that act on their own.",
+      "units": [
+        {
+          "number": 1,
+          "code": "DS.01",
+          "title": "The computers you already use",
+          "criteria": [
+            {
+              "code": "ADOW-DS-DS.01.1",
+              "text": "Name the four things every computer does — take input, process it, store it, give output — and point to each one on a device used in your own trade.",
+              "assessmentMode": "knowledge",
+              "evidence": "Labelling task; oral questioning.",
+              "leadsTo": []
+            },
+            {
+              "code": "ADOW-DS-DS.01.2",
+              "text": "Identify the computer inside a piece of equipment that is not called a computer: a moisture meter, a welding inverter, a vehicle diagnostic tool, a milk chiller, a feed scale.",
+              "assessmentMode": "knowledge",
+              "evidence": "Identification task from photographs or real equipment.",
+              "leadsTo": []
+            },
+            {
+              "code": "ADOW-DS-DS.01.3",
+              "text": "Distinguish a general-purpose computer from an embedded one, and explain why a machine's controller cannot simply be used for something else.",
+              "assessmentMode": "knowledge",
+              "evidence": "Written or oral explanation.",
+              "leadsTo": []
+            },
+            {
+              "code": "ADOW-DS-DS.01.4",
+              "text": "Separate a mechanical fault from a digital one on the same machine, and say which trade attends to each.",
+              "assessmentMode": "knowledge",
+              "evidence": "Fault-sorting exercise.",
+              "leadsTo": []
+            },
+            {
+              "code": "ADOW-DS-DS.01.5",
+              "text": "State what data a workplace device holds, who it belongs to, and what may not be copied or removed from it.",
+              "assessmentMode": "knowledge",
+              "evidence": "Written test; workplace policy discussion.",
+              "leadsTo": []
+            },
+            {
+              "code": "ADOW-DS-DS.01.6",
+              "text": "Start up, log in to and shut down a shared workshop computer without losing another person's work.",
+              "assessmentMode": "both",
+              "evidence": "Observed at the machine; checklist.",
+              "leadsTo": []
+            },
+            {
+              "code": "ADOW-DS-DS.01.7",
+              "text": "Report a device fault so a technician can act on it: what was being done, what happened, what was expected instead.",
+              "assessmentMode": "both",
+              "evidence": "Written fault report assessed against a rubric.",
+              "leadsTo": []
+            }
+          ]
+        },
+        {
+          "number": 2,
+          "code": "DS.02",
+          "title": "Getting connected on site",
+          "criteria": [
+            {
+              "code": "ADOW-DS-DS.02.1",
+              "text": "Distinguish a local network from the internet, and name one job on site that needs each.",
+              "assessmentMode": "knowledge",
+              "evidence": "Written test; sorting task.",
+              "leadsTo": []
+            },
+            {
+              "code": "ADOW-DS-DS.02.2",
+              "text": "Identify the parts of a small site network — the device, the access point or router, and the line leaving the building — and say what each one does.",
+              "assessmentMode": "knowledge",
+              "evidence": "Labelling a site diagram.",
+              "leadsTo": []
+            },
+            {
+              "code": "ADOW-DS-DS.02.3",
+              "text": "Choose wired or wireless for a stated job and justify the choice by reliability, distance and interference.",
+              "assessmentMode": "knowledge",
+              "evidence": "Scenario questions with reasoning.",
+              "leadsTo": []
+            },
+            {
+              "code": "ADOW-DS-DS.02.4",
+              "text": "Connect a device to a named network, and recognise when you have joined the wrong one.",
+              "assessmentMode": "both",
+              "evidence": "Observed on a device; screenshot evidence.",
+              "leadsTo": []
+            },
+            {
+              "code": "ADOW-DS-DS.02.5",
+              "text": "Diagnose a connection failure in order: the device is off the network, the network has no route out, or the service itself is down.",
+              "assessmentMode": "both",
+              "evidence": "Fault-finding exercise, observed.",
+              "leadsTo": []
+            },
+            {
+              "code": "ADOW-DS-DS.02.6",
+              "text": "State what must never be sent over a shared or public connection, and why a password typed on site is not private by default.",
+              "assessmentMode": "knowledge",
+              "evidence": "Written test.",
+              "leadsTo": []
+            },
+            {
+              "code": "ADOW-DS-DS.02.7",
+              "text": "Describe how a job's records reach the office, and what happens to them if the connection drops mid-shift.",
+              "assessmentMode": "knowledge",
+              "evidence": "Oral explanation; written account.",
+              "leadsTo": []
+            }
+          ]
+        },
+        {
+          "number": 3,
+          "code": "DS.03",
+          "title": "Hardware, software and machines that act",
+          "criteria": [
+            {
+              "code": "ADOW-DS-DS.03.1",
+              "text": "Separate hardware from software on a device you use, and say which of the two a given fault is likely to sit in.",
+              "assessmentMode": "knowledge",
+              "evidence": "Sorting task; written test.",
+              "leadsTo": []
+            },
+            {
+              "code": "ADOW-DS-DS.03.2",
+              "text": "Describe what settings and firmware are, and why a machine can behave differently after an update.",
+              "assessmentMode": "knowledge",
+              "evidence": "Written or oral explanation.",
+              "leadsTo": []
+            },
+            {
+              "code": "ADOW-DS-DS.03.3",
+              "text": "Name the three parts of an automated machine — sensor, controller, actuator — and trace a signal through them from a real example.",
+              "assessmentMode": "knowledge",
+              "evidence": "Labelling and tracing exercise.",
+              "leadsTo": []
+            },
+            {
+              "code": "ADOW-DS-DS.03.4",
+              "text": "Distinguish a machine that repeats a fixed sequence from one that responds to what a sensor reads.",
+              "assessmentMode": "knowledge",
+              "evidence": "Classification task with justification.",
+              "leadsTo": []
+            },
+            {
+              "code": "ADOW-DS-DS.03.5",
+              "text": "Work safely around an automated machine, including treating a stopped machine as one that may still start.",
+              "assessmentMode": "practical",
+              "evidence": "Supervised observation; signed off at the machine.",
+              "leadsTo": []
+            },
+            {
+              "code": "ADOW-DS-DS.03.6",
+              "text": "Judge which tasks in your trade a machine does better than a person, and which it does not, giving a reason from the work itself.",
+              "assessmentMode": "knowledge",
+              "evidence": "Written or oral reasoning.",
+              "leadsTo": []
+            },
+            {
+              "code": "ADOW-DS-DS.03.7",
+              "text": "Record a machine's settings before changing them, and restore them afterwards.",
+              "assessmentMode": "both",
+              "evidence": "Observed; before-and-after record sheet.",
+              "leadsTo": []
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "counts": {
+    "modules": 1,
+    "units": 3,
+    "criteria": 21,
+    "byAssessmentMode": {
+      "knowledge": 15,
+      "both": 5,
+      "practical": 1
+    }
+  }
+}

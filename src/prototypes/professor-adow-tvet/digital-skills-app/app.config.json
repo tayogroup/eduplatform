@@ -1,0 +1,29 @@
+{
+  "_comment": "Digital Skills for the Workshop — the SECOND cross-trade core module, beside Shapes and Measurements. It sits outside carpentry because a moisture meter, a welding inverter, a vehicle diagnostic tool and a milk chiller are the same machine wearing different cases, and every department now meets one. Built by ../lesson-kit/build.py.",
+  "school": "Professor Adow TVET",
+  "module": "digital-skills",
+  "moduleTitle": "Digital Skills for the Workshop",
+  "levelKind": "tvet",
+  "levelNumber": 3,
+  "levelLabel": "Core",
+  "standards": "src/curriculum/adow-digital-skills.json",
+  "_extraScripts": "kit.js first for the machinery and every step kind this module uses; digital.js is this module's own pictures and adds no renderer. A digital page loads no carpentry file and a carpentry page loads no digital one.",
+  "extraScripts": [
+    "digital.js"
+  ],
+  "hub": "index.html",
+  "hubIntro": "The computer inside a meter, an inverter and a chiller; how a site gets connected and what to do when it will not; hardware against software; and the machines that act on their own. Nothing here is about one manufacturer's menus — those change within a year, and what a computer does has not changed at all.",
+  "leadsNote": "This module serves all six departments. Every trade in this school now works next to an embedded computer, and none of them calls it one. Where a criterion would map onto a Kenyan TVET unit it carries NO mapping rather than a guessed one: the Carpentry & Joinery Level 4 framework is the only one in hand, and digital skills are not in it. A claimed code that does not exist is worse than an honest blank.",
+  "endNote": "You can find the computer in a machine, get a device onto a network and say which part a fault is in. What none of this gives you is permission to open a live panel or reach into a stopped machine — that is signed off at the machine, by an assessor, and nowhere else.",
+  "lessons": [
+    {
+      "content": "lesson-1.py"
+    },
+    {
+      "content": "lesson-2.py"
+    },
+    {
+      "content": "lesson-3.py"
+    }
+  ]
+}

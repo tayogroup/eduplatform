@@ -1,0 +1,323 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Hardware, Software and Machines That Act · Professor Adow TVET</title>
+<meta name="description" content="Separate hardware from software and say which one a fault is in, understand why a machine behaves differently after an update, trace a signal from sensor to controller to actuator, and work safely beside a machine that can start without you.">
+<link rel="stylesheet" href="../lesson-kit/lib/lesson.css">
+<link rel="stylesheet" href="../lesson-kit/lib/kit.css">
+</head>
+<body>
+<a class="eh-skip" href="#lesson">Skip to the lesson</a>
+
+<header class="eh-bar1">
+  <a class="eh-brand" href="index.html">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 20h18"/><path d="M5 20V9l7-5 7 5v11"/><path d="M10 20v-6h4v6"/></svg>
+    <span class="eh-brandtext"><b>Professor Adow TVET</b><i>Digital Skills for the Workshop</i></span>
+  </a>
+  <div class="eh-prog" title="How much of this lesson you have finished">
+    <span class="eh-pct" id="ehPct">0%</span>
+    <span class="eh-progtext">Lesson progress</span>
+    <span class="eh-track"><i id="ehFill"></i></span>
+  </div>
+  <div class="eh-b1right">
+    <label class="eh-find">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6.5"/><path d="M15.4 15.4 21 21"/></svg>
+      <input id="ehFind" type="search" autocomplete="off" spellcheck="false" placeholder="Search the lessons" aria-label="Search the Digital Skills for the Workshop lessons" aria-controls="ehFound" aria-expanded="false">
+    </label>
+    <select class="eh-picker" id="ehPicker" aria-label="Choose a lesson"><option value="the-computers-you-already-use.html">The Computers You Already Use</option><option value="getting-connected-on-site.html">Getting Connected on Site</option><option value="hardware-software-and-machines-that-act.html" selected>Hardware, Software and Machines That Act</option></select>
+  </div>
+</header>
+
+<nav class="eh-bar2" aria-label="Lesson">
+  <a class="eh-round back" href="index.html" aria-label="Back to the lesson list">←</a>
+  <button type="button" class="eh-round" id="ehMenu" aria-expanded="false" aria-controls="ehSteps">☰ Menu</button>
+  <span class="eh-section">Hardware, Software and Machines That Act</span>
+  <span class="eh-b2right"><button type="button" class="eh-pill" id="ehFull">⛶ Full screen</button></span>
+</nav>
+<div class="eh-steps" id="ehSteps" hidden></div>
+<div class="eh-found" id="ehFound" hidden></div>
+
+<div class="wrap">
+  <a class="lesson-back" href="index.html"><span aria-hidden="true">←</span> Digital Skills for the Workshop</a>
+  <div class="hero">
+    <div>
+      <p class="eyebrow">Digital Skills for the Workshop · Core</p>
+      <h1>Hardware, Software and Machines That Act</h1>
+    </div>
+    <div class="dots" id="dots" role="tablist" aria-label="Steps"></div>
+  </div>
+
+  <section class="deck" id="lesson" tabindex="-1">
+    <section class="slide active" data-step="0" data-kind="intro">
+      <div class="slide-head"><span class="n">0</span><h2>What this lesson is about</h2></div>
+      <p class="carp-caption">Separate hardware from software and say which one a fault is in, understand why a machine behaves differently after an update, trace a signal from sensor to controller to actuator, and work safely beside a machine that can start without you.</p>
+      <p><b>By the end of this lesson you can:</b></p>
+      <ol class="carp-order-done" style="color:var(--ink)"><li>Separate hardware from software, and locate a fault in one or the other.</li><li>Say what settings and firmware are, and why an update changes behaviour.</li><li>Name the three parts of an automated machine and trace a signal through them.</li><li>Tell a fixed sequence from a machine responding to a sensor.</li><li>Work safely near an automated machine.</li><li>Judge which tasks a machine does better than a person, and which it does not.</li><li>Record a machine's settings before changing them, and restore them.</li></ol>
+      <div class="carp-error"><b>Where this leads</b>This module serves all six departments. Every trade in this school now works next to an embedded computer, and none of them calls it one. Where a criterion would map onto a Kenyan TVET unit it carries NO mapping rather than a guessed one: the Carpentry &amp; Joinery Level 4 framework is the only one in hand, and digital skills are not in it. A claimed code that does not exist is worse than an honest blank.</div>
+    </section>
+<section class="slide" data-step="1" data-kind="sort" data-criteria="ADOW-DS-DS.03.1">
+  <div class="slide-head"><span class="n">1</span><h2>Hardware or software?</h2></div>
+  <p><span class="carp-mode ">Assessed here</span></p>
+  <div class="stage" data-mount="1"></div>
+  <div class="carp-error" data-explain hidden><b>What goes wrong here</b>Assuming intermittent means electrical and consistent means software. It is a useful hunch and it is wrong about as often as it is right. A loose connection is intermittent; so is a setting that only applies after a restart. Ask instead whether the machine is doing what it was told. If it is, the instruction is wrong — that is software.</div>
+  <p class="carp-crit"><code>ADOW-DS-DS.03.1</code></p>
+</section>
+<section class="slide" data-step="2" data-kind="questions" data-criteria="ADOW-DS-DS.03.2">
+  <div class="slide-head"><span class="n">2</span><h2>Settings, firmware and updates</h2></div>
+  <p><span class="carp-mode ">Assessed here</span></p>
+  <div class="stage" data-mount="2"></div>
+  <div class="carp-error" data-explain hidden><b>What goes wrong here</b>Treating an update as maintenance that cannot do harm. An update is a replacement of the instructions the machine runs. It usually improves things and it is still a change, which is why it belongs on the job sheet next to the parts fitted.</div>
+  <p class="carp-crit"><code>ADOW-DS-DS.03.2</code></p>
+</section>
+<section class="slide" data-step="3" data-kind="label" data-criteria="ADOW-DS-DS.03.3">
+  <div class="slide-head"><span class="n">3</span><h2>A machine that acts on its own</h2></div>
+  <p><span class="carp-mode ">Assessed here</span></p>
+  <p class="carp-caption" data-say>Tap each part, and follow the signal left to right.</p>
+  <div class="stage" data-mount="3"></div>
+  <div class="carp-error" data-explain hidden><b>What goes wrong here</b>Thinking of the controller as the dangerous part. The controller only decides. The actuator is the part with force behind it — the motor, the ram, the valve — and it moves when the controller says so, which may be while you are reaching past it.</div>
+  <p class="carp-crit"><code>ADOW-DS-DS.03.3</code></p>
+</section>
+<section class="slide" data-step="4" data-kind="questions" data-criteria="ADOW-DS-DS.03.4">
+  <div class="slide-head"><span class="n">4</span><h2>Fixed sequence, or responding?</h2></div>
+  <p><span class="carp-mode ">Assessed here</span></p>
+  <div class="stage" data-mount="4"></div>
+  <div class="carp-error" data-explain hidden><b>What goes wrong here</b>Reading 'it has been quiet for a while' as 'it is not running'. For a sensor-driven machine, quiet is not a state. It is a gap between the last time the condition was met and the next.</div>
+  <p class="carp-crit"><code>ADOW-DS-DS.03.4</code></p>
+</section>
+<section class="slide" data-step="5" data-kind="safety" data-criteria="ADOW-DS-DS.03.5">
+  <div class="slide-head"><span class="n">5</span><h2>Working near a machine that can start itself</h2></div>
+  <p><span class="carp-mode bench">Practised here · bench sign-off</span></p>
+  <div class="stage" data-mount="5"></div>
+  <div class="carp-error" data-explain hidden><b>What goes wrong here</b>Trusting the emergency stop as an isolator. It is the commonest and most serious confusion around automated plant. An e-stop is designed to halt a machine quickly during an emergency, which is a different job from keeping it halted while somebody's hands are inside it. Only an isolator, locked, with the key in your pocket, does the second.</div>
+  <p class="carp-crit"><code>ADOW-DS-DS.03.5</code></p>
+</section>
+<section class="slide" data-step="6" data-kind="questions" data-criteria="ADOW-DS-DS.03.6">
+  <div class="slide-head"><span class="n">6</span><h2>What a machine is good at</h2></div>
+  <p><span class="carp-mode ">Assessed here</span></p>
+  <div class="stage" data-mount="6"></div>
+  <div class="carp-error" data-explain hidden><b>What goes wrong here</b>Judging automation by whether it replaces a person. Most of it does not. It changes which part of the job the person does, and the part left over is usually the part that needed the training.</div>
+  <p class="carp-crit"><code>ADOW-DS-DS.03.6</code></p>
+</section>
+<section class="slide" data-step="7" data-kind="order" data-criteria="ADOW-DS-DS.03.7">
+  <div class="slide-head"><span class="n">7</span><h2>Before you change a setting</h2></div>
+  <p><span class="carp-mode both">Assessed here · and at the bench</span></p>
+  <div class="stage" data-mount="7"></div>
+  <div class="carp-error" data-explain hidden><b>What goes wrong here</b>Remembering the old settings instead of writing them down. You will remember them for about an hour. The machine will be someone else's problem for years, and 'it used to be better before it was adjusted' with no record of what it was is a fault nobody can fix.</div>
+  <p class="carp-crit"><code>ADOW-DS-DS.03.7</code></p>
+</section>
+<section class="slide" data-step="8" data-kind="words" data-criteria="ADOW-DS-DS.03.1,ADOW-DS-DS.03.3">
+  <div class="slide-head"><span class="n">8</span><h2>The words for it</h2></div>
+  <p><span class="carp-mode ">Assessed here</span></p>
+  <div class="stage" data-mount="8"></div>
+  <p class="carp-crit"><code>ADOW-DS-DS.03.1</code> <code>ADOW-DS-DS.03.3</code></p>
+</section>
+    <section class="slide" data-step="9" data-kind="end">
+      <div class="slide-head"><span class="n">✓</span><h2>End of the lesson</h2></div>
+      <p class="carp-caption">You can find the computer in a machine, get a device onto a network and say which part a fault is in. What none of this gives you is permission to open a live panel or reach into a stopped machine — that is signed off at the machine, by an assessor, and nowhere else.</p>
+      <div class="bigbtns"><a class="big teal" href="index.html" style="text-decoration:none;display:grid;place-items:center">Back to the module</a></div>
+    </section>
+  </section>
+
+  <div class="bigbtns" style="margin-top:18px">
+    <button class="big ghost small" id="prev" type="button">Back</button>
+    <button class="big" id="next" type="button">Next step</button>
+  </div>
+</div>
+<script src="../lesson-kit/lib/kit.js"></script>
+<script src="../lesson-kit/lib/digital.js"></script>
+<script>
+(function () {
+  var slides = [].slice.call(document.querySelectorAll('.slide'));
+  var dots = document.getElementById('dots');
+  var prev = document.getElementById('prev');
+  var next = document.getElementById('next');
+  var at = 0;
+  var reached = { 0: true };
+  var STEPS = {"1": {"kind": "sort", "data": {"ask": "Sort each fault by where it actually sits. This decides who you call.", "finish": "Hardware you can usually see or hear. Software you can only infer, from a machine doing exactly what it was told and the wrong thing happening.", "groups": [{"key": "hard", "label": "hardware"}, {"key": "soft", "label": "software or settings"}], "items": [{"tool": "meter", "label": "probe reads 0.0 on everything", "group": "hard", "say": "Hardware. Nothing is reaching the chip — a broken probe, a broken lead, or corrosion at the contact."}, {"tool": "chiller", "label": "holds 8 °C, not the 4 °C on the display", "group": "hard", "say": "Hardware, most likely. The controller believes it is at 4 °C, so it is being told that by a sensor that is wrong, or the cooling cannot keep up."}, {"tool": "welder", "label": "starts at the wrong current every morning", "group": "soft", "say": "Settings. It is returning to a stored default rather than the value you last used — a setting to change, not a part to replace."}, {"tool": "laptop", "label": "will not print since Tuesday", "group": "soft", "say": "Software, almost always. Nothing physical changed on Tuesday; something was updated or a setting moved."}, {"tool": "phone", "label": "screen cracked and half unresponsive", "group": "hard", "say": "Hardware, and the one case where it is obvious. Worth having in the list precisely because most are not."}]}}, "2": {"kind": "questions", "data": {"items": [{"ask": "A machine has worked the same way for two years and behaves differently after a service. What is worth asking first?", "opts": [{"t": "Whether its firmware or settings were changed during the service", "ok": true, "why": null}, {"t": "Whether a part was fitted wrongly", "ok": false, "why": "Worth asking second. A service commonly includes an update, and an update commonly changes a default."}], "why": "Ask what was updated. Firmware changes are invisible, are rarely written on the job sheet, and change behaviour that everybody had learned to rely on."}, {"ask": "What is the difference between a setting and firmware?", "opts": [{"t": "A setting is a value you are meant to change; firmware is the program that reads it", "ok": true, "why": null}, {"t": "They are two words for the same thing", "ok": false, "why": "Changing a setting is routine. Changing firmware replaces the machine's instructions and can reset every setting."}, {"t": "Firmware is the manual", "ok": false, "why": "Firmware is the program the machine runs."}], "why": "The setting is the number. The firmware is what decides what the number means, and an update can change that without the number changing."}, {"ask": "Why record the settings before an update?", "opts": [{"t": "An update can restore factory defaults and lose what the machine was tuned to", "ok": true, "why": null}, {"t": "It is not necessary — updates keep settings", "ok": false, "why": "Usually they do. The times they do not are why anyone writes them down."}], "why": "Because the tuning is knowledge, often built over months, and it lives nowhere except in that machine until somebody writes it on paper."}]}}, "3": {"kind": "label", "data": {"tool": "autoMachine"}}, "4": {"kind": "questions", "data": {"items": [{"ask": "A machine repeats the same movement every 40 seconds whatever you put in front of it. Which is it?", "opts": [{"t": "A fixed sequence — it is not sensing anything", "ok": true, "why": null}, {"t": "Responding to a sensor", "ok": false, "why": "A responding machine would change what it does when what it reads changes."}], "why": "Fixed. Predictable, which is a safety advantage — and it will carry on doing it with your hand there, which is the disadvantage."}, {"ask": "A chiller's compressor runs sometimes and not others, with no pattern you can see. Fixed or responding?", "opts": [{"t": "Responding — to a temperature you cannot see", "ok": true, "why": null}, {"t": "Fixed, on a timer you have not worked out", "ok": false, "why": "Possible, and testable: a timer keeps its rhythm on a cold day, a thermostat does not."}], "why": "Responding. There IS a pattern; it is in a quantity you are not measuring. That is the normal experience of standing next to a sensor-driven machine."}, {"ask": "Which of the two is more dangerous to stand beside, and why?", "opts": [{"t": "The responding one — you cannot predict it from watching", "ok": true, "why": null}, {"t": "The fixed one, because it never stops", "ok": false, "why": "A fixed sequence can be timed and learned. That is exactly what makes it the safer of the two to be near."}], "why": "The responding one. A machine that has been still for ten minutes may be one degree away from starting, and nothing you can see will tell you."}]}}, "5": {"kind": "safety", "data": {"ask": "Tick every genuine precaution before you go near an automated machine. One of these is not — leave it alone.", "done": "That is the list. It is also the one thing in this module a screen cannot sign off: an assessor watches you do it, at the machine.", "items": [{"text": "Isolate the machine and lock off the isolator, keeping the key.", "required": true, "why": "The only measure on this list that actually prevents a start. Everything else reduces the chance."}, {"text": "Treat a stopped machine as one that has not started YET.", "required": true, "why": "A sensor-driven machine is idle, not off. Idle is a condition that can end without anyone touching it."}, {"text": "Check whether anything can move under gravity when the power goes.", "required": true, "why": "Isolating removes the power that holds a ram or a gate up as well as the power that drives it."}, {"text": "Tell whoever is at the controls that you are working on it.", "required": true, "why": "Remote starts are the reason lock-off exists. A person at a panel in another room cannot see your hands."}, {"text": "Press the emergency stop and rely on that while you work.", "required": false, "why": "No — this is the one that is not a precaution. An emergency stop is for an emergency: it is not a lock, it can be reset by anyone, and on many machines it does not remove stored energy. Isolate and lock off instead."}, {"text": "Put the guards back before the machine is handed over.", "required": true, "why": "The machine is not finished until it is safe for the next person, who will not know what you removed."}]}}, "6": {"kind": "questions", "data": {"items": [{"ask": "Which of these does a machine do better than a skilled person?", "opts": [{"t": "The same operation, to the same tolerance, ten thousand times", "ok": true, "why": null}, {"t": "Deciding whether a piece of timber is worth using", "ok": false, "why": "That is judgement across several unmeasured things at once, and it is the part of the trade that takes years."}, {"t": "Noticing that something sounds wrong", "ok": false, "why": "A machine notices what it is instrumented to notice. It has no opinion about a noise nobody fitted a sensor for."}], "why": "Repetition without drift. That is the whole of what automation is good at, and it is worth a great deal."}, {"ask": "A workshop automates a task and quality gets worse. What is the most likely explanation?", "opts": [{"t": "The task involved judgement that nobody had written down", "ok": true, "why": null}, {"t": "The machine was badly made", "ok": false, "why": "Possible, and less common than the task being misunderstood."}], "why": "The judgement was invisible because it was in somebody's hands. Automating a task means first stating exactly what it is, and that is where most of the work is."}, {"ask": "What happens to the skill when a machine takes over the repetitive part?", "opts": [{"t": "It moves to setting up, checking and knowing when the output is wrong", "ok": true, "why": null}, {"t": "It disappears", "ok": false, "why": "Somebody has to decide the machine is producing rubbish, and that judgement comes from having done the work."}], "why": "It moves up. The person who can tell good work from bad is more valuable beside a machine, not less — they are the only one who can."}]}}, "7": {"kind": "order", "data": {"ask": "You have been asked to adjust a machine's settings. Put the stages in order.", "finish": "Write it down before, prove it after. The middle is the easy part.", "items": ["Write down every setting as you found it", "Note who asked for the change and why", "Make one change at a time", "Run the machine and check the result", "Record what the settings now are", "Restore the originals if the change is not kept"], "why": ["Yes. Before anything is touched, while the record is still true.", "Yes. In six months the reason is the only thing that explains a value nobody recognises.", "Yes. Two changes at once and you cannot say which one did it.", "Yes. On real work, not on the assumption that a number in a menu is a result.", "Yes. The new state is now the one the next person will find.", "Yes. And you can only do this because of the first step."], "before": ["First — the moment anything is changed, the original is gone.", "Not yet. Capture the machine's state before the paperwork about it.", "Not yet. Record where you started before you move anything.", "Not yet. Make the change before checking it.", "Not yet. Check it works before writing it down as the new normal.", "Last. This is only possible if you did the first step."]}}, "8": {"kind": "words", "data": {"items": [{"word": "hardware", "meaning": "The parts you can touch. A fault here can usually be seen, heard or measured."}, {"word": "software", "meaning": "The instructions. A fault here shows as the machine doing exactly what it was told, wrongly."}, {"word": "firmware", "meaning": "The program built into a machine. Changed by an update, not by installing."}, {"word": "setting", "meaning": "A value you are meant to change. Recorded before you change it."}, {"word": "sensor", "meaning": "Turns something physical into a number the controller can read."}, {"word": "controller", "meaning": "Holds the rule: if the reading is this, do that."}, {"word": "actuator", "meaning": "The part that moves — motor, valve, ram, heater. The part with force behind it."}, {"word": "isolate and lock off", "meaning": "Cut the power and lock the isolator, keeping the key. The only thing that stops a machine starting while you are in it."}]}}};
+  var LESSONS = [{"t": "The Computers You Already Use", "b": "Find the computer inside a meter, sort the machines in a workshop by whether they hold one, say what is lost when the digital half fails, share a workshop machine without losing someone else's work, and report a fault a technician can actually act on.", "h": "the-computers-you-already-use.html"}, {"t": "Getting Connected on Site", "b": "Tell a local network from the internet, name the parts of a small site network, choose wired or wireless with a reason, diagnose a dead connection in the right order, and know what should never be sent over a connection you do not own.", "h": "getting-connected-on-site.html"}];
+  /* `done` is what the bar-1 percentage and the Menu ticks read. A step is
+     done when its renderer calls back, and a step with nothing to do (the
+     intro, the words list, the end card) is done on arrival — otherwise the
+     bar could never reach 100% and the number would be a lie. */
+  var done = new Array(slides.length).fill(false);
+
+  slides.forEach(function (s, i) {
+    var b = document.createElement('button');
+    b.type = 'button';
+    b.setAttribute('aria-label', 'Step ' + i);
+    b.addEventListener('click', function () { if (reached[i]) show(i); });
+    dots.appendChild(b);
+  });
+
+  function paintDots() {
+    [].forEach.call(dots.children, function (b, i) {
+      b.className = i === at ? 'now' : (reached[i] && i < at ? 'done' : '');
+    });
+  }
+
+  function show(i) {
+    slides[at].classList.remove('active');
+    at = i;
+    reached[i] = true;
+    slides[at].classList.add('active');
+    paintDots();
+    prev.disabled = at === 0;
+    next.textContent = at === slides.length - 1 ? 'Finished' : 'Next step';
+    next.disabled = at === slides.length - 1;
+    /* The voice bar, built once per step: a speaker that reads the step
+       aloud, and Explain, which reveals the "what goes wrong here" note.
+       Both are the Ehel shell's controls; the narration is spoken by the
+       browser rather than played from a recorded clip. */
+    if (!slides[at].dataset.said) {
+      slides[at].dataset.said = '1';
+      var line = slides[at].querySelector('[data-say]');
+      var note = slides[at].querySelector('[data-explain]');
+      var heading = slides[at].querySelector('h2');
+      var spoken = line ? line.textContent
+                        : (heading ? heading.textContent : '') + '. ' +
+                          (slides[at].querySelector('.carp-caption') || { textContent: '' }).textContent;
+      var bar = window.CARP.sayBar(spoken.trim(), note ? function (btn) {
+        note.hidden = !note.hidden;
+        btn.setAttribute('aria-pressed', note.hidden ? 'false' : 'true');
+        if (!note.hidden) window.CARP.voice.say(note.textContent);
+      } : null);
+      if (line) line.replaceWith(bar); else slides[at].querySelector('.slide-head').after(bar);
+    }
+
+    var mount = slides[at].querySelector('[data-mount]');
+    if (!mount) { done[at] = true; ehPaint(); }
+    if (mount && !mount.dataset.built) {
+      mount.dataset.built = '1';
+      var spec = STEPS[slides[at].dataset.step];
+      /* A step that throws used to leave EMPTY SPACE and a line in a
+         console nobody has open — that is how a `label` pointing at a
+         drawing with no parts shipped. The build gate can see a missing
+         renderer; it cannot see bad data. So the page says so itself. */
+      try {
+        if (!spec) throw new Error('no step data');
+        if (!window.CARP.R[spec.kind]) throw new Error('no renderer for kind "' + spec.kind + '"');
+        var me = at;
+        window.CARP.R[spec.kind](spec.data, mount, function () {
+          mount.dataset.done = '1';
+          done[me] = true;
+          ehPaint();
+        });
+      } catch (err) {
+        mount.dataset.failed = '1';
+        var warn = document.createElement('p');
+        warn.className = 'fb bad';
+        warn.textContent = 'This step did not render: ' + err.message;
+        mount.appendChild(warn);
+        if (window.console) console.error('step ' + slides[at].dataset.step, err);
+      }
+    }
+    ehPaint();
+    document.getElementById('lesson').focus({ preventScroll: true });
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  /* ===================== the two header bars =====================
+     Ported from ehel-academy/mathematics/lesson-app-tools/add-header-bars.py
+     so this build has the same structure and controls as an Ehel lesson.
+     Everything here is answered by this page — nothing calls a server. */
+  var $ = function (id) { return document.getElementById(id); };
+
+  function ehPaint() {
+    var n = done.filter(Boolean).length;
+    var p = slides.length ? Math.round((n / slides.length) * 100) : 0;
+    $('ehPct').textContent = p + '%';
+    $('ehFill').style.width = p + '%';
+    if (!$('ehSteps').hidden) ehSteps();
+  }
+
+  function ehSteps() {
+    $('ehSteps').innerHTML = slides.map(function (s, i) {
+      var h = s.querySelector('h2');
+      return '<button type="button" data-i="' + i + '" class="' +
+        (i === at ? 'now ' : '') + (done[i] ? 'done' : '') + '">' +
+        (i + 1) + '. ' + (h ? h.textContent : 'Step ' + (i + 1)) + '</button>';
+    }).join('');
+  }
+
+  $('ehSteps').addEventListener('click', function (e) {
+    var b = e.target.closest('button[data-i]');
+    if (!b) return;
+    /* Any step, reached or not. The first version guarded on `reached` for
+       fear of an empty card, which was wrong: show() builds a step's mount
+       on arrival, so jumping forward works — and a Menu that silently
+       ignores half its own rows is worse than no Menu. */
+    show(+b.dataset.i);
+    $('ehSteps').hidden = true;
+    $('ehMenu').setAttribute('aria-expanded', 'false');
+  });
+
+  $('ehMenu').addEventListener('click', function () {
+    var box = $('ehSteps'), open = box.hidden;
+    if (open) ehSteps();
+    box.hidden = !open;
+    $('ehFound').hidden = true;
+    $('ehMenu').setAttribute('aria-expanded', open ? 'true' : 'false');
+  });
+
+  $('ehPicker').addEventListener('change', function (e) {
+    if (e.target.value) location.href = e.target.value + location.search;
+  });
+
+  $('ehFull').addEventListener('click', function () {
+    if (document.fullscreenElement) document.exitFullscreen();
+    else if (document.documentElement.requestFullscreen) document.documentElement.requestFullscreen();
+  });
+  document.addEventListener('fullscreenchange', function () {
+    $('ehFull').textContent = document.fullscreenElement ? '⛶ Leave full screen' : '⛶ Full screen';
+  });
+
+  /* Search covers THIS lesson's steps and the other lessons of the module.
+     Ehel's searches a generated lesson-search.json; this prototype has no
+     such index, so it searches what the page can actually see and says so
+     by what it returns rather than pretending to a wider reach. */
+  $('ehFind').addEventListener('input', function (e) {
+    var q = e.target.value.trim().toLowerCase();
+    var box = $('ehFound');
+    if (q.length < 2) { box.hidden = true; e.target.setAttribute('aria-expanded', 'false'); return; }
+    $('ehSteps').hidden = true;
+    var hits = [];
+    slides.forEach(function (s, i) {
+      var h = s.querySelector('h2');
+      var t = (h ? h.textContent : '') + ' ' + s.textContent;
+      if (t.toLowerCase().indexOf(q) >= 0) {
+        hits.push('<a href="#" data-i="' + i + '">' + (i + 1) + '. ' +
+          (h ? h.textContent : 'Step ' + (i + 1)) + '<small>in this lesson</small></a>');
+      }
+    });
+    LESSONS.forEach(function (l) {
+      if ((l.t + ' ' + l.b).toLowerCase().indexOf(q) >= 0) {
+        hits.push('<a href="' + l.h + '">' + l.t + '<small>' + l.b + '</small></a>');
+      }
+    });
+    box.innerHTML = hits.length ? hits.join('') : '<p>Nothing matches that.</p>';
+    box.hidden = false;
+    e.target.setAttribute('aria-expanded', 'true');
+  });
+  $('ehFound').addEventListener('click', function (e) {
+    var a = e.target.closest('a[data-i]');
+    if (!a) return;
+    e.preventDefault();
+    show(+a.dataset.i);
+    $('ehFound').hidden = true;
+  });
+
+  prev.addEventListener('click', function () { if (at > 0) show(at - 1); });
+  next.addEventListener('click', function () { if (at < slides.length - 1) show(at + 1); });
+  paintDots();
+  prev.disabled = true;
+  /* Slide 0 is on screen before show() has ever run, so without this the
+     bar read 0% while the learner was already looking at a finished step
+     and the Menu showed no tick against it. */
+  if (!slides[0].querySelector('[data-mount]')) done[0] = true;
+  ehPaint();
+})();
+</script>
+</body>
+</html>

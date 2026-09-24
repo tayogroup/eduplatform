@@ -49,6 +49,34 @@ def school_root(app_dir):
 # worse than no probe. Absent from this map means "not probed", which is
 # reported as such rather than counted as a pass.
 PROBES = {
+    # --- Digital Skills for the Workshop ---
+    # One word per criterion that the TEACHING cannot avoid if it is really
+    # there. Not a word from the criterion's own title, which a page can
+    # satisfy by quoting itself: "embedded" is in the criterion AND is the
+    # idea, whereas probing DS.01.6 for "shared" would pass on the step
+    # heading alone, so it probes "log out" instead.
+    "ADOW-DS-DS.01.1": ["output"],
+    "ADOW-DS-DS.01.2": ["probe"],
+    "ADOW-DS-DS.01.3": ["embedded"],
+    "ADOW-DS-DS.01.4": ["compressor"],
+    "ADOW-DS-DS.01.5": ["customer"],
+    "ADOW-DS-DS.01.6": ["log out"],
+    "ADOW-DS-DS.01.7": ["expected"],
+    "ADOW-DS-DS.02.1": ["local network"],
+    "ADOW-DS-DS.02.2": ["router"],
+    "ADOW-DS-DS.02.3": ["interference"],
+    "ADOW-DS-DS.02.4": ["guest"],
+    "ADOW-DS-DS.02.5": ["reboot"],
+    "ADOW-DS-DS.02.6": ["firewall"],
+    "ADOW-DS-DS.02.7": ["sync"],
+    "ADOW-DS-DS.03.1": ["intermittent"],
+    "ADOW-DS-DS.03.2": ["firmware"],
+    "ADOW-DS-DS.03.3": ["actuator"],
+    "ADOW-DS-DS.03.4": ["sensor-driven"],
+    "ADOW-DS-DS.03.5": ["lock off"],
+    "ADOW-DS-DS.03.6": ["repetition"],
+    "ADOW-DS-DS.03.7": ["one change at a time"],
+
     # --- Shapes and Measurements ---
     "ADOW-SM-SM.01.1": ["millimetre"],
     "ADOW-SM-SM.01.2": ["datum"],

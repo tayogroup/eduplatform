@@ -880,7 +880,24 @@
     wrap.appendChild(btns);
 
     let i = 0;
-    const parts = data.parts;
+    /* A lecture step may be a FILM AND NOTHING ELSE. Until now `parts` was
+       assumed, and a step without it threw on parts[i] before drawing
+       anything — so reusing an existing film, rather than authoring a
+       walkthrough beside it, was impossible without inventing content for
+       the walkthrough. The controls and the stage below are simply not
+       built when there are no parts. */
+    const parts = data.parts || [];
+    if (!parts.length) {
+      counter.remove(); s.remove(); cap.remove(); btns.remove();
+      /* The default under-film line says "go back through it a part at a
+         time below", which is false once there is no below. An author who
+         wrote their own keeps it; one who did not gets nothing rather than
+         a pointer to controls that are not there. */
+      if (!data.underFilm) under.remove();
+      mount.appendChild(wrap);
+      done();
+      return;
+    }
 
     function paint(speak) {
       const p = parts[i];

@@ -38,6 +38,38 @@ LESSON = {
     ],
     "steps": [
 
+        # THE UNIT LECTURE, first, before the learner does anything.
+        #
+        # THIS FILM IS NOT OURS AND WAS NOT MADE FOR THIS SCHOOL. It is the
+        # Ehel Academy Stage 4 shape-and-measures lecture, reused whole at
+        # the owner's instruction rather than a new one being written for
+        # this module. Nothing about it was changed except the encoding: the
+        # original is 18.2 MB and a published artifact refuses a binary over
+        # 15, so it is re-compressed to 11.1 MB at the same 352 seconds and
+        # the same picture. The words, the pictures and the voice are Ehel's.
+        #
+        # Worth a trainer knowing: it is pitched at a nine-year-old, and it
+        # covers symmetry and putting shapes together, which this module
+        # deliberately does not. It is an introduction to the ideas, not to
+        # this lesson's trade content - the ducts, the thickness allowance
+        # and the mitre are taught in the steps below and are not in the film.
+        #
+        # No `parts` here. A lecture step used to assume them and threw
+        # without them, which made reusing an existing film impossible
+        # without inventing a walkthrough to sit beside it.
+        step("lecture", "Unit lecture", ["ADOW-SM-SM.07.1", "ADOW-SM-SM.08.1"],
+             {"video": {
+                  "src": "lecture-video/shape-and-measures.534e9a4a.mp4",
+                  "captions": "lecture-video/shape-and-measures.2613b081.vtt",
+                  "poster": "lecture-video/shape-and-measures.29644ff7.jpg"},
+              "underFilm": "An introduction to solids, nets and angles. The trade work — allowing for thickness, the circumference of a duct, halving a mitre — is in the steps below."},
+             ask="Watch the film first. It introduces the ideas; the steps after it put them on the bench.",
+             error=("Treating the film as the lesson.",
+                    "It introduces faces, nets and angles and stops there. Everything this "
+                    "module is actually assessed on — the thickness allowance, the duct that "
+                    "is marked by its circumference, the mitre halved from the corner — comes "
+                    "after it.")),
+
         step("label", "A solid, and what its parts are called", ["ADOW-SM-SM.07.1"],
              {"tool": "solidBox"},
              ask="Tap each part. These three words are what a drawing office and a sheet-metal shop both use.",

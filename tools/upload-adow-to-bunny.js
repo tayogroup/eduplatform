@@ -5,8 +5,13 @@
 //
 //   catalog.json          + catalog-<digest>.json   (zone root)
 //   content/<course>/…    course-manifest.json + units/*.json
-//   app/…                 NOT YET — Phase 3, see THE APP TIER below
-//   media/…               NOT YET — Phase 3
+//   app/…                 the lesson build — see THE APP TIER below
+//   media/…               NOT YET — nothing in this school has media of its own
+//
+// This header said app/ was "NOT YET" for longer than it was true: the tier is
+// implemented below (APP_EXT), and it is what serves the client a browsable
+// site rather than a catalogue of JSON. A stale comment about what a deploy
+// does is worth more than a stale comment about anything else.
 //
 // FOUR DELIBERATE DIFFERENCES FROM EVERY OTHER UPLOADER IN THIS REPO:
 //

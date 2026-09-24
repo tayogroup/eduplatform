@@ -1,0 +1,120 @@
+{
+  "_comment": "Storyboard for the Grade 4 Science unit lecture film, Lesson 11 Inside the Earth. Rendered by tools/create-ehel-unit-lecture.js. See lecture-video/BRIEF.md. Every beat is one narration clip; art.at names the phrases a picture waits for, and the page refuses to load if a phrase is not in its beat's say. The chapters follow LESSON['lecture'] in order (three layers; volcanoes; earthquakes; a model to scale; how we know), in the lesson's own words: its tap figure (ART.figure earthLayers, one layer named at a time), its volcano demo (ART.scene volcano 0-3), its earthquake demo (ART.scene quake 0-3), the apple of its scale-model step, and the evidence of its 'How we found out' step.",
+  "slug": "inside-the-earth",
+  "lesson": 11,
+  "grade": 4,
+  "stage": 4,
+  "title": "Inside the Earth",
+  "subtitle": "Grade 4 Science",
+  "framework": "Cambridge Primary Science 0097",
+  "renderer": {
+    "art": ["science"],
+    "skin": "brown",
+    "scenes": [
+      "tools/lib/ehel-film-marks.js",
+      "tools/lib/film-scenes/science-g4/inside-the-earth.js",
+      "tools/lib/film-scenes/science-g4/inside-the-earth-2.js",
+      "tools/lib/film-scenes/science-g4/inside-the-earth-3.js"
+    ]
+  },
+  "objectives": [
+    ["4ESp.01", "Describe the model of the structure of the Earth which includes a core, a mantle and a crust."],
+    ["4ESp.02", "Describe common features of volcanoes and know they are found at breaks in the Earth's crust."],
+    ["4ESp.03", "Know that the Earth's crust moves and when parts move suddenly this is called an earthquake."],
+    ["4TWSm.01", "Know that models are not fully representative of a real world situation and/or scientific idea."],
+    ["4TWSm.02", "Use models to show relationships, quantities or scale."],
+    ["4SIC.01", "Describe how scientific knowledge and understanding changes over time through the use of evidence gained by enquiry."]
+  ],
+  "scenes": [
+    { "id": "title", "kind": "title", "codes": [], "beats": [
+      { "say": "Cut the Earth open, and you would find three layers.",
+        "art": { "at": { "three": "three layers" } } },
+      { "say": "Nobody has ever dug down to see them. We know from evidence.",
+        "art": { "at": { "dug": "Nobody has ever dug down", "evidence": "evidence" } } }
+    ] },
+
+    { "id": "layers", "kind": "layers", "heading": "Crust, mantle, core", "codes": ["4ESp.01"], "beats": [
+      { "say": "Scientists model the inside of the Earth as three layers.",
+        "art": { "at": { "model": "Scientists model", "three": "three layers" } } },
+      { "say": "The crust is the thin, hard, rocky outside. We live on it.",
+        "art": { "at": { "crust": "The crust", "thin": "thin, hard, rocky outside", "live": "We live on it" } } },
+      { "say": "Under it is the mantle: a very thick layer of hot, solid rock.",
+        "art": { "at": { "mantle": "the mantle", "thick": "very thick layer", "hot": "hot, solid rock" } } },
+      { "say": "The mantle is most of the Earth. It is so hot that it can flow, very slowly.",
+        "art": { "at": { "most": "most of the Earth", "flow": "flow, very slowly" } } },
+      { "say": "At the centre is the core. It is metal, not rock.",
+        "art": { "at": { "core": "the core", "metal": "metal, not rock" } } },
+      { "say": "The core is about as hot as the surface of the Sun.",
+        "art": { "at": { "sun": "as hot as the surface of the Sun" } } }
+    ] },
+
+    { "id": "volcano", "kind": "volcano", "heading": "A volcano", "codes": ["4ESp.02", "4ESp.01"], "beats": [
+      { "say": "Under the crust, rock is so hot that it melts. Melted rock underground is magma.",
+        "art": { "at": { "hot": "so hot that it melts", "magma": "magma" } } },
+      { "say": "Where the crust is broken, magma pushes up through the crack.",
+        "art": { "at": { "broken": "the crust is broken", "push": "pushes up", "crack": "the crack" } } },
+      { "say": "It erupts. Red-hot lava pours out, with ash and gas.",
+        "art": { "at": { "erupt": "It erupts", "lava": "Red-hot lava", "ash": "ash and gas" } } },
+      { "say": "Lava is magma that has reached the surface.",
+        "art": { "at": { "lava": "Lava", "surface": "reached the surface" } } },
+      { "say": "The lava cools into new rock. The mountain grows, with a crater at the top.",
+        "art": { "at": { "cools": "cools into new rock", "grows": "The mountain grows", "crater": "a crater at the top" } } },
+      { "say": "Volcanoes are found at breaks in the crust. That is why they come in lines.",
+        "art": { "at": { "breaks": "at breaks in the crust", "lines": "come in lines" } } }
+    ] },
+
+    { "id": "quake", "kind": "quake", "heading": "Earthquakes", "codes": ["4ESp.03", "4ESp.01"], "beats": [
+      { "say": "The crust is not one shell. It is broken into huge pieces called plates.",
+        "art": { "at": { "one": "not one shell", "plates": "huge pieces called plates" } } },
+      { "say": "The plates rest on the hot mantle. They creep along as fast as your fingernails grow.",
+        "art": { "at": { "rest": "rest on the hot mantle", "creep": "creep along", "nails": "as fast as your fingernails grow" } } },
+      { "say": "Where two plates push against each other, their edges catch and stick.",
+        "art": { "at": { "push": "push against each other", "stick": "catch and stick" } } },
+      { "say": "The push builds up for years. Then the edges slip, all at once.",
+        "art": { "at": { "builds": "builds up for years", "slip": "slip, all at once" } } },
+      { "say": "That sudden move is an earthquake, and the ground shakes.",
+        "art": { "at": { "quake": "an earthquake", "shakes": "the ground shakes" } } },
+      { "say": "A crack is left behind. Earthquakes happen at the same breaks as volcanoes.",
+        "art": { "at": { "crack": "A crack is left behind", "same": "the same breaks as volcanoes" } } }
+    ] },
+
+    { "id": "apple", "kind": "apple", "heading": "An apple Earth", "codes": ["4TWSm.02", "4TWSm.01", "4ESp.01"], "beats": [
+      { "say": "How thin is the crust, really? Imagine the Earth as an apple.",
+        "art": { "at": { "thin": "How thin is the crust", "apple": "as an apple" } } },
+      { "say": "The skin stands for the crust. The real crust is even thinner.",
+        "art": { "at": { "skin": "The skin", "crust": "the crust", "thinner": "even thinner" } } },
+      { "say": "The flesh is the mantle: most of the Earth, thick and hot.",
+        "art": { "at": { "flesh": "The flesh", "mantle": "the mantle", "most": "most of the Earth" } } },
+      { "say": "The apple's core stands for the Earth's core, but it is far too small.",
+        "art": { "at": { "core": "The apple's core", "real": "the Earth's core", "small": "far too small" } } },
+      { "say": "No model shows everything. This one leaves out the heat and the metal.",
+        "art": { "at": { "nomodel": "No model shows everything", "heat": "the heat", "metal": "the metal" } } }
+    ] },
+
+    { "id": "evid", "kind": "evid", "heading": "How we know", "codes": ["4SIC.01", "4ESp.01"], "beats": [
+      { "say": "Nobody has seen the mantle or the core. So how do we know?",
+        "art": { "at": { "nobody": "Nobody has seen", "how": "how do we know" } } },
+      { "say": "Earthquakes send waves right through the Earth. Some only travel through solids.",
+        "art": { "at": { "waves": "send waves", "through": "right through the Earth", "solids": "only travel through solids" } } },
+      { "say": "They pass through the mantle, so the mantle is solid.",
+        "art": { "at": { "pass": "pass through the mantle", "solid": "the mantle is solid" } } },
+      { "say": "They cannot get through the outer core, so that part is liquid.",
+        "art": { "at": { "stop": "cannot get through", "outer": "the outer core", "liquid": "that part is liquid" } } },
+      { "say": "The Earth is far too heavy to be rock all the way through.",
+        "art": { "at": { "heavy": "far too heavy", "rock": "rock all the way through" } } },
+      { "say": "And meteorites, rocks from space, are sometimes made of iron. The core is metal.",
+        "art": { "at": { "met": "meteorites", "iron": "made of iron", "metal": "The core is metal" } } },
+      { "say": "Evidence from enquiry built this model. It changed what people thought.",
+        "art": { "at": { "ev": "Evidence from enquiry", "changed": "changed what people thought" } } }
+    ] },
+
+    { "id": "recap", "kind": "recap", "heading": "What you now know", "codes": ["4ESp.01", "4ESp.02", "4ESp.03", "4TWSm.01", "4TWSm.02", "4SIC.01"], "beats": [
+      { "say": "Crust, mantle, core: thin rock, thick hot rock, and metal at the centre.",
+        "art": { "at": { "crust": "Crust", "mantle": "mantle", "core": "core" } } },
+      { "say": "Volcanoes and earthquakes happen where the crust is broken.",
+        "art": { "at": { "volc": "Volcanoes", "quake": "earthquakes" } } },
+      { "say": "An apple can model that, and evidence is how we know.",
+        "art": { "at": { "apple": "An apple", "ev": "evidence" } } }
+    ] }
+  ]
+}

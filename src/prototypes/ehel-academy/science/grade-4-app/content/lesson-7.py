@@ -234,6 +234,17 @@ LESSON["lecture"] = [
          "Fizz can spray. Beakers can smash. Pans burn. Before any practical work, a scientist lists the risks and makes a plan for each: goggles, two hands, a grown-up for the heat. Today you plan, then you test."),
 ]
 
+# The unit lecture film (tools/create-ehel-unit-lecture.js; storyboard and
+# pictures in lecture-video/changes-and-reactions.json). The lecture step draws it
+# above the parts; build-lessons.py refuses a path that is not on disk AND in
+# app.config.json :: extraPages, and a --draft render.
+LESSON["video"] = {
+    "src": "lecture-video/changes-and-reactions.336f1e62.mp4",
+    "captions": "lecture-video/changes-and-reactions.b2936609.vtt",
+    "poster": "lecture-video/changes-and-reactions.91970d68.jpg",
+    "note": "About three minutes. Watch it through, then go back over it a part at a time below.",
+}
+
 LESSON["words"] = [
     word("change of state", "\U0001F504", "A change between solid, liquid and gas, like melting or freezing.",
          ["Melting is a change of state.", "A change of state can be undone."]),

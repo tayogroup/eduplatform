@@ -1,0 +1,121 @@
+{
+  "_comment": "Storyboard for the Grade 4 Science unit lecture film, Lesson 7 Changes and Reactions. Rendered by tools/create-ehel-unit-lecture.js. See lecture-video/BRIEF.md. Every beat is one narration clip; art.at names the phrases a picture waits for, and the page refuses to load if a phrase is not in its beat's say. The chapters follow LESSON['lecture'] in order (melting; freezing; mixing; a chemical reaction; staying safe) with one extra chapter, 'Can it be undone?', which is the lesson's own change sorter. The pictures are the lesson's own drawings: the particle model (ART.kit.particleSvg, the demo the child steps through) and the two beakers (ART.sim reaction, the experiment they are about to run). Every arrow in this film was checked against the sentence it sits under: a change that can be undone gets a two-way arrow, a change that cannot gets a one-way arrow with the return crossed out.",
+  "slug": "changes-and-reactions",
+  "lesson": 7,
+  "grade": 4,
+  "stage": 4,
+  "title": "Changes and Reactions",
+  "subtitle": "Grade 4 Science",
+  "framework": "Cambridge Primary Science 0097",
+  "renderer": {
+    "art": ["science"],
+    "skin": "brown",
+    "scenes": [
+      "tools/lib/ehel-film-marks.js",
+      "tools/lib/film-scenes/science-g4/changes-and-reactions.js",
+      "tools/lib/film-scenes/science-g4/changes-and-reactions-2.js",
+      "tools/lib/film-scenes/science-g4/changes-and-reactions-3.js"
+    ]
+  },
+  "objectives": [
+    ["4Cc.01", "Describe solidification/freezing and melting, using the particle model to describe the change of state."],
+    ["4Cc.02", "Understand that the change of state of a substance is a physical process."],
+    ["4Cc.03", "Know that some substances will react with another substance to produce one or more new substances and this is called a chemical reaction."],
+    ["4TWSc.01", "Use observations and tests to sort, group and classify objects."],
+    ["4TWSp.05", "Identify risks and explain how to stay safe during practical work."],
+    ["4TWSc.06", "Carry out practical work safely."]
+  ],
+  "scenes": [
+    { "id": "title", "kind": "title", "codes": [], "beats": [
+      { "say": "Ice melts. Wood burns. Both of them are changes, but they are not the same kind of change.",
+        "art": { "at": { "melts": "Ice melts", "burns": "Wood burns", "kind": "not the same kind" } } },
+      { "say": "One of them makes nothing new. The other makes a substance that was not there before.",
+        "art": { "at": { "nothing": "makes nothing new", "new": "was not there before" } } }
+    ] },
+
+    { "id": "melting", "kind": "melting", "heading": "Melting", "codes": ["4Cc.01"], "beats": [
+      { "say": "Ice is solid water. Its particles sit in rows, vibrating on the spot.",
+        "art": { "at": { "solid": "solid water", "rows": "sit in rows", "vibrate": "vibrating on the spot" } } },
+      { "say": "Warm it up. The particles gain energy and vibrate harder.",
+        "art": { "at": { "warm": "Warm it up", "energy": "gain energy", "harder": "vibrate harder" } } },
+      { "say": "Soon they break out of their rows and slide past each other.",
+        "art": { "at": { "break": "break out of their rows", "slide": "slide past each other" } } },
+      { "say": "The ice has melted. It is liquid water now.",
+        "art": { "at": { "melted": "has melted", "liquid": "liquid water now" } } },
+      { "say": "Same water particles all the way through. Only their arrangement changed.",
+        "art": { "at": { "same": "Same water particles", "arrange": "their arrangement changed" } } }
+    ] },
+
+    { "id": "freezing", "kind": "freezing", "heading": "Freezing", "codes": ["4Cc.01", "4Cc.02"], "beats": [
+      { "say": "Now cool the water down. The particles lose energy and slow.",
+        "art": { "at": { "cool": "cool the water down", "lose": "lose energy", "slow": "and slow" } } },
+      { "say": "They lock back into rows. The water has frozen into ice again.",
+        "art": { "at": { "lock": "lock back into rows", "frozen": "frozen into ice again" } } },
+      { "say": "You can melt and freeze the same water a thousand times over.",
+        "art": { "at": { "cycle": "melt and freeze", "thousand": "a thousand times" } } },
+      { "say": "Nothing new is ever made, and that makes it a physical process.",
+        "art": { "at": { "nothing": "Nothing new is ever made", "physical": "a physical process" } } }
+    ] },
+
+    { "id": "mixing", "kind": "mixing", "heading": "Mixing", "codes": ["4Cc.03"], "beats": [
+      { "say": "Now stir sand into water, and watch carefully what the sand does.",
+        "art": { "at": { "stir": "stir sand into water", "watch": "watch carefully" } } },
+      { "say": "It sinks to the bottom, but it is still sand. The water is still water.",
+        "art": { "at": { "sinks": "It sinks to the bottom", "stillsand": "still sand", "stillwater": "The water is still water" } } },
+      { "say": "Nothing new has been made here. This is a mixture.",
+        "art": { "at": { "nothing": "Nothing new has been made", "mixture": "a mixture" } } },
+      { "say": "You could filter the sand back out again, so mixing is physical too.",
+        "art": { "at": { "filter": "filter the sand back out", "physical": "mixing is physical" } } }
+    ] },
+
+    { "id": "reaction", "kind": "reaction", "heading": "A chemical reaction", "codes": ["4Cc.03"], "beats": [
+      { "say": "Now pour vinegar onto bicarbonate of soda. Predict what will happen.",
+        "art": { "at": { "pour": "pour vinegar", "bicarb": "bicarbonate of soda", "predict": "Predict what will happen" } } },
+      { "say": "It fizzes at once. Bubbles of a gas pour out of the beaker.",
+        "art": { "at": { "fizz": "It fizzes at once", "gas": "Bubbles of a gas" } } },
+      { "say": "That gas did not exist a moment ago. It is being made in front of you.",
+        "art": { "at": { "notexist": "did not exist a moment ago", "made": "being made in front of you" } } },
+      { "say": "The fizz is not just air escaping. The two substances are reacting.",
+        "art": { "at": { "notair": "not just air escaping", "react": "are reacting" } } },
+      { "say": "New substances have been made, and you cannot get the old ones back.",
+        "art": { "at": { "newsub": "New substances have been made", "noback": "cannot get the old ones back" } } },
+      { "say": "A change that makes new substances is called a chemical reaction.",
+        "art": { "at": { "makes": "makes new substances", "chem": "a chemical reaction" } } }
+    ] },
+
+    { "id": "undone", "kind": "undone", "heading": "Can it be undone?", "codes": ["4Cc.02", "4Cc.03", "4TWSc.01"], "beats": [
+      { "say": "Here is the one test that settles it. Can you get the same substance back?",
+        "art": { "at": { "test": "the one test", "back": "the same substance back" } } },
+      { "say": "Melt a bar of chocolate, then cool it. It sets, and it is still chocolate.",
+        "art": { "at": { "melt": "Melt a bar of chocolate", "sets": "It sets", "still": "still chocolate" } } },
+      { "say": "Dissolve salt in water, then dry the water off. The salt is left behind.",
+        "art": { "at": { "dissolve": "Dissolve salt in water", "dry": "dry the water off", "left": "left behind" } } },
+      { "say": "Burn wood, and you get ash and smoke. They never turn back into wood.",
+        "art": { "at": { "burn": "Burn wood", "ash": "ash and smoke", "never": "never turn back" } } },
+      { "say": "Bake a cake, and you cannot un-bake it. New substances were made.",
+        "art": { "at": { "bake": "Bake a cake", "unbake": "cannot un-bake it", "newsub": "New substances were made" } } }
+    ] },
+
+    { "id": "safe", "kind": "safe", "heading": "Plan to stay safe", "codes": ["4TWSp.05", "4TWSc.06"], "beats": [
+      { "say": "Fizz can spray. Beakers can smash. Pans burn.",
+        "art": { "at": { "spray": "Fizz can spray", "smash": "Beakers can smash", "burn": "Pans burn" } } },
+      { "say": "A scientist lists every risk first, then plans an action for each one.",
+        "art": { "at": { "risk": "lists every risk", "plan": "plans an action" } } },
+      { "say": "Goggles on before you pour. Beakers on a tray, and two hands to carry.",
+        "art": { "at": { "goggles": "Goggles on before you pour", "tray": "on a tray", "hands": "two hands to carry" } } },
+      { "say": "A grown-up does the heat. And you never, ever taste anything.",
+        "art": { "at": { "grownup": "A grown-up does the heat", "taste": "never, ever taste anything" } } }
+    ] },
+
+    { "id": "recap", "kind": "recap", "heading": "What you now know", "codes": ["4Cc.01", "4Cc.02", "4Cc.03", "4TWSc.01", "4TWSp.05", "4TWSc.06"], "beats": [
+      { "say": "Melting and freezing move the particles. They make nothing new.",
+        "art": { "at": { "melt": "Melting and freezing" } } },
+      { "say": "Mixing keeps both substances, so mixing is physical too.",
+        "art": { "at": { "mixing": "Mixing keeps both substances" } } },
+      { "say": "A reaction makes new substances, and you cannot get the old ones back.",
+        "art": { "at": { "reaction": "A reaction makes new substances" } } },
+      { "say": "And goggles go on before you pour anything.",
+        "art": { "at": { "goggles": "goggles go on" } } }
+    ] }
+  ]
+}

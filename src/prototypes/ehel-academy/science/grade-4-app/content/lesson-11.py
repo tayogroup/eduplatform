@@ -233,6 +233,17 @@ LESSON["lecture"] = [
          "Nobody has seen the mantle or the core. The model was built from evidence: earthquake waves that show a solid mantle and a liquid outer core, the Earth's great weight and metal meteorites that tell us the core is metal, rock that volcanoes bring up, continents that fit together. Evidence from enquiry changed what people knew."),
 ]
 
+# The unit lecture film (tools/create-ehel-unit-lecture.js; storyboard and
+# pictures in lecture-video/inside-the-earth.json). The lecture step draws it
+# above the parts; build-lessons.py refuses a path that is not on disk AND in
+# app.config.json :: extraPages, and a --draft render.
+LESSON["video"] = {
+    "src": "lecture-video/inside-the-earth.057b992d.mp4",
+    "captions": "lecture-video/inside-the-earth.4b1bbaea.vtt",
+    "poster": "lecture-video/inside-the-earth.e4912459.jpg",
+    "note": "About three minutes. Watch it through, then go back over it a part at a time below.",
+}
+
 LESSON["words"] = [
     word("crust", "\U0001F30D", "The thin, hard outer layer of the Earth that we live on.",
          ["Volcanoes form at breaks in the crust.", "The crust is thinner than an apple's skin, to scale."]),

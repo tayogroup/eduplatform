@@ -214,6 +214,17 @@ LESSON["lecture"] = [
          "When you make a point about health, back it up with evidence. Evidence is something that was measured, counted or tested. I think PE is boring is an opinion. Doctors measured stronger hearts in children who ran is evidence."),
 ]
 
+# The unit lecture film (tools/create-ehel-unit-lecture.js; storyboard and
+# pictures in lecture-video/staying-healthy.json). The lecture step draws it
+# above the parts; build-lessons.py refuses a path that is not on disk AND in
+# app.config.json :: extraPages, and a --draft render.
+LESSON["video"] = {
+    "src": "lecture-video/staying-healthy.1c47a93b.mp4",
+    "captions": "lecture-video/staying-healthy.5eb70415.vtt",
+    "poster": "lecture-video/staying-healthy.87ecbd8e.jpg",
+    "note": "About two and a half minutes. Watch it through, then go back over it a part at a time below.",
+}
+
 LESSON["words"] = [
     word("medicine", "\U0001F48A", "A substance that treats an illness.",
          ["The doctor gave me medicine for my cough.", "Medicine must be measured carefully."]),

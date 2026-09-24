@@ -269,6 +269,17 @@ LESSON["lecture"] = [
          "Every transfer leaks a little into the surroundings as sound, light or heat. That is why a bulb gets a little warm and a bouncing ball stops. Today you track it, record it and chart it."),
 ]
 
+# The unit lecture film (tools/create-ehel-unit-lecture.js; storyboard and
+# pictures in lecture-video/energy-everywhere.json). The lecture step draws it
+# above the parts; build-lessons.py refuses a path that is not on disk AND in
+# app.config.json :: extraPages, and a --draft render.
+LESSON["video"] = {
+    "src": "lecture-video/energy-everywhere.e8e06b6f.mp4",
+    "captions": "lecture-video/energy-everywhere.7c3da20f.vtt",
+    "poster": "lecture-video/energy-everywhere.c01ec4a3.jpg",
+    "note": "About three minutes. Watch it through, then go back over it a part at a time below.",
+}
+
 LESSON["words"] = [
     word("energy", "⚡", "What makes things happen. It is in everything, and every action needs it.",
          ["A moving ball has energy.", "Food gives you energy."]),

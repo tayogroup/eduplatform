@@ -1,0 +1,124 @@
+{
+  "_comment": "Storyboard for the Grade 4 Science unit lecture film, Lesson 2 Backbone or Not?. Rendered by tools/create-ehel-unit-lecture.js. See lecture-video/BRIEF.md. Every beat is one narration clip; art.at names the phrases a picture waits for, and the page refuses to load if a phrase is not in its beat's say. The chapters follow LESSON['lecture'] in content/lesson-2.py in order (vertebrates; invertebrates; exoskeletons, with the snail's shell; a key; and today's sort and look-up), in the lesson's own words and examples: the lesson's skeleton (ART.figure skeleton, its spine of twelve small bones), its animals, its key (the five KEY questions and six minibeasts, walked to its own spider, whose eight legs can be counted in the picture), its sort (the ten animals and the two bins) and its fact card on moulting.",
+  "slug": "backbone-or-not",
+  "lesson": 2,
+  "grade": 4,
+  "stage": 4,
+  "title": "Backbone or Not?",
+  "subtitle": "Grade 4 Science",
+  "framework": "Cambridge Primary Science 0097",
+  "renderer": {
+    "art": ["science"],
+    "skin": "brown",
+    "scenes": [
+      "tools/lib/ehel-film-marks.js",
+      "tools/lib/film-scenes/science-g4/backbone-or-not.js",
+      "tools/lib/film-scenes/science-g4/backbone-or-not-2.js",
+      "tools/lib/film-scenes/science-g4/backbone-or-not-3.js",
+      "tools/lib/film-scenes/science-g4/backbone-or-not-4.js",
+      "tools/lib/film-scenes/science-g4/backbone-or-not-5.js"
+    ]
+  },
+  "objectives": [
+    ["4Bs.05", "Identify vertebrates as animals with a backbone and invertebrates as animals without a backbone."],
+    ["4Bs.04", "Know that some animals have an exoskeleton."],
+    ["4TWSc.01", "Use observations and tests to sort, group and classify objects."],
+    ["4TWSc.02", "Use keys to identify objects, materials and living things."],
+    ["4TWSc.07", "Use secondary information sources to research an answer to a question."]
+  ],
+  "scenes": [
+    { "id": "title", "kind": "title", "codes": [], "beats": [
+      { "say": "Not all animals have a skeleton like yours.",
+        "art": { "at": { "skeleton": "a skeleton like yours" } } },
+      { "say": "Some have a backbone, some have none, and some wear a skeleton outside.",
+        "art": { "at": { "backbone": "a backbone", "none": "some have none", "outside": "a skeleton outside" } } }
+    ] },
+
+    { "id": "vert", "kind": "vert", "heading": "A backbone inside", "codes": ["4Bs.05"], "beats": [
+      { "say": "You have a backbone. It is a spine of small bones inside you.",
+        "art": { "at": { "backbone": "You have a backbone", "spine": "a spine", "small": "small bones", "inside": "inside you" } } },
+      { "say": "A dog has one too. So does a bird, a fish, a frog and a snake.",
+        "art": { "at": { "dog": "A dog", "bird": "a bird", "fish": "a fish", "frog": "a frog", "snake": "a snake" } } },
+      { "say": "Animals with a backbone are called vertebrates.",
+        "art": { "at": { "with": "with a backbone", "vert": "vertebrates" } } },
+      { "say": "Mammals, birds, fish, reptiles and amphibians are all vertebrates. So are you.",
+        "art": { "at": { "mammals": "Mammals", "birds": "birds", "fish": "fish", "reptiles": "reptiles", "amphibians": "amphibians", "you": "So are you" } } }
+    ] },
+
+    { "id": "invert", "kind": "invert", "heading": "No backbone", "codes": ["4Bs.05"], "beats": [
+      { "say": "A worm has no backbone. It has no bones at all.",
+        "art": { "at": { "worm": "A worm", "no": "no backbone", "bones": "no bones at all" } } },
+      { "say": "Neither does a slug, a jellyfish or an octopus.",
+        "art": { "at": { "slug": "a slug", "jelly": "a jellyfish", "octopus": "an octopus" } } },
+      { "say": "Animals without a backbone are called invertebrates.",
+        "art": { "at": { "without": "without a backbone", "inv": "invertebrates" } } },
+      { "say": "Most animals in the world are invertebrates.",
+        "art": { "at": { "most": "Most animals", "world": "in the world", "inv": "invertebrates" } } }
+    ] },
+
+    { "id": "exo", "kind": "exo", "heading": "A skeleton outside", "codes": ["4Bs.04"], "beats": [
+      { "say": "Some invertebrates wear their skeleton on the outside.",
+        "art": { "at": { "some": "Some invertebrates", "wear": "wear their skeleton", "outside": "on the outside" } } },
+      { "say": "It is a hard case over the whole body, with joints so it can bend.",
+        "art": { "at": { "hard": "a hard case", "whole": "the whole body", "joints": "with joints", "bend": "it can bend" } } },
+      { "say": "It is called an exoskeleton. Exo means outside.",
+        "art": { "at": { "exo": "an exoskeleton", "means": "Exo means outside" } } },
+      { "say": "Insects, spiders, crabs and woodlice have one.",
+        "art": { "at": { "insects": "Insects", "spiders": "spiders", "crabs": "crabs", "woodlice": "woodlice" } } },
+      { "say": "It protects them, and their muscles pull on it from inside.",
+        "art": { "at": { "protects": "It protects them", "muscles": "their muscles pull", "inside": "from inside" } } },
+      { "say": "A snail's shell is different. It is not a backbone, and not an exoskeleton.",
+        "art": { "at": { "snail": "A snail's shell", "different": "is different", "notback": "not a backbone", "notexo": "not an exoskeleton" } } },
+      { "say": "The snail's soft body comes out of it, so the shell does not cover the whole body.",
+        "art": { "at": { "body": "soft body", "out": "comes out of it", "cover": "does not cover the whole body" } } }
+    ] },
+
+    { "id": "key", "kind": "key", "heading": "Use a key", "codes": ["4TWSc.02"], "beats": [
+      { "say": "Scientists use a key to identify a creature: to work out what it is.",
+        "art": { "at": { "key": "a key", "identify": "identify a creature", "work": "work out what it is" } } },
+      { "say": "A key is a chain of yes-or-no questions. Each answer leads to the next one.",
+        "art": { "at": { "chain": "a chain of yes-or-no questions", "each": "Each answer", "next": "the next one" } } },
+      { "say": "Look at this creature. Does it have legs? Yes.",
+        "art": { "at": { "look": "Look at this creature", "legs": "Does it have legs", "yes": "Yes" } } },
+      { "say": "Does it have exactly six legs? Count them. Eight, so no.",
+        "art": { "at": { "six": "exactly six legs", "count": "Count them", "eight": "Eight", "no": "so no" } } },
+      { "say": "Does it have exactly eight legs? Yes. The key names it: a spider.",
+        "art": { "at": { "eight": "exactly eight legs", "yes": "Yes.", "names": "The key names it", "spider": "a spider" } } },
+      { "say": "Answer from what you see, not from what you think it is.",
+        "art": { "at": { "see": "what you see", "think": "what you think it is" } } }
+    ] },
+
+    { "id": "sort", "kind": "sort", "heading": "Backbone or not?", "codes": ["4TWSc.01", "4Bs.05"], "beats": [
+      { "say": "Today you sort ten animals by backbone. Ask: is there a spine of bones inside it?",
+        "art": { "at": { "sort": "sort ten animals", "ask": "Ask:", "spine": "a spine of bones" } } },
+      { "say": "A dog, a shark, a frog, a lizard, a parrot: yes. Vertebrates.",
+        "art": { "at": { "dog": "A dog", "shark": "a shark", "frog": "a frog", "lizard": "a lizard", "parrot": "a parrot", "yes": "yes", "vert": "Vertebrates" } } },
+      { "say": "A snail, a spider, a jellyfish, a bee, an earthworm: no. Invertebrates.",
+        "art": { "at": { "snail": "A snail", "spider": "a spider", "jelly": "a jellyfish", "bee": "a bee", "worm": "an earthworm", "no": ": no", "inv": "Invertebrates" } } },
+      { "say": "Size is not the test. A giant squid is an invertebrate.",
+        "art": { "at": { "size": "Size is not the test", "squid": "A giant squid", "inv": "an invertebrate" } } }
+    ] },
+
+    { "id": "lookup", "kind": "lookup", "heading": "Look it up", "codes": ["4TWSc.07", "4Bs.04"], "beats": [
+      { "say": "Then you look up how a crab gets a bigger shell.",
+        "art": { "at": { "look": "look up", "crab": "a crab", "bigger": "a bigger shell" } } },
+      { "say": "The fact card is a secondary source: what somebody else found out and wrote down.",
+        "art": { "at": { "card": "fact card", "source": "a secondary source", "found": "found out", "wrote": "wrote down" } } },
+      { "say": "It says an exoskeleton cannot grow. So the crab sheds it, and grows a bigger one.",
+        "art": { "at": { "says": "It says", "grow": "cannot grow", "sheds": "sheds it", "bigger": "a bigger one" } } },
+      { "say": "This is called moulting. The new case is soft at first, so the crab hides.",
+        "art": { "at": { "moult": "moulting", "soft": "soft at first", "hides": "the crab hides" } } }
+    ] },
+
+    { "id": "recap", "kind": "recap", "heading": "What you now know", "codes": ["4Bs.05", "4Bs.04", "4TWSc.01", "4TWSc.02", "4TWSc.07"], "beats": [
+      { "say": "Vertebrates have a backbone inside. Invertebrates do not.",
+        "art": { "at": { "vert": "Vertebrates", "inv": "Invertebrates" } } },
+      { "say": "Some invertebrates wear an exoskeleton. To grow, they shed it.",
+        "art": { "at": { "exo": "an exoskeleton", "shed": "they shed it" } } },
+      { "say": "A key names a creature, one yes-or-no question at a time.",
+        "art": { "at": { "key": "A key" } } },
+      { "say": "Size and shells do not decide it. Look for the backbone.",
+        "art": { "at": { "size": "Size and shells", "look": "Look for the backbone" } } }
+    ] }
+  ]
+}

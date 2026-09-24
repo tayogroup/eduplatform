@@ -212,6 +212,17 @@ LESSON["lecture"] = [
          "A food chain drawn with arrows is a model. It shows a relationship: who eats whom, and which way the energy travels. Today you build one, and then take away the plant and see what a model can show you."),
 ]
 
+# The unit lecture film (tools/create-ehel-unit-lecture.js; storyboard and
+# pictures in lecture-video/energy-for-life.json). The lecture step draws it
+# above the parts; build-lessons.py refuses a path that is not on disk AND in
+# app.config.json :: extraPages, and a --draft render.
+LESSON["video"] = {
+    "src": "lecture-video/energy-for-life.b8ffa4c7.mp4",
+    "captions": "lecture-video/energy-for-life.e953243c.vtt",
+    "poster": "lecture-video/energy-for-life.862ab7b9.jpg",
+    "note": "About three minutes. Watch it through, then go back over it a part at a time below.",
+}
+
 LESSON["words"] = [
     word("energy", "⚡", "What every living thing needs to grow, move and stay healthy.",
          ["Food gives you energy.", "Plants get energy from light."]),

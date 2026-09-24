@@ -1,0 +1,123 @@
+{
+  "_comment": "Storyboard for the Grade 4 Science unit lecture film, Lesson 4 Energy for Life. Rendered by tools/create-ehel-unit-lecture.js. See lecture-video/BRIEF.md. Every beat is one narration clip; art.at names the phrases a picture waits for, and the page refuses to load if a phrase is not in its beat's say. The six teaching chapters follow LESSON['lecture'] in order (energy for life; light and food; three kinds of eater; predator and prey; a model of who eats whom) with the sea chain of the 'order' step added for 4TWSm.03, in the lesson's own words: its energy trail (the demo's five frames: Sun, plant, rabbit, fox, you), its three sort bins and their animals, its four predator-and-prey cards, and the lesson kit's own food chain drawing (ART.kit.foodChainSvg), built and then broken.",
+  "slug": "energy-for-life",
+  "lesson": 4,
+  "grade": 4,
+  "stage": 4,
+  "title": "Energy for Life",
+  "subtitle": "Grade 4 Science",
+  "framework": "Cambridge Primary Science 0097",
+  "renderer": {
+    "art": ["science"],
+    "skin": "brown",
+    "scenes": [
+      "tools/lib/ehel-film-marks.js",
+      "tools/lib/film-scenes/science-g4/energy-for-life.js",
+      "tools/lib/film-scenes/science-g4/energy-for-life-2.js",
+      "tools/lib/film-scenes/science-g4/energy-for-life-3.js"
+    ]
+  },
+  "objectives": [
+    ["4Bp.03", "Know that plants and animals need energy to grow, live and be healthy, and plants get their energy from light while animals get their energy from eating plants or other animals."],
+    ["4Be.03", "Describe food chains as being made of producers and consumers, and classify consumers as herbivores, omnivores, carnivores, predators and/or prey."],
+    ["4Pf.03", "Know that energy is required for any movement or action to happen."],
+    ["4TWSc.01", "Use observations and tests to sort, group and classify objects."],
+    ["4TWSm.02", "Use models to show relationships, quantities or scale."],
+    ["4TWSm.03", "Draw a diagram to represent a real world situation and/or scientific idea."]
+  ],
+  "scenes": [
+    { "id": "title", "kind": "title", "codes": [], "beats": [
+      { "say": "Every living thing needs energy to grow, move and stay healthy.",
+        "art": { "at": { "living": "Every living thing", "energy": "needs energy", "healthy": "stay healthy" } } },
+      { "say": "Today you follow it: from the Sun, into a plant, along a food chain.",
+        "art": { "at": { "sun": "from the Sun", "plant": "into a plant", "chain": "a food chain" } } }
+    ] },
+
+    { "id": "energy", "kind": "energy", "heading": "Energy for life", "codes": ["4Pf.03"], "beats": [
+      { "say": "Nothing lives without energy. Growing takes energy.",
+        "art": { "at": { "nothing": "Nothing lives without energy", "growing": "Growing takes energy" } } },
+      { "say": "Moving takes energy. Even staying warm takes energy.",
+        "art": { "at": { "moving": "Moving takes energy", "warm": "staying warm" } } },
+      { "say": "No energy, no movement. Nothing at all can happen.",
+        "art": { "at": { "no": "No energy", "stop": "no movement", "happen": "Nothing at all can happen" } } },
+      { "say": "Every living thing must get energy from somewhere. Where does it start?",
+        "art": { "at": { "get": "get energy from somewhere", "where": "Where does it start" } } }
+    ] },
+
+    { "id": "light", "kind": "light", "heading": "Light and food", "codes": ["4Bp.03"], "beats": [
+      { "say": "Plants get their energy from light. Their leaves catch the sunlight.",
+        "art": { "at": { "light": "from light", "leaves": "Their leaves", "catch": "catch the sunlight" } } },
+      { "say": "The plant uses it to make food, and the energy is stored in the plant.",
+        "art": { "at": { "food": "make food", "stored": "stored in the plant" } } },
+      { "say": "Animals cannot use light. A rabbit eats the plant and gets the energy.",
+        "art": { "at": { "cannot": "cannot use light", "rabbit": "A rabbit eats the plant", "gets": "gets the energy" } } },
+      { "say": "A fox eats the rabbit, and the energy moves along again.",
+        "art": { "at": { "fox": "A fox eats the rabbit", "moves": "moves along again" } } },
+      { "say": "The fox is running on sunlight that came through the plant and the rabbit.",
+        "art": { "at": { "running": "running on sunlight", "through": "through the plant and the rabbit" } } },
+      { "say": "You are the same. Water and air are needed, but the energy is in your food.",
+        "art": { "at": { "you": "You are the same", "waterair": "Water and air", "yourfood": "in your food" } } }
+    ] },
+
+    { "id": "eaters", "kind": "eaters", "heading": "Three kinds of eater", "codes": ["4Be.03", "4TWSc.01"], "beats": [
+      { "say": "An animal cannot make its own food. It has to eat: it is a consumer.",
+        "art": { "at": { "cannot": "cannot make its own food", "eat": "has to eat", "consumer": "a consumer" } } },
+      { "say": "A consumer that eats only plants is a herbivore: a rabbit, a horse, an elephant.",
+        "art": { "at": { "herbivore": "a herbivore", "rabbit": "a rabbit", "horse": "a horse", "elephant": "an elephant" } } },
+      { "say": "One that eats only animals is a carnivore: a lion, an owl, a shark.",
+        "art": { "at": { "carnivore": "a carnivore", "lion": "a lion", "owl": "an owl", "shark": "a shark" } } },
+      { "say": "One that eats both is an omnivore: a bear, a pig, and most people.",
+        "art": { "at": { "omnivore": "an omnivore", "bear": "a bear", "pig": "a pig", "people": "most people" } } },
+      { "say": "Big does not mean carnivore. The biggest land animal, the elephant, is a herbivore.",
+        "art": { "at": { "big": "Big does not mean carnivore", "biggest": "The biggest land animal", "eleph": "the elephant", "herb": "is a herbivore" } } }
+    ] },
+
+    { "id": "hunt", "kind": "hunt", "heading": "Predator and prey", "codes": ["4Be.03"], "beats": [
+      { "say": "A predator hunts and eats other animals: an owl, a fox, a shark.",
+        "art": { "at": { "predator": "A predator", "owl": "an owl", "fox": "a fox", "shark": "a shark" } } },
+      { "say": "Prey is the animal that gets hunted. A mouse is the owl's prey.",
+        "art": { "at": { "prey": "Prey is the animal", "hunted": "gets hunted", "mouse": "A mouse" } } },
+      { "say": "Prey does not mean small. A zebra is prey to a lion, and it is huge.",
+        "art": { "at": { "small": "does not mean small", "zebra": "A zebra is prey", "lion": "to a lion", "huge": "it is huge" } } },
+      { "say": "A frog is both at once. It hunts flies, and a heron hunts the frog.",
+        "art": { "at": { "frog": "A frog", "both": "both at once", "flies": "hunts flies", "heron": "a heron hunts the frog" } } },
+      { "say": "The plant at the start is neither. It is the producer, and it gets eaten.",
+        "art": { "at": { "plant": "The plant at the start", "neither": "is neither", "producer": "the producer", "eaten": "it gets eaten" } } }
+    ] },
+
+    { "id": "model", "kind": "model", "heading": "A model of who eats whom", "codes": ["4TWSm.02", "4Be.03", "4Bp.03"], "beats": [
+      { "say": "A food chain drawn with arrows is a model. It shows who eats whom.",
+        "art": { "at": { "chain": "A food chain", "model": "is a model", "whom": "who eats whom" } } },
+      { "say": "Grass comes first: the producer, with its energy from light.",
+        "art": { "at": { "grass": "Grass comes first", "producer": "the producer", "light": "from light" } } },
+      { "say": "Then the rabbit: a herbivore, and the fox's prey.",
+        "art": { "at": { "rabbit": "Then the rabbit", "herbivore": "a herbivore", "prey": "the fox's prey" } } },
+      { "say": "Then the fox: a consumer, and a predator in this chain.",
+        "art": { "at": { "fox": "Then the fox", "consumer": "a consumer", "predator": "a predator" } } },
+      { "say": "Each arrow means eaten by, and it shows which way the energy goes.",
+        "art": { "at": { "arrow": "Each arrow", "eatenby": "means eaten by", "energy": "which way the energy goes" } } },
+      { "say": "Take the grass away. The rabbits have nothing to eat, and the chain breaks.",
+        "art": { "at": { "away": "Take the grass away", "nothing": "nothing to eat", "breaks": "the chain breaks" } } }
+    ] },
+
+    { "id": "diagram", "kind": "diagram", "heading": "A sea food chain", "codes": ["4TWSm.03", "4Be.03"], "beats": [
+      { "say": "The sea has food chains too, starting with tiny floating plants.",
+        "art": { "at": { "sea": "The sea", "tiny": "tiny floating plants" } } },
+      { "say": "A small fish eats them: a herbivore, and prey.",
+        "art": { "at": { "small": "A small fish", "herb": "a herbivore", "prey": "and prey" } } },
+      { "say": "A bigger fish eats the small fish, and a seal eats the bigger fish.",
+        "art": { "at": { "bigger": "A bigger fish", "seal": "a seal" } } },
+      { "say": "Start with the producer, always, and point each arrow at the eater.",
+        "art": { "at": { "producer": "the producer", "arrow": "each arrow", "eater": "at the eater" } } }
+    ] },
+
+    { "id": "recap", "kind": "recap", "heading": "What you now know", "codes": ["4Bp.03", "4Be.03", "4Pf.03", "4TWSc.01", "4TWSm.02", "4TWSm.03"], "beats": [
+      { "say": "Nothing lives without energy. Plants get it from light; animals get it by eating.",
+        "art": { "at": { "energy": "without energy", "light": "from light", "eating": "by eating" } } },
+      { "say": "Herbivore, carnivore, omnivore: plants, animals, both. Predators hunt prey.",
+        "art": { "at": { "eaters": "Herbivore, carnivore, omnivore", "hunt": "Predators hunt prey" } } },
+      { "say": "A food chain is a model. Its arrows show which way the energy goes.",
+        "art": { "at": { "chain": "A food chain", "arrows": "Its arrows" } } }
+    ] }
+  ]
+}

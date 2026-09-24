@@ -213,6 +213,17 @@ LESSON["lecture"] = [
          "The particle model draws particles as coloured balls the size of peas, a few dozen of them. Real particles have no colour, are millions of times smaller, and come in countless kinds. The model leaves that out on purpose, to show the idea."),
 ]
 
+# The unit lecture film (tools/create-ehel-unit-lecture.js; storyboard and
+# pictures in lecture-video/particles.json). The lecture step draws it
+# above the parts; build-lessons.py refuses a path that is not on disk AND in
+# app.config.json :: extraPages, and a --draft render.
+LESSON["video"] = {
+    "src": "lecture-video/particles.42dd2b81.mp4",
+    "captions": "lecture-video/particles.87ecbd29.vtt",
+    "poster": "lecture-video/particles.c07b7cb2.jpg",
+    "note": "About three minutes. Watch it through, then go back over it a part at a time below.",
+}
+
 LESSON["words"] = [
     word("particle", "\U0001F7E2", "One of the tiny bits everything is made of, far too small to see.",
          ["Water is made of particles.", "The particles vibrate."]),

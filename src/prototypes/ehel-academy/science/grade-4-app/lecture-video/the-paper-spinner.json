@@ -1,0 +1,126 @@
+{
+  "_comment": "Storyboard for the Grade 4 Science unit lecture film, Lesson 13 The Paper Spinner. Rendered by tools/create-ehel-unit-lecture.js. See lecture-video/BRIEF.md. This lesson is one whole investigation rather than a body of content, so its chapters are the investigation's own steps, in the order LESSON.lecture and the lesson's steps take them: the question and which enquiry answers it, the variables of a fair test, the equipment and its standard units, the three drops of each spinner, the table and the dot plot, and the conclusion. The pictures are the lesson's own: its five enquiry bins, its three variable bins, its kit list, and above all ART.sim('spinner', 'draw', n, y, big, m), the drawing the child drops and times two steps later.",
+  "slug": "the-paper-spinner",
+  "lesson": 13,
+  "grade": 4,
+  "stage": 4,
+  "title": "The Paper Spinner",
+  "subtitle": "Grade 4 Science",
+  "framework": "Cambridge Primary Science 0097",
+  "renderer": {
+    "art": ["science"],
+    "skin": "brown",
+    "scenes": [
+      "tools/lib/ehel-film-marks.js",
+      "tools/lib/film-scenes/science-g4/the-paper-spinner.js",
+      "tools/lib/film-scenes/science-g4/the-paper-spinner-2.js",
+      "tools/lib/film-scenes/science-g4/the-paper-spinner-3.js",
+      "tools/lib/film-scenes/science-g4/the-paper-spinner-4.js"
+    ]
+  },
+  "objectives": [
+    ["4TWSp.01", "Ask scientific questions that can be investigated."],
+    ["4TWSp.02", "Know that there are five main types of scientific enquiry (research, fair testing, observing over time, identifying and classifying, and pattern seeking)."],
+    ["4TWSp.03", "Make a prediction describing some possible outcomes of an enquiry."],
+    ["4TWSp.04", "Identify variables that need to be taken into account when doing a fair test."],
+    ["4TWSc.03", "Choose equipment from a provided selection and use it appropriately."],
+    ["4TWSc.04", "Describe how repeated measurements and/or observations can give more reliable data."],
+    ["4TWSc.05", "Take measurements in standard units, describing the advantage of standard units over non-standard units."],
+    ["4TWSc.08", "Collect and record observations and/or measurements in tables and diagrams."],
+    ["4TWSa.01", "Identify whether results support, or do not support, a prediction."],
+    ["4TWSa.02", "Describe simple patterns in results."],
+    ["4TWSa.03", "Make a conclusion from results and relate it to the scientific question being investigated."],
+    ["4TWSa.04", "Present and interpret results using tables, bar charts and dot plots."]
+  ],
+  "scenes": [
+    { "id": "title", "kind": "title", "codes": [], "beats": [
+      { "say": "A paper spinner falls, turning as it goes. Does a bigger one fall more slowly?",
+        "art": { "at": { "spinner": "A paper spinner", "turning": "turning as it goes", "bigger": "a bigger one" } } },
+      { "say": "Today you find out the way a scientist does: one whole investigation.",
+        "art": { "at": { "find": "find out", "whole": "one whole investigation" } } }
+    ] },
+
+    { "id": "enquiry", "kind": "enquiry", "heading": "Which kind of enquiry?", "codes": ["4TWSp.01", "4TWSp.02"], "beats": [
+      { "say": "Every investigation starts with a question you can actually test.",
+        "art": { "at": { "starts": "starts with", "question": "a question", "test": "actually test" } } },
+      { "say": "Ours is this: does a spinner with bigger wings fall more slowly?",
+        "art": { "at": { "ours": "Ours is this", "wings": "bigger wings", "slower": "more slowly" } } },
+      { "say": "There are five types of scientific enquiry. The question tells you which.",
+        "art": { "at": { "five": "five types", "tells": "tells you which" } } },
+      { "say": "Research. Fair testing. Observing over time. Classifying. Pattern seeking.",
+        "art": { "at": { "research": "Research.", "fair": "Fair testing.", "time": "Observing over time.", "classify": "Classifying.", "pattern": "Pattern seeking." } } },
+      { "say": "We change one thing and see what happens. So ours is a fair test.",
+        "art": { "at": { "change": "change one thing", "ours": "ours is a fair test" } } }
+    ] },
+
+    { "id": "fairtest", "kind": "fairtest", "heading": "Change one, keep the rest", "codes": ["4TWSp.04"], "beats": [
+      { "say": "A variable is anything in the test that could change.",
+        "art": { "at": { "variable": "A variable", "change": "could change" } } },
+      { "say": "You change one variable. Ours is the size of the wings.",
+        "art": { "at": { "change": "change one variable", "wings": "the size of the wings" } } },
+      { "say": "You measure one variable. Ours is how long it takes to fall.",
+        "art": { "at": { "measure": "measure one variable", "fall": "how long it takes to fall" } } },
+      { "say": "Every other variable stays the same: the height, the paper, the paperclip, the person dropping.",
+        "art": { "at": { "same": "stays the same", "height": "the height", "paper": "the paper", "clip": "the paperclip", "person": "the person dropping" } } },
+      { "say": "Change two things at once, and you cannot tell which one made the difference.",
+        "art": { "at": { "two": "two things at once", "cannot": "cannot tell" } } }
+    ] },
+
+    { "id": "kit", "kind": "kit", "heading": "The right kit, the right units", "codes": ["4TWSc.03", "4TWSc.05"], "beats": [
+      { "say": "Choose your equipment before you start. Each job needs the right tool.",
+        "art": { "at": { "equipment": "your equipment", "job": "Each job", "tool": "the right tool" } } },
+      { "say": "To time the fall, take a stopwatch. It reads in seconds.",
+        "art": { "at": { "stopwatch": "a stopwatch", "seconds": "in seconds" } } },
+      { "say": "To set the drop height, take a tape measure. It reads in centimetres.",
+        "art": { "at": { "tape": "a tape measure", "cm": "in centimetres" } } },
+      { "say": "Seconds and centimetres are standard units: the same for everyone, so anybody can check.",
+        "art": { "at": { "standard": "standard units", "everyone": "the same for everyone", "check": "anybody can check" } } }
+    ] },
+
+    { "id": "repeat", "kind": "repeat", "heading": "Drop each one three times", "codes": ["4TWSp.03", "4TWSc.04"], "beats": [
+      { "say": "Predict first. Which spinner takes longer to fall, the small one or the big one?",
+        "art": { "at": { "predict": "Predict first", "longer": "takes longer", "small": "the small one", "big": "the big one" } } },
+      { "say": "Drop it once and you get one number. Was your thumb slow? Did a draught catch it?",
+        "art": { "at": { "once": "Drop it once", "thumb": "your thumb slow", "draught": "a draught" } } },
+      { "say": "One measurement can be wrong. So drop each spinner three times, from the same height.",
+        "art": { "at": { "wrong": "can be wrong", "three": "three times", "height": "the same height" } } },
+      { "say": "The small spinner gave 2.1, then 2.3, then 2.0 seconds.",
+        "art": { "at": { "small": "The small spinner", "d1": "2.1", "d2": "2.3", "d3": "2.0" } } },
+      { "say": "The spinner with bigger wings gave 2.8, then 3.0, then 2.7 seconds.",
+        "art": { "at": { "big": "bigger wings", "b1": "2.8", "b2": "3.0", "b3": "2.7" } } },
+      { "say": "Close, but not the same. Small differences are normal. Three close numbers are reliable.",
+        "art": { "at": { "close": "Close, but not the same", "normal": "are normal", "reliable": "are reliable" } } }
+    ] },
+
+    { "id": "record", "kind": "record", "heading": "A table, then a dot plot", "codes": ["4TWSc.08", "4TWSa.04"], "beats": [
+      { "say": "Write each drop down as it happens, in a table, in seconds.",
+        "art": { "at": { "write": "Write each drop", "table": "a table", "seconds": "in seconds" } } },
+      { "say": "Drop one took 2.1 seconds, drop two 2.3, and drop three 2.0.",
+        "art": { "at": { "one": "Drop one", "two": "drop two", "three": "drop three" } } },
+      { "say": "Now a dot plot: one dot for each measurement, above its own time.",
+        "art": { "at": { "plot": "a dot plot", "dot": "one dot", "time": "its own time" } } },
+      { "say": "The three dots pile up close to 2.1 seconds. An odd one would stand alone.",
+        "art": { "at": { "pile": "pile up close to 2.1", "odd": "An odd one", "alone": "stand alone" } } }
+    ] },
+
+    { "id": "conclude", "kind": "conclude", "heading": "What the results say", "codes": ["4TWSa.01", "4TWSa.02", "4TWSa.03"], "beats": [
+      { "say": "The small spinner took about 2.1 seconds. The bigger wings took about 2.8.",
+        "art": { "at": { "small": "The small spinner", "big": "The bigger wings" } } },
+      { "say": "Two clusters, and the bigger wings took longer on every single drop.",
+        "art": { "at": { "clusters": "Two clusters", "longer": "took longer", "every": "every single drop" } } },
+      { "say": "That is the pattern: bigger wings, slower fall. It matches your prediction.",
+        "art": { "at": { "pattern": "the pattern", "matches": "matches your prediction" } } },
+      { "say": "So the conclusion answers the question you asked, and the repeats make it reliable.",
+        "art": { "at": { "conclusion": "the conclusion", "question": "the question you asked", "reliable": "make it reliable" } } }
+    ] },
+
+    { "id": "recap", "kind": "recap", "heading": "What you now know", "codes": ["4TWSp.02", "4TWSp.04", "4TWSc.03", "4TWSc.04", "4TWSc.05", "4TWSa.03", "4TWSa.04"], "beats": [
+      { "say": "A fair test changes one thing and keeps every other thing the same.",
+        "art": { "at": { "fair": "A fair test" } } },
+      { "say": "Choose the right kit, measure in standard units, and repeat every measurement.",
+        "art": { "at": { "kit": "the right kit", "units": "standard units", "repeat": "repeat every measurement" } } },
+      { "say": "Plot your drops as dots, and let the cluster answer the question you asked.",
+        "art": { "at": { "plot": "Plot your drops", "answer": "answer the question" } } }
+    ] }
+  ]
+}

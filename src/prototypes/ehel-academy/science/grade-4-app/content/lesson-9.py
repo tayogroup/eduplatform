@@ -239,6 +239,17 @@ LESSON["lecture"] = [
          "Today you bounce a torch beam off a mirror into an eye, work out how a book is seen, sort sources from reflectors, and learn to draw and label a ray diagram."),
 ]
 
+# The unit lecture film (tools/create-ehel-unit-lecture.js; storyboard and
+# pictures in lecture-video/light-and-seeing.json). The lecture step draws it
+# above the parts; build-lessons.py refuses a path that is not on disk AND in
+# app.config.json :: extraPages, and a --draft render.
+LESSON["video"] = {
+    "src": "lecture-video/light-and-seeing.aab15887.mp4",
+    "captions": "lecture-video/light-and-seeing.8afea494.vtt",
+    "poster": "lecture-video/light-and-seeing.3b78a2c5.jpg",
+    "note": "About three minutes. Watch it through, then go back over it a part at a time below.",
+}
+
 LESSON["words"] = [
     word("ray", "➡️", "A straight line with an arrow, drawn to show which way light travels.",
          ["Draw the ray from the torch to the mirror.", "The arrow on a ray points away from the source."]),

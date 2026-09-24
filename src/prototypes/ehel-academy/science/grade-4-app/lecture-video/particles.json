@@ -1,0 +1,120 @@
+{
+  "_comment": "Storyboard for the Grade 4 Science unit lecture film, Lesson 6 Particles. Rendered by tools/create-ehel-unit-lecture.js. See lecture-video/BRIEF.md. Every beat is one narration clip; art.at names the phrases a picture waits for, and the page refuses to load if a phrase is not in its beat's say. The chapters follow LESSON['lecture'] in order (particles; in a solid; in a liquid, with the lesson's own heating experiment; material, substance and particle from the lesson's three-word step; powders; a model, not a photograph), in the lesson's own words. The particle box is the lesson's own drawing throughout: ART.kit.particleSvg(state, jiggle, tick), the picture the child works in the Melt and freeze experiment two steps later.",
+  "slug": "particles",
+  "lesson": 6,
+  "grade": 4,
+  "stage": 4,
+  "title": "Particles",
+  "subtitle": "Grade 4 Science",
+  "framework": "Cambridge Primary Science 0097",
+  "renderer": {
+    "art": ["science"],
+    "skin": "brown",
+    "scenes": [
+      "tools/lib/ehel-film-marks.js",
+      "tools/lib/film-scenes/science-g4/particles.js",
+      "tools/lib/film-scenes/science-g4/particles-2.js",
+      "tools/lib/film-scenes/science-g4/particles-3.js",
+      "tools/lib/film-scenes/science-g4/particles-4.js"
+    ]
+  },
+  "objectives": [
+    ["4Cm.01", "Describe the particle model for solids and liquids."],
+    ["4Cm.02", "Understand the difference between materials, substances and particles."],
+    ["4Cm.03", "Know that particles are in constant motion, even when in a solid."],
+    ["4Cp.01", "Use the particle model to explain the properties of solids and liquids."],
+    ["4Cp.02", "Describe and explain how some solids can behave like liquids (e.g. powders), referring to the particle model."],
+    ["4TWSm.01", "Know that models are not fully representative of a real world situation and/or scientific idea."]
+  ],
+  "scenes": [
+    { "id": "title", "kind": "title", "codes": [], "beats": [
+      { "say": "What is a spoon made of? What is water made of? What are you made of?",
+        "art": { "at": { "spoon": "a spoon", "water": "water", "you": "you" } } },
+      { "say": "The same answer every time: particles, far too small to see.",
+        "art": { "at": { "same": "The same answer", "particles": "particles", "small": "far too small to see" } } }
+    ] },
+
+    { "id": "particles", "kind": "particles", "heading": "Everything is particles", "codes": ["4Cm.01"], "beats": [
+      { "say": "Everything is made of particles: bits far too small for any eye to see.",
+        "art": { "at": { "everything": "Everything", "particles": "particles", "eye": "any eye to see" } } },
+      { "say": "A spoon, water, the air, you. All of them are made of particles.",
+        "art": { "at": { "spoon": "A spoon", "water": "water", "air": "the air", "you": "you", "all": "All of them" } } },
+      { "say": "So scientists use a model: a picture of an idea, drawn so you can see it.",
+        "art": { "at": { "model": "a model", "picture": "a picture of an idea", "see": "so you can see it" } } },
+      { "say": "This is the particle model. Forty balls in a box, standing for the real thing.",
+        "art": { "at": { "this": "This is the particle model", "forty": "Forty balls in a box", "real": "the real thing" } } }
+    ] },
+
+    { "id": "solid", "kind": "solid", "heading": "In a solid", "codes": ["4Cm.01", "4Cm.03", "4Cp.01"], "beats": [
+      { "say": "In a solid the particles are packed tightly in rows. Every one touches the next.",
+        "art": { "at": { "solid": "In a solid", "rows": "packed tightly in rows", "touches": "touches the next" } } },
+      { "say": "They cannot move about. But they vibrate: they jiggle on the spot.",
+        "art": { "at": { "cannot": "cannot move about", "vibrate": "they vibrate", "spot": "jiggle on the spot" } } },
+      { "say": "Because they hold their rows, a solid keeps its shape. A brick stays a brick.",
+        "art": { "at": { "hold": "hold their rows", "shape": "keeps its shape", "brick": "A brick stays a brick" } } },
+      { "say": "Do the particles in a block of ice stop moving? No, they do not.",
+        "art": { "at": { "ice": "a block of ice", "stop": "stop moving", "no": "No, they do not" } } },
+      { "say": "They vibrate all the time. Only a little, but always.",
+        "art": { "at": { "time": "all the time", "little": "Only a little", "always": "but always" } } }
+    ] },
+
+    { "id": "liquid", "kind": "liquid", "heading": "Heat it, and it melts", "codes": ["4Cp.01", "4Cm.01", "4Cm.03"], "beats": [
+      { "say": "Now heat the solid. Heat gives the particles energy, so they vibrate harder.",
+        "art": { "at": { "heat": "Now heat the solid", "energy": "energy", "harder": "vibrate harder" } } },
+      { "say": "Heat it more and they break out of their rows. The solid has melted.",
+        "art": { "at": { "more": "Heat it more", "break": "break out of their rows", "melted": "has melted" } } },
+      { "say": "In a liquid the particles still touch, but they slide past each other.",
+        "art": { "at": { "liquid": "In a liquid", "touch": "still touch", "slide": "slide past each other" } } },
+      { "say": "That is why a liquid flows and takes the shape of its container.",
+        "art": { "at": { "flows": "flows", "shape": "takes the shape", "container": "its container" } } },
+      { "say": "Cool it and they slow down and lock back into rows. The same particles all the way through.",
+        "art": { "at": { "cool": "Cool it", "lock": "lock back into rows", "same": "The same particles" } } }
+    ] },
+
+    { "id": "words", "kind": "words", "heading": "Material, substance, particle", "codes": ["4Cm.02"], "beats": [
+      { "say": "Scientists keep three words apart: material, substance and particle.",
+        "art": { "at": { "three": "three words apart", "material": "material", "substance": "substance", "particle": "particle" } } },
+      { "say": "A material is what a thing is made of. Wood is a material, and a mixture of substances.",
+        "art": { "at": { "material": "A material", "made": "what a thing is made of", "wood": "Wood", "mixture": "a mixture of substances" } } },
+      { "say": "A substance is one pure kind of stuff, the same all the way through. Water is one.",
+        "art": { "at": { "substance": "A substance", "pure": "one pure kind of stuff", "through": "all the way through", "water": "Water is one" } } },
+      { "say": "A particle is one of the tiny bits a substance is made of.",
+        "art": { "at": { "particle": "A particle", "tiny": "the tiny bits", "of": "a substance is made of" } } }
+    ] },
+
+    { "id": "powders", "kind": "powders", "heading": "Why sand pours", "codes": ["4Cp.02", "4Cp.01"], "beats": [
+      { "say": "Pour sand into a cup and it takes the cup's shape, like a liquid.",
+        "art": { "at": { "pour": "Pour sand", "cup": "into a cup", "shape": "takes the cup's shape", "liquid": "like a liquid" } } },
+      { "say": "But sand is a solid. Look at one grain through a lens.",
+        "art": { "at": { "solid": "sand is a solid", "grain": "one grain", "lens": "a lens" } } },
+      { "say": "The grain keeps its shape. Inside it the particles are packed in rows.",
+        "art": { "at": { "keeps": "keeps its shape", "inside": "Inside it", "rows": "packed in rows" } } },
+      { "say": "So what slides is not the particles. It is the grains, rolling over each other.",
+        "art": { "at": { "not": "not the particles", "grains": "the grains", "rolling": "rolling over each other" } } },
+      { "say": "Salt, sugar and flour are powders too: solids that pour.",
+        "art": { "at": { "salt": "Salt", "sugar": "sugar", "flour": "flour", "powders": "powders", "pour": "solids that pour" } } }
+    ] },
+
+    { "id": "model", "kind": "model", "heading": "A model, not a photograph", "codes": ["4TWSm.01"], "beats": [
+      { "say": "The particle model is useful, and it is not a photograph.",
+        "art": { "at": { "useful": "is useful", "photograph": "not a photograph" } } },
+      { "say": "Real particles have no colour. The green is for us, so we can see them.",
+        "art": { "at": { "colour": "no colour", "green": "The green is for us", "see": "so we can see them" } } },
+      { "say": "They are far smaller than the picture, and they come in many kinds and shapes.",
+        "art": { "at": { "smaller": "far smaller", "kinds": "many kinds and shapes" } } },
+      { "say": "The model shows forty. One drop of water has more than you could count.",
+        "art": { "at": { "forty": "shows forty", "drop": "One drop of water", "count": "more than you could count" } } }
+    ] },
+
+    { "id": "recap", "kind": "recap", "heading": "What you now know", "codes": ["4Cm.01", "4Cm.02", "4Cm.03", "4Cp.01", "4Cp.02", "4TWSm.01"], "beats": [
+      { "say": "In a solid the particles sit in rows and vibrate. In a liquid they slide.",
+        "art": { "at": { "solid": "In a solid", "liquid": "In a liquid" } } },
+      { "say": "They never stop moving, and heat makes them move more.",
+        "art": { "at": { "never": "never stop moving", "heat": "heat makes them move more" } } },
+      { "say": "A powder pours because its grains roll, not its particles.",
+        "art": { "at": { "powder": "A powder pours" } } },
+      { "say": "And the model is a picture of an idea, not a photograph.",
+        "art": { "at": { "model": "the model" } } }
+    ] }
+  ]
+}

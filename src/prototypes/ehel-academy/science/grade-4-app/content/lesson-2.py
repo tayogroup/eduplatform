@@ -210,6 +210,17 @@ LESSON["lecture"] = [
          "Today you sort ten animals by backbone. You follow a key through six minibeasts. Then you look up how a crab gets a bigger shell."),
 ]
 
+# The unit lecture film (tools/create-ehel-unit-lecture.js; storyboard and
+# pictures in lecture-video/backbone-or-not.json). The lecture step draws it
+# above the parts; build-lessons.py refuses a path that is not on disk AND in
+# app.config.json :: extraPages, and a --draft render.
+LESSON["video"] = {
+    "src": "lecture-video/backbone-or-not.35a4aaf1.mp4",
+    "captions": "lecture-video/backbone-or-not.d1522d94.vtt",
+    "poster": "lecture-video/backbone-or-not.1fddb96c.jpg",
+    "note": "About three minutes. Watch it through, then go back over it a part at a time below.",
+}
+
 LESSON["words"] = [
     word("vertebrate", "\U0001F9B4", "An animal with a backbone.",
          ["A cat is a vertebrate.", "All birds are vertebrates."]),

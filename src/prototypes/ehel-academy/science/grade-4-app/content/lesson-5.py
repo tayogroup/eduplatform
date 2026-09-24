@@ -253,6 +253,17 @@ LESSON["lecture"] = [
          "Most technology helps some living things. It harms others. Science lets you see both sides and decide. Today you will sort animals and look things up. You will ask a question you could test near you. Then you will weigh up what technology does to your area."),
 ]
 
+# The unit lecture film (tools/create-ehel-unit-lecture.js; storyboard and
+# pictures in lecture-video/habitats-and-survival.json). The lecture step draws it
+# above the parts; build-lessons.py refuses a path that is not on disk AND in
+# app.config.json :: extraPages, and a --draft render.
+LESSON["video"] = {
+    "src": "lecture-video/habitats-and-survival.eebb0795.mp4",
+    "captions": "lecture-video/habitats-and-survival.d7f33aa4.vtt",
+    "poster": "lecture-video/habitats-and-survival.da0e9f16.jpg",
+    "note": "About three minutes. Watch it through, then go back over it a part at a time below.",
+}
+
 LESSON["words"] = [
     word("habitat", "\U0001F333", "The place where a living thing naturally lives.",
          ["The desert is a camel's habitat.", "A pond is a habitat."]),

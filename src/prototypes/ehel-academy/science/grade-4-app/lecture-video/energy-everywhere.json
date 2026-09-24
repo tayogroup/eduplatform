@@ -1,0 +1,123 @@
+{
+  "_comment": "Storyboard for the Grade 4 Science unit lecture film, Lesson 8 Energy Everywhere. Rendered by tools/create-ehel-unit-lecture.js. See lecture-video/BRIEF.md. Every beat is one narration clip; art.at names the phrases a picture waits for, and the page refuses to load if a phrase is not in its beat's say. The chapters follow LESSON['lecture'] in order (energy everywhere; nothing moves without it; never made, never lost; where it goes; leaking out - the last part's 'track it, record it and chart it' becoming its own chapter), in the lesson's own words: its energy hunt's six cards, its transfers demo's five frames, and its bounce experiment drawn by the lesson's own sim (ART.sim energyDrop, the drawing its Drop the ball button steps through, whose bars always total 100).",
+  "slug": "energy-everywhere",
+  "lesson": 8,
+  "grade": 4,
+  "stage": 4,
+  "title": "Energy Everywhere",
+  "subtitle": "Grade 4 Science",
+  "framework": "Cambridge Primary Science 0097",
+  "renderer": {
+    "art": ["science"],
+    "skin": "brown",
+    "scenes": [
+      "tools/lib/ehel-film-marks.js",
+      "tools/lib/film-scenes/science-g4/energy-everywhere.js",
+      "tools/lib/film-scenes/science-g4/energy-everywhere-2.js",
+      "tools/lib/film-scenes/science-g4/energy-everywhere-3.js"
+    ]
+  },
+  "objectives": [
+    ["4Pf.01", "Know that energy is present in all matter and in sound, light and heat."],
+    ["4Pf.02", "Know that energy cannot be made, lost, used up or destroyed but it can be transferred."],
+    ["4Pf.03", "Know that energy is required for any movement or action to happen."],
+    ["4Pf.04", "Know that not all energy is transferred from one object to another, but often some energy during a process can be transferred to the surrounding environment and this can be detected as sound, light or temperature increase."],
+    ["4TWSp.03", "Make a prediction describing some possible outcomes of an enquiry."],
+    ["4TWSa.02", "Describe simple patterns in results."],
+    ["4TWSa.04", "Present and interpret results using tables, bar charts and dot plots."],
+    ["4TWSc.08", "Collect and record observations and/or measurements in tables and diagrams."]
+  ],
+  "scenes": [
+    { "id": "title", "kind": "title", "codes": [], "beats": [
+      { "say": "Energy is what makes things happen. It is in everything around you.",
+        "art": { "at": { "happen": "makes things happen", "every": "in everything" } } },
+      { "say": "You cannot hold it. You can only see what it does.",
+        "art": { "at": { "hold": "cannot hold it", "does": "what it does" } } }
+    ] },
+
+    { "id": "everywhere", "kind": "everywhere", "heading": "Energy is everywhere", "codes": ["4Pf.01"], "beats": [
+      { "say": "Let us go on an energy hunt. Six things, and all six have energy.",
+        "art": { "at": { "hunt": "an energy hunt", "six": "Six things" } } },
+      { "say": "A moving ball has energy. The faster it goes, the more it has.",
+        "art": { "at": { "ball": "A moving ball", "faster": "The faster it goes" } } },
+      { "say": "A stretched band has energy stored in it, waiting. Let go, and it moves.",
+        "art": { "at": { "band": "A stretched band", "stored": "stored in it", "go": "Let go" } } },
+      { "say": "Sound is energy travelling through the air. Light and heat are energy from the Sun.",
+        "art": { "at": { "sound": "Sound is energy", "air": "through the air", "light": "Light and heat", "sun": "from the Sun" } } },
+      { "say": "Your food has energy stored in it too. Energy is in every material.",
+        "art": { "at": { "food": "Your food", "material": "every material" } } },
+      { "say": "Energy is not only electricity. A hot cup and a loud drum have it too.",
+        "art": { "at": { "only": "not only electricity", "cup": "A hot cup", "drum": "a loud drum" } } }
+    ] },
+
+    { "id": "nothing", "kind": "nothing", "heading": "Nothing moves without it", "codes": ["4Pf.03"], "beats": [
+      { "say": "Every movement and every action needs energy.",
+        "art": { "at": { "movement": "Every movement", "action": "every action" } } },
+      { "say": "Your muscles take it out of your food, so that you can run and kick.",
+        "art": { "at": { "muscles": "Your muscles", "food": "your food", "run": "run and kick" } } },
+      { "say": "A lamp takes it from electricity. A plant takes it from light.",
+        "art": { "at": { "lamp": "A lamp", "electricity": "from electricity", "plant": "A plant", "light": "from light" } } },
+      { "say": "Take the energy away, and nothing happens at all.",
+        "art": { "at": { "away": "Take the energy away", "nothing": "nothing happens at all" } } }
+    ] },
+
+    { "id": "rule", "kind": "rule", "heading": "Never made, never lost", "codes": ["4Pf.02"], "beats": [
+      { "say": "Here is the big rule. Energy cannot be made out of nothing.",
+        "art": { "at": { "rule": "the big rule", "made": "cannot be made" } } },
+      { "say": "And it cannot be destroyed. It is never used up, whatever people say.",
+        "art": { "at": { "destroyed": "cannot be destroyed", "used": "never used up" } } },
+      { "say": "It can only be transferred: moved from one thing to another.",
+        "art": { "at": { "transferred": "only be transferred", "moved": "moved from one thing" } } },
+      { "say": "Or moved from one form to another. Food to muscle.",
+        "art": { "at": { "form": "one form to another", "food": "Food to muscle" } } },
+      { "say": "Then muscle to ball. Your kick sends the energy into the ball, and it flies.",
+        "art": { "at": { "ball": "muscle to ball", "kick": "Your kick", "flies": "it flies" } } }
+    ] },
+
+    { "id": "bounce", "kind": "bounce", "heading": "Where the energy goes", "codes": ["4Pf.02", "4Pf.04", "4TWSp.03"], "beats": [
+      { "say": "Now drop a ball. Before you let go, predict what the bounces will do.",
+        "art": { "at": { "drop": "drop a ball", "predict": "predict" } } },
+      { "say": "Held up high, the ball has stored energy. As it falls, that becomes movement energy.",
+        "art": { "at": { "high": "Held up high", "stored": "stored energy", "falls": "As it falls", "movement": "movement energy" } } },
+      { "say": "Bounce one. Thud! It comes back up to three marks.",
+        "art": { "at": { "one": "Bounce one", "thud": "Thud!", "three": "three marks" } } },
+      { "say": "Bounce two, and only two marks. Some energy left as sound and warmth.",
+        "art": { "at": { "two": "Bounce two", "marks": "only two marks", "sound": "sound and warmth" } } },
+      { "say": "Bounce three, just one mark. Each bounce is lower than the last.",
+        "art": { "at": { "three": "Bounce three", "one": "just one mark", "lower": "lower than the last" } } },
+      { "say": "None of it vanished. The bars always add up to the same total.",
+        "art": { "at": { "vanished": "None of it vanished", "bars": "The bars", "add": "add up" } } }
+    ] },
+
+    { "id": "leak", "kind": "leak", "heading": "Leaking out", "codes": ["4Pf.04", "4Pf.02"], "beats": [
+      { "say": "The ball hits the wall. Thump. Some of its energy became sound.",
+        "art": { "at": { "wall": "hits the wall", "thump": "Thump", "sound": "became sound" } } },
+      { "say": "And some warmed the wall a tiny bit. None of it was lost.",
+        "art": { "at": { "warmed": "warmed the wall", "lost": "None of it was lost" } } },
+      { "say": "A lamp is the same. Electricity goes in, light comes out, and the bulb gets warm.",
+        "art": { "at": { "lamp": "A lamp", "in": "Electricity goes in", "out": "light comes out", "warm": "the bulb gets warm" } } },
+      { "say": "A warm bulb is not broken. Every transfer leaks a little to the surroundings.",
+        "art": { "at": { "broken": "not broken", "leaks": "leaks a little", "surroundings": "the surroundings" } } }
+    ] },
+
+    { "id": "chart", "kind": "chart", "heading": "Record it and chart it", "codes": ["4TWSc.08", "4TWSa.04", "4TWSa.02"], "beats": [
+      { "say": "You read each bounce off the marked scale. Then it goes in a table.",
+        "art": { "at": { "scale": "the marked scale", "table": "a table" } } },
+      { "say": "First bounce, three marks. Second, two marks. Third, one mark.",
+        "art": { "at": { "first": "First bounce", "second": "Second, two", "third": "Third, one" } } },
+      { "say": "Then you turn the table into a bar chart, one bar for each bounce.",
+        "art": { "at": { "chart": "a bar chart", "bar": "one bar" } } },
+      { "say": "A falling staircase. That is the pattern: energy transferred away every bounce.",
+        "art": { "at": { "staircase": "A falling staircase", "pattern": "the pattern", "away": "transferred away" } } }
+    ] },
+
+    { "id": "recap", "kind": "recap", "heading": "What you now know", "codes": ["4Pf.01", "4Pf.02", "4Pf.03", "4Pf.04", "4TWSa.02", "4TWSa.04", "4TWSc.08", "4TWSp.03"], "beats": [
+      { "say": "Energy is in everything, and in sound, light and heat.",
+        "art": { "at": { "every": "in everything", "slh": "sound, light and heat" } } },
+      { "say": "Nothing happens without it, and it can never be made or destroyed.",
+        "art": { "at": { "nothing": "Nothing happens without it", "never": "made or destroyed" } } },
+      { "say": "It is only transferred, and some always leaks out to the surroundings.",
+        "art": { "at": { "transferred": "only transferred", "leaks": "leaks out" } } }
+    ] }
+  ]
+}

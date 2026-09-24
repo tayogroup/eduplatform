@@ -311,6 +311,17 @@ LESSON["lecture"] = [
          "Today you add cells and lamps and watch the light change, open and close a switch, put eight materials in a gap to find the conductors, and choose the right equipment for each job."),
 ]
 
+# The unit lecture film (tools/create-ehel-unit-lecture.js; storyboard and
+# pictures in lecture-video/circuits-and-switches.json). The lecture step draws it
+# above the parts; build-lessons.py refuses a path that is not on disk AND in
+# app.config.json :: extraPages, and a --draft render.
+LESSON["video"] = {
+    "src": "lecture-video/circuits-and-switches.73dcb977.mp4",
+    "captions": "lecture-video/circuits-and-switches.dab59e82.vtt",
+    "poster": "lecture-video/circuits-and-switches.619c550b.jpg",
+    "note": "About three minutes. Watch it through, then go back over it a part at a time below.",
+}
+
 LESSON["words"] = [
     word("circuit", "\U0001F501", "A complete loop that electricity can flow round.",
          ["A break stops the circuit.", "A switch is part of the circuit."]),

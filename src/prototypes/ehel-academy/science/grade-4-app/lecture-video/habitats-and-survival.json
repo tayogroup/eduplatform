@@ -1,0 +1,120 @@
+{
+  "_comment": "Storyboard for the Grade 4 Science unit lecture film, Lesson 5 Habitats and Survival. Rendered by tools/create-ehel-unit-lecture.js. See lecture-video/BRIEF.md. Every beat is one narration clip; art.at names the phrases a picture waits for, and the page refuses to load if a phrase is not in its beat's say. The chapters follow LESSON lecture in content/lesson-5.py in order (suited to the place; why it matters; surviving somewhere else; science near you; both sides), with one chapter added between the third and fourth for 4TWSp.01, which the lesson teaches in its ask step. The pictures are the lesson's own: the sort's four bins and their first four animals, the explore step's camel and polar bear features, the lookup step's fact card (food, water, temperature, shelter; the goldfish, the rainforest plant, the camels in Australia), the ask step's woodlice under a damp and a dry patch, and the context step's road, streetlights, recycling centre and park pond.",
+  "slug": "habitats-and-survival",
+  "lesson": 5,
+  "grade": 4,
+  "stage": 4,
+  "title": "Habitats and Survival",
+  "subtitle": "Grade 4 Science",
+  "framework": "Cambridge Primary Science 0097",
+  "renderer": {
+    "art": ["science"],
+    "skin": "brown",
+    "scenes": [
+      "tools/lib/ehel-film-marks.js",
+      "tools/lib/film-scenes/science-g4/habitats-and-survival.js",
+      "tools/lib/film-scenes/science-g4/habitats-and-survival-2.js",
+      "tools/lib/film-scenes/science-g4/habitats-and-survival-3.js",
+      "tools/lib/film-scenes/science-g4/habitats-and-survival-4.js"
+    ]
+  },
+  "objectives": [
+    ["4Be.01", "Know that different animals are found in, and suited to, different habitats."],
+    ["4Be.02", "Know plants and animals can survive in environments other than their habitats."],
+    ["4TWSc.07", "Use secondary information sources to research an answer to a question."],
+    ["4TWSp.01", "Ask scientific questions that can be investigated."],
+    ["4SIC.02", "Describe how science is used in their local area."],
+    ["4SIC.05", "Discuss how the use of science and technology can have positive and negative environmental effects on their local area."]
+  ],
+  "scenes": [
+    { "id": "title", "kind": "title", "codes": [], "beats": [
+      { "say": "A camel lives in the hot desert. A polar bear lives in the cold Arctic.",
+        "art": { "at": { "camel": "A camel", "desert": "the hot desert", "bear": "A polar bear", "arctic": "the cold Arctic" } } },
+      { "say": "Each is suited to its home. Could it live anywhere else?",
+        "art": { "at": { "suited": "suited to its home", "else": "anywhere else" } } }
+    ] },
+
+    { "id": "suited", "kind": "suited", "heading": "Suited to the place", "codes": ["4Be.01"], "beats": [
+      { "say": "A habitat is where an animal lives in the wild. Here are four.",
+        "art": { "at": { "habitat": "A habitat", "wild": "in the wild", "four": "Here are four" } } },
+      { "say": "A camel in the desert, a polar bear in the Arctic. A monkey in the rainforest, a whale in the ocean.",
+        "art": { "at": { "camel": "A camel", "desert": "the desert", "bear": "a polar bear", "arctic": "the Arctic", "monkey": "A monkey", "forest": "the rainforest", "whale": "a whale", "ocean": "the ocean" } } },
+      { "say": "Its features suit its habitat. A feature is a part of its body.",
+        "art": { "at": { "features": "features", "part": "a part of its body" } } },
+      { "say": "A camel has a hump of fat, and wide feet for the sand.",
+        "art": { "at": { "camel": "A camel", "hump": "a hump of fat", "feet": "wide feet" } } },
+      { "say": "Long lashes keep sand out of its eyes. Every feature suits the desert.",
+        "art": { "at": { "lashes": "Long lashes", "every": "Every feature" } } },
+      { "say": "A polar bear has thick fur over a layer of fat. So the Arctic cold does not reach it.",
+        "art": { "at": { "bear": "A polar bear", "fur": "thick fur", "fat": "a layer of fat", "cold": "the Arctic cold", "reach": "does not reach it" } } }
+    ] },
+
+    { "id": "matters", "kind": "matters", "heading": "Wrong for another place", "codes": ["4Be.01"], "beats": [
+      { "say": "Put a polar bear in the desert, and its fur would cook it.",
+        "art": { "at": { "put": "Put a polar bear", "desert": "in the desert", "cook": "would cook it" } } },
+      { "say": "Put a fish in the desert, and its gills have no water to breathe.",
+        "art": { "at": { "fish": "Put a fish", "gills": "its gills", "water": "no water" } } },
+      { "say": "The features that suit one place are wrong for another.",
+        "art": { "at": { "suit": "suit one place", "wrong": "wrong for another" } } }
+    ] },
+
+    { "id": "elsewhere", "kind": "elsewhere", "heading": "Surviving somewhere else", "codes": ["4Be.02", "4TWSc.07"], "beats": [
+      { "say": "Can a living thing survive outside its habitat? Look it up on a fact card.",
+        "art": { "at": { "survive": "survive outside", "look": "Look it up", "card": "a fact card" } } },
+      { "say": "The card says yes: food, water, the right temperature and shelter.",
+        "art": { "at": { "yes": "says yes", "food": "food", "water": "water", "temp": "the right temperature", "shelter": "shelter" } } },
+      { "say": "A goldfish lives in a bowl: a person feeds it and keeps the water clean.",
+        "art": { "at": { "goldfish": "A goldfish", "bowl": "a bowl", "feeds": "feeds it", "clean": "the water clean" } } },
+      { "say": "A rainforest plant lives on a windowsill, if a person waters it and keeps it warm.",
+        "art": { "at": { "plant": "A rainforest plant", "sill": "a windowsill", "waters": "waters it", "warm": "keeps it warm" } } },
+      { "say": "Camels taken to Australia survived. Its hot, dry centre is like their home.",
+        "art": { "at": { "camels": "Camels taken", "survived": "survived", "hot": "hot, dry centre", "home": "like their home" } } },
+      { "say": "Give it what it needs, and it survives.",
+        "art": { "at": { "give": "Give it", "survives": "it survives" } } }
+    ] },
+
+    { "id": "question", "kind": "question", "heading": "A question you can test", "codes": ["4TWSp.01"], "beats": [
+      { "say": "A scientific question is one you can investigate, by observing, counting or testing.",
+        "art": { "at": { "question": "A scientific question", "observe": "observing", "count": "counting", "test": "testing" } } },
+      { "say": "Are woodlice happy? You cannot go and check that.",
+        "art": { "at": { "happy": "Are woodlice happy", "cannot": "You cannot" } } },
+      { "say": "Are more woodlice found in damp places than dry ones? You can count them.",
+        "art": { "at": { "damp": "damp places", "count": "You can count them" } } },
+      { "say": "Count under a damp patch and a dry patch, the same size, at the same time.",
+        "art": { "at": { "damp": "a damp patch", "dry": "a dry patch", "size": "the same size", "time": "the same time" } } },
+      { "say": "Only the dampness is different. That is a fair test.",
+        "art": { "at": { "only": "Only the dampness", "fair": "a fair test" } } }
+    ] },
+
+    { "id": "near", "kind": "near", "heading": "Science near you", "codes": ["4SIC.02", "4SIC.05"], "beats": [
+      { "say": "Science and technology are all over your area. Technology is what people make and use.",
+        "art": { "at": { "area": "all over your area", "tech": "Technology is", "make": "make and use" } } },
+      { "say": "Think of roads, streetlights, recycling centres and park ponds. Each changes habitats nearby.",
+        "art": { "at": { "roads": "roads", "lights": "streetlights", "recycling": "recycling centres", "ponds": "park ponds", "changes": "Each changes" } } },
+      { "say": "A new road brings shops and jobs. But it cuts a habitat in two.",
+        "art": { "at": { "road": "A new road", "shops": "shops and jobs", "cuts": "cuts a habitat in two" } } },
+      { "say": "A pond dug in a park is a new habitat, for frogs and dragonflies.",
+        "art": { "at": { "pond": "A pond dug", "habitat": "a new habitat", "frogs": "frogs", "flies": "dragonflies" } } }
+    ] },
+
+    { "id": "sides", "kind": "sides", "heading": "Both sides", "codes": ["4SIC.05"], "beats": [
+      { "say": "Most technology helps some living things, and harms others.",
+        "art": { "at": { "helps": "helps some living things", "harms": "harms others" } } },
+      { "say": "Streetlights make streets safer at night. But moths fly round them until they drop.",
+        "art": { "at": { "lights": "Streetlights", "safer": "safer at night", "moths": "moths fly round", "drop": "until they drop" } } },
+      { "say": "Science lets you see both sides, and decide.",
+        "art": { "at": { "both": "both sides", "decide": "and decide" } } }
+    ] },
+
+    { "id": "recap", "kind": "recap", "heading": "What you now know", "codes": ["4Be.01", "4Be.02", "4TWSc.07", "4TWSp.01", "4SIC.02", "4SIC.05"], "beats": [
+      { "say": "Its features suit its habitat, wrong for another place.",
+        "art": { "at": { "suit": "suit its habitat", "wrong": "wrong for another" } } },
+      { "say": "A fact card said it can survive, if given what it needs.",
+        "art": { "at": { "card": "A fact card", "survive": "can survive" } } },
+      { "say": "A good question is one you can go and check.",
+        "art": { "at": { "question": "A good question", "check": "go and check" } } },
+      { "say": "Technology near you helps some, harms others. Weigh up both sides.",
+        "art": { "at": { "tech": "Technology near you", "weigh": "Weigh up both sides" } } }
+    ] }
+  ]
+}

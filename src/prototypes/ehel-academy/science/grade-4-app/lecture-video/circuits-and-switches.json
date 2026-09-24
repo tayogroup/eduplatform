@@ -1,0 +1,126 @@
+{
+  "_comment": "Storyboard for the Grade 4 Science unit lecture film, Lesson 10 Circuits and Switches. Rendered by tools/create-ehel-unit-lecture.js. See lecture-video/BRIEF.md. Every beat is one narration clip; art.at names the phrases a picture waits for, and the page refuses to load if a phrase is not in its beat's say. The chapters follow LESSON['lecture'] in order (one loop; a switch; brighter and dimmer; conductors and insulators; today), with the lesson's safety rules as their own chapter because 4TWSp.05 is taught in two of its steps. The pictures are the lesson's own: ART.kit.circuitSvg (the circuit the child builds, with its gap), ART.kit.seriesSvg (the seriesCircuit sim: cells, lamps and the switch) and the conductor sim's own circuit-with-a-gap, with the lesson's eight test materials.",
+  "slug": "circuits-and-switches",
+  "lesson": 10,
+  "grade": 4,
+  "stage": 4,
+  "title": "Circuits and Switches",
+  "subtitle": "Grade 4 Science",
+  "framework": "Cambridge Primary Science 0097",
+  "renderer": {
+    "art": ["science"],
+    "skin": "brown",
+    "scenes": [
+      "tools/lib/ehel-film-marks.js",
+      "tools/lib/film-scenes/science-g4/circuits-and-switches.js",
+      "tools/lib/film-scenes/science-g4/circuits-and-switches-2.js",
+      "tools/lib/film-scenes/science-g4/circuits-and-switches-3.js",
+      "tools/lib/film-scenes/science-g4/circuits-and-switches-4.js"
+    ]
+  },
+  "objectives": [
+    ["4Pe.01", "Know that an electrical device will not work if there is a break in the circuit."],
+    ["4Pe.02", "Describe how a simple switch is used to open and close a circuit."],
+    ["4Pe.03", "Describe how changing the number or type of components in a series circuit can make a lamp brighter or dimmer."],
+    ["4Pe.04", "Know some materials are good electrical conductors, especially metals, and some are good electrical insulators."],
+    ["4TWSp.05", "Identify risks and explain how to stay safe during practical work."],
+    ["4TWSc.03", "Choose equipment from a provided selection and use it appropriately."],
+    ["4TWSc.08", "Collect and record observations and/or measurements in tables and diagrams."]
+  ],
+  "scenes": [
+    { "id": "title", "kind": "title", "codes": [], "beats": [
+      { "say": "Electricity flows round a loop. Break the loop anywhere, and it stops.",
+        "art": { "at": { "loop": "round a loop", "break": "Break the loop", "stops": "it stops" } } },
+      { "say": "A cell pushes it round. A switch lets you stop it when you want.",
+        "art": { "at": { "cell": "A cell", "push": "pushes it round", "switch": "A switch" } } }
+    ] },
+
+    { "id": "loop", "kind": "loop", "heading": "One loop", "codes": ["4Pe.01"], "beats": [
+      { "say": "A cell, two wires and a lamp make one loop: a series circuit.",
+        "art": { "at": { "cell": "A cell", "wires": "two wires", "lamp": "a lamp", "loop": "one loop" } } },
+      { "say": "The wire runs from the cell to the lamp, and back to the cell.",
+        "art": { "at": { "from": "from the cell", "to": "to the lamp", "back": "back to the cell" } } },
+      { "say": "The loop is complete. Electricity flows, and the lamp lights.",
+        "art": { "at": { "complete": "is complete", "flows": "Electricity flows", "lights": "the lamp lights" } } },
+      { "say": "Now a wire comes loose. That gap is a break in the circuit.",
+        "art": { "at": { "loose": "comes loose", "gap": "That gap", "break": "a break in the circuit" } } },
+      { "say": "Nothing can flow, so the lamp goes out. One break stops it all.",
+        "art": { "at": { "nothing": "Nothing can flow", "out": "goes out", "all": "stops it all" } } }
+    ] },
+
+    { "id": "switch", "kind": "switch", "heading": "A switch", "codes": ["4Pe.02", "4Pe.01"], "beats": [
+      { "say": "A switch is a break you control. Inside are two metal contacts.",
+        "art": { "at": { "switch": "A switch", "control": "you control", "contacts": "two metal contacts" } } },
+      { "say": "Closed, the contacts touch. The loop is complete and the lamp lights.",
+        "art": { "at": { "closed": "Closed", "touch": "the contacts touch", "lights": "the lamp lights" } } },
+      { "say": "Open, there is a gap between them. Nothing flows, and the lamp is dark.",
+        "art": { "at": { "open": "Open", "gap": "a gap between them", "dark": "the lamp is dark" } } },
+      { "say": "The cell is still full. It is the path that is broken.",
+        "art": { "at": { "full": "still full", "path": "the path", "broken": "is broken" } } },
+      { "say": "A doorbell button is a switch. It closes only while you press it.",
+        "art": { "at": { "doorbell": "A doorbell button", "closes": "closes only", "press": "you press it" } } },
+      { "say": "Let go, and it springs open again. The bell stops.",
+        "art": { "at": { "go": "Let go", "springs": "springs open", "stops": "The bell stops" } } }
+    ] },
+
+    { "id": "bright", "kind": "bright", "heading": "Brighter and dimmer", "codes": ["4Pe.03"], "beats": [
+      { "say": "Cells push the electricity round the loop. One cell, one lamp.",
+        "art": { "at": { "push": "push the electricity", "one": "One cell, one lamp" } } },
+      { "say": "Add a second cell. The push is bigger, so the lamp is brighter.",
+        "art": { "at": { "add": "Add a second cell", "bigger": "push is bigger", "brighter": "brighter" } } },
+      { "say": "Now add a second lamp. The same push is shared between the two.",
+        "art": { "at": { "lamp": "add a second lamp", "shared": "is shared" } } },
+      { "say": "A shared push means each lamp is dimmer than it was before.",
+        "art": { "at": { "shared": "A shared push", "each": "each lamp", "dimmer": "dimmer" } } },
+      { "say": "More cells: brighter. More lamps: dimmer. Open the switch: off.",
+        "art": { "at": { "cells": "More cells", "lamps": "More lamps", "off": "Open the switch" } } }
+    ] },
+
+    { "id": "materials", "kind": "materials", "heading": "Conductors and insulators", "codes": ["4Pe.04"], "beats": [
+      { "say": "Leave a gap in the loop. Put a material in that gap and test it.",
+        "art": { "at": { "gap": "a gap", "material": "a material", "test": "test it" } } },
+      { "say": "A conductor lets electricity through, so the lamp lights up.",
+        "art": { "at": { "conductor": "A conductor", "through": "lets electricity through", "lights": "the lamp lights" } } },
+      { "say": "Copper wire, a steel key, a coin: metals are the best conductors.",
+        "art": { "at": { "copper": "Copper wire", "key": "a steel key", "coin": "a coin", "metals": "metals are the best" } } },
+      { "say": "An insulator does not let it through. Plastic, rubber, wood, glass.",
+        "art": { "at": { "insulator": "An insulator", "plastic": "Plastic", "rubber": "rubber", "wood": "wood", "glass": "glass" } } },
+      { "say": "A shiny plastic lid is an insulator. It is the metal that conducts.",
+        "art": { "at": { "shiny": "A shiny plastic lid", "metal": "the metal" } } },
+      { "say": "That is why a wire is copper inside and plastic outside.",
+        "art": { "at": { "copper": "copper inside", "plastic": "plastic outside" } } }
+    ] },
+
+    { "id": "safe", "kind": "safe", "heading": "Safe with electricity", "codes": ["4TWSp.05"], "beats": [
+      { "say": "Build your circuit with cells only. Never the plug socket.",
+        "art": { "at": { "cells": "cells only", "never": "Never the plug socket" } } },
+      { "say": "A cell gives a small, safe push. Mains electricity can kill.",
+        "art": { "at": { "small": "a small, safe push", "mains": "Mains electricity can kill" } } },
+      { "say": "Water carries electricity. Dry your hands before you touch a switch.",
+        "art": { "at": { "water": "Water carries electricity", "dry": "Dry your hands", "touch": "touch a switch" } } },
+      { "say": "If a wire gets hot, open the switch and tell a grown-up.",
+        "art": { "at": { "hot": "gets hot", "open": "open the switch", "tell": "tell a grown-up" } } }
+    ] },
+
+    { "id": "today", "kind": "today", "heading": "What you do today", "codes": ["4TWSc.03", "4TWSc.08"], "beats": [
+      { "say": "Today you add cells and lamps, and watch the light change.",
+        "art": { "at": { "add": "add cells and lamps", "change": "the light change" } } },
+      { "say": "You open and close the switch, then test eight materials in the gap.",
+        "art": { "at": { "switch": "close the switch", "eight": "eight materials" } } },
+      { "say": "Write each one in a table: conductor, or insulator.",
+        "art": { "at": { "table": "in a table", "conductor": "conductor,", "insulator": "insulator" } } },
+      { "say": "And choose the right equipment: a cell for brighter, never more wire.",
+        "art": { "at": { "choose": "choose the right equipment", "cell": "a cell for brighter", "wire": "never more wire" } } }
+    ] },
+
+    { "id": "recap", "kind": "recap", "heading": "What you now know",
+      "codes": ["4Pe.01", "4Pe.02", "4Pe.03", "4Pe.04", "4TWSp.05", "4TWSc.03", "4TWSc.08"], "beats": [
+      { "say": "One loop, all the way round. A break anywhere stops everything.",
+        "art": { "at": { "loop": "One loop", "break": "A break anywhere" } } },
+      { "say": "A switch opens and closes a gap. More cells, brighter. More lamps, dimmer.",
+        "art": { "at": { "switch": "A switch", "cells": "More cells", "lamps": "More lamps" } } },
+      { "say": "Metals conduct. Plastic, rubber, wood and glass insulate.",
+        "art": { "at": { "metals": "Metals conduct", "insulate": "insulate" } } }
+    ] }
+  ]
+}

@@ -1,0 +1,125 @@
+{
+  "_comment": "Storyboard for the Grade 4 Science unit lecture film, Lesson 9 Light and Seeing. Rendered by tools/create-ehel-unit-lecture.js. See lecture-video/BRIEF.md. Every beat is one narration clip; art.at names the phrases a picture waits for, and the page refuses to load if a phrase is not in its beat's say. The chapters follow the five parts of LESSON[lecture] in content/lesson-9.py in order (straight lines; reflection; seeing; the old idea; and today's ray diagram), with the lesson's mirror experiment as its own chapter between reflection and seeing, where the lesson puts it. The pictures are the lesson's own where it has one: its mirror experiment (ART.sim rayMirror, the three states its two buttons reach) and its labelling figure (ART.figure ray, with the four parts its diagram step asks the child to name). Every ray in this film travels source to object to eye; the one place a ray leaves an eye is the old idea in the How the idea changed chapter, which is crossed out as the line says it was wrong.",
+  "slug": "light-and-seeing",
+  "lesson": 9,
+  "grade": 4,
+  "stage": 4,
+  "title": "Light and Seeing",
+  "subtitle": "Grade 4 Science",
+  "framework": "Cambridge Primary Science 0097",
+  "renderer": {
+    "art": ["science"],
+    "skin": "brown",
+    "scenes": [
+      "tools/lib/ehel-film-marks.js",
+      "tools/lib/film-scenes/science-g4/light-and-seeing.js",
+      "tools/lib/film-scenes/science-g4/light-and-seeing-2.js",
+      "tools/lib/film-scenes/science-g4/light-and-seeing-3.js"
+    ]
+  },
+  "objectives": [
+    ["4Ps.01", "Know that light travels in straight lines and this can be represented with ray diagrams."],
+    ["4Ps.02", "Know that light can reflect off surfaces."],
+    ["4Ps.03", "Describe how objects which are not light sources are seen."],
+    ["4TWSm.03", "Draw a diagram to represent a real world situation and/or scientific idea."],
+    ["4TWSp.03", "Make a prediction describing some possible outcomes of an enquiry."],
+    ["4TWSa.01", "Identify whether results support, or do not support, a prediction."],
+    ["4TWSc.01", "Use observations and tests to sort, group and classify objects."],
+    ["4SIC.01", "Describe how scientific knowledge and understanding changes over time through the use of evidence gained by enquiry."]
+  ],
+  "scenes": [
+    { "id": "title", "kind": "title", "codes": [], "beats": [
+      { "say": "Light travels in straight lines. It will not bend round a corner.",
+        "art": { "at": { "straight": "travels in straight lines", "corner": "bend round a corner" } } },
+      { "say": "You see a book when light bounces off it into your eye.",
+        "art": { "at": { "bounces": "bounces off it", "eye": "into your eye" } } }
+    ] },
+
+    { "id": "straight", "kind": "straight", "heading": "Light in straight lines", "codes": ["4Ps.01"], "beats": [
+      { "say": "Shine a torch through dusty air. The beam is dead straight.",
+        "art": { "at": { "torch": "Shine a torch", "dusty": "dusty air", "straight": "dead straight" } } },
+      { "say": "Sunlight through a gap in the clouds comes down in straight lines.",
+        "art": { "at": { "clouds": "a gap in the clouds", "lines": "straight lines" } } },
+      { "say": "You cannot see round a corner. Light will not bend round it.",
+        "art": { "at": { "corner": "see round a corner", "bend": "will not bend" } } },
+      { "say": "The light from behind the corner travels straight, and misses your eye.",
+        "art": { "at": { "travels": "travels straight", "misses": "misses your eye" } } },
+      { "say": "Scientists draw light as rays: straight lines with arrows.",
+        "art": { "at": { "rays": "as rays", "arrows": "with arrows" } } }
+    ] },
+
+    { "id": "reflect", "kind": "reflect", "heading": "Light bounces off", "codes": ["4Ps.02"], "beats": [
+      { "say": "When light hits a surface, some of it bounces off. That is reflection.",
+        "art": { "at": { "hits": "hits a surface", "bounces": "bounces off", "word": "That is reflection" } } },
+      { "say": "A mirror reflects neatly, in one new straight line.",
+        "art": { "at": { "mirror": "A mirror", "neat": "in one new straight line" } } },
+      { "say": "A book reflects roughly, scattering the light in every direction.",
+        "art": { "at": { "book": "A book", "rough": "roughly", "every": "in every direction" } } },
+      { "say": "Pale and shiny surfaces reflect most of the light that hits them.",
+        "art": { "at": { "pale": "Pale and shiny surfaces", "most": "reflect most" } } },
+      { "say": "Dark surfaces soak most of it up, so they look dark.",
+        "art": { "at": { "dark": "Dark surfaces", "soak": "soak most of it up", "look": "they look dark" } } }
+    ] },
+
+    { "id": "mirror", "kind": "mirror", "heading": "Bounce it into an eye", "codes": ["4Ps.02", "4TWSp.03", "4TWSa.01"], "beats": [
+      { "say": "A torch, a mirror and an eye. Watch what the ray does.",
+        "art": { "at": { "torch": "A torch", "mirror": "a mirror", "eye": "an eye", "watch": "Watch what the ray does" } } },
+      { "say": "Predict first. Will the ray bounce, stop dead, or curve round?",
+        "art": { "at": { "predict": "Predict first", "bounce": "bounce,", "stop": "stop dead", "curve": "curve round" } } },
+      { "say": "Turn the mirror. It bounces off in a new straight line, as you predicted.",
+        "art": { "at": { "turn": "Turn the mirror", "bounces": "bounces off in a new straight line", "predicted": "as you predicted" } } },
+      { "say": "At the right angle the ray reaches the eye, and you see the torch.",
+        "art": { "at": { "angle": "the right angle", "reaches": "reaches the eye", "see": "you see the torch" } } },
+      { "say": "Put a book in the way. It blocks the ray, so the mirror shows no torch.",
+        "art": { "at": { "book": "Put a book in the way", "blocks": "blocks the ray", "none": "shows no torch" } } }
+    ] },
+
+    { "id": "seeing", "kind": "seeing", "heading": "How you see a book", "codes": ["4Ps.03", "4TWSc.01"], "beats": [
+      { "say": "Only a light source makes light. You see everything else by reflection.",
+        "art": { "at": { "source": "Only a light source makes light", "else": "everything else", "reflection": "by reflection" } } },
+      { "say": "The lamp shines on the book. The book is not a source.",
+        "art": { "at": { "lamp": "The lamp shines on the book", "not": "not a source" } } },
+      { "say": "It reflects some of that light off its surface, in every direction.",
+        "art": { "at": { "reflects": "reflects some of that light", "every": "in every direction" } } },
+      { "say": "A little of it travels straight into your eye. Now you see the book.",
+        "art": { "at": { "eye": "into your eye", "see": "Now you see the book" } } },
+      { "say": "Switch the lamp off. Nothing reflects, so you see nothing at all.",
+        "art": { "at": { "off": "Switch the lamp off", "nothing": "Nothing reflects", "none": "see nothing at all" } } },
+      { "say": "The Sun, a lamp and a candle make light. The Moon and a mirror only reflect.",
+        "art": { "at": { "sources": "The Sun, a lamp and a candle", "reflect": "The Moon and a mirror" } } }
+    ] },
+
+    { "id": "oldidea", "kind": "oldidea", "heading": "How the idea changed", "codes": ["4SIC.01"], "beats": [
+      { "say": "For a thousand years people believed the eye sent out beams.",
+        "art": { "at": { "long": "For a thousand years", "beams": "sent out beams" } } },
+      { "say": "But if that were true, why can nobody see in a dark room?",
+        "art": { "at": { "true": "if that were true", "dark": "in a dark room" } } },
+      { "say": "Ibn al-Haytham built dark rooms with tiny holes and tested it.",
+        "art": { "at": { "name": "Ibn al-Haytham", "holes": "tiny holes", "tested": "tested it" } } },
+      { "say": "He showed light comes into the eye, not out of it. Evidence changed what everyone knew.",
+        "art": { "at": { "into": "comes into the eye", "not": "not out of it", "evidence": "Evidence changed" } } }
+    ] },
+
+    { "id": "diagram", "kind": "diagram", "heading": "Draw a ray diagram", "codes": ["4Ps.01", "4TWSm.03"], "beats": [
+      { "say": "Now draw it all: the light source, the ray, the mirror and the eye.",
+        "art": { "at": { "draw": "Now draw it all", "source": "the light source", "ray": "the ray", "mirror": "the mirror", "eye": "the eye" } } },
+      { "say": "The source first. Every ray starts at the torch.",
+        "art": { "at": { "source": "The source first", "starts": "Every ray starts" } } },
+      { "say": "A ruler line to the mirror, with an arrow pointing away from the torch.",
+        "art": { "at": { "ruler": "A ruler line", "mirror": "to the mirror", "arrow": "with an arrow", "away": "away from the torch" } } },
+      { "say": "Then a second straight line into the eye. That is your ray diagram.",
+        "art": { "at": { "second": "a second straight line", "eye": "into the eye", "diagram": "your ray diagram" } } }
+    ] },
+
+    { "id": "recap", "kind": "recap", "heading": "What you now know", "codes": ["4Ps.01", "4Ps.02", "4Ps.03", "4TWSm.03", "4TWSp.03", "4TWSa.01", "4TWSc.01", "4SIC.01"], "beats": [
+      { "say": "Light travels in straight lines, and we draw it as rays with arrows.",
+        "art": { "at": { "straight": "straight lines", "rays": "as rays with arrows" } } },
+      { "say": "Light reflects off surfaces: neatly off a mirror, roughly off a book.",
+        "art": { "at": { "mirror": "neatly off a mirror", "book": "roughly off a book" } } },
+      { "say": "You see a thing when light from a source bounces off it into your eye.",
+        "art": { "at": { "eye": "into your eye" } } },
+      { "say": "Evidence from enquiry changed the old idea. That is how science works.",
+        "art": { "at": { "evidence": "Evidence from enquiry", "science": "how science works" } } }
+    ] }
+  ]
+}

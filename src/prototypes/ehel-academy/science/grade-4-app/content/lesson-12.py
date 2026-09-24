@@ -220,6 +220,17 @@ LESSON["lecture"] = [
          "For two thousand years people put the Earth at the centre. Then Copernicus did the sums and Galileo's telescope saw moons going round Jupiter. The evidence moved the Sun to the centre. Knowledge changes when enquiry brings evidence."),
 ]
 
+# The unit lecture film (tools/create-ehel-unit-lecture.js; storyboard and
+# pictures in lecture-video/the-solar-system.json). The lecture step draws it
+# above the parts; build-lessons.py refuses a path that is not on disk AND in
+# app.config.json :: extraPages, and a --draft render.
+LESSON["video"] = {
+    "src": "lecture-video/the-solar-system.6efe5be7.mp4",
+    "captions": "lecture-video/the-solar-system.a5d59a24.vtt",
+    "poster": "lecture-video/the-solar-system.7fb7d0ff.jpg",
+    "note": "About three minutes. Watch it through, then go back over it a part at a time below.",
+}
+
 LESSON["words"] = [
     word("axis", "\U0001F30D", "The imaginary line through the middle of the Earth that it spins around.",
          ["The Earth spins on its axis.", "The axis runs from pole to pole."]),

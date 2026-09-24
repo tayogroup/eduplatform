@@ -270,6 +270,17 @@ LESSON["lecture"] = [
          "Put each drop as a dot above its time: a dot plot. The dots cluster, and the cluster is your answer. Then write the conclusion: what the results say about the question you asked."),
 ]
 
+# The unit lecture film (tools/create-ehel-unit-lecture.js; storyboard and
+# pictures in lecture-video/the-paper-spinner.json). The lecture step draws it
+# above the parts; build-lessons.py refuses a path that is not on disk AND in
+# app.config.json :: extraPages, and a --draft render.
+LESSON["video"] = {
+    "src": "lecture-video/the-paper-spinner.bab6c07f.mp4",
+    "captions": "lecture-video/the-paper-spinner.dd1cab9c.vtt",
+    "poster": "lecture-video/the-paper-spinner.962df53f.jpg",
+    "note": "About three minutes. Watch it through, then go back over it a part at a time below.",
+}
+
 LESSON["words"] = [
     word("variable", "\U0001F504", "Anything in a test that could change.",
          ["Wing size is a variable.", "Keep every other variable the same."]),

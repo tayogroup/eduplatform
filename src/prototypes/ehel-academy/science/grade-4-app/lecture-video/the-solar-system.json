@@ -1,0 +1,120 @@
+{
+  "_comment": "Storyboard for the Grade 4 Science unit lecture film, Lesson 12 The Solar System. Rendered by tools/create-ehel-unit-lecture.js. See lecture-video/BRIEF.md. Every beat is one narration clip; art.at names the phrases a picture waits for, and the page refuses to load if a phrase is not in its beat's say. The chapters follow LESSON['lecture'] in order (the spinning Earth; the Sun at the centre and its eight planets; asteroids and comets; to scale; how we found out), in the lesson's own words and with its own pictures: its day and night sim (ART.sim dayNight 0-3, the drawing its Spin button steps through), the eight planet pics of its order step, the rock of its asteroid card, and the football, peppercorn, grape and pea of its scale demo.",
+  "slug": "the-solar-system",
+  "lesson": 12,
+  "grade": 4,
+  "stage": 4,
+  "title": "The Solar System",
+  "subtitle": "Grade 4 Science",
+  "framework": "Cambridge Primary Science 0097",
+  "renderer": {
+    "art": ["science"],
+    "skin": "brown",
+    "scenes": [
+      "tools/lib/ehel-film-marks.js",
+      "tools/lib/film-scenes/science-g4/the-solar-system.js",
+      "tools/lib/film-scenes/science-g4/the-solar-system-2.js",
+      "tools/lib/film-scenes/science-g4/the-solar-system-3.js"
+    ]
+  },
+  "objectives": [
+    ["4ESs.01", "Explain why the spinning of the Earth on its axis leads to the apparent movement of the Sun, night and day, and changes in shadows."],
+    ["4ESs.02", "Name the planets in the Solar System."],
+    ["4ESs.03", "Know that the Sun is at the centre of the Solar System."],
+    ["4ESs.04", "Know that planetary systems can contain stars, planets, asteroids and comets."],
+    ["4TWSm.02", "Use models to show relationships, quantities or scale."],
+    ["4SIC.01", "Describe how scientific knowledge and understanding changes over time through the use of evidence gained by enquiry."]
+  ],
+  "scenes": [
+    { "id": "title", "kind": "title", "codes": [], "beats": [
+      { "say": "The Sun does not cross the sky. The Earth spins, and carries you round.",
+        "art": { "at": { "sky": "cross the sky", "spins": "The Earth spins", "round": "carries you round" } } },
+      { "say": "Round the Sun go eight planets, a belt of rock, and comets made of ice.",
+        "art": { "at": { "planets": "eight planets", "rock": "a belt of rock", "comets": "comets made of ice" } } }
+    ] },
+
+    { "id": "spin", "kind": "spin", "heading": "The spinning Earth", "codes": ["4ESs.01"], "beats": [
+      { "say": "The Earth spins once every twenty-four hours. One spin, one day.",
+        "art": { "at": { "spins": "The Earth spins", "hours": "twenty-four hours", "day": "one day" } } },
+      { "say": "It spins on its axis: an imaginary line through the middle, pole to pole.",
+        "art": { "at": { "axis": "its axis", "line": "an imaginary line", "poles": "pole to pole" } } },
+      { "say": "When your side faces the Sun it is day. At midday the Sun looks high.",
+        "art": { "at": { "faces": "your side faces the Sun", "day": "it is day", "midday": "At midday", "high": "looks high" } } },
+      { "say": "Turn a quarter further and the Sun looks low. Sunset.",
+        "art": { "at": { "turn": "Turn a quarter", "low": "looks low", "sunset": "Sunset" } } },
+      { "say": "Another quarter and your side faces away. Night. The Sun did not move. You did.",
+        "art": { "at": { "away": "faces away", "night": "Night", "still": "did not move", "you": "You did" } } },
+      { "say": "The spin swings your shadow round, and changes its length.",
+        "art": { "at": { "swings": "swings your shadow", "length": "changes its length" } } }
+    ] },
+
+    { "id": "centre", "kind": "centre", "heading": "The Sun and its planets", "codes": ["4ESs.03", "4ESs.02"], "beats": [
+      { "say": "The Sun is a star: a huge ball of hot, glowing gas.",
+        "art": { "at": { "star": "a star", "gas": "glowing gas" } } },
+      { "say": "It sits at the centre of the Solar System, and eight planets go round it.",
+        "art": { "at": { "centre": "at the centre", "eight": "eight planets", "round": "go round it" } } },
+      { "say": "Nearest is Mercury. Then Venus, then Earth, then Mars.",
+        "art": { "at": { "mercury": "Mercury", "venus": "Venus", "earth": "Earth", "mars": "Mars" } } },
+      { "say": "Those four are small and rocky. Earth is third, not first.",
+        "art": { "at": { "rocky": "small and rocky", "third": "Earth is third", "first": "not first" } } },
+      { "say": "Further out come the giants: Jupiter, Saturn, Uranus, Neptune.",
+        "art": { "at": { "giants": "the giants", "jupiter": "Jupiter", "saturn": "Saturn", "uranus": "Uranus", "neptune": "Neptune" } } },
+      { "say": "Jupiter is the biggest. Saturn has the great rings, and Neptune is farthest out.",
+        "art": { "at": { "biggest": "the biggest", "rings": "the great rings", "farthest": "farthest out" } } }
+    ] },
+
+    { "id": "rocks", "kind": "rocks", "heading": "Asteroids and comets", "codes": ["4ESs.04"], "beats": [
+      { "say": "Between Mars and Jupiter is a belt of rocks called asteroids.",
+        "art": { "at": { "between": "Between Mars and Jupiter", "belt": "a belt of rocks", "asteroids": "asteroids" } } },
+      { "say": "An asteroid can be as small as a house, or hundreds of kilometres across.",
+        "art": { "at": { "house": "as small as a house", "huge": "hundreds of kilometres" } } },
+      { "say": "From the cold edge of the Solar System come comets: balls of ice and dust.",
+        "art": { "at": { "edge": "the cold edge", "comets": "comets", "ice": "ice and dust" } } },
+      { "say": "Near the Sun its ice turns to gas, streaming out as a glowing tail.",
+        "art": { "at": { "near": "Near the Sun", "gas": "turns to gas", "tail": "a glowing tail" } } },
+      { "say": "A comet is not a shooting star. It goes round the Sun, far out in space.",
+        "art": { "at": { "shooting": "a shooting star", "orbit": "goes round the Sun", "far": "far out in space" } } },
+      { "say": "A star, planets, asteroids and comets: that is a planetary system.",
+        "art": { "at": { "star": "A star", "planets": "planets", "asteroids": "asteroids", "comets": "comets", "system": "a planetary system" } } }
+    ] },
+
+    { "id": "scale", "kind": "scale", "heading": "A model to scale", "codes": ["4TWSm.02", "4ESs.02"], "beats": [
+      { "say": "Pictures squeeze the planets together so they fit on the page.",
+        "art": { "at": { "squeeze": "squeeze the planets", "page": "fit on the page" } } },
+      { "say": "A scale model shrinks everything by the same amount: sizes and distances.",
+        "art": { "at": { "model": "A scale model", "same": "the same amount", "both": "sizes and distances" } } },
+      { "say": "Let the Sun be a football, about twenty centimetres across.",
+        "art": { "at": { "football": "a football", "cm": "twenty centimetres" } } },
+      { "say": "Then the Earth is a peppercorn, twenty-five metres away.",
+        "art": { "at": { "pepper": "a peppercorn", "m25": "twenty-five metres" } } },
+      { "say": "Jupiter is a grape, a hundred and thirty metres off.",
+        "art": { "at": { "grape": "a grape", "m130": "a hundred and thirty metres" } } },
+      { "say": "Neptune is a small pea, seven hundred and fifty metres away: most of a kilometre.",
+        "art": { "at": { "pea": "a small pea", "m750": "seven hundred and fifty metres", "km": "most of a kilometre" } } }
+    ] },
+
+    { "id": "found", "kind": "found", "heading": "How we found out", "codes": ["4SIC.01", "4ESs.03"], "beats": [
+      { "say": "For two thousand years people put the Earth at the centre.",
+        "art": { "at": { "years": "two thousand years", "earth": "the Earth at the centre" } } },
+      { "say": "It matched what you see. The Sun rises, crosses the sky and sets.",
+        "art": { "at": { "matched": "It matched what you see", "rises": "The Sun rises", "sets": "and sets" } } },
+      { "say": "Then Copernicus did the sums. They fitted better with the Sun at the centre.",
+        "art": { "at": { "copernicus": "Copernicus", "sums": "did the sums", "sun": "the Sun at the centre" } } },
+      { "say": "Galileo's telescope saw four moons going round Jupiter.",
+        "art": { "at": { "telescope": "Galileo's telescope", "moons": "four moons", "jupiter": "Jupiter" } } },
+      { "say": "He saw Venus change phase too. Not everything went round the Earth.",
+        "art": { "at": { "venus": "Venus change phase", "not": "Not everything" } } },
+      { "say": "The evidence won. Knowledge changes when enquiry brings evidence.",
+        "art": { "at": { "won": "The evidence won", "changes": "Knowledge changes" } } }
+    ] },
+
+    { "id": "recap", "kind": "recap", "heading": "What you now know", "codes": ["4ESs.01", "4ESs.02", "4ESs.03", "4ESs.04", "4TWSm.02", "4SIC.01"], "beats": [
+      { "say": "The Earth spins, so the Sun only seems to move, and day turns into night.",
+        "art": { "at": { "spins": "The Earth spins" } } },
+      { "say": "Eight planets go round the Sun, with asteroids and comets too.",
+        "art": { "at": { "planets": "Eight planets", "asteroids": "asteroids and comets" } } },
+      { "say": "A scale model keeps sizes and distances true. Evidence put the Sun at the centre.",
+        "art": { "at": { "scale": "A scale model", "evidence": "Evidence put the Sun" } } }
+    ] }
+  ]
+}

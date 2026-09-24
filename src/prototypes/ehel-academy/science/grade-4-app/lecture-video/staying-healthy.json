@@ -1,0 +1,121 @@
+{
+  "_comment": "Storyboard for the Grade 4 Science unit lecture film, Lesson 3 Staying Healthy. Rendered by tools/create-ehel-unit-lecture.js. See lecture-video/BRIEF.md. Every beat is one narration clip; art.at names the phrases a picture waits for, and the page refuses to load if a phrase is not in its beat's say. The chapters follow LESSON[lecture] in order (medicines, infectious diseases, vaccines, moving, evidence) and then the lesson's own 'Health science near you' step, in the lesson's own words and with the lesson's own pictures: its medicine sort (the label, the dose, the lock, the double dose), its five-frame vaccine demo (germ, ill, vaccine, shield, animals), its five reasons to move, its evidence-or-opinion bins and its four health jobs.",
+  "slug": "staying-healthy",
+  "lesson": 3,
+  "grade": 4,
+  "stage": 4,
+  "title": "Staying Healthy",
+  "subtitle": "Grade 4 Science",
+  "framework": "Cambridge Primary Science 0097",
+  "renderer": {
+    "art": ["science"],
+    "skin": "brown",
+    "scenes": [
+      "tools/lib/ehel-film-marks.js",
+      "tools/lib/film-scenes/science-g4/staying-healthy.js",
+      "tools/lib/film-scenes/science-g4/staying-healthy-2.js",
+      "tools/lib/film-scenes/science-g4/staying-healthy-3.js"
+    ]
+  },
+  "objectives": [
+    ["4Bp.01", "Know that medicines can be used to treat some illnesses, and describe how to use them safely."],
+    ["4Bp.02", "Know that plants and animals can have infectious diseases, and vaccinations can prevent some infectious diseases of animals."],
+    ["4Bp.04", "Describe the importance of movement in maintaining human health."],
+    ["4SIC.02", "Describe how science is used in their local area."],
+    ["4SIC.03", "Use science to support points when discussing issues, situations or actions."],
+    ["4SIC.04", "Identify people who use science, including professionally, in their area and describe how they use science."]
+  ],
+  "scenes": [
+    { "id": "title", "kind": "title", "codes": [], "beats": [
+      { "say": "Your body can stay healthy, and a lot of that is up to you.",
+        "art": { "at": { "body": "Your body", "healthy": "stay healthy", "you": "up to you" } } },
+      { "say": "Medicines. Vaccines. Moving every day. And how to prove a point.",
+        "art": { "at": { "med": "Medicines.", "vac": "Vaccines.", "mov": "Moving every day.", "ev": "prove a point" } } }
+    ] },
+
+    { "id": "medicines", "kind": "medicines", "heading": "Medicines, used safely", "codes": ["4Bp.01"], "beats": [
+      { "say": "A medicine is a substance that treats an illness.",
+        "art": { "at": { "medicine": "A medicine", "treats": "treats an illness" } } },
+      { "say": "The right amount helps you. The wrong amount can harm you.",
+        "art": { "at": { "right": "The right amount", "wrong": "The wrong amount" } } },
+      { "say": "So a grown-up measures the dose on the label.",
+        "art": { "at": { "grown": "a grown-up", "dose": "the dose", "label": "the label" } } },
+      { "say": "More is not better. Double the dose can poison you.",
+        "art": { "at": { "more": "More is not better", "double": "Double the dose" } } },
+      { "say": "Medicines are kept locked away. Nobody ever takes someone else's.",
+        "art": { "at": { "locked": "locked away", "nobody": "Nobody ever takes" } } }
+    ] },
+
+    { "id": "infectious", "kind": "infectious", "heading": "Diseases that spread", "codes": ["4Bp.02"], "beats": [
+      { "say": "Some illnesses spread from one living thing to another.",
+        "art": { "at": { "illness": "Some illnesses", "spread": "spread from one living thing" } } },
+      { "say": "Germs carry them. A cold. Measles. A blight on potatoes.",
+        "art": { "at": { "germs": "Germs carry them", "cold": "A cold", "measles": "Measles", "blight": "A blight on potatoes" } } },
+      { "say": "Illnesses that spread like that are called infectious diseases.",
+        "art": { "at": { "name": "infectious diseases" } } },
+      { "say": "Plants and animals catch them too, not only people.",
+        "art": { "at": { "plants": "Plants", "animals": "animals catch them", "people": "not only people" } } }
+    ] },
+
+    { "id": "vaccines", "kind": "vaccines", "heading": "How a vaccine works", "codes": ["4Bp.02"], "beats": [
+      { "say": "The first time a new germ gets in, your body must work out how to fight it.",
+        "art": { "at": { "germ": "a new germ", "work": "work out how to fight it" } } },
+      { "say": "That takes days. While your body learns, you are ill.",
+        "art": { "at": { "days": "takes days", "ill": "you are ill" } } },
+      { "say": "A vaccine is a harmless piece of a germ, given while you are well.",
+        "art": { "at": { "vaccine": "A vaccine", "harmless": "a harmless piece", "well": "while you are well" } } },
+      { "say": "Your body learns to fight it, and you do not get ill.",
+        "art": { "at": { "learns": "learns to fight it", "notill": "do not get ill" } } },
+      { "say": "Then if the real germ gets in, your body is ready. It fights it fast.",
+        "art": { "at": { "real": "the real germ", "ready": "your body is ready", "fast": "fights it fast" } } },
+      { "say": "Puppies, kittens and farm animals are vaccinated too.",
+        "art": { "at": { "puppies": "Puppies", "kittens": "kittens", "farm": "farm animals" } } }
+    ] },
+
+    { "id": "moving", "kind": "moving", "heading": "Moving every day", "codes": ["4Bp.04"], "beats": [
+      { "say": "Your body is built to move. Sit still all day and it gets weaker.",
+        "art": { "at": { "built": "built to move", "still": "Sit still all day", "weaker": "gets weaker" } } },
+      { "say": "Muscles that work get stronger. Muscles that never work get smaller.",
+        "art": { "at": { "muscles": "Muscles that work", "smaller": "get smaller" } } },
+      { "say": "The heart is a muscle too. Running makes it beat faster and get stronger.",
+        "art": { "at": { "heart": "The heart is a muscle", "running": "Running", "stronger": "get stronger" } } },
+      { "say": "Bones stay strong. You sleep better and you feel better.",
+        "art": { "at": { "bones": "Bones stay strong", "sleep": "sleep better", "feel": "feel better" } } },
+      { "say": "It is not only sport. Walking, dancing and playing all count.",
+        "art": { "at": { "sport": "not only sport", "walking": "Walking", "dancing": "dancing", "playing": "playing all count" } } }
+    ] },
+
+    { "id": "evidence", "kind": "evidence", "heading": "Evidence or opinion", "codes": ["4SIC.03"], "beats": [
+      { "say": "When you make a point about health, back it up with evidence.",
+        "art": { "at": { "point": "make a point", "back": "back it up with evidence" } } },
+      { "say": "Evidence is something that was measured, counted or tested.",
+        "art": { "at": { "measured": "measured", "counted": "counted", "tested": "tested" } } },
+      { "say": "I think PE is boring is an opinion. Nobody measured it.",
+        "art": { "at": { "opinion": "an opinion", "nobody": "Nobody measured it" } } },
+      { "say": "Doctors measured stronger hearts in children who ran. That is evidence.",
+        "art": { "at": { "doctors": "Doctors measured", "that": "That is evidence" } } }
+    ] },
+
+    { "id": "jobs", "kind": "jobs", "heading": "Health science near you", "codes": ["4SIC.02", "4SIC.04"], "beats": [
+      { "say": "Science is not only in a lab. It is used in your own area.",
+        "art": { "at": { "lab": "not only in a lab", "area": "your own area" } } },
+      { "say": "A pharmacist knows each medicine, and how much of it is safe.",
+        "art": { "at": { "pharm": "A pharmacist", "safe": "how much of it is safe" } } },
+      { "say": "A nurse gives vaccines. A vet vaccinates puppies and farm animals.",
+        "art": { "at": { "nurse": "A nurse", "vet": "A vet" } } },
+      { "say": "A PE teacher plans movement that keeps a whole school healthy.",
+        "art": { "at": { "pe": "A PE teacher", "school": "a whole school" } } }
+    ] },
+
+    { "id": "recap", "kind": "recap", "heading": "What you now know", "codes": ["4Bp.01", "4Bp.02", "4Bp.04", "4SIC.02", "4SIC.03", "4SIC.04"], "beats": [
+      { "say": "The right medicine, the right amount, a grown-up in charge.",
+        "art": { "at": { "medicine": "The right medicine" } } },
+      { "say": "Infectious diseases spread. A vaccine gets your body ready first.",
+        "art": { "at": { "infect": "Infectious diseases spread", "vaccine": "A vaccine" } } },
+      { "say": "Move every day: muscles, heart, bones, sleep and mood.",
+        "art": { "at": { "move": "Move every day" } } },
+      { "say": "Back your point with evidence, and ask the people who use science near you.",
+        "art": { "at": { "evidence": "with evidence", "near": "near you" } } }
+    ] }
+  ]
+}

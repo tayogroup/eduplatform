@@ -65,6 +65,12 @@ MARK = "ehel-g4-lesson-opener"
 # }
 WORK = {
  "big-numbers-below-zero": {
+  "video": {
+   "src": "lecture-video/big-numbers-below-zero.de4c94d1.mp4",
+   "poster": "lecture-video/big-numbers-below-zero.2530b640.jpg",
+   "vtt": "lecture-video/big-numbers-below-zero.19cd5d64.vtt",
+   "note": "The whole lesson in about 3 minutes. When the film ends, this step is done.",
+  },
   "about": [
    "Say what a digit is worth by which column it sits in, up to ten thousand.",
    "Regroup a number into a different mix of thousands, hundreds, tens and ones.",
@@ -87,6 +93,12 @@ WORK = {
   ],
  },
  "patterns-and-squares": {
+  "video": {
+   "src": "lecture-video/patterns-and-squares.8d748703.mp4",
+   "poster": "lecture-video/patterns-and-squares.fef25628.jpg",
+   "vtt": "lecture-video/patterns-and-squares.a7f360cc.vtt",
+   "note": "The whole lesson in about 3 minutes. When the film ends, this step is done.",
+  },
   "about": [
    "Say whether a number is odd or even, and explain how you know.",
    "Build a square number as an actual square of counters, not just a multiplication fact.",
@@ -106,6 +118,12 @@ WORK = {
   ],
  },
  "ways-to-calculate": {
+  "video": {
+   "src": "lecture-video/ways-to-calculate.6ec5fed6.mp4",
+   "poster": "lecture-video/ways-to-calculate.f90d342a.jpg",
+   "vtt": "lecture-video/ways-to-calculate.08153834.vtt",
+   "note": "The whole lesson in about 3 minutes. When the film ends, this step is done.",
+  },
   "about": [
    "Estimate an answer before calculating, and check the exact answer against it.",
    "Add and subtract using a method that makes sense for the numbers in front of you.",
@@ -125,6 +143,12 @@ WORK = {
   ],
  },
  "parts-of-a-whole": {
+  "video": {
+   "src": "lecture-video/parts-of-a-whole.035cdf0c.mp4",
+   "poster": "lecture-video/parts-of-a-whole.2ede6f63.jpg",
+   "vtt": "lecture-video/parts-of-a-whole.7ffc65d5.vtt",
+   "note": "The whole lesson in about 2 and a half minutes. When the film ends, this step is done.",
+  },
   "about": [
    "Compare fractions with different denominators, such as three eighths and one half.",
    "Convert between fractions and percentages.",
@@ -144,6 +168,12 @@ WORK = {
   ],
  },
  "telling-the-time": {
+  "video": {
+   "src": "lecture-video/telling-the-time.84c230fc.mp4",
+   "poster": "lecture-video/telling-the-time.55a6c85a.jpg",
+   "vtt": "lecture-video/telling-the-time.447c47cf.vtt",
+   "note": "The whole lesson in about 3 minutes. When the film ends, this step is done.",
+  },
   "about": [
    "Convert between 24-hour time and 12-hour time.",
    "Read a real bus timetable or TV guide written in 24-hour time.",
@@ -191,6 +221,12 @@ WORK = {
   ],
  },
  "where-things-are": {
+  "video": {
+   "src": "lecture-video/where-things-are.403c475b.mp4",
+   "poster": "lecture-video/where-things-are.a18bf7df.jpg",
+   "vtt": "lecture-video/where-things-are.5cb133ff.vtt",
+   "note": "The whole lesson in about 2 and a half minutes. When the film ends, this step is done.",
+  },
   "about": [
    "Use all eight compass points to give and follow directions.",
    "Plot and read coordinates on a grid.",
@@ -209,6 +245,12 @@ WORK = {
   ],
  },
  "asking-sorting-chance": {
+  "video": {
+   "src": "lecture-video/asking-sorting-chance.2b4c3228.mp4",
+   "poster": "lecture-video/asking-sorting-chance.a3c042ee.jpg",
+   "vtt": "lecture-video/asking-sorting-chance.53e14203.vtt",
+   "note": "The whole lesson in about 2 and a half minutes. When the film ends, this step is done.",
+  },
   "about": [
    "Sort information using a Venn diagram and a Carroll diagram.",
    "Say whether an event is impossible, unlikely, likely or certain.",

@@ -2674,7 +2674,21 @@
     });
   }
 
+  function lessonFilm(o) {
+    const v = o.video, stage = document.getElementById(o.stage);
+    stage.innerHTML = '<div class="lec lec-film">' +
+      '<video controls playsinline preload="none" poster="' + esc(v.poster) + '" src="' + esc(v.src) + '">' +
+      '<track kind="captions" srclang="en" label="English" src="' + esc(v.vtt) + '"></video>' +
+      '<p class="lec-note">' + esc(v.note) + '</p></div>';
+    const film = stage.querySelector('video'), slide = stage.closest('section.slide');
+    film.addEventListener('ended', () => finish(o.finish, o.done));
+    if (slide && window.MutationObserver) new MutationObserver(() => {
+      if (!slide.classList.contains('active') && !film.paused) film.pause();
+    }).observe(slide, { attributes: true, attributeFilter: ['class'] });
+  }
+  
   function lessonLecture(o) {
+    if (o.video) return lessonFilm(o);
     const parts = o.parts || [];
     let k = 0;
     const id = o.stage + 'l';
@@ -2773,7 +2787,7 @@
   }
 
   lessonAbout({ stage: 'stageOvw', about: ["Say when parts are equal and when they are not.", "Know what the top and bottom numbers of a fraction mean.", "Find a fraction of a group of objects.", "Name fractions that are worth the same.", "Compare two fractions and say which is bigger.", "Put fractions on a number line."], finish: 0, done: "Let's begin." });
-  lessonLecture({ stage: 'stageLec', parts: [{ title: "Equal parts", say: "A fraction only works if the parts are equal - cutting unevenly does not make halves or quarters, however many pieces you end up with." }, { title: "Top number, bottom number", say: "The bottom number says how many equal parts the whole is split into, and the top number says how many of those parts you have." }, { title: "Fractions worth the same", say: "Different fractions can be worth exactly the same amount - one half and two quarters cover the same amount of a whole." }], finish: 1, done: "You have heard the whole lesson. Now do it yourself." });
+  lessonLecture({ stage: 'stageLec', parts: [{ title: "Equal parts", say: "A fraction only works if the parts are equal - cutting unevenly does not make halves or quarters, however many pieces you end up with." }, { title: "Top number, bottom number", say: "The bottom number says how many equal parts the whole is split into, and the top number says how many of those parts you have." }, { title: "Fractions worth the same", say: "Different fractions can be worth exactly the same amount - one half and two quarters cover the same amount of a whole." }], video: { src: "lecture-video/fair-shares.a262aa6c.mp4", poster: "lecture-video/fair-shares.d01fb8a5.jpg", vtt: "lecture-video/fair-shares.05fa5051.vtt", note: "The whole lesson in about 2 and a half minutes. When the film ends, this step is done." }, finish: 1, done: "You have heard the whole lesson. Now do it yourself." });
   lessonWords({ stage: 'stageMw', words: [{ w: "fraction", pic: "🍕", meaning: "A part of a whole, like one half or one quarter.", uses: ["Shade one half of the circle to show the fraction."] }, { w: "numerator", pic: "⬆️", meaning: "The top number in a fraction - how many equal parts you have.", uses: ["In 3/4, the numerator is 3."] }, { w: "denominator", pic: "⬇️", meaning: "The bottom number in a fraction - how many equal parts the whole is split into.", uses: ["In 3/4, the denominator is 4."] }, { w: "equal parts", pic: "⚖️", meaning: "Pieces that are exactly the same size.", uses: ["Cut the paper into four equal parts."] }, { w: "equivalent", pic: "🔁", meaning: "Worth the same amount, even though the fraction looks different, like one half and two quarters.", uses: ["1/2 and 2/4 are equivalent fractions."] }, { w: "whole", pic: "🍎", meaning: "One whole thing, before it is cut into parts.", uses: ["Put the pieces back together to make one whole."] }], finish: 2, done: "You know the math words of this lesson." });
   show(0, false);
   quiet -= 1;   /* the first draw is over: say() speaks from here on */
@@ -3568,6 +3582,9 @@
     align-items: center; gap: 10px; text-align: center; }
   .phase { color: var(--teal); font-weight: 800; font-size: 12.5px; letter-spacing: .1em;
     text-transform: uppercase; }
+  .lec.lec-film { max-width: 760px; }
+  .lec-film video { width: 100%; display: block; border-radius: 18px; background: #000;
+    aspect-ratio: 16 / 9; box-shadow: var(--shadow); }
   .lec-h { font-weight: 800; font-size: clamp(21px, 4vw, 26px); margin: 0; }
   .lec-p { margin: 0; font-size: 19px; line-height: 1.55; max-width: 34em; }
   .lec-note { margin: 4px 0 0; color: var(--muted); font-size: 13.5px; }

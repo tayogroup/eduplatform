@@ -85,6 +85,12 @@ FRAG = {
 # }
 WORK = {
  "up-to-a-thousand": {
+  "video": {
+   "src": "lecture-video/up-to-a-thousand.c4ba032a.mp4",
+   "poster": "lecture-video/up-to-a-thousand.74e4ca05.jpg",
+   "vtt": "lecture-video/up-to-a-thousand.5a801c05.vtt",
+   "note": "The whole lesson in about 2 and a half minutes. When the film ends, this step is done.",
+  },
   "about": [
    "Say what a digit is worth by which column it sits in, up to a thousand.",
    "Break a 3-digit number apart into hundreds, tens and ones.",
@@ -108,6 +114,12 @@ WORK = {
   ],
  },
  "adding-and-money": {
+  "video": {
+   "src": "lecture-video/adding-and-money.97516ff4.mp4",
+   "poster": "lecture-video/adding-and-money.396c4d31.jpg",
+   "vtt": "lecture-video/adding-and-money.7ded6806.vtt",
+   "note": "The whole lesson in about 2 and a half minutes. When the film ends, this step is done.",
+  },
   "about": [
    "Find the complement of a number to 100.",
    "Add pairs of numbers in any order without changing the total.",
@@ -130,6 +142,12 @@ WORK = {
   ],
  },
  "rows-and-rules": {
+  "video": {
+   "src": "lecture-video/rows-and-rules.f9307cfa.mp4",
+   "poster": "lecture-video/rows-and-rules.79db959f.jpg",
+   "vtt": "lecture-video/rows-and-rules.92d66916.vtt",
+   "note": "The whole lesson in about 2 and a half minutes. When the film ends, this step is done.",
+  },
   "about": [
    "Use an array of rows and columns to show a multiplication fact.",
    "Know that turning an array round gives the same total a different way.",
@@ -152,6 +170,12 @@ WORK = {
   ],
  },
  "equal-parts": {
+  "video": {
+   "src": "lecture-video/equal-parts.2af45c9f.mp4",
+   "poster": "lecture-video/equal-parts.0d63f0fe.jpg",
+   "vtt": "lecture-video/equal-parts.588026e8.vtt",
+   "note": "The whole lesson in about 2 and a half minutes. When the film ends, this step is done.",
+  },
   "about": [
    "Know that a fraction's parts must be exactly equal, not just close.",
    "Find a fraction of a group of objects.",
@@ -173,6 +197,12 @@ WORK = {
   ],
  },
  "shapes-and-symmetry": {
+  "video": {
+   "src": "lecture-video/shapes-and-symmetry.0d98fd10.mp4",
+   "poster": "lecture-video/shapes-and-symmetry.89f75889.jpg",
+   "vtt": "lecture-video/shapes-and-symmetry.f6583d21.vtt",
+   "note": "The whole lesson in about 2 and a half minutes. When the film ends, this step is done.",
+  },
   "about": [
    "Name flat shapes, including quadrilaterals.",
    "Say whether a shape is regular or irregular.",
@@ -196,6 +226,12 @@ WORK = {
   ],
  },
  "measure-it": {
+  "video": {
+   "src": "lecture-video/measure-it.309dab53.mp4",
+   "poster": "lecture-video/measure-it.4ef46df3.jpg",
+   "vtt": "lecture-video/measure-it.b98bed5b.vtt",
+   "note": "The whole lesson in about 2 and a half minutes. When the film ends, this step is done.",
+  },
   "about": [
    "Measure length, mass and capacity using real instruments.",
    "Read a scale marked in twos, fives or tens.",
@@ -217,6 +253,12 @@ WORK = {
   ],
  },
  "time-and-direction": {
+  "video": {
+   "src": "lecture-video/time-and-direction.28bfdbec.mp4",
+   "poster": "lecture-video/time-and-direction.c3e76988.jpg",
+   "vtt": "lecture-video/time-and-direction.54126f1e.vtt",
+   "note": "The whole lesson in about 2 and a half minutes. When the film ends, this step is done.",
+  },
   "about": [
    "Tell the time and work out how long something took.",
    "Read a timetable to plan a journey.",
@@ -238,6 +280,12 @@ WORK = {
   ],
  },
  "ask-count-chart": {
+  "video": {
+   "src": "lecture-video/ask-count-chart.8a89aab5.mp4",
+   "poster": "lecture-video/ask-count-chart.51cb5c53.jpg",
+   "vtt": "lecture-video/ask-count-chart.96cf5961.vtt",
+   "note": "The whole lesson in about 2 and a half minutes. When the film ends, this step is done.",
+  },
   "about": [
    "Ask a real question and record the answers with tally marks.",
    "Read a pictogram using its key.",

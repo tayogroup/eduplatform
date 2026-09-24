@@ -1,0 +1,112 @@
+{
+  "_comment": "Storyboard for the Grade 1 Mathematics unit lecture film, Days, Months and Clocks. Rendered by tools/create-ehel-unit-lecture.js. See lecture-video/BRIEF.md. Every beat is one narration clip; art.at names the phrases a picture waits for, and the page refuses to load if a phrase is not in its beat's say. The chapters follow the lesson opener's three parts (days and months; short times and long times; o'clock and half past), opened out with the lesson page's own examples: its seven day cards and the day after Wednesday (step 4), its twelve months and Hodan born in the first month (steps 5 and 11), its second-minute-hour-day-week ladder (steps 6 and 8), and its clocks - school at 8 o'clock, and the short hand between 3 and 4 at half past 3 (steps 7, 9 and 10).",
+  "slug": "days-months-and-clocks",
+  "lesson": 6,
+  "grade": 1,
+  "stage": 1,
+  "title": "Days, Months and Clocks",
+  "subtitle": "Grade 1 Mathematics",
+  "framework": "Cambridge Primary Mathematics 0096",
+  "renderer": {
+    "art": ["math"],
+    "skin": "brown",
+    "scenes": [
+      "tools/lib/ehel-film-marks.js",
+      "tools/lib/film-scenes/math-g1/days-months-and-clocks.js",
+      "tools/lib/film-scenes/math-g1/days-months-and-clocks-2.js"
+    ]
+  },
+  "objectives": [
+    ["1Gt.01", "Use familiar language to describe units of time."],
+    ["1Gt.02", "Know the days of the week and the months of the year."],
+    ["1Gt.03", "Recognise time to the hour and half hour."]
+  ],
+  "scenes": [
+    { "id": "title", "kind": "title", "codes": [], "beats": [
+      { "say": "A week has seven days. A year has twelve months.",
+        "art": { "at": { "week": "seven days", "year": "twelve months" } } },
+      { "say": "And a clock tells you the time, with two hands.",
+        "art": { "at": { "clock": "a clock", "hands": "two hands" } } }
+    ] },
+
+    { "id": "days", "kind": "days", "heading": "Seven days in a week", "codes": ["1Gt.02"], "beats": [
+      { "say": "The days of the week always come round in the same order.",
+        "art": { "at": { "order": "the same order" } } },
+      { "say": "Monday, Tuesday, Wednesday, Thursday, Friday.",
+        "art": { "at": { "mon": "Monday", "tue": "Tuesday", "wed": "Wednesday", "thu": "Thursday", "fri": "Friday" } } },
+      { "say": "Then Saturday, and then Sunday. That is seven days.",
+        "art": { "at": { "sat": "Saturday", "sun": "Sunday", "seven": "seven days" } } },
+      { "say": "After Sunday the week starts again at Monday, round and round.",
+        "art": { "at": { "again": "starts again", "monday": "at Monday", "round": "round and round" } } },
+      { "say": "The day after Wednesday is Thursday. The day before Saturday is Friday.",
+        "art": { "at": { "after": "after Wednesday", "thu": "is Thursday", "before": "before Saturday", "fri": "is Friday" } } }
+    ] },
+
+    { "id": "months", "kind": "months", "heading": "Twelve months in a year", "codes": ["1Gt.02"], "beats": [
+      { "say": "A year is made of twelve months. They always come in this order.",
+        "art": { "at": { "year": "A year", "twelve": "twelve months", "order": "this order" } } },
+      { "say": "January, February, March, April, May, June.",
+        "art": { "at": { "jan": "January", "feb": "February", "mar": "March", "apr": "April", "may": "May", "jun": "June" } } },
+      { "say": "July, August, September, October, November, December.",
+        "art": { "at": { "jul": "July", "aug": "August", "sep": "September", "oct": "October", "nov": "November", "dec": "December" } } },
+      { "say": "The year starts at January and it ends at December.",
+        "art": { "at": { "start": "starts at January", "end": "ends at December" } } },
+      { "say": "Hodan was born in the first month. That month is January.",
+        "art": { "at": { "hodan": "Hodan was born", "first": "the first month", "cal": "That month is January" } } }
+    ] },
+
+    { "id": "howlong", "kind": "howlong", "heading": "Short times and long times", "codes": ["1Gt.01"], "beats": [
+      { "say": "Some things take a very short time. Some take a very long time.",
+        "art": { "at": { "short": "a very short time", "long": "a very long time" } } },
+      { "say": "One clap takes about a second. That is the shortest.",
+        "art": { "at": { "clap": "One clap", "second": "about a second", "shortest": "the shortest" } } },
+      { "say": "Sixty seconds make one minute. A minute is longer.",
+        "art": { "at": { "sixty": "Sixty seconds", "minute": "one minute", "longer": "A minute is longer" } } },
+      { "say": "One lesson at school lasts about an hour. That is sixty minutes.",
+        "art": { "at": { "lesson": "One lesson at school", "hour": "about an hour", "mins": "sixty minutes" } } },
+      { "say": "A day is one whole sleep to the next sleep. That is much longer.",
+        "art": { "at": { "day": "A day", "sleep": "one whole sleep to the next", "much": "much longer" } } },
+      { "say": "A week is seven days. That is the longest one here.",
+        "art": { "at": { "week": "A week", "seven": "seven days", "longest": "the longest" } } }
+    ] },
+
+    { "id": "hands", "kind": "hands", "heading": "The two hands", "codes": ["1Gt.03"], "beats": [
+      { "say": "A clock has two hands. They do two different jobs.",
+        "art": { "at": { "clock": "A clock", "two": "two hands", "jobs": "two different jobs" } } },
+      { "say": "The short hand is the hour hand. It tells you the hour.",
+        "art": { "at": { "short": "The short hand", "hourhand": "the hour hand", "hour": "tells you the hour" } } },
+      { "say": "The long hand tells you how far through the hour you are.",
+        "art": { "at": { "long": "The long hand", "far": "how far through the hour" } } },
+      { "say": "Always look for the short hand first, every single time.",
+        "art": { "at": { "look": "look for the short hand", "every": "every single time" } } },
+      { "say": "The long hand is bigger, but it never tells the hour.",
+        "art": { "at": { "bigger": "is bigger", "never": "never tells the hour" } } }
+    ] },
+
+    { "id": "oclock", "kind": "oclock", "heading": "O'clock and half past", "codes": ["1Gt.03"], "beats": [
+      { "say": "At o'clock, the long hand points straight up to twelve.",
+        "art": { "at": { "oclock": "At o'clock", "up": "straight up to twelve" } } },
+      { "say": "Here the short hand is on the three. It is three o'clock.",
+        "art": { "at": { "short": "the short hand", "three": "on the three", "say": "three o'clock" } } },
+      { "say": "School starts at eight o'clock. The short hand points to eight.",
+        "art": { "at": { "school": "School starts", "eight": "points to eight" } } },
+      { "say": "At half past, the long hand points straight down to six.",
+        "art": { "at": { "half": "At half past", "down": "straight down to six" } } },
+      { "say": "Now the short hand sits between two numbers on the face.",
+        "art": { "at": { "hand": "the short hand", "between": "between two numbers" } } },
+      { "say": "It is between three and four. So it is half past three.",
+        "art": { "at": { "betw": "between three and four", "hp": "half past three" } } }
+    ] },
+
+    { "id": "recap", "kind": "recap", "heading": "What you now know", "codes": ["1Gt.01", "1Gt.02", "1Gt.03"], "beats": [
+      { "say": "Seven days make a week. Twelve months make a year.",
+        "art": { "at": { "days": "Seven days", "months": "Twelve months" } } },
+      { "say": "A second is short. A whole year is long. Pick the right word.",
+        "art": { "at": { "secs": "A second is short" } } },
+      { "say": "Long hand up is o'clock. Long hand down is half past.",
+        "art": { "at": { "up": "Long hand up", "down": "Long hand down" } } },
+      { "say": "And the short hand always tells you the hour, every time.",
+        "art": { "at": { "shorthand": "the short hand" } } }
+    ] }
+  ]
+}

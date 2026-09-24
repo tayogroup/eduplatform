@@ -1,0 +1,112 @@
+{
+  "_comment": "Storyboard for the Grade 2 Mathematics unit lecture film, Lesson 3 Half Past, Quarter To. Rendered by tools/create-ehel-unit-lecture.js. See lecture-video/BRIEF.md. Every beat is one narration clip; art.at names the phrases a picture waits for, and the page refuses to load if a phrase is not in its beat's say. The chapters follow the lesson page's own steps in order: The two hands, Quarter past quarter to, Counting round in fives, Clock face and digital, Seconds to years, Days months calendar. Every clock is drawn by ART.clock(h, m), which puts the hour hand at h plus m over 60 of the way round, so the hands always agree with the words: half past three is clock(3, 30) with the short hand halfway to the 4, and quarter to four is clock(3, 45) with it three quarters of the way there.",
+  "slug": "half-past-quarter-to",
+  "lesson": 3,
+  "grade": 2,
+  "stage": 2,
+  "title": "Half Past, Quarter To",
+  "subtitle": "Grade 2 Mathematics",
+  "framework": "Cambridge Primary Mathematics 0096",
+  "renderer": {
+    "art": ["math"],
+    "skin": "brown",
+    "scenes": [
+      "tools/lib/ehel-film-marks.js",
+      "tools/lib/film-scenes/math-g2/half-past-quarter-to.js",
+      "tools/lib/film-scenes/math-g2/half-past-quarter-to-2.js",
+      "tools/lib/film-scenes/math-g2/half-past-quarter-to-3.js"
+    ]
+  },
+  "objectives": [
+    ["2Gt.01", "Order and compare units of time (seconds, minutes, hours, days, weeks, months and years)."],
+    ["2Gt.02", "Read and record time to five minutes in digital notation (12-hour) and on analogue clocks."],
+    ["2Gt.03", "Interpret and use the information in calendars."]
+  ],
+  "scenes": [
+    { "id": "title", "kind": "title", "codes": [], "beats": [
+      { "say": "This is a clock face. It has two hands, and they move.",
+        "art": { "at": { "face": "a clock face", "hands": "two hands", "move": "they move" } } },
+      { "say": "Today you will read the time on it, down to five minutes.",
+        "art": { "at": { "read": "read the time", "five": "five minutes" } } }
+    ] },
+
+    { "id": "hands", "kind": "hands", "heading": "The two hands", "codes": ["2Gt.02"], "beats": [
+      { "say": "The short fat hand shows the hour. Read that one first.",
+        "art": { "at": { "short": "The short fat hand", "hour": "the hour", "first": "Read that one first" } } },
+      { "say": "The long thin hand shows the minutes. Read that one next.",
+        "art": { "at": { "long": "The long thin hand", "minutes": "the minutes", "next": "Read that one next" } } },
+      { "say": "Here the short hand is at the 3, so the hour is three o'clock.",
+        "art": { "at": { "at3": "at the 3", "oclock": "three o'clock" } } },
+      { "say": "Watch the long hand travel once round. That trip is one hour.",
+        "art": { "at": { "watch": "Watch the long hand", "round": "once round", "hour": "one hour" } } },
+      { "say": "The short hand crept along too. It moved from the 3 to the 4.",
+        "art": { "at": { "crept": "crept along too", "moved": "from the 3 to the 4" } } }
+    ] },
+
+    { "id": "quarters", "kind": "quarters", "heading": "Quarter past, quarter to", "codes": ["2Gt.02"], "beats": [
+      { "say": "The clock face splits into four quarters, like a cake.",
+        "art": { "at": { "splits": "splits into four quarters", "cake": "like a cake" } } },
+      { "say": "A quarter of the way round, at the 3, is quarter past three.",
+        "art": { "at": { "quarter": "A quarter of the way round", "three": "at the 3", "past": "quarter past three" } } },
+      { "say": "Half way round, straight down at the 6, is half past three.",
+        "art": { "at": { "half": "Half way round", "six": "down at the 6", "halfpast": "half past three" } } },
+      { "say": "Three quarters round, at the 9, is quarter to the next hour.",
+        "art": { "at": { "three": "Three quarters round", "nine": "at the 9", "to": "quarter to the next hour" } } },
+      { "say": "Now look at the short hand. It is nearly all the way to the 4.",
+        "art": { "at": { "look": "look at the short hand", "nearly": "nearly all the way to the 4" } } },
+      { "say": "So this is quarter to four, not quarter to three.",
+        "art": { "at": { "four": "quarter to four", "not": "not quarter to three" } } }
+    ] },
+
+    { "id": "fives", "kind": "fives", "heading": "Counting round in fives", "codes": ["2Gt.02"], "beats": [
+      { "say": "The long hand points at the 4. Count round from the 12 in fives.",
+        "art": { "at": { "points": "points at the 4", "count": "Count round from the 12", "fives": "in fives" } } },
+      { "say": "Five, ten, fifteen, twenty. It is twenty minutes past three.",
+        "art": { "at": { "five": "Five,", "ten": "ten,", "fifteen": "fifteen,", "twenty": "twenty.", "past": "twenty minutes past three" } } },
+      { "say": "It is not four minutes past. Every number counts five minutes.",
+        "art": { "at": { "notfour": "not four minutes past", "every": "Every number counts five minutes" } } },
+      { "say": "On the right side it is past. On the left side it is to.",
+        "art": { "at": { "right": "On the right side", "past": "it is past", "left": "On the left side", "to": "it is to" } } }
+    ] },
+
+    { "id": "digital", "kind": "digital", "heading": "Clock face and digital", "codes": ["2Gt.02"], "beats": [
+      { "say": "A digital clock writes the time in numbers, hour first, minutes after.",
+        "art": { "at": { "digital": "A digital clock", "numbers": "in numbers", "hour": "hour first", "minutes": "minutes after" } } },
+      { "say": "Half past two is written two thirty, with a colon between.",
+        "art": { "at": { "halfpast": "Half past two", "written": "two thirty", "colon": "a colon between" } } },
+      { "say": "Quarter past seven is written seven fifteen on a digital clock.",
+        "art": { "at": { "quarterpast": "Quarter past seven", "written": "seven fifteen" } } },
+      { "say": "Quarter to five is written four forty five. The hour is still four.",
+        "art": { "at": { "quarterto": "Quarter to five", "written": "four forty five", "still": "The hour is still four" } } }
+    ] },
+
+    { "id": "units", "kind": "units", "heading": "Seconds to years", "codes": ["2Gt.01"], "beats": [
+      { "say": "Time has its own units, from very short to very long.",
+        "art": { "at": { "units": "its own units", "short": "very short", "long": "very long" } } },
+      { "say": "Sixty seconds make one minute. Sixty minutes make one hour.",
+        "art": { "at": { "sec": "Sixty seconds", "min": "Sixty minutes", "hour": "one hour" } } },
+      { "say": "Twenty four hours make one day. Seven days make one week.",
+        "art": { "at": { "day": "Twenty four hours", "week": "Seven days" } } },
+      { "say": "Twelve months make one year. One blink lasts about a second.",
+        "art": { "at": { "year": "Twelve months", "blink": "One blink" } } }
+    ] },
+
+    { "id": "calendar", "kind": "calendar", "heading": "Days, months, calendar", "codes": ["2Gt.03"], "beats": [
+      { "say": "A calendar lays one whole month out in rows of seven days.",
+        "art": { "at": { "calendar": "A calendar", "rows": "rows of seven days" } } },
+      { "say": "Each row is one week, running from Monday to Sunday.",
+        "art": { "at": { "row": "Each row is one week", "monday": "Monday to Sunday" } } },
+      { "say": "The twelfth of June sits under Friday. Read up the column.",
+        "art": { "at": { "twelfth": "The twelfth of June", "friday": "under Friday", "column": "up the column" } } }
+    ] },
+
+    { "id": "recap", "kind": "recap", "heading": "What you now know", "codes": ["2Gt.01", "2Gt.02", "2Gt.03"], "beats": [
+      { "say": "Short hand for the hour, and long hand for the minutes.",
+        "art": { "at": { "short": "Short hand" } } },
+      { "say": "Quarter past at the 3, and quarter to at the 9. Count in fives.",
+        "art": { "at": { "quarters": "Quarter past at the 3", "fives": "Count in fives" } } },
+      { "say": "Write it in numbers, read a calendar, and know your units of time.",
+        "art": { "at": { "numbers": "in numbers", "calendar": "a calendar", "units": "your units of time" } } }
+    ] }
+  ]
+}

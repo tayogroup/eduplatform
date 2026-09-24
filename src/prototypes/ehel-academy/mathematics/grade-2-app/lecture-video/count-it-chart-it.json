@@ -1,0 +1,118 @@
+{
+  "_comment": "Storyboard for the Grade 2 Mathematics unit lecture film, Lesson 9 Count It, Chart It. Rendered by tools/create-ehel-unit-lecture.js. See lecture-video/BRIEF.md. Every beat is one narration clip; art.at names the phrases a picture waits for, and the page refuses to load if a phrase is not in its beat's say. The chapters follow the lesson opener's three parts (sorting and tallying; charts and pictograms; likely or random) opened out with the lesson page's own steps: Sort them into groups (fruit or vegetable), Ask collect answer and Tally charts, Build and Reading a block graph, Pictograms and Spot the mistake's key of 2, Sorting two ways (the Carroll diagram, red and round), and Toss a coin with Regular or random. One set of numbers runs through the whole film: mango 8, banana 5, orange 4, seventeen children in all, and a coin run of six heads and four tails.",
+  "slug": "count-it-chart-it",
+  "lesson": 9,
+  "grade": 2,
+  "stage": 2,
+  "title": "Count It, Chart It",
+  "subtitle": "Grade 2 Mathematics",
+  "framework": "Cambridge Primary Mathematics 0096",
+  "renderer": {
+    "art": ["math"],
+    "skin": "brown",
+    "scenes": [
+      "tools/lib/ehel-film-marks.js",
+      "tools/lib/film-scenes/math-g2/count-it-chart-it.js",
+      "tools/lib/film-scenes/math-g2/count-it-chart-it-2.js",
+      "tools/lib/film-scenes/math-g2/count-it-chart-it-3.js"
+    ]
+  },
+  "objectives": [
+    ["2Ss.01", "Conduct an investigation to answer non-statistical and statistical questions (categorical data)."],
+    ["2Ss.02", "Record, organise and represent categorical data. Choose and explain which representation to use in a given situation: lists and tables Venn and Carroll diagrams tally charts block graphs and pictograms."],
+    ["2Ss.03", "Describe data, identifying similarities and variations to answer non-statistical and statistical questions and discuss conclusions."],
+    ["2Sp.01", "Use familiar language associated with patterns and randomness, including regular pattern and random pattern."],
+    ["2Sp.02", "Conduct chance experiments with two outcomes, and present and describe the results."]
+  ],
+  "scenes": [
+    { "id": "title", "kind": "title", "codes": [], "beats": [
+      { "say": "Ask a question. Count what people say. Then show it.",
+        "art": { "at": { "ask": "Ask a question", "count": "Count what people say", "show": "show it" } } },
+      { "say": "A tally, a block graph and a pictogram all do that job.",
+        "art": { "at": { "tally": "A tally", "graph": "a block graph", "picto": "a pictogram" } } }
+    ] },
+
+    { "id": "sort", "kind": "sort", "heading": "Sorting into groups", "codes": ["2Ss.02"], "beats": [
+      { "say": "Sorting puts things that are alike together. It needs one clear rule.",
+        "art": { "at": { "alike": "things that are alike", "rule": "one clear rule" } } },
+      { "say": "Here the rule is fruit, or vegetable. Nothing else matters.",
+        "art": { "at": { "fruit": "fruit,", "veg": "vegetable", "nothing": "Nothing else matters" } } },
+      { "say": "An apple is a fruit, so it goes here. A carrot is a vegetable.",
+        "art": { "at": { "apple": "An apple", "here": "it goes here", "carrot": "A carrot" } } },
+      { "say": "Each thing goes in one hoop only. Sort by the rule, not by colour.",
+        "art": { "at": { "one": "one hoop only", "colour": "not by colour" } } }
+    ] },
+
+    { "id": "tally", "kind": "tally", "heading": "Ask, and keep a tally", "codes": ["2Ss.01", "2Ss.02"], "beats": [
+      { "say": "An investigation starts with a question you want answered.",
+        "art": { "at": { "quest": "a question" } } },
+      { "say": "Which fruit do you like best? Ask everyone in your class.",
+        "art": { "at": { "which": "Which fruit do you like best", "ask": "Ask everyone" } } },
+      { "say": "Make one mark for every answer you hear. Do it straight away.",
+        "art": { "at": { "mark": "one mark", "away": "straight away" } } },
+      { "say": "Every fifth mark goes across the other four. That bundle is five.",
+        "art": { "at": { "fifth": "Every fifth mark", "across": "across the other four", "five": "bundle is five" } } },
+      { "say": "Mango got a gate of five, and three more. That is eight.",
+        "art": { "at": { "gate": "a gate of five", "three": "three more", "eight": "That is eight" } } }
+    ] },
+
+    { "id": "graph", "kind": "graph", "heading": "A block graph", "codes": ["2Ss.02", "2Ss.03"], "beats": [
+      { "say": "Now show your counts on a block graph. One block is one child.",
+        "art": { "at": { "graph": "a block graph", "block": "One block is one child" } } },
+      { "say": "Count the blocks, do not guess. The mango column reaches eight.",
+        "art": { "at": { "count": "Count the blocks", "eight": "reaches eight" } } },
+      { "say": "Banana has five blocks. Orange has four. They start on one line.",
+        "art": { "at": { "banana": "Banana has five", "orange": "Orange has four", "line": "one line" } } },
+      { "say": "Mango is tallest, so most children chose mango.",
+        "art": { "at": { "tallest": "Mango is tallest", "most": "most children chose mango" } } },
+      { "say": "Eight take away five is three, so three more chose mango.",
+        "art": { "at": { "take": "Eight take away five", "is": "is three", "more": "three more chose mango" } } }
+    ] },
+
+    { "id": "picto", "kind": "picto", "heading": "Pictograms and the key", "codes": ["2Ss.02"], "beats": [
+      { "say": "A pictogram shows the same counts using pictures instead of blocks.",
+        "art": { "at": { "picto": "A pictogram", "pictures": "using pictures" } } },
+      { "say": "Here one picture is one child, so you just count the pictures.",
+        "art": { "at": { "one": "one picture is one child", "count": "count the pictures" } } },
+      { "say": "But always read the key first. Here one picture stands for two children.",
+        "art": { "at": { "key": "read the key first", "two": "stands for two children" } } },
+      { "say": "Walk has four pictures. Two, four, six, eight: that is eight children.",
+        "art": { "at": { "four": "four pictures", "steps": "Two, four, six, eight", "eight": "eight children" } } }
+    ] },
+
+    { "id": "carroll", "kind": "carroll", "heading": "Sorting two ways", "codes": ["2Ss.02"], "beats": [
+      { "say": "A Carroll diagram sorts things two ways at once. Check both labels.",
+        "art": { "at": { "carroll": "A Carroll diagram", "two": "two ways at once", "both": "Check both labels" } } },
+      { "say": "Across the top it says red, or not red.",
+        "art": { "at": { "red": "says red", "notred": "not red" } } },
+      { "say": "Down the side it says round, or not round.",
+        "art": { "at": { "round": "says round", "notround": "not round" } } },
+      { "say": "An apple is red and round, so it goes in the box where both are true.",
+        "art": { "at": { "apple": "An apple", "redround": "red and round", "box": "the box where both are true" } } }
+    ] },
+
+    { "id": "chance", "kind": "chance", "heading": "Regular or random", "codes": ["2Sp.01", "2Sp.02"], "beats": [
+      { "say": "A coin can land two ways, heads or tails. Toss it ten times.",
+        "art": { "at": { "coin": "A coin", "ways": "two ways", "ten": "ten times" } } },
+      { "say": "This run gave six heads and four tails. Six and four make ten.",
+        "art": { "at": { "six": "six heads", "four": "four tails", "ten": "make ten" } } },
+      { "say": "Heads, tails, heads, tails keeps repeating. That is a regular pattern.",
+        "art": { "at": { "repeat": "keeps repeating", "regular": "a regular pattern" } } },
+      { "say": "Your real tosses have no repeat anywhere. That is a random pattern.",
+        "art": { "at": { "real": "Your real tosses", "norepeat": "no repeat anywhere", "random": "a random pattern" } } },
+      { "say": "So nobody can say how the next toss will land. Heads is not due.",
+        "art": { "at": { "nobody": "nobody can say", "next": "the next toss", "due": "not due" } } }
+    ] },
+
+    { "id": "recap", "kind": "recap", "heading": "What you now know", "codes": ["2Ss.01", "2Ss.02", "2Ss.03", "2Sp.01", "2Sp.02"], "beats": [
+      { "say": "You sorted by one rule, and kept a tally in fives.",
+        "art": { "at": { "sort": "sorted by one rule", "tally": "a tally in fives" } } },
+      { "say": "You read a block graph, and a pictogram with its key.",
+        "art": { "at": { "graph": "a block graph", "picto": "a pictogram" } } },
+      { "say": "A Carroll diagram sorts two ways at once.",
+        "art": { "at": { "carroll": "A Carroll diagram" } } },
+      { "say": "And you can tell a regular pattern from a random one.",
+        "art": { "at": { "regular": "a regular pattern", "random": "a random one" } } }
+    ] }
+  ]
+}

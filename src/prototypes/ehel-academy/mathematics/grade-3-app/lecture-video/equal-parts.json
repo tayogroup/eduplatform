@@ -1,0 +1,125 @@
+{
+  "_comment": "Storyboard for the Grade 3 Mathematics unit lecture film, Equal Parts. Rendered by tools/create-ehel-unit-lecture.js. See lecture-video/BRIEF.md. The chapters follow the lesson's own three-part lecture (equal parts and fractions; dividing to find a fraction; comparing fractions), broken into six teaching chapters and built from the lesson page's own examples: its equal-or-not circles (one boundary shifted by half a sector, exactly as the page's shapeSvg draws a wrong one), its fifths bar coloured up to one whole, its three halves of different shapes, Zara's 12 beads, Amina's 20 shillings, 1/2 = 5/10, 2/5 + 1/5 = 3/5, 3/5 > 2/5 and 1/4 > 1/10. Every division drawn in the pictures is equal by arithmetic, never by eye.",
+  "slug": "equal-parts",
+  "lesson": 4,
+  "grade": 3,
+  "stage": 3,
+  "title": "Equal Parts",
+  "subtitle": "Grade 3 Mathematics",
+  "framework": "Cambridge Primary Mathematics 0096",
+  "renderer": {
+    "art": ["math"],
+    "skin": "brown",
+    "scenes": [
+      "tools/lib/ehel-film-marks.js",
+      "tools/lib/film-scenes/math-g3/equal-parts.js",
+      "tools/lib/film-scenes/math-g3/equal-parts-2.js",
+      "tools/lib/film-scenes/math-g3/equal-parts-3.js"
+    ]
+  },
+  "objectives": [
+    ["3Nf.01", "Understand and explain that fractions are several equal parts of an object or shape and all the parts, taken together, equal one whole."],
+    ["3Nf.02", "Understand that the relationship between the whole and the parts depends on the relative size of each, regardless of their shape or orientation."],
+    ["3Nf.03", "Understand and explain that fractions can describe equal parts of a quantity or set of objects."],
+    ["3Nf.04", "Understand that a fraction can be represented as a division of the numerator by the denominator (half, quarter and three-quarters)."],
+    ["3Nf.05", "Understand that fractions (half, quarter, three-quarters, third and tenth) can act as operators."],
+    ["3Nf.06", "Recognise that two fractions can have an equivalent value (halves, quarters, fifths and tenths)."],
+    ["3Nf.07", "Estimate, add and subtract fractions with the same denominator (within one whole)."],
+    ["3Nf.08", "Use knowledge of equivalence to compare and order unit fractions and fractions with the same denominator, using the symbols =, > and <."]
+  ],
+  "scenes": [
+    { "id": "title", "kind": "title", "codes": [], "beats": [
+      { "say": "A pizza is cut into four pieces. Are they all quarters?",
+        "art": { "at": { "four": "four pieces", "quarters": "all quarters" } } },
+      { "say": "Only if the pieces are equal. Equal is the word that does the work.",
+        "art": { "at": { "equal": "the pieces are equal", "work": "does the work" } } }
+    ] },
+
+    { "id": "equal", "kind": "equal", "heading": "Equal, or not", "codes": ["3Nf.01"], "beats": [
+      { "say": "Here are two shapes. Each one is cut into four pieces.",
+        "art": { "at": { "two": "Here are two shapes", "four": "four pieces" } } },
+      { "say": "Look at this one. Every piece is exactly the same size.",
+        "art": { "at": { "look": "Look at this one", "same": "exactly the same size" } } },
+      { "say": "So these four pieces really are quarters.",
+        "art": { "at": { "pieces": "these four pieces", "quarters": "really are quarters" } } },
+      { "say": "Now the other one. This piece is bigger than the rest.",
+        "art": { "at": { "other": "the other one", "bigger": "bigger than the rest" } } },
+      { "say": "Four pieces is not enough. Fractions must be equal parts.",
+        "art": { "at": { "notenough": "not enough", "equal": "equal parts" } } }
+    ] },
+
+    { "id": "whole", "kind": "whole", "heading": "One whole, any shape", "codes": ["3Nf.01", "3Nf.02"], "beats": [
+      { "say": "This bar is cut into five equal pieces, so each one is a fifth.",
+        "art": { "at": { "five": "five equal pieces", "fifth": "a fifth" } } },
+      { "say": "Colour them in, one at a time. Watch the top number climb.",
+        "art": { "at": { "colour": "Colour them in", "climb": "the top number climb" } } },
+      { "say": "Five fifths is not nearly one whole. It is one whole.",
+        "art": { "at": { "five": "Five fifths", "one": "It is one whole" } } },
+      { "say": "A square cut down the middle. A square cut corner to corner. A circle cut across.",
+        "art": { "at": { "middle": "A square cut down the middle", "corner": "corner to corner", "across": "cut across" } } },
+      { "say": "Every one of them is a half. The shape does not decide the fraction.",
+        "art": { "at": { "half": "is a half", "shape": "The shape does not decide" } } }
+    ] },
+
+    { "id": "group", "kind": "group", "heading": "A fraction of a group", "codes": ["3Nf.03"], "beats": [
+      { "say": "A fraction can be part of a group, not just part of a shape.",
+        "art": { "at": { "group": "A fraction can be part of a group", "shape": "part of a shape" } } },
+      { "say": "Zara has twelve beads. She wants a quarter of them.",
+        "art": { "at": { "twelve": "twelve beads", "quarter": "a quarter of them" } } },
+      { "say": "The bottom number says four, so share them into four equal piles.",
+        "art": { "at": { "bottom": "The bottom number says four", "piles": "four equal piles" } } },
+      { "say": "Three beads in every pile. Take one pile, and that is three.",
+        "art": { "at": { "three": "Three beads in every pile", "take": "Take one pile" } } },
+      { "say": "The bottom number tells you how many piles, not how many to take.",
+        "art": { "at": { "piles": "how many piles", "take": "how many to take" } } }
+    ] },
+
+    { "id": "divide", "kind": "divide", "heading": "The line means divide", "codes": ["3Nf.04", "3Nf.05"], "beats": [
+      { "say": "The line in a fraction is a dividing line.",
+        "art": { "at": { "line": "The line in a fraction", "dividing": "a dividing line" } } },
+      { "say": "Three quarters means three shared between four.",
+        "art": { "at": { "threeq": "Three quarters", "shared": "three shared between four" } } },
+      { "say": "Amina has twenty shillings. What is three quarters of that?",
+        "art": { "at": { "twenty": "Amina has twenty shillings", "threeq": "three quarters of that" } } },
+      { "say": "Divide by the bottom number first. Twenty shared into four is five.",
+        "art": { "at": { "divide": "Divide by the bottom number", "five": "four is five" } } },
+      { "say": "Then multiply by the top. Three fives are fifteen shillings.",
+        "art": { "at": { "multiply": "multiply by the top", "fifteen": "fifteen shillings" } } }
+    ] },
+
+    { "id": "same", "kind": "same", "heading": "Worth the same", "codes": ["3Nf.06", "3Nf.07"], "beats": [
+      { "say": "Two fifths, and one more fifth. Count the pieces: three fifths.",
+        "art": { "at": { "two": "Two fifths", "one": "one more fifth", "three": "three fifths" } } },
+      { "say": "The bottom number never changes. It is never three tenths.",
+        "art": { "at": { "never": "never changes", "tenths": "three tenths" } } },
+      { "say": "Now look at one half, and five tenths under it.",
+        "art": { "at": { "half": "Now look at one half", "tenths": "five tenths" } } },
+      { "say": "Both bars are coloured exactly the same amount.",
+        "art": { "at": { "both": "Both bars", "same": "exactly the same amount" } } },
+      { "say": "Bigger numbers do not make a bigger fraction.",
+        "art": { "at": { "bigger": "Bigger numbers", "fraction": "a bigger fraction" } } }
+    ] },
+
+    { "id": "bigger", "kind": "bigger", "heading": "Which is bigger?", "codes": ["3Nf.08"], "beats": [
+      { "say": "When the bottom numbers match, the pieces are the same size.",
+        "art": { "at": { "match": "the bottom numbers match", "same": "the same size" } } },
+      { "say": "So three fifths is bigger than two fifths. More pieces wins.",
+        "art": { "at": { "three": "three fifths", "two": "two fifths", "more": "More pieces wins" } } },
+      { "say": "But one quarter is bigger than one tenth. That sounds wrong.",
+        "art": { "at": { "quarter": "one quarter", "tenth": "one tenth" } } },
+      { "say": "Sharing between fewer people gives everybody a bigger piece.",
+        "art": { "at": { "fewer": "between fewer people", "piece": "a bigger piece" } } }
+    ] },
+
+    { "id": "recap", "kind": "recap", "heading": "What you now know", "codes": ["3Nf.01", "3Nf.02", "3Nf.03", "3Nf.04", "3Nf.05", "3Nf.06", "3Nf.07", "3Nf.08"], "beats": [
+      { "say": "A fraction is equal parts, and all of them make one whole.",
+        "art": { "at": { "equal": "equal parts", "whole": "one whole" } } },
+      { "say": "You can take a fraction of a group, because the line means divide.",
+        "art": { "at": { "group": "of a group", "divide": "the line means divide" } } },
+      { "say": "Two fractions can be worth the same, and you can compare them.",
+        "art": { "at": { "same": "worth the same", "compare": "compare them" } } },
+      { "say": "Now go and fold some paper strips, and see the equal parts.",
+        "art": { "at": { "fold": "fold some paper strips", "parts": "the equal parts" } } }
+    ] }
+  ]
+}

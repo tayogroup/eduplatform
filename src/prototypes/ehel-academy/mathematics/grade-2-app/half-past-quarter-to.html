@@ -2552,7 +2552,21 @@
     });
   }
 
+  function lessonFilm(o) {
+    const v = o.video, stage = document.getElementById(o.stage);
+    stage.innerHTML = '<div class="lec lec-film">' +
+      '<video controls playsinline preload="none" poster="' + esc(v.poster) + '" src="' + esc(v.src) + '">' +
+      '<track kind="captions" srclang="en" label="English" src="' + esc(v.vtt) + '"></video>' +
+      '<p class="lec-note">' + esc(v.note) + '</p></div>';
+    const film = stage.querySelector('video'), slide = stage.closest('section.slide');
+    film.addEventListener('ended', () => finish(o.finish, o.done));
+    if (slide && window.MutationObserver) new MutationObserver(() => {
+      if (!slide.classList.contains('active') && !film.paused) film.pause();
+    }).observe(slide, { attributes: true, attributeFilter: ['class'] });
+  }
+  
   function lessonLecture(o) {
+    if (o.video) return lessonFilm(o);
     const parts = o.parts || [];
     let k = 0;
     const id = o.stage + 'l';
@@ -2651,7 +2665,7 @@
   }
 
   lessonAbout({ stage: 'stageOvw', about: ["Know what each hand on a clock tells me.", "Read quarter past and quarter to.", "Read and write the time to the nearest 5 minutes.", "Match a clock face to a digital time.", "Use and compare units of time.", "Use a calendar to find days and months."], finish: 0, done: "Let's begin." });
-  lessonLecture({ stage: 'stageLec', parts: [{ title: "The two hands", say: "The short hand shows the hour and the long hand shows the minutes - read the short hand first, then the long hand." }, { title: "Quarter past and quarter to", say: "Quarter past is fifteen minutes after the hour, and quarter to is fifteen minutes before the next one - the long hand points to the 3 or the 9." }, { title: "Digital time and the calendar", say: "Digital time writes the same moment in numbers, like 3:15, instead of showing it on a clock face. A calendar shows the days of a month in rows of seven." }], finish: 1, done: "You have heard the whole lesson. Now do it yourself." });
+  lessonLecture({ stage: 'stageLec', parts: [{ title: "The two hands", say: "The short hand shows the hour and the long hand shows the minutes - read the short hand first, then the long hand." }, { title: "Quarter past and quarter to", say: "Quarter past is fifteen minutes after the hour, and quarter to is fifteen minutes before the next one - the long hand points to the 3 or the 9." }, { title: "Digital time and the calendar", say: "Digital time writes the same moment in numbers, like 3:15, instead of showing it on a clock face. A calendar shows the days of a month in rows of seven." }], video: { src: "lecture-video/half-past-quarter-to.f3754762.mp4", poster: "lecture-video/half-past-quarter-to.a7eda971.jpg", vtt: "lecture-video/half-past-quarter-to.77a048a7.vtt", note: "The whole lesson in about 2 and a half minutes. When the film ends, this step is done." }, finish: 1, done: "You have heard the whole lesson. Now do it yourself." });
   lessonWords({ stage: 'stageMw', words: [{ w: "hour", pic: "🕐", meaning: "A unit of time - there are 24 in a day, shown by the short hand on a clock.", uses: ["It takes about an hour to read this book."] }, { w: "minute", pic: "🕜", meaning: "A unit of time - there are 60 in an hour, shown by the long hand on a clock.", uses: ["Wait five minutes for the bus."] }, { w: "quarter past", pic: "🕒", meaning: "Fifteen minutes after the hour.", uses: ["It is quarter past three."] }, { w: "quarter to", pic: "🕡", meaning: "Fifteen minutes before the next hour.", uses: ["It is quarter to four."] }, { w: "digital time", pic: "⏱️", meaning: "Time written in numbers, like 3:15, instead of shown on a clock face.", uses: ["Match the clock face to its digital time."] }, { w: "calendar", pic: "📅", meaning: "A chart that shows the days of a month, arranged in rows of seven.", uses: ["Find today's date on the calendar."] }], finish: 2, done: "You know the math words of this lesson." });
   show(0, false);
   quiet -= 1;   /* the first draw is over: say() speaks from here on */
@@ -3446,6 +3460,9 @@
     align-items: center; gap: 10px; text-align: center; }
   .phase { color: var(--teal); font-weight: 800; font-size: 12.5px; letter-spacing: .1em;
     text-transform: uppercase; }
+  .lec.lec-film { max-width: 760px; }
+  .lec-film video { width: 100%; display: block; border-radius: 18px; background: #000;
+    aspect-ratio: 16 / 9; box-shadow: var(--shadow); }
   .lec-h { font-weight: 800; font-size: clamp(21px, 4vw, 26px); margin: 0; }
   .lec-p { margin: 0; font-size: 19px; line-height: 1.55; max-width: 34em; }
   .lec-note { margin: 4px 0 0; color: var(--muted); font-size: 13.5px; }

@@ -1,0 +1,116 @@
+{
+  "_comment": "Storyboard for the Grade 2 Mathematics unit lecture film, Lesson 2 Coins and Change. Rendered by tools/create-ehel-unit-lecture.js. See lecture-video/BRIEF.md. Every beat is one narration clip; art.at names the phrases a picture waits for, and the page refuses to load if a phrase is not in its beat's say. The chapters follow the lesson's own steps in order - Know your money, Count what is in the purse, Make this exact amount and The fewest pieces, Writing money, Which purse is worth more, How much more - and use the lesson's own worked examples: the 50, 20 and 5 purse counted to 75 sh, 35 sh built as 20, 10 and 5, 70 sh as a 50 and a 20 against seven 10s, 45 sh written three ways, the purse pair 20+20+5 against a single 50, and counting on from 35 sh to 50 sh in hops of 5 and 10. Money is written the way the lesson writes it, 45 sh, with KSh 45 named as the other way the shops write it.",
+  "slug": "coins-and-change",
+  "lesson": 2,
+  "grade": 2,
+  "stage": 2,
+  "title": "Coins and Change",
+  "subtitle": "Grade 2 Mathematics",
+  "framework": "Cambridge Primary Mathematics 0096",
+  "renderer": {
+    "art": ["math"],
+    "skin": "brown",
+    "scenes": [
+      "tools/lib/ehel-film-marks.js",
+      "tools/lib/film-scenes/math-g2/coins-and-change.js",
+      "tools/lib/film-scenes/math-g2/coins-and-change-2.js",
+      "tools/lib/film-scenes/math-g2/coins-and-change-3.js"
+    ]
+  },
+  "objectives": [
+    ["2Nm.01", "Recognise value and money notation used in local currency."],
+    ["2Nm.02", "Compare values of different combinations of coins or notes."],
+    ["2Ni.03", "Recognise complements of 20 and complements of multiples of 10 (up to 100)."]
+  ],
+  "scenes": [
+    { "id": "title", "kind": "title", "codes": [], "beats": [
+      { "say": "This is money. The round ones are coins. The flat ones are notes.",
+        "art": { "at": { "money": "This is money", "coins": "coins", "notes": "notes" } } },
+      { "say": "Every piece has its own value. Count them all up, and you know what the purse is worth.",
+        "art": { "at": { "value": "its own value", "count": "Count them all up", "worth": "what the purse is worth" } } }
+    ] },
+
+    { "id": "know", "kind": "know", "heading": "Know your money", "codes": ["2Nm.01"], "beats": [
+      { "say": "Our money is shillings. Every coin and note has its value printed on it.",
+        "art": { "at": { "shillings": "shillings", "printed": "its value printed on it" } } },
+      { "say": "These are the coins: one, five, ten, twenty and fifty shillings.",
+        "art": { "at": { "coins": "the coins", "list": "one, five, ten, twenty and fifty" } } },
+      { "say": "This flat one is a note. A note is worth more than most coins. This one is 100.",
+        "art": { "at": { "note": "This flat one is a note", "worth": "worth more than most coins", "hundred": "This one is 100" } } },
+      { "say": "A big coin is not always worth more. Read the number, not the size.",
+        "art": { "at": { "big": "A big coin", "read": "Read the number", "size": "not the size" } } }
+    ] },
+
+    { "id": "count", "kind": "count", "heading": "Count what is in the purse", "codes": ["2Nm.01"], "beats": [
+      { "say": "Here is a purse with money in it. What is it all worth?",
+        "art": { "at": { "purse": "a purse", "worth": "What is it all worth" } } },
+      { "say": "Always start with the biggest piece. Here the biggest is the 50.",
+        "art": { "at": { "biggest": "the biggest piece", "fifty": "the 50" } } },
+      { "say": "Then count on. Fifty, and twenty more makes seventy.",
+        "art": { "at": { "on": "count on", "twenty": "twenty more", "seventy": "seventy" } } },
+      { "say": "Five more makes seventy-five. So the purse holds 75 sh.",
+        "art": { "at": { "five": "Five more", "sf": "seventy-five", "total": "75 sh" } } },
+      { "say": "Three pieces, and 75 shillings. Count the value, not the pieces.",
+        "art": { "at": { "three": "Three pieces", "amount": "75 shillings", "value": "Count the value" } } }
+    ] },
+
+    { "id": "make", "kind": "make", "heading": "Making an amount", "codes": ["2Nm.02"], "beats": [
+      { "say": "Now you choose the money yourself. Make 35 sh exactly.",
+        "art": { "at": { "choose": "choose the money", "target": "Make 35 sh" } } },
+      { "say": "Take a 20, then a 10, then a 5. That is 35.",
+        "art": { "at": { "c20": "a 20", "c10": "a 10", "c5": "a 5", "is35": "That is 35" } } },
+      { "say": "Say the total as you go: twenty, thirty, thirty-five.",
+        "art": { "at": { "t20": "twenty,", "t30": "thirty,", "t35": "thirty-five" } } },
+      { "say": "Now make 70 sh, with as few pieces as you can.",
+        "art": { "at": { "t70": "make 70 sh", "few": "as few pieces" } } },
+      { "say": "A 50 fits, and leaves 20. A 20 finishes it, so two pieces.",
+        "art": { "at": { "fifty": "A 50 fits", "leaves": "leaves 20", "twenty": "A 20 finishes it", "two": "two pieces" } } },
+      { "say": "Seven 10 shilling coins make 70 too, but that is seven pieces.",
+        "art": { "at": { "seven": "Seven 10 shilling coins", "pieces": "seven pieces" } } }
+    ] },
+
+    { "id": "write", "kind": "write", "heading": "Writing money", "codes": ["2Nm.01"], "beats": [
+      { "say": "Money has its own way of being written down.",
+        "art": { "at": { "own": "its own way" } } },
+      { "say": "Forty-five shillings is written 45 sh, with the sh after it.",
+        "art": { "at": { "words": "Forty-five shillings", "short": "45 sh", "after": "after it" } } },
+      { "say": "A shop may write KSh 45 instead, with the KSh in front.",
+        "art": { "at": { "ksh": "KSh 45", "front": "in front" } } },
+      { "say": "Both mean the same money. Read the number first, then the letters.",
+        "art": { "at": { "same": "the same money", "number": "Read the number", "letters": "the letters" } } }
+    ] },
+
+    { "id": "compare", "kind": "compare", "heading": "Which purse is worth more?", "codes": ["2Nm.02"], "beats": [
+      { "say": "Here are two purses. Which one is worth more?",
+        "art": { "at": { "two": "two purses", "more": "worth more" } } },
+      { "say": "Purse A holds a 20, a 20 and a 5. Add them up: 45 sh.",
+        "art": { "at": { "a": "Purse A", "add": "Add them up", "total": "45 sh" } } },
+      { "say": "Purse B holds just one coin, a 50. That is 50 sh.",
+        "art": { "at": { "b": "Purse B", "one": "just one coin", "total": "50 sh" } } },
+      { "say": "Purse B has fewer pieces and more money. More coins is not more money.",
+        "art": { "at": { "fewer": "fewer pieces", "money": "more money", "coins": "More coins" } } }
+    ] },
+
+    { "id": "more", "kind": "more", "heading": "How much more?", "codes": ["2Ni.03"], "beats": [
+      { "say": "You have 35 sh, and the thing you want costs 50 sh.",
+        "art": { "at": { "have": "35 sh", "price": "costs 50 sh" } } },
+      { "say": "Count on from what you have, up to the price.",
+        "art": { "at": { "on": "Count on", "price": "the price" } } },
+      { "say": "Hop 5 to reach 40. Then hop 10 to reach 50.",
+        "art": { "at": { "hop5": "Hop 5", "at40": "reach 40", "hop10": "hop 10", "at50": "reach 50" } } },
+      { "say": "The hops are 5 and 10. So you need 15 shillings more.",
+        "art": { "at": { "hops": "5 and 10", "need": "15 shillings more" } } }
+    ] },
+
+    { "id": "recap", "kind": "recap", "heading": "What you now know", "codes": ["2Nm.01", "2Nm.02", "2Ni.03"], "beats": [
+      { "say": "Count money biggest first, then count on from there.",
+        "art": { "at": { "biggest": "biggest first", "counton": "count on" } } },
+      { "say": "One amount can be made in many ways. The fewest pieces uses the biggest coins.",
+        "art": { "at": { "ways": "many ways", "fewest": "The fewest pieces" } } },
+      { "say": "45 sh and KSh 45 are two ways to write the same money.",
+        "art": { "at": { "both": "two ways" } } },
+      { "say": "Compare purses by value, and count on to find how much more.",
+        "art": { "at": { "value": "by value", "more": "how much more" } } }
+    ] }
+  ]
+}

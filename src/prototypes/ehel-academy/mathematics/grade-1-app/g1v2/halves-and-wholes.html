@@ -2890,7 +2890,21 @@
     });
   }
 
+  function lessonFilm(o) {
+    const v = o.video, stage = document.getElementById(o.stage);
+    stage.innerHTML = '<div class="lec lec-film">' +
+      '<video controls playsinline preload="none" poster="' + esc(v.poster) + '" src="' + esc(v.src) + '">' +
+      '<track kind="captions" srclang="en" label="English" src="' + esc(v.vtt) + '"></video>' +
+      '<p class="lec-note">' + esc(v.note) + '</p></div>';
+    const film = stage.querySelector('video'), slide = stage.closest('section.slide');
+    film.addEventListener('ended', () => finish(o.finish, o.done));
+    if (slide && window.MutationObserver) new MutationObserver(() => {
+      if (!slide.classList.contains('active') && !film.paused) film.pause();
+    }).observe(slide, { attributes: true, attributeFilter: ['class'] });
+  }
+  
   function lessonLecture(o) {
+    if (o.video) return lessonFilm(o);
     const parts = o.parts || [];
     let k = 0;
     const id = o.stage + 'l';
@@ -2989,7 +3003,7 @@
   }
 
   lessonAbout({ stage: 'stageOvw', about: ["Know that a half means two parts of the same size.", "Colour one half of a shape.", "Find half of a group of things.", "Work out half of a number.", "Know that two halves make one whole."], finish: 0, done: "Let's begin." });
-  lessonLecture({ stage: 'stageLec', parts: [{ title: "Equal parts", say: "A half is one of two parts that are exactly the same size - not just nearly the same. Cutting fairly is what makes a half a half." }, { title: "Half of a group", say: "To find half of a group, share it into two equal groups and count how many are in one group." }, { title: "Two halves make a whole", say: "Put the two halves back together and you have the whole again, with nothing missing and nothing extra." }], finish: 1, done: "You have heard the whole lesson. Now do it yourself." });
+  lessonLecture({ stage: 'stageLec', parts: [{ title: "Equal parts", say: "A half is one of two parts that are exactly the same size - not just nearly the same. Cutting fairly is what makes a half a half." }, { title: "Half of a group", say: "To find half of a group, share it into two equal groups and count how many are in one group." }, { title: "Two halves make a whole", say: "Put the two halves back together and you have the whole again, with nothing missing and nothing extra." }], video: { src: "lecture-video/halves-and-wholes.bf84e13c.mp4", poster: "lecture-video/halves-and-wholes.411081d0.jpg", vtt: "lecture-video/halves-and-wholes.cbccd10b.vtt", note: "The whole lesson in about 2 minutes. When the film ends, this step is done." }, finish: 1, done: "You have heard the whole lesson. Now do it yourself." });
   lessonWords({ stage: 'stageMw', words: [{ w: "equal", pic: "⚖️", meaning: "Exactly the same size, not just nearly the same.", uses: ["Cut the sandwich into two equal parts."] }, { w: "half", pic: "🌓", meaning: "One of two equal parts.", uses: ["Colour one half of the circle."] }, { w: "whole", pic: "🍎", meaning: "All of a shape, with no parts missing or taken away.", uses: ["Two halves put together make one whole apple."] }, { w: "share", pic: "🤝", meaning: "Give things out so that everyone gets the same amount.", uses: ["Share 6 beans fairly between two people."] }, { w: "fair", pic: "👫", meaning: "The same for everyone, like two parts the same size.", uses: ["A fair share means both people get the same amount."] }, { w: "halve", pic: "✂️", meaning: "Find half of a number or a shape.", uses: ["Halve 10 beans between two friends."] }], finish: 2, done: "You know the math words of this lesson." });
   show(0, false);
 
@@ -3872,6 +3886,9 @@
     align-items: center; gap: 10px; text-align: center; }
   .phase { color: var(--teal); font-weight: 800; font-size: 12.5px; letter-spacing: .1em;
     text-transform: uppercase; }
+  .lec.lec-film { max-width: 760px; }
+  .lec-film video { width: 100%; display: block; border-radius: 18px; background: #000;
+    aspect-ratio: 16 / 9; box-shadow: var(--shadow); }
   .lec-h { font-weight: 800; font-size: clamp(21px, 4vw, 26px); margin: 0; }
   .lec-p { margin: 0; font-size: 19px; line-height: 1.55; max-width: 34em; }
   .lec-note { margin: 4px 0 0; color: var(--muted); font-size: 13.5px; }

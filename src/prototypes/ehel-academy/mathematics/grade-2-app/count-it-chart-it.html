@@ -2839,7 +2839,21 @@
     });
   }
 
+  function lessonFilm(o) {
+    const v = o.video, stage = document.getElementById(o.stage);
+    stage.innerHTML = '<div class="lec lec-film">' +
+      '<video controls playsinline preload="none" poster="' + esc(v.poster) + '" src="' + esc(v.src) + '">' +
+      '<track kind="captions" srclang="en" label="English" src="' + esc(v.vtt) + '"></video>' +
+      '<p class="lec-note">' + esc(v.note) + '</p></div>';
+    const film = stage.querySelector('video'), slide = stage.closest('section.slide');
+    film.addEventListener('ended', () => finish(o.finish, o.done));
+    if (slide && window.MutationObserver) new MutationObserver(() => {
+      if (!slide.classList.contains('active') && !film.paused) film.pause();
+    }).observe(slide, { attributes: true, attributeFilter: ['class'] });
+  }
+  
   function lessonLecture(o) {
+    if (o.video) return lessonFilm(o);
     const parts = o.parts || [];
     let k = 0;
     const id = o.stage + 'l';
@@ -2938,7 +2952,7 @@
   }
 
   lessonAbout({ stage: 'stageOvw', about: ["Sort things into groups and say what my rule was.", "Record what people say using tally marks.", "Read a pictogram, using its key.", "Answer questions about Venn diagrams and Carroll diagrams.", "Describe what a block graph shows.", "Say how likely something is to happen."], finish: 0, done: "Let's begin." });
-  lessonLecture({ stage: 'stageLec', parts: [{ title: "Sorting and tallying", say: "Sorting things into groups needs one clear rule, and a tally mark is a quick way to keep count as you go, with every fifth mark crossing the other four." }, { title: "Charts and pictograms", say: "A block graph uses one block for each answer, and a pictogram uses a picture instead - both let you compare groups at a glance." }, { title: "Likely or random", say: "Something regular follows a pattern you can predict. Something random has no pattern at all, so you cannot know what comes next." }], finish: 1, done: "You have heard the whole lesson. Now do it yourself." });
+  lessonLecture({ stage: 'stageLec', parts: [{ title: "Sorting and tallying", say: "Sorting things into groups needs one clear rule, and a tally mark is a quick way to keep count as you go, with every fifth mark crossing the other four." }, { title: "Charts and pictograms", say: "A block graph uses one block for each answer, and a pictogram uses a picture instead - both let you compare groups at a glance." }, { title: "Likely or random", say: "Something regular follows a pattern you can predict. Something random has no pattern at all, so you cannot know what comes next." }], video: { src: "lecture-video/count-it-chart-it.2ededde8.mp4", poster: "lecture-video/count-it-chart-it.ca234d48.jpg", vtt: "lecture-video/count-it-chart-it.51d00993.vtt", note: "The whole lesson in about 2 and a half minutes. When the film ends, this step is done." }, finish: 1, done: "You have heard the whole lesson. Now do it yourself." });
   lessonWords({ stage: 'stageMw', words: [{ w: "tally", pic: "📝", meaning: "A quick way to keep count using marks, with every fifth mark crossing the other four.", uses: ["Keep a tally of how many heads you toss."] }, { w: "pictogram", pic: "🖼️", meaning: "A chart that uses pictures to show how many of something there are.", uses: ["Read the pictogram using its key."] }, { w: "Carroll diagram", pic: "🗂️", meaning: "A grid that sorts things by two labels at once, such as red and round.", uses: ["Sort the shapes on a Carroll diagram."] }, { w: "block graph", pic: "📶", meaning: "A chart that uses one block for each thing, so you can count the blocks to answer.", uses: ["Build a block graph of favourite fruits."] }, { w: "regular", pic: "🔁", meaning: "A pattern that repeats in the same way over and over.", uses: ["A regular pattern is easy to predict."] }, { w: "random", pic: "🎲", meaning: "Something with no pattern, so you cannot know what comes next.", uses: ["A coin toss is random."] }], finish: 2, done: "You know the math words of this lesson." });
   show(0, false);
   quiet -= 1;   /* the first draw is over: say() speaks from here on */
@@ -3733,6 +3747,9 @@
     align-items: center; gap: 10px; text-align: center; }
   .phase { color: var(--teal); font-weight: 800; font-size: 12.5px; letter-spacing: .1em;
     text-transform: uppercase; }
+  .lec.lec-film { max-width: 760px; }
+  .lec-film video { width: 100%; display: block; border-radius: 18px; background: #000;
+    aspect-ratio: 16 / 9; box-shadow: var(--shadow); }
   .lec-h { font-weight: 800; font-size: clamp(21px, 4vw, 26px); margin: 0; }
   .lec-p { margin: 0; font-size: 19px; line-height: 1.55; max-width: 34em; }
   .lec-note { margin: 4px 0 0; color: var(--muted); font-size: 13.5px; }

@@ -1,0 +1,121 @@
+{
+  "_comment": "Storyboard for the Grade 2 Mathematics unit lecture film, Sides and Corners. Rendered by tools/create-ehel-unit-lecture.js. See lecture-video/BRIEF.md. Every beat is one narration clip; art.at names the phrases a picture waits for, and the page refuses to load if a phrase is not in its beat's say. The chapters follow the lesson opener's three parts (sides and corners; symmetry; turns) widened with the lesson page's own steps: step 1 counts sides and then corners by tapping, step 2 names a shape by its side count, step 6 is solid shapes and their faces, step 12 finds shapes in real things, step 5 judges a fold line, step 8 turns an arrow a quarter at a time and step 13 spins a square through a whole turn. Every number said here is drawn: the polygons are built from an explicit vertex count, and the cube's six faces, twelve edges and eight vertices are the picture library's own. Revised 2026-09-24 against two review notes: the solid chapter now also shows a FLAT familiar object (step 12's own door and clock face, alongside its dice, tin and ball), so 2Gg.08's '2D and 3D shapes in familiar objects' is not 3D alone; and the turn chapter now also turns anticlockwise (step 8's own arrow, from up to left), so 2Gg.11's 'both clockwise and anticlockwise' is not clockwise alone.",
+  "slug": "sides-and-corners",
+  "lesson": 5,
+  "grade": 2,
+  "stage": 2,
+  "title": "Sides and Corners",
+  "subtitle": "Grade 2 Mathematics",
+  "framework": "Cambridge Primary Mathematics 0096",
+  "renderer": {
+    "art": ["math"],
+    "skin": "brown",
+    "scenes": [
+      "tools/lib/ehel-film-marks.js",
+      "tools/lib/film-scenes/math-g2/sides-and-corners.js",
+      "tools/lib/film-scenes/math-g2/sides-and-corners-2.js",
+      "tools/lib/film-scenes/math-g2/sides-and-corners-3.js"
+    ]
+  },
+  "objectives": [
+    ["2Gg.01", "Identify, describe, sort, name and sketch 2D shapes by their properties, including reference to regular polygons, number of sides and vertices. Recognise these shapes in different positions and orientations."],
+    ["2Gg.05", "Identify, describe, sort and name 3D shapes by their properties, including reference to number and shapes of faces, edges and vertices."],
+    ["2Gg.08", "Identify 2D and 3D shapes in familiar objects."],
+    ["2Gg.09", "Identify a horizontal or vertical line of symmetry on 2D shapes and patterns."],
+    ["2Gg.10", "Predict and check how many times a shape looks identical as it completes a full turn."],
+    ["2Gg.11", "Understand that an angle is a description of a turn, including reference to the terms whole, half and quarter turns, both clockwise and anticlockwise."]
+  ],
+  "scenes": [
+    { "id": "title", "kind": "title", "codes": [], "beats": [
+      { "say": "Every flat shape has sides and corners. Count them, and you can name it.",
+        "art": { "at": { "sides": "sides", "corners": "corners", "name": "name it" } } },
+      { "say": "Solid shapes have faces and edges. Shapes fold, and shapes turn.",
+        "art": { "at": { "faces": "faces and edges", "fold": "Shapes fold", "turn": "shapes turn" } } }
+    ] },
+
+    { "id": "count", "kind": "count", "heading": "Sides and corners", "codes": ["2Gg.01"], "beats": [
+      { "say": "Here is a triangle. A side is one straight edge.",
+        "art": { "at": { "tri": "a triangle", "side": "A side", "edge": "one straight edge" } } },
+      { "say": "Go round in order, and count each side once: one, two, three.",
+        "art": { "at": { "round": "Go round in order", "one": "one,", "two": "two,", "three": "three." } } },
+      { "say": "A corner is the point where two sides meet.",
+        "art": { "at": { "corner": "A corner", "meet": "two sides meet" } } },
+      { "say": "Count the corners the same way, going round: one, two, three.",
+        "art": { "at": { "count": "Count the corners", "one": "one,", "two": "two,", "three": "three." } } },
+      { "say": "Now try a bigger shape. Count round the pentagon: five sides.",
+        "art": { "at": { "bigger": "a bigger shape", "pent": "the pentagon", "five": "five sides" } } },
+      { "say": "It has five corners too. Every side ends at a corner.",
+        "art": { "at": { "corners": "five corners", "ends": "ends at a corner" } } }
+    ] },
+
+    { "id": "name", "kind": "name", "heading": "Naming a shape", "codes": ["2Gg.01"], "beats": [
+      { "say": "Counting the sides tells you the shape's name.",
+        "art": { "at": { "counting": "Counting the sides", "name": "the shape's name" } } },
+      { "say": "Three sides make a triangle. Four make a square or a rectangle.",
+        "art": { "at": { "three": "Three sides", "tri": "a triangle", "four": "Four", "sq": "a square", "rect": "a rectangle" } } },
+      { "say": "Five sides make a pentagon. Six sides make a hexagon.",
+        "art": { "at": { "five": "Five sides", "pent": "a pentagon", "six": "Six sides", "hex": "a hexagon" } } },
+      { "say": "A shape turned round is still the same shape. A tipped square is still a square.",
+        "art": { "at": { "turned": "turned round", "tipped": "A tipped square", "still": "still a square." } } }
+    ] },
+
+    { "id": "solid", "kind": "solid", "heading": "Solid shapes", "codes": ["2Gg.05", "2Gg.08"], "beats": [
+      { "say": "A face is a flat part you could paint. Every face of a cube is a square.",
+        "art": { "at": { "face": "A face", "paint": "could paint", "square": "is a square" } } },
+      { "say": "Count the faces of the cube: one, two, three, four, five, six.",
+        "art": { "at": { "count": "Count the faces", "one": "one,", "six": "six." } } },
+      { "say": "The line where two faces meet is an edge. A cube has twelve.",
+        "art": { "at": { "edge": "is an edge", "twelve": "has twelve" } } },
+      { "say": "A cube has eight corners as well. A dice is a cube.",
+        "art": { "at": { "eight": "eight corners", "dice": "A dice" } } },
+      { "say": "A tin of beans is a cylinder. A ball is a sphere, curved all over.",
+        "art": { "at": { "tin": "A tin of beans", "cyl": "a cylinder", "ball": "A ball", "sph": "a sphere" } } },
+      { "say": "A door is a flat shape: a rectangle. A clock face is a flat shape: a circle.",
+        "art": { "at": { "door": "A door", "rect": "a rectangle", "clockf": "A clock face", "circ": "a circle" } } }
+    ] },
+
+    { "id": "fold", "kind": "fold", "heading": "Lines of symmetry", "codes": ["2Gg.09"], "beats": [
+      { "say": "A line of symmetry is a fold line. Both halves match exactly.",
+        "art": { "at": { "line": "A line of symmetry", "fold": "a fold line", "match": "match exactly" } } },
+      { "say": "Fold this square down the middle. The halves land on each other.",
+        "art": { "at": { "square": "this square", "middle": "down the middle", "land": "land on each other" } } },
+      { "say": "A rectangle folds across the middle as well. That works too.",
+        "art": { "at": { "rect": "A rectangle", "across": "across the middle", "works": "That works" } } },
+      { "say": "A slanted fold does not work. The halves are not the same shape.",
+        "art": { "at": { "slant": "A slanted fold", "no": "does not work", "same": "the same shape" } } }
+    ] },
+
+    { "id": "turn", "kind": "turn", "heading": "Turning", "codes": ["2Gg.11"], "beats": [
+      { "say": "A turn can be a quarter turn, a half turn or a whole turn.",
+        "art": { "at": { "quarter": "a quarter turn", "half": "a half turn", "whole": "a whole turn" } } },
+      { "say": "Clockwise means the way the hands of a clock go round.",
+        "art": { "at": { "clock": "the hands of a clock", "round": "go round" } } },
+      { "say": "This arrow points up. Turn it a quarter turn clockwise.",
+        "art": { "at": { "up": "points up", "spin": "Turn it a quarter turn" } } },
+      { "say": "Now it points right. Another quarter, and it points down.",
+        "art": { "at": { "right": "points right", "another": "Another quarter", "down": "points down" } } },
+      { "say": "Two quarter turns make a half turn. A whole turn comes back to the start.",
+        "art": { "at": { "two": "Two quarter turns", "half": "a half turn", "whole": "A whole turn", "back": "back to the start" } } },
+      { "say": "Anticlockwise is the other way round. A quarter turn from up points left.",
+        "art": { "at": { "anti": "Anticlockwise", "left": "points left" } } }
+    ] },
+
+    { "id": "spin", "kind": "spin", "heading": "The same again", "codes": ["2Gg.10"], "beats": [
+      { "say": "Turn a square slowly all the way round. It looks the same four times.",
+        "art": { "at": { "round": "all the way round", "same": "looks the same", "four": "four times" } } },
+      { "say": "One for each equal corner. Count the last one, back at the start.",
+        "art": { "at": { "corner": "each equal corner", "last": "the last one", "start": "back at the start" } } }
+    ] },
+
+    { "id": "recap", "kind": "recap", "heading": "What you now know", "codes": ["2Gg.01", "2Gg.05", "2Gg.08", "2Gg.09", "2Gg.10", "2Gg.11"], "beats": [
+      { "say": "Count the sides and the corners. The numbers always match.",
+        "art": { "at": { "sides": "the sides and the corners" } } },
+      { "say": "Count its sides to name it: three, four, five, six.",
+        "art": { "at": { "name": "to name it" } } },
+      { "say": "Solid shapes have faces, edges and corners you can count.",
+        "art": { "at": { "faces": "faces, edges and corners" } } },
+      { "say": "A fold line makes matching halves. A whole turn comes back to the start.",
+        "art": { "at": { "fold": "A fold line", "start": "back to the start" } } }
+    ] }
+  ]
+}

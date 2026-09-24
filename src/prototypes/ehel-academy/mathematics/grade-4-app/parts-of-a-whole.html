@@ -2983,7 +2983,21 @@
     });
   }
 
+  function lessonFilm(o) {
+    const v = o.video, stage = document.getElementById(o.stage);
+    stage.innerHTML = '<div class="lec lec-film">' +
+      '<video controls playsinline preload="none" poster="' + esc(v.poster) + '" src="' + esc(v.src) + '">' +
+      '<track kind="captions" srclang="en" label="English" src="' + esc(v.vtt) + '"></video>' +
+      '<p class="lec-note">' + esc(v.note) + '</p></div>';
+    const film = stage.querySelector('video'), slide = stage.closest('section.slide');
+    film.addEventListener('ended', () => finish(o.finish, o.done));
+    if (slide && window.MutationObserver) new MutationObserver(() => {
+      if (!slide.classList.contains('active') && !film.paused) film.pause();
+    }).observe(slide, { attributes: true, attributeFilter: ['class'] });
+  }
+  
   function lessonLecture(o) {
+    if (o.video) return lessonFilm(o);
     const parts = o.parts || [];
     let k = 0;
     const id = o.stage + 'l';
@@ -3082,7 +3096,7 @@
   }
 
   lessonAbout({ stage: 'stageOvw', about: ["Compare fractions with different denominators, such as three eighths and one half.", "Convert between fractions and percentages.", "Find a fraction of an amount by sharing it into equal groups."], finish: 0, done: "Let's begin." });
-  lessonLecture({ stage: 'stageLec', parts: [{ title: "Fractions of a whole", say: "A fraction is a part of a whole, written as one number over another. Folding a strip into eighths is what makes three eighths a real, comparable amount next to a half." }, { title: "Fractions and percentages", say: "Per cent means out of 100. A quarter of 100 is 25, so one quarter is the same as 25%." }, { title: "Sharing to find a fraction", say: "To find a quarter of 20, share the 20 into four equal groups and count how many are in one group." }], finish: 1, done: "You have heard the whole lesson. Now do it yourself." });
+  lessonLecture({ stage: 'stageLec', parts: [{ title: "Fractions of a whole", say: "A fraction is a part of a whole, written as one number over another. Folding a strip into eighths is what makes three eighths a real, comparable amount next to a half." }, { title: "Fractions and percentages", say: "Per cent means out of 100. A quarter of 100 is 25, so one quarter is the same as 25%." }, { title: "Sharing to find a fraction", say: "To find a quarter of 20, share the 20 into four equal groups and count how many are in one group." }], video: { src: "lecture-video/parts-of-a-whole.035cdf0c.mp4", poster: "lecture-video/parts-of-a-whole.2ede6f63.jpg", vtt: "lecture-video/parts-of-a-whole.7ffc65d5.vtt", note: "The whole lesson in about 2 and a half minutes. When the film ends, this step is done." }, finish: 1, done: "You have heard the whole lesson. Now do it yourself." });
   lessonWords({ stage: 'stageMw', words: [{ w: "fraction", pic: "🍕", meaning: "A part of a whole, written as one number over another, such as 3/8.", uses: ["Shade three eighths of the circle to show the fraction."] }, { w: "numerator", pic: "⬆️", meaning: "The top number in a fraction - how many parts you have.", uses: ["In 3/8, the numerator is 3."] }, { w: "denominator", pic: "⬇️", meaning: "The bottom number in a fraction - how many equal parts the whole was split into.", uses: ["In 3/8, the denominator is 8."] }, { w: "percentage", pic: "💯", meaning: "A number out of 100, written with a % sign.", uses: ["25% means 25 out of every 100."] }, { w: "equivalent", pic: "⚖️", meaning: "Equal in value, even when written differently - 1/2 and 2/4 are equivalent fractions.", uses: ["1/2 and 2/4 are equivalent fractions."] }], finish: 2, done: "You know the math words of this lesson." });
   show(0, false);
   quiet -= 1;   /* the first draw is over: say() speaks from here on */
@@ -4019,6 +4033,9 @@
     align-items: center; gap: 10px; text-align: center; }
   .phase { color: var(--teal); font-weight: 800; font-size: 12.5px; letter-spacing: .1em;
     text-transform: uppercase; }
+  .lec.lec-film { max-width: 760px; }
+  .lec-film video { width: 100%; display: block; border-radius: 18px; background: #000;
+    aspect-ratio: 16 / 9; box-shadow: var(--shadow); }
   .lec-h { font-weight: 800; font-size: clamp(21px, 4vw, 26px); margin: 0; }
   .lec-p { margin: 0; font-size: 19px; line-height: 1.55; max-width: 34em; }
   .lec-note { margin: 4px 0 0; color: var(--muted); font-size: 13.5px; }

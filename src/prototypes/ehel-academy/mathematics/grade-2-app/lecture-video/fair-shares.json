@@ -1,0 +1,228 @@
+{
+  "_comment": "Storyboard for the Grade 2 Mathematics unit lecture film, Fair Shares. Rendered by tools/create-ehel-unit-lecture.js. See lecture-video/BRIEF.md. Every beat is one narration clip; art.at names the phrases a picture waits for, and the page refuses to load if a phrase is not in its beat's say. The chapters follow the lesson's own order (equal parts first; top and bottom number; a fraction of a group; a fraction of an amount; same size, different name; more than one whole), and every number is the lesson page's own: 12 apples shared between 4, half of 8, 20 shillings and a quarter, 12 eggs and three quarters, one half = two quarters, four quarters = one whole, five quarters = one whole and one quarter. The whole film turns on one thing: a share is only fair when the groups hold the same number, so every group drawn here is built from one list, three to a group, and can hold no other number.",
+  "slug": "fair-shares",
+  "lesson": 5,
+  "grade": 2,
+  "stage": 2,
+  "title": "Fair Shares",
+  "subtitle": "Grade 2 Mathematics",
+  "framework": "Cambridge Primary Mathematics 0096",
+  "renderer": {
+    "art": ["math"],
+    "skin": "brown",
+    "scenes": [
+      "tools/lib/ehel-film-marks.js",
+      "tools/lib/film-scenes/math-g2/fair-shares.js",
+      "tools/lib/film-scenes/math-g2/fair-shares-2.js"
+    ]
+  },
+  "objectives": [
+    ["2Nf.01", "Understand that an object or shape can be split into four equal parts or four unequal parts."],
+    ["2Nf.02", "Understand that a quarter can describe one of four equal parts of a quantity or set of objects."],
+    ["2Nf.03", "Understand that one half and one quarter can be interpreted as division."],
+    ["2Nf.04", "Understand that fractions (half, quarter and three-quarters) can act as operators."],
+    ["2Nf.05", "Recognise the relative size of 4 , , and 1, and the equivalence of and , and , and 1."],
+    ["2Nf.06", "Understand and visualise that wholes, halves and quarters can be combined to create new fractions."]
+  ],
+  "scenes": [
+    {
+      "id": "title",
+      "kind": "title",
+      "codes": [],
+      "beats": [
+        {
+          "say": "You cut a sandwich into two parts. They must be the same size.",
+          "art": { "at": { "sandwich": "cut a sandwich", "two": "two parts" } }
+        },
+        {
+          "say": "Fair means the two pieces are equal. That is a fraction.",
+          "art": { "at": { "fair": "Fair means", "equal": "are equal", "fraction": "That is a fraction." } }
+        }
+      ]
+    },
+    {
+      "id": "equal",
+      "kind": "equal",
+      "heading": "Equal parts first",
+      "codes": ["2Nf.01"],
+      "beats": [
+        {
+          "say": "Here is a paper bar. Cut it into four parts.",
+          "art": { "at": { "bar": "a paper bar", "cut": "Cut it", "four": "four parts" } }
+        },
+        {
+          "say": "These four parts are all the same size. They are quarters.",
+          "art": { "at": { "same": "all the same size", "quarters": "They are quarters" } }
+        },
+        {
+          "say": "Now look at this bar. One piece is much wider than the others.",
+          "art": { "at": { "look": "look at this bar", "wider": "much wider" } }
+        },
+        {
+          "say": "Four pieces, but not equal. So not one of them is a quarter.",
+          "art": { "at": { "four": "Four pieces", "notequal": "not equal", "none": "not one of them" } }
+        }
+      ]
+    },
+    {
+      "id": "naming",
+      "kind": "naming",
+      "heading": "Top number, bottom number",
+      "codes": ["2Nf.01"],
+      "beats": [
+        {
+          "say": "A fraction has two numbers. Here is three quarters.",
+          "art": { "at": { "two": "two numbers", "three": "three quarters" } }
+        },
+        {
+          "say": "The bottom number is four. The whole is cut into four equal parts.",
+          "art": { "at": { "bottom": "The bottom number is four", "parts": "four equal parts" } }
+        },
+        {
+          "say": "The top number is three. That is how many parts you take.",
+          "art": { "at": { "top": "The top number is three", "take": "how many parts you take" } }
+        },
+        {
+          "say": "So shade three of the four parts. Three quarters.",
+          "art": { "at": { "shade": "shade three", "done": "Three quarters." } }
+        }
+      ]
+    },
+    {
+      "id": "share",
+      "kind": "share",
+      "heading": "A fraction of a group",
+      "codes": ["2Nf.02", "2Nf.03"],
+      "beats": [
+        {
+          "say": "A fraction can be part of a group of things.",
+          "art": { "at": { "group": "a group of things" } }
+        },
+        {
+          "say": "Here are twelve apples. Share them between four children.",
+          "art": { "at": { "twelve": "twelve apples", "four": "four children" } }
+        },
+        {
+          "say": "One each, round and round, until they are all gone.",
+          "art": { "at": { "deal": "One each, round and round", "gone": "all gone" } }
+        },
+        {
+          "say": "Everyone gets three apples. None is left over.",
+          "art": { "at": { "three": "Everyone gets three apples", "left": "None is left over" } }
+        },
+        {
+          "say": "One share out of four is a quarter. A quarter of twelve is three.",
+          "art": { "at": { "one": "One share out of four", "quarter": "A quarter of twelve is three" } }
+        },
+        {
+          "say": "Half is the same idea. Eight sweets shared between two is four each.",
+          "art": { "at": { "half": "Half is the same idea", "eight": "Eight sweets", "four": "four each" } }
+        }
+      ]
+    },
+    {
+      "id": "amount",
+      "kind": "amount",
+      "heading": "A fraction of an amount",
+      "codes": ["2Nf.04"],
+      "beats": [
+        {
+          "say": "Amina has twenty shillings. She spends a quarter of it.",
+          "art": { "at": { "twenty": "twenty shillings", "spends": "a quarter of it" } }
+        },
+        {
+          "say": "Twenty shared between four is five. She spends five shillings.",
+          "art": { "at": { "shared": "Twenty shared between four", "five": "five shillings" } }
+        },
+        {
+          "say": "There are twelve eggs. Three quarters of them are brown.",
+          "art": { "at": { "eggs": "twelve eggs", "three": "Three quarters" } }
+        },
+        {
+          "say": "A quarter of twelve is three. So three quarters is nine.",
+          "art": { "at": { "qtr": "A quarter of twelve is three", "nine": "three quarters is nine" } }
+        }
+      ]
+    },
+    {
+      "id": "same",
+      "kind": "same",
+      "heading": "Same size, different name",
+      "codes": ["2Nf.05"],
+      "beats": [
+        {
+          "say": "Two fractions can be worth exactly the same amount.",
+          "art": { "at": { "two": "Two fractions", "same": "exactly the same amount" } }
+        },
+        {
+          "say": "Here is one half of the bar. Under it are two quarters.",
+          "art": { "at": { "half": "one half", "quarters": "two quarters" } }
+        },
+        {
+          "say": "They reach the same place. One half is two quarters.",
+          "art": { "at": { "reach": "reach the same place", "eq": "One half is two quarters" } }
+        },
+        {
+          "say": "Two quarters has bigger numbers. It is not a bigger amount.",
+          "art": { "at": { "bigger": "bigger numbers", "not": "not a bigger amount" } }
+        },
+        {
+          "say": "And one half is bigger than one quarter. More pieces, smaller pieces.",
+          "art": { "at": { "halfbig": "one half is bigger than one quarter", "more": "More pieces, smaller pieces" } }
+        }
+      ]
+    },
+    {
+      "id": "whole",
+      "kind": "whole",
+      "heading": "More than one whole",
+      "codes": ["2Nf.06"],
+      "beats": [
+        {
+          "say": "Put quarters together and you just count the parts.",
+          "art": { "at": { "put": "Put quarters together", "count": "count the parts" } }
+        },
+        {
+          "say": "One quarter and two quarters make three quarters.",
+          "art": { "at": { "one": "One quarter", "two": "two quarters", "three": "three quarters" } }
+        },
+        {
+          "say": "The bottom number stays four. The pieces are still quarters.",
+          "art": { "at": { "stays": "stays four", "still": "still quarters" } }
+        },
+        {
+          "say": "Four quarters fill the whole pizza. That is one whole.",
+          "art": { "at": { "four": "Four quarters", "whole": "one whole" } }
+        },
+        {
+          "say": "Add one more quarter. Five quarters is one whole and one quarter.",
+          "art": { "at": { "add": "Add one more quarter", "five": "Five quarters" } }
+        }
+      ]
+    },
+    {
+      "id": "recap",
+      "kind": "recap",
+      "heading": "What you now know",
+      "codes": ["2Nf.01", "2Nf.02", "2Nf.03", "2Nf.04", "2Nf.05", "2Nf.06"],
+      "beats": [
+        {
+          "say": "A fair share is an equal share. Always check the parts.",
+          "art": { "at": { "fair": "A fair share is an equal share", "check": "check the parts" } }
+        },
+        {
+          "say": "The bottom number counts the parts. The top counts the ones you take.",
+          "art": { "at": { "bottom": "The bottom number", "top": "The top" } }
+        },
+        {
+          "say": "A quarter of twelve is three. Two quarters is one half.",
+          "art": { "at": { "group": "A quarter of twelve", "eqv": "Two quarters is one half" } }
+        },
+        {
+          "say": "Four quarters make one whole. Now go and share something fairly.",
+          "art": { "at": { "whole": "Four quarters make one whole", "go": "share something fairly" } }
+        }
+      ]
+    }
+  ]
+}

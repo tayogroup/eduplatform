@@ -629,6 +629,9 @@
     align-items: center; gap: 10px; text-align: center; }
   .phase { color: var(--teal); font-weight: 800; font-size: 12.5px; letter-spacing: .1em;
     text-transform: uppercase; }
+  .lec.lec-film { max-width: 760px; }
+  .lec-film video { width: 100%; display: block; border-radius: 18px; background: #000;
+    aspect-ratio: 16 / 9; box-shadow: var(--shadow); }
   .lec-h { font-weight: 800; font-size: clamp(21px, 4vw, 26px); margin: 0; }
   .lec-p { margin: 0; font-size: 19px; line-height: 1.55; max-width: 34em; }
   .lec-note { margin: 4px 0 0; color: var(--muted); font-size: 13.5px; }
@@ -2747,7 +2750,21 @@
     });
   }
 
+  function lessonFilm(o) {
+    const v = o.video, stage = document.getElementById(o.stage);
+    stage.innerHTML = '<div class="lec lec-film">' +
+      '<video controls playsinline preload="none" poster="' + esc(v.poster) + '" src="' + esc(v.src) + '">' +
+      '<track kind="captions" srclang="en" label="English" src="' + esc(v.vtt) + '"></video>' +
+      '<p class="lec-note">' + esc(v.note) + '</p></div>';
+    const film = stage.querySelector('video'), slide = stage.closest('section.slide');
+    film.addEventListener('ended', () => finish(o.finish, o.done));
+    if (slide && window.MutationObserver) new MutationObserver(() => {
+      if (!slide.classList.contains('active') && !film.paused) film.pause();
+    }).observe(slide, { attributes: true, attributeFilter: ['class'] });
+  }
+  
   function lessonLecture(o) {
+    if (o.video) return lessonFilm(o);
     const parts = o.parts || [];
     let k = 0;
     const id = o.stage + 'l';
@@ -2846,7 +2863,7 @@
   }
 
   lessonAbout({ stage: 'stageOvw', about: ["Find the complement of a number to 100.", "Add pairs of numbers in any order without changing the total.", "Add and take away with regrouping.", "Use money notation with a decimal point.", "Estimate an answer before adding or taking away exactly.", "Work out change from a shopping total."], finish: 0, done: "Let's begin." });
-  lessonLecture({ stage: 'stageLec', parts: [{ title: "Complements and adding in any order", say: "A complement to 100 is the amount still needed to reach it - 62 and 38 are complements. Numbers can be added in any order without changing the total." }, { title: "Regrouping to add and take away", say: "When a column adds up to more than 9, a ten moves into the next column - that is regrouping, or carrying." }, { title: "Money and change", say: "Money is written with a decimal point - the two figures after it are always cents. Giving change means working out the gap between the price and what was paid." }], finish: 1, done: "You have heard the whole lesson. Now do it yourself." });
+  lessonLecture({ stage: 'stageLec', parts: [{ title: "Complements and adding in any order", say: "A complement to 100 is the amount still needed to reach it - 62 and 38 are complements. Numbers can be added in any order without changing the total." }, { title: "Regrouping to add and take away", say: "When a column adds up to more than 9, a ten moves into the next column - that is regrouping, or carrying." }, { title: "Money and change", say: "Money is written with a decimal point - the two figures after it are always cents. Giving change means working out the gap between the price and what was paid." }], video: { src: "lecture-video/adding-and-money.97516ff4.mp4", poster: "lecture-video/adding-and-money.396c4d31.jpg", vtt: "lecture-video/adding-and-money.7ded6806.vtt", note: "The whole lesson in about 2 and a half minutes. When the film ends, this step is done." }, finish: 1, done: "You have heard the whole lesson. Now do it yourself." });
   lessonWords({ stage: 'stageMw', words: [{ w: "complement", pic: "💯", meaning: "The amount still needed to reach a round number, such as a multiple of 10 or 100 - 62 and its complement to 100 is 38.", uses: ["Find the complement of 62 to 100."] }, { w: "regroup", pic: "🔄", meaning: "Move a group of ten from one column into the next, such as moving 100 out of the hundreds to make 10 more tens.", uses: ["Regroup to take away 48 from 300."] }, { w: "carry", pic: "➡️", meaning: "A ten (or a hundred) that moves from one column into the next when adding, because that column added up to more than 9.", uses: ["Carry the ten into the tens column."] }, { w: "exchange", pic: "🔁", meaning: "Trade one from the column to the left for ten in the column you are working on, so you have enough to take away.", uses: ["Exchange a hundred for ten tens."] }, { w: "estimate", pic: "🎲", meaning: "A sensible rough answer worked out before the exact calculation, by rounding the numbers first.", uses: ["Estimate the total before adding exactly."] }], finish: 2, done: "You know the math words of this lesson." });
   show(0, false);
   quiet -= 1;   /* the first draw is over: say() speaks from here on */

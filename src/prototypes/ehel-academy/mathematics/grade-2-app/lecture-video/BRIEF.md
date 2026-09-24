@@ -332,7 +332,7 @@ them was the ordinary beat fade.
 So check it yourself, once, before you report:
 
 ```bash
-node tools/check-ehel-film-cues.js <grade>
+node tools/check-ehel-film-cues.js mathematics 2
 ```
 
 It lists every declared cue that no scene file names. Then either give the cue

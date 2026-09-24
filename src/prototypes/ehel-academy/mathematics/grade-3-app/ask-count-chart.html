@@ -629,6 +629,9 @@
     align-items: center; gap: 10px; text-align: center; }
   .phase { color: var(--teal); font-weight: 800; font-size: 12.5px; letter-spacing: .1em;
     text-transform: uppercase; }
+  .lec.lec-film { max-width: 760px; }
+  .lec-film video { width: 100%; display: block; border-radius: 18px; background: #000;
+    aspect-ratio: 16 / 9; box-shadow: var(--shadow); }
   .lec-h { font-weight: 800; font-size: clamp(21px, 4vw, 26px); margin: 0; }
   .lec-p { margin: 0; font-size: 19px; line-height: 1.55; max-width: 34em; }
   .lec-note { margin: 4px 0 0; color: var(--muted); font-size: 13.5px; }
@@ -2822,7 +2825,21 @@
     });
   }
 
+  function lessonFilm(o) {
+    const v = o.video, stage = document.getElementById(o.stage);
+    stage.innerHTML = '<div class="lec lec-film">' +
+      '<video controls playsinline preload="none" poster="' + esc(v.poster) + '" src="' + esc(v.src) + '">' +
+      '<track kind="captions" srclang="en" label="English" src="' + esc(v.vtt) + '"></video>' +
+      '<p class="lec-note">' + esc(v.note) + '</p></div>';
+    const film = stage.querySelector('video'), slide = stage.closest('section.slide');
+    film.addEventListener('ended', () => finish(o.finish, o.done));
+    if (slide && window.MutationObserver) new MutationObserver(() => {
+      if (!slide.classList.contains('active') && !film.paused) film.pause();
+    }).observe(slide, { attributes: true, attributeFilter: ['class'] });
+  }
+  
   function lessonLecture(o) {
+    if (o.video) return lessonFilm(o);
     const parts = o.parts || [];
     let k = 0;
     const id = o.stage + 'l';
@@ -2921,7 +2938,7 @@
   }
 
   lessonAbout({ stage: 'stageOvw', about: ["Ask a real question and record the answers with tally marks.", "Read a pictogram using its key.", "Read a bar chart and say what it shows.", "Sort things using a Venn diagram or a Carroll diagram.", "Say whether something will, might or will not happen."], finish: 0, done: "Let's begin." });
-  lessonLecture({ stage: 'stageLec', parts: [{ title: "Tallying and charting", say: "A tally chart counts things as they happen, with a mark laid across every fifth one. A bar chart shows the same kind of information as bars - the taller the bar, the bigger the amount." }, { title: "Pictograms and their key", say: "A pictogram uses pictures instead of bars, and its key says how much one picture is worth - without the key, a pictogram cannot be read." }, { title: "Venn and Carroll diagrams", say: "A Venn diagram sorts things using two overlapping circles, and a Carroll diagram sorts the same kind of thing into a grid using two yes/no questions." }], finish: 1, done: "You have heard the whole lesson. Now do it yourself." });
+  lessonLecture({ stage: 'stageLec', parts: [{ title: "Tallying and charting", say: "A tally chart counts things as they happen, with a mark laid across every fifth one. A bar chart shows the same kind of information as bars - the taller the bar, the bigger the amount." }, { title: "Pictograms and their key", say: "A pictogram uses pictures instead of bars, and its key says how much one picture is worth - without the key, a pictogram cannot be read." }, { title: "Venn and Carroll diagrams", say: "A Venn diagram sorts things using two overlapping circles, and a Carroll diagram sorts the same kind of thing into a grid using two yes/no questions." }], video: { src: "lecture-video/ask-count-chart.8a89aab5.mp4", poster: "lecture-video/ask-count-chart.51cb5c53.jpg", vtt: "lecture-video/ask-count-chart.96cf5961.vtt", note: "The whole lesson in about 2 and a half minutes. When the film ends, this step is done." }, finish: 1, done: "You have heard the whole lesson. Now do it yourself." });
   lessonWords({ stage: 'stageMw', words: [{ w: "tally chart", pic: "✏️", meaning: "A way of counting things as they happen, using one mark for each one and a mark laid across every fifth one.", uses: ["Keep a tally chart of how many heads you toss."] }, { w: "pictogram", pic: "🍎", meaning: "A chart that uses pictures to show amounts, where a key says how much each picture is worth.", uses: ["Read the pictogram using its key."] }, { w: "bar chart", pic: "📊", meaning: "A chart that shows amounts as bars - the taller the bar, the bigger the amount.", uses: ["Build a bar chart of favourite fruits."] }, { w: "Venn diagram", pic: "⭕", meaning: "Two overlapping circles that sort things by which of two properties they have - the middle holds things with both.", uses: ["Sort the numbers using a Venn diagram."] }, { w: "Carroll diagram", pic: "🔲", meaning: "A grid that sorts things into boxes using two yes/no questions, one across the top and one down the side.", uses: ["Sort the shapes using a Carroll diagram."] }, { w: "key", pic: "🔑", meaning: "The part of a pictogram that says how much one picture stands for.", uses: ["Check the key before reading the pictogram."] }], finish: 2, done: "You know the math words of this lesson." });
   show(0, false);
   quiet -= 1;   /* the first draw is over: say() speaks from here on */

@@ -1,0 +1,116 @@
+{
+  "_comment": "Storyboard for the Grade 1 Mathematics unit lecture film, Asking and Sorting. Rendered by tools/create-ehel-unit-lecture.js. See lecture-video/BRIEF.md. Every beat is one narration clip; art.at names the phrases a picture waits for, and the page refuses to load if a phrase is not in its beat's say. The chapters follow the lesson page's own order and its own survey: the twelve children of CLASS asked which fruit they like best (pineapple 5, banana 4, orange 2, apple 1, twelve altogether), the list and the table of steps 5 and 6, the block graph of steps 7 and 8, the pictogram of step 9, the hoop, Venn and Carroll of steps 10 to 12, and the pet graph of steps 13 and 14 (dog 6, cat 4, fish 4, bird 2).",
+  "slug": "asking-and-sorting",
+  "lesson": 5,
+  "grade": 1,
+  "stage": 1,
+  "title": "Asking and Sorting",
+  "subtitle": "Grade 1 Mathematics",
+  "framework": "Cambridge Primary Mathematics 0096",
+  "renderer": {
+    "art": ["math"],
+    "skin": "brown",
+    "scenes": [
+      "tools/lib/ehel-film-marks.js",
+      "tools/lib/film-scenes/math-g1/asking-and-sorting.js",
+      "tools/lib/film-scenes/math-g1/asking-and-sorting-2.js",
+      "tools/lib/film-scenes/math-g1/asking-and-sorting-3.js"
+    ]
+  },
+  "objectives": [
+    ["1Ss.01", "Answer non-statistical questions (categorical data)."],
+    ["1Ss.02", "Record, organise and represent categorical data using: practical resources and drawings lists and tables Venn and Carroll diagrams block graphs and pictograms."],
+    ["1Ss.03", "Describe data, using familiar language including reference to more, less, most or least to answer non-statistical questions and discuss conclusions."]
+  ],
+  "scenes": [
+    { "id": "title", "kind": "title", "codes": [], "beats": [
+      { "say": "Twelve children. One question. Which fruit do you like best?",
+        "art": { "at": { "twelve": "Twelve children", "one": "One question", "which": "Which fruit" } } },
+      { "say": "You collect every answer, then draw what the class said.",
+        "art": { "at": { "collect": "collect every answer", "draw": "draw what the class said" } } }
+    ] },
+
+    { "id": "ask", "kind": "ask", "heading": "Asking everyone", "codes": ["1Ss.01", "1Ss.02"], "beats": [
+      { "say": "Before you can draw anything, you need answers.",
+        "art": { "at": { "answers": "you need answers" } } },
+      { "say": "So ask every child the same question, one at a time.",
+        "art": { "at": { "every": "every child", "same": "the same question" } } },
+      { "say": "Amina says pineapple. Musa says banana. Hodan says pineapple.",
+        "art": { "at": { "amina": "Amina", "musa": "Musa", "hodan": "Hodan" } } },
+      { "say": "Ask each child once. All twelve answers line up in rows.",
+        "art": { "at": { "once": "each child once", "twelve": "All twelve answers", "rows": "line up in rows" } } }
+    ] },
+
+    { "id": "table", "kind": "table", "heading": "A list, then a table", "codes": ["1Ss.02"], "beats": [
+      { "say": "A list writes every answer down, one under the other.",
+        "art": { "at": { "list": "A list", "under": "one under the other" } } },
+      { "say": "Twelve children, so the list is twelve lines long.",
+        "art": { "at": { "lines": "twelve lines long" } } },
+      { "say": "To count the pineapples you read down every single line.",
+        "art": { "at": { "count": "count the pineapples", "every": "every single line" } } },
+      { "say": "A table is shorter. It writes each answer only once.",
+        "art": { "at": { "table": "A table", "once": "only once" } } },
+      { "say": "Pineapple five, banana four, orange two, apple one: twelve children.",
+        "art": { "at": { "p": "Pineapple five", "b": "banana four", "o": "orange two", "a": "apple one", "all": "twelve children" } } }
+    ] },
+
+    { "id": "graph", "kind": "graph", "heading": "A block graph", "codes": ["1Ss.02", "1Ss.03"], "beats": [
+      { "say": "A block graph turns those numbers into towers of blocks.",
+        "art": { "at": { "graph": "A block graph", "towers": "towers of blocks" } } },
+      { "say": "One block means one child, and nothing else at all.",
+        "art": { "at": { "block": "One block", "child": "one child" } } },
+      { "say": "Five children chose pineapple, so its tower is five blocks.",
+        "art": { "at": { "five": "Five children", "blocks": "five blocks" } } },
+      { "say": "Four blocks for banana, two for orange, one for apple.",
+        "art": { "at": { "b": "Four blocks for banana", "o": "two for orange", "a": "one for apple" } } },
+      { "say": "Pineapple is the tallest, so most children chose pineapple.",
+        "art": { "at": { "tall": "the tallest", "most": "most children" } } },
+      { "say": "Apple is the shortest. Only one child chose apple.",
+        "art": { "at": { "short": "the shortest", "one": "Only one child" } } }
+    ] },
+
+    { "id": "picto", "kind": "picto", "heading": "A pictogram", "codes": ["1Ss.02"], "beats": [
+      { "say": "A pictogram shows the same answers, using little pictures.",
+        "art": { "at": { "picto": "A pictogram", "pics": "little pictures" } } },
+      { "say": "One picture stands for one child, every single time.",
+        "art": { "at": { "one": "One picture", "child": "one child" } } },
+      { "say": "The banana row has four pictures, so four children chose banana.",
+        "art": { "at": { "row": "four pictures", "chose": "four children" } } }
+    ] },
+
+    { "id": "sort", "kind": "sort", "heading": "Hoops and boxes", "codes": ["1Ss.02"], "beats": [
+      { "say": "Now sort. A hoop holds everything that follows one rule.",
+        "art": { "at": { "hoop": "A hoop", "rule": "one rule" } } },
+      { "say": "Two hoops that cross over make a Venn diagram.",
+        "art": { "at": { "two": "Two hoops", "venn": "a Venn diagram" } } },
+      { "say": "This hoop is for red. That hoop is for circles.",
+        "art": { "at": { "red": "for red", "circ": "for circles" } } },
+      { "say": "A red circle follows both rules, so it goes in the middle.",
+        "art": { "at": { "card": "A red circle", "both": "both rules", "mid": "the middle" } } },
+      { "say": "A blue triangle follows neither rule, so it stays outside.",
+        "art": { "at": { "card": "A blue triangle", "out": "stays outside" } } },
+      { "say": "A Carroll diagram does the same job, using four boxes.",
+        "art": { "at": { "carroll": "A Carroll diagram", "boxes": "four boxes" } } }
+    ] },
+
+    { "id": "say", "kind": "say", "heading": "What the graph tells you", "codes": ["1Ss.01", "1Ss.03"], "beats": [
+      { "say": "This graph is about pets. Six have a dog, two a bird.",
+        "art": { "at": { "pets": "about pets", "dog": "Six have a dog", "bird": "two a bird" } } },
+      { "say": "So more children have a dog than a bird. Point at it.",
+        "art": { "at": { "more": "more children have a dog", "point": "Point at it" } } },
+      { "say": "Cat and fish are both four, so their towers match exactly.",
+        "art": { "at": { "four": "both four", "match": "towers match exactly" } } },
+      { "say": "The graph never says dogs are best. It only counts.",
+        "art": { "at": { "never": "never says dogs are best", "counts": "It only counts" } } }
+    ] },
+
+    { "id": "recap", "kind": "recap", "heading": "What you now know", "codes": ["1Ss.01", "1Ss.02", "1Ss.03"], "beats": [
+      { "say": "You asked everyone once, and wrote every answer down.",
+        "art": { "at": { "ask": "asked everyone once", "write": "wrote every answer" } } },
+      { "say": "A block graph and a pictogram show the very same answers.",
+        "art": { "at": { "graph": "A block graph", "picto": "a pictogram" } } },
+      { "say": "Hoops and boxes sort. A graph says what people really said.",
+        "art": { "at": { "sort": "Hoops and boxes", "said": "what people really said" } } }
+    ] }
+  ]
+}

@@ -629,6 +629,9 @@
     align-items: center; gap: 10px; text-align: center; }
   .phase { color: var(--teal); font-weight: 800; font-size: 12.5px; letter-spacing: .1em;
     text-transform: uppercase; }
+  .lec.lec-film { max-width: 760px; }
+  .lec-film video { width: 100%; display: block; border-radius: 18px; background: #000;
+    aspect-ratio: 16 / 9; box-shadow: var(--shadow); }
   .lec-h { font-weight: 800; font-size: clamp(21px, 4vw, 26px); margin: 0; }
   .lec-p { margin: 0; font-size: 19px; line-height: 1.55; max-width: 34em; }
   .lec-note { margin: 4px 0 0; color: var(--muted); font-size: 13.5px; }
@@ -2829,7 +2832,21 @@
     });
   }
 
+  function lessonFilm(o) {
+    const v = o.video, stage = document.getElementById(o.stage);
+    stage.innerHTML = '<div class="lec lec-film">' +
+      '<video controls playsinline preload="none" poster="' + esc(v.poster) + '" src="' + esc(v.src) + '">' +
+      '<track kind="captions" srclang="en" label="English" src="' + esc(v.vtt) + '"></video>' +
+      '<p class="lec-note">' + esc(v.note) + '</p></div>';
+    const film = stage.querySelector('video'), slide = stage.closest('section.slide');
+    film.addEventListener('ended', () => finish(o.finish, o.done));
+    if (slide && window.MutationObserver) new MutationObserver(() => {
+      if (!slide.classList.contains('active') && !film.paused) film.pause();
+    }).observe(slide, { attributes: true, attributeFilter: ['class'] });
+  }
+  
   function lessonLecture(o) {
+    if (o.video) return lessonFilm(o);
     const parts = o.parts || [];
     let k = 0;
     const id = o.stage + 'l';
@@ -2928,7 +2945,7 @@
   }
 
   lessonAbout({ stage: 'stageOvw', about: ["Say what a digit is worth by which column it sits in, up to a thousand.", "Break a 3-digit number apart into hundreds, tens and ones.", "Regroup a number into a different mix of hundreds and tens.", "Multiply a number by 10 and see every digit move one place.", "Round a number to the nearest 10 or 100.", "Make a good estimate of how many things are in a group."], finish: 0, done: "Let's begin." });
-  lessonLecture({ stage: 'stageLec', parts: [{ title: "Place value to a thousand", say: "A digit is worth a different amount depending on which column it sits in - the 3 in 348 is worth three hundred, not just three." }, { title: "Regrouping", say: "The same number can be written as a different mix of hundreds and tens - trading one hundred for ten tens never changes what the number is worth." }, { title: "Rounding and estimating", say: "Rounding replaces a number with a nearby one that is easier to work with. Estimating is a sensible guess made before you count everything exactly." }], finish: 1, done: "You have heard the whole lesson. Now do it yourself." });
+  lessonLecture({ stage: 'stageLec', parts: [{ title: "Place value to a thousand", say: "A digit is worth a different amount depending on which column it sits in - the 3 in 348 is worth three hundred, not just three." }, { title: "Regrouping", say: "The same number can be written as a different mix of hundreds and tens - trading one hundred for ten tens never changes what the number is worth." }, { title: "Rounding and estimating", say: "Rounding replaces a number with a nearby one that is easier to work with. Estimating is a sensible guess made before you count everything exactly." }], video: { src: "lecture-video/up-to-a-thousand.c4ba032a.mp4", poster: "lecture-video/up-to-a-thousand.74e4ca05.jpg", vtt: "lecture-video/up-to-a-thousand.5a801c05.vtt", note: "The whole lesson in about 2 and a half minutes. When the film ends, this step is done." }, finish: 1, done: "You have heard the whole lesson. Now do it yourself." });
   lessonWords({ stage: 'stageMw', words: [{ w: "digit", pic: "🔢", meaning: "One of the ten symbols 0-9 used to write a number - 348 has three digits.", uses: ["Point to the digit in the hundreds column of 348."] }, { w: "place value", pic: "🏷️", meaning: "What a digit is worth because of the column it stands in, not just the symbol itself.", uses: ["The place value of the 3 in 348 is three hundred."] }, { w: "decompose", pic: "✂️", meaning: "Break a number apart into its hundreds, tens and ones, such as 348 into 300, 40 and 8.", uses: ["Decompose 348 into hundreds, tens and ones."] }, { w: "regroup", pic: "🔄", meaning: "Rewrite the same number using a different mix of hundreds and tens, such as trading one hundred for ten tens - the value never changes.", uses: ["Regroup 348 to show 2 hundreds and 14 tens."] }, { w: "round", pic: "🎯", meaning: "Replace a number with a nearby one that is easier to work with, such as the nearest 10 or 100.", uses: ["Round 348 to the nearest hundred."] }, { w: "estimate", pic: "🎲", meaning: "A sensible guess at an amount, made by picturing part of it rather than counting every single one.", uses: ["Estimate how many beans are in the jar."] }], finish: 2, done: "You know the math words of this lesson." });
   show(0, false);
   quiet -= 1;   /* the first draw is over: say() speaks from here on */

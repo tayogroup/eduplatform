@@ -629,6 +629,9 @@
     align-items: center; gap: 10px; text-align: center; }
   .phase { color: var(--teal); font-weight: 800; font-size: 12.5px; letter-spacing: .1em;
     text-transform: uppercase; }
+  .lec.lec-film { max-width: 760px; }
+  .lec-film video { width: 100%; display: block; border-radius: 18px; background: #000;
+    aspect-ratio: 16 / 9; box-shadow: var(--shadow); }
   .lec-h { font-weight: 800; font-size: clamp(21px, 4vw, 26px); margin: 0; }
   .lec-p { margin: 0; font-size: 19px; line-height: 1.55; max-width: 34em; }
   .lec-note { margin: 4px 0 0; color: var(--muted); font-size: 13.5px; }
@@ -2824,7 +2827,21 @@
     });
   }
 
+  function lessonFilm(o) {
+    const v = o.video, stage = document.getElementById(o.stage);
+    stage.innerHTML = '<div class="lec lec-film">' +
+      '<video controls playsinline preload="none" poster="' + esc(v.poster) + '" src="' + esc(v.src) + '">' +
+      '<track kind="captions" srclang="en" label="English" src="' + esc(v.vtt) + '"></video>' +
+      '<p class="lec-note">' + esc(v.note) + '</p></div>';
+    const film = stage.querySelector('video'), slide = stage.closest('section.slide');
+    film.addEventListener('ended', () => finish(o.finish, o.done));
+    if (slide && window.MutationObserver) new MutationObserver(() => {
+      if (!slide.classList.contains('active') && !film.paused) film.pause();
+    }).observe(slide, { attributes: true, attributeFilter: ['class'] });
+  }
+  
   function lessonLecture(o) {
+    if (o.video) return lessonFilm(o);
     const parts = o.parts || [];
     let k = 0;
     const id = o.stage + 'l';
@@ -2923,7 +2940,7 @@
   }
 
   lessonAbout({ stage: 'stageOvw', about: ["Tell the time and work out how long something took.", "Read a timetable to plan a journey.", "Use north, south, east and west to give directions.", "Choose the right unit of time for an activity.", "Follow and give directions using cardinal points."], finish: 0, done: "Let's begin." });
-  lessonLecture({ stage: 'stageLec', parts: [{ title: "Time intervals", say: "A time interval is how long something lasts, found by counting on from the start time to the end time." }, { title: "Timetables", say: "A timetable sets out times in rows and columns, such as which bus reaches which stop and when - reading it means finding the right row and the right column together." }, { title: "Cardinal points and direction", say: "North, south, east and west never change, whichever way you are facing. Clockwise turns the way a clock's hands move; anticlockwise turns the other way." }], finish: 1, done: "You have heard the whole lesson. Now do it yourself." });
+  lessonLecture({ stage: 'stageLec', parts: [{ title: "Time intervals", say: "A time interval is how long something lasts, found by counting on from the start time to the end time." }, { title: "Timetables", say: "A timetable sets out times in rows and columns, such as which bus reaches which stop and when - reading it means finding the right row and the right column together." }, { title: "Cardinal points and direction", say: "North, south, east and west never change, whichever way you are facing. Clockwise turns the way a clock's hands move; anticlockwise turns the other way." }], video: { src: "lecture-video/time-and-direction.28bfdbec.mp4", poster: "lecture-video/time-and-direction.c3e76988.jpg", vtt: "lecture-video/time-and-direction.54126f1e.vtt", note: "The whole lesson in about 2 and a half minutes. When the film ends, this step is done." }, finish: 1, done: "You have heard the whole lesson. Now do it yourself." });
   lessonWords({ stage: 'stageMw', words: [{ w: "time interval", pic: "⏳", meaning: "How long something lasts, found by counting on from the start time to the end time.", uses: ["Work out the time interval between 3:15 and 4:00."] }, { w: "timetable", pic: "🚌", meaning: "A list of times set out in rows and columns, such as which bus arrives at which stop and when.", uses: ["Read the timetable to find when the bus arrives."] }, { w: "cardinal point", pic: "🗺️", meaning: "One of the four main compass directions - north, south, east and west - which never change, whichever way you are facing.", uses: ["Point to north, then name the cardinal point behind you."] }, { w: "clockwise", pic: "↻", meaning: "Turning the same way the hands of a clock move - from 12 towards 3, then 6, then 9.", uses: ["Turn the shape clockwise."] }, { w: "anticlockwise", pic: "↺", meaning: "Turning the opposite way to the hands of a clock.", uses: ["Turn the shape anticlockwise."] }], finish: 2, done: "You know the math words of this lesson." });
   show(0, false);
   quiet -= 1;   /* the first draw is over: say() speaks from here on */

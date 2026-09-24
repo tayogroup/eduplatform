@@ -1,0 +1,128 @@
+{
+  "_comment": "Storyboard for the Grade 3 Mathematics unit lecture film, Lesson 3 Rows and Rules. Rendered by tools/create-ehel-unit-lecture.js. See lecture-video/BRIEF.md. Every beat is one narration clip; art.at names the phrases a picture waits for, and the page refuses to load if a phrase is not in its beat's say. The chapters follow the lesson's own steps in order (Rows and columns, Turn it round, One array four facts, Split it to multiply, Estimate then multiply, Sharing and what is left, Multiples of 2 5 and 10, What is the rule, Patterns that grow) and use the lesson's own numbers: the 4 by 6 array it opens on, 24 times 3 split into 20 and 4, 38 times 4 against an estimate of 160, 13 shared between 4 with an estimate of 12 divided by 4 first (the lesson's own round7 does this), the sequence 3 6 9 12, and a shrinking pattern 12 9 6 3 (3Nc.06 is adding AND subtracting a constant, and the lesson's own round10 shrinks half the time). Trimmed the rows chapter's closing 8 nines / 9 eights beats, pure extra practice, to keep the length in range.",
+  "slug": "rows-and-rules",
+  "lesson": 3,
+  "grade": 3,
+  "stage": 3,
+  "title": "Rows and Rules",
+  "subtitle": "Grade 3 Mathematics",
+  "framework": "Cambridge Primary Mathematics 0096",
+  "renderer": {
+    "art": ["math"],
+    "skin": "brown",
+    "scenes": [
+      "tools/lib/ehel-film-marks.js",
+      "tools/lib/film-scenes/math-g3/rows-and-rules.js",
+      "tools/lib/film-scenes/math-g3/rows-and-rules-2.js",
+      "tools/lib/film-scenes/math-g3/rows-and-rules-3.js",
+      "tools/lib/film-scenes/math-g3/rows-and-rules-4.js"
+    ]
+  },
+  "objectives": [
+    ["3Ni.05", "Understand and explain the relationship between multiplication and division."],
+    ["3Ni.06", "Understand and explain the commutative and distributive properties of multiplication, and use these to simplify calculations."],
+    ["3Ni.07", "Know 1, 2, 3, 4, 5, 6, 8, 9 and 10 times tables."],
+    ["3Ni.08", "Estimate and multiply whole numbers up to 100 by 2, 3, 4 and 5."],
+    ["3Ni.09", "Estimate and divide whole numbers up to 100 by 2, 3, 4 and 5."],
+    ["3Ni.10", "Recognise multiples of 2, 5 and 10 (up to 1000)."],
+    ["3Nc.05", "Recognise and extend linear sequences, and describe the term-to-term rule."],
+    ["3Nc.06", "Extend spatial patterns formed from adding and subtracting a constant."]
+  ],
+  "scenes": [
+    { "id": "title", "kind": "title", "codes": [], "beats": [
+      { "say": "Multiplying is counting equal groups. An array lays them out in neat rows.",
+        "art": { "at": { "groups": "counting equal groups", "rows": "neat rows" } } },
+      { "say": "See one times fact, and you can share it out and find its rule too.",
+        "art": { "at": { "share": "share it out", "rule": "find its rule" } } }
+    ] },
+
+    { "id": "rows", "kind": "rows", "heading": "Rows and columns", "codes": ["3Ni.07", "3Ni.06"], "beats": [
+      { "say": "Here are four rows, with six in every row.",
+        "art": { "at": { "rows": "four rows", "six": "six in every row" } } },
+      { "say": "You could count all twenty-four, one at a time. You do not need to.",
+        "art": { "at": { "count": "count all twenty-four", "not": "do not need to" } } },
+      { "say": "Four sixes is twenty-four. Read it as rows times columns.",
+        "art": { "at": { "four": "Four sixes", "read": "rows times columns" } } },
+      { "say": "Every row must be equal. A short row is not a times fact.",
+        "art": { "at": { "equal": "must be equal", "short": "A short row" } } },
+      { "say": "Now turn the whole array on its side.",
+        "art": { "at": { "turn": "turn the whole array" } } },
+      { "say": "Six rows of four. The same dots, looked at another way.",
+        "art": { "at": { "six": "Six rows of four", "same": "The same dots" } } }
+    ] },
+
+    { "id": "family", "kind": "family", "heading": "One array, four facts", "codes": ["3Ni.05"], "beats": [
+      { "say": "One array holds four number sentences.",
+        "art": { "at": { "four": "four number sentences" } } },
+      { "say": "Four times six is twenty-four. Six times four is twenty-four.",
+        "art": { "at": { "f1": "Four times six", "f2": "Six times four" } } },
+      { "say": "Twenty-four shared between four is six.",
+        "art": { "at": { "f3": "shared between four" } } },
+      { "say": "And twenty-four shared between six is four.",
+        "art": { "at": { "f4": "shared between six" } } },
+      { "say": "When a division will not come, ask what you multiply by.",
+        "art": { "at": { "stuck": "will not come", "mult": "what you multiply by" } } }
+    ] },
+
+    { "id": "split", "kind": "split", "heading": "Split it to multiply", "codes": ["3Ni.06", "3Ni.08"], "beats": [
+      { "say": "Twenty-four times three is big. Split the twenty-four into twenty and four.",
+        "art": { "at": { "big": "is big", "split": "Split the twenty-four", "into": "twenty and four" } } },
+      { "say": "Twenty threes are sixty. Four threes are twelve.",
+        "art": { "at": { "tens": "Twenty threes are sixty", "ones": "Four threes are twelve" } } },
+      { "say": "Sixty and twelve make seventy-two. Both parts had to be multiplied.",
+        "art": { "at": { "add": "Sixty and twelve", "both": "Both parts" } } },
+      { "say": "Estimate first. Thirty-eight is nearly forty, and forty fours are one hundred and sixty.",
+        "art": { "at": { "est": "Estimate first", "near": "nearly forty", "forty": "forty fours" } } },
+      { "say": "The real answer is one hundred and fifty-two. Close, as it should be.",
+        "art": { "at": { "real": "one hundred and fifty-two", "close": "Close" } } }
+    ] },
+
+    { "id": "share", "kind": "share", "heading": "Sharing, and what is left", "codes": ["3Ni.09"], "beats": [
+      { "say": "Estimate first. Twelve is close to thirteen, so expect about three each.",
+        "art": { "at": { "est": "Estimate first", "near": "close to thirteen", "expect": "about three each" } } },
+      { "say": "Share thirteen sweets between four friends. Deal them out, one to each.",
+        "art": { "at": { "sweets": "thirteen sweets", "friends": "four friends", "deal": "one to each" } } },
+      { "say": "Three each, and that is twelve given out.",
+        "art": { "at": { "three": "Three each", "twelve": "twelve given out" } } },
+      { "say": "One sweet is left over. That one is the remainder.",
+        "art": { "at": { "left": "left over", "rem": "the remainder" } } },
+      { "say": "A remainder must be smaller than the number of groups. One is smaller than four.",
+        "art": { "at": { "smaller": "smaller than the number of groups", "one": "One is smaller than four" } } }
+    ] },
+
+    { "id": "multiples", "kind": "multiples", "heading": "Multiples of 2, 5 and 10", "codes": ["3Ni.10"], "beats": [
+      { "say": "Count up from zero in equal steps. Five, ten, fifteen, twenty.",
+        "art": { "at": { "steps": "equal steps", "five": "Five, ten, fifteen, twenty" } } },
+      { "say": "Every number you land on is a multiple of five.",
+        "art": { "at": { "mult": "a multiple of five" } } },
+      { "say": "The last digit tells you. Multiples of five end in nought or five.",
+        "art": { "at": { "digit": "The last digit", "end": "nought or five" } } },
+      { "say": "Multiples of ten end in nought. Multiples of two end in nought, two, four, six or eight.",
+        "art": { "at": { "ten": "Multiples of ten", "two": "Multiples of two" } } }
+    ] },
+
+    { "id": "rules", "kind": "rules", "heading": "Find the rule", "codes": ["3Nc.05", "3Nc.06"], "beats": [
+      { "say": "Three, six, nine, twelve. A sequence goes up by the same amount each time.",
+        "art": { "at": { "terms": "Three, six, nine, twelve", "same": "the same amount" } } },
+      { "say": "To find the rule, take one term away from the next.",
+        "art": { "at": { "find": "find the rule", "take": "take one term away" } } },
+      { "say": "Nine take away six is three. The rule is add three.",
+        "art": { "at": { "nine": "Nine take away six", "rule": "add three" } } },
+      { "say": "So the next number is fifteen, and you did not draw it.",
+        "art": { "at": { "next": "fifteen", "draw": "draw it" } } },
+      { "say": "Squares can grow by a rule too. Three, six, nine, then twelve.",
+        "art": { "at": { "sq": "Squares can grow", "counts": "Three, six, nine, then twelve" } } },
+      { "say": "Patterns can shrink too. Twelve, nine, six, then three: take away three each time.",
+        "art": { "at": { "shrink": "shrink too", "seq": "Twelve, nine, six, then three", "away": "take away three" } } }
+    ] },
+
+    { "id": "recap", "kind": "recap", "heading": "What you now know", "codes": ["3Ni.05", "3Ni.06", "3Ni.09", "3Ni.10", "3Nc.05"], "beats": [
+      { "say": "An array shows a times fact, and turning it round keeps the total.",
+        "art": { "at": { "array": "An array", "turn": "turning it round" } } },
+      { "say": "One array gives four facts, and a big number can be split into parts.",
+        "art": { "at": { "facts": "four facts", "split": "split into parts" } } },
+      { "say": "Sharing can leave a remainder, and equal steps find multiples and rules.",
+        "art": { "at": { "rem": "a remainder", "steps": "equal steps" } } }
+    ] }
+  ]
+}

@@ -1,0 +1,119 @@
+{
+  "_comment": "Storyboard for the Grade 3 Mathematics unit lecture film, Measure It. Rendered by tools/create-ehel-unit-lecture.js. See lecture-video/BRIEF.md. Every beat is one narration clip; art.at names the phrases a picture waits for, and the page refuses to load if a phrase is not in its beat's say. The chapters follow the lesson's own order (steps 4 to 10 of measure-it.html): centimetres, metres and kilometres; grams and kilograms; millilitres and litres; reading a scale; measuring from a mark that is not zero; right angles and turns. Every number said is read off the scale drawn beside it: the pencil spans 0 to 15 and then 2 to 9 on a real ruler, the jugs fill to the 1000, 300 and 500 marks, the balance carries 1000 g against 1 kg, and the pointer sits on the 350 mark of a line printed in hundreds.",
+  "slug": "measure-it",
+  "lesson": 6,
+  "grade": 3,
+  "stage": 3,
+  "title": "Measure It",
+  "subtitle": "Grade 3 Mathematics",
+  "framework": "Cambridge Primary Mathematics 0096",
+  "renderer": {
+    "art": ["math"],
+    "skin": "brown",
+    "scenes": [
+      "tools/lib/ehel-film-marks.js",
+      "tools/lib/film-scenes/math-g3/measure-it.js",
+      "tools/lib/film-scenes/math-g3/measure-it-2.js"
+    ]
+  },
+  "objectives": [
+    ["3Gg.02", "Estimate and measure lengths in centimetres (cm), metres (m) and kilometres (km). Understand the relationship between units."],
+    ["3Gg.06", "Estimate and measure the mass of objects in grams (g) and kilograms (kg). Understand the relationship between units."],
+    ["3Gg.07", "Estimate and measure capacity in millilitres (ml) and litres (l), and understand their relationships."],
+    ["3Gg.10", "Compare angles with a right angle. Recognise that a straight line is equivalent to two right angles or a half turn."],
+    ["3Gg.11", "Use instruments that measure length, mass, capacity and temperature."]
+  ],
+  "scenes": [
+    { "id": "title", "kind": "title", "codes": [], "beats": [
+      { "say": "How long is it? How heavy is it? How much does it hold?",
+        "art": { "at": { "long": "How long", "heavy": "How heavy", "much": "How much" } } },
+      { "say": "Each question has its own tool, its own units and its own scale.",
+        "art": { "at": { "tool": "its own tool", "units": "its own units", "scale": "its own scale" } } }
+    ] },
+
+    { "id": "length", "kind": "length", "heading": "Centimetres, metres, kilometres", "codes": ["3Gg.02"], "beats": [
+      { "say": "Length is how far it is from one end to the other.",
+        "art": { "at": { "ends": "from one end to the other" } } },
+      { "say": "A ruler measures it. This pencil runs from zero to fifteen.",
+        "art": { "at": { "ruler": "A ruler", "runs": "from zero to fifteen" } } },
+      { "say": "So the pencil is fifteen centimetres long.",
+        "art": { "at": { "cm": "fifteen centimetres" } } },
+      { "say": "A hundred centimetres make one metre. A thousand metres make one kilometre.",
+        "art": { "at": { "hundred": "A hundred centimetres", "metre": "one metre", "thousand": "A thousand metres", "km": "one kilometre" } } },
+      { "say": "A door is about two metres. The next town is five kilometres away.",
+        "art": { "at": { "door": "two metres", "town": "five kilometres" } } }
+    ] },
+
+    { "id": "mass", "kind": "mass", "heading": "Grams and kilograms", "codes": ["3Gg.06"], "beats": [
+      { "say": "Mass is how heavy a thing is. You weigh it on a scale.",
+        "art": { "at": { "heavy": "how heavy", "weigh": "on a scale" } } },
+      { "say": "A thousand grams balance one kilogram exactly.",
+        "art": { "at": { "grams": "A thousand grams", "kilo": "one kilogram" } } },
+      { "say": "An apple is about a hundred grams. A bag of rice is two kilograms.",
+        "art": { "at": { "apple": "a hundred grams", "rice": "two kilograms" } } },
+      { "say": "Big does not mean heavy. A bag of feathers can weigh less than a stone.",
+        "art": { "at": { "big": "Big does not mean heavy", "stone": "less than a stone" } } }
+    ] },
+
+    { "id": "capacity", "kind": "capacity", "heading": "Millilitres and litres", "codes": ["3Gg.07"], "beats": [
+      { "say": "Capacity is how much a container holds.",
+        "art": { "at": { "holds": "how much a container holds" } } },
+      { "say": "A thousand millilitres fill one litre.",
+        "art": { "at": { "ml": "A thousand millilitres", "litre": "one litre" } } },
+      { "say": "A teaspoon holds about five millilitres. A mug of tea holds three hundred.",
+        "art": { "at": { "spoon": "five millilitres", "mug": "three hundred" } } },
+      { "say": "So half a litre is five hundred millilitres, not fifty.",
+        "art": { "at": { "half": "half a litre", "five": "five hundred millilitres", "fifty": "not fifty" } } }
+    ] },
+
+    { "id": "scale", "kind": "scale", "heading": "Reading a scale", "codes": ["3Gg.11"], "beats": [
+      { "say": "A scale is the marked line on an instrument. What is this pointer reading?",
+        "art": { "at": { "line": "the marked line", "pointer": "this pointer" } } },
+      { "say": "Work out what one small mark is worth first.",
+        "art": { "at": { "mark": "one small mark" } } },
+      { "say": "Three hundred and four hundred are printed, a hundred apart.",
+        "art": { "at": { "printed": "are printed", "apart": "a hundred apart" } } },
+      { "say": "Count the gaps between them, not the marks. There are two.",
+        "art": { "at": { "gaps": "Count the gaps", "two": "There are two" } } },
+      { "say": "A hundred shared between two gaps is fifty. The pointer reads three hundred and fifty.",
+        "art": { "at": { "share": "shared between two gaps is fifty", "reads": "three hundred and fifty" } } }
+    ] },
+
+    { "id": "startmark", "kind": "startmark", "heading": "Measure from any mark", "codes": ["3Gg.02", "3Gg.11"], "beats": [
+      { "say": "A ruler does not have to start at zero.",
+        "art": { "at": { "zero": "start at zero" } } },
+      { "say": "This pencil begins at the two and ends at the nine.",
+        "art": { "at": { "two": "at the two", "nine": "at the nine" } } },
+      { "say": "Read only the end and you get nine. That is too long.",
+        "art": { "at": { "end": "you get nine", "long": "too long" } } },
+      { "say": "Count on from the two, not the zero.",
+        "art": { "at": { "take": "Count on from the two" } } },
+      { "say": "Count on, one centimetre at a time: seven centimetres long.",
+        "art": { "at": { "count": "Count on, one centimetre at a time", "len": "seven centimetres long" } } }
+    ] },
+
+    { "id": "angles", "kind": "angles", "heading": "Right angles and turns", "codes": ["3Gg.10"], "beats": [
+      { "say": "A right angle is a square corner. It is a quarter turn.",
+        "art": { "at": { "corner": "a square corner", "quarter": "a quarter turn" } } },
+      { "say": "The corner of a book is one. Hold it against any angle to check.",
+        "art": { "at": { "book": "The corner of a book", "check": "against any angle" } } },
+      { "say": "This angle opens less, so it is smaller than a right angle.",
+        "art": { "at": { "less": "opens less", "smaller": "smaller than a right angle" } } },
+      { "say": "This one opens wider, so it is bigger. Long arms do not make a bigger angle.",
+        "art": { "at": { "wider": "opens wider", "arms": "Long arms" } } },
+      { "say": "Two right angles side by side make a straight line, a half turn.",
+        "art": { "at": { "two": "Two right angles", "straight": "a straight line", "half": "a half turn" } } }
+    ] },
+
+    { "id": "recap", "kind": "recap", "heading": "What you now know", "codes": ["3Gg.02", "3Gg.06", "3Gg.07", "3Gg.10", "3Gg.11"], "beats": [
+      { "say": "Length in centimetres, mass in grams, capacity in millilitres.",
+        "art": { "at": { "length": "Length in centimetres", "mass": "mass in grams", "capacity": "capacity in millilitres" } } },
+      { "say": "Work out what one mark is worth before you read any scale.",
+        "art": { "at": { "scale": "one mark is worth" } } },
+      { "say": "Count on from the start when a ruler starts past zero.",
+        "art": { "at": { "start": "Count on from the start" } } },
+      { "say": "A right angle is a quarter turn, and two of them make a straight line.",
+        "art": { "at": { "angle": "a quarter turn", "line": "make a straight line" } } }
+    ] }
+  ]
+}

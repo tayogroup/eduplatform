@@ -1,0 +1,124 @@
+{
+  "_comment": "Storyboard for the Grade 3 Mathematics unit lecture film, Time and Direction. Rendered by tools/create-ehel-unit-lecture.js. See lecture-video/BRIEF.md. Every beat is one narration clip; art.at names the phrases a picture waits for, and the page refuses to load if a phrase is not in its beat's say. The chapters follow the lesson's own steps in order (Telling the time; How long did it take?; Which unit of time?; Reading a timetable and Which bus do you catch?; North, south, east, west; Find your way), and every number in it is the lesson's own: the hour hand crept halfway to 4 at half past three (the lesson's How do you know? bank), 10:40 to 11:15 is 35 minutes counted on through 11:00 (the same bank), 2 weeks is 14 days (the interval chapter's own days-in-weeks bank, round14long kind 0, w = rnd(2, 8) so w = 2 is inside range and 2 x 7 = 14), Amina walking to school in about 15 minutes (Which unit of time?), Hodan needing the Library by 10:00 with Bus 3 at 10:10 and Bus 2 at 9:45 (Which bus do you catch?), and Home to School on the map as 2 squares east then 2 squares north (Find your way).",
+  "slug": "time-and-direction",
+  "lesson": 7,
+  "grade": 3,
+  "stage": 3,
+  "title": "Time and Direction",
+  "subtitle": "Grade 3 Mathematics",
+  "framework": "Cambridge Primary Mathematics 0096",
+  "renderer": {
+    "art": ["math"],
+    "skin": "brown",
+    "scenes": [
+      "tools/lib/ehel-film-marks.js",
+      "tools/lib/film-scenes/math-g3/time-and-direction.js",
+      "tools/lib/film-scenes/math-g3/time-and-direction-2.js",
+      "tools/lib/film-scenes/math-g3/time-and-direction-3.js"
+    ]
+  },
+  "objectives": [
+    ["3Gt.01", "Choose the appropriate unit of time for familiar activities."],
+    ["3Gt.02", "Read and record time accurately in digital notation (12-hour) and on analogue clocks."],
+    ["3Gt.03", "Interpret and use the information in timetables (12-hour clock)."],
+    ["3Gt.04", "Understand the difference between a time and a time interval. Find time intervals between the same units in days, weeks, months and years."],
+    ["3Gp.01", "Interpret and create descriptions of position, direction and movement, including reference to cardinal points."]
+  ],
+  "scenes": [
+    { "id": "title", "kind": "title", "codes": [], "beats": [
+      { "say": "A clock tells you when. A compass tells you which way.",
+        "art": { "at": { "clock": "A clock", "when": "when", "compass": "A compass", "way": "which way" } } },
+      { "say": "Today you will use both, and work out how long things take.",
+        "art": { "at": { "both": "use both", "long": "how long things take" } } }
+    ] },
+
+    { "id": "clock", "kind": "clock", "heading": "Reading the clock", "codes": ["3Gt.02"], "beats": [
+      { "say": "A clock has two hands, and they do different jobs.",
+        "art": { "at": { "two": "two hands", "jobs": "different jobs" } } },
+      { "say": "The long hand gives the minutes. Each number it passes is five minutes.",
+        "art": { "at": { "long": "The long hand", "five": "five minutes" } } },
+      { "say": "The short hand gives the hour. Read the number it has just passed.",
+        "art": { "at": { "short": "The short hand", "passed": "it has just passed" } } },
+      { "say": "The long hand is at 3, and the short hand has passed 3. Quarter past three.",
+        "art": { "at": { "at3": "is at 3", "past3": "has passed 3", "quarter": "Quarter past three" } } },
+      { "say": "Now the long hand moves to 6. Half past three, and the short hand has crept halfway to 4.",
+        "art": { "at": { "six": "moves to 6", "half": "Half past three", "crept": "crept halfway to 4" } } }
+    ] },
+
+    { "id": "interval", "kind": "interval", "heading": "How long did it take?", "codes": ["3Gt.04"], "beats": [
+      { "say": "A time is a point in the day. A time interval is how long something lasts.",
+        "art": { "at": { "point": "a point in the day", "lasts": "how long something lasts" } } },
+      { "say": "A film starts at 10:40 and ends at 11:15. How long is it?",
+        "art": { "at": { "start": "starts at 10:40", "end": "ends at 11:15", "how": "How long is it?" } } },
+      { "say": "Do not take one time from the other. An hour is sixty minutes, not a hundred.",
+        "art": { "at": { "dont": "Do not take one time", "sixty": "sixty minutes", "hundred": "not a hundred" } } },
+      { "say": "Count on instead. 10:40 to 11:00 is twenty minutes.",
+        "art": { "at": { "count": "Count on instead", "twenty": "twenty minutes" } } },
+      { "say": "Then 11:00 to 11:15 is fifteen more. Twenty and fifteen make 35 minutes.",
+        "art": { "at": { "fifteen": "fifteen more", "total": "35 minutes" } } },
+      { "say": "It works for weeks too. 2 weeks is 7 days, then 7 more: 14 days.",
+        "art": { "at": { "twoweeks": "2 weeks", "sevendays": "7 days", "sevenmore": "7 more", "fourteen": "14 days" } } }
+    ] },
+
+    { "id": "units", "kind": "units", "heading": "Choosing the unit", "codes": ["3Gt.01"], "beats": [
+      { "say": "Some things take seconds. Others take minutes, hours, days or years.",
+        "art": { "at": { "seconds": "take seconds", "ladder": "minutes, hours, days or years" } } },
+      { "say": "Amina walks to school. Is that 15 seconds, 15 minutes or 15 hours?",
+        "art": { "at": { "amina": "Amina walks to school", "ask": "15 seconds, 15 minutes or 15 hours?" } } },
+      { "say": "15 seconds is far too quick. You would not reach the gate.",
+        "art": { "at": { "sec": "15 seconds", "quick": "far too quick" } } },
+      { "say": "15 hours is far too long. That is most of a day.",
+        "art": { "at": { "hrs": "15 hours", "day": "most of a day" } } },
+      { "say": "15 minutes fits. Picture the thing happening, then choose the unit.",
+        "art": { "at": { "min": "15 minutes fits", "picture": "Picture the thing happening" } } }
+    ] },
+
+    { "id": "timetable", "kind": "timetable", "heading": "Reading a timetable", "codes": ["3Gt.03"], "beats": [
+      { "say": "A timetable sets out times in rows and columns.",
+        "art": { "at": { "table": "A timetable", "rows": "rows and columns" } } },
+      { "say": "Each column is one bus. Each row is one stop.",
+        "art": { "at": { "col": "Each column is one bus", "row": "Each row is one stop" } } },
+      { "say": "Hodan must be at the Library by 10 o'clock. Which bus?",
+        "art": { "at": { "library": "at the Library", "by": "by 10 o'clock", "which": "Which bus?" } } },
+      { "say": "Find the Library row, and keep a finger on it. Bus 3 arrives at 10:10, too late.",
+        "art": { "at": { "find": "Find the Library row", "finger": "keep a finger on it", "bus3": "Bus 3 arrives at 10:10", "late": "too late" } } },
+      { "say": "Bus 2 arrives at 9:45, so Hodan catches Bus 2.",
+        "art": { "at": { "bus2": "Bus 2 arrives at 9:45", "catch": "Hodan catches Bus 2" } } }
+    ] },
+
+    { "id": "points", "kind": "points", "heading": "North, south, east, west", "codes": ["3Gp.01"], "beats": [
+      { "say": "North, south, east and west are the four cardinal points.",
+        "art": { "at": { "north": "North, south, east and west", "four": "four cardinal points" } } },
+      { "say": "On a map, north is up and south is down.",
+        "art": { "at": { "up": "north is up", "down": "south is down" } } },
+      { "say": "East is to the right, and west is to the left.",
+        "art": { "at": { "east": "East is to the right", "west": "west is to the left" } } },
+      { "say": "Your left and right change when you turn. North never does.",
+        "art": { "at": { "change": "change when you turn", "never": "North never does" } } },
+      { "say": "Clockwise is the way a clock's hands go. Anticlockwise is the other way.",
+        "art": { "at": { "cw": "Clockwise", "acw": "Anticlockwise" } } }
+    ] },
+
+    { "id": "route", "kind": "route", "heading": "Finding your way", "codes": ["3Gp.01"], "beats": [
+      { "say": "Here is a map. Amina starts at the Home.",
+        "art": { "at": { "map": "a map", "home": "at the Home" } } },
+      { "say": "Go 2 squares east, which is 2 squares to the right.",
+        "art": { "at": { "east": "2 squares east", "right": "to the right" } } },
+      { "say": "Then go 2 squares north, which is 2 squares up the map.",
+        "art": { "at": { "north": "2 squares north", "up": "up the map" } } },
+      { "say": "Amina reaches the School. Say those words and anyone can follow them.",
+        "art": { "at": { "school": "reaches the School", "follow": "anyone can follow them" } } },
+      { "say": "Face west, turn a quarter turn clockwise, and you face north.",
+        "art": { "at": { "west": "Face west", "turn": "a quarter turn clockwise", "facing": "you face north" } } }
+    ] },
+
+    { "id": "recap", "kind": "recap", "heading": "What you now know", "codes": ["3Gt.01", "3Gt.02", "3Gt.03", "3Gt.04", "3Gp.01"], "beats": [
+      { "say": "The short hand gives the hour, and the long hand gives the minutes.",
+        "art": { "at": { "hour": "gives the hour", "minutes": "gives the minutes" } } },
+      { "say": "Count on to find how long, and choose a unit that fits.",
+        "art": { "at": { "counton": "Count on", "unit": "a unit that fits" } } },
+      { "say": "Read a timetable by row and column. North, south, east and west never move.",
+        "art": { "at": { "rowcol": "by row and column", "nevermove": "never move" } } }
+    ] }
+  ]
+}

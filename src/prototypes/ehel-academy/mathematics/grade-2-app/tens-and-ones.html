@@ -3099,7 +3099,21 @@
     });
   }
 
+  function lessonFilm(o) {
+    const v = o.video, stage = document.getElementById(o.stage);
+    stage.innerHTML = '<div class="lec lec-film">' +
+      '<video controls playsinline preload="none" poster="' + esc(v.poster) + '" src="' + esc(v.src) + '">' +
+      '<track kind="captions" srclang="en" label="English" src="' + esc(v.vtt) + '"></video>' +
+      '<p class="lec-note">' + esc(v.note) + '</p></div>';
+    const film = stage.querySelector('video'), slide = stage.closest('section.slide');
+    film.addEventListener('ended', () => finish(o.finish, o.done));
+    if (slide && window.MutationObserver) new MutationObserver(() => {
+      if (!slide.classList.contains('active') && !film.paused) film.pause();
+    }).observe(slide, { attributes: true, attributeFilter: ['class'] });
+  }
+  
   function lessonLecture(o) {
+    if (o.video) return lessonFilm(o);
     const parts = o.parts || [];
     let k = 0;
     const id = o.stage + 'l';
@@ -3198,7 +3212,7 @@
   }
 
   lessonAbout({ stage: 'stageOvw', about: ["Count up to 100 objects.", "Say how many you see without counting them.", "Know what each digit means in a 2-digit number.", "Round a 2-digit number to the nearest 10.", "Use arrays to show multiplication.", "Use sharing and grouping to work out a division."], finish: 0, done: "Let's begin." });
-  lessonLecture({ stage: 'stageLec', parts: [{ title: "Tens and ones", say: "A 2-digit number is made of tens and ones - 34 is 3 tens and 4 ones, and each ten is worth ten times as much as a one." }, { title: "Rounding", say: "Rounding to the nearest 10 means finding the nearest multiple of ten - 34 rounds down to 30, because it is closer to 30 than to 40." }, { title: "Arrays and sharing", say: "An array shows multiplication as rows and columns - 2 rows of 5 is the same as 5 lots of 2. Sharing the same total into equal groups is division." }], finish: 1, done: "You have heard the whole lesson. Now do it yourself." });
+  lessonLecture({ stage: 'stageLec', parts: [{ title: "Tens and ones", say: "A 2-digit number is made of tens and ones - 34 is 3 tens and 4 ones, and each ten is worth ten times as much as a one." }, { title: "Rounding", say: "Rounding to the nearest 10 means finding the nearest multiple of ten - 34 rounds down to 30, because it is closer to 30 than to 40." }, { title: "Arrays and sharing", say: "An array shows multiplication as rows and columns - 2 rows of 5 is the same as 5 lots of 2. Sharing the same total into equal groups is division." }], video: { src: "lecture-video/tens-and-ones.b2b74945.mp4", poster: "lecture-video/tens-and-ones.be623fe7.jpg", vtt: "lecture-video/tens-and-ones.fad7e869.vtt", note: "The whole lesson in about 2 and a half minutes. When the film ends, this step is done." }, finish: 1, done: "You have heard the whole lesson. Now do it yourself." });
   lessonWords({ stage: 'stageMw', words: [{ w: "digit", pic: "🔢", meaning: "One of the ten symbols 0-9 used to write a number - the 4 and the 7 in 47 are both digits.", uses: ["Point to the digit in the tens column of 47."] }, { w: "array", pic: "🔲", meaning: "Rows and columns of the same size, used to show a multiplication fact.", uses: ["Draw an array to show 2 rows of 5."] }, { w: "odd number", pic: "🔵", meaning: "A whole number that leaves one left over when put into pairs, like 3, 5 and 7.", uses: ["7 is an odd number."] }, { w: "even number", pic: "🔴", meaning: "A whole number that splits into pairs exactly, with nothing left over, like 2, 4 and 6.", uses: ["4 is an even number."] }, { w: "round", pic: "🎯", meaning: "Change a number to the nearest ten, to make it easier to work with.", uses: ["Round 34 to the nearest ten."] }], finish: 2, done: "You know the math words of this lesson." });
   show(0, false);
   quiet -= 1;   /* the first draw is over: say() speaks from here on */
@@ -3993,6 +4007,9 @@
     align-items: center; gap: 10px; text-align: center; }
   .phase { color: var(--teal); font-weight: 800; font-size: 12.5px; letter-spacing: .1em;
     text-transform: uppercase; }
+  .lec.lec-film { max-width: 760px; }
+  .lec-film video { width: 100%; display: block; border-radius: 18px; background: #000;
+    aspect-ratio: 16 / 9; box-shadow: var(--shadow); }
   .lec-h { font-weight: 800; font-size: clamp(21px, 4vw, 26px); margin: 0; }
   .lec-p { margin: 0; font-size: 19px; line-height: 1.55; max-width: 34em; }
   .lec-note { margin: 4px 0 0; color: var(--muted); font-size: 13.5px; }

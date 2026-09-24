@@ -1,0 +1,118 @@
+{
+  "_comment": "Storyboard for the Grade 2 Mathematics unit lecture film, How Much, How Long. Rendered by tools/create-ehel-unit-lecture.js. See lecture-video/BRIEF.md. Every beat is one narration clip; art.at names the phrases a picture waits for, and the page refuses to load if a phrase is not in its beat's say. The chapters follow the lesson's own steps in order - longer and shorter, measure with cubes, reading a ruler and drawing a line, which unit, the balance and the jug, and a scale read between its marks - in the lesson's own numbers: the pencil 7 cubes long, the same pencil ending at the 8, a line drawn to the 6, a longer pencil about 15 cm and a door about 2 m, the apple balanced by 100 g and 200 g at 300 g, the jug poured three times to 300 ml, and the ribbon on the halfway mark between 30 and 40 at 35 cm.",
+  "slug": "how-much-how-long",
+  "lesson": 7,
+  "grade": 2,
+  "stage": 2,
+  "title": "How Much, How Long",
+  "subtitle": "Grade 2 Mathematics",
+  "framework": "Cambridge Primary Mathematics 0096",
+  "renderer": {
+    "art": ["math"],
+    "skin": "brown",
+    "scenes": [
+      "tools/lib/ehel-film-marks.js",
+      "tools/lib/film-scenes/math-g2/how-much-how-long.js",
+      "tools/lib/film-scenes/math-g2/how-much-how-long-2.js",
+      "tools/lib/film-scenes/math-g2/how-much-how-long-3.js"
+    ]
+  },
+  "objectives": [
+    ["2Gg.03", "Understand that length is a fixed distance between two points. Estimate and measure lengths using non-standard or standard units."],
+    ["2Gg.04", "Draw and measure lines, using standard units."],
+    ["2Gg.06", "Understand that mass is the quantity of matter in an object. Estimate and measure familiar objects using non-standard or standard units."],
+    ["2Gg.07", "Understand that capacity is the maximum amount that an object can contain. Estimate and measure the capacity of familiar objects using non-standard or standard units."],
+    ["2Gg.12", "Understand a measuring scale as a continuous number line where intermediate points have value."]
+  ],
+  "scenes": [
+    { "id": "title", "kind": "title", "codes": [], "beats": [
+      { "say": "Some things are long. Some things are heavy. Some hold a lot.",
+        "art": { "at": { "long": "are long", "heavy": "are heavy", "hold": "hold a lot" } } },
+      { "say": "Measuring tells you exactly how long, how heavy, or how much.",
+        "art": { "at": { "measure": "Measuring", "much": "how much" } } }
+    ] },
+
+    { "id": "compare", "kind": "compare", "heading": "Longer and shorter", "codes": ["2Gg.03"], "beats": [
+      { "say": "Here are a pencil and a crayon. Which one is longer?",
+        "art": { "at": { "pencil": "a pencil", "crayon": "a crayon", "which": "Which one is longer" } } },
+      { "say": "They both start in the same place, on the same line.",
+        "art": { "at": { "start": "both start", "line": "on the same line" } } },
+      { "say": "Now look at where each one ends. The pencil ends further along.",
+        "art": { "at": { "ends": "where each one ends", "further": "further along" } } },
+      { "say": "So the pencil is longer, and the crayon is shorter.",
+        "art": { "at": { "longer": "is longer", "shorter": "is shorter" } } },
+      { "say": "A fat thing is not a long thing. Only the length along it counts.",
+        "art": { "at": { "fat": "A fat thing", "not": "not a long thing", "length": "the length along it" } } }
+    ] },
+
+    { "id": "cubes", "kind": "cubes", "heading": "Measure with cubes", "codes": ["2Gg.03"], "beats": [
+      { "say": "You can measure with cubes. Lay them along the pencil, with no gaps.",
+        "art": { "at": { "cubes": "with cubes", "lay": "Lay them along", "gaps": "no gaps" } } },
+      { "say": "Then count them: one, two, three, four, five, six, seven.",
+        "art": { "at": { "one": "one,", "seven": "seven." } } },
+      { "say": "The pencil is seven cubes long. Cubes are the unit here.",
+        "art": { "at": { "seven": "seven cubes long", "unit": "the unit here" } } },
+      { "say": "Every cube must be the same size, or the count means nothing.",
+        "art": { "at": { "same": "the same size", "nothing": "means nothing" } } }
+    ] },
+
+    { "id": "ruler", "kind": "ruler", "heading": "Reading a ruler", "codes": ["2Gg.03", "2Gg.04"], "beats": [
+      { "say": "A ruler measures in centimetres. The marks are all the same size.",
+        "art": { "at": { "ruler": "A ruler", "cm": "in centimetres", "marks": "The marks" } } },
+      { "say": "Line up the end of the pencil with the 0, not with the 1.",
+        "art": { "at": { "zero": "with the 0", "one": "not with the 1" } } },
+      { "say": "Read the number where the pencil ends. It ends at the 8.",
+        "art": { "at": { "read": "Read the number", "eight": "at the 8" } } },
+      { "say": "So the pencil is 8 centimetres long. You measured it.",
+        "art": { "at": { "long": "8 centimetres long", "measured": "You measured it" } } },
+      { "say": "To draw a line 6 centimetres long, start at 0 and stop at the 6.",
+        "art": { "at": { "draw": "draw a line", "start": "start at 0", "stop": "stop at the 6" } } }
+    ] },
+
+    { "id": "unit", "kind": "unit", "heading": "Choosing a unit", "codes": ["2Gg.03", "2Gg.06", "2Gg.07"], "beats": [
+      { "say": "Now choose a unit that fits. A longer pencil is about 15 centimetres.",
+        "art": { "at": { "choose": "choose a unit", "pencil": "A longer pencil", "cm": "about 15 centimetres" } } },
+      { "say": "A door is about 2 metres tall. Big things need metres.",
+        "art": { "at": { "door": "A door", "m": "need metres" } } },
+      { "say": "An apple is light, so grams. A school bag is heavy, so kilograms.",
+        "art": { "at": { "apple": "An apple", "grams": "so grams", "bag": "A school bag", "kg": "so kilograms" } } },
+      { "say": "A spoon of medicine is millilitres. A bath of water is litres.",
+        "art": { "at": { "spoon": "A spoon of medicine", "bath": "A bath of water" } } }
+    ] },
+
+    { "id": "mass", "kind": "mass", "heading": "Mass and capacity", "codes": ["2Gg.06", "2Gg.07"], "beats": [
+      { "say": "Mass is how heavy a thing is. A balance can find it.",
+        "art": { "at": { "mass": "Mass is how heavy", "balance": "A balance" } } },
+      { "say": "The apple side tips down, so the apple is the heavier side.",
+        "art": { "at": { "down": "tips down", "heavier": "the heavier side" } } },
+      { "say": "Add 100 grams, then 200 grams. Now the beam is level.",
+        "art": { "at": { "hundred": "Add 100 grams", "twohundred": "then 200 grams", "level": "the beam is level" } } },
+      { "say": "Level means both sides match. The apple is 300 grams.",
+        "art": { "at": { "match": "both sides match", "three": "300 grams" } } },
+      { "say": "Capacity is how much a jug holds. Each mark is 100 millilitres.",
+        "art": { "at": { "capacity": "Capacity is how much", "mark": "Each mark" } } },
+      { "say": "Pour in three times, and the water reaches the 300 mark.",
+        "art": { "at": { "pour": "Pour in three times", "reach": "the 300 mark" } } }
+    ] },
+
+    { "id": "marks", "kind": "marks", "heading": "Between the marks", "codes": ["2Gg.12"], "beats": [
+      { "say": "A measuring scale is a number line, and not every mark has a number.",
+        "art": { "at": { "line": "a number line", "not": "not every mark" } } },
+      { "say": "Here the numbered marks say 30 and 40.",
+        "art": { "at": { "thirty": "30", "forty": "40" } } },
+      { "say": "One small mark sits halfway between them. It is worth 5 more.",
+        "art": { "at": { "small": "One small mark", "halfway": "halfway between", "worth": "worth 5 more" } } },
+      { "say": "The ribbon ends on that mark, so it is 35 centimetres long.",
+        "art": { "at": { "ribbon": "The ribbon", "ends": "ends on that mark", "answer": "35 centimetres" } } }
+    ] },
+
+    { "id": "recap", "kind": "recap", "heading": "What you now know", "codes": ["2Gg.03", "2Gg.04", "2Gg.06", "2Gg.07", "2Gg.12"], "beats": [
+      { "say": "Start at 0, use one unit all the way, and read where it ends.",
+        "art": { "at": { "zero": "Start at 0", "unit": "one unit", "ends": "where it ends" } } },
+      { "say": "Small things take small units. Big things take big ones.",
+        "art": { "at": { "small": "Small things", "big": "Big things" } } },
+      { "say": "A balance finds mass, a jug finds capacity, and every mark counts.",
+        "art": { "at": { "balance": "A balance", "jug": "a jug", "mark": "every mark counts" } } }
+    ] }
+  ]
+}

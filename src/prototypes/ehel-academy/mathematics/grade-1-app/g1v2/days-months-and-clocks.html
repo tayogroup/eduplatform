@@ -2942,7 +2942,21 @@
     });
   }
 
+  function lessonFilm(o) {
+    const v = o.video, stage = document.getElementById(o.stage);
+    stage.innerHTML = '<div class="lec lec-film">' +
+      '<video controls playsinline preload="none" poster="' + esc(v.poster) + '" src="' + esc(v.src) + '">' +
+      '<track kind="captions" srclang="en" label="English" src="' + esc(v.vtt) + '"></video>' +
+      '<p class="lec-note">' + esc(v.note) + '</p></div>';
+    const film = stage.querySelector('video'), slide = stage.closest('section.slide');
+    film.addEventListener('ended', () => finish(o.finish, o.done));
+    if (slide && window.MutationObserver) new MutationObserver(() => {
+      if (!slide.classList.contains('active') && !film.paused) film.pause();
+    }).observe(slide, { attributes: true, attributeFilter: ['class'] });
+  }
+  
   function lessonLecture(o) {
+    if (o.video) return lessonFilm(o);
     const parts = o.parts || [];
     let k = 0;
     const id = o.stage + 'l';
@@ -3041,7 +3055,7 @@
   }
 
   lessonAbout({ stage: 'stageOvw', about: ["Name the 7 days of the week in order.", "Name the 12 months of the year.", "Say whether something takes a short time or a long time.", "Read a clock at o'clock.", "Read a clock at half past."], finish: 0, done: "Let's begin." });
-  lessonLecture({ stage: 'stageLec', parts: [{ title: "Days and months", say: "There are 7 days in a week, from Monday round to Sunday, and 12 months in a year, from January to December." }, { title: "Short times and long times", say: "Some things take a short time, like a blink. Some things take a long time, like a whole day at school." }, { title: "O'clock and half past", say: "At o'clock, the long hand points straight up to twelve. At half past, the long hand points straight down to six." }], finish: 1, done: "You have heard the whole lesson. Now do it yourself." });
+  lessonLecture({ stage: 'stageLec', parts: [{ title: "Days and months", say: "There are 7 days in a week, from Monday round to Sunday, and 12 months in a year, from January to December." }, { title: "Short times and long times", say: "Some things take a short time, like a blink. Some things take a long time, like a whole day at school." }, { title: "O'clock and half past", say: "At o'clock, the long hand points straight up to twelve. At half past, the long hand points straight down to six." }], video: { src: "lecture-video/days-months-and-clocks.990f0aab.mp4", poster: "lecture-video/days-months-and-clocks.300cf325.jpg", vtt: "lecture-video/days-months-and-clocks.691dfcab.vtt", note: "The whole lesson in about 2 minutes. When the film ends, this step is done." }, finish: 1, done: "You have heard the whole lesson. Now do it yourself." });
   lessonWords({ stage: 'stageMw', words: [{ w: "hour hand", pic: "🕐", meaning: "The short hand on a clock. It tells you the hour.", uses: ["The hour hand points to the 3."] }, { w: "minute hand", pic: "🕜", meaning: "The long hand on a clock. It tells you how far through the hour you are.", uses: ["The minute hand points straight up at o'clock."] }, { w: "o'clock", pic: "🕛", meaning: "When the long hand points straight up to twelve.", uses: ["It is three o'clock."] }, { w: "half past", pic: "🕡", meaning: "When the long hand points straight down to six.", uses: ["It is half past three."] }, { w: "week", pic: "📅", meaning: "Seven days, from Monday round to Sunday.", uses: ["There are seven days in a week."] }, { w: "year", pic: "🗓️", meaning: "Twelve months, from January to December.", uses: ["There are twelve months in a year."] }], finish: 2, done: "You know the math words of this lesson." });
   show(0, false);
 
@@ -3936,6 +3950,9 @@
     align-items: center; gap: 10px; text-align: center; }
   .phase { color: var(--teal); font-weight: 800; font-size: 12.5px; letter-spacing: .1em;
     text-transform: uppercase; }
+  .lec.lec-film { max-width: 760px; }
+  .lec-film video { width: 100%; display: block; border-radius: 18px; background: #000;
+    aspect-ratio: 16 / 9; box-shadow: var(--shadow); }
   .lec-h { font-weight: 800; font-size: clamp(21px, 4vw, 26px); margin: 0; }
   .lec-p { margin: 0; font-size: 19px; line-height: 1.55; max-width: 34em; }
   .lec-note { margin: 4px 0 0; color: var(--muted); font-size: 13.5px; }

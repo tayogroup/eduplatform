@@ -1,0 +1,125 @@
+{
+  "_comment": "Storyboard for the Grade 4 Mathematics unit lecture film, Lesson 4 Parts of a Whole. Rendered by tools/create-ehel-unit-lecture.js. See lecture-video/BRIEF.md. Every beat is one narration clip; art.at names the phrases a picture waits for, and the page refuses to load if a phrase is not in the beat that names it. The chapters follow the lesson page's own teaching steps in order - step 4 More parts, smaller parts; step 5 A fraction is a division (3 cakes between 4 children); step 6 A fraction of an amount (one fifth of 20); step 8 Same value, different name; step 9 Out of a hundred (25 of 100); step 10 Which is bigger (three quarters against five eighths) - with the lesson's own numbers. Every division drawn here is equal by construction: ART.fraction cuts its bar into parts of exactly bw/parts, and the equivalence bars are the same drawing placed at the same width, so 1/2, 2/4 and 4/8 shade the same length.",
+  "slug": "parts-of-a-whole",
+  "lesson": 4,
+  "grade": 4,
+  "stage": 4,
+  "title": "Parts of a Whole",
+  "subtitle": "Grade 4 Mathematics",
+  "framework": "Cambridge Primary Mathematics 0096",
+  "renderer": {
+    "art": ["math"],
+    "skin": "brown",
+    "scenes": [
+      "tools/lib/ehel-film-marks.js",
+      "tools/lib/film-scenes/math-g4/parts-of-a-whole.js",
+      "tools/lib/film-scenes/math-g4/parts-of-a-whole-2.js",
+      "tools/lib/film-scenes/math-g4/parts-of-a-whole-3.js"
+    ]
+  },
+  "objectives": [
+    ["4Nf.01", "Understand that the more parts a whole is divided into, the smaller the parts become."],
+    ["4Nf.02", "Understand that a fraction can be represented as a division of the numerator by the denominator (unit fractions and three-quarters)."],
+    ["4Nf.03", "Understand that unit fractions can act as operators."],
+    ["4Nf.04", "Recognise that two proper fractions can have an equivalent value."],
+    ["4Nf.06", "Understand percentage as the number of parts in each hundred, and use the percentage symbol (%)."],
+    ["4Nf.07", "Use knowledge of equivalence to compare and order proper fractions, using the symbols =, > and <."]
+  ],
+  "scenes": [
+    { "id": "title", "kind": "title", "codes": [], "beats": [
+      { "say": "Cut a whole into equal parts, and every part is a fraction.",
+        "art": { "at": { "cut": "Cut a whole", "equal": "equal parts", "frac": "a fraction" } } },
+      { "say": "Today you compare fractions, share amounts, and write percentages.",
+        "art": { "at": { "compare": "compare fractions", "share": "share amounts", "pct": "percentages" } } }
+    ] },
+
+    { "id": "more", "kind": "more", "heading": "More parts, smaller parts", "codes": ["4Nf.01"], "beats": [
+      { "say": "Here is one whole bar. Cut it into 2 equal parts.",
+        "art": { "at": { "whole": "one whole bar", "two": "2 equal parts" } } },
+      { "say": "Each part is a half. Now cut the same bar into 4 equal parts.",
+        "art": { "at": { "half": "a half", "four": "into 4 equal parts" } } },
+      { "say": "Each part is a quarter, and a quarter is half the size of a half.",
+        "art": { "at": { "quarter": "a quarter", "halfsize": "half the size of a half" } } },
+      { "say": "Cut the bar into 8, and each part is an eighth. Smaller again.",
+        "art": { "at": { "eight": "into 8", "eighth": "an eighth", "again": "Smaller again" } } },
+      { "say": "The whole never changes, so more parts always means smaller parts.",
+        "art": { "at": { "never": "never changes", "smaller": "smaller parts" } } },
+      { "say": "So a bigger bottom number does not mean a bigger piece.",
+        "art": { "at": { "bottom": "a bigger bottom number", "piece": "a bigger piece" } } }
+    ] },
+
+    { "id": "divide", "kind": "divide", "heading": "A fraction is a division", "codes": ["4Nf.02"], "beats": [
+      { "say": "Three cakes are shared fairly between four children.",
+        "art": { "at": { "cakes": "Three cakes", "kids": "four children" } } },
+      { "say": "Cut every cake into quarters. That gives twelve equal quarters.",
+        "art": { "at": { "cut": "Cut every cake into quarters", "twelve": "twelve equal quarters" } } },
+      { "say": "Now share the twelve quarters out, one at a time.",
+        "art": { "at": { "share": "share the twelve quarters out" } } },
+      { "say": "Each child gets three quarters of a cake.",
+        "art": { "at": { "each": "Each child gets three quarters" } } },
+      { "say": "Three cakes divided by four children: the cakes go on top.",
+        "art": { "at": { "div": "divided by four children", "top": "go on top" } } }
+    ] },
+
+    { "id": "amount", "kind": "amount", "heading": "A fraction of an amount", "codes": ["4Nf.03"], "beats": [
+      { "say": "A unit fraction is an instruction. Find one fifth of 20.",
+        "art": { "at": { "unit": "A unit fraction", "find": "one fifth of 20" } } },
+      { "say": "The bottom number says how many equal groups to make, so make five.",
+        "art": { "at": { "bottom": "The bottom number", "make": "so make five" } } },
+      { "say": "Share the 20 counters out fairly. Each group holds four.",
+        "art": { "at": { "share": "Share the 20 counters", "holds": "Each group holds four" } } },
+      { "say": "One group is the answer, so one fifth of 20 is 4.",
+        "art": { "at": { "one": "One group", "ans": "one fifth of 20 is 4" } } },
+      { "say": "It is not 5. The 5 told you how many groups, not the answer.",
+        "art": { "at": { "not": "It is not 5", "groups": "how many groups" } } }
+    ] },
+
+    { "id": "equiv", "kind": "equiv", "heading": "Same value, different name", "codes": ["4Nf.04"], "beats": [
+      { "say": "Two fractions can look different and still be worth exactly the same.",
+        "art": { "at": { "look": "look different", "same": "exactly the same" } } },
+      { "say": "Here is one half of a bar, and here are two quarters of the same bar.",
+        "art": { "at": { "half": "one half of a bar", "two": "two quarters" } } },
+      { "say": "The shading ends in the same place, so one half equals two quarters.",
+        "art": { "at": { "ends": "ends in the same place", "eq": "one half equals two quarters" } } },
+      { "say": "Four eighths reaches there too. All three are equivalent fractions.",
+        "art": { "at": { "four": "Four eighths", "all": "All three are equivalent" } } }
+    ] },
+
+    { "id": "percent", "kind": "percent", "heading": "Out of a hundred", "codes": ["4Nf.06"], "beats": [
+      { "say": "Per cent means out of a hundred. Here are a hundred small squares.",
+        "art": { "at": { "percent": "Per cent", "hundred": "out of a hundred", "squares": "a hundred small squares" } } },
+      { "say": "Shade 25 of them, and you have shaded 25 per cent of the grid.",
+        "art": { "at": { "shade": "Shade 25 of them", "pct": "25 per cent" } } },
+      { "say": "You write it with the per cent sign, like this: 25%.",
+        "art": { "at": { "sign": "the per cent sign", "wrote": "25%" } } },
+      { "say": "Those 25 shaded squares fill one quarter of the whole grid.",
+        "art": { "at": { "fill": "fill one quarter" } } },
+      { "say": "So one quarter and 25 per cent are the very same amount.",
+        "art": { "at": { "same": "the very same amount" } } }
+    ] },
+
+    { "id": "compare", "kind": "compare", "heading": "Which is bigger?", "codes": ["4Nf.07"], "beats": [
+      { "say": "Which is bigger, three quarters or five eighths?",
+        "art": { "at": { "tq": "three quarters", "fe": "five eighths" } } },
+      { "say": "Give them the same bottom number first. Cut every quarter in two.",
+        "art": { "at": { "same": "the same bottom number", "cut": "Cut every quarter in two" } } },
+      { "say": "Three quarters is the same amount as six eighths.",
+        "art": { "at": { "six": "six eighths" } } },
+      { "say": "Now only the top numbers matter, and six beats five.",
+        "art": { "at": { "tops": "the top numbers", "beats": "six beats five" } } },
+      { "say": "So three quarters is bigger than five eighths.",
+        "art": { "at": { "bigger": "is bigger than" } } }
+    ] },
+
+    { "id": "recap", "kind": "recap", "heading": "What you now know", "codes": ["4Nf.01", "4Nf.02", "4Nf.03", "4Nf.04", "4Nf.06", "4Nf.07"], "beats": [
+      { "say": "More parts means smaller parts, and a fraction is a division.",
+        "art": { "at": { "more": "More parts", "div": "a fraction is a division" } } },
+      { "say": "To find a fraction of an amount, share it into equal groups.",
+        "art": { "at": { "share": "share it into equal groups" } } },
+      { "say": "Fractions can be worth the same, and per cent means out of a hundred.",
+        "art": { "at": { "equiv": "worth the same", "pct": "out of a hundred" } } },
+      { "say": "Give two fractions the same bottom number, and you can compare them.",
+        "art": { "at": { "cmp": "you can compare them" } } }
+    ] }
+  ]
+}

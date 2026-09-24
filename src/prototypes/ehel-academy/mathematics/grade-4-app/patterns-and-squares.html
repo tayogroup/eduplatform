@@ -3148,7 +3148,21 @@
     });
   }
 
+  function lessonFilm(o) {
+    const v = o.video, stage = document.getElementById(o.stage);
+    stage.innerHTML = '<div class="lec lec-film">' +
+      '<video controls playsinline preload="none" poster="' + esc(v.poster) + '" src="' + esc(v.src) + '">' +
+      '<track kind="captions" srclang="en" label="English" src="' + esc(v.vtt) + '"></video>' +
+      '<p class="lec-note">' + esc(v.note) + '</p></div>';
+    const film = stage.querySelector('video'), slide = stage.closest('section.slide');
+    film.addEventListener('ended', () => finish(o.finish, o.done));
+    if (slide && window.MutationObserver) new MutationObserver(() => {
+      if (!slide.classList.contains('active') && !film.paused) film.pause();
+    }).observe(slide, { attributes: true, attributeFilter: ['class'] });
+  }
+  
   function lessonLecture(o) {
+    if (o.video) return lessonFilm(o);
     const parts = o.parts || [];
     let k = 0;
     const id = o.stage + 'l';
@@ -3247,7 +3261,7 @@
   }
 
   lessonAbout({ stage: 'stageOvw', about: ["Say whether a number is odd or even, and explain how you know.", "Build a square number as an actual square of counters, not just a multiplication fact.", "Find the rule in a sequence and use it to predict the next term."], finish: 0, done: "Let's begin." });
-  lessonLecture({ stage: 'stageLec', parts: [{ title: "Odd and even", say: "Pair the counters off. An even number pairs exactly; an odd number leaves one over. Even plus odd is always odd." }, { title: "Square numbers", say: "A square number comes from multiplying a whole number by itself, and you can build it as an actual square of counters - four rows of four counters makes sixteen, a real square." }, { title: "Finding the rule", say: "A sequence follows a rule from one term to the next. Find the rule from two terms that sit next to each other, then use it to predict what comes next." }], finish: 1, done: "You have heard the whole lesson. Now do it yourself." });
+  lessonLecture({ stage: 'stageLec', parts: [{ title: "Odd and even", say: "Pair the counters off. An even number pairs exactly; an odd number leaves one over. Even plus odd is always odd." }, { title: "Square numbers", say: "A square number comes from multiplying a whole number by itself, and you can build it as an actual square of counters - four rows of four counters makes sixteen, a real square." }, { title: "Finding the rule", say: "A sequence follows a rule from one term to the next. Find the rule from two terms that sit next to each other, then use it to predict what comes next." }], video: { src: "lecture-video/patterns-and-squares.8d748703.mp4", poster: "lecture-video/patterns-and-squares.fef25628.jpg", vtt: "lecture-video/patterns-and-squares.a7f360cc.vtt", note: "The whole lesson in about 3 minutes. When the film ends, this step is done." }, finish: 1, done: "You have heard the whole lesson. Now do it yourself." });
   lessonWords({ stage: 'stageMw', words: [{ w: "odd number", pic: "🔵", meaning: "A whole number that leaves 1 left over when split into pairs - 1, 3, 5, 7...", uses: ["7 is an odd number because it makes 3 pairs and 1 left over."] }, { w: "even number", pic: "🔴", meaning: "A whole number that splits into pairs exactly, with none left over - 2, 4, 6, 8...", uses: ["8 is an even number: four whole pairs, nothing left over."] }, { w: "square number", pic: "🔷", meaning: "The result of multiplying a whole number by itself - 4 x 4 = 16, so 16 is a square number.", uses: ["Build the square number 4 squared out of counters."] }, { w: "sequence", pic: "➡️", meaning: "A list of numbers or shapes that follow a rule, one after another.", uses: ["1, 4, 9, 16 is a sequence of square numbers."] }, { w: "rule", pic: "📏", meaning: "The instruction that says how to get from one term in a sequence to the next.", uses: ["The rule for this sequence is add 3 each time."] }], finish: 2, done: "You know the math words of this lesson." });
   show(0, false);
   quiet -= 1;   /* the first draw is over: say() speaks from here on */
@@ -4156,6 +4170,9 @@
     align-items: center; gap: 10px; text-align: center; }
   .phase { color: var(--teal); font-weight: 800; font-size: 12.5px; letter-spacing: .1em;
     text-transform: uppercase; }
+  .lec.lec-film { max-width: 760px; }
+  .lec-film video { width: 100%; display: block; border-radius: 18px; background: #000;
+    aspect-ratio: 16 / 9; box-shadow: var(--shadow); }
   .lec-h { font-weight: 800; font-size: clamp(21px, 4vw, 26px); margin: 0; }
   .lec-p { margin: 0; font-size: 19px; line-height: 1.55; max-width: 34em; }
   .lec-note { margin: 4px 0 0; color: var(--muted); font-size: 13.5px; }

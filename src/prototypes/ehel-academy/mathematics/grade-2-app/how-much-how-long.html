@@ -2839,7 +2839,21 @@
     });
   }
 
+  function lessonFilm(o) {
+    const v = o.video, stage = document.getElementById(o.stage);
+    stage.innerHTML = '<div class="lec lec-film">' +
+      '<video controls playsinline preload="none" poster="' + esc(v.poster) + '" src="' + esc(v.src) + '">' +
+      '<track kind="captions" srclang="en" label="English" src="' + esc(v.vtt) + '"></video>' +
+      '<p class="lec-note">' + esc(v.note) + '</p></div>';
+    const film = stage.querySelector('video'), slide = stage.closest('section.slide');
+    film.addEventListener('ended', () => finish(o.finish, o.done));
+    if (slide && window.MutationObserver) new MutationObserver(() => {
+      if (!slide.classList.contains('active') && !film.paused) film.pause();
+    }).observe(slide, { attributes: true, attributeFilter: ['class'] });
+  }
+  
   function lessonLecture(o) {
+    if (o.video) return lessonFilm(o);
     const parts = o.parts || [];
     let k = 0;
     const id = o.stage + 'l';
@@ -2938,7 +2952,7 @@
   }
 
   lessonAbout({ stage: 'stageOvw', about: ["Compare two lengths and say which is longer.", "Measure with the same unit every time.", "Measure a length in whole centimetres with a ruler.", "Choose the right unit for what I am measuring.", "Estimate the mass of an object before measuring it.", "Read scales marked in twos, fives and tens."], finish: 0, done: "Let's begin." });
-  lessonLecture({ stage: 'stageLec', parts: [{ title: "Measuring length", say: "Line up the end of the ruler with the start of what you are measuring, and use the same unit all the way along, or the measurement will not mean anything." }, { title: "Choosing a unit", say: "Small things are measured in small units like centimetres, and big things need bigger units - the right unit makes the number sensible." }, { title: "Mass and capacity", say: "Mass is how heavy something is, found on a balance or a scale. Capacity is how much a container can hold, found by filling it up." }], finish: 1, done: "You have heard the whole lesson. Now do it yourself." });
+  lessonLecture({ stage: 'stageLec', parts: [{ title: "Measuring length", say: "Line up the end of the ruler with the start of what you are measuring, and use the same unit all the way along, or the measurement will not mean anything." }, { title: "Choosing a unit", say: "Small things are measured in small units like centimetres, and big things need bigger units - the right unit makes the number sensible." }, { title: "Mass and capacity", say: "Mass is how heavy something is, found on a balance or a scale. Capacity is how much a container can hold, found by filling it up." }], video: { src: "lecture-video/how-much-how-long.3eb52366.mp4", poster: "lecture-video/how-much-how-long.547f5f2c.jpg", vtt: "lecture-video/how-much-how-long.6b8c078a.vtt", note: "The whole lesson in about 2 and a half minutes. When the film ends, this step is done." }, finish: 1, done: "You have heard the whole lesson. Now do it yourself." });
   lessonWords({ stage: 'stageMw', words: [{ w: "length", pic: "↔️", meaning: "How long something is, measured from one end to the other.", uses: ["Compare the length of two pencils."] }, { w: "centimetre", pic: "📏", meaning: "A small unit for measuring length, marked on a ruler.", uses: ["Measure the pencil in centimetres."] }, { w: "unit", pic: "1️⃣", meaning: "The thing you use to measure with, like a cube, a centimetre or a cup.", uses: ["Choose the right unit to measure the table."] }, { w: "balance", pic: "⚖️", meaning: "A tool with two sides that tips down on the heavier side, used to compare mass.", uses: ["Use the balance to compare two objects."] }, { w: "mass", pic: "🐘", meaning: "How heavy something is.", uses: ["Estimate the mass of the book before weighing it."] }, { w: "capacity", pic: "🥤", meaning: "How much a container can hold.", uses: ["Which jug has the bigger capacity?"] }], finish: 2, done: "You know the math words of this lesson." });
   show(0, false);
   quiet -= 1;   /* the first draw is over: say() speaks from here on */
@@ -3733,6 +3747,9 @@
     align-items: center; gap: 10px; text-align: center; }
   .phase { color: var(--teal); font-weight: 800; font-size: 12.5px; letter-spacing: .1em;
     text-transform: uppercase; }
+  .lec.lec-film { max-width: 760px; }
+  .lec-film video { width: 100%; display: block; border-radius: 18px; background: #000;
+    aspect-ratio: 16 / 9; box-shadow: var(--shadow); }
   .lec-h { font-weight: 800; font-size: clamp(21px, 4vw, 26px); margin: 0; }
   .lec-p { margin: 0; font-size: 19px; line-height: 1.55; max-width: 34em; }
   .lec-note { margin: 4px 0 0; color: var(--muted); font-size: 13.5px; }

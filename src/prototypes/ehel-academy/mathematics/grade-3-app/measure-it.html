@@ -629,6 +629,9 @@
     align-items: center; gap: 10px; text-align: center; }
   .phase { color: var(--teal); font-weight: 800; font-size: 12.5px; letter-spacing: .1em;
     text-transform: uppercase; }
+  .lec.lec-film { max-width: 760px; }
+  .lec-film video { width: 100%; display: block; border-radius: 18px; background: #000;
+    aspect-ratio: 16 / 9; box-shadow: var(--shadow); }
   .lec-h { font-weight: 800; font-size: clamp(21px, 4vw, 26px); margin: 0; }
   .lec-p { margin: 0; font-size: 19px; line-height: 1.55; max-width: 34em; }
   .lec-note { margin: 4px 0 0; color: var(--muted); font-size: 13.5px; }
@@ -2665,7 +2668,21 @@
     });
   }
 
+  function lessonFilm(o) {
+    const v = o.video, stage = document.getElementById(o.stage);
+    stage.innerHTML = '<div class="lec lec-film">' +
+      '<video controls playsinline preload="none" poster="' + esc(v.poster) + '" src="' + esc(v.src) + '">' +
+      '<track kind="captions" srclang="en" label="English" src="' + esc(v.vtt) + '"></video>' +
+      '<p class="lec-note">' + esc(v.note) + '</p></div>';
+    const film = stage.querySelector('video'), slide = stage.closest('section.slide');
+    film.addEventListener('ended', () => finish(o.finish, o.done));
+    if (slide && window.MutationObserver) new MutationObserver(() => {
+      if (!slide.classList.contains('active') && !film.paused) film.pause();
+    }).observe(slide, { attributes: true, attributeFilter: ['class'] });
+  }
+  
   function lessonLecture(o) {
+    if (o.video) return lessonFilm(o);
     const parts = o.parts || [];
     let k = 0;
     const id = o.stage + 'l';
@@ -2764,7 +2781,7 @@
   }
 
   lessonAbout({ stage: 'stageOvw', about: ["Measure length, mass and capacity using real instruments.", "Read a scale marked in twos, fives or tens.", "Recognise a right angle as a quarter turn.", "Measure a length that does not start at zero on the ruler.", "Know that two right angles make a straight line."], finish: 0, done: "Let's begin." });
-  lessonLecture({ stage: 'stageLec', parts: [{ title: "Length, mass and capacity", say: "Length is measured with a ruler, mass on a scale, and capacity by how much a container holds - each uses its own instrument and its own units." }, { title: "Reading a scale", say: "A scale is the marked line on an instrument, and reading it carefully - not just the nearest big number - is what gives an accurate measurement." }, { title: "Right angles and turns", say: "A right angle is a quarter turn - a square corner. Two right angles side by side make a straight line, which is a half turn." }], finish: 1, done: "You have heard the whole lesson. Now do it yourself." });
+  lessonLecture({ stage: 'stageLec', parts: [{ title: "Length, mass and capacity", say: "Length is measured with a ruler, mass on a scale, and capacity by how much a container holds - each uses its own instrument and its own units." }, { title: "Reading a scale", say: "A scale is the marked line on an instrument, and reading it carefully - not just the nearest big number - is what gives an accurate measurement." }, { title: "Right angles and turns", say: "A right angle is a quarter turn - a square corner. Two right angles side by side make a straight line, which is a half turn." }], video: { src: "lecture-video/measure-it.309dab53.mp4", poster: "lecture-video/measure-it.4ef46df3.jpg", vtt: "lecture-video/measure-it.b98bed5b.vtt", note: "The whole lesson in about 2 and a half minutes. When the film ends, this step is done." }, finish: 1, done: "You have heard the whole lesson. Now do it yourself." });
   lessonWords({ stage: 'stageMw', words: [{ w: "capacity", pic: "🥤", meaning: "How much a container can hold, measured in millilitres and litres.", uses: ["Which jug has the bigger capacity?"] }, { w: "mass", pic: "⚖️", meaning: "How heavy something is, measured in grams and kilograms.", uses: ["Estimate the mass of the book before weighing it."] }, { w: "scale", pic: "🌡️", meaning: "The marked line on an instrument, such as a ruler or kitchen scales, used to read off a measurement.", uses: ["Read the scale to find the mass."] }, { w: "right angle", pic: "📐", meaning: "A square corner - a quarter turn, exactly a quarter of the way round.", uses: ["Find a right angle in the room."] }, { w: "half turn", pic: "🔄", meaning: "A turn that makes a straight line - the same amount of turning as two right angles put together.", uses: ["Turn the shape a half turn."] }], finish: 2, done: "You know the math words of this lesson." });
   show(0, false);
   quiet -= 1;   /* the first draw is over: say() speaks from here on */

@@ -629,6 +629,9 @@
     align-items: center; gap: 10px; text-align: center; }
   .phase { color: var(--teal); font-weight: 800; font-size: 12.5px; letter-spacing: .1em;
     text-transform: uppercase; }
+  .lec.lec-film { max-width: 760px; }
+  .lec-film video { width: 100%; display: block; border-radius: 18px; background: #000;
+    aspect-ratio: 16 / 9; box-shadow: var(--shadow); }
   .lec-h { font-weight: 800; font-size: clamp(21px, 4vw, 26px); margin: 0; }
   .lec-p { margin: 0; font-size: 19px; line-height: 1.55; max-width: 34em; }
   .lec-note { margin: 4px 0 0; color: var(--muted); font-size: 13.5px; }
@@ -2764,7 +2767,21 @@
     });
   }
 
+  function lessonFilm(o) {
+    const v = o.video, stage = document.getElementById(o.stage);
+    stage.innerHTML = '<div class="lec lec-film">' +
+      '<video controls playsinline preload="none" poster="' + esc(v.poster) + '" src="' + esc(v.src) + '">' +
+      '<track kind="captions" srclang="en" label="English" src="' + esc(v.vtt) + '"></video>' +
+      '<p class="lec-note">' + esc(v.note) + '</p></div>';
+    const film = stage.querySelector('video'), slide = stage.closest('section.slide');
+    film.addEventListener('ended', () => finish(o.finish, o.done));
+    if (slide && window.MutationObserver) new MutationObserver(() => {
+      if (!slide.classList.contains('active') && !film.paused) film.pause();
+    }).observe(slide, { attributes: true, attributeFilter: ['class'] });
+  }
+  
   function lessonLecture(o) {
+    if (o.video) return lessonFilm(o);
     const parts = o.parts || [];
     let k = 0;
     const id = o.stage + 'l';
@@ -2863,7 +2880,7 @@
   }
 
   lessonAbout({ stage: 'stageOvw', about: ["Know that a fraction's parts must be exactly equal, not just close.", "Find a fraction of a group of objects.", "Say what the line in a fraction means.", "Name fractions that are worth the same, even though they look different.", "Compare two fractions and say which is bigger."], finish: 0, done: "Let's begin." });
-  lessonLecture({ stage: 'stageLec', parts: [{ title: "Equal parts and fractions", say: "A fraction is one or more equal parts of a whole - the parts must be exactly the same size, not just close, or it is not a fraction at all." }, { title: "Dividing to find a fraction", say: "The line in a fraction means divide - finding a fraction of a group means sharing it into that many equal parts." }, { title: "Comparing fractions", say: "Fractions can be worth the same amount even though they look different, and two fractions can be compared by looking at whether their top or bottom numbers match." }], finish: 1, done: "You have heard the whole lesson. Now do it yourself." });
+  lessonLecture({ stage: 'stageLec', parts: [{ title: "Equal parts and fractions", say: "A fraction is one or more equal parts of a whole - the parts must be exactly the same size, not just close, or it is not a fraction at all." }, { title: "Dividing to find a fraction", say: "The line in a fraction means divide - finding a fraction of a group means sharing it into that many equal parts." }, { title: "Comparing fractions", say: "Fractions can be worth the same amount even though they look different, and two fractions can be compared by looking at whether their top or bottom numbers match." }], video: { src: "lecture-video/equal-parts.2af45c9f.mp4", poster: "lecture-video/equal-parts.0d63f0fe.jpg", vtt: "lecture-video/equal-parts.588026e8.vtt", note: "The whole lesson in about 2 and a half minutes. When the film ends, this step is done." }, finish: 1, done: "You have heard the whole lesson. Now do it yourself." });
   lessonWords({ stage: 'stageMw', words: [{ w: "fraction", pic: "🍕", meaning: "One or more equal parts of a whole, written as one number over another, such as 3/4.", uses: ["Shade 3/4 of the circle to show the fraction."] }, { w: "equal parts", pic: "⚖️", meaning: "Pieces of a whole that are all exactly the same size - not just close, but the same.", uses: ["Cut the paper into four equal parts."] }, { w: "whole", pic: "🍎", meaning: "All of the equal parts put back together - one complete thing, before any of it was shared out.", uses: ["Put the pieces back together to make one whole."] }, { w: "divide", pic: "➗", meaning: "Share an amount into equal parts - the line in a fraction means exactly this.", uses: ["Divide 12 sweets into 4 equal groups."] }, { w: "compare", pic: "📏", meaning: "Work out which of two fractions is bigger, by looking at whether their top numbers or bottom numbers match.", uses: ["Compare 3/4 and 1/2 and say which is bigger."] }], finish: 2, done: "You know the math words of this lesson." });
   show(0, false);
   quiet -= 1;   /* the first draw is over: say() speaks from here on */

@@ -1,0 +1,166 @@
+{
+  "_comment": "Storyboard for the Grade 4 Mathematics unit lecture film, Big Numbers and Below Zero. Rendered by tools/create-ehel-unit-lecture.js. See lecture-video/BRIEF.md. Every beat is one narration clip; art.at names the phrases a picture waits for, and the page refuses to load if a phrase is not in its beat's say. The chapters follow the lesson page's own steps in the lesson's own numbers: 3,406 in its place-value columns (step 4-5), 4,208 regrouped as 3 thousands and 12 hundreds (step 6), 34 x 10 and 34 x 100 (step 7), the thermometer falling from 3 degrees to minus 2 (step 9), minus 2 and minus 9 on the number line (steps 10-11), and 4,630 rounded to the nearest hundred (step 12). Revised 2026-09-24 against a lead review note: five of the longest beats were split (worth, ten-times, and below-zero-in-order each gained a beat) and several others tightened, to bring the average beat sentence from 12.45 to 10.9 words without cutting any teaching. The order chapter's dead 'below' cue (declared, never read by any picture) was given one: the negative half of the number line now glows while 'below zero' is said.",
+  "slug": "big-numbers-below-zero",
+  "lesson": 1,
+  "grade": 4,
+  "stage": 4,
+  "title": "Big Numbers and Below Zero",
+  "subtitle": "Grade 4 Mathematics",
+  "framework": "Cambridge Primary Mathematics 0096",
+  "renderer": {
+    "art": ["math"],
+    "skin": "brown",
+    "scenes": [
+      "tools/lib/ehel-film-marks.js",
+      "tools/lib/film-scenes/math-g4/big-numbers-below-zero.js",
+      "tools/lib/film-scenes/math-g4/big-numbers-below-zero-2.js",
+      "tools/lib/film-scenes/math-g4/big-numbers-below-zero-3.js"
+    ]
+  },
+  "objectives": [
+    ["4Ni.01", "Read and write number names and whole numbers greater than 1000 and less than 0."],
+    ["4Nc.01", "Count on and count back in steps of constant size: 1-digit numbers, tens, hundreds or thousands, starting from any number, and extending beyond zero to include negative numbers."],
+    ["4Np.01", "Understand and explain that the value of each digit in numbers is determined by its position in that number."],
+    ["4Np.02", "Use knowledge of place value to multiply and divide whole numbers by 10 and 100."],
+    ["4Np.03", "Compose, decompose and regroup whole numbers."],
+    ["4Np.04", "Understand the relative size of quantities to compare and order positive and negative numbers, using the symbols =, > and <."],
+    ["4Np.05", "Round numbers to the nearest 10, 100, 1000, 10 000 or 100 000."]
+  ],
+  "scenes": [
+    {
+      "id": "title",
+      "kind": "title",
+      "codes": [],
+      "beats": [
+        { "say": "Some numbers are huge, like 47,318. Some sit below zero, like minus 6.",
+          "art": { "at": { "huge": "huge, like 47,318", "below": "below zero, like minus 6" } } },
+        { "say": "Where a digit stands decides its worth. Today you will read both kinds.",
+          "art": { "at": { "stands": "Where a digit stands", "worth": "its worth" } } }
+      ]
+    },
+    {
+      "id": "worth",
+      "kind": "worth",
+      "heading": "What each digit is worth",
+      "codes": ["4Ni.01", "4Np.01"],
+      "beats": [
+        { "say": "Read this number: three thousand, four hundred and six.",
+          "art": { "at": { "read": "Read this number", "name": "three thousand, four hundred and six" } } },
+        { "say": "Three thousands, four hundreds, no tens, and six ones.",
+          "art": { "at": { "t3": "Three thousands", "h4": "four hundreds", "t0": "no tens", "o6": "six ones" } } },
+        { "say": "The zero is not nothing to skip. It holds the tens column open.",
+          "art": { "at": { "zero": "The zero", "holds": "holds the tens column" } } },
+        { "say": "Take the zero away and 3,406 turns into 346, a much smaller number.",
+          "art": { "at": { "away": "Take the zero away", "turns": "turns into 346", "small": "much smaller" } } },
+        { "say": "The same 8 is worth 8 in 58, but 80 in 85.",
+          "art": { "at": { "same": "The same 8", "a": "8 in 58", "b": "80 in 85" } } },
+        { "say": "And eighty thousand in 80,000.",
+          "art": { "at": { "c": "eighty thousand" } } }
+      ]
+    },
+    {
+      "id": "regroup",
+      "kind": "regroup",
+      "heading": "The same number, regrouped",
+      "codes": ["4Np.03"],
+      "beats": [
+        { "say": "Here is 4,208: four thousands, two hundreds, no tens and eight ones.",
+          "art": { "at": { "here": "Here is 4,208", "th": "four thousands", "hu": "two hundreds", "te": "no tens", "on": "eight ones" } } },
+        { "say": "Swap one thousand for ten hundreds. That swap is called regrouping.",
+          "art": { "at": { "swap": "Swap one thousand", "ten": "ten hundreds", "name": "called regrouping" } } },
+        { "say": "Now the same number is three thousands, twelve hundreds and eight ones.",
+          "art": { "at": { "th3": "three thousands", "h12": "twelve hundreds", "o8": "eight ones" } } },
+        { "say": "It is still 4,208. Regrouping changes how it is stored, never its worth.",
+          "art": { "at": { "still": "It is still 4,208", "stored": "how it is stored", "worth": "its worth" } } }
+      ]
+    },
+    {
+      "id": "tentimes",
+      "kind": "tentimes",
+      "heading": "Ten times, a hundred times",
+      "codes": ["4Np.02"],
+      "beats": [
+        { "say": "Times 10 does not add a zero. Every digit moves one place left.",
+          "art": { "at": { "mult": "Times 10", "nozero": "does not add a zero", "left": "moves one place left" } } },
+        { "say": "Take 34 times 10. The 3 tens become 3 hundreds.",
+          "art": { "at": { "take": "Take 34 times 10", "three": "3 tens become 3 hundreds" } } },
+        { "say": "The 4 ones become 4 tens, too.",
+          "art": { "at": { "four": "4 ones become 4 tens" } } },
+        { "say": "34 times 10 is 340. The zero only fills the empty ones column.",
+          "art": { "at": { "ans": "34 times 10 is 340", "fill": "fills the empty ones column" } } },
+        { "say": "Times 100 moves every digit two places. 34 times 100 is 3,400.",
+          "art": { "at": { "two": "two places", "big": "34 times 100 is 3,400" } } }
+      ]
+    },
+    {
+      "id": "belowzero",
+      "kind": "belowzero",
+      "heading": "Below zero",
+      "codes": ["4Nc.01", "4Ni.01"],
+      "beats": [
+        { "say": "Numbers keep going below zero. A thermometer is where you meet them.",
+          "art": { "at": { "below": "below zero", "therm": "A thermometer" } } },
+        { "say": "It is 3 degrees, and then it gets 5 degrees colder.",
+          "art": { "at": { "three": "3 degrees", "colder": "5 degrees colder" } } },
+        { "say": "Count down one step at a time: 2, 1, 0, minus 1, minus 2.",
+          "art": { "at": { "count": "Count down", "s2": "2,", "s1": "1,", "s0": "0,", "m1": "minus 1", "m2": "minus 2" } } },
+        { "say": "The temperature is now minus 2 degrees, two steps below zero.",
+          "art": { "at": { "now": "now minus 2 degrees", "steps": "two steps below zero" } } },
+        { "say": "Zero is a number you pass through, not where counting stops.",
+          "art": { "at": { "zero": "Zero is a number", "through": "pass through", "stop": "counting stops" } } }
+      ]
+    },
+    {
+      "id": "order",
+      "kind": "order",
+      "heading": "Below zero, in order",
+      "codes": ["4Np.04"],
+      "beats": [
+        { "say": "On a number line, further right always means bigger.",
+          "art": { "at": { "line": "a number line", "right": "further right", "bigger": "means bigger" } } },
+        { "say": "That keeps working below zero.",
+          "art": { "at": { "below": "below zero" } } },
+        { "say": "Minus 2 sits to the right of minus 9.",
+          "art": { "at": { "m2": "Minus 2", "m9": "minus 9" } } },
+        { "say": "Minus 2 is bigger. Minus 9 is nine below zero; minus 2 is two.",
+          "art": { "at": { "big": "Minus 2 is bigger", "nine": "nine below zero", "two": "is two" } } },
+        { "say": "Smallest first, these go minus 8, minus 3, zero, then 5.",
+          "art": { "at": { "small": "Smallest first", "a": "minus 8", "b": "minus 3", "c": "zero", "d": "then 5" } } }
+      ]
+    },
+    {
+      "id": "round",
+      "kind": "round",
+      "heading": "Which one is it nearer?",
+      "codes": ["4Np.05"],
+      "beats": [
+        { "say": "Rounding asks one question: which neighbour is this number nearer to?",
+          "art": { "at": { "ask": "asks one question", "near": "nearer to" } } },
+        { "say": "Round 4,630 to the nearest hundred. Its neighbours are 4,600 and 4,700.",
+          "art": { "at": { "num": "Round 4,630", "hund": "the nearest hundred", "nb": "4,600 and 4,700" } } },
+        { "say": "It is 30 past 4,600, but 70 short of 4,700.",
+          "art": { "at": { "past": "30 past 4,600", "short": "70 short of 4,700" } } },
+        { "say": "So 4,630 rounds down to 4,600, the nearer one.",
+          "art": { "at": { "down": "rounds down", "near": "the nearer one" } } },
+        { "say": "Exactly halfway needs a rule: 4,650 rounds up, to 4,700.",
+          "art": { "at": { "half": "Exactly halfway", "up": "rounds up" } } }
+      ]
+    },
+    {
+      "id": "recap",
+      "kind": "recap",
+      "heading": "What you now know",
+      "codes": ["4Ni.01", "4Nc.01", "4Np.01", "4Np.02", "4Np.03", "4Np.04", "4Np.05"],
+      "beats": [
+        { "say": "A digit's column decides its worth. A zero holds a column open.",
+          "art": { "at": { "col": "A digit's column", "zero": "A zero holds" } } },
+        { "say": "Regroup a thousand into ten hundreds and the number never changes.",
+          "art": { "at": { "regroup": "Regroup a thousand" } } },
+        { "say": "Times 10 moves every digit one place to the left.",
+          "art": { "at": { "ten": "Times 10" } } },
+        { "say": "Below zero, further right is bigger. Rounding picks the nearer neighbour.",
+          "art": { "at": { "below": "Below zero", "round": "Rounding picks" } } }
+      ]
+    }
+  ]
+}

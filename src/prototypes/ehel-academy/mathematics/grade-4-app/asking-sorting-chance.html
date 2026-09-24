@@ -2945,7 +2945,21 @@
     });
   }
 
+  function lessonFilm(o) {
+    const v = o.video, stage = document.getElementById(o.stage);
+    stage.innerHTML = '<div class="lec lec-film">' +
+      '<video controls playsinline preload="none" poster="' + esc(v.poster) + '" src="' + esc(v.src) + '">' +
+      '<track kind="captions" srclang="en" label="English" src="' + esc(v.vtt) + '"></video>' +
+      '<p class="lec-note">' + esc(v.note) + '</p></div>';
+    const film = stage.querySelector('video'), slide = stage.closest('section.slide');
+    film.addEventListener('ended', () => finish(o.finish, o.done));
+    if (slide && window.MutationObserver) new MutationObserver(() => {
+      if (!slide.classList.contains('active') && !film.paused) film.pause();
+    }).observe(slide, { attributes: true, attributeFilter: ['class'] });
+  }
+  
   function lessonLecture(o) {
+    if (o.video) return lessonFilm(o);
     const parts = o.parts || [];
     let k = 0;
     const id = o.stage + 'l';
@@ -3044,7 +3058,7 @@
   }
 
   lessonAbout({ stage: 'stageOvw', about: ["Sort information using a Venn diagram and a Carroll diagram.", "Say whether an event is impossible, unlikely, likely or certain.", "Choose the right kind of chart for a set of data."], finish: 0, done: "Let's begin." });
-  lessonLecture({ stage: 'stageLec', parts: [{ title: "Venn and Carroll diagrams", say: "A Venn diagram sorts things by which properties they share, using overlapping circles. A Carroll diagram sorts the same kind of information into a grid using yes and no." }, { title: "Chance", say: "Every event sits somewhere between impossible and certain. A fair coin landing heads is neither - it is an even chance, equally likely either way." }, { title: "Choosing a chart", say: "A bar model shows each group as a length, so sizes can be compared at a glance - the same job a bar chart does, in a different shape." }], finish: 1, done: "You have heard the whole lesson. Now do it yourself." });
+  lessonLecture({ stage: 'stageLec', parts: [{ title: "Venn and Carroll diagrams", say: "A Venn diagram sorts things by which properties they share, using overlapping circles. A Carroll diagram sorts the same kind of information into a grid using yes and no." }, { title: "Chance", say: "Every event sits somewhere between impossible and certain. A fair coin landing heads is neither - it is an even chance, equally likely either way." }, { title: "Choosing a chart", say: "A bar model shows each group as a length, so sizes can be compared at a glance - the same job a bar chart does, in a different shape." }], video: { src: "lecture-video/asking-sorting-chance.2b4c3228.mp4", poster: "lecture-video/asking-sorting-chance.a3c042ee.jpg", vtt: "lecture-video/asking-sorting-chance.53e14203.vtt", note: "The whole lesson in about 2 and a half minutes. When the film ends, this step is done." }, finish: 1, done: "You have heard the whole lesson. Now do it yourself." });
   lessonWords({ stage: 'stageMw', words: [{ w: "Venn diagram", pic: "⭕", meaning: "Overlapping circles that sort things by which properties they share.", uses: ["Use a Venn diagram to sort even numbers and multiples of 3."] }, { w: "Carroll diagram", pic: "🔲", meaning: "A grid that sorts things into boxes by two properties at once, such as odd/even and more/less than 10.", uses: ["Use a Carroll diagram to sort the numbers."] }, { w: "certain", pic: "✅", meaning: "Sure to happen - there is no other possibility.", uses: ["It is certain that the sun will rise tomorrow."] }, { w: "likely", pic: "🌤️", meaning: "More probable to happen than not, but not certain.", uses: ["It is likely to rain in April."] }, { w: "impossible", pic: "🚫", meaning: "Cannot happen at all.", uses: ["Rolling a 7 on a normal dice is impossible."] }], finish: 2, done: "You know the math words of this lesson." });
   show(0, false);
   quiet -= 1;   /* the first draw is over: say() speaks from here on */
@@ -3970,6 +3984,9 @@
     align-items: center; gap: 10px; text-align: center; }
   .phase { color: var(--teal); font-weight: 800; font-size: 12.5px; letter-spacing: .1em;
     text-transform: uppercase; }
+  .lec.lec-film { max-width: 760px; }
+  .lec-film video { width: 100%; display: block; border-radius: 18px; background: #000;
+    aspect-ratio: 16 / 9; box-shadow: var(--shadow); }
   .lec-h { font-weight: 800; font-size: clamp(21px, 4vw, 26px); margin: 0; }
   .lec-p { margin: 0; font-size: 19px; line-height: 1.55; max-width: 34em; }
   .lec-note { margin: 4px 0 0; color: var(--muted); font-size: 13.5px; }

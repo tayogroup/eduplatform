@@ -1,0 +1,124 @@
+{
+  "_comment": "Storyboard for the Grade 3 Mathematics unit lecture film, Ask, Count and Chart. Rendered by tools/create-ehel-unit-lecture.js. See lecture-video/BRIEF.md. Every beat is one narration clip; art.at names the phrases a picture waits for, and the page refuses to load if a phrase is not in its beat's say. One survey runs through the whole film, and it is the lesson's own: How do the children in this class travel to school - Walk 9, Bus 6, Bicycle 4, Car 3, twenty-two children. The tally, the bar chart and the spoken numbers all describe that one count. The pictogram is the lesson's fruit survey with its key at two children a picture; the Venn and Carroll are the lesson's own even / more-than-twenty test with 8, 33, 24 and 7; the spinner is the lesson's own, three parts red, two blue, one gold.",
+  "slug": "ask-count-chart",
+  "lesson": 8,
+  "grade": 3,
+  "stage": 3,
+  "title": "Ask, Count and Chart",
+  "subtitle": "Grade 3 Mathematics",
+  "framework": "Cambridge Primary Mathematics 0096",
+  "renderer": {
+    "art": ["math"],
+    "skin": "brown",
+    "scenes": [
+      "tools/lib/ehel-film-marks.js",
+      "tools/lib/film-scenes/math-g3/ask-count-chart.js",
+      "tools/lib/film-scenes/math-g3/ask-count-chart-2.js",
+      "tools/lib/film-scenes/math-g3/ask-count-chart-3.js"
+    ]
+  },
+  "objectives": [
+    ["3Ss.01", "Conduct an investigation to answer non-statistical and statistical questions (categorical and discrete data)."],
+    ["3Ss.02", "Record, organise and represent categorical and discrete data. Choose and explain which representation to use in a given situation: Venn and Carroll diagrams tally charts and frequency tables pictograms and bar charts."],
+    ["3Ss.03", "Interpret data, identifying similarities and variations, within data sets, to answer non- statistical and statistical questions and discuss conclusions."],
+    ["3Sp.01", "Use familiar language associated with chance to describe events, including ‘it will happen’, ‘it will not happen’, ‘it might happen’."],
+    ["3Sp.02", "Conduct chance experiments, and present and describe the results."]
+  ],
+  "scenes": [
+    { "id": "title", "kind": "title", "codes": [], "beats": [
+      { "say": "Some questions you cannot answer out of your own head.",
+        "art": { "at": { "head": "your own head" } } },
+      { "say": "You have to ask, count, and chart what people say.",
+        "art": { "at": { "ask": "ask,", "count": "count,", "chart": "chart" } } }
+    ] },
+
+    { "id": "ask", "kind": "ask", "heading": "A question worth asking", "codes": ["3Ss.01"], "beats": [
+      { "say": "Some questions you can just answer. Some need data.",
+        "art": { "at": { "just": "just answer", "data": "need data" } } },
+      { "say": "How many legs has a spider? Eight, and everybody says eight.",
+        "art": { "at": { "spider": "a spider", "eight": "Eight,", "everybody": "everybody says eight" } } },
+      { "say": "Nobody knows how we travel to school until you ask us all.",
+        "art": { "at": { "travel": "how we travel to school", "ask": "ask us all" } } },
+      { "say": "Those answers vary - worth asking.",
+        "art": { "at": { "vary": "answers vary", "worth": "worth asking" } } }
+    ] },
+
+    { "id": "tally", "kind": "tally", "heading": "Counting in fives", "codes": ["3Ss.02"], "beats": [
+      { "say": "A tally counts things while they are still happening.",
+        "art": { "at": { "tally": "A tally", "happening": "still happening" } } },
+      { "say": "One mark for each child who walks. One, two, three, four.",
+        "art": { "at": { "mark": "One mark", "one": "One,", "two": "two,", "three": "three,", "four": "four." } } },
+      { "say": "The fifth mark lies across the other four, like a gate.",
+        "art": { "at": { "fifth": "The fifth mark", "across": "lies across", "gate": "like a gate" } } },
+      { "say": "Now count the bundles in fives, then the ones left over.",
+        "art": { "at": { "bundles": "the bundles in fives", "left": "left over" } } },
+      { "say": "One bundle is five, and four more makes nine children.",
+        "art": { "at": { "bundle": "One bundle is five", "four": "four more", "nine": "nine children" } } },
+      { "say": "Write it in a table too. That is a frequency table.",
+        "art": { "at": { "table": "a table too", "freq": "a frequency table" } } }
+    ] },
+
+    { "id": "picto", "kind": "picto", "heading": "Reading a pictogram", "codes": ["3Ss.02"], "beats": [
+      { "say": "A pictogram shows counts as pictures. Read the key: one picture means two children.",
+        "art": { "at": { "pictogram": "A pictogram", "pictures": "as pictures", "key": "the key", "two": "means two children" } } },
+      { "say": "Apples has five pictures. Five twos make ten children.",
+        "art": { "at": { "apples": "Apples", "five": "five pictures", "ten": "make ten children" } } },
+      { "say": "Counting the pictures gives five, and five is the wrong answer.",
+        "art": { "at": { "counting": "Counting the pictures", "wrong": "the wrong answer" } } },
+      { "say": "Oranges has one picture and a half: two and one make three.",
+        "art": { "at": { "oranges": "Oranges", "half": "and a half", "three": "make three" } } }
+    ] },
+
+    { "id": "bars", "kind": "bars", "heading": "Reading a bar chart", "codes": ["3Ss.02", "3Ss.03"], "beats": [
+      { "say": "The same counts, drawn as bars. Taller bar, more children.",
+        "art": { "at": { "bars": "drawn as bars", "taller": "Taller bar" } } },
+      { "say": "Along the bottom is each way. Up the side is how many.",
+        "art": { "at": { "bottom": "Along the bottom", "side": "Up the side" } } },
+      { "say": "Walk is the tallest bar, at nine. Car is shortest, at three.",
+        "art": { "at": { "walk": "Walk is the tallest", "nine": "at nine", "car": "Car is shortest", "three": "at three" } } },
+      { "say": "Nine take away three is six. Altogether, twenty-two children answered, six more by walking than by car.",
+        "art": { "at": { "take": "Nine take away three", "six": "is six", "alt": "Altogether, twenty-two", "class": "six more by walking than by car" } } }
+    ] },
+
+    { "id": "sort", "kind": "sort", "heading": "Hoops and boxes", "codes": ["3Ss.02"], "beats": [
+      { "say": "Sometimes you sort things instead of counting them.",
+        "art": { "at": { "sort": "sort things", "counting": "counting them" } } },
+      { "say": "Two hoops: even numbers in one, more than twenty in the other.",
+        "art": { "at": { "hoops": "Two hoops", "even": "even numbers", "more": "more than twenty" } } },
+      { "say": "Eight is even, but not more than twenty. It goes in the even hoop.",
+        "art": { "at": { "eight": "Eight is even", "not": "not more than twenty", "hoop": "the even hoop" } } },
+      { "say": "Thirty-three is more than twenty, but it is odd. The other hoop.",
+        "art": { "at": { "thirty": "Thirty-three", "odd": "it is odd", "other": "The other hoop" } } },
+      { "say": "Twenty-four is both, so it goes in the middle, where they overlap.",
+        "art": { "at": { "twentyfour": "Twenty-four", "middle": "in the middle", "overlap": "they overlap" } } },
+      { "say": "Seven is neither. A Carroll diagram gives it a box of its own.",
+        "art": { "at": { "seven": "Seven is neither", "carroll": "A Carroll diagram", "box": "a box of its own" } } },
+      { "say": "There are many ways to show it. Choose one, and say why.",
+        "art": { "at": { "many": "many ways", "choose": "Choose one", "why": "say why" } } }
+    ] },
+
+    { "id": "chance", "kind": "chance", "heading": "Will, might, will not", "codes": ["3Sp.01", "3Sp.02"], "beats": [
+      { "say": "Not everything can be counted. Some things only might happen.",
+        "art": { "at": { "counted": "be counted", "might": "might happen" } } },
+      { "say": "The sun will come up tomorrow. That one will happen.",
+        "art": { "at": { "sun": "The sun", "will": "will happen" } } },
+      { "say": "You will not roll a seven on an ordinary dice. It has no seven.",
+        "art": { "at": { "seven": "roll a seven", "no": "no seven" } } },
+      { "say": "A coin might land on heads. Might is not the same as will not.",
+        "art": { "at": { "coin": "A coin", "mightnot": "Might is not the same" } } },
+      { "say": "Spin the arrow thirty times and keep the score as you go.",
+        "art": { "at": { "spin": "Spin the arrow", "thirty": "thirty times", "score": "keep the score" } } },
+      { "say": "Red sixteen, blue nine, gold five. Red has the most room.",
+        "art": { "at": { "red": "Red sixteen", "blue": "blue nine", "gold": "gold five", "room": "the most room" } } }
+    ] },
+
+    { "id": "recap", "kind": "recap", "heading": "What you now know", "codes": ["3Ss.01", "3Ss.02", "3Ss.03", "3Sp.01", "3Sp.02"], "beats": [
+      { "say": "Ask a question whose answers vary, then count with a tally.",
+        "art": { "at": { "ask": "Ask a question", "tally": "a tally" } } },
+      { "say": "Read a pictogram by its key, and a bar chart by its height.",
+        "art": { "at": { "key": "its key", "height": "its height" } } },
+      { "say": "Sort with hoops or boxes. Some things only might happen.",
+        "art": { "at": { "sort": "hoops or boxes", "might": "might happen" } } }
+    ] }
+  ]
+}

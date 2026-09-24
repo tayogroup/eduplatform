@@ -3015,7 +3015,21 @@
     });
   }
 
+  function lessonFilm(o) {
+    const v = o.video, stage = document.getElementById(o.stage);
+    stage.innerHTML = '<div class="lec lec-film">' +
+      '<video controls playsinline preload="none" poster="' + esc(v.poster) + '" src="' + esc(v.src) + '">' +
+      '<track kind="captions" srclang="en" label="English" src="' + esc(v.vtt) + '"></video>' +
+      '<p class="lec-note">' + esc(v.note) + '</p></div>';
+    const film = stage.querySelector('video'), slide = stage.closest('section.slide');
+    film.addEventListener('ended', () => finish(o.finish, o.done));
+    if (slide && window.MutationObserver) new MutationObserver(() => {
+      if (!slide.classList.contains('active') && !film.paused) film.pause();
+    }).observe(slide, { attributes: true, attributeFilter: ['class'] });
+  }
+  
   function lessonLecture(o) {
+    if (o.video) return lessonFilm(o);
     const parts = o.parts || [];
     let k = 0;
     const id = o.stage + 'l';
@@ -3114,7 +3128,7 @@
   }
 
   lessonAbout({ stage: 'stageOvw', about: ["Ask everyone a question and collect the answers.", "Put answers into a list and a table.", "Build a block graph and read it.", "Read a pictogram.", "Sort things on a Venn diagram or a Carroll diagram.", "Say what the answers tell us."], finish: 0, done: "Let's begin." });
-  lessonLecture({ stage: 'stageLec', parts: [{ title: "Asking and collecting", say: "Ask everyone the same question, and write each answer down as you go so none are lost or counted twice." }, { title: "Tables, graphs and pictograms", say: "A table writes the answers down with a number next to each one. A block graph shows the same answers as towers of blocks. A pictogram uses a little picture instead of a block." }, { title: "Sorting with diagrams", say: "A Venn diagram uses two hoops that cross over, for sorting things by two rules at once. A Carroll diagram uses four boxes instead, with yes and no." }], finish: 1, done: "You have heard the whole lesson. Now do it yourself." });
+  lessonLecture({ stage: 'stageLec', parts: [{ title: "Asking and collecting", say: "Ask everyone the same question, and write each answer down as you go so none are lost or counted twice." }, { title: "Tables, graphs and pictograms", say: "A table writes the answers down with a number next to each one. A block graph shows the same answers as towers of blocks. A pictogram uses a little picture instead of a block." }, { title: "Sorting with diagrams", say: "A Venn diagram uses two hoops that cross over, for sorting things by two rules at once. A Carroll diagram uses four boxes instead, with yes and no." }], video: { src: "lecture-video/asking-and-sorting.977d284c.mp4", poster: "lecture-video/asking-and-sorting.505401f2.jpg", vtt: "lecture-video/asking-and-sorting.29f9a35d.vtt", note: "The whole lesson in about 2 and a half minutes. When the film ends, this step is done." }, finish: 1, done: "You have heard the whole lesson. Now do it yourself." });
   lessonWords({ stage: 'stageMw', words: [{ w: "table", pic: "📋", meaning: "A short way to write answers down, with a number next to each one.", uses: ["Write the answers in a table."] }, { w: "block graph", pic: "📶", meaning: "Towers of blocks. Each block stands for one answer.", uses: ["Build a block graph of favourite fruits."] }, { w: "pictogram", pic: "🖼️", meaning: "Like a block graph, but with a little picture instead of a block.", uses: ["Read the pictogram to see how many chose apples."] }, { w: "Venn diagram", pic: "🔗", meaning: "Two hoops that cross over, for sorting things by two rules at once.", uses: ["Sort the shapes using a Venn diagram."] }, { w: "Carroll diagram", pic: "🗂️", meaning: "Four boxes for sorting things by two rules, using yes and no.", uses: ["Sort the numbers using a Carroll diagram."] }, { w: "hoop", pic: "⭕", meaning: "A ring that holds everything which follows one rule.", uses: ["Put all the red shapes inside the hoop."] }], finish: 2, done: "You know the math words of this lesson." });
   show(0, false);
 
@@ -3997,6 +4011,9 @@
     align-items: center; gap: 10px; text-align: center; }
   .phase { color: var(--teal); font-weight: 800; font-size: 12.5px; letter-spacing: .1em;
     text-transform: uppercase; }
+  .lec.lec-film { max-width: 760px; }
+  .lec-film video { width: 100%; display: block; border-radius: 18px; background: #000;
+    aspect-ratio: 16 / 9; box-shadow: var(--shadow); }
   .lec-h { font-weight: 800; font-size: clamp(21px, 4vw, 26px); margin: 0; }
   .lec-p { margin: 0; font-size: 19px; line-height: 1.55; max-width: 34em; }
   .lec-note { margin: 4px 0 0; color: var(--muted); font-size: 13.5px; }

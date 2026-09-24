@@ -2564,7 +2564,21 @@
     });
   }
 
+  function lessonFilm(o) {
+    const v = o.video, stage = document.getElementById(o.stage);
+    stage.innerHTML = '<div class="lec lec-film">' +
+      '<video controls playsinline preload="none" poster="' + esc(v.poster) + '" src="' + esc(v.src) + '">' +
+      '<track kind="captions" srclang="en" label="English" src="' + esc(v.vtt) + '"></video>' +
+      '<p class="lec-note">' + esc(v.note) + '</p></div>';
+    const film = stage.querySelector('video'), slide = stage.closest('section.slide');
+    film.addEventListener('ended', () => finish(o.finish, o.done));
+    if (slide && window.MutationObserver) new MutationObserver(() => {
+      if (!slide.classList.contains('active') && !film.paused) film.pause();
+    }).observe(slide, { attributes: true, attributeFilter: ['class'] });
+  }
+  
   function lessonLecture(o) {
+    if (o.video) return lessonFilm(o);
     const parts = o.parts || [];
     let k = 0;
     const id = o.stage + 'l';
@@ -2663,7 +2677,7 @@
   }
 
   lessonAbout({ stage: 'stageOvw', about: ["Say where something is, using position words.", "Tell my left from my right, and someone else's.", "Follow directions to get somewhere.", "Give directions for someone else to follow.", "Complete a symmetrical picture by drawing the other half."], finish: 0, done: "Let's begin." });
-  lessonLecture({ stage: 'stageLec', parts: [{ title: "Position words", say: "Position words like above, below and between say exactly where something is compared to something else." }, { title: "Giving and following directions", say: "A direction like forward or a quarter turn only works if it is said from the mover's own point of view, not the watcher's." }, { title: "Reflection", say: "A reflection is a mirror image, flipped across a line - every point ends up exactly as far from the mirror line as it started, just on the other side." }], finish: 1, done: "You have heard the whole lesson. Now do it yourself." });
+  lessonLecture({ stage: 'stageLec', parts: [{ title: "Position words", say: "Position words like above, below and between say exactly where something is compared to something else." }, { title: "Giving and following directions", say: "A direction like forward or a quarter turn only works if it is said from the mover's own point of view, not the watcher's." }, { title: "Reflection", say: "A reflection is a mirror image, flipped across a line - every point ends up exactly as far from the mirror line as it started, just on the other side." }], video: { src: "lecture-video/which-way-from-here.6914b6ff.mp4", poster: "lecture-video/which-way-from-here.04e3935e.jpg", vtt: "lecture-video/which-way-from-here.ea99300b.vtt", note: "The whole lesson in about 2 and a half minutes. When the film ends, this step is done." }, finish: 1, done: "You have heard the whole lesson. Now do it yourself." });
   lessonWords({ stage: 'stageMw', words: [{ w: "position", pic: "📍", meaning: "Where something is, such as above, below or between other things.", uses: ["Say the position of the cat in the picture."] }, { w: "direction", pic: "➡️", meaning: "The way something is facing or moving, like left, right or forward.", uses: ["Give a direction to get to the flag."] }, { w: "forward", pic: "⬆️", meaning: "Moving the way you are facing, straight ahead.", uses: ["Move three steps forward."] }, { w: "reflection", pic: "🦋", meaning: "A mirror image of a shape, flipped over a line.", uses: ["Draw the reflection of the shape."] }, { w: "mirror line", pic: "📏", meaning: "The line a reflection is flipped across - both sides are the same distance from it.", uses: ["Draw the mirror line down the middle."] }], finish: 2, done: "You know the math words of this lesson." });
   show(0, false);
   quiet -= 1;   /* the first draw is over: say() speaks from here on */
@@ -3458,6 +3472,9 @@
     align-items: center; gap: 10px; text-align: center; }
   .phase { color: var(--teal); font-weight: 800; font-size: 12.5px; letter-spacing: .1em;
     text-transform: uppercase; }
+  .lec.lec-film { max-width: 760px; }
+  .lec-film video { width: 100%; display: block; border-radius: 18px; background: #000;
+    aspect-ratio: 16 / 9; box-shadow: var(--shadow); }
   .lec-h { font-weight: 800; font-size: clamp(21px, 4vw, 26px); margin: 0; }
   .lec-p { margin: 0; font-size: 19px; line-height: 1.55; max-width: 34em; }
   .lec-note { margin: 4px 0 0; color: var(--muted); font-size: 13.5px; }

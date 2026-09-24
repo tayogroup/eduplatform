@@ -1,0 +1,126 @@
+{
+  "_comment": "Storyboard for the Grade 3 Mathematics unit lecture film, Lesson 5 Shapes and Symmetry. Rendered by tools/create-ehel-unit-lecture.js. See lecture-video/BRIEF.md. Every beat is one narration clip; art.at names the phrases a picture waits for, and the page refuses to load if a phrase is not in its beat's say. The chapters follow the lesson's own steps in order - Naming flat shapes, Regular or irregular, Lines of symmetry, Mirror it, Solid shapes, All the way round and Counting the space inside - and use the lesson's own numbers: a square standing on its corner is still a square, a square has four lines of symmetry and a rectangle two, a reflection lands the same distance the other side, a cube has 6 faces, 12 edges and 8 corners with 3 edges hidden, and the 6 cm by 2 cm rectangle has a perimeter of 16 cm and covers 12 squares (both figures are the lesson's own, from its How do you know bank and its check).",
+  "slug": "shapes-and-symmetry",
+  "lesson": 5,
+  "grade": 3,
+  "stage": 3,
+  "title": "Shapes and Symmetry",
+  "subtitle": "Grade 3 Mathematics",
+  "framework": "Cambridge Primary Mathematics 0096",
+  "renderer": {
+    "art": ["math"],
+    "skin": "brown",
+    "scenes": [
+      "tools/lib/ehel-film-marks.js",
+      "tools/lib/film-scenes/math-g3/shapes-and-symmetry.js",
+      "tools/lib/film-scenes/math-g3/shapes-and-symmetry-2.js",
+      "tools/lib/film-scenes/math-g3/shapes-and-symmetry-3.js"
+    ]
+  },
+  "objectives": [
+    ["3Gg.01", "Identify, describe, classify, name and sketch 2D shapes by their properties. Differentiate between regular and irregular polygons."],
+    ["3Gg.03", "Understand that perimeter is the total distance around a 2D shape and can be calculated by adding lengths, and area is how much space a 2D shape occupies within its boundary."],
+    ["3Gg.04", "Draw lines, rectangles and squares. Estimate, measure and calculate the perimeter of a shape, using appropriate metric units, and area on a square grid."],
+    ["3Gg.05", "Identify, describe, sort, name and sketch 3D shapes by their properties."],
+    ["3Gg.08", "Recognise pictures, drawings and diagrams of 3D shapes."],
+    ["3Gg.09", "Identify both horizontal and vertical lines of symmetry on 2D shapes and patterns."],
+    ["3Gp.02", "Sketch the reflection of a 2D shape in a horizontal or vertical mirror line, including where the mirror line is the edge of the shape."]
+  ],
+  "scenes": [
+    { "id": "title", "kind": "title", "codes": [], "beats": [
+      { "say": "Every flat shape has a name, and the sides tell you which.",
+        "art": { "at": { "name": "a name", "sides": "the sides" } } },
+      { "say": "Shapes fold in half, flip over a mirror, and have a distance round the edge.",
+        "art": { "at": { "fold": "fold in half", "flip": "flip over a mirror", "round": "round the edge" } } }
+    ] },
+
+    { "id": "naming", "kind": "naming", "heading": "Naming flat shapes", "codes": ["3Gg.01"], "beats": [
+      { "say": "A flat shape is named by how many straight sides it has.",
+        "art": { "at": { "sides": "how many straight sides" } } },
+      { "say": "Three straight sides and three corners. That is a triangle.",
+        "art": { "at": { "three": "Three straight sides", "corners": "three corners", "tri": "a triangle" } } },
+      { "say": "Four straight sides make a quadrilateral. A square is one.",
+        "art": { "at": { "four": "Four straight sides", "quad": "a quadrilateral", "square": "A square" } } },
+      { "say": "Five sides is a pentagon. Six sides is a hexagon.",
+        "art": { "at": { "pent": "Five sides", "hex": "Six sides" } } },
+      { "say": "Stand a square on its corner. It is still a square, not a diamond.",
+        "art": { "at": { "stand": "Stand a square on its corner", "still": "still a square" } } }
+    ] },
+
+    { "id": "regular", "kind": "regular", "heading": "Regular or irregular", "codes": ["3Gg.01"], "beats": [
+      { "say": "Regular means every side is the same length, and every corner too.",
+        "art": { "at": { "regular": "Regular", "sides": "the same length", "corners": "every corner too" } } },
+      { "say": "Both of these have five sides, so both of them are pentagons.",
+        "art": { "at": { "both": "Both of these", "five": "five sides", "pent": "both of them are pentagons" } } },
+      { "say": "Only one of them is regular. The other is stretched.",
+        "art": { "at": { "one": "Only one of them is regular", "stretch": "stretched" } } },
+      { "say": "Irregular is not wrong. Most shapes around you are irregular.",
+        "art": { "at": { "notwrong": "not wrong", "most": "Most shapes around you" } } }
+    ] },
+
+    { "id": "symmetry", "kind": "symmetry", "heading": "Lines of symmetry", "codes": ["3Gg.09"], "beats": [
+      { "say": "A line of symmetry is a fold line, drawn on the shape.",
+        "art": { "at": { "line": "A line of symmetry", "fold": "a fold line" } } },
+      { "say": "Fold along it, and the two halves land on top of each other.",
+        "art": { "at": { "foldit": "Fold along it", "halves": "the two halves", "ontop": "land on top" } } },
+      { "say": "Count them with me. A square has four lines of symmetry.",
+        "art": { "at": { "four": "four lines of symmetry", "count": "Count them" } } },
+      { "say": "A rectangle has only two: down the middle, and across.",
+        "art": { "at": { "two": "only two", "down": "down the middle", "across": "across" } } },
+      { "say": "Cutting a shape in two is not enough. The halves must match.",
+        "art": { "at": { "cut": "Cutting a shape in two", "notenough": "not enough", "match": "halves must match" } } }
+    ] },
+
+    { "id": "mirror", "kind": "mirror", "heading": "Mirror it", "codes": ["3Gp.02"], "beats": [
+      { "say": "A reflection flips a shape over a mirror line.",
+        "art": { "at": { "flip": "flips a shape", "mirror": "a mirror line" } } },
+      { "say": "Every square lands the same distance on the other side.",
+        "art": { "at": { "same": "the same distance", "other": "the other side" } } },
+      { "say": "This square is two along. Its reflection is two along as well.",
+        "art": { "at": { "twoalong": "two along", "refl": "Its reflection" } } },
+      { "say": "Four squares on this side, so four squares on that side.",
+        "art": { "at": { "here": "Four squares on this side", "there": "four squares on that side" } } },
+      { "say": "A reflection is not a slide. It turns the shape round.",
+        "art": { "at": { "notslide": "not a slide", "round": "turns the shape round" } } }
+    ] },
+
+    { "id": "solids", "kind": "solids", "heading": "Solid shapes", "codes": ["3Gg.05", "3Gg.08"], "beats": [
+      { "say": "A solid shape is not flat. This one is a cube.",
+        "art": { "at": { "solid": "A solid shape", "cube": "a cube" } } },
+      { "say": "A face is a flat surface. A cube has six faces.",
+        "art": { "at": { "face": "A face", "six": "six faces" } } },
+      { "say": "An edge is where two faces meet. A cube has twelve edges.",
+        "art": { "at": { "edge": "An edge", "twelve": "twelve edges" } } },
+      { "say": "A corner is where edges meet. A cube has eight corners.",
+        "art": { "at": { "corner": "A corner", "eight": "eight corners" } } },
+      { "say": "The drawing is flat. Three edges hide round the back. Count those too.",
+        "art": { "at": { "flat": "The drawing is flat", "three": "Three edges hide", "counttoo": "Count those too" } } }
+    ] },
+
+    { "id": "roundabout", "kind": "roundabout", "heading": "Round the edge, and inside", "codes": ["3Gg.03", "3Gg.04"], "beats": [
+      { "say": "Perimeter is the whole distance round the outside edge.",
+        "art": { "at": { "per": "Perimeter", "round": "round the outside edge" } } },
+      { "say": "This rectangle is six centimetres by two centimetres.",
+        "art": { "at": { "six": "six centimetres", "two": "two centimetres" } } },
+      { "say": "Only two numbers are written on it. The other two sides match.",
+        "art": { "at": { "only": "Only two numbers", "others": "The other two sides" } } },
+      { "say": "Six plus two plus six plus two makes sixteen centimetres.",
+        "art": { "at": { "sum": "Six plus two plus six plus two", "sixteen": "sixteen centimetres" } } },
+      { "say": "Area is different. It is the space inside, counted in squares.",
+        "art": { "at": { "area": "Area is different", "inside": "the space inside", "squares": "counted in squares" } } },
+      { "say": "Twelve squares inside, and sixteen centimetres round the edge.",
+        "art": { "at": { "twelve": "Twelve squares inside", "edge16": "sixteen centimetres" } } }
+    ] },
+
+    { "id": "recap", "kind": "recap", "heading": "What you now know", "codes": ["3Gg.01", "3Gg.03", "3Gg.04", "3Gg.05", "3Gg.08", "3Gg.09", "3Gp.02"], "beats": [
+      { "say": "Count the sides to name a flat shape. Regular means every side the same.",
+        "art": { "at": { "count": "Count the sides", "regular": "Regular means" } } },
+      { "say": "A line of symmetry folds a shape onto itself. A reflection flips it.",
+        "art": { "at": { "sym": "A line of symmetry", "refl": "A reflection" } } },
+      { "say": "A cube has six faces, twelve edges and eight corners.",
+        "art": { "at": { "cube": "A cube" } } },
+      { "say": "Perimeter goes round the edge. Area is the space inside.",
+        "art": { "at": { "per": "Perimeter goes round the edge", "area": "Area is the space inside" } } }
+    ] }
+  ]
+}

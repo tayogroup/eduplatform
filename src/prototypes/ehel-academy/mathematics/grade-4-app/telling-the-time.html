@@ -3186,7 +3186,21 @@
     });
   }
 
+  function lessonFilm(o) {
+    const v = o.video, stage = document.getElementById(o.stage);
+    stage.innerHTML = '<div class="lec lec-film">' +
+      '<video controls playsinline preload="none" poster="' + esc(v.poster) + '" src="' + esc(v.src) + '">' +
+      '<track kind="captions" srclang="en" label="English" src="' + esc(v.vtt) + '"></video>' +
+      '<p class="lec-note">' + esc(v.note) + '</p></div>';
+    const film = stage.querySelector('video'), slide = stage.closest('section.slide');
+    film.addEventListener('ended', () => finish(o.finish, o.done));
+    if (slide && window.MutationObserver) new MutationObserver(() => {
+      if (!slide.classList.contains('active') && !film.paused) film.pause();
+    }).observe(slide, { attributes: true, attributeFilter: ['class'] });
+  }
+  
   function lessonLecture(o) {
+    if (o.video) return lessonFilm(o);
     const parts = o.parts || [];
     let k = 0;
     const id = o.stage + 'l';
@@ -3285,7 +3299,7 @@
   }
 
   lessonAbout({ stage: 'stageOvw', about: ["Convert between 24-hour time and 12-hour time.", "Read a real bus timetable or TV guide written in 24-hour time.", "Work out how long a journey or a programme lasts."], finish: 0, done: "Let's begin." });
-  lessonLecture({ stage: 'stageLec', parts: [{ title: "24-hour and 12-hour time", say: "24-hour time runs from 00:00 to 23:59 with no a.m. or p.m. needed. To change 15:45 to 12-hour time, take 12 off the hours: 3:45, and since it is after midday, that is 3:45 p.m." }, { title: "Reading a timetable", say: "A real timetable is written in 24-hour time. Converting it into the 12-hour time you say out loud is the whole of this lesson." }, { title: "Working out duration", say: "Duration is how long something lasts, found by working out the time between a start and an end." }], finish: 1, done: "You have heard the whole lesson. Now do it yourself." });
+  lessonLecture({ stage: 'stageLec', parts: [{ title: "24-hour and 12-hour time", say: "24-hour time runs from 00:00 to 23:59 with no a.m. or p.m. needed. To change 15:45 to 12-hour time, take 12 off the hours: 3:45, and since it is after midday, that is 3:45 p.m." }, { title: "Reading a timetable", say: "A real timetable is written in 24-hour time. Converting it into the 12-hour time you say out loud is the whole of this lesson." }, { title: "Working out duration", say: "Duration is how long something lasts, found by working out the time between a start and an end." }], video: { src: "lecture-video/telling-the-time.84c230fc.mp4", poster: "lecture-video/telling-the-time.55a6c85a.jpg", vtt: "lecture-video/telling-the-time.447c47cf.vtt", note: "The whole lesson in about 3 minutes. When the film ends, this step is done." }, finish: 1, done: "You have heard the whole lesson. Now do it yourself." });
   lessonWords({ stage: 'stageMw', words: [{ w: "24-hour time", pic: "🕕", meaning: "A way of writing time from 00:00 to 23:59 with no a.m. or p.m. needed.", uses: ["The train timetable is written in 24-hour time."] }, { w: "12-hour time", pic: "🕒", meaning: "A way of writing time from 1 to 12 with a.m. or p.m. added to say which half of the day.", uses: ["Change 15:45 into 12-hour time."] }, { w: "a.m.", pic: "🌅", meaning: "Before midday - from midnight up to, but not including, 12 noon.", uses: ["7:30 a.m. is early in the morning."] }, { w: "p.m.", pic: "🌇", meaning: "After midday - from 12 noon up to, but not including, midnight.", uses: ["3:45 p.m. is in the afternoon."] }, { w: "duration", pic: "⏱️", meaning: "How long something lasts, found by working out the time between a start and an end.", uses: ["Work out the duration of the bus journey."] }], finish: 2, done: "You know the math words of this lesson." });
   show(0, false);
   quiet -= 1;   /* the first draw is over: say() speaks from here on */
@@ -4214,6 +4228,9 @@
     align-items: center; gap: 10px; text-align: center; }
   .phase { color: var(--teal); font-weight: 800; font-size: 12.5px; letter-spacing: .1em;
     text-transform: uppercase; }
+  .lec.lec-film { max-width: 760px; }
+  .lec-film video { width: 100%; display: block; border-radius: 18px; background: #000;
+    aspect-ratio: 16 / 9; box-shadow: var(--shadow); }
   .lec-h { font-weight: 800; font-size: clamp(21px, 4vw, 26px); margin: 0; }
   .lec-p { margin: 0; font-size: 19px; line-height: 1.55; max-width: 34em; }
   .lec-note { margin: 4px 0 0; color: var(--muted); font-size: 13.5px; }

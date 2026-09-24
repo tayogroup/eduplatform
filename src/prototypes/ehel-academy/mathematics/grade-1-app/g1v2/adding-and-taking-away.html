@@ -3159,7 +3159,21 @@
     });
   }
 
+  function lessonFilm(o) {
+    const v = o.video, stage = document.getElementById(o.stage);
+    stage.innerHTML = '<div class="lec lec-film">' +
+      '<video controls playsinline preload="none" poster="' + esc(v.poster) + '" src="' + esc(v.src) + '">' +
+      '<track kind="captions" srclang="en" label="English" src="' + esc(v.vtt) + '"></video>' +
+      '<p class="lec-note">' + esc(v.note) + '</p></div>';
+    const film = stage.querySelector('video'), slide = stage.closest('section.slide');
+    film.addEventListener('ended', () => finish(o.finish, o.done));
+    if (slide && window.MutationObserver) new MutationObserver(() => {
+      if (!slide.classList.contains('active') && !film.paused) film.pause();
+    }).observe(slide, { attributes: true, attributeFilter: ['class'] });
+  }
+  
   function lessonLecture(o) {
+    if (o.video) return lessonFilm(o);
     const parts = o.parts || [];
     let k = 0;
     const id = o.stage + 'l';
@@ -3258,7 +3272,7 @@
   }
 
   lessonAbout({ stage: 'stageOvw', about: ["Put two groups together to add them.", "Take away by counting back.", "Find how many more one group has than another.", "Know the pairs of numbers that make 10.", "Know your doubles up to double 10.", "Name the coins we use."], finish: 0, done: "Let's begin." });
-  lessonLecture({ stage: 'stageLec', parts: [{ title: "Adding", say: "Putting two groups together and counting them all makes an addition - if you have 4 and 3 more, count on from 4: 5, 6, 7." }, { title: "Taking away and counting back", say: "Start at the bigger number and count backwards to take some away - start at 8, count back 3, land on 5." }, { title: "Bonds to 10 and doubles", say: "Two numbers that add together to make 10 are a number bond - 6 and 4 make 10. A double is the same amount again, like 3 and 3 more." }], finish: 1, done: "You have heard the whole lesson. Now do it yourself." });
+  lessonLecture({ stage: 'stageLec', parts: [{ title: "Adding", say: "Putting two groups together and counting them all makes an addition - if you have 4 and 3 more, count on from 4: 5, 6, 7." }, { title: "Taking away and counting back", say: "Start at the bigger number and count backwards to take some away - start at 8, count back 3, land on 5." }, { title: "Bonds to 10 and doubles", say: "Two numbers that add together to make 10 are a number bond - 6 and 4 make 10. A double is the same amount again, like 3 and 3 more." }], video: { src: "lecture-video/adding-and-taking-away.04bbb06a.mp4", poster: "lecture-video/adding-and-taking-away.bdfe222a.jpg", vtt: "lecture-video/adding-and-taking-away.a17a3941.vtt", note: "The whole lesson in about 2 and a half minutes. When the film ends, this step is done." }, finish: 1, done: "You have heard the whole lesson. Now do it yourself." });
   lessonWords({ stage: 'stageMw', words: [{ w: "add", pic: "➕", meaning: "Put two groups together to find out how many there are altogether.", uses: ["Add 4 counters and 3 counters together."] }, { w: "take away", pic: "➖", meaning: "Start with a group and remove some of it.", uses: ["Take away 3 counters from a group of 8."] }, { w: "double", pic: "2️⃣", meaning: "The same amount again, like 3 and 3 more.", uses: ["Double 5 is 10."] }, { w: "number bond", pic: "🔗", meaning: "Two numbers that add together to make ten.", uses: ["6 and 4 are a number bond to ten."] }, { w: "count back", pic: "⏪", meaning: "Start at a number and count backwards to take some away.", uses: ["Count back 3 from 8 to take some away."] }, { w: "shilling", pic: "💰", meaning: "The money we count in. We write it as sh for short.", uses: ["Two shillings and three more make five shillings."] }], finish: 2, done: "You know the math words of this lesson." });
   show(0, false);
 
@@ -4178,6 +4192,9 @@
     align-items: center; gap: 10px; text-align: center; }
   .phase { color: var(--teal); font-weight: 800; font-size: 12.5px; letter-spacing: .1em;
     text-transform: uppercase; }
+  .lec.lec-film { max-width: 760px; }
+  .lec-film video { width: 100%; display: block; border-radius: 18px; background: #000;
+    aspect-ratio: 16 / 9; box-shadow: var(--shadow); }
   .lec-h { font-weight: 800; font-size: clamp(21px, 4vw, 26px); margin: 0; }
   .lec-p { margin: 0; font-size: 19px; line-height: 1.55; max-width: 34em; }
   .lec-note { margin: 4px 0 0; color: var(--muted); font-size: 13.5px; }

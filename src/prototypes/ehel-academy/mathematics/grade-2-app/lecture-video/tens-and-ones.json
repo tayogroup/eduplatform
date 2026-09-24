@@ -1,0 +1,115 @@
+{
+  "_comment": "Storyboard for the Grade 2 Mathematics unit lecture film, Lesson 1 Tens and Ones. Rendered by tools/create-ehel-unit-lecture.js. See lecture-video/BRIEF.md. Every beat is one narration clip; art.at names the phrases a picture waits for, and the page refuses to load if a phrase is not in its beat's say. The chapters follow the lesson opener's three lecture parts (tens and ones; rounding; arrays and sharing), opened out with the lesson page's own numbers: 34 built as 3 tens and 4 ones (step 7, Build it with tens and ones), 34 and 35 rounded on the decade line (step 10), 2 rows of 5 (step 16, Arrays), and 12 sweets shared between 3 friends and grouped into bags of 4 (step 18, Sharing and grouping).",
+  "slug": "tens-and-ones",
+  "lesson": 1,
+  "grade": 2,
+  "stage": 2,
+  "title": "Tens and Ones",
+  "subtitle": "Grade 2 Mathematics",
+  "framework": "Cambridge Primary Mathematics 0096",
+  "renderer": {
+    "art": ["math"],
+    "skin": "brown",
+    "scenes": [
+      "tools/lib/ehel-film-marks.js",
+      "tools/lib/film-scenes/math-g2/tens-and-ones.js",
+      "tools/lib/film-scenes/math-g2/tens-and-ones-2.js",
+      "tools/lib/film-scenes/math-g2/tens-and-ones-3.js"
+    ]
+  },
+  "objectives": [
+    ["2Np.01", "Understand and explain that the value of each digit in a 2-digit number is determined by its position in that number, recognising zero as a place holder."],
+    ["2Np.02", "Compose, decompose and regroup 2-digit numbers, using tens and ones."],
+    ["2Np.05", "Round 2-digit numbers to the nearest 10."],
+    ["2Ni.05", "Understand multiplication as: repeated addition an array."],
+    ["2Ni.06", "Understand division as: sharing (number of items per group) grouping (number of groups)."]
+  ],
+  "scenes": [
+    { "id": "title", "kind": "title", "codes": [], "beats": [
+      { "say": "This is the number 34. It is built from tens and ones.",
+        "art": { "at": { "num": "the number 34", "made": "tens and ones" } } },
+      { "say": "Every digit has a place. Its place says what it is worth.",
+        "art": { "at": { "digit": "Every digit", "worth": "what it is worth" } } }
+    ] },
+
+    { "id": "tens", "kind": "tens", "heading": "Tens and ones", "codes": ["2Np.01"], "beats": [
+      { "say": "Here is 34 in blocks. You can see exactly what it is made of.",
+        "art": { "at": { "blocks": "34 in blocks", "made": "what it is made of" } } },
+      { "say": "Three long rods stand on the left. Each rod is one whole ten.",
+        "art": { "at": { "rods": "Three long rods", "ten": "one whole ten" } } },
+      { "say": "Count the tens along the row: ten, twenty, thirty.",
+        "art": { "at": { "ten": "ten,", "twenty": "twenty,", "thirty": "thirty." } } },
+      { "say": "Beside them sit four small cubes. Each cube is worth just one.",
+        "art": { "at": { "cubes": "four small cubes", "one": "worth just one" } } },
+      { "say": "Thirty and four make 34. So 34 is 3 tens and 4 ones.",
+        "art": { "at": { "sum": "Thirty and four", "answer": "3 tens and 4 ones" } } },
+      { "say": "One rod is worth ten of those cubes. A ten is ten times a one.",
+        "art": { "at": { "rod": "One rod", "cubes": "ten of those cubes", "times": "ten times a one" } } }
+    ] },
+
+    { "id": "build", "kind": "build", "heading": "Building other numbers", "codes": ["2Np.01", "2Np.02"], "beats": [
+      { "say": "Now let us change the blocks. Five rods, and six cubes beside them.",
+        "art": { "at": { "five": "Five rods", "six": "six cubes" } } },
+      { "say": "That is 5 tens and 6 ones. The number we built is 56.",
+        "art": { "at": { "tensones": "5 tens and 6 ones", "num": "is 56" } } },
+      { "say": "The 5 is worth fifty, not five. The 6 is worth only six.",
+        "art": { "at": { "fifty": "worth fifty", "six": "worth only six" } } },
+      { "say": "Now take every cube away. Seven rods are left, and no cubes at all.",
+        "art": { "at": { "away": "take every cube away", "seven": "Seven rods" } } },
+      { "say": "Seven tens and zero ones is 70. The zero holds the ones place.",
+        "art": { "at": { "seventy": "is 70", "zero": "The zero holds the ones place" } } }
+    ] },
+
+    { "id": "round", "kind": "round", "heading": "Round to the nearest 10", "codes": ["2Np.05"], "beats": [
+      { "say": "Rounding means finding the nearest ten. Here is a number line.",
+        "art": { "at": { "nearest": "the nearest ten", "line": "a number line" } } },
+      { "say": "Put 34 on it. You can see it sits between 30 and 40.",
+        "art": { "at": { "put": "Put 34 on it", "between": "between 30 and 40" } } },
+      { "say": "Count back four steps to reach 30. Count on six steps to reach 40.",
+        "art": { "at": { "back": "Count back four steps", "on": "Count on six steps" } } },
+      { "say": "Four is fewer than six. So 34 rounds down to 30, not up.",
+        "art": { "at": { "fewer": "fewer than six", "down": "rounds down to 30" } } },
+      { "say": "35 sits right in the middle. Five always rounds up, to 40.",
+        "art": { "at": { "middle": "right in the middle", "up": "always rounds up" } } }
+    ] },
+
+    { "id": "arrays", "kind": "arrays", "heading": "Arrays", "codes": ["2Ni.05"], "beats": [
+      { "say": "An array is rows and columns of things. Every row is the same size.",
+        "art": { "at": { "rc": "rows and columns", "same": "the same size" } } },
+      { "say": "Here are 2 rows of counters. Each row holds 5 of them.",
+        "art": { "at": { "rows": "2 rows", "holds": "Each row holds 5" } } },
+      { "say": "Five and five make ten. So 2 rows of 5 is 10 counters.",
+        "art": { "at": { "add": "Five and five", "is": "2 rows of 5 is 10" } } },
+      { "say": "Turn the whole array round. Now it is 5 rows of 2.",
+        "art": { "at": { "turn": "Turn the whole array round", "now": "5 rows of 2" } } },
+      { "say": "That is 5 lots of 2. It is still 10 counters altogether.",
+        "art": { "at": { "lots": "5 lots of 2", "still": "still 10 counters" } } }
+    ] },
+
+    { "id": "share", "kind": "share", "heading": "Sharing and grouping", "codes": ["2Ni.06"], "beats": [
+      { "say": "Division is sharing out fairly. It is also making equal groups.",
+        "art": { "at": { "share": "sharing out fairly", "groups": "equal groups" } } },
+      { "say": "Share 12 sweets between 3 friends. One each, round and round.",
+        "art": { "at": { "twelve": "12 sweets", "three": "3 friends", "each": "One each" } } },
+      { "say": "Everybody ends up with 4 sweets. So 12 shared by 3 is 4.",
+        "art": { "at": { "four": "ends up with 4", "div": "12 shared by 3 is 4" } } },
+      { "say": "Now take the same 12 sweets. Group them into bags of 4.",
+        "art": { "at": { "same": "the same 12 sweets", "bags": "bags of 4" } } },
+      { "say": "One bag, two bags, three bags. Nothing is left over.",
+        "art": { "at": { "b1": "One bag,", "b2": "two bags,", "b3": "three bags.", "none": "Nothing is left over" } } },
+      { "say": "So 12 in groups of 4 makes 3 bags, with none left.",
+        "art": { "at": { "makes": "makes 3 bags" } } }
+    ] },
+
+    { "id": "recap", "kind": "recap", "heading": "What you now know", "codes": ["2Np.01", "2Np.02", "2Np.05", "2Ni.05", "2Ni.06"], "beats": [
+      { "say": "A 2-digit number is tens and ones. 34 is 3 tens and 4 ones.",
+        "art": { "at": { "tens": "tens and ones", "ex": "3 tens and 4 ones" } } },
+      { "say": "Rounding finds the nearest ten. So 34 rounds down to 30.",
+        "art": { "at": { "round": "the nearest ten", "ex": "rounds down to 30" } } },
+      { "say": "An array shows times. Look: 2 rows of 5 is 10 counters.",
+        "art": { "at": { "array": "An array", "is": "2 rows of 5 is 10" } } },
+      { "say": "Sharing and grouping are both division. Now go and build some numbers.",
+        "art": { "at": { "share": "Sharing and grouping", "go": "go and build" } } }
+    ] }
+  ]
+}

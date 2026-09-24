@@ -47,6 +47,12 @@ MARK = "ehel-g2-lesson-opener"
 # }
 WORK = {
  "tens-and-ones": {
+  "video": {
+   "src": "lecture-video/tens-and-ones.b2b74945.mp4",
+   "poster": "lecture-video/tens-and-ones.be623fe7.jpg",
+   "vtt": "lecture-video/tens-and-ones.fad7e869.vtt",
+   "note": "The whole lesson in about 2 and a half minutes. When the film ends, this step is done.",
+  },
   "about": [
    "Count up to 100 objects.",
    "Say how many you see without counting them.",
@@ -69,6 +75,12 @@ WORK = {
   ],
  },
  "coins-and-change": {
+  "video": {
+   "src": "lecture-video/coins-and-change.4cd44541.mp4",
+   "poster": "lecture-video/coins-and-change.4bd6c0c4.jpg",
+   "vtt": "lecture-video/coins-and-change.691e4525.vtt",
+   "note": "The whole lesson in about 2 and a half minutes. When the film ends, this step is done.",
+  },
   "about": [
    "Sort coins and make sets of different values.",
    "Count what is in a purse and say what it is worth.",
@@ -92,6 +104,12 @@ WORK = {
   ],
  },
  "fair-shares": {
+  "video": {
+   "src": "lecture-video/fair-shares.a262aa6c.mp4",
+   "poster": "lecture-video/fair-shares.d01fb8a5.jpg",
+   "vtt": "lecture-video/fair-shares.05fa5051.vtt",
+   "note": "The whole lesson in about 2 and a half minutes. When the film ends, this step is done.",
+  },
   "about": [
    "Say when parts are equal and when they are not.",
    "Know what the top and bottom numbers of a fraction mean.",
@@ -115,6 +133,12 @@ WORK = {
   ],
  },
  "patterns-that-grow": {
+  "video": {
+   "src": "lecture-video/patterns-that-grow.515d20a9.mp4",
+   "poster": "lecture-video/patterns-that-grow.a3390ea3.jpg",
+   "vtt": "lecture-video/patterns-that-grow.c02faac2.vtt",
+   "note": "The whole lesson in about 2 and a half minutes. When the film ends, this step is done.",
+  },
   "about": [
    "Find the part of a pattern that repeats.",
    "Say what comes next in a pattern.",
@@ -137,6 +161,12 @@ WORK = {
   ],
  },
  "sides-and-corners": {
+  "video": {
+   "src": "lecture-video/sides-and-corners.39d347f3.mp4",
+   "poster": "lecture-video/sides-and-corners.b6800141.jpg",
+   "vtt": "lecture-video/sides-and-corners.fcf5dce1.vtt",
+   "note": "The whole lesson in about 2 and a half minutes. When the film ends, this step is done.",
+  },
   "about": [
    "Count the sides and corners of a 2D shape.",
    "Name 2D shapes and say what is the same about them.",
@@ -160,6 +190,12 @@ WORK = {
   ],
  },
  "which-way-from-here": {
+  "video": {
+   "src": "lecture-video/which-way-from-here.6914b6ff.mp4",
+   "poster": "lecture-video/which-way-from-here.04e3935e.jpg",
+   "vtt": "lecture-video/which-way-from-here.ea99300b.vtt",
+   "note": "The whole lesson in about 2 and a half minutes. When the film ends, this step is done.",
+  },
   "about": [
    "Say where something is, using position words.",
    "Tell my left from my right, and someone else's.",
@@ -181,6 +217,12 @@ WORK = {
   ],
  },
  "how-much-how-long": {
+  "video": {
+   "src": "lecture-video/how-much-how-long.3eb52366.mp4",
+   "poster": "lecture-video/how-much-how-long.547f5f2c.jpg",
+   "vtt": "lecture-video/how-much-how-long.6b8c078a.vtt",
+   "note": "The whole lesson in about 2 and a half minutes. When the film ends, this step is done.",
+  },
   "about": [
    "Compare two lengths and say which is longer.",
    "Measure with the same unit every time.",
@@ -204,6 +246,12 @@ WORK = {
   ],
  },
  "half-past-quarter-to": {
+  "video": {
+   "src": "lecture-video/half-past-quarter-to.f3754762.mp4",
+   "poster": "lecture-video/half-past-quarter-to.a7eda971.jpg",
+   "vtt": "lecture-video/half-past-quarter-to.77a048a7.vtt",
+   "note": "The whole lesson in about 2 and a half minutes. When the film ends, this step is done.",
+  },
   "about": [
    "Know what each hand on a clock tells me.",
    "Read quarter past and quarter to.",
@@ -227,6 +275,12 @@ WORK = {
   ],
  },
  "count-it-chart-it": {
+  "video": {
+   "src": "lecture-video/count-it-chart-it.2ededde8.mp4",
+   "poster": "lecture-video/count-it-chart-it.ca234d48.jpg",
+   "vtt": "lecture-video/count-it-chart-it.51d00993.vtt",
+   "note": "The whole lesson in about 2 and a half minutes. When the film ends, this step is done.",
+  },
   "about": [
    "Sort things into groups and say what my rule was.",
    "Record what people say using tally marks.",

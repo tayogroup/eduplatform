@@ -1,0 +1,119 @@
+{
+  "_comment": "Storyboard for the Grade 1 Mathematics unit lecture film, Adding and Taking Away. Rendered by tools/create-ehel-unit-lecture.js. See lecture-video/BRIEF.md. Every beat is one narration clip; art.at names the phrases a picture waits for, and the page refuses to load if a phrase is not in its beat's say. The chapters follow the lesson's own steps in order (Adding and Counting on; Taking away and counting back; How many more?; Making 10 and Pairs that make 10; Doubles and Doubles to 20; Money to 20 and Know your coins), and every number is the lesson's own: 3 and 2 make 5, count on from 3 to 5, 7 take away 3 is 4, count back 7 6 5 4, 8 red and 5 blue leave 3 over, split ten after six, 7 leaves 3 empty spaces, the ladybird's 3 spots a side, double 7 fills a ten frame with 4 over, and the price of 7 shillings paid with a 5 and a 2.",
+  "slug": "adding-and-taking-away",
+  "lesson": 2,
+  "grade": 1,
+  "stage": 1,
+  "title": "Adding and Taking Away",
+  "subtitle": "Grade 1 Mathematics",
+  "framework": "Cambridge Primary Mathematics 0096",
+  "renderer": {
+    "art": ["math"],
+    "skin": "brown",
+    "scenes": [
+      "tools/lib/ehel-film-marks.js",
+      "tools/lib/film-scenes/math-g1/adding-and-taking-away.js",
+      "tools/lib/film-scenes/math-g1/adding-and-taking-away-2.js",
+      "tools/lib/film-scenes/math-g1/adding-and-taking-away-3.js"
+    ]
+  },
+  "objectives": [
+    ["1Ni.02", "Understand addition as: counting on combining two sets."],
+    ["1Ni.03", "Understand subtraction as: counting back take away difference."],
+    ["1Ni.04", "Recognise complements of 10."],
+    ["1Ni.05", "Estimate, add and subtract whole numbers (where the answer is from 0 to 20)."],
+    ["1Ni.06", "Know doubles up to double 10."],
+    ["1Nm.01", "Recognise money used in local currency."]
+  ],
+  "scenes": [
+    { "id": "title", "kind": "title", "codes": [], "beats": [
+      { "say": "Numbers can come together. Numbers can go away.",
+        "art": { "at": { "together": "come together", "away": "go away" } } },
+      { "say": "Today you will add and take away. You will also make pairs of ten.",
+        "art": { "at": { "add": "add", "takeaway": "take away", "ten": "pairs of ten" } } }
+    ] },
+
+    { "id": "adding", "kind": "adding", "heading": "Adding", "codes": ["1Ni.02", "1Ni.05"], "beats": [
+      { "say": "Adding means putting two groups together. Then you count them all.",
+        "art": { "at": { "adding": "Adding", "together": "two groups together" } } },
+      { "say": "Here are three counters. Here are two more counters.",
+        "art": { "at": { "three": "three counters", "two": "two more counters" } } },
+      { "say": "Push the two groups together. Then count every counter.",
+        "art": { "at": { "push": "Push the two groups together", "count": "count every counter" } } },
+      { "say": "One, two, three, four, five. So three and two make five.",
+        "art": { "at": { "one": "One,", "two": "two,", "three": "three,", "four": "four,", "five": "five.", "make": "three and two make five" } } },
+      { "say": "Or start at three and count on: four, five.",
+        "art": { "at": { "start": "start at three", "counton": "count on", "four": "four,", "five": "five." } } }
+    ] },
+
+    { "id": "takeaway", "kind": "takeaway", "heading": "Taking away", "codes": ["1Ni.03", "1Ni.05"], "beats": [
+      { "say": "Taking away starts with one group. Some of it goes.",
+        "art": { "at": { "starts": "starts with one group", "goes": "Some of it goes" } } },
+      { "say": "Here are seven counters. Now take three of them away.",
+        "art": { "at": { "seven": "seven counters", "three": "take three of them away" } } },
+      { "say": "Those three have gone. Count the ones still here.",
+        "art": { "at": { "gone": "Those three have gone", "count": "Count the ones" } } },
+      { "say": "Four are left. So seven take away three is four.",
+        "art": { "at": { "four": "Four are left", "sum": "seven take away three is four" } } },
+      { "say": "Counting back works too. Start at seven: six, five, four.",
+        "art": { "at": { "back": "Counting back", "start": "Start at seven", "six": "six,", "five": "five,", "four": "four." } } }
+    ] },
+
+    { "id": "more", "kind": "more", "heading": "How many more?", "codes": ["1Ni.03"], "beats": [
+      { "say": "How many more is a taking away question. It is not an adding one.",
+        "art": { "at": { "more": "How many more", "away": "taking away question", "not": "not an adding one" } } },
+      { "say": "Here are eight red counters. Here are five blue ones.",
+        "art": { "at": { "eight": "eight red counters", "five": "five blue ones" } } },
+      { "say": "Match them up in pairs. You can make five pairs.",
+        "art": { "at": { "match": "Match them up in pairs", "pairs": "five pairs" } } },
+      { "say": "Three red ones have no partner. So eight is three more than five.",
+        "art": { "at": { "three": "Three red ones", "partner": "no partner", "diff": "three more than five" } } }
+    ] },
+
+    { "id": "bonds", "kind": "bonds", "heading": "Pairs that make ten", "codes": ["1Ni.04"], "beats": [
+      { "say": "Two numbers can add up to ten. That pair is a number bond.",
+        "art": { "at": { "two": "Two numbers", "ten": "add up to ten", "bond": "a number bond" } } },
+      { "say": "Here are ten counters in a row. Split them after six.",
+        "art": { "at": { "ten": "ten counters in a row", "split": "Split them after six" } } },
+      { "say": "Six on this side, four on that side. Six and four make ten.",
+        "art": { "at": { "six": "Six on this side", "four": "four on that side", "make": "Six and four make ten" } } },
+      { "say": "Seven counters leave three empty spaces. Seven and three make ten.",
+        "art": { "at": { "seven": "Seven counters", "spaces": "three empty spaces", "make": "Seven and three make ten" } } }
+    ] },
+
+    { "id": "doubles", "kind": "doubles", "heading": "Doubles", "codes": ["1Ni.06"], "beats": [
+      { "say": "A double is the same amount again. It happens on both sides.",
+        "art": { "at": { "double": "A double", "same": "the same amount again", "both": "both sides" } } },
+      { "say": "This ladybird has three spots on each side.",
+        "art": { "at": { "three": "three spots", "each": "each side" } } },
+      { "say": "Three spots and three more spots. Count them all: six.",
+        "art": { "at": { "and": "three more spots", "count": "Count them all", "six": "six." } } },
+      { "say": "So double three is six. It is not four.",
+        "art": { "at": { "dbl": "double three is six", "not": "not four" } } },
+      { "say": "Double seven fills one ten frame, with four left over. Fourteen.",
+        "art": { "at": { "seven": "Double seven", "fill": "fills one ten frame", "over": "four left over", "fourteen": "Fourteen" } } }
+    ] },
+
+    { "id": "coins", "kind": "coins", "heading": "Coins and shillings", "codes": ["1Nm.01"], "beats": [
+      { "say": "We count our money in shillings. We write it as sh.",
+        "art": { "at": { "money": "our money in shillings", "sh": "write it as sh" } } },
+      { "say": "Every coin has a number on it. That is what it is worth.",
+        "art": { "at": { "number": "a number on it", "worth": "what it is worth" } } },
+      { "say": "The price is seven shillings. Start with a five coin.",
+        "art": { "at": { "price": "The price is seven shillings", "five": "a five coin" } } },
+      { "say": "Now add a two coin. Five and two make seven shillings.",
+        "art": { "at": { "two": "add a two coin", "seven": "Five and two make seven shillings" } } }
+    ] },
+
+    { "id": "recap", "kind": "recap", "heading": "What you now know", "codes": ["1Ni.02", "1Ni.03", "1Ni.04", "1Ni.05", "1Ni.06", "1Nm.01"], "beats": [
+      { "say": "Adding puts two groups together. Taking away leaves fewer.",
+        "art": { "at": { "add": "Adding puts two groups together", "away": "Taking away leaves fewer" } } },
+      { "say": "How many more finds the gap. And six and four make ten.",
+        "art": { "at": { "more": "How many more", "bond": "six and four make ten" } } },
+      { "say": "Double three is six. A coin is worth its own number.",
+        "art": { "at": { "dbl": "Double three is six", "coin": "worth its own number" } } },
+      { "say": "You can add and take away. You can go up to twenty.",
+        "art": { "at": { "go": "add and take away" } } }
+    ] }
+  ]
+}

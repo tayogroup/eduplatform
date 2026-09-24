@@ -49,6 +49,12 @@ MARK = "ehel-g1-lesson-opener"
 # }
 WORK = {
  "counting-to-twenty": {
+  "video": {
+   "src": "lecture-video/counting-to-twenty.0b26623a.mp4",
+   "poster": "lecture-video/counting-to-twenty.d158b857.jpg",
+   "vtt": "lecture-video/counting-to-twenty.491a7d44.vtt",
+   "note": "The whole lesson in about 2 and a half minutes. When the film ends, this step is done.",
+  },
   "about": [
    "Count up to 20 things, touching each one once.",
    "Say how many you see without counting them.",
@@ -72,6 +78,12 @@ WORK = {
   ],
  },
  "adding-and-taking-away": {
+  "video": {
+   "src": "lecture-video/adding-and-taking-away.04bbb06a.mp4",
+   "poster": "lecture-video/adding-and-taking-away.bdfe222a.jpg",
+   "vtt": "lecture-video/adding-and-taking-away.a17a3941.vtt",
+   "note": "The whole lesson in about 2 and a half minutes. When the film ends, this step is done.",
+  },
   "about": [
    "Put two groups together to add them.",
    "Take away by counting back.",
@@ -95,6 +107,12 @@ WORK = {
   ],
  },
  "halves-and-wholes": {
+  "video": {
+   "src": "lecture-video/halves-and-wholes.bf84e13c.mp4",
+   "poster": "lecture-video/halves-and-wholes.411081d0.jpg",
+   "vtt": "lecture-video/halves-and-wholes.cbccd10b.vtt",
+   "note": "The whole lesson in about 2 minutes. When the film ends, this step is done.",
+  },
   "about": [
    "Know that a half means two parts of the same size.",
    "Colour one half of a shape.",
@@ -117,6 +135,12 @@ WORK = {
   ],
  },
  "what-comes-next": {
+  "video": {
+   "src": "lecture-video/what-comes-next.191e90a8.mp4",
+   "poster": "lecture-video/what-comes-next.5d8edf96.jpg",
+   "vtt": "lecture-video/what-comes-next.bbfa8b47.vtt",
+   "note": "The whole lesson in about 2 minutes. When the film ends, this step is done.",
+  },
   "about": [
    "Say what comes next in a pattern.",
    "Find the part of a pattern that repeats.",
@@ -140,6 +164,12 @@ WORK = {
   ],
  },
  "shapes-and-sizes": {
+  "video": {
+   "src": "lecture-video/shapes-and-sizes.a6e63fad.mp4",
+   "poster": "lecture-video/shapes-and-sizes.b0822f4a.jpg",
+   "vtt": "lecture-video/shapes-and-sizes.69e76f3f.vtt",
+   "note": "The whole lesson in about 2 and a half minutes. When the film ends, this step is done.",
+  },
   "about": [
    "Name flat shapes and say how many sides they have.",
    "Name solid shapes and count their faces.",
@@ -163,6 +193,12 @@ WORK = {
   ],
  },
  "days-months-and-clocks": {
+  "video": {
+   "src": "lecture-video/days-months-and-clocks.990f0aab.mp4",
+   "poster": "lecture-video/days-months-and-clocks.300cf325.jpg",
+   "vtt": "lecture-video/days-months-and-clocks.691dfcab.vtt",
+   "note": "The whole lesson in about 2 minutes. When the film ends, this step is done.",
+  },
   "about": [
    "Name the 7 days of the week in order.",
    "Name the 12 months of the year.",
@@ -185,6 +221,12 @@ WORK = {
   ],
  },
  "asking-and-sorting": {
+  "video": {
+   "src": "lecture-video/asking-and-sorting.977d284c.mp4",
+   "poster": "lecture-video/asking-and-sorting.505401f2.jpg",
+   "vtt": "lecture-video/asking-and-sorting.29f9a35d.vtt",
+   "note": "The whole lesson in about 2 and a half minutes. When the film ends, this step is done.",
+  },
   "about": [
    "Ask everyone a question and collect the answers.",
    "Put answers into a list and a table.",

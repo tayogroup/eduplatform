@@ -1,0 +1,121 @@
+{
+  "_comment": "Storyboard for the Grade 4 Mathematics unit lecture film, Lesson 2 Patterns and Square Numbers. Rendered by tools/create-ehel-unit-lecture.js. See lecture-video/BRIEF.md. Every beat is one narration clip; art.at names the phrases a picture waits for, and the page refuses to load if a phrase is not in its beat's say. The chapters follow the lesson page's own teaching slides in order - pairing counters off (slide 2), what adding and taking away do to odd and even (slides 2 and 3), a shape for an unknown quantity in an addition (slide 6) and then with the shape first in a take-away (slide 7), linear and non-linear sequences named as the lesson names them, with their term-to-term rule (slides 9-10), the spatial pattern of square numbers (slide 11) and the L between one square and the next (slide 12) - and uses the lesson's own numbers throughout: 8 and 7, 7 + 5 = 12, 9 - 3 = 6, 15 + triangle = 22, triangle take away 14 = 30, so triangle = 44 (slide 7's own example), 5 12 19 26 linear, 2 5 9 14 non-linear, 4 by 4 = 16, and 6 by 6 growing into 7 by 7 with an L of 13.",
+  "slug": "patterns-and-squares",
+  "lesson": 2,
+  "grade": 4,
+  "stage": 4,
+  "title": "Patterns and Square Numbers",
+  "subtitle": "Grade 4 Mathematics",
+  "framework": "Cambridge Primary Mathematics 0096",
+  "renderer": {
+    "art": ["math"],
+    "skin": "brown",
+    "scenes": [
+      "tools/lib/ehel-film-marks.js",
+      "tools/lib/film-scenes/math-g4/patterns-and-squares.js",
+      "tools/lib/film-scenes/math-g4/patterns-and-squares-2.js",
+      "tools/lib/film-scenes/math-g4/patterns-and-squares-3.js"
+    ]
+  },
+  "objectives": [
+    ["4Nc.02", "Recognise and explain generalisations when adding and subtracting combinations of even and odd numbers."],
+    ["4Nc.03", "Recognise the use of objects, shapes or symbols to represent unknown quantities in addition and subtraction calculations."],
+    ["4Nc.04", "Recognise and extend linear and non-linear sequences, and describe the term-to- term rule."],
+    ["4Nc.05", "Recognise and extend the spatial pattern of square numbers."]
+  ],
+  "scenes": [
+    { "id": "title", "kind": "title", "codes": [], "beats": [
+      { "say": "Some numbers pair off exactly. Others always leave one over.",
+        "art": { "at": { "pair": "pair off exactly", "over": "leave one over" } } },
+      { "say": "And some numbers make a perfect square of dots, like 16.",
+        "art": { "at": { "square": "a perfect square of dots", "sixteen": "16" } } }
+    ] },
+
+    { "id": "pairs", "kind": "pairs", "heading": "Pair them off", "codes": ["4Nc.02"], "beats": [
+      { "say": "Take some counters and pair them off, two by two.",
+        "art": { "at": { "counters": "some counters", "pair": "pair them off" } } },
+      { "say": "8 makes four whole pairs, and nothing is left over. So 8 is even.",
+        "art": { "at": { "eight": "8 makes four whole pairs", "none": "nothing is left over", "even": "8 is even" } } },
+      { "say": "Now try 7. It makes three pairs and one left over, so 7 is odd.",
+        "art": { "at": { "seven": "Now try 7", "three": "three pairs", "one": "one left over", "odd": "7 is odd" } } },
+      { "say": "That one left over is the whole story. Watch what it does next.",
+        "art": { "at": { "left": "That one left over", "watch": "Watch what it does next" } } }
+    ] },
+
+    { "id": "adding", "kind": "adding", "heading": "Adding and taking away", "codes": ["4Nc.02"], "beats": [
+      { "say": "Add 7 and 5. Both are odd, so each one has a leftover.",
+        "art": { "at": { "add": "Add 7 and 5", "odd": "Both are odd", "leftover": "a leftover" } } },
+      { "say": "Put them together. The two leftovers find each other and make a pair.",
+        "art": { "at": { "together": "Put them together", "pair": "make a pair" } } },
+      { "say": "So 7 add 5 is 12, and 12 is even. Two odd numbers make an even one.",
+        "art": { "at": { "twelve": "7 add 5 is 12", "even": "12 is even", "rule": "Two odd numbers make an even one" } } },
+      { "say": "Taking away follows the same rule. 9 take away 3 leaves 6.",
+        "art": { "at": { "same": "the same rule", "nine": "9 take away 3 leaves 6" } } },
+      { "say": "Both leftovers cancel, so 6 pairs up exactly. It is even too.",
+        "art": { "at": { "cancel": "Both leftovers cancel", "pairs": "6 pairs up exactly", "even": "It is even too" } } }
+    ] },
+
+    { "id": "hidden", "kind": "hidden", "heading": "The shape that hides a number", "codes": ["4Nc.03"], "beats": [
+      { "say": "A shape in a sum stands for a number nobody has told you yet.",
+        "art": { "at": { "shape": "A shape in a sum", "number": "a number nobody has told you yet" } } },
+      { "say": "15 add triangle is 22. The triangle has to fill the gap.",
+        "art": { "at": { "eq": "15 add triangle is 22", "gap": "fill the gap" } } },
+      { "say": "22 take away 15 is 7, so the triangle must be 7. It is not a guess.",
+        "art": { "at": { "work": "22 take away 15 is 7", "seven": "the triangle must be 7", "guess": "not a guess" } } },
+      { "say": "Sometimes the shape comes first, in a take-away: triangle take away 14 is 30.",
+        "art": { "at": { "first": "the shape comes first", "eq2": "triangle take away 14 is 30" } } },
+      { "say": "Put the two parts back together: 30 add 14 is 44. The triangle is 44.",
+        "art": { "at": { "together": "Put the two parts back together", "sum2": "30 add 14 is 44", "answer": "The triangle is 44" } } }
+    ] },
+
+    { "id": "steps", "kind": "steps", "heading": "Same step, or changing step?", "codes": ["4Nc.04"], "beats": [
+      { "say": "A sequence follows a rule from one term to the next one.",
+        "art": { "at": { "sequence": "A sequence", "next": "from one term to the next one" } } },
+      { "say": "Look at 5, 12, 19, 26. Take each term away from the one after it.",
+        "art": { "at": { "terms": "5, 12, 19, 26", "take": "Take each term away" } } },
+      { "say": "Every step is add 7, the same each time. That makes it linear, and the next term is 33.",
+        "art": { "at": { "seven": "add 7", "same": "the same each time", "linear": "linear", "next": "the next term is 33" } } },
+      { "say": "Now look at 2, 5, 9, 14. The steps are add 3, then add 4, then add 5.",
+        "art": { "at": { "two": "2, 5, 9, 14", "three": "add 3", "four": "add 4", "five": "add 5" } } },
+      { "say": "Those steps change every time, so it is non-linear. The rule is to add one more than before.",
+        "art": { "at": { "change": "Those steps change every time", "nonlinear": "non-linear", "rule": "add one more than before" } } }
+    ] },
+
+    { "id": "squares", "kind": "squares", "heading": "Numbers that make squares", "codes": ["4Nc.05"], "beats": [
+      { "say": "A square number is one you can lay out as a perfect square of dots.",
+        "art": { "at": { "square": "A square number", "perfect": "a perfect square of dots" } } },
+      { "say": "Here are 4 rows of 4 dots. Count them: that is 16 altogether.",
+        "art": { "at": { "rows": "4 rows of 4 dots", "count": "Count them", "sixteen": "16 altogether" } } },
+      { "say": "So 16 is a square number. We write it as 4 squared.",
+        "art": { "at": { "is": "16 is a square number", "write": "4 squared" } } },
+      { "say": "It means a number times itself: 4 times 4 is 16, not 8.",
+        "art": { "at": { "itself": "a number times itself", "four": "4 times 4 is 16", "eight": "not 8" } } },
+      { "say": "The first four square numbers are 1, 4, 9 and 16. Look at them grow.",
+        "art": { "at": { "first": "The first four square numbers", "list": "1, 4, 9 and 16", "grow": "Look at them grow" } } }
+    ] },
+
+    { "id": "lshape", "kind": "lshape", "heading": "Between one square and the next", "codes": ["4Nc.05"], "beats": [
+      { "say": "To grow a square by one, you add a whole L along two edges.",
+        "art": { "at": { "grow": "To grow a square", "ell": "a whole L along two edges" } } },
+      { "say": "A 6 by 6 square needs 6 new dots down the side and 6 along the bottom.",
+        "art": { "at": { "six": "A 6 by 6 square", "side": "6 new dots down the side", "bottom": "6 along the bottom" } } },
+      { "say": "And one more in the corner, where the two arms meet. That makes 13.",
+        "art": { "at": { "corner": "one more in the corner", "thirteen": "That makes 13" } } },
+      { "say": "6 times 6 is 36, and 7 times 7 is 49. The gap is 13, just as we counted.",
+        "art": { "at": { "small": "6 times 6 is 36", "big": "7 times 7 is 49", "gap": "The gap is 13" } } },
+      { "say": "Every L is the next odd number: 3, then 5, then 7, then 9.",
+        "art": { "at": { "every": "Every L", "odd": "3, then 5, then 7, then 9" } } }
+    ] },
+
+    { "id": "recap", "kind": "recap", "heading": "What you now know", "codes": ["4Nc.02", "4Nc.03", "4Nc.04", "4Nc.05"], "beats": [
+      { "say": "Even numbers pair off exactly. Odd numbers always leave one over.",
+        "art": { "at": { "even": "Even numbers pair off", "odd": "Odd numbers always leave one over" } } },
+      { "say": "Two odd numbers, added or taken away, give you an even one.",
+        "art": { "at": { "added": "added or taken away" } } },
+      { "say": "A shape hides a number, and a sequence follows a rule you can say.",
+        "art": { "at": { "shape": "A shape hides a number", "rule": "follows a rule" } } },
+      { "say": "And a square number really does make a square of dots. Go and build one.",
+        "art": { "at": { "square": "a square number", "build": "Go and build one" } } }
+    ] }
+  ]
+}

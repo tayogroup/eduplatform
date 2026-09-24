@@ -1,0 +1,122 @@
+{
+  "_comment": "Storyboard for the Grade 3 Mathematics unit lecture film, Lesson 2 Adding, Taking Away and Money. Rendered by tools/create-ehel-unit-lecture.js. See lecture-video/BRIEF.md. Every beat is one narration clip; art.at names the phrases a picture waits for, and the page refuses to load if a phrase is not in its beat's say. The chapters follow the lesson page's own steps in order - Make 100 and make 1000, Add in any order, Adding with regrouping (with its own Estimate first check), Taking away with regrouping, Money and the dot, Giving change - and every number is the lesson's: 62 and 38, 17 add 9 add 3, 247 add 185, 400 take away 178, sh 4.65 and sh 3.05, and sh 2.60 paid with sh 5.00. NOTE this lesson writes money as sh 2.60, shillings and cents with a dot, because 3Nm.01 is money notation with a decimal point; it is not the bare '10 sh' of the other Maths lessons.",
+  "slug": "adding-and-money",
+  "lesson": 2,
+  "grade": 3,
+  "stage": 3,
+  "title": "Adding, Taking Away and Money",
+  "subtitle": "Grade 3 Mathematics",
+  "framework": "Cambridge Primary Mathematics 0096",
+  "renderer": {
+    "art": ["math"],
+    "skin": "brown",
+    "scenes": [
+      "tools/lib/ehel-film-marks.js",
+      "tools/lib/film-scenes/math-g3/adding-and-money.js",
+      "tools/lib/film-scenes/math-g3/adding-and-money-2.js",
+      "tools/lib/film-scenes/math-g3/adding-and-money-3.js"
+    ]
+  },
+  "objectives": [
+    ["3Ni.02", "Understand the commutative and associative properties of addition, and use these to simplify calculations."],
+    ["3Ni.03", "Recognise complements of 100 and complements of multiples of 10 or 100 (up to 1000)."],
+    ["3Ni.04", "Estimate, add and subtract whole numbers with up to three digits (regrouping of ones or tens)."],
+    ["3Nm.01", "Interpret money notation for currencies that use a decimal point."],
+    ["3Nm.02", "Add and subtract amounts of money to give change."]
+  ],
+  "scenes": [
+    { "id": "title", "kind": "title", "codes": [], "beats": [
+      { "say": "Today you add big numbers, take them away, and pay for things.",
+        "art": { "at": { "add": "add big numbers", "take": "take them away", "pay": "pay for things" } } },
+      { "say": "You will make a hundred, carry a ten, and count out change.",
+        "art": { "at": { "hundred": "make a hundred", "carry": "carry a ten", "change": "count out change" } } }
+    ] },
+
+    { "id": "hundred", "kind": "hundred", "heading": "Make 100", "codes": ["3Ni.03"], "beats": [
+      { "say": "A complement is what you still need to reach a round number.",
+        "art": { "at": { "comp": "A complement", "round": "a round number" } } },
+      { "say": "You have 62. How many more make 100?",
+        "art": { "at": { "have": "You have 62", "more": "How many more" } } },
+      { "say": "Count on to the next ten first. 62 to 70 is 8.",
+        "art": { "at": { "next": "the next ten", "eight": "62 to 70 is 8" } } },
+      { "say": "Then 70 to 100 is 30. And 8 and 30 make 38.",
+        "art": { "at": { "thirty": "70 to 100 is 30", "sum": "8 and 30 make 38" } } },
+      { "say": "So 62 and 38 are complements. 62 add 38 is 100.",
+        "art": { "at": { "pair": "62 and 38 are complements", "total": "62 add 38 is 100" } } }
+    ] },
+
+    { "id": "anyorder", "kind": "anyorder", "heading": "Add in any order", "codes": ["3Ni.02"], "beats": [
+      { "say": "Adding can be done in any order you like. Look at 17 add 9 add 3.",
+        "art": { "at": { "order": "in any order", "sum": "17 add 9 add 3" } } },
+      { "say": "Start with 17 and 3. They make 20, which is a round number.",
+        "art": { "at": { "pick": "Start with 17 and 3", "twenty": "They make 20", "round": "a round number" } } },
+      { "say": "Now 20 add 9 is 29. Choosing the order made the sum easy.",
+        "art": { "at": { "nine": "20 add 9 is 29", "easy": "made the sum easy" } } },
+      { "say": "Taking away is not like this. 10 take away 3 is not 3 take away 10.",
+        "art": { "at": { "not": "not like this", "swap": "not 3 take away 10" } } }
+    ] },
+
+    { "id": "carry", "kind": "carry", "heading": "Adding with regrouping", "codes": ["3Ni.04"], "beats": [
+      { "say": "Add one column at a time, starting from the right.",
+        "art": { "at": { "one": "one column at a time", "right": "from the right" } } },
+      { "say": "247 add 185. The ones first: 7 and 5 make 12.",
+        "art": { "at": { "sum": "247 add 185", "ones": "7 and 5 make 12" } } },
+      { "say": "12 is too big for the ones. Write 2, and carry the ten.",
+        "art": { "at": { "big": "too big", "write": "Write 2", "carry": "carry the ten" } } },
+      { "say": "The tens: 4 and 8 and the carried 1 make 13. Write 3, carry again.",
+        "art": { "at": { "tens": "The tens", "thirteen": "make 13", "write": "Write 3", "again": "carry again" } } },
+      { "say": "The hundreds: 2 and 1 and 1 make 4. So the answer is 432.",
+        "art": { "at": { "huns": "The hundreds", "answer": "the answer is 432" } } },
+      { "say": "Check it roughly: 200 add 200 is about 400. 432 is close.",
+        "art": { "at": { "rough": "200 add 200", "close": "432 is close" } } }
+    ] },
+
+    { "id": "take", "kind": "take", "heading": "Taking away with regrouping", "codes": ["3Ni.04"], "beats": [
+      { "say": "Taking away goes down the same columns, from the right.",
+        "art": { "at": { "cols": "the same columns", "right": "from the right" } } },
+      { "say": "400 take away 178. In the ones, 0 is too small for 8.",
+        "art": { "at": { "sum": "400 take away 178", "small": "0 is too small for 8" } } },
+      { "say": "Never swap the digits round. Fetch a ten from the left.",
+        "art": { "at": { "never": "Never swap", "fetch": "Fetch a ten" } } },
+      { "say": "The hundreds lend one. 4 becomes 3, 0 becomes 9, and 0 becomes 10.",
+        "art": { "at": { "three": "4 becomes 3", "nine": "0 becomes 9", "ten": "and 0 becomes 10" } } },
+      { "say": "Now take away down the columns: 2, 2 and 2. That is 222.",
+        "art": { "at": { "down": "2, 2 and 2", "answer": "That is 222" } } }
+    ] },
+
+    { "id": "moneydot", "kind": "moneydot", "heading": "Money and the dot", "codes": ["3Nm.01"], "beats": [
+      { "say": "An amount of money has a dot in it. Look at four point six five.",
+        "art": { "at": { "dot": "a dot", "amount": "four point six five" } } },
+      { "say": "The four is whole shillings. The six and the five are cents.",
+        "art": { "at": { "shill": "whole shillings", "cents": "are cents" } } },
+      { "say": "There are 100 cents in a shilling, not ten. Read both figures.",
+        "art": { "at": { "hundred": "100 cents in a shilling", "both": "Read both figures" } } },
+      { "say": "So three point zero five is three shillings and five cents.",
+        "art": { "at": { "three": "three point zero five", "five": "five cents" } } },
+      { "say": "Not fifty cents. The zero is holding the ten cents column open.",
+        "art": { "at": { "no": "Not fifty cents", "zero": "The zero", "column": "ten cents column" } } }
+    ] },
+
+    { "id": "change", "kind": "change", "heading": "Giving change", "codes": ["3Nm.02"], "beats": [
+      { "say": "Change is the gap between the price and what you paid.",
+        "art": { "at": { "gap": "the gap", "price": "the price", "paid": "what you paid" } } },
+      { "say": "It costs two shillings and sixty cents. You pay five shillings.",
+        "art": { "at": { "cost": "two shillings and sixty cents", "pay": "You pay five shillings" } } },
+      { "say": "Count on. From two sixty up to three shillings is forty cents.",
+        "art": { "at": { "count": "Count on", "forty": "forty cents" } } },
+      { "say": "Then three shillings up to five is two more shillings.",
+        "art": { "at": { "two": "two more shillings" } } },
+      { "say": "So the change is two shillings and forty cents.",
+        "art": { "at": { "change": "two shillings and forty cents" } } }
+    ] },
+
+    { "id": "recap", "kind": "recap", "heading": "What you now know", "codes": ["3Ni.02", "3Ni.03", "3Ni.04", "3Nm.01", "3Nm.02"], "beats": [
+      { "say": "You can find a complement to 100, and add in any order.",
+        "art": { "at": { "comp": "a complement to 100", "order": "any order" } } },
+      { "say": "You carry when a column is too big, and exchange when it is too small.",
+        "art": { "at": { "carry": "carry", "exch": "exchange" } } },
+      { "say": "You read both figures after the dot, and count on to find change.",
+        "art": { "at": { "dot": "both figures", "change": "count on", "done": "find change" } } }
+    ] }
+  ]
+}

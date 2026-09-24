@@ -629,6 +629,9 @@
     align-items: center; gap: 10px; text-align: center; }
   .phase { color: var(--teal); font-weight: 800; font-size: 12.5px; letter-spacing: .1em;
     text-transform: uppercase; }
+  .lec.lec-film { max-width: 760px; }
+  .lec-film video { width: 100%; display: block; border-radius: 18px; background: #000;
+    aspect-ratio: 16 / 9; box-shadow: var(--shadow); }
   .lec-h { font-weight: 800; font-size: clamp(21px, 4vw, 26px); margin: 0; }
   .lec-p { margin: 0; font-size: 19px; line-height: 1.55; max-width: 34em; }
   .lec-note { margin: 4px 0 0; color: var(--muted); font-size: 13.5px; }
@@ -2778,7 +2781,21 @@
     });
   }
 
+  function lessonFilm(o) {
+    const v = o.video, stage = document.getElementById(o.stage);
+    stage.innerHTML = '<div class="lec lec-film">' +
+      '<video controls playsinline preload="none" poster="' + esc(v.poster) + '" src="' + esc(v.src) + '">' +
+      '<track kind="captions" srclang="en" label="English" src="' + esc(v.vtt) + '"></video>' +
+      '<p class="lec-note">' + esc(v.note) + '</p></div>';
+    const film = stage.querySelector('video'), slide = stage.closest('section.slide');
+    film.addEventListener('ended', () => finish(o.finish, o.done));
+    if (slide && window.MutationObserver) new MutationObserver(() => {
+      if (!slide.classList.contains('active') && !film.paused) film.pause();
+    }).observe(slide, { attributes: true, attributeFilter: ['class'] });
+  }
+  
   function lessonLecture(o) {
+    if (o.video) return lessonFilm(o);
     const parts = o.parts || [];
     let k = 0;
     const id = o.stage + 'l';
@@ -2877,7 +2894,7 @@
   }
 
   lessonAbout({ stage: 'stageOvw', about: ["Use an array of rows and columns to show a multiplication fact.", "Know that turning an array round gives the same total a different way.", "Split a multiplication into easier parts.", "Share an amount into equal groups and say what is left over.", "Find multiples of a number by counting up in equal steps.", "Find the rule in a growing pattern and use it to predict the next term."], finish: 0, done: "Let's begin." });
-  lessonLecture({ stage: 'stageLec', parts: [{ title: "Arrays", say: "An array arranges things in equal rows and columns, so a multiplication can be seen and counted rather than just recited - 3 rows of 4 is the same total as 4 rows of 3." }, { title: "Sharing and multiples", say: "Sharing an amount into equal groups can leave a remainder if it does not divide exactly. A multiple is a number you land on when counting up in equal steps from zero." }, { title: "Patterns and rules", say: "A growing pattern follows a rule from one term to the next - find the rule, and you can predict any term without drawing it out." }], finish: 1, done: "You have heard the whole lesson. Now do it yourself." });
+  lessonLecture({ stage: 'stageLec', parts: [{ title: "Arrays", say: "An array arranges things in equal rows and columns, so a multiplication can be seen and counted rather than just recited - 3 rows of 4 is the same total as 4 rows of 3." }, { title: "Sharing and multiples", say: "Sharing an amount into equal groups can leave a remainder if it does not divide exactly. A multiple is a number you land on when counting up in equal steps from zero." }, { title: "Patterns and rules", say: "A growing pattern follows a rule from one term to the next - find the rule, and you can predict any term without drawing it out." }], video: { src: "lecture-video/rows-and-rules.f9307cfa.mp4", poster: "lecture-video/rows-and-rules.79db959f.jpg", vtt: "lecture-video/rows-and-rules.92d66916.vtt", note: "The whole lesson in about 2 and a half minutes. When the film ends, this step is done." }, finish: 1, done: "You have heard the whole lesson. Now do it yourself." });
   lessonWords({ stage: 'stageMw', words: [{ w: "array", pic: "🔲", meaning: "Objects or numbers arranged in equal rows and columns, so you can count them by multiplying instead of one at a time.", uses: ["Draw an array to show 3 rows of 4."] }, { w: "multiple", pic: "🔟", meaning: "A number you land on when counting up in equal steps from zero, such as 5, 10, 15, 20 when counting in fives.", uses: ["List the first four multiples of 5."] }, { w: "remainder", pic: "🍪", meaning: "What is left over when an amount cannot be shared into equal groups exactly.", uses: ["Share 13 biscuits into groups of 4 and find the remainder."] }, { w: "sequence", pic: "➡️", meaning: "A list of numbers or shapes that follow a pattern, one after another.", uses: ["3, 6, 9, 12 is a sequence."] }, { w: "rule", pic: "📏", meaning: "The instruction that says how to get from one number in a sequence to the next.", uses: ["The rule for this sequence is add 3 each time."] }], finish: 2, done: "You know the math words of this lesson." });
   show(0, false);
   quiet -= 1;   /* the first draw is over: say() speaks from here on */

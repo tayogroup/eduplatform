@@ -3674,7 +3674,21 @@
     });
   }
 
+  function lessonFilm(o) {
+    const v = o.video, stage = document.getElementById(o.stage);
+    stage.innerHTML = '<div class="lec lec-film">' +
+      '<video controls playsinline preload="none" poster="' + esc(v.poster) + '" src="' + esc(v.src) + '">' +
+      '<track kind="captions" srclang="en" label="English" src="' + esc(v.vtt) + '"></video>' +
+      '<p class="lec-note">' + esc(v.note) + '</p></div>';
+    const film = stage.querySelector('video'), slide = stage.closest('section.slide');
+    film.addEventListener('ended', () => finish(o.finish, o.done));
+    if (slide && window.MutationObserver) new MutationObserver(() => {
+      if (!slide.classList.contains('active') && !film.paused) film.pause();
+    }).observe(slide, { attributes: true, attributeFilter: ['class'] });
+  }
+  
   function lessonLecture(o) {
+    if (o.video) return lessonFilm(o);
     const parts = o.parts || [];
     let k = 0;
     const id = o.stage + 'l';
@@ -3773,7 +3787,7 @@
   }
 
   lessonAbout({ stage: 'stageOvw', about: ["Count up to 20 things, touching each one once.", "Say how many you see without counting them.", "Count in twos and in tens.", "Say whether a number is odd or even.", "Read and write numbers up to 20.", "Put numbers in order and say which is more."], finish: 0, done: "Let's begin." });
-  lessonLecture({ stage: 'stageLec', parts: [{ title: "Counting carefully", say: "Touch each thing once as you count it, so you never count the same one twice or miss one out." }, { title: "Seeing without counting", say: "Some small groups you can just see, without counting one by one - three dots in a triangle is still three, at a glance." }, { title: "Odd and even", say: "Pair the things up. If every one has a partner, the number is even. If one is left over, it is odd." }], finish: 1, done: "You have heard the whole lesson. Now do it yourself." });
+  lessonLecture({ stage: 'stageLec', parts: [{ title: "Counting carefully", say: "Touch each thing once as you count it, so you never count the same one twice or miss one out." }, { title: "Seeing without counting", say: "Some small groups you can just see, without counting one by one - three dots in a triangle is still three, at a glance." }, { title: "Odd and even", say: "Pair the things up. If every one has a partner, the number is even. If one is left over, it is odd." }], video: { src: "lecture-video/counting-to-twenty.0b26623a.mp4", poster: "lecture-video/counting-to-twenty.d158b857.jpg", vtt: "lecture-video/counting-to-twenty.491a7d44.vtt", note: "The whole lesson in about 2 and a half minutes. When the film ends, this step is done." }, finish: 1, done: "You have heard the whole lesson. Now do it yourself." });
   lessonWords({ stage: 'stageMw', words: [{ w: "odd number", pic: "🔵", meaning: "A number that always has one left over when you pair it up.", uses: ["7 is an odd number - pair them up and one is left over."] }, { w: "even number", pic: "🔴", meaning: "A number that pairs up exactly, with nobody left out.", uses: ["8 is an even number - four pairs, nobody left out."] }, { w: "zero", pic: "0️⃣", meaning: "The number for none at all.", uses: ["Zero beans means there are none at all."] }, { w: "ordinal number", pic: "🥇", meaning: "A number that says where something is in a line, like first or second.", uses: ["The winner is first, an ordinal number."] }, { w: "estimate", pic: "🎲", meaning: "A sensible guess you make before you count.", uses: ["Estimate how many beans are in the jar before you count them."] }, { w: "number line", pic: "📏", meaning: "A line of numbers in order, so you can see which one is bigger.", uses: ["Find 12 and 15 on the number line and say which is bigger."] }], finish: 2, done: "You know the math words of this lesson." });
   show(0, false);
 
@@ -4693,6 +4707,9 @@
     align-items: center; gap: 10px; text-align: center; }
   .phase { color: var(--teal); font-weight: 800; font-size: 12.5px; letter-spacing: .1em;
     text-transform: uppercase; }
+  .lec.lec-film { max-width: 760px; }
+  .lec-film video { width: 100%; display: block; border-radius: 18px; background: #000;
+    aspect-ratio: 16 / 9; box-shadow: var(--shadow); }
   .lec-h { font-weight: 800; font-size: clamp(21px, 4vw, 26px); margin: 0; }
   .lec-p { margin: 0; font-size: 19px; line-height: 1.55; max-width: 34em; }
   .lec-note { margin: 4px 0 0; color: var(--muted); font-size: 13.5px; }

@@ -1,0 +1,121 @@
+{
+  "_comment": "Storyboard for the Grade 4 Mathematics unit lecture film, Lesson 5 Telling the Time. Rendered by tools/create-ehel-unit-lecture.js. See lecture-video/BRIEF.md. Every beat is one narration clip; art.at names the phrases a picture waits for, and the page refuses to load if a phrase is not in its beat's say. The chapters follow the lesson page's own teaching order - units of time swapped both ways, reading the face, writing a 12-hour time in 24-hour, the bus timetable, the interval counted on in hops, and days over the end of a month - and every number is the lesson's own: 4 hours is 240 minutes, the face reads 4:40, 15:45 is 3:45 in the afternoon, Hodan's Bus B reaches School at 08:55, 10:40 to 12:15 is 1 hour 35 minutes, and 28 April plus 9 days is 7 May.",
+  "slug": "telling-the-time",
+  "lesson": 5,
+  "grade": 4,
+  "stage": 4,
+  "title": "Telling the Time",
+  "subtitle": "Grade 4 Mathematics",
+  "framework": "Cambridge Primary Mathematics 0096",
+  "renderer": {
+    "art": ["math"],
+    "skin": "brown",
+    "scenes": [
+      "tools/lib/ehel-film-marks.js",
+      "tools/lib/film-scenes/math-g4/telling-the-time.js",
+      "tools/lib/film-scenes/math-g4/telling-the-time-2.js",
+      "tools/lib/film-scenes/math-g4/telling-the-time-3.js"
+    ]
+  },
+  "objectives": [
+    ["4Gt.01", "Understand the direct relationship between units of time, and convert between them."],
+    ["4Gt.02", "Read and record time accurately in digital notation (12- and 24-hour) and on analogue clocks."],
+    ["4Gt.03", "Interpret and use the information in timetables (12- and 24-hour clock)."],
+    ["4Gt.04", "Find time intervals between different units: days, weeks, months and years seconds, minutes and hours that do not bridge through 60."]
+  ],
+  "scenes": [
+    { "id": "title", "kind": "title", "codes": [], "beats": [
+      { "say": "A clock has two hands, and each one tells you something different.",
+        "art": { "at": { "two": "two hands", "different": "something different" } } },
+      { "say": "Read them properly and you can catch a bus, or time a programme.",
+        "art": { "at": { "bus": "catch a bus", "programme": "time a programme" } } }
+    ] },
+
+    { "id": "units", "kind": "units", "heading": "Units of time", "codes": ["4Gt.01"], "beats": [
+      { "say": "Time does not count in tens. It counts in sixties.",
+        "art": { "at": { "tens": "in tens", "sixties": "in sixties" } } },
+      { "say": "Sixty seconds make one minute, and sixty minutes make one hour.",
+        "art": { "at": { "minute": "one minute", "hour": "one hour" } } },
+      { "say": "Twenty-four hours make one whole day, from midnight to midnight.",
+        "art": { "at": { "day": "one whole day", "midnight": "midnight to midnight" } } },
+      { "say": "Four hours is four lots of sixty minutes, which is 240 minutes.",
+        "art": { "at": { "lots": "four lots of sixty", "total": "which is 240 minutes" } } },
+      { "say": "To go back the other way, you divide. 240 divided by 60 is 4 hours.",
+        "art": { "at": { "back": "go back the other way", "divide": "you divide", "four": "is 4 hours" } } }
+    ] },
+
+    { "id": "face", "kind": "face", "heading": "Reading the clock face", "codes": ["4Gt.02"], "beats": [
+      { "say": "Here is a clock. The short hand and the long hand do different jobs.",
+        "art": { "at": { "clock": "a clock", "short": "The short hand", "long": "the long hand" } } },
+      { "say": "The short hand gives the hour. It is sitting between 4 and 5.",
+        "art": { "at": { "hour": "gives the hour", "between": "between 4 and 5" } } },
+      { "say": "Take the hour it has passed. So the hour is 4, not 5.",
+        "art": { "at": { "passed": "it has passed", "four": "the hour is 4", "five": "not 5" } } },
+      { "say": "The long hand gives the minutes. Every number on the face is five minutes.",
+        "art": { "at": { "minutes": "gives the minutes", "five": "is five minutes" } } },
+      { "say": "It points at the 8, and eight fives are 40. The time is 4:40.",
+        "art": { "at": { "eight": "at the 8", "forty": "eight fives are 40", "time": "The time is 4:40" } } }
+    ] },
+
+    { "id": "twentyfour", "kind": "twentyfour", "heading": "Writing it in 24-hour", "codes": ["4Gt.02"], "beats": [
+      { "say": "A timetable never says a.m. or p.m. It uses 24-hour time instead.",
+        "art": { "at": { "ampm": "a.m. or p.m.", "tf": "24-hour time" } } },
+      { "say": "Morning hours stay as they are. Quarter past nine is written 09:15.",
+        "art": { "at": { "morning": "Morning hours stay", "nine": "written 09:15" } } },
+      { "say": "After midday, add 12 to the hour. Half past three becomes 15:30.",
+        "art": { "at": { "midday": "After midday", "add": "add 12", "half": "becomes 15:30" } } },
+      { "say": "So 15:45 is 3:45 in the afternoon. Take the 12 off again.",
+        "art": { "at": { "before": "So 15:45", "after": "3:45 in the afternoon", "off": "Take the 12 off" } } },
+      { "say": "Midday is written 12:00. Midnight is written with four zeros.",
+        "art": { "at": { "noon": "Midday is written 12:00", "night": "four zeros" } } }
+    ] },
+
+    { "id": "timetable", "kind": "timetable", "heading": "Reading a timetable", "codes": ["4Gt.03"], "beats": [
+      { "say": "This is a real bus timetable, and every time on it is 24-hour.",
+        "art": { "at": { "table": "a real bus timetable", "tf": "is 24-hour" } } },
+      { "say": "Read down a column to follow one bus all the way to school.",
+        "art": { "at": { "down": "Read down a column", "school": "to school" } } },
+      { "say": "Read across a row to see when every bus reaches that one stop.",
+        "art": { "at": { "across": "Read across a row", "stop": "that one stop" } } },
+      { "say": "Hodan must be at school by nine o'clock. Which is the latest bus?",
+        "art": { "at": { "hodan": "Hodan must be at school", "nine": "by nine o'clock", "which": "the latest bus" } } },
+      { "say": "Bus C does not arrive until 10:40, far too late. Bus B gets there at 08:55.",
+        "art": { "at": { "cbus": "Bus C", "late": "far too late", "bbus": "Bus B gets there at 08:55" } } }
+    ] },
+
+    { "id": "duration", "kind": "duration", "heading": "How long did it last?", "codes": ["4Gt.04"], "beats": [
+      { "say": "How long did something last? Count on from the start to the end.",
+        "art": { "at": { "long": "How long", "count": "Count on", "start": "the start", "end": "the end" } } },
+      { "say": "The programme starts at 10:40 and ends at 12:15.",
+        "art": { "at": { "starts": "starts at 10:40", "ends": "ends at 12:15" } } },
+      { "say": "Count on 20 minutes to 11:00, then one whole hour to 12:00.",
+        "art": { "at": { "twenty": "20 minutes to 11:00", "hour": "one whole hour to 12:00" } } },
+      { "say": "Then 15 minutes more. That is 1 hour and 35 minutes altogether.",
+        "art": { "at": { "fifteen": "Then 15 minutes more", "total": "1 hour and 35 minutes" } } },
+      { "say": "Never take the times away like ordinary numbers. An hour is 60 minutes.",
+        "art": { "at": { "never": "Never take the times away", "sixty": "An hour is 60 minutes" } } }
+    ] },
+
+    { "id": "month", "kind": "month", "heading": "Over the end of the month", "codes": ["4Gt.04"], "beats": [
+      { "say": "Days work the same way. It is 28 April, and you add 9 days.",
+        "art": { "at": { "same": "Days work the same way", "date": "28 April", "add": "add 9 days" } } },
+      { "say": "April has 30 days. There is no 37 April.",
+        "art": { "at": { "thirty": "April has 30 days", "none": "no 37 April" } } },
+      { "say": "Two days take you to the 30th, the last day of April.",
+        "art": { "at": { "two": "Two days", "last": "the last day of April" } } },
+      { "say": "Seven days are left over, so they go into May. It is 7 May.",
+        "art": { "at": { "seven": "Seven days are left over", "into": "go into May", "answer": "It is 7 May" } } }
+    ] },
+
+    { "id": "recap", "kind": "recap", "heading": "What you now know", "codes": ["4Gt.01", "4Gt.02", "4Gt.03", "4Gt.04"], "beats": [
+      { "say": "Time counts in sixties: 60 seconds, 60 minutes, and 24 hours in a day.",
+        "art": { "at": { "sixties": "Time counts in sixties" } } },
+      { "say": "The short hand gives the hour, and each number is five minutes.",
+        "art": { "at": { "hand": "The short hand" } } },
+      { "say": "After midday add 12, and a timetable reads down and across.",
+        "art": { "at": { "add": "After midday add 12", "table": "a timetable" } } },
+      { "say": "To find how long, count on in hops, and days carry into the next month.",
+        "art": { "at": { "count": "count on in hops", "days": "days carry" } } }
+    ] }
+  ]
+}

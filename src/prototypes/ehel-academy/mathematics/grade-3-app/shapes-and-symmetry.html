@@ -629,6 +629,9 @@
     align-items: center; gap: 10px; text-align: center; }
   .phase { color: var(--teal); font-weight: 800; font-size: 12.5px; letter-spacing: .1em;
     text-transform: uppercase; }
+  .lec.lec-film { max-width: 760px; }
+  .lec-film video { width: 100%; display: block; border-radius: 18px; background: #000;
+    aspect-ratio: 16 / 9; box-shadow: var(--shadow); }
   .lec-h { font-weight: 800; font-size: clamp(21px, 4vw, 26px); margin: 0; }
   .lec-p { margin: 0; font-size: 19px; line-height: 1.55; max-width: 34em; }
   .lec-note { margin: 4px 0 0; color: var(--muted); font-size: 13.5px; }
@@ -2744,7 +2747,21 @@
     });
   }
 
+  function lessonFilm(o) {
+    const v = o.video, stage = document.getElementById(o.stage);
+    stage.innerHTML = '<div class="lec lec-film">' +
+      '<video controls playsinline preload="none" poster="' + esc(v.poster) + '" src="' + esc(v.src) + '">' +
+      '<track kind="captions" srclang="en" label="English" src="' + esc(v.vtt) + '"></video>' +
+      '<p class="lec-note">' + esc(v.note) + '</p></div>';
+    const film = stage.querySelector('video'), slide = stage.closest('section.slide');
+    film.addEventListener('ended', () => finish(o.finish, o.done));
+    if (slide && window.MutationObserver) new MutationObserver(() => {
+      if (!slide.classList.contains('active') && !film.paused) film.pause();
+    }).observe(slide, { attributes: true, attributeFilter: ['class'] });
+  }
+  
   function lessonLecture(o) {
+    if (o.video) return lessonFilm(o);
     const parts = o.parts || [];
     let k = 0;
     const id = o.stage + 'l';
@@ -2843,7 +2860,7 @@
   }
 
   lessonAbout({ stage: 'stageOvw', about: ["Name flat shapes, including quadrilaterals.", "Say whether a shape is regular or irregular.", "Find a line of symmetry on a shape.", "Reflect a shape over a mirror line.", "Measure the perimeter of a shape.", "Work out the area of a shape."], finish: 0, done: "Let's begin." });
-  lessonLecture({ stage: 'stageLec', parts: [{ title: "Regular and irregular shapes", say: "A quadrilateral is any flat shape with exactly four straight sides. A shape is regular when every side and every corner is the same - otherwise it is irregular." }, { title: "Symmetry and reflection", say: "A shape has a line of symmetry if folding it along that line makes both halves land exactly on top of each other. A reflection flips a shape over a mirror line the same way." }, { title: "Perimeter and area", say: "Perimeter is the whole distance all the way round the outside edge of a shape. Area is how much flat space is covered inside it." }], finish: 1, done: "You have heard the whole lesson. Now do it yourself." });
+  lessonLecture({ stage: 'stageLec', parts: [{ title: "Regular and irregular shapes", say: "A quadrilateral is any flat shape with exactly four straight sides. A shape is regular when every side and every corner is the same - otherwise it is irregular." }, { title: "Symmetry and reflection", say: "A shape has a line of symmetry if folding it along that line makes both halves land exactly on top of each other. A reflection flips a shape over a mirror line the same way." }, { title: "Perimeter and area", say: "Perimeter is the whole distance all the way round the outside edge of a shape. Area is how much flat space is covered inside it." }], video: { src: "lecture-video/shapes-and-symmetry.0d98fd10.mp4", poster: "lecture-video/shapes-and-symmetry.89f75889.jpg", vtt: "lecture-video/shapes-and-symmetry.f6583d21.vtt", note: "The whole lesson in about 2 and a half minutes. When the film ends, this step is done." }, finish: 1, done: "You have heard the whole lesson. Now do it yourself." });
   lessonWords({ stage: 'stageMw', words: [{ w: "quadrilateral", pic: "🔷", meaning: "Any flat shape with exactly four straight sides, such as a square, rectangle or trapezium.", uses: ["Name a quadrilateral you can see in the room."] }, { w: "regular", pic: "⬡", meaning: "A shape where every side is the same length and every corner is the same - an irregular shape is not.", uses: ["Say whether this hexagon is regular."] }, { w: "symmetry", pic: "🦋", meaning: "A shape has a line of symmetry when it can be folded along that line so the two halves land exactly on top of each other.", uses: ["Fold the shape to check for symmetry."] }, { w: "reflection", pic: "↔️", meaning: "A flip of a shape over a mirror line, so every point ends up the same distance from the line, on the other side.", uses: ["Draw the reflection of the triangle."] }, { w: "perimeter", pic: "🚧", meaning: "The whole distance all the way round the outside edge of a shape.", uses: ["Measure the perimeter of the book."] }, { w: "area", pic: "🔲", meaning: "How much flat space is covered inside a shape's edge, measured in square units.", uses: ["Work out the area of the rectangle."] }], finish: 2, done: "You know the math words of this lesson." });
   show(0, false);
   quiet -= 1;   /* the first draw is over: say() speaks from here on */

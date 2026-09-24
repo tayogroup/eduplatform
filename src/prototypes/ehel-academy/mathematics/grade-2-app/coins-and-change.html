@@ -2661,7 +2661,21 @@
     });
   }
 
+  function lessonFilm(o) {
+    const v = o.video, stage = document.getElementById(o.stage);
+    stage.innerHTML = '<div class="lec lec-film">' +
+      '<video controls playsinline preload="none" poster="' + esc(v.poster) + '" src="' + esc(v.src) + '">' +
+      '<track kind="captions" srclang="en" label="English" src="' + esc(v.vtt) + '"></video>' +
+      '<p class="lec-note">' + esc(v.note) + '</p></div>';
+    const film = stage.querySelector('video'), slide = stage.closest('section.slide');
+    film.addEventListener('ended', () => finish(o.finish, o.done));
+    if (slide && window.MutationObserver) new MutationObserver(() => {
+      if (!slide.classList.contains('active') && !film.paused) film.pause();
+    }).observe(slide, { attributes: true, attributeFilter: ['class'] });
+  }
+  
   function lessonLecture(o) {
+    if (o.video) return lessonFilm(o);
     const parts = o.parts || [];
     let k = 0;
     const id = o.stage + 'l';
@@ -2760,7 +2774,7 @@
   }
 
   lessonAbout({ stage: 'stageOvw', about: ["Sort coins and make sets of different values.", "Count what is in a purse and say what it is worth.", "Combine coins to make different values.", "Pay an amount using the fewest pieces.", "Work out how much more is needed.", "Compare values and put coins in order of value."], finish: 0, done: "Let's begin." });
-  lessonLecture({ stage: 'stageLec', parts: [{ title: "Coins and notes", say: "Coins and notes are worth different amounts - counting money means starting with the biggest value and counting on from there." }, { title: "Making an amount", say: "The same amount of money can be made with different coins - the fewest pieces is usually the biggest coins first, then the smaller ones to finish exactly." }, { title: "How much more", say: "To find how much more is needed, work out the gap between what you have and what you need." }], finish: 1, done: "You have heard the whole lesson. Now do it yourself." });
+  lessonLecture({ stage: 'stageLec', parts: [{ title: "Coins and notes", say: "Coins and notes are worth different amounts - counting money means starting with the biggest value and counting on from there." }, { title: "Making an amount", say: "The same amount of money can be made with different coins - the fewest pieces is usually the biggest coins first, then the smaller ones to finish exactly." }, { title: "How much more", say: "To find how much more is needed, work out the gap between what you have and what you need." }], video: { src: "lecture-video/coins-and-change.4cd44541.mp4", poster: "lecture-video/coins-and-change.4bd6c0c4.jpg", vtt: "lecture-video/coins-and-change.691e4525.vtt", note: "The whole lesson in about 2 and a half minutes. When the film ends, this step is done." }, finish: 1, done: "You have heard the whole lesson. Now do it yourself." });
   lessonWords({ stage: 'stageMw', words: [{ w: "coin", pic: "💰", meaning: "A round piece of money, like a 5 or 10 shilling coin.", uses: ["Sort the coins by value."] }, { w: "note", pic: "💵", meaning: "A flat piece of paper money, worth more than most coins.", uses: ["A note is worth more than most coins."] }, { w: "value", pic: "🏷️", meaning: "How much something is worth in money.", uses: ["Compare the value of two coins."] }, { w: "total", pic: "🔢", meaning: "The whole amount when you add prices or coins together.", uses: ["Add the coins to find the total."] }, { w: "shilling", pic: "👛", meaning: "The unit of money used in this lesson, written KSh or sh.", uses: ["Count how many shillings are in the purse."] }, { w: "saving", pic: "🏦", meaning: "Keeping money instead of spending it, so the amount goes up.", uses: ["Saving a little each week adds up."] }], finish: 2, done: "You know the math words of this lesson." });
   show(0, false);
   quiet -= 1;   /* the first draw is over: say() speaks from here on */
@@ -3555,6 +3569,9 @@
     align-items: center; gap: 10px; text-align: center; }
   .phase { color: var(--teal); font-weight: 800; font-size: 12.5px; letter-spacing: .1em;
     text-transform: uppercase; }
+  .lec.lec-film { max-width: 760px; }
+  .lec-film video { width: 100%; display: block; border-radius: 18px; background: #000;
+    aspect-ratio: 16 / 9; box-shadow: var(--shadow); }
   .lec-h { font-weight: 800; font-size: clamp(21px, 4vw, 26px); margin: 0; }
   .lec-p { margin: 0; font-size: 19px; line-height: 1.55; max-width: 34em; }
   .lec-note { margin: 4px 0 0; color: var(--muted); font-size: 13.5px; }

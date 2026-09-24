@@ -39,6 +39,18 @@ if (!lessons.length || lessons.some((l) => !l.app || !l.brief || !l.scenesDir)) 
   throw new Error('args need app, brief, scenesDir (at the top or per lesson) and lessons [{n, slug, title}]')
 }
 const mode = ['draft', 'review', 'revise'].includes(A.mode) ? A.mode : 'draft'
+
+/* WHERE A LESSON LIVES IS NOT THE SAME IN EVERY SUBJECT. Science keeps each
+   lesson in content/lesson-N.py; Mathematics has no content directory at all -
+   a lesson IS its HTML page, and what the Unit lecture teaches is a WORK entry
+   in that grade's add-lesson-opener.py. This was hardcoded to the Science shape
+   and sent all 31 Mathematics agents to a file that does not exist (found by
+   the what-comes-next agent, 2026-09-24, which recovered by reading the brief).
+   `lessonPath` overrides it per run; otherwise the subject decides. */
+const lessonOf = (l) =>
+  A.lessonPath ? String(A.lessonPath).replace('{n}', l.n).replace('{slug}', l.slug).replace('{app}', l.app)
+  : /mathematics/.test(l.app) ? `${l.app}/${l.slug}.html, and its WORK entry (keyed "${l.slug}") in that grade's add-lesson-opener.py - there is no content/lesson-N.py in Mathematics`
+  : `${l.app}/content/lesson-${l.n}.py`
 /* A stage may name its own model; without one an agent inherits the session's.
    Reviewing is checklist work under a hard evidence rule, and every note it
    makes is vetted twice afterwards (by the lead and by the reviser, who is
@@ -135,7 +147,7 @@ with its evidence, so the lead can decide what to fix.
 The film's files:
   ${board}
   ${l.scenesDir}/${l.slug}*.js
-Its lesson: ${l.app}/content/lesson-${l.n}.py
+Its lesson: ${lessonOf(l)}
 
 Never: a write or an edit to any file, --narrate, any render (not even
 --draft), --calibrate, the runner tools/run-ehel-lecture-films.js, or git. The
@@ -177,7 +189,7 @@ verdict "good" and no notes: say so rather than find something to say.`
 ${common}
 
 1. Read the brief, all of it.
-2. Read your lesson, ${l.app}/content/lesson-${l.n}.py, all of it. Its
+2. Read your lesson, ${lessonOf(l)}, all of it. Its
    docstring names its objectives; LESSON["lecture"] is what the film teaches;
    its steps, words and experiments are where the pictures come from.
 3. Read tools/lib/ehel-film-engine-head.js, tools/lib/ehel-film-marks.js and

@@ -2565,7 +2565,21 @@
     });
   }
 
+  function lessonFilm(o) {
+    const v = o.video, stage = document.getElementById(o.stage);
+    stage.innerHTML = '<div class="lec lec-film">' +
+      '<video controls playsinline preload="none" poster="' + esc(v.poster) + '" src="' + esc(v.src) + '">' +
+      '<track kind="captions" srclang="en" label="English" src="' + esc(v.vtt) + '"></video>' +
+      '<p class="lec-note">' + esc(v.note) + '</p></div>';
+    const film = stage.querySelector('video'), slide = stage.closest('section.slide');
+    film.addEventListener('ended', () => finish(o.finish, o.done));
+    if (slide && window.MutationObserver) new MutationObserver(() => {
+      if (!slide.classList.contains('active') && !film.paused) film.pause();
+    }).observe(slide, { attributes: true, attributeFilter: ['class'] });
+  }
+  
   function lessonLecture(o) {
+    if (o.video) return lessonFilm(o);
     const parts = o.parts || [];
     let k = 0;
     const id = o.stage + 'l';
@@ -2664,7 +2678,7 @@
   }
 
   lessonAbout({ stage: 'stageOvw', about: ["Find the part of a pattern that repeats.", "Say what comes next in a pattern.", "Mend a pattern that has a mistake in it.", "Count on in steps of 2, 5 and 10.", "Say how much a pattern goes up by each time.", "Count back in steps from any number up to 100."], finish: 0, done: "Let's begin." });
-  lessonLecture({ stage: 'stageLec', parts: [{ title: "Repeating patterns", say: "Find the smallest part of a pattern that repeats, and you can say what comes next, however long the pattern runs on." }, { title: "Growing patterns", say: "A growing pattern goes up by the same amount every time - spot that amount, and you can predict every term without drawing it out." }, { title: "Counting on and back in steps", say: "Counting on in steps of 2, 5 or 10 gets you to a big number fast - and counting back in the same steps gets you back again." }], finish: 1, done: "You have heard the whole lesson. Now do it yourself." });
+  lessonLecture({ stage: 'stageLec', parts: [{ title: "Repeating patterns", say: "Find the smallest part of a pattern that repeats, and you can say what comes next, however long the pattern runs on." }, { title: "Growing patterns", say: "A growing pattern goes up by the same amount every time - spot that amount, and you can predict every term without drawing it out." }, { title: "Counting on and back in steps", say: "Counting on in steps of 2, 5 or 10 gets you to a big number fast - and counting back in the same steps gets you back again." }], video: { src: "lecture-video/patterns-that-grow.515d20a9.mp4", poster: "lecture-video/patterns-that-grow.a3390ea3.jpg", vtt: "lecture-video/patterns-that-grow.c02faac2.vtt", note: "The whole lesson in about 2 and a half minutes. When the film ends, this step is done." }, finish: 1, done: "You have heard the whole lesson. Now do it yourself." });
   lessonWords({ stage: 'stageMw', words: [{ w: "pattern", pic: "📿", meaning: "Shapes or numbers arranged in a way that follows a rule.", uses: ["Spot the pattern: red, blue, red, blue."] }, { w: "repeat", pic: "🔁", meaning: "The part of a pattern that happens again and again.", uses: ["The part that repeats is red, blue."] }, { w: "sequence", pic: "➡️", meaning: "A list of numbers that follow one after another, in order.", uses: ["5, 10, 15, 20 is a sequence."] }, { w: "rule", pic: "📏", meaning: "The idea that tells you how a pattern changes each time.", uses: ["The rule for this sequence is add 5 each time."] }, { w: "step", pic: "👣", meaning: "How much a sequence of numbers goes up or down by each time.", uses: ["Count on in steps of 5."] }], finish: 2, done: "You know the math words of this lesson." });
   show(0, false);
   quiet -= 1;   /* the first draw is over: say() speaks from here on */
@@ -3459,6 +3473,9 @@
     align-items: center; gap: 10px; text-align: center; }
   .phase { color: var(--teal); font-weight: 800; font-size: 12.5px; letter-spacing: .1em;
     text-transform: uppercase; }
+  .lec.lec-film { max-width: 760px; }
+  .lec-film video { width: 100%; display: block; border-radius: 18px; background: #000;
+    aspect-ratio: 16 / 9; box-shadow: var(--shadow); }
   .lec-h { font-weight: 800; font-size: clamp(21px, 4vw, 26px); margin: 0; }
   .lec-p { margin: 0; font-size: 19px; line-height: 1.55; max-width: 34em; }
   .lec-note { margin: 4px 0 0; color: var(--muted); font-size: 13.5px; }

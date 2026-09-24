@@ -1,0 +1,123 @@
+{
+  "_comment": "Storyboard for the Grade 4 Mathematics unit lecture film, Asking, Sorting and Chance. Rendered by tools/create-ehel-unit-lecture.js. See lecture-video/BRIEF.md. Every number is the lesson page's own: the survey is its A4 (Walk 9, Bus 6, Car 4, Bike 3) and B4 (5, 11, 4, 2), both 22; the Venn numbers 12, 8, 15 and 7 are the four it names in its own explainer; the spinner is its four equal parts spun 10 and 1000 times.",
+  "slug": "asking-sorting-chance",
+  "lesson": 8,
+  "grade": 4,
+  "stage": 4,
+  "title": "Asking, Sorting and Chance",
+  "subtitle": "Grade 4 Mathematics",
+  "framework": "Cambridge Primary Mathematics 0096",
+  "renderer": {
+    "art": ["math"],
+    "skin": "brown",
+    "scenes": [
+      "tools/lib/ehel-film-marks.js",
+      "tools/lib/film-scenes/math-g4/asking-sorting-chance.js",
+      "tools/lib/film-scenes/math-g4/asking-sorting-chance-2.js",
+      "tools/lib/film-scenes/math-g4/asking-sorting-chance-3.js"
+    ]
+  },
+  "objectives": [
+    ["4Ss.01", "Plan and conduct an investigation to answer statistical questions, considering what data to collect (categorical and discrete data)."],
+    ["4Ss.02", "Record, organise and represent categorical and discrete data. Choose and explain which representation to use in a given situation: Venn and Carroll diagrams tally charts and frequency tables pictograms and bar charts dot plots (one dot per count)."],
+    ["4Ss.03", "Interpret data, identifying similarities and variations, within and between data sets, to answer statistical questions. Discuss conclusions, considering the sources of variation."],
+    ["4Sp.01", "Use language associated with chance to describe familiar events, including reference to maybe, likely, certain, impossible."],
+    ["4Sp.02", "Conduct chance experiments, using small and large numbers of trials, and present and describe the results using the language of probability."]
+  ],
+  "scenes": [
+    {
+      "id": "title",
+      "kind": "title",
+      "codes": [],
+      "beats": [
+        {"say": "How does your class get to school? Ask them all, and you have data.", "art": {"at": {"askthem": "Ask them", "data": "you have data"}}},
+        {"say": "Today you will record it, draw it, sort it, and say how likely it is.", "art": {"at": {"record": "record it", "drawit": "draw it", "sortit": "sort it", "likely": "how likely it is"}}}
+      ]
+    },
+    {
+      "id": "plan",
+      "kind": "plan",
+      "heading": "Ask, then tally",
+      "codes": ["4Ss.01", "4Ss.02"],
+      "beats": [
+        {"say": "First decide what would answer it. Some answers are names, some are numbers.", "art": {"at": {"decide": "what would answer it", "names": "names", "numbers": "numbers"}}},
+        {"say": "Walk, bus, car or bike are groups you can name. Categorical data.", "art": {"at": {"groups": "groups you can name", "categorical": "Categorical data"}}},
+        {"say": "How many brothers and sisters? Those are numbers you count. Discrete data.", "art": {"at": {"howmany": "How many brothers and sisters", "counted": "numbers you count", "discrete": "Discrete data"}}},
+        {"say": "Twenty-two children answer, one stroke each. Every fifth stroke crosses four, like a gate.", "art": {"at": {"children": "Twenty-two children answer", "stroke": "one stroke each", "fifth": "Every fifth stroke", "gate": "like a gate"}}},
+        {"say": "Now count in fives. Nine walk, six by bus, four by car, three by bike. Twenty-two.", "art": {"at": {"fives": "count in fives", "walk": "Nine walk", "bus": "six by bus", "car": "four by car", "bike": "three by bike", "alltotal": "Twenty-two."}}}
+      ]
+    },
+    {
+      "id": "pictures",
+      "kind": "pictures",
+      "heading": "One set, three pictures",
+      "codes": ["4Ss.02"],
+      "beats": [
+        {"say": "The same twenty-two answers, drawn three ways. Each is good at a different job.", "art": {"at": {"sameanswers": "The same twenty-two answers", "threeways": "three ways", "different": "a different job"}}},
+        {"say": "A bar chart gives each group a bar against a scale. Walking is tallest, at nine.", "art": {"at": {"abar": "each group a bar", "scale": "against a scale", "tallest": "Walking is tallest"}}},
+        {"say": "A pictogram uses a key. One circle stands for two children, so nine is four and a half.", "art": {"at": {"akey": "uses a key", "twoeach": "two children", "andahalf": "four and a half"}}},
+        {"say": "A dot plot puts one dot for each child, so you can count them one by one.", "art": {"at": {"onedot": "one dot for each child", "onebyone": "count them one by one"}}}
+      ]
+    },
+    {
+      "id": "sorting",
+      "kind": "sorting",
+      "heading": "Sorting two ways at once",
+      "codes": ["4Ss.02"],
+      "beats": [
+        {"say": "A Venn diagram asks two questions at once. Is it even? Is it more than ten?", "art": {"at": {"venn": "A Venn diagram", "twoquestions": "two questions at once", "iseven": "Is it even", "morethan": "more than ten"}}},
+        {"say": "Twelve is even and more than ten. Both answers are yes, so it goes in the overlap.", "art": {"at": {"twelve": "Twelve is even", "bothyes": "Both answers are yes", "overlap": "in the overlap"}}},
+        {"say": "Eight is even, but not more than ten. Fifteen is more than ten, but not even.", "art": {"at": {"eight": "Eight is even", "fifteen": "Fifteen is more than ten"}}},
+        {"say": "Seven is neither, so it sits outside both hoops. A Carroll diagram gives it its own box.", "art": {"at": {"seven": "Seven is neither", "outside": "outside both hoops", "carroll": "A Carroll diagram", "ownbox": "its own box"}}}
+      ]
+    },
+    {
+      "id": "compare",
+      "kind": "compare",
+      "heading": "Two classes, one question",
+      "codes": ["4Ss.03"],
+      "beats": [
+        {"say": "Class 4A and class 4B answered the same question. Both have twenty-two children.", "art": {"at": {"classa": "Class 4A", "classb": "class 4B", "bothhave": "Both have twenty-two children"}}},
+        {"say": "In 4A walking wins, with nine. In 4B the bus wins, with eleven.", "art": {"at": {"awalk": "walking wins, with nine", "bbus": "the bus wins, with eleven"}}},
+        {"say": "Four children come by car in each class. That is the same in both.", "art": {"at": {"bycar": "Four children come by car", "samein": "the same in both"}}},
+        {"say": "The same total does not mean the same answers. Look at every group.", "art": {"at": {"notsame": "does not mean the same answers", "everygroup": "Look at every group"}}}
+      ]
+    },
+    {
+      "id": "chance",
+      "kind": "chance",
+      "heading": "Impossible to certain",
+      "codes": ["4Sp.01"],
+      "beats": [
+        {"say": "Some things cannot happen. Some are sure to. Most sit in between.", "art": {"at": {"cannot": "cannot happen", "suretodo": "sure to", "between": "in between"}}},
+        {"say": "A dice has no seven, so rolling one is impossible.", "art": {"at": {"noseven": "no seven", "impossible": "is impossible"}}},
+        {"say": "But every face is less than seven, so that is certain.", "art": {"at": {"everyface": "every face is less than seven", "certain": "that is certain"}}},
+        {"say": "A bag holds nine red counters and one blue. Red is likely, blue is unlikely.", "art": {"at": {"ninered": "nine red counters", "oneblue": "one blue", "likely": "Red is likely", "unlikely": "blue is unlikely"}}},
+        {"say": "Tossing a coin is maybe. It might land on heads, and it might not.", "art": {"at": {"coin": "Tossing a coin", "maybe": "is maybe", "heads": "It might land on heads"}}}
+      ]
+    },
+    {
+      "id": "spin",
+      "kind": "spin",
+      "heading": "Spin it, and spin it again",
+      "codes": ["4Sp.02"],
+      "beats": [
+        {"say": "This spinner has four equal parts, so each should come up a quarter of the time.", "art": {"at": {"fourequal": "four equal parts", "aquarter": "a quarter of the time"}}},
+        {"say": "Ten spins are lumpy. One part came up five times, when it should be two and a half.", "art": {"at": {"tenspins": "Ten spins", "cameupfive": "came up five times", "expected": "two and a half"}}},
+        {"say": "Now spin it a thousand times. Each part lands close to two hundred and fifty.", "art": {"at": {"athousand": "a thousand times", "closeto": "close to two hundred and fifty"}}},
+        {"say": "A few spins tell you little. Many spins show what the spinner really does.", "art": {"at": {"fewspins": "A few spins", "manyspins": "Many spins"}}}
+      ]
+    },
+    {
+      "id": "recap",
+      "kind": "recap",
+      "heading": "What you now know",
+      "codes": ["4Ss.01", "4Ss.02", "4Ss.03", "4Sp.01", "4Sp.02"],
+      "beats": [
+        {"say": "You can plan what to collect, and tally it as the answers come.", "art": {"at": {"planit": "plan what to collect", "tallyit": "tally it"}}},
+        {"say": "You can draw it three ways, sort it two ways, and compare two classes.", "art": {"at": {"drawthree": "draw it three ways", "sortby": "sort it two ways", "comparetwo": "compare two classes"}}},
+        {"say": "And you can say if something is impossible, maybe, likely or certain. Well done.", "art": {"at": {"chanceword": "impossible, maybe, likely or certain", "welldone": "Well done"}}}
+      ]
+    }
+  ]
+}

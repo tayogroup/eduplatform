@@ -3493,7 +3493,21 @@
     });
   }
 
+  function lessonFilm(o) {
+    const v = o.video, stage = document.getElementById(o.stage);
+    stage.innerHTML = '<div class="lec lec-film">' +
+      '<video controls playsinline preload="none" poster="' + esc(v.poster) + '" src="' + esc(v.src) + '">' +
+      '<track kind="captions" srclang="en" label="English" src="' + esc(v.vtt) + '"></video>' +
+      '<p class="lec-note">' + esc(v.note) + '</p></div>';
+    const film = stage.querySelector('video'), slide = stage.closest('section.slide');
+    film.addEventListener('ended', () => finish(o.finish, o.done));
+    if (slide && window.MutationObserver) new MutationObserver(() => {
+      if (!slide.classList.contains('active') && !film.paused) film.pause();
+    }).observe(slide, { attributes: true, attributeFilter: ['class'] });
+  }
+  
   function lessonLecture(o) {
+    if (o.video) return lessonFilm(o);
     const parts = o.parts || [];
     let k = 0;
     const id = o.stage + 'l';
@@ -3592,7 +3606,7 @@
   }
 
   lessonAbout({ stage: 'stageOvw', about: ["Name flat shapes and say how many sides they have.", "Name solid shapes and count their faces.", "Tell a flat shape from a solid shape.", "Say which of two things is longer.", "Say which of two things is heavier.", "Say which container holds more."], finish: 0, done: "Let's begin." });
-  lessonLecture({ stage: 'stageLec', parts: [{ title: "Flat and solid shapes", say: "A flat shape lies on the page, like a circle or a square. A solid shape you can pick up and turn over, like a ball or a box." }, { title: "Sides, corners and faces", say: "A side is an edge of a flat shape, and a corner is where two sides meet. A solid shape has faces instead - flat surfaces you can count." }, { title: "Comparing size", say: "Line two things up to see which is longer. Hold two things to feel which is heavier. Pour water from one cup to another to see which holds more." }], finish: 1, done: "You have heard the whole lesson. Now do it yourself." });
+  lessonLecture({ stage: 'stageLec', parts: [{ title: "Flat and solid shapes", say: "A flat shape lies on the page, like a circle or a square. A solid shape you can pick up and turn over, like a ball or a box." }, { title: "Sides, corners and faces", say: "A side is an edge of a flat shape, and a corner is where two sides meet. A solid shape has faces instead - flat surfaces you can count." }, { title: "Comparing size", say: "Line two things up to see which is longer. Hold two things to feel which is heavier. Pour water from one cup to another to see which holds more." }], video: { src: "lecture-video/shapes-and-sizes.a6e63fad.mp4", poster: "lecture-video/shapes-and-sizes.b0822f4a.jpg", vtt: "lecture-video/shapes-and-sizes.69e76f3f.vtt", note: "The whole lesson in about 2 and a half minutes. When the film ends, this step is done." }, finish: 1, done: "You have heard the whole lesson. Now do it yourself." });
   lessonWords({ stage: 'stageMw', words: [{ w: "side", pic: "📐", meaning: "A straight or curved edge of a flat shape.", uses: ["Count the sides of the triangle."] }, { w: "corner", pic: "📍", meaning: "The point where two sides of a shape meet.", uses: ["A square has four corners."] }, { w: "face", pic: "🎲", meaning: "A flat surface on a solid shape.", uses: ["A dice has six faces."] }, { w: "edge", pic: "📏", meaning: "The line where two faces of a solid shape meet.", uses: ["Run your finger along the edge of the box."] }, { w: "capacity", pic: "🥤", meaning: "How much a container can hold.", uses: ["Which cup has the bigger capacity?"] }, { w: "balance", pic: "⚖️", meaning: "A tool that shows which of two things is heavier.", uses: ["Use the balance to see which is heavier."] }], finish: 2, done: "You know the math words of this lesson." });
   show(0, false);
 
@@ -4489,6 +4503,9 @@
     align-items: center; gap: 10px; text-align: center; }
   .phase { color: var(--teal); font-weight: 800; font-size: 12.5px; letter-spacing: .1em;
     text-transform: uppercase; }
+  .lec.lec-film { max-width: 760px; }
+  .lec-film video { width: 100%; display: block; border-radius: 18px; background: #000;
+    aspect-ratio: 16 / 9; box-shadow: var(--shadow); }
   .lec-h { font-weight: 800; font-size: clamp(21px, 4vw, 26px); margin: 0; }
   .lec-p { margin: 0; font-size: 19px; line-height: 1.55; max-width: 34em; }
   .lec-note { margin: 4px 0 0; color: var(--muted); font-size: 13.5px; }

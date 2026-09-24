@@ -1,0 +1,120 @@
+{
+  "_comment": "Storyboard for the Grade 1 Mathematics unit lecture film, Lesson 1 Counting to Twenty. Rendered by tools/create-ehel-unit-lecture.js. See lecture-video/BRIEF.md. Every beat is one narration clip; art.at names the phrases a picture waits for, and the page refuses to load if a phrase is not in its beat's say. The chapters follow the lesson's own steps in order - Count to 10 and Zero means none, See how many and Guess then count, Then to 20 with Read and Write the number, Counting in tens and in twos with Odd and even, More or fewer with First second third - drawn with the shared Mathematics pictures (ART): the lesson's ten frame, its dice patterns, its paired counters, its number line.",
+  "slug": "counting-to-twenty",
+  "lesson": 1,
+  "grade": 1,
+  "stage": 1,
+  "title": "Counting to Twenty",
+  "subtitle": "Grade 1 Mathematics",
+  "framework": "Cambridge Primary Mathematics 0096",
+  "renderer": {
+    "art": ["math"],
+    "skin": "brown",
+    "scenes": [
+      "tools/lib/ehel-film-marks.js",
+      "tools/lib/film-scenes/math-g1/counting-to-twenty.js",
+      "tools/lib/film-scenes/math-g1/counting-to-twenty-2.js",
+      "tools/lib/film-scenes/math-g1/counting-to-twenty-3.js"
+    ]
+  },
+  "objectives": [
+    ["1Nc.01", "Count objects from 0 to 20, recognising conservation of number and one-to-one correspondence."],
+    ["1Nc.02", "Recognise the number of objects presented in familiar patterns up to 10, without counting."],
+    ["1Nc.03", "Estimate the number of objects or people (up to 20), and check by counting."],
+    ["1Nc.04", "Count on in ones, twos or tens, and count back in ones and tens, starting from any number (from 0 to 20)."],
+    ["1Nc.05", "Understand even and odd numbers as ‘every other number’ when counting (from 0 to 20)."],
+    ["1Ni.01", "Recite, read and write number names and whole numbers (from 0 to 20)."],
+    ["1Np.01", "Understand that zero represents none of something."],
+    ["1Np.02", "Compose, decompose and regroup numbers from 10 to 20."],
+    ["1Np.03", "Understand the relative size of quantities to compare and order numbers from 0 to 20."],
+    ["1Np.04", "Recognise and use ordinal numbers from 1st to 10th."]
+  ],
+  "scenes": [
+    { "id": "title", "kind": "title", "codes": [], "beats": [
+      { "say": "Today you count all the way to twenty.",
+        "art": { "at": { "count": "count all the way", "twenty": "twenty." } } },
+      { "say": "You will count carefully, read the numbers, and find odd and even.",
+        "art": { "at": { "careful": "count carefully", "read": "read the numbers", "odd": "odd and even" } } }
+    ] },
+
+    { "id": "count", "kind": "count", "heading": "Counting carefully", "codes": ["1Nc.01", "1Np.01"], "beats": [
+      { "say": "Counting is saying one number for each thing.",
+        "art": { "at": { "one": "one number", "each": "each thing" } } },
+      { "say": "Touch each one once. One. Two. Three.",
+        "art": { "at": { "touch": "Touch each one once", "n1": "One.", "n2": "Two.", "n3": "Three." } } },
+      { "say": "Never say two numbers for the same thing.",
+        "art": { "at": { "never": "Never say two numbers", "same": "the same thing" } } },
+      { "say": "Keep going to the end of the frame. That is ten.",
+        "art": { "at": { "keep": "Keep going", "end": "the end of the frame", "ten": "That is ten" } } },
+      { "say": "Now mix them up. Nothing came or went, so it is still ten.",
+        "art": { "at": { "mix": "mix them up", "nothing": "Nothing came or went", "still": "still ten" } } },
+      { "say": "Take them all away. An empty frame is zero, and zero is a number.",
+        "art": { "at": { "away": "Take them all away", "zero": "is zero", "number": "zero is a number" } } }
+    ] },
+
+    { "id": "look", "kind": "look", "heading": "Look, do not count", "codes": ["1Nc.02", "1Nc.03"], "beats": [
+      { "say": "You do not always have to count. Some patterns you just see.",
+        "art": { "at": { "notcount": "do not always have to count", "patterns": "Some patterns", "see": "you just see" } } },
+      { "say": "Five dots, like a dice. You know it is five at a glance.",
+        "art": { "at": { "five": "Five dots", "dice": "like a dice", "isfive": "it is five", "glance": "at a glance" } } },
+      { "say": "Four and two make six. You did not count one by one.",
+        "art": { "at": { "four": "Four and two", "six": "make six", "onebyone": "one by one" } } },
+      { "say": "Look at these apples. An estimate is a sensible guess before you count.",
+        "art": { "at": { "apples": "these apples", "estimate": "An estimate", "guess": "a sensible guess" } } },
+      { "say": "Guess about fifteen. Then count them: fourteen. Very close.",
+        "art": { "at": { "fifteen": "about fifteen", "count": "count them", "fourteen": "fourteen.", "close": "Very close" } } }
+    ] },
+
+    { "id": "teen", "kind": "teen", "heading": "Ten and some more", "codes": ["1Np.02", "1Ni.01"], "beats": [
+      { "say": "Fill the first frame right up. That is ten.",
+        "art": { "at": { "fill": "Fill the first frame", "ten": "That is ten" } } },
+      { "say": "After ten we do not start again. We keep the ten.",
+        "art": { "at": { "after": "After ten", "start": "do not start again", "keep": "keep the ten" } } },
+      { "say": "Ten and one more is eleven. Ten and two is twelve.",
+        "art": { "at": { "eleven": "is eleven", "twelve": "is twelve" } } },
+      { "say": "One full frame and three more. Find the number: thirteen.",
+        "art": { "at": { "frame": "One full frame", "three": "three more", "find": "Find the number", "thirteen": "thirteen" } } },
+      { "say": "Now write fourteen. Press one, then four.",
+        "art": { "at": { "write": "write fourteen", "one": "Press one", "four": "then four" } } },
+      { "say": "The one means one whole ten. The four is the four loose ones.",
+        "art": { "at": { "whole": "one whole ten", "loose": "four loose ones" } } }
+    ] },
+
+    { "id": "twos", "kind": "twos", "heading": "Twos, tens and pairs", "codes": ["1Nc.04", "1Nc.05"], "beats": [
+      { "say": "Count in tens with whole frames. Ten. Twenty.",
+        "art": { "at": { "tens": "Count in tens", "ten": "Ten.", "twenty": "Twenty." } } },
+      { "say": "Socks come in pairs. Count in twos: two, four, six.",
+        "art": { "at": { "socks": "Socks come in pairs", "two": "two,", "four": "four,", "six": "six." } } },
+      { "say": "Now pair them up. Six makes three pairs, with nobody left over.",
+        "art": { "at": { "pair": "pair them up", "three": "three pairs", "nobody": "nobody left over" } } },
+      { "say": "Six is even. Seven has one left alone, so seven is odd.",
+        "art": { "at": { "even": "Six is even", "alone": "one left alone", "odd": "seven is odd" } } },
+      { "say": "Even, odd, even, odd. They take turns all the way to twenty.",
+        "art": { "at": { "altern": "Even, odd", "turns": "They take turns", "twenty": "to twenty" } } }
+    ] },
+
+    { "id": "order", "kind": "order", "heading": "Bigger, smaller, first", "codes": ["1Np.03", "1Np.04"], "beats": [
+      { "say": "Which is bigger, nine or fifteen? The number line knows.",
+        "art": { "at": { "which": "Which is bigger", "nine": "nine or fifteen", "line": "The number line" } } },
+      { "say": "Fifteen is further to the right, so fifteen is bigger.",
+        "art": { "at": { "right": "further to the right", "bigger": "fifteen is bigger" } } },
+      { "say": "Put them in order. Smallest first: four, nine, fifteen.",
+        "art": { "at": { "order": "Put them in order", "small": "Smallest first", "four": "four,", "nine": "nine,", "fifteen": "fifteen." } } },
+      { "say": "First, second and third tell you a place in a line.",
+        "art": { "at": { "first": "First, second and third", "place": "a place in a line" } } },
+      { "say": "Count from the front. The runner nearest the flag is first.",
+        "art": { "at": { "front": "from the front", "flag": "nearest the flag", "isfirst": "is first" } } }
+    ] },
+
+    { "id": "recap", "kind": "recap", "heading": "What you now know", "codes": ["1Nc.01", "1Np.01", "1Np.02", "1Nc.04", "1Nc.05", "1Np.04"], "beats": [
+      { "say": "You can count to twenty, one number for each thing. Zero means none.",
+        "art": { "at": { "count": "count to twenty", "zero": "Zero means none" } } },
+      { "say": "Ten and some more makes thirteen. You can count in twos and tens.",
+        "art": { "at": { "teen": "Ten and some more", "twos": "in twos and tens" } } },
+      { "say": "Pairs show odd and even, with nobody left over.",
+        "art": { "at": { "pairs": "Pairs show odd and even" } } },
+      { "say": "And first, second, third say where you are in a line.",
+        "art": { "at": { "first": "first, second, third" } } }
+    ] }
+  ]
+}

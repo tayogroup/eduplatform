@@ -1,0 +1,124 @@
+{
+  "_comment": "Storyboard for the Grade 4 Mathematics unit lecture film, Lesson 3 Ways to Calculate. Rendered by tools/create-ehel-unit-lecture.js. See lecture-video/BRIEF.md. Every beat is one narration clip; art.at names the phrases a picture waits for, and the page refuses to load if a phrase is not in its beat's say. The chapters follow the lesson page's own steps in order - Estimate before you work (387 + 214), Adding it exactly (347 + 185), Taking away exactly (623 - 187), Tables and a shortcut with the lecture's own 225 + 98, Multiplying a big number (342 x 6) and Sharing out (87 / 5), and 6s 7s 9s and factor pairs (24) - in the lesson's own numbers. Every sum the pictures draw is ART.columnSum's own computed working, so the carries and exchanges cannot disagree with the digits above them.",
+  "slug": "ways-to-calculate",
+  "lesson": 3,
+  "grade": 4,
+  "stage": 4,
+  "title": "Ways to Calculate",
+  "subtitle": "Grade 4 Mathematics",
+  "framework": "Cambridge Primary Mathematics 0096",
+  "renderer": {
+    "art": ["math"],
+    "skin": "brown",
+    "scenes": [
+      "tools/lib/ehel-film-marks.js",
+      "tools/lib/film-scenes/math-g4/ways-to-calculate.js",
+      "tools/lib/film-scenes/math-g4/ways-to-calculate-2.js",
+      "tools/lib/film-scenes/math-g4/ways-to-calculate-3.js",
+      "tools/lib/film-scenes/math-g4/ways-to-calculate-4.js"
+    ]
+  },
+  "objectives": [
+    ["4Ni.02", "Estimate, add and subtract whole numbers with up to three digits."],
+    ["4Ni.03", "Understand the associative property of multiplication, and use this to simplify calculations."],
+    ["4Ni.05", "Estimate and multiply whole numbers up to 1000 by 1-digit whole numbers."],
+    ["4Ni.06", "Estimate and divide whole numbers up to 100 by 1-digit whole numbers."],
+    ["4Ni.07", "Understand the relationship between multiples and factors."]
+  ],
+  "scenes": [
+    { "id": "title", "kind": "title", "codes": [], "beats": [
+      { "say": "Maths gives you more than one way to work something out.",
+        "art": { "at": { "ways": "more than one way" } } },
+      { "say": "Estimate first, then choose the method that fits the numbers.",
+        "art": { "at": { "est": "Estimate first", "fits": "fits the numbers" } } }
+    ] },
+
+    { "id": "estimate", "kind": "estimate", "heading": "Estimate first", "codes": ["4Ni.02"], "beats": [
+      { "say": "Here is a sum to work out. What is 387 add 214?",
+        "art": { "at": { "sum": "387 add 214" } } },
+      { "say": "Before you calculate, round each number to something easy.",
+        "art": { "at": { "round": "round each number", "easy": "something easy" } } },
+      { "say": "387 is nearly 400, and 214 is a little past 200.",
+        "art": { "at": { "up": "387 is nearly 400", "down": "214 is a little past 200" } } },
+      { "say": "400 add 200 is 600, so the answer should be about 600.",
+        "art": { "at": { "sums": "400 add 200 is 600", "about": "about 600" } } },
+      { "say": "An estimate is not the answer. It shows when one looks silly.",
+        "art": { "at": { "not": "is not the answer", "silly": "looks silly" } } }
+    ] },
+
+    { "id": "adding", "kind": "adding", "heading": "Adding in columns", "codes": ["4Ni.02"], "beats": [
+      { "say": "Now work one out exactly. Line the digits up in their own columns.",
+        "art": { "at": { "exact": "exactly", "cols": "in their own columns" } } },
+      { "say": "Take 347 add 185. Start at the ones: 7 and 5 make 12.",
+        "art": { "at": { "sum": "347 add 185", "ones": "the ones", "twelve": "make 12" } } },
+      { "say": "Write the 2 down, and carry the ten into the tens column.",
+        "art": { "at": { "two": "Write the 2 down", "carry": "carry the ten" } } },
+      { "say": "The tens are 4, 8 and the carried ten, which together make 13.",
+        "art": { "at": { "tens": "The tens are 4, 8", "thirteen": "make 13" } } },
+      { "say": "Write 3 and carry a hundred. The hundreds make 5, so the answer is 532.",
+        "art": { "at": { "three": "Write 3", "carryh": "carry a hundred", "hund": "The hundreds make 5", "ans": "answer is 532" } } }
+    ] },
+
+    { "id": "taking", "kind": "taking", "heading": "Taking away in columns", "codes": ["4Ni.02"], "beats": [
+      { "say": "Taking away needs the opposite of carrying. Try 623 take away 187.",
+        "art": { "at": { "back": "the opposite of carrying", "sum": "623 take away 187" } } },
+      { "say": "3 is less than 7, so exchange a ten. Now 13 take away 7 is 6.",
+        "art": { "at": { "less": "3 is less than 7", "ex": "exchange a ten", "six": "13 take away 7 is 6" } } },
+      { "say": "The tens now hold 1, so exchange a hundred. 11 take away 8 is 3.",
+        "art": { "at": { "tens": "The tens now hold 1", "ex": "exchange a hundred", "three": "11 take away 8 is 3" } } },
+      { "say": "Then 5 take away 1 is 4, and the answer is 436.",
+        "art": { "at": { "four": "5 take away 1 is 4", "ans": "is 436" } } }
+    ] },
+
+    { "id": "easier", "kind": "easier", "heading": "A method that fits", "codes": ["4Ni.02", "4Ni.03"], "beats": [
+      { "say": "Look at 225 add 98. Some sums are quicker without columns.",
+        "art": { "at": { "quick": "quicker without columns", "sum": "225 add 98" } } },
+      { "say": "98 is nearly 100. Add 100 instead, and you get 325.",
+        "art": { "at": { "near": "98 is nearly 100", "hund": "Add 100 instead", "get": "you get 325" } } },
+      { "say": "You added 2 too many, so take those 2 away again. That leaves 323.",
+        "art": { "at": { "too": "added 2 too many", "take": "take those 2 away", "ans": "leaves 323" } } },
+      { "say": "Work out 4 times 7 times 5. Multiplying can be regrouped too.",
+        "art": { "at": { "chain": "4 times 7 times 5", "re": "can be regrouped" } } },
+      { "say": "4 times 5 is 20, and 20 times 7 is 140. Much easier that way.",
+        "art": { "at": { "twenty": "4 times 5 is 20", "ans": "20 times 7 is 140", "easy": "Much easier" } } }
+    ] },
+
+    { "id": "bigger", "kind": "bigger", "heading": "Multiplying and sharing", "codes": ["4Ni.05", "4Ni.06"], "beats": [
+      { "say": "Try 342 times 6. To multiply a big number, break it into parts.",
+        "art": { "at": { "sum": "342 times 6", "breakup": "break it into parts" } } },
+      { "say": "342 splits into 300, 40 and 2. Multiply each part on its own.",
+        "art": { "at": { "parts": "300, 40 and 2", "each": "each part on its own" } } },
+      { "say": "300 times 6 is 1,800. 40 times 6 is 240. 2 times 6 is 12.",
+        "art": { "at": { "hun": "300 times 6 is 1,800", "ten": "40 times 6 is 240", "one": "2 times 6 is 12" } } },
+      { "say": "Add the three parts back, and you get 2,052. Miss one and you are short.",
+        "art": { "at": { "add": "Add the three parts", "ans": "you get 2,052" } } },
+      { "say": "What is 87 divided by 5? Dividing keeps taking whole groups away.",
+        "art": { "at": { "sum": "87 divided by 5", "groups": "whole groups away" } } },
+      { "say": "17 fives make 85, and 2 are left over. So it is 17 remainder 2.",
+        "art": { "at": { "fives": "17 fives make 85", "left": "2 are left over", "ans": "17 remainder 2" } } }
+    ] },
+
+    { "id": "factors", "kind": "factors", "heading": "Factors and multiples", "codes": ["4Ni.07"], "beats": [
+      { "say": "Lay 24 counters out as a rectangle: 4 rows of 6.",
+        "art": { "at": { "lay": "24 counters", "rect": "4 rows of 6" } } },
+      { "say": "4 and 6 multiply to make 24, so they are a factor pair.",
+        "art": { "at": { "mult": "multiply to make 24", "pair": "a factor pair" } } },
+      { "say": "24 has more pairs: 1 and 24, 2 and 12, and 3 and 8.",
+        "art": { "at": { "one": "1 and 24", "two": "2 and 12", "three": "3 and 8" } } },
+      { "say": "Do not stop at the first pair. Keep going until they repeat.",
+        "art": { "at": { "stop": "the first pair", "keep": "Keep going", "repeat": "they repeat" } } },
+      { "say": "One fact, two names. 4 is a factor of 24, and 24 is a multiple of 4.",
+        "art": { "at": { "names": "two names", "factor": "4 is a factor of 24", "multiple": "24 is a multiple of 4" } } }
+    ] },
+
+    { "id": "recap", "kind": "recap", "heading": "What you now know",
+      "codes": ["4Ni.02", "4Ni.03", "4Ni.05", "4Ni.06", "4Ni.07"], "beats": [
+      { "say": "Estimate first, then work it out exactly in columns.",
+        "art": { "at": { "est": "Estimate first", "cols": "in columns" } } },
+      { "say": "Or take a shortcut: give 2 back, or regroup a multiplication.",
+        "art": { "at": { "back": "give 2 back", "regroup": "regroup a multiplication" } } },
+      { "say": "Split a big number, share into fives, and look for factor pairs.",
+        "art": { "at": { "split": "Split a big number", "share": "share into fives", "pair": "factor pairs" } } }
+    ] }
+  ]
+}

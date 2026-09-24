@@ -1,0 +1,104 @@
+{
+  "_comment": "Storyboard for the Grade 3 Mathematics unit lecture film, Up to a Thousand. Rendered by tools/create-ehel-unit-lecture.js. See lecture-video/BRIEF.md. Every beat is one narration clip; art.at names the phrases a picture waits for, and the page refuses to load if a phrase is not in its beat's say. The chapters follow the lesson opener's three-part lecture (place value to a thousand; regrouping; rounding and estimating), opened out with the lesson page's own steps and its own numbers: 348 built in the place-value columns (step Three digits), 348 decomposed and 307's holding zero (Break it apart), 348 regrouped as 200 + 140 + 8 (Another way to break it), 35 times ten (Ten times bigger), 348 rounded to 10 and to 100 (Round it to 10 or 100), and one group of ten counted to estimate a boxful (Roughly how many?).",
+  "slug": "up-to-a-thousand",
+  "lesson": 1,
+  "grade": 3,
+  "stage": 3,
+  "title": "Up to a Thousand",
+  "subtitle": "Grade 3 Mathematics",
+  "framework": "Cambridge Primary Mathematics 0096",
+  "renderer": {
+    "art": ["math"],
+    "skin": "brown",
+    "scenes": [
+      "tools/lib/ehel-film-marks.js",
+      "tools/lib/film-scenes/math-g3/up-to-a-thousand.js",
+      "tools/lib/film-scenes/math-g3/up-to-a-thousand-2.js",
+      "tools/lib/film-scenes/math-g3/up-to-a-thousand-3.js"
+    ]
+  },
+  "objectives": [
+    ["3Np.01", "Understand and explain that the value of each digit is determined by its position in that number (up to 3-digit numbers)."],
+    ["3Np.03", "Compose, decompose and regroup 3-digit numbers, using hundreds, tens and ones."],
+    ["3Np.02", "Use knowledge of place value to multiply whole numbers by 10."],
+    ["3Np.05", "Round 3-digit numbers to the nearest 10 or 100."],
+    ["3Nc.01", "Estimate the number of objects or people (up to 1000)."]
+  ],
+  "scenes": [
+    {
+      "id": "title", "kind": "title", "codes": [],
+      "beats": [
+        { "say": "Look at this number: 348. It is made of three digits.", "art": { "at": { "num": "348", "digits": "three digits" } } },
+        { "say": "Each digit is worth what its own column says. Let us look.", "art": { "at": { "worth": "worth what its own column says" } } }
+      ]
+    },
+    {
+      "id": "worth", "kind": "worth", "heading": "What a digit is worth", "codes": ["3Np.01"],
+      "beats": [
+        { "say": "Here is 348 in its columns: hundreds, tens and ones.", "art": { "at": { "cols": "in its columns", "hto": "hundreds, tens and ones" } } },
+        { "say": "The 3 stands in the hundreds column. It is worth three hundred.", "art": { "at": { "three": "The 3 stands", "worth": "worth three hundred" } } },
+        { "say": "The 4 stands in the tens column. Four tens is forty.", "art": { "at": { "four": "The 4 stands", "forty": "Four tens is forty" } } },
+        { "say": "The 8 stands in the ones column. Eight ones is just eight.", "art": { "at": { "eight": "The 8 stands", "just": "Eight ones is just eight" } } },
+        { "say": "So 348 is not three, four, eight. It is three hundred and forty-eight.", "art": { "at": { "not": "not three, four, eight", "real": "three hundred and forty-eight" } } }
+      ]
+    },
+    {
+      "id": "apart", "kind": "apart", "heading": "Break it apart", "codes": ["3Np.03"],
+      "beats": [
+        { "say": "Taking a number apart is called decomposing it.", "art": { "at": { "apart": "Taking a number apart", "dec": "decomposing it" } } },
+        { "say": "348 comes apart into 300, and 40, and 8.", "art": { "at": { "h": "into 300", "t": "and 40", "o": "and 8." } } },
+        { "say": "Add the three parts back together, and you have 348 again.", "art": { "at": { "back": "back together", "again": "348 again" } } },
+        { "say": "Nothing is lost. Watch a zero, though: 307 has no tens.", "art": { "at": { "lost": "Nothing is lost", "zero": "Watch a zero", "n307": "307" } } },
+        { "say": "Its parts are just 300 and 7. The zero holds the tens column open.", "art": { "at": { "parts": "just 300 and 7", "hold": "holds the tens column open" } } }
+      ]
+    },
+    {
+      "id": "regroup", "kind": "regroup", "heading": "Another way to break it", "codes": ["3Np.03"],
+      "beats": [
+        { "say": "There is more than one way to break a number up.", "art": { "at": { "more": "more than one way" } } },
+        { "say": "348 is 300 and 40 and 8. Now move one hundred across.", "art": { "at": { "ord": "300 and 40 and 8", "move": "move one hundred across" } } },
+        { "say": "That one hundred crosses over and becomes ten tens.", "art": { "at": { "cross": "crosses over", "ten": "becomes ten tens" } } },
+        { "say": "Four tens and ten tens make fourteen tens. So 348 is 200 and 140 and 8.", "art": { "at": { "fourteen": "fourteen tens", "also": "200 and 140 and 8" } } },
+        { "say": "The total has not changed at all. That is regrouping.", "art": { "at": { "same": "has not changed", "reg": "regrouping" } } }
+      ]
+    },
+    {
+      "id": "tentimes", "kind": "tentimes", "heading": "Ten times bigger", "codes": ["3Np.02"],
+      "beats": [
+        { "say": "Multiplying by ten does not add a zero on the end.", "art": { "at": { "notadd": "does not add a zero" } } },
+        { "say": "It moves every digit one column to the left.", "art": { "at": { "moves": "one column to the left" } } },
+        { "say": "Take 35. The 3 is three tens and the 5 is five ones.", "art": { "at": { "n35": "Take 35", "tens": "three tens", "ones": "five ones" } } },
+        { "say": "Times ten, and those three tens become three hundreds.", "art": { "at": { "times": "Times ten", "hundreds": "three hundreds" } } },
+        { "say": "The five ones become five tens. A zero holds the ones open. 350.", "art": { "at": { "fifty": "become five tens", "zero": "A zero holds the ones open", "ans": "350." } } }
+      ]
+    },
+    {
+      "id": "round", "kind": "round", "heading": "Round it to 10 or 100", "codes": ["3Np.05"],
+      "beats": [
+        { "say": "Rounding means picking whichever neighbour is nearer.", "art": { "at": { "near": "whichever neighbour is nearer" } } },
+        { "say": "Round 348 to the nearest ten. It sits between 340 and 350.", "art": { "at": { "n348": "Round 348", "ten": "the nearest ten", "between": "between 340 and 350" } } },
+        { "say": "Halfway is 345. 348 is past halfway, so it rounds up to 350.", "art": { "at": { "half": "Halfway is 345", "past": "past halfway", "up": "rounds up to 350" } } },
+        { "say": "Now round it to the nearest hundred. It sits between 300 and 400.", "art": { "at": { "hundred": "the nearest hundred", "between2": "between 300 and 400" } } },
+        { "say": "Halfway is 350 now, so 348 goes down to 300. Two answers, one number.", "art": { "at": { "half2": "Halfway is 350 now", "down": "goes down to 300", "two": "Two answers" } } }
+      ]
+    },
+    {
+      "id": "estimate", "kind": "estimate", "heading": "Roughly how many?", "codes": ["3Nc.01"],
+      "beats": [
+        { "say": "Sometimes close is good enough. That is an estimate.", "art": { "at": { "close": "close is good enough", "est": "an estimate" } } },
+        { "say": "Do not try to count them all. That takes far too long.", "art": { "at": { "dont": "count them all", "long": "far too long" } } },
+        { "say": "Ring one small group instead. There are about ten in it.", "art": { "at": { "ring": "Ring one small group", "ten": "about ten" } } },
+        { "say": "Now see how many groups like that fill the box. About twenty.", "art": { "at": { "fill": "fill the box", "twenty": "About twenty" } } },
+        { "say": "Twenty groups of ten is two hundred. There were 214, so that was close.", "art": { "at": { "two": "is two hundred", "real": "There were 214" } } }
+      ]
+    },
+    {
+      "id": "recap", "kind": "recap", "heading": "What you now know", "codes": ["3Np.01", "3Np.03", "3Np.02", "3Np.05", "3Nc.01"],
+      "beats": [
+        { "say": "A digit is worth what its column says. 348 is 300 and 40 and 8.", "art": { "at": { "col": "what its column says", "apart": "300 and 40 and 8" } } },
+        { "say": "Regrouped, 348 is also 200 and 140 and 8. Times ten, 35 becomes 350.", "art": { "at": { "regroup": "200 and 140 and 8", "times": "35 becomes 350" } } },
+        { "say": "Round to the nearer neighbour, and estimate in groups of ten.", "art": { "at": { "round": "the nearer neighbour", "est": "groups of ten" } } }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,115 @@
+{
+  "_comment": "Storyboard for the Grade 2 Mathematics unit lecture film, Patterns That Grow. Rendered by tools/create-ehel-unit-lecture.js. See lecture-video/BRIEF.md. Every beat is one narration clip; art.at names the phrases a picture waits for, and the page refuses to load if a phrase is not in its beat's say. The chapters follow the lesson page's own steps in order - the part that repeats (step 4), what comes next and mending a gap (steps 5 and 6), counting on in steps (step 8), how a number pattern goes up and the missing number (steps 9 and 10), counting back (step 11) and the hundred square (step 12) - in the lesson's own shapes (orange circle, teal square) and the lesson's own numbers (3, 5, 7, 9, 11; 20, 25, 30, 35; 15, 20, 25, 30; 10, 20, gap, 40; 50, 40, 30, 20; 5, 15, 25, 35).",
+  "slug": "patterns-that-grow",
+  "lesson": 4,
+  "grade": 2,
+  "stage": 2,
+  "title": "Patterns That Grow",
+  "subtitle": "Grade 2 Mathematics",
+  "framework": "Cambridge Primary Mathematics 0096",
+  "renderer": {
+    "art": ["math"],
+    "skin": "brown",
+    "scenes": [
+      "tools/lib/ehel-film-marks.js",
+      "tools/lib/film-scenes/math-g2/patterns-that-grow.js",
+      "tools/lib/film-scenes/math-g2/patterns-that-grow-2.js"
+    ]
+  },
+  "objectives": [
+    ["2Sp.01", "Use familiar language associated with patterns and randomness, including regular pattern and random pattern."],
+    ["2Nc.04", "Count on and count back in ones, twos, fives or tens, starting from any number (from 0 to 100)."],
+    ["2Nc.06", "Recognise, describe and extend numerical sequences (from 0 to 100)."]
+  ],
+  "scenes": [
+    { "id": "title", "kind": "title", "codes": [], "beats": [
+      { "say": "Some patterns repeat, over and over. Other patterns grow.",
+        "art": { "at": { "repeat": "repeat, over and over", "grow": "patterns grow" } } },
+      { "say": "Find the part that repeats, or find the step. Then you know what comes next.",
+        "art": { "at": { "part": "the part that repeats", "step": "find the step", "next": "what comes next" } } }
+    ] },
+
+    { "id": "repeat", "kind": "repeat", "heading": "The part that repeats", "codes": ["2Sp.01"], "beats": [
+      { "say": "Here is a line of shapes. Circle, square, circle, square.",
+        "art": { "at": { "line": "a line of shapes", "say": "Circle, square, circle, square" } } },
+      { "say": "One small part comes round again and again. Can you see it?",
+        "art": { "at": { "small": "One small part", "round": "round again and again", "see": "Can you see it" } } },
+      { "say": "Here it is. The part that repeats is circle, square.",
+        "art": { "at": { "here": "Here it is", "part": "The part that repeats" } } },
+      { "say": "It is two shapes long. Say it six times and you have the whole line.",
+        "art": { "at": { "two": "two shapes long", "six": "six times", "whole": "the whole line" } } },
+      { "say": "Now a longer part: circle, square, square. Three shapes, whole every time.",
+        "art": { "at": { "longer": "a longer part", "abb": "circle, square, square", "three": "Three shapes", "whole": "whole every time" } } }
+    ] },
+
+    { "id": "next", "kind": "next", "heading": "What comes next", "codes": ["2Sp.01"], "beats": [
+      { "say": "Once you have found the part, you can say what comes next.",
+        "art": { "at": { "found": "found the part", "next": "what comes next" } } },
+      { "say": "Circle, square, square, circle. What shape comes after that?",
+        "art": { "at": { "say": "Circle, square, square, circle", "after": "comes after that" } } },
+      { "say": "Square. The part tells you, not the shape just before it.",
+        "art": { "at": { "square": "Square.", "tells": "The part tells you" } } },
+      { "say": "If a shape falls out of the middle, the part mends it.",
+        "art": { "at": { "falls": "falls out of the middle", "mends": "the part mends it" } } }
+    ] },
+
+    { "id": "counton", "kind": "counton", "heading": "Counting on in steps", "codes": ["2Nc.04"], "beats": [
+      { "say": "Numbers make patterns too. You count on in steps.",
+        "art": { "at": { "numbers": "Numbers make patterns", "steps": "count on in steps" } } },
+      { "say": "Start at 3 and count on in twos. 3, 5, 7, 9, 11.",
+        "art": { "at": { "start": "Start at 3", "twos": "count on in twos", "seq": "3, 5, 7, 9, 11" } } },
+      { "say": "Every jump is the same size. You add 2 each time.",
+        "art": { "at": { "same": "the same size", "add": "add 2 each time" } } },
+      { "say": "You can start anywhere. 20, 25, 30, 35 goes up in fives.",
+        "art": { "at": { "anywhere": "start anywhere", "seq": "20, 25, 30, 35", "fives": "up in fives" } } }
+    ] },
+
+    { "id": "step", "kind": "step", "heading": "How much does it go up?", "codes": ["2Nc.06"], "beats": [
+      { "say": "Now a number pattern. 15, 20, 25, 30. How does it go up?",
+        "art": { "at": { "numbers": "a number pattern", "seq": "15, 20, 25, 30", "up": "How does it go up" } } },
+      { "say": "Look at the jumps between them, not just at the numbers.",
+        "art": { "at": { "jumps": "the jumps between them" } } },
+      { "say": "15 to 20 is 5. And 20 to 25 is 5 again.",
+        "art": { "at": { "one": "15 to 20 is 5", "two": "20 to 25 is 5 again" } } },
+      { "say": "Always check two jumps. One jump on its own can trick you.",
+        "art": { "at": { "check": "check two jumps", "trick": "can trick you" } } },
+      { "say": "Every jump here is 5, so the pattern goes up in fives.",
+        "art": { "at": { "every": "Every jump here is 5", "fives": "up in fives" } } },
+      { "say": "Now one number is hiding. 10, 20, gap, 40.",
+        "art": { "at": { "hiding": "one number is hiding", "seq": "10, 20, gap, 40" } } },
+      { "say": "It goes up in tens, so the gap must be 30.",
+        "art": { "at": { "tens": "up in tens", "ans": "the gap must be 30" } } }
+    ] },
+
+    { "id": "back", "kind": "back", "heading": "Counting back in steps", "codes": ["2Nc.04"], "beats": [
+      { "say": "Counting back takes the same step away each time.",
+        "art": { "at": { "back": "Counting back", "away": "takes the same step away" } } },
+      { "say": "Start at 50 and count back in tens. 50, 40, 30, 20.",
+        "art": { "at": { "start": "Start at 50", "tens": "count back in tens", "seq": "50, 40, 30, 20" } } },
+      { "say": "The numbers get smaller. If one gets bigger, you went the wrong way.",
+        "art": { "at": { "smaller": "get smaller", "wrong": "the wrong way" } } }
+    ] },
+
+    { "id": "hundred", "kind": "hundred", "heading": "The hundred square", "codes": ["2Nc.06"], "beats": [
+      { "say": "Number patterns hide in the hundred square as well.",
+        "art": { "at": { "hide": "hide in the hundred square" } } },
+      { "say": "These coloured numbers are 5, 15, 25 and 35.",
+        "art": { "at": { "coloured": "These coloured numbers", "seq": "5, 15, 25 and 35" } } },
+      { "say": "They go straight down one column. Each one is ten more.",
+        "art": { "at": { "down": "straight down one column", "ten": "ten more" } } },
+      { "say": "So the next one is 45. Down one row always adds ten.",
+        "art": { "at": { "next": "the next one is 45", "row": "Down one row" } } }
+    ] },
+
+    { "id": "recap", "kind": "recap", "heading": "What you now know", "codes": ["2Sp.01", "2Nc.04", "2Nc.06"], "beats": [
+      { "say": "A repeating pattern has a part that comes round again.",
+        "art": { "at": { "part": "a part that comes round again" } } },
+      { "say": "A number pattern goes up, or back, by the same step.",
+        "art": { "at": { "up": "goes up", "back": "or back", "step": "the same step" } } },
+      { "say": "You can count on in twos, fives or tens, from any number.",
+        "art": { "at": { "on": "count on in twos", "any": "from any number" } } },
+      { "say": "Find the step, and you can always say what comes next.",
+        "art": { "at": { "find": "Find the step" } } }
+    ] }
+  ]
+}

@@ -1,0 +1,114 @@
+{
+  "_comment": "Storyboard for the Grade 1 Mathematics unit lecture film, Halves and Wholes. Rendered by tools/create-ehel-unit-lecture.js. See lecture-video/BRIEF.md. Every beat is one narration clip; art.at names the phrases a picture waits for, and the page refuses to load if a phrase is not in its beat's say. The chapters follow the lesson's own order - two equal parts, colour one half, half of a group, half of a number, two halves make a whole - and use the lesson page's own numbers: the square and the strip cut near one end, six apples on two plates, eight counters in two rows, half of ten, and three wholes made of six halves. Every division drawn in this film is cut at the exact middle, except the strip that the film names as NOT equal and then repairs.",
+  "slug": "halves-and-wholes",
+  "lesson": 3,
+  "grade": 1,
+  "stage": 1,
+  "title": "Halves and Wholes",
+  "subtitle": "Grade 1 Mathematics",
+  "framework": "Cambridge Primary Mathematics 0096",
+  "renderer": {
+    "art": ["math"],
+    "skin": "brown",
+    "scenes": [
+      "tools/lib/ehel-film-marks.js",
+      "tools/lib/film-scenes/math-g1/halves-and-wholes.js",
+      "tools/lib/film-scenes/math-g1/halves-and-wholes-2.js",
+      "tools/lib/film-scenes/math-g1/halves-and-wholes-3.js"
+    ]
+  },
+  "objectives": [
+    ["1Nf.01", "Understand that an object or shape can be split into two equal parts or two unequal parts."],
+    ["1Nf.02", "Understand that a half can describe one of two equal parts of a quantity or set of objects."],
+    ["1Nf.03", "Understand that a half can act as an operator (whole number answers)."],
+    ["1Nf.04", "Understand and visualise that halves can be combined to make wholes."]
+  ],
+  "scenes": [
+    { "id": "title", "kind": "title", "codes": [], "beats": [
+      { "say": "Half means two parts, and both are exactly the same size.",
+        "art": { "at": { "two": "two parts", "same": "exactly the same size" } } },
+      { "say": "Cut a shape fairly, and each part you get is one half.",
+        "art": { "at": { "fair": "Cut a shape fairly", "half": "one half" } } }
+    ] },
+
+    { "id": "equal", "kind": "equal", "heading": "Two equal parts", "codes": ["1Nf.01"], "beats": [
+      { "say": "Look at this square. A line goes straight down the middle.",
+        "art": { "at": { "square": "this square", "line": "straight down the middle" } } },
+      { "say": "The two parts match. Swap them over and you would not notice.",
+        "art": { "at": { "match": "The two parts match", "swap": "Swap them over" } } },
+      { "say": "That is equal. Equal means exactly the same size, not nearly.",
+        "art": { "at": { "equal": "That is equal", "exactly": "exactly the same size" } } },
+      { "say": "Now look at this strip. It is cut near one end.",
+        "art": { "at": { "strip": "this strip", "near": "cut near one end" } } },
+      { "say": "One part is fat and one is thin. They are not equal.",
+        "art": { "at": { "fat": "One part is fat", "thin": "one is thin", "notequal": "not equal" } } },
+      { "say": "Two parts is not enough. Both parts must be the same size.",
+        "art": { "at": { "enough": "not enough", "both": "Both parts must be the same size" } } }
+    ] },
+
+    { "id": "onehalf", "kind": "onehalf", "heading": "Colour one half", "codes": ["1Nf.02"], "beats": [
+      { "say": "This circle is already cut into two equal parts.",
+        "art": { "at": { "circle": "This circle", "twoparts": "two equal parts" } } },
+      { "say": "Colour one part, and then stop. That piece is one half.",
+        "art": { "at": { "one": "Colour one part", "stop": "then stop", "ahalf": "one half" } } },
+      { "say": "One of two equal parts is one half. One part, not both.",
+        "art": { "at": { "oneof": "One of two equal parts", "notboth": "not both" } } },
+      { "say": "Colour both parts and you colour every bit of the circle.",
+        "art": { "at": { "bothparts": "Colour both parts", "every": "every bit of the circle" } } },
+      { "say": "That is not a half. That is the whole shape.",
+        "art": { "at": { "nothalf": "not a half", "wholeshape": "the whole shape" } } }
+    ] },
+
+    { "id": "group", "kind": "group", "heading": "Half of a group", "codes": ["1Nf.02"], "beats": [
+      { "say": "Half is not only for shapes. You can halve a pile of things.",
+        "art": { "at": { "shapes": "not only for shapes", "pile": "a pile of things" } } },
+      { "say": "Here are six apples and two plates. Do not guess.",
+        "art": { "at": { "six": "six apples", "plates": "two plates", "guess": "Do not guess" } } },
+      { "say": "Deal them out one at a time, like cards. Empty the pile.",
+        "art": { "at": { "deal": "Deal them out", "onetime": "one at a time", "empty": "Empty the pile" } } },
+      { "say": "Three on each plate. Both plates end up with exactly the same.",
+        "art": { "at": { "three": "Three on each plate", "plsame": "exactly the same" } } },
+      { "say": "So half of six is three, and nobody is left out.",
+        "art": { "at": { "halfsix": "half of six is three", "leftout": "left out" } } }
+    ] },
+
+    { "id": "number", "kind": "number", "heading": "Half of a number", "codes": ["1Nf.03"], "beats": [
+      { "say": "Halving a number is the same job as sharing a pile.",
+        "art": { "at": { "halving": "Halving a number", "sharing": "sharing a pile" } } },
+      { "say": "Take eight counters. Share them into two equal rows.",
+        "art": { "at": { "eight": "eight counters", "rows": "two equal rows" } } },
+      { "say": "Now count one row only. One, two, three, four.",
+        "art": { "at": { "countrow": "count one row only", "four": "four" } } },
+      { "say": "Four and four make eight, so half of eight is four.",
+        "art": { "at": { "fourfour": "Four and four make eight", "halfeight": "half of eight is four" } } },
+      { "say": "Do not count them all. Eight is what you started with.",
+        "art": { "at": { "countall": "count them all", "started": "what you started with" } } },
+      { "say": "Halving makes a number smaller. Half of ten is five.",
+        "art": { "at": { "smaller": "makes a number smaller", "halften": "Half of ten is five" } } }
+    ] },
+
+    { "id": "whole", "kind": "whole", "heading": "Two halves make a whole", "codes": ["1Nf.04"], "beats": [
+      { "say": "Here is one half of a circle. It has a straight edge.",
+        "art": { "at": { "halfcircle": "one half of a circle", "edge": "a straight edge" } } },
+      { "say": "Find the piece that fills the empty space exactly.",
+        "art": { "at": { "fills": "fills the empty space" } } },
+      { "say": "It has to be the same size, and the same shape.",
+        "art": { "at": { "samesize": "the same size", "sameshape": "the same shape" } } },
+      { "say": "Push the two halves together and the circle is whole again.",
+        "art": { "at": { "push": "Push the two halves together", "again": "whole again" } } },
+      { "say": "Every whole takes two halves. Count them: two, four, six.",
+        "art": { "at": { "every": "Every whole takes two halves", "count": "two, four, six" } } },
+      { "say": "Three whole oranges are made from six halves.",
+        "art": { "at": { "threewholes": "Three whole oranges", "sixhalves": "six halves" } } }
+    ] },
+
+    { "id": "recap", "kind": "recap", "heading": "What you now know", "codes": ["1Nf.01", "1Nf.02", "1Nf.03", "1Nf.04"], "beats": [
+      { "say": "A half is one of two parts that are exactly the same size.",
+        "art": { "at": { "rEqual": "exactly the same size" } } },
+      { "say": "Half of a group, and half of a number, is a fair share.",
+        "art": { "at": { "rGroup": "Half of a group", "rNumber": "half of a number" } } },
+      { "say": "And two halves always make one whole. Now it is your turn.",
+        "art": { "at": { "rTwo": "two halves", "rTurn": "your turn" } } }
+    ] }
+  ]
+}

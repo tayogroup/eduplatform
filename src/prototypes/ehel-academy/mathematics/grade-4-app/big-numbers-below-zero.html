@@ -3092,7 +3092,21 @@
     });
   }
 
+  function lessonFilm(o) {
+    const v = o.video, stage = document.getElementById(o.stage);
+    stage.innerHTML = '<div class="lec lec-film">' +
+      '<video controls playsinline preload="none" poster="' + esc(v.poster) + '" src="' + esc(v.src) + '">' +
+      '<track kind="captions" srclang="en" label="English" src="' + esc(v.vtt) + '"></video>' +
+      '<p class="lec-note">' + esc(v.note) + '</p></div>';
+    const film = stage.querySelector('video'), slide = stage.closest('section.slide');
+    film.addEventListener('ended', () => finish(o.finish, o.done));
+    if (slide && window.MutationObserver) new MutationObserver(() => {
+      if (!slide.classList.contains('active') && !film.paused) film.pause();
+    }).observe(slide, { attributes: true, attributeFilter: ['class'] });
+  }
+  
   function lessonLecture(o) {
+    if (o.video) return lessonFilm(o);
     const parts = o.parts || [];
     let k = 0;
     const id = o.stage + 'l';
@@ -3191,7 +3205,7 @@
   }
 
   lessonAbout({ stage: 'stageOvw', about: ["Say what a digit is worth by which column it sits in, up to ten thousand.", "Regroup a number into a different mix of thousands, hundreds, tens and ones.", "Multiply and divide by 10 and 100 by moving every digit, not by adding a zero.", "Read and order numbers below zero on a number line.", "Round a number to the nearest ten, hundred or thousand, whichever the question asks for."], finish: 0, done: "Let's begin." });
-  lessonLecture({ stage: 'stageLec', parts: [{ title: "Big numbers, one column at a time", say: "A digit is worth a different amount depending on which column it sits in. The same 8 can be worth 8, or eighty thousand - it depends where it is standing." }, { title: "Regrouping", say: "One thousand can be swapped for ten hundreds without changing the number at all. That swap is called regrouping, and it only changes how the number is stored, not what it is worth." }, { title: "Multiplying and dividing by 10", say: "Multiplying by ten does not add a zero. Every digit moves one place to the left, and a zero only fills the empty column left behind." }, { title: "Below zero", say: "Numbers can go below zero. A thermometer shows them, and on a number line, further right always means bigger - even when both numbers are negative." }], finish: 1, done: "You have heard the whole lesson. Now do it yourself." });
+  lessonLecture({ stage: 'stageLec', parts: [{ title: "Big numbers, one column at a time", say: "A digit is worth a different amount depending on which column it sits in. The same 8 can be worth 8, or eighty thousand - it depends where it is standing." }, { title: "Regrouping", say: "One thousand can be swapped for ten hundreds without changing the number at all. That swap is called regrouping, and it only changes how the number is stored, not what it is worth." }, { title: "Multiplying and dividing by 10", say: "Multiplying by ten does not add a zero. Every digit moves one place to the left, and a zero only fills the empty column left behind." }, { title: "Below zero", say: "Numbers can go below zero. A thermometer shows them, and on a number line, further right always means bigger - even when both numbers are negative." }], video: { src: "lecture-video/big-numbers-below-zero.de4c94d1.mp4", poster: "lecture-video/big-numbers-below-zero.2530b640.jpg", vtt: "lecture-video/big-numbers-below-zero.19cd5d64.vtt", note: "The whole lesson in about 3 minutes. When the film ends, this step is done." }, finish: 1, done: "You have heard the whole lesson. Now do it yourself." });
   lessonWords({ stage: 'stageMw', words: [{ w: "digit", pic: "🔢", meaning: "One of the ten symbols 0-9 used to write a number. 3,472 has four digits.", uses: ["Point to the digit in the hundreds column."] }, { w: "place value", pic: "🏷️", meaning: "What a digit is worth because of the column it sits in, not just the symbol itself.", uses: ["The place value of the 4 in 3,472 is four hundred."] }, { w: "regroup", pic: "🔄", meaning: "Rewrite the same number using a different mix of thousands, hundreds, tens and ones - the value never changes.", uses: ["Regroup 4,208 as 3 thousands and 12 hundreds."] }, { w: "negative number", pic: "❄️", meaning: "A number below zero, written with a minus sign, such as -5.", uses: ["The temperature dropped to a negative number overnight."] }, { w: "round", pic: "🎯", meaning: "Replace a number with a nearby one that is easier to work with, such as the nearest hundred.", uses: ["Round 4,630 to the nearest hundred."] }], finish: 2, done: "You know the math words of this lesson." });
   show(0, false);
   quiet -= 1;   /* the first draw is over: say() speaks from here on */
@@ -4100,6 +4114,9 @@
     align-items: center; gap: 10px; text-align: center; }
   .phase { color: var(--teal); font-weight: 800; font-size: 12.5px; letter-spacing: .1em;
     text-transform: uppercase; }
+  .lec.lec-film { max-width: 760px; }
+  .lec-film video { width: 100%; display: block; border-radius: 18px; background: #000;
+    aspect-ratio: 16 / 9; box-shadow: var(--shadow); }
   .lec-h { font-weight: 800; font-size: clamp(21px, 4vw, 26px); margin: 0; }
   .lec-p { margin: 0; font-size: 19px; line-height: 1.55; max-width: 34em; }
   .lec-note { margin: 4px 0 0; color: var(--muted); font-size: 13.5px; }

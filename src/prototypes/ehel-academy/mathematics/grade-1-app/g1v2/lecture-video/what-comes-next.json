@@ -1,0 +1,109 @@
+{
+  "_comment": "Storyboard for the Grade 1 Mathematics unit lecture film, What Comes Next. Rendered by tools/create-ehel-unit-lecture.js. See lecture-video/BRIEF.md. Every beat is one narration clip; art.at names the phrases a picture waits for, and the page refuses to load if a phrase is not in its beat's say. The chapters follow the lesson's own three-part lecture (patterns that repeat; jump patterns; the equals sign) with the lesson's own growing-shape step between the last two, and they use the lesson's own numbers: its orange-and-teal bead row, its purple-gold-gold unit, its 2 4 6 8 10 and 10 9 8 7 6 jump patterns, its pattern-of-two growing shapes (2, 4, 6, 8) and its first balance, 4 + 2 = ? + 3.",
+  "slug": "what-comes-next",
+  "lesson": 4,
+  "grade": 1,
+  "stage": 1,
+  "title": "What Comes Next",
+  "subtitle": "Grade 1 Mathematics",
+  "framework": "Cambridge Primary Mathematics 0096",
+  "renderer": {
+    "art": ["math"],
+    "skin": "brown",
+    "scenes": [
+      "tools/lib/ehel-film-marks.js",
+      "tools/lib/film-scenes/math-g1/what-comes-next.js",
+      "tools/lib/film-scenes/math-g1/what-comes-next-2.js",
+      "tools/lib/film-scenes/math-g1/what-comes-next-3.js"
+    ]
+  },
+  "objectives": [
+    ["1Nc.06", "Use familiar language to describe sequences of objects."],
+    ["1Nc.04", "Count on in ones, twos or tens, and count back in ones and tens, starting from any number (from 0 to 20)."],
+    ["1Ni.05", "Estimate, add and subtract whole numbers (where the answer is from 0 to 20)."]
+  ],
+  "scenes": [
+    { "id": "title", "kind": "title", "codes": [], "beats": [
+      { "say": "Some things happen again and again, in the same order.",
+        "art": { "at": { "again": "again and again", "order": "the same order" } } },
+      { "say": "That is a pattern. Spot the part that repeats, and you can say what comes next.",
+        "art": { "at": { "pattern": "That is a pattern", "next": "what comes next" } } }
+    ] },
+
+    { "id": "repeat", "kind": "repeat", "heading": "Patterns that repeat", "codes": ["1Nc.06"], "beats": [
+      { "say": "Look at these beads. Orange, teal, orange, teal, orange.",
+        "art": { "at": { "beads": "these beads", "count": "Orange, teal, orange" } } },
+      { "say": "Say the colours out loud, and let your voice run on past the end.",
+        "art": { "at": { "loud": "out loud", "run": "run on past the end" } } },
+      { "say": "Your voice wants to say teal next. Your voice is right.",
+        "art": { "at": { "wants": "wants to say teal", "right": "is right" } } },
+      { "say": "Two colours can take turns, and that is a pattern too. It repeats the same part over and over.",
+        "art": { "at": { "turns": "take turns", "repeats": "It repeats" } } },
+      { "say": "So start at the beginning every time, and let the words carry you on.",
+        "art": { "at": { "start": "start at the beginning", "carry": "carry you on" } } }
+    ] },
+
+    { "id": "unit", "kind": "unit", "heading": "The part that repeats", "codes": ["1Nc.06"], "beats": [
+      { "say": "Every pattern has one small part that repeats.",
+        "art": { "at": { "every": "Every pattern", "repeats": "that repeats" } } },
+      { "say": "Purple, gold, gold. Then purple, gold, gold again.",
+        "art": { "at": { "first": "Purple, gold, gold", "again": "Then purple, gold, gold" } } },
+      { "say": "Three beads repeat. You can draw a line after every three.",
+        "art": { "at": { "three": "Three beads repeat", "line": "draw a line" } } },
+      { "say": "Now one bead is missing. Look at the bead before the hole.",
+        "art": { "at": { "missing": "one bead is missing", "before": "the bead before the hole" } } },
+      { "say": "The part that repeats tells you exactly what belongs there.",
+        "art": { "at": { "tells": "tells you exactly what belongs" } } }
+    ] },
+
+    { "id": "jump", "kind": "jump", "heading": "Jump patterns", "codes": ["1Nc.04"], "beats": [
+      { "say": "Numbers make patterns too. Two, four, six, eight, ten.",
+        "art": { "at": { "numbers": "Numbers make patterns", "count": "Two, four, six" } } },
+      { "say": "Each number is two more than the one before it.",
+        "art": { "at": { "two": "two more", "before": "the one before it" } } },
+      { "say": "That is a jump pattern, and the jump is the same every time.",
+        "art": { "at": { "jump": "a jump pattern", "same": "the same every time" } } },
+      { "say": "A jump can go backwards too. Ten, nine, eight, seven, six.",
+        "art": { "at": { "back": "go backwards", "down": "Ten, nine, eight" } } },
+      { "say": "Find the jump first. Then you can fill any hole in the line.",
+        "art": { "at": { "find": "Find the jump", "fill": "fill any hole" } } }
+    ] },
+
+    { "id": "grow", "kind": "grow", "heading": "Patterns that grow", "codes": ["1Nc.04", "1Nc.06"], "beats": [
+      { "say": "Some patterns grow. Each one adds a new row of two shapes.",
+        "art": { "at": { "grow": "patterns grow", "row": "a new row of two" } } },
+      { "say": "Two shapes, then four, then six. Count them every time.",
+        "art": { "at": { "counts": "Two shapes, then four, then six", "count": "Count them" } } },
+      { "say": "The counts jump up by two, just like the numbers did.",
+        "art": { "at": { "jump": "jump up by two", "like": "like the numbers did" } } },
+      { "say": "So pattern four has eight shapes. Six, and two more.",
+        "art": { "at": { "eight": "eight shapes", "more": "two more" } } },
+      { "say": "A growing pattern gets bigger by the same amount each time.",
+        "art": { "at": { "bigger": "gets bigger", "same": "the same amount" } } }
+    ] },
+
+    { "id": "equals", "kind": "equals", "heading": "The equals sign", "codes": ["1Ni.05"], "beats": [
+      { "say": "The equals sign means the same amount on both sides.",
+        "art": { "at": { "equals": "The equals sign", "both": "both sides" } } },
+      { "say": "It does not mean here comes the answer.",
+        "art": { "at": { "answer": "here comes the answer" } } },
+      { "say": "Three add something makes seven. How many are missing?",
+        "art": { "at": { "three": "Three add something", "seven": "makes seven" } } },
+      { "say": "Count on from three: four, five, six, seven. That is four.",
+        "art": { "at": { "countOn": "four, five, six, seven", "four": "That is four" } } },
+      { "say": "Now a scale. Four add two on one side, three on the other.",
+        "art": { "at": { "scale": "Now a scale", "other": "three on the other" } } },
+      { "say": "Add three more, and it sits level. Both sides make six.",
+        "art": { "at": { "add": "Add three more", "level": "sits level", "six": "Both sides make six" } } }
+    ] },
+
+    { "id": "recap", "kind": "recap", "heading": "What you now know", "codes": ["1Nc.06", "1Nc.04", "1Ni.05"], "beats": [
+      { "say": "A pattern has a part that repeats. Find it and carry on.",
+        "art": { "at": { "part": "a part that repeats" } } },
+      { "say": "A jump pattern goes up or down by the same amount.",
+        "art": { "at": { "jump": "A jump pattern" } } },
+      { "say": "And equals means the same on both sides. Now go and try it.",
+        "art": { "at": { "equals": "equals means the same", "go": "go and try it" } } }
+    ] }
+  ]
+}

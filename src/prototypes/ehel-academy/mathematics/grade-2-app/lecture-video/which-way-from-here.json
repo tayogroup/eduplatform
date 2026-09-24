@@ -1,0 +1,117 @@
+{
+  "_comment": "Storyboard for the Grade 2 Mathematics unit lecture film, Which Way From Here. Rendered by tools/create-ehel-unit-lecture.js. See lecture-video/BRIEF.md. Every beat is one narration clip; art.at names the phrases a picture waits for, and the page refuses to load if a phrase is not in its beat's say. The chapters follow the lesson page's own teaching steps in order: Saying where (step 4), Whose left is it (step 5), the size of a turn (the turns the lesson's story and always-work steps test), Drive it to the flag (step 6), Say the route (step 7) and Over the mirror line (step 8). Every number and every route here is the lesson's own. The lesson deliberately has NO cardinal points - its DIRS are the top, the right, the bottom, the left, because north, east, south and west are Stage 3's Gp.01 - so ART.compass is not used and the film never says north.",
+  "slug": "which-way-from-here",
+  "lesson": 6,
+  "grade": 2,
+  "stage": 2,
+  "title": "Which Way From Here",
+  "subtitle": "Grade 2 Mathematics",
+  "framework": "Cambridge Primary Mathematics 0096",
+  "renderer": {
+    "art": ["math"],
+    "skin": "brown",
+    "scenes": [
+      "tools/lib/ehel-film-marks.js",
+      "tools/lib/film-scenes/math-g2/which-way-from-here.js",
+      "tools/lib/film-scenes/math-g2/which-way-from-here-2.js",
+      "tools/lib/film-scenes/math-g2/which-way-from-here-3.js"
+    ]
+  },
+  "objectives": [
+    ["1Gp.01", "Use familiar language to describe position and direction."],
+    ["2Gp.01", "Use knowledge of position and direction to describe movement."],
+    ["2Gg.11", "Understand that an angle is a description of a turn, including reference to the terms whole, half and quarter turns, both clockwise and anticlockwise."],
+    ["2Gp.02", "Sketch the reflection of a 2D shape in a vertical mirror line, including where the mirror line is the edge of the shape."]
+  ],
+  "scenes": [
+    { "id": "title", "kind": "title", "codes": [], "beats": [
+      { "say": "Where is it? And which way do you go from here?",
+        "art": { "at": { "where": "Where is it?", "which": "which way do you go" } } },
+      { "say": "Today you say where things are, and you give directions.",
+        "art": { "at": { "say": "say where things are", "give": "give directions" } } }
+    ] },
+
+    { "id": "where", "kind": "where", "heading": "Saying where", "codes": ["1Gp.01"], "beats": [
+      { "say": "Before any grid, you can say where something is in words.",
+        "art": { "at": { "grid": "Before any grid", "words": "in words" } } },
+      { "say": "The tree is above the boat. The medal is below the fish.",
+        "art": { "at": { "above": "above the boat", "below": "below the fish" } } },
+      { "say": "The boat is between the fish and the butterfly, one on each side.",
+        "art": { "at": { "between": "between the fish and the butterfly", "side": "one on each side" } } },
+      { "say": "And the star sits up in the top left corner.",
+        "art": { "at": { "star": "the star", "corner": "the top left corner" } } }
+    ] },
+
+    { "id": "whose", "kind": "whose", "heading": "Whose left is it?", "codes": ["2Gp.01"], "beats": [
+      { "say": "Left and right depend on the way you are facing.",
+        "art": { "at": { "depend": "depend on the way you are facing" } } },
+      { "say": "This robot faces the top of the page. Its left is your left.",
+        "art": { "at": { "top": "faces the top of the page", "left": "Its left is your left" } } },
+      { "say": "Now it faces the bottom. Its left is over on your right.",
+        "art": { "at": { "bottom": "faces the bottom", "right": "over on your right" } } },
+      { "say": "So turn with the robot, and never with the page.",
+        "art": { "at": { "turn": "turn with the robot", "page": "never with the page" } } }
+    ] },
+
+    { "id": "turns", "kind": "turns", "heading": "How big is the turn?", "codes": ["2Gg.11"], "beats": [
+      { "say": "A turn has a size. This much is a quarter turn.",
+        "art": { "at": { "size": "a size", "much": "This much", "quarter": "a quarter turn" } } },
+      { "say": "Two quarter turns make a half turn. You face back the way you came.",
+        "art": { "at": { "two": "Two quarter turns", "half": "a half turn", "back": "back the way you came" } } },
+      { "say": "Four quarter turns make a whole turn, all the way round to the start.",
+        "art": { "at": { "four": "Four quarter turns", "whole": "a whole turn", "round": "all the way round", "start": "to the start" } } },
+      { "say": "A turn changes the way you face. It does not move you along.",
+        "art": { "at": { "changes": "changes the way you face", "move": "does not move you along" } } }
+    ] },
+
+    { "id": "drive", "kind": "drive", "heading": "Drive it to the flag", "codes": ["2Gp.01", "2Gg.11"], "beats": [
+      { "say": "Forward goes the way the robot faces. Turn first, then go.",
+        "art": { "at": { "forward": "Forward goes the way the robot faces", "turn": "Turn first, then go" } } },
+      { "say": "The flag is two squares up, and two squares to the right.",
+        "art": { "at": { "up": "two squares up", "right": "two squares to the right" } } },
+      { "say": "The robot faces the top, so go forward two squares.",
+        "art": { "at": { "top": "faces the top", "go": "go forward two squares" } } },
+      { "say": "Now turn right. It faces the right of the page.",
+        "art": { "at": { "turn": "turn right", "faces": "faces the right of the page" } } },
+      { "say": "Go forward two more squares, and it lands on the flag.",
+        "art": { "at": { "go": "Go forward two more squares", "flag": "lands on the flag" } } }
+    ] },
+
+    { "id": "route", "kind": "route", "heading": "Say the route", "codes": ["2Gp.01"], "beats": [
+      { "say": "Now you read a route that somebody else walked.",
+        "art": { "at": { "read": "read a route" } } },
+      { "say": "Start at the star, and follow the purple trail to the flag.",
+        "art": { "at": { "star": "the star", "trail": "the purple trail", "flag": "the flag" } } },
+      { "say": "It goes two squares towards the top of the page.",
+        "art": { "at": { "two": "two squares towards the top" } } },
+      { "say": "Then it turns, and goes two squares towards the right.",
+        "art": { "at": { "turns": "it turns", "two": "two squares towards the right" } } },
+      { "say": "Say how many squares, and say which way, every time.",
+        "art": { "at": { "many": "how many squares", "way": "which way" } } }
+    ] },
+
+    { "id": "mirror", "kind": "mirror", "heading": "Over the mirror line", "codes": ["2Gp.02"], "beats": [
+      { "say": "A mirror line flips a shape over to the other side.",
+        "art": { "at": { "flips": "flips a shape over", "other": "the other side" } } },
+      { "say": "Look at this square. It is two squares from the line.",
+        "art": { "at": { "this": "this square", "two": "two squares from the line" } } },
+      { "say": "So it lands two squares away, on the other side of the line.",
+        "art": { "at": { "lands": "lands two squares away", "other": "the other side of the line" } } },
+      { "say": "Every part flips over. The shape does not slide across.",
+        "art": { "at": { "every": "Every part flips over", "slide": "does not slide across" } } },
+      { "say": "The reflection is the same size, just facing the other way.",
+        "art": { "at": { "size": "the same size", "facing": "facing the other way" } } }
+    ] },
+
+    { "id": "recap", "kind": "recap", "heading": "What you now know", "codes": ["1Gp.01", "2Gp.01", "2Gg.11", "2Gp.02"], "beats": [
+      { "say": "Position words say where something is: above, below, between.",
+        "art": { "at": { "position": "Position words", "above": "above, below, between" } } },
+      { "say": "Forward goes the way you face, so turn first, then go.",
+        "art": { "at": { "forward": "Forward goes the way you face", "turn": "turn first, then go" } } },
+      { "say": "A quarter turn, a half turn, a whole turn, all the way round.",
+        "art": { "at": { "quarter": "A quarter turn", "half": "a half turn", "whole": "a whole turn" } } },
+      { "say": "And a mirror line flips a shape over, the same distance away.",
+        "art": { "at": { "mirror": "a mirror line", "distance": "the same distance away" } } }
+    ] }
+  ]
+}

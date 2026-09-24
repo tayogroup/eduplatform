@@ -3257,7 +3257,21 @@
     });
   }
 
+  function lessonFilm(o) {
+    const v = o.video, stage = document.getElementById(o.stage);
+    stage.innerHTML = '<div class="lec lec-film">' +
+      '<video controls playsinline preload="none" poster="' + esc(v.poster) + '" src="' + esc(v.src) + '">' +
+      '<track kind="captions" srclang="en" label="English" src="' + esc(v.vtt) + '"></video>' +
+      '<p class="lec-note">' + esc(v.note) + '</p></div>';
+    const film = stage.querySelector('video'), slide = stage.closest('section.slide');
+    film.addEventListener('ended', () => finish(o.finish, o.done));
+    if (slide && window.MutationObserver) new MutationObserver(() => {
+      if (!slide.classList.contains('active') && !film.paused) film.pause();
+    }).observe(slide, { attributes: true, attributeFilter: ['class'] });
+  }
+  
   function lessonLecture(o) {
+    if (o.video) return lessonFilm(o);
     const parts = o.parts || [];
     let k = 0;
     const id = o.stage + 'l';
@@ -3356,7 +3370,7 @@
   }
 
   lessonAbout({ stage: 'stageOvw', about: ["Estimate an answer before calculating, and check the exact answer against it.", "Add and subtract using a method that makes sense for the numbers in front of you.", "Find every factor pair of a number."], finish: 0, done: "Let's begin." });
-  lessonLecture({ stage: 'stageLec', parts: [{ title: "Estimating first", say: "A sensible rough answer, worked out quickly by rounding, tells you whether your exact answer is even in the right range - always estimate before you calculate exactly." }, { title: "Choosing a method", say: "225 + 98 is easier as 225 + 100, then take away the 2 you added too many. The best method depends on the numbers in front of you, not one fixed rule." }, { title: "Factor pairs", say: "Two numbers that multiply together to make a given number are a factor pair. 24 has several factor pairs: 1 and 24, 2 and 12, 3 and 8, 4 and 6." }], finish: 1, done: "You have heard the whole lesson. Now do it yourself." });
+  lessonLecture({ stage: 'stageLec', parts: [{ title: "Estimating first", say: "A sensible rough answer, worked out quickly by rounding, tells you whether your exact answer is even in the right range - always estimate before you calculate exactly." }, { title: "Choosing a method", say: "225 + 98 is easier as 225 + 100, then take away the 2 you added too many. The best method depends on the numbers in front of you, not one fixed rule." }, { title: "Factor pairs", say: "Two numbers that multiply together to make a given number are a factor pair. 24 has several factor pairs: 1 and 24, 2 and 12, 3 and 8, 4 and 6." }], video: { src: "lecture-video/ways-to-calculate.6ec5fed6.mp4", poster: "lecture-video/ways-to-calculate.f90d342a.jpg", vtt: "lecture-video/ways-to-calculate.08153834.vtt", note: "The whole lesson in about 3 minutes. When the film ends, this step is done." }, finish: 1, done: "You have heard the whole lesson. Now do it yourself." });
   lessonWords({ stage: 'stageMw', words: [{ w: "estimate", pic: "🎲", meaning: "A sensible guess at an answer, worked out quickly, before or instead of calculating exactly.", uses: ["Estimate the total shopping bill before adding it up exactly."] }, { w: "sum", pic: "➕", meaning: "The answer when numbers are added together.", uses: ["Find the sum of 225 and 98."] }, { w: "difference", pic: "➖", meaning: "The answer when one number is subtracted from another.", uses: ["The difference between 100 and 98 is 2."] }, { w: "product", pic: "✖️", meaning: "The answer when numbers are multiplied together.", uses: ["The product of 6 and 4 is 24."] }, { w: "factor pair", pic: "🔗", meaning: "Two numbers that multiply together to make a given number - 4 and 6 are a factor pair of 24.", uses: ["List every factor pair of 24."] }], finish: 2, done: "You know the math words of this lesson." });
   show(0, false);
   quiet -= 1;   /* the first draw is over: say() speaks from here on */
@@ -4259,6 +4273,9 @@
     align-items: center; gap: 10px; text-align: center; }
   .phase { color: var(--teal); font-weight: 800; font-size: 12.5px; letter-spacing: .1em;
     text-transform: uppercase; }
+  .lec.lec-film { max-width: 760px; }
+  .lec-film video { width: 100%; display: block; border-radius: 18px; background: #000;
+    aspect-ratio: 16 / 9; box-shadow: var(--shadow); }
   .lec-h { font-weight: 800; font-size: clamp(21px, 4vw, 26px); margin: 0; }
   .lec-p { margin: 0; font-size: 19px; line-height: 1.55; max-width: 34em; }
   .lec-note { margin: 4px 0 0; color: var(--muted); font-size: 13.5px; }

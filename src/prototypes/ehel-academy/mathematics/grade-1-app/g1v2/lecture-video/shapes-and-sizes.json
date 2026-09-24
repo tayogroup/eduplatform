@@ -1,0 +1,121 @@
+{
+  "_comment": "Storyboard for the Grade 1 Mathematics unit lecture film, Shapes and Sizes. Rendered by tools/create-ehel-unit-lecture.js. See lecture-video/BRIEF.md. Every beat is one narration clip; art.at names the phrases a picture waits for, and the page refuses to load if a phrase is not in its beat's say. The chapters follow the lesson opener's three lecture parts (flat and solid shapes; sides, corners and faces; comparing size) opened out into six teaching chapters, in the lesson page's own examples: its flat shapes (circle, triangle, square: step 4 'Flat shapes'), its solids (cube like a dice, sphere like a ball, cylinder like a tin, cone with a point: steps 6 and 14), its one sorting question (step 7 'Flat or solid?'), its three ribbons short-longer-longest (step 9), its melon and strawberry on the balance (step 10, question 1) and its full and empty jugs (step 11).",
+  "slug": "shapes-and-sizes",
+  "lesson": 5,
+  "grade": 1,
+  "stage": 1,
+  "title": "Shapes and Sizes",
+  "subtitle": "Grade 1 Mathematics",
+  "framework": "Cambridge Primary Mathematics 0096",
+  "renderer": {
+    "art": ["math"],
+    "skin": "brown",
+    "scenes": [
+      "tools/lib/ehel-film-marks.js",
+      "tools/lib/film-scenes/math-g1/shapes-and-sizes.js",
+      "tools/lib/film-scenes/math-g1/shapes-and-sizes-2.js",
+      "tools/lib/film-scenes/math-g1/shapes-and-sizes-3.js"
+    ]
+  },
+  "objectives": [
+    ["1Gg.01", "Identify, describe and sort 2D shapes by their characteristics or properties, including reference to number of sides and whether the sides are curved or straight."],
+    ["1Gg.03", "Identify, describe and sort 3D shapes by their properties, including reference to the number of faces, edges and whether faces are flat or curved."],
+    ["1Gg.06", "Differentiate between 2D and 3D shapes."],
+    ["1Gg.02", "Use familiar language to describe length, including long, longer, longest, thin, thinner, thinnest, short, shorter, shortest, tall, taller and tallest."],
+    ["1Gg.04", "Use familiar language to describe mass, including heavy, light, less and more."],
+    ["1Gg.05", "Use familiar language to describe capacity, including full, empty, less and more."]
+  ],
+  "scenes": [
+    { "id": "title", "kind": "title", "codes": [], "beats": [
+      { "say": "Shapes are all around you. Some are flat. Some are solid.",
+        "art": { "at": { "around": "all around you", "flat": "Some are flat", "solid": "Some are solid" } } },
+      { "say": "You can also compare their sizes. Longer, heavier, holds more.",
+        "art": { "at": { "compare": "compare their sizes", "longer": "Longer", "heavier": "heavier", "more": "holds more" } } }
+    ] },
+
+    { "id": "flat", "kind": "flat", "heading": "Flat shapes", "codes": ["1Gg.01"], "beats": [
+      { "say": "A flat shape lies on the page. You could draw it yourself.",
+        "art": { "at": { "flat": "A flat shape", "draw": "draw it yourself" } } },
+      { "say": "Here is a square. Count its sides: one, two, three, four.",
+        "art": { "at": { "square": "Here is a square", "one": "one,", "two": "two,", "three": "three,", "four": "four." } } },
+      { "say": "Four sides. Now the corners, where two sides meet.",
+        "art": { "at": { "sides": "Four sides", "corners": "the corners", "meet": "two sides meet" } } },
+      { "say": "One, two, three, four. A square has four corners too.",
+        "art": { "at": { "one": "One,", "two": "two,", "three": "three,", "four": "four.", "all": "four corners" } } },
+      { "say": "A triangle has three sides and three corners.",
+        "art": { "at": { "triangle": "A triangle", "sides": "three sides", "corners": "three corners" } } },
+      { "say": "A circle is different. Its edge curves right round, with no corners.",
+        "art": { "at": { "circle": "A circle", "curves": "curves right round", "none": "no corners" } } }
+    ] },
+
+    { "id": "solid", "kind": "solid", "heading": "Solid shapes", "codes": ["1Gg.03"], "beats": [
+      { "say": "A solid shape is not flat. You can hold it in your hand.",
+        "art": { "at": { "solid": "A solid shape", "hold": "hold it in your hand" } } },
+      { "say": "A cube is like a dice. Its flat surfaces are called faces.",
+        "art": { "at": { "cube": "A cube", "dice": "like a dice", "faces": "called faces" } } },
+      { "say": "Count them: one, two, three, four, five, six faces.",
+        "art": { "at": { "one": "one,", "two": "two,", "three": "three,", "four": "four,", "five": "five,", "six": "six faces" } } },
+      { "say": "An edge is where two faces meet. A cube has twelve edges.",
+        "art": { "at": { "edge": "An edge", "meet": "two faces meet", "twelve": "twelve edges" } } },
+      { "say": "A sphere is like a ball. One curved face, no edges.",
+        "art": { "at": { "sphere": "A sphere", "ball": "like a ball", "curved": "One curved face", "none": "no edges" } } },
+      { "say": "A cylinder is like a tin. A cone has a point on top.",
+        "art": { "at": { "cylinder": "A cylinder", "tin": "like a tin", "cone": "A cone", "point": "a point on top" } } }
+    ] },
+
+    { "id": "sort", "kind": "sort", "heading": "Flat or solid?", "codes": ["1Gg.06"], "beats": [
+      { "say": "How do you tell a flat shape from a solid one?",
+        "art": { "at": { "tell": "How do you tell", "flat": "a flat shape", "solid": "a solid one" } } },
+      { "say": "Ask one question. Could I pick it up and turn it over?",
+        "art": { "at": { "ask": "Ask one question", "pick": "pick it up", "turn": "turn it over" } } },
+      { "say": "A circle is drawn on paper, so it is flat. A ball you can hold.",
+        "art": { "at": { "circle": "A circle", "flat": "it is flat", "ball": "A ball", "hold": "you can hold" } } },
+      { "say": "A square is flat. A cube is solid, made of six square faces.",
+        "art": { "at": { "square": "A square", "cube": "A cube", "six": "six square faces" } } }
+    ] },
+
+    { "id": "length", "kind": "length", "heading": "Long, longer, longest", "codes": ["1Gg.02"], "beats": [
+      { "say": "Here are three ribbons, all of different lengths.",
+        "art": { "at": { "three": "three ribbons", "diff": "different lengths" } } },
+      { "say": "Line up one end, so they all start together.",
+        "art": { "at": { "line": "Line up one end", "start": "start together" } } },
+      { "say": "Now see which one goes further. This one is short.",
+        "art": { "at": { "further": "goes further", "short": "is short" } } },
+      { "say": "This one is longer. And this one is the longest of all.",
+        "art": { "at": { "longer": "is longer", "longest": "the longest of all" } } }
+    ] },
+
+    { "id": "mass", "kind": "mass", "heading": "Heavy and light", "codes": ["1Gg.04"], "beats": [
+      { "say": "Which one is heavier? A balance can tell you.",
+        "art": { "at": { "heavier": "is heavier", "balance": "A balance" } } },
+      { "say": "Put a melon in one pan and a strawberry in the other.",
+        "art": { "at": { "melon": "a melon", "straw": "a strawberry" } } },
+      { "say": "The side that goes down holds the heavier thing.",
+        "art": { "at": { "down": "goes down", "heavier": "the heavier thing" } } },
+      { "say": "The melon side goes down. So the melon is heavier.",
+        "art": { "at": { "tip": "goes down", "heavier": "the melon is heavier" } } }
+    ] },
+
+    { "id": "capacity", "kind": "capacity", "heading": "Which holds more?", "codes": ["1Gg.05"], "beats": [
+      { "say": "Capacity means how much a container can hold.",
+        "art": { "at": { "capacity": "Capacity", "hold": "how much a container can hold" } } },
+      { "say": "This jug is full. The water is right up to the top.",
+        "art": { "at": { "full": "is full", "top": "right up to the top" } } },
+      { "say": "This one is empty. It has none at all.",
+        "art": { "at": { "empty": "is empty", "none": "none at all" } } },
+      { "say": "In between, the jug where the water is higher holds more.",
+        "art": { "at": { "between": "In between", "higher": "the water is higher", "more": "holds more" } } }
+    ] },
+
+    { "id": "recap", "kind": "recap", "heading": "What you now know", "codes": ["1Gg.01", "1Gg.03", "1Gg.06", "1Gg.02", "1Gg.04", "1Gg.05"], "beats": [
+      { "say": "Flat shapes have sides and corners. Solid shapes have faces and edges.",
+        "art": { "at": { "flat": "Flat shapes", "solid": "Solid shapes" } } },
+      { "say": "A flat shape you draw. A solid shape you can hold.",
+        "art": { "at": { "hold": "you can hold" } } },
+      { "say": "Longer, heavier, holds more: you can compare any two things.",
+        "art": { "at": { "longer": "Longer", "heavier": "heavier", "more": "holds more" } } },
+      { "say": "Now go and hunt for shapes at home.",
+        "art": { "at": { "hunt": "hunt for shapes" } } }
+    ] }
+  ]
+}

@@ -1,0 +1,122 @@
+{
+  "_comment": "Storyboard for the Grade 4 Mathematics unit lecture film, Where Things Are. Rendered by tools/create-ehel-unit-lecture.js. See lecture-video/BRIEF.md. The chapters follow the lesson's own three parts (compass points, coordinates, turns and angles) and its own slides: the four cardinal points and a quarter turn (slide 1), the ordinal points and where their names come from (slide 2), a two-move route on the 8 by 8 map (slides 3 and 4), along first then up (slides 5 and 6), the corners of a rectangle (slide 7), and a mirror line on the shape's own edge (slides 8 and 9). Every number said is the lesson's: Hodan's 3 east then 2 north, the point (3, 2), the rectangle with corners (1, 1) and (4, 3).",
+  "slug": "where-things-are",
+  "lesson": 7,
+  "grade": 4,
+  "stage": 4,
+  "title": "Where Things Are",
+  "subtitle": "Grade 4 Mathematics",
+  "framework": "Cambridge Primary Mathematics 0096",
+  "renderer": {
+    "art": ["math"],
+    "skin": "brown",
+    "scenes": [
+      "tools/lib/ehel-film-marks.js",
+      "tools/lib/film-scenes/math-g4/where-things-are.js",
+      "tools/lib/film-scenes/math-g4/where-things-are-2.js",
+      "tools/lib/film-scenes/math-g4/where-things-are-3.js"
+    ]
+  },
+  "objectives": [
+    ["4Gp.01", "Interpret and create descriptions of position, direction and movement, including reference to cardinal and ordinal points, and their notations."],
+    ["4Gp.02", "Understand that position can be described using coordinate notation. Read and plot coordinates in the first quadrant (with the aid of a grid)."],
+    ["4Gp.03", "Reflect 2D shapes in a horizontal or vertical mirror line, including where the mirror line is the edge of the shape, on square grids."]
+  ],
+  "scenes": [
+    { "id": "title", "kind": "title", "codes": [], "beats": [
+      { "say": "Where is it? And which way? A grid and a compass answer both.",
+        "art": { "at": { "grid": "A grid", "compass": "a compass" } } },
+      { "say": "Eight compass points, and a pair of numbers for every place.",
+        "art": { "at": { "eight": "Eight compass points", "pair": "a pair of numbers" } } }
+    ] },
+
+    { "id": "cardinal", "kind": "cardinal", "heading": "Four main points", "codes": ["4Gp.01"], "beats": [
+      { "say": "A compass always has four main points on every map.",
+        "art": { "at": { "four": "four main points", "map": "every map" } } },
+      { "say": "North, east, south and west, going round in that order.",
+        "art": { "at": { "north": "North", "east": "east", "south": "south", "west": "west" } } },
+      { "say": "You are facing north. Now make a quarter turn clockwise.",
+        "art": { "at": { "facing": "facing north", "quarter": "a quarter turn clockwise" } } },
+      { "say": "You are facing east. Each quarter turn moves you on one point.",
+        "art": { "at": { "east": "facing east", "one": "moves you on one point" } } },
+      { "say": "A quarter turn is a right angle. Four turns make a full turn.",
+        "art": { "at": { "right": "a right angle", "full": "a full turn" } } }
+    ] },
+
+    { "id": "ordinal", "kind": "ordinal", "heading": "The four in between", "codes": ["4Gp.01"], "beats": [
+      { "say": "Between north and east there sits one more point.",
+        "art": { "at": { "between": "Between north and east", "one": "one more point" } } },
+      { "say": "Its name is both names joined together: north-east.",
+        "art": { "at": { "joined": "both names joined", "ne": "north-east" } } },
+      { "say": "South and west join in the same way, to make south-west.",
+        "art": { "at": { "join": "South and west join", "sw": "south-west" } } },
+      { "say": "There are four of these in-between points, one in each gap.",
+        "art": { "at": { "four": "four of these", "gap": "each gap" } } },
+      { "say": "That makes eight in all, and north or south always comes first.",
+        "art": { "at": { "eight": "eight in all", "first": "always comes first" } } }
+    ] },
+
+    { "id": "route", "kind": "route", "heading": "Following a route", "codes": ["4Gp.01"], "beats": [
+      { "say": "A route is moves, one after another, in order.",
+        "art": { "at": { "route": "A route", "after": "one after another" } } },
+      { "say": "Hodan starts on this square. North is up the grid.",
+        "art": { "at": { "starts": "starts on this square", "north": "North is up the grid" } } },
+      { "say": "She walks three squares east. Count them: one, two, three.",
+        "art": { "at": { "east": "three squares east", "c1": "one,", "c2": "two,", "c3": "three." } } },
+      { "say": "Then she walks two squares north, up two rows.",
+        "art": { "at": { "north": "two squares north", "up": "up two rows" } } },
+      { "say": "She is still three squares east of her start. North changed the row, not the column.",
+        "art": { "at": { "east": "three squares east", "row": "changed the row", "col": "not the column" } } }
+    ] },
+
+    { "id": "coords", "kind": "coords", "heading": "Along first, then up", "codes": ["4Gp.02"], "beats": [
+      { "say": "This grid has numbers along the bottom and up the side.",
+        "art": { "at": { "along": "along the bottom", "up": "up the side" } } },
+      { "say": "A coordinate is a pair of numbers, like three and two.",
+        "art": { "at": { "pair": "a pair of numbers", "three": "three and two" } } },
+      { "say": "Go along three first, then go up two squares.",
+        "art": { "at": { "along": "along three", "up": "up two squares" } } },
+      { "say": "That lands on the point. Along first, then up, every time.",
+        "art": { "at": { "lands": "lands on the point", "every": "every time" } } },
+      { "say": "Swap them and you are somewhere else. Two along and three up is a different place.",
+        "art": { "at": { "swap": "Swap them", "two": "Two along", "three": "three up", "diff": "a different place" } } }
+    ] },
+
+    { "id": "corners", "kind": "corners", "heading": "The corners of a shape", "codes": ["4Gp.02"], "beats": [
+      { "say": "A shape sits on the grid. Every corner has its own pair.",
+        "art": { "at": { "shape": "A shape sits on the grid", "corner": "Every corner" } } },
+      { "say": "This corner here is one along and one up.",
+        "art": { "at": { "along": "one along", "up": "one up" } } },
+      { "say": "The corner opposite is four along and three up.",
+        "art": { "at": { "four": "four along", "three": "three up" } } },
+      { "say": "The other two borrow one number from each of those.",
+        "art": { "at": { "other": "The other two", "each": "one number from each" } } },
+      { "say": "Read every corner the same way: along the bottom, then up the side.",
+        "art": { "at": { "every": "Read every corner", "along": "along the bottom", "up": "then up the side" } } }
+    ] },
+
+    { "id": "mirror", "kind": "mirror", "heading": "Reflecting in a mirror line", "codes": ["4Gp.03"], "beats": [
+      { "say": "A mirror line runs down the grid, along the edge of this shape.",
+        "art": { "at": { "mirror": "A mirror line", "edge": "the edge of this shape" } } },
+      { "say": "Every square receives a partner, the same distance the other side.",
+        "art": { "at": { "every": "Every square", "same": "the same distance" } } },
+      { "say": "This square is right against the line, so its partner touches it.",
+        "art": { "at": { "against": "right against the line", "touches": "its partner touches it" } } },
+      { "say": "This is two squares back, so its partner is two squares out.",
+        "art": { "at": { "back": "two squares back", "out": "two squares out" } } },
+      { "say": "All six squares cross over, and the picture is twice as wide.",
+        "art": { "at": { "six": "All six squares", "twice": "twice as wide" } } }
+    ] },
+
+    { "id": "recap", "kind": "recap", "heading": "What you now know", "codes": ["4Gp.01", "4Gp.02", "4Gp.03"], "beats": [
+      { "say": "Eight compass points name every direction. A quarter turn is a right angle.",
+        "art": { "at": { "eight": "Eight compass points", "quarter": "A quarter turn" } } },
+      { "say": "A route is moves in order. A coordinate is along first, then up.",
+        "art": { "at": { "route": "A route", "coordinate": "A coordinate" } } },
+      { "say": "Every corner has its own pair.",
+        "art": { "at": { "corner": "Every corner" } } },
+      { "say": "And a mirror gives every square its partner.",
+        "art": { "at": { "mirror": "a mirror" } } }
+    ] }
+  ]
+}

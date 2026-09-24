@@ -28,19 +28,18 @@ export const meta = {
                   so no line may change: pictures and cues only, checked on the
                   MEASURED timeline. */
 
-/* args can be a FILE instead of a literal. A resume does NOT keep the args of
-   the run it resumes - it throws "args need app, brief, scenesDir ..." - so
-   every retry had to resend the whole lessons array, which for one grade is
-   several thousand words. Three retries were forced in one afternoon (a network
-   outage, then the session limit twice), so the args live in a file and a retry
-   is {argsFile}. The file must hold exactly what args would have held. */
-let A = args || {}
-if (typeof A.argsFile === "string") {
-  let read
-  try { read = require("fs").readFileSync(A.argsFile, "utf8") }
-  catch (e) { throw new Error("argsFile could not be read (" + A.argsFile + "): " + e.message) }
-  try { A = JSON.parse(read) }
-  catch (e) { throw new Error("argsFile is not valid JSON (" + A.argsFile + "): " + e.message) }
+/* A resumed workflow does NOT keep the args of the run it resumes - it throws
+   "args need app, brief, scenesDir ..." in milliseconds - so every retry must
+   resend the whole lessons array. That cost three full resends in one afternoon
+   (a network outage, then the session limit twice).
+
+   An args-in-a-file escape was tried on 2026-09-24 and REMOVED the same hour:
+   a workflow script has neither `require` nor `import()`, so it cannot read a
+   file at all. Both were tried and both were refused - `require is not defined`
+   at run time, and `import() is not available in workflow scripts` before the
+   script even launches. There is no file access here to build on. Resend the
+   args. */
+const A = args || {}
 }
 /* app, brief, scenesDir, grade and example may be set per lesson, so one run
    can carry several grades (and stay under the account's rate limit: a run

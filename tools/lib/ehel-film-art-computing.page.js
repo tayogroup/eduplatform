@@ -218,8 +218,32 @@
       return HOST;
     }
     function withDom(fn) {
+      /* The sliced sprite stage carries the LESSON'S OWN sequencing timers -
+         setTimeout(r, 720) between blocks, and a 320 ms one for jump. They are
+         right on a lesson page, where the child watches the sprite move. In a
+         film they are a bug with no owner: the gate shuts when this returns,
+         the timer fires hundreds of milliseconds later, calls $ , and throws
+         into nothing. Every Grade 1 Computing film refused --preview, --sample
+         AND --sweep because of it, and the film page's own error said only
+         "a film cannot run a Computing activity" - pointing at the film rather
+         than at this. (Found by the first drafting wave, 2026-09-24. A fresh
+         box id does not help: $ throws before it ever looks an id up.)
+
+         So while the gate is open, a timer runs AT ONCE. The lesson's chain
+         then resolves synchronously and leaves nothing pending, which is what
+         a film wants anyway - it needs the END STATE, not the animation. The
+         depth cap is because a block chain schedules the next block from
+         inside the previous one. */
+      var realTimeout = window.setTimeout, depth = 0;
+      window.setTimeout = function (fn2, ms) {
+        if (typeof fn2 !== "function" || depth > 400) return 0;
+        depth++;
+        try { fn2(); } catch (e) { /* a lesson timer that fails is not the film's */ }
+        finally { depth--; }
+        return 0;
+      };
       DOM_OPEN = true;
-      try { return fn(); } finally { DOM_OPEN = false; }
+      try { return fn(); } finally { DOM_OPEN = false; window.setTimeout = realTimeout; }
     }
     function mount(sprites, opts) {
       var box = host();

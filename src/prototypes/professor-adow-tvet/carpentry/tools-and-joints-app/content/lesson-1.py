@@ -60,6 +60,16 @@ LESSON = {
               # it: the renderer reads data.slides, and nested here it drew
               # nothing at all while every gate stayed green.
               "slides": "lecture-video/marking-out-and-cutting-a-halving-joint.310a3160.slides.html",
+              # A ten-second demonstration clip of the real thing, between
+              # the film and the line that sends the learner back through it.
+              # The lecture is DRAWN; this is footage. Played at 0.75 so the
+              # cut can be followed, and it does not autoplay because it
+              # carries sound.
+              "demo": {
+                  "src": "lecture-video/wood-cutting-demonstration.901c652c.mp4",
+                  "caption": "Wood Cutting Demonstration Video",
+                  "rate": 0.75,
+              },
               "parts": [
                   {"sequence": "joint", "state": 1,
                    "say": "This is a halving joint. Two pieces of timber cross, and each one has had exactly half its thickness cut away, so the two faces finish flush. By the end of this lesson you will have marked one out and cut it."},

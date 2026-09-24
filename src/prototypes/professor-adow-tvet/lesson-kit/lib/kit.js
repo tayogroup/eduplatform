@@ -733,6 +733,50 @@
       }
       v.addEventListener("ended", () => done());
       wrap.appendChild(v);
+
+      /* A DEMONSTRATION CLIP, between the lecture film and the line that
+         sends the learner back through it. Footage of the real thing, where
+         the lecture is drawn: the drawings say what to do and why, and ten
+         seconds of a saw in timber says what it looks and sounds like.
+
+         It is NOT the lecture, so it does not finish the step, it does not
+         autoplay — it carries sound — and it keeps its own caption saying
+         what it is. `rate` plays it slower than life: a demonstration is
+         watched to see HOW, and full speed is often faster than a learner
+         can follow. playbackRate is reset by the browser when a source
+         loads, so it is set again on loadedmetadata; setting it once before
+         the metadata arrives is silently discarded. */
+      if (data.demo && data.demo.src) {
+        const dv = document.createElement("video");
+        dv.className = "carp-film carp-demo";
+        dv.controls = true;
+        dv.preload = "metadata";
+        dv.playsInline = true;
+        if (data.demo.poster) dv.poster = data.demo.poster;
+        const dsrc = document.createElement("source");
+        dsrc.src = data.demo.src;
+        dsrc.type = "video/mp4";
+        dv.appendChild(dsrc);
+        const rate = Number(data.demo.rate) || 1;
+        const setRate = () => { dv.playbackRate = rate; };
+        dv.addEventListener("loadedmetadata", setRate);
+        dv.addEventListener("ratechange", () => {
+          /* the learner's own speed control wins; this only re-asserts the
+             default when the browser has quietly reset it to 1 */
+          if (dv.playbackRate === 1 && rate !== 1 && !dv.dataset.userRate) setRate();
+        });
+        setRate();
+        wrap.appendChild(dv);
+
+        /* The caption is used verbatim. An earlier version appended
+           "· playing at 0.75× speed" to it, which is useful to a learner and
+           is still not the caption that was asked for. */
+        const dcap = document.createElement("p");
+        dcap.className = "carp-caption carp-demo-cap";
+        dcap.textContent = data.demo.caption || "Demonstration";
+        wrap.appendChild(dcap);
+      }
+
       const under = document.createElement("p");
       under.className = "carp-caption";
       under.textContent = data.underFilm ||

@@ -66,19 +66,22 @@ LESSON = {
               # -16 LUFS so the lecture sounds the same whether it is watched
               # or stepped through. The first build of that audio was a bare
               # 64k mono encode at -21.1 LUFS - three and a half decibels
-              # under the film carrying the same words, which is audible. A SIBLING of "video", not a key inside
-              # it: the renderer reads data.slides, and nested here it drew
-              # nothing at all while every gate stayed green.
+              # under the film carrying the same words, which is audible.
+              #
+              # A SIBLING of "video", not a key inside it: the renderer reads
+              # data.slides, and nested there it drew nothing at all while
+              # every gate stayed green.
               "slides": "lecture-video/marking-out-and-cutting-a-halving-joint.02ff831b.slides.html",
               # A twenty-second demonstration clip of the real thing, between
               # the film and the line that sends the learner back through it.
               # The lecture is DRAWN; this is footage — the drawings say what
               # to do and why, and the bench says what it looks and sounds
               # like. The owner's longer version replaced a ten-second one and
-              # is the better match: it shows the face side and face edge
-              # being written on the timber, a chisel paring the joint, the
-              # two members offered together, and the finished work — which is
-              # the lesson's own order of work, filmed.
+              # is the better match: it shows the marking gauge being set, the
+              # face side and face edge written on the timber, the shoulder
+              # sawn, a chisel paring the joint, the two members offered
+              # together, and the finished work — the lesson's own order of
+              # work, filmed.
               #
               # Played at 0.65: shipped at 0.75, slowed to 0.6, then eased back
               # to 0.65 on the owner's word once the clip doubled in length,
@@ -93,17 +96,26 @@ LESSON = {
                   # which is tool and room noise — so these lines are written
                   # against what is on screen, checked frame by frame, and
                   # worded to tie the footage back to the job just taught.
-                  # `at` is in the CLIP's seconds, not wall-clock: at rate 0.6
-                  # these twenty seconds take over half a minute to watch.
-                  # Re-timed 2026-09-24 for the owner's longer clip, which is
-                  # the better match: it shows the face marks being written on
-                  # the wood, the chisel paring, and the dry fit.
+                  # `at` is in the CLIP's seconds, not wall-clock: at rate
+                  # 0.65 these twenty seconds take about thirty-one to watch.
+                  # Re-timed 2026-09-24 for the owner's longer clip. The
+                  # SECOND re-timing: the first sampled five frames and
+                  # interpolated between them, which put "paring with a
+                  # chisel" over footage of a saw and "the face side and face
+                  # edge" over a shot of the tools. Cue times now come from
+                  # reading the clip a second at a time, so each line names
+                  # what is on the screen while it is said: two pieces (0),
+                  # the gauge and saw (4), the face marks written (8), sawing
+                  # (10), paring (12), the dry fit (14), the finished work
+                  # (17).
                   "narration": [
                       {"at": 0.0,  "say": "Two pieces of timber that have to cross — the same job, at a real bench."},
-                      {"at": 6.5,  "say": "The face side and the face edge, marked on the wood. Every measurement comes off those two surfaces."},
-                      {"at": 11.5, "say": "Paring the waste away with a chisel, down to the line."},
-                      {"at": 15.0, "say": "Then the two members are offered together — a dry fit, before any glue goes near it."},
-                      {"at": 18.0, "say": "Together by hand, and flush. That is the joint the lecture drew."},
+                      {"at": 4.0,  "say": "The marking gauge, set and locked by hand, and the tenon saw waiting beside it."},
+                      {"at": 8.0,  "say": "The face side and the face edge, written on the wood. Every measurement comes off those two surfaces."},
+                      {"at": 10.0, "say": "Sawing the shoulder: fine teeth across the grain, and the stiff back keeping the cut straight."},
+                      {"at": 12.0, "say": "Paring the waste away with a chisel, down to the line."},
+                      {"at": 14.0, "say": "Then the two members are offered together — a dry fit, before any glue goes near it."},
+                      {"at": 17.0, "say": "Together by hand, and flush. That is the joint the lecture drew."},
                   ],
                   "rate": 0.65,
               },

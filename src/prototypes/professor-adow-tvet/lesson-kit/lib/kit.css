@@ -525,3 +525,24 @@ a.lesson:active .go { transform: translateY(2px); box-shadow: 0 1px 0 var(--gold
   background: #000;
   aspect-ratio: 16 / 9;
 }
+
+/* An author `display` beats the browser's own [hidden] rule, so `el.hidden =
+   true` on either of these left it on screen — the film went on playing under
+   the slide deck that had just replaced it. Say it explicitly. */
+.carp-film[hidden],
+.carp-slides[hidden],
+.carp-caption[hidden] { display: none !important; }
+
+/* The same lecture, stepped through. Taller than 16/9 on purpose: the slides
+   page carries its own Back / Again / Next bar under the stage, and at 16/9
+   that bar is what gets cropped. */
+.carp-slides {
+  display: block;
+  width: 100%;
+  max-width: 760px;
+  margin: 0 auto;
+  border-radius: 16px;
+  border: 1px solid var(--line);
+  background: #0b1720;
+  aspect-ratio: 16 / 10.1;
+}

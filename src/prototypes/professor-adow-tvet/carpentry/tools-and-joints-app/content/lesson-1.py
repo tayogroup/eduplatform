@@ -53,6 +53,13 @@ LESSON = {
                   "captions": "lecture-video/marking-out-and-cutting-a-halving-joint.54b24e37.vtt",
                   "poster": "lecture-video/marking-out-and-cutting-a-halving-joint.7cfa3a81.jpg",
               },
+              # The same lecture, stepped through a beat at a time, built by
+              # --slides from this storyboard and these drawings. 229 KB
+              # against the film's 11.2 MB, so it is also what a learner on a
+              # thin connection gets. A SIBLING of "video", not a key inside
+              # it: the renderer reads data.slides, and nested here it drew
+              # nothing at all while every gate stayed green.
+              "slides": "lecture-video/marking-out-and-cutting-a-halving-joint.310a3160.slides.html",
               "parts": [
                   {"sequence": "joint", "state": 1,
                    "say": "This is a halving joint. Two pieces of timber cross, and each one has had exactly half its thickness cut away, so the two faces finish flush. By the end of this lesson you will have marked one out and cut it."},

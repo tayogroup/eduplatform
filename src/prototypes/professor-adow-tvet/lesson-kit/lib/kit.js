@@ -738,6 +738,47 @@
       under.textContent = data.underFilm ||
         "Watched it? Go back through it a part at a time below.";
       wrap.appendChild(under);
+
+      /* THE SAME FILM, AT THE LEARNER'S PACE. Not a second lecture and not
+         a reconstruction of this one: the slides page is built from the same
+         storyboard and the same drawings by --slides, and replays one beat
+         at a time on Next. It is ~230 KB against the film's several
+         megabytes, so it is also the answer for a learner who cannot afford
+         to stream the video at all.
+
+         A toggle rather than a third thing on the page: a step that offered
+         a film, a slide deck AND eight parts would be three ways to meet the
+         same lecture, which is the clutter the deck-only change removed
+         elsewhere. */
+      if (data.slides) {
+        const row = document.createElement("div");
+        row.className = "bigbtns";
+        const toggle = document.createElement("button");
+        toggle.type = "button";
+        toggle.className = "big small ghost";
+        toggle.textContent = "⏯ Step through it at your own pace";
+        let deck = null;
+        toggle.addEventListener("click", () => {
+          if (deck) {
+            deck.remove(); deck = null;
+            v.hidden = false; under.hidden = false;
+            toggle.textContent = "⏯ Step through it at your own pace";
+            return;
+          }
+          deck = document.createElement("iframe");
+          deck.className = "carp-slides";
+          deck.src = data.slides;
+          deck.title = "The unit lecture, one slide at a time";
+          deck.loading = "lazy";
+          v.hidden = true; under.hidden = true;
+          wrap.insertBefore(deck, row);
+          toggle.textContent = "▶ Back to the film";
+          /* Stepping the whole lecture through is watching it. */
+          done();
+        });
+        row.appendChild(toggle);
+        wrap.appendChild(row);
+      }
     }
 
     const counter = document.createElement("p");

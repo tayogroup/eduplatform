@@ -89,35 +89,40 @@ LESSON = {
               # time is faster than a learner can follow. It does not autoplay
               # — it carries sound.
               "demo": {
-                  "src": "lecture-video/wood-cutting-demonstration.153371f5.mp4",
+                  "src": "lecture-video/wood-cutting-demonstration.b2001ff4.mp4",
                   "caption": "Wood Cutting Demonstration Video",
-                  # Narration for footage that has none. The clip carries no
-                  # speech — the audio sits flat at about -20 dB throughout,
-                  # which is tool and room noise — so these lines are written
-                  # against what is on screen, checked frame by frame, and
-                  # worded to tie the footage back to the job just taught.
-                  # `at` is in the CLIP's seconds, not wall-clock: at rate
-                  # 0.65 these twenty seconds take about thirty-one to watch.
-                  # Re-timed 2026-09-24 for the owner's longer clip. The
-                  # SECOND re-timing: the first sampled five frames and
-                  # interpolated between them, which put "paring with a
-                  # chisel" over footage of a saw and "the face side and face
-                  # edge" over a shot of the tools. Cue times now come from
-                  # reading the clip a second at a time, so each line names
-                  # what is on the screen while it is said: two pieces (0),
-                  # the gauge and saw (4), the face marks written (8), sawing
-                  # (10), paring (12), the dry fit (14), the finished work
-                  # (17).
+                  # THE CLIP IS NARRATED. The footage arrived silent of
+                  # speech - the audio sat flat at about -20 dB, which is tool
+                  # and room noise - so seven lines were written against it and
+                  # spoken in Daniel, the film's own voice, then mixed OVER the
+                  # bench sound rather than replacing it: the saw and the
+                  # chisel are half of why footage earns its place beside a
+                  # drawn diagram. 180 characters.
+                  #
+                  # The lines are short because SPEECH IS NOT A CAPTION. The
+                  # first draft of them ran 548 characters - about 39 seconds
+                  # of speech for a 20-second clip - which a text band can flash
+                  # in 2 seconds and a voice cannot say at all.
+                  #
+                  # RATE IS 1.0 for the same reason. The clip played at 0.65
+                  # while it was silent, to let a learner follow the cut; a
+                  # voice played at 0.65 is slurred and pitch-dropped, and the
+                  # narration now does the pacing instead.
+                  #
+                  # `at` is in the clip's seconds. The band shows the SAME
+                  # words as the voice, so it works with the sound off. 10.4
+                  # rather than 10.0: measured, "Face side and face edge" runs
+                  # 2.23 s from 8.0 and would have talked over the next line.
                   "narration": [
-                      {"at": 0.0,  "say": "Two pieces of timber that have to cross — the same job, at a real bench."},
-                      {"at": 4.0,  "say": "The marking gauge, set and locked by hand, and the tenon saw waiting beside it."},
-                      {"at": 8.0,  "say": "The face side and the face edge, written on the wood. Every measurement comes off those two surfaces."},
-                      {"at": 10.0, "say": "Sawing the shoulder: fine teeth across the grain, and the stiff back keeping the cut straight."},
-                      {"at": 12.0, "say": "Paring the waste away with a chisel, down to the line."},
-                      {"at": 14.0, "say": "Then the two members are offered together — a dry fit, before any glue goes near it."},
-                      {"at": 17.0, "say": "Together by hand, and flush. That is the joint the lecture drew."},
+                      {"at": 0.0,  "say": "Two pieces that have to cross."},
+                      {"at": 4.0,  "say": "The gauge is set; the saw waits."},
+                      {"at": 8.0,  "say": "Face side and face edge."},
+                      {"at": 10.4, "say": "Sawing the shoulder."},
+                      {"at": 12.4, "say": "Paring to the line."},
+                      {"at": 14.2, "say": "A dry fit, before any glue."},
+                      {"at": 17.0, "say": "Together by hand, and flush."},
                   ],
-                  "rate": 0.65,
+                  "rate": 1.0,
               },
               "parts": [
                   {"sequence": "joint", "state": 1,

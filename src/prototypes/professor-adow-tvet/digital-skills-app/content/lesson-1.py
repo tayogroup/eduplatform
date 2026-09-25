@@ -11,6 +11,19 @@ machine that does not know what job it is for until you tell it.
 """
 from _kit import step, opt, q, check, word
 
+import base64, os
+
+# THE CAPTION TRACK IS INLINED, not linked: a published artifact refuses to
+# serve a .vtt whatever content type it is given, and a linked one 404s there
+# silently, leaving a film with no captions and nothing on screen to say so.
+# A <track src> takes a data URI as happily as a path. The .vtt on disk stays
+# the source of truth and is read here at build time, so editing the captions
+# cannot drift from what the page ships.
+_VTT = os.path.join(os.path.dirname(os.path.abspath(__file__)),
+                    "..", "lecture-video", "machines-things-and-robots.fbc586a7.vtt")
+with open(_VTT, "rb") as _fh:
+    CAPTIONS = "data:text/vtt;base64," + base64.b64encode(_fh.read()).decode("ascii")
+
 LESSON = {
     "slug": "the-computers-you-already-use",
     "title": "The Computers You Already Use",
@@ -31,6 +44,34 @@ LESSON = {
         "Write a fault report a technician can act on.",
     ],
     "steps": [
+
+        # THE UNIT LECTURE, before the learner does anything.
+        #
+        # THIS FILM IS NOT OURS. It is Ehel Academy's Stage 3 Computing lecture
+        # "Machines, Things and Robots", reused whole rather than a new one being
+        # written for this module. Nothing about it was changed - not the
+        # words, not the pictures, not the voice, not even the encoding.
+        #
+        # It is a Stage 3 film for nine-year-olds, and its examples are a washing machine, traffic
+        # lights and a lift rather than workshop plant. It also names sensors as inputs and
+        # motors as outputs, which is lesson 3's sensor-controller-actuator material arriving
+        # early — useful, and not what this lesson is assessed on.
+        #
+        # The step says all of this in its own way: the line under the film
+        # points at the steps below, and the step's stated error is expecting
+        # the film to carry the lesson. It claims ONE criterion, the one it
+        # actually teaches.
+        #
+        # No `parts`. A lecture step is a film and nothing else here; no
+        # walkthrough was invented to sit beside somebody else's film.
+        step("lecture", "Unit lecture", ["ADOW-DS-DS.01.2"],
+             {"video": {"src": "lecture-video/machines-things-and-robots.8fbfc745.mp4",
+                        "captions": CAPTIONS,
+                        "poster": "lecture-video/machines-things-and-robots.22b7b259.jpg"},
+              "underFilm": "An introduction to the idea that a program inside a machine decides what it does. The workshop equipment — the moisture meter, the inverter, the chiller — is in the steps below."},
+             ask="Watch the film first. It introduces the idea; the steps after it put it on workshop equipment.",
+             error=("Treating the film as the lesson.",
+                    "It asks one question well — is a computer deciding, or are you? — and stops there. Everything this lesson is assessed on comes after it: finding the controller inside a meter, telling a mechanical fault from a digital one, and writing a fault report a technician can act on. None of that is in the film.")),
 
         step("label", "The computer in a moisture meter",
              ["ADOW-DS-DS.01.1", "ADOW-DS-DS.01.2"],

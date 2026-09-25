@@ -12,6 +12,19 @@ distinction applied.
 """
 from _kit import step, opt, q, check, word
 
+import base64, os
+
+# THE CAPTION TRACK IS INLINED, not linked: a published artifact refuses to
+# serve a .vtt whatever content type it is given, and a linked one 404s there
+# silently, leaving a film with no captions and nothing on screen to say so.
+# A <track src> takes a data URI as happily as a path. The .vtt on disk stays
+# the source of truth and is read here at build time, so editing the captions
+# cannot drift from what the page ships.
+_VTT = os.path.join(os.path.dirname(os.path.abspath(__file__)),
+                    "..", "lecture-video", "networks-around-us.446546ca.vtt")
+with open(_VTT, "rb") as _fh:
+    CAPTIONS = "data:text/vtt;base64," + base64.b64encode(_fh.read()).decode("ascii")
+
 LESSON = {
     "slug": "getting-connected-on-site",
     "title": "Getting Connected on Site",
@@ -31,6 +44,33 @@ LESSON = {
         "Say how a job's records reach the office, and what happens when they do not.",
     ],
     "steps": [
+
+        # THE UNIT LECTURE, before the learner does anything.
+        #
+        # THIS FILM IS NOT OURS. It is Ehel Academy's Stage 3 Computing lecture
+        # "Networks Around Us", reused whole rather than a new one being
+        # written for this module. Nothing about it was changed - not the
+        # words, not the pictures, not the voice, not even the encoding.
+        #
+        # It is a Stage 3 film and its network is a SCHOOL's — cables to a cupboard, an access point
+        # on a ceiling, a printer and a whiteboard. A site hut is the same hardware in worse
+        # weather, which is the transfer the steps below ask the learner to make.
+        #
+        # The step says all of this in its own way: the line under the film
+        # points at the steps below, and the step's stated error is expecting
+        # the film to carry the lesson. It claims ONE criterion, the one it
+        # actually teaches.
+        #
+        # No `parts`. A lecture step is a film and nothing else here; no
+        # walkthrough was invented to sit beside somebody else's film.
+        step("lecture", "Unit lecture", ["ADOW-DS-DS.02.2"],
+             {"video": {"src": "lecture-video/networks-around-us.a11692b4.mp4",
+                        "captions": CAPTIONS,
+                        "poster": "lecture-video/networks-around-us.51b6df87.jpg"},
+              "underFilm": "An introduction to the parts of a network — the switch, the server, the access point, the router. Choosing wired or wireless for a job, and diagnosing a dead connection, are in the steps below."},
+             ask="Watch the film first. It names the parts; the steps after it put them on a site.",
+             error=("Expecting the film to cover the whole lesson.",
+                    "It names the parts of a network and stops there. It never once mentions the internet, so the very first thing this lesson asks of you — telling a local network from the internet — is not in it, and neither is choosing wired over wireless, diagnosing a failure in order, or knowing what must never be sent over a connection you do not own.")),
 
         step("label", "A small site network", ["ADOW-DS-DS.02.1", "ADOW-DS-DS.02.2"],
              {"tool": "siteNetwork"},

@@ -14,6 +14,19 @@ with a method behind it instead of a shrug.
 """
 from _kit import step, opt, q, check, word
 
+import base64, os
+
+# THE CAPTION TRACK IS INLINED, not linked: a published artifact refuses to
+# serve a .vtt whatever content type it is given, and a linked one 404s there
+# silently, leaving a film with no captions and nothing on screen to say so.
+# A <track src> takes a data URI as happily as a path. The .vtt on disk stays
+# the source of truth and is read here at build time, so editing the captions
+# cannot drift from what the page ships.
+_VTT = os.path.join(os.path.dirname(os.path.abspath(__file__)),
+                    "..", "lecture-video", "hardware-and-software.316ffab1.vtt")
+with open(_VTT, "rb") as _fh:
+    CAPTIONS = "data:text/vtt;base64," + base64.b64encode(_fh.read()).decode("ascii")
+
 LESSON = {
     "slug": "hardware-software-and-machines-that-act",
     "title": "Hardware, Software and Machines That Act",
@@ -33,6 +46,33 @@ LESSON = {
         "Record a machine's settings before changing them, and restore them.",
     ],
     "steps": [
+
+        # THE UNIT LECTURE, before the learner does anything.
+        #
+        # THIS FILM IS NOT OURS. It is Ehel Academy's Stage 2 Computing lecture
+        # "Hardware and Software", reused whole rather than a new one being
+        # written for this module. Nothing about it was changed - not the
+        # words, not the pictures, not the voice, not even the encoding.
+        #
+        # It is a STAGE 2 film, the youngest of the three, made for seven-year-olds: its examples are
+        # a game, a drawing app and a tablet. The line it draws is exactly the right one and
+        # the register is the furthest from a workshop of any film in this module.
+        #
+        # The step says all of this in its own way: the line under the film
+        # points at the steps below, and the step's stated error is expecting
+        # the film to carry the lesson. It claims ONE criterion, the one it
+        # actually teaches.
+        #
+        # No `parts`. A lecture step is a film and nothing else here; no
+        # walkthrough was invented to sit beside somebody else's film.
+        step("lecture", "Unit lecture", ["ADOW-DS-DS.03.1"],
+             {"video": {"src": "lecture-video/hardware-and-software.30f07d4a.mp4",
+                        "captions": CAPTIONS,
+                        "poster": "lecture-video/hardware-and-software.6c330abe.jpg"},
+              "underFilm": "An introduction to the difference between the parts you can touch and the programs that run on them. Firmware, sensors and machines that start on their own are in the steps below."},
+             ask="Watch the film first. It draws the line between hardware and software; the steps after it put a fault on one side of it.",
+             error=("Expecting the film to cover the machines that act.",
+                    "It teaches the hardware-software line and nothing beyond it. HALF this lesson — the sensor, the controller and the actuator, a machine that starts without being asked, and recording settings before you change them — has no film and is taught only in the steps below. Watch it for the first two outcomes, not the last five.")),
 
         step("sort", "Hardware or software?", ["ADOW-DS-DS.03.1"],
              {"ask": "Sort each fault by where it actually sits. This decides who you call.",

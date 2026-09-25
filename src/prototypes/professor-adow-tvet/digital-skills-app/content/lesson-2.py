@@ -64,7 +64,7 @@ LESSON = {
         # No `parts`. A lecture step is a film and nothing else here; no
         # walkthrough was invented to sit beside somebody else's film.
         step("lecture", "Unit lecture", ["ADOW-DS-DS.02.2"],
-             {"video": {"src": "lecture-video/networks-around-us.a11692b4.mp4",
+             {"video": {"src": "lecture-video/networks-around-us.8b73141e.mp4",
                         "captions": CAPTIONS,
                         "poster": "lecture-video/networks-around-us.51b6df87.jpg"},
               "underFilm": "An introduction to the parts of a network — the switch, the server, the access point, the router. Choosing wired or wireless for a job, and diagnosing a dead connection, are in the steps below."},

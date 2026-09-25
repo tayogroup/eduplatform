@@ -10,6 +10,16 @@ them and a learner from any department should see their own bench in it.
 """
 from _kit import step, opt, q, word
 
+import base64, os
+
+# Inlined, not linked: a published artifact refuses to serve a .vtt whatever
+# content type it is given, so a linked track 404s there silently. The .vtt on
+# disk stays the source of truth and is read at build time.
+_VTT = os.path.join(os.path.dirname(os.path.abspath(__file__)),
+                    "..", "lecture-video", "measure-it.b98bed5b.vtt")
+with open(_VTT, "rb") as _fh:
+    CAPTIONS = "data:text/vtt;base64," + base64.b64encode(_fh.read()).decode("ascii")
+
 LESSON = {
     "slug": "reading-a-measurement",
     "title": "Reading a Measurement",
@@ -28,6 +38,43 @@ LESSON = {
         "Say whether a measurement is inside a stated tolerance.",
     ],
     "steps": [
+
+        # THE UNIT LECTURE, before the learner does anything.
+        #
+        # THIS FILM IS NOT OURS. It is Ehel Academy's Stage 3 Mathematics
+        # lecture "Measure It", reused whole. Re-encoded for delivery only
+        # (7.8 MB -> 5.7 MB, same 152 seconds, same picture) because the
+        # published demo has a 64 MB ceiling; nothing else was changed.
+        #
+        # READ THIS BEFORE TRUSTING THE CRITERION IT CLAIMS. The film never
+        # says the word "millimetre". It reads a ruler in CENTIMETRES, and
+        # its scale-reading example is a pointer between marks a hundred
+        # apart. SM.01.1 is claimed for the second half of its wording -
+        # naming the value rather than the nearest mark - which the film
+        # does teach, and NOT for the millimetre, which it does not. The
+        # millimetre, the datum, the tape's hook and the tolerance are the
+        # whole of this lesson and none of the four is in the film.
+        #
+        # build.py refuses a step that names no criterion, which is why this
+        # claims one at all. If a lecture step should be able to claim
+        # nothing, that is a change to the gate, not a reason to pick a
+        # criterion that fits less badly.
+        #
+        # No `parts`: a film and nothing else, with no walkthrough invented
+        # to sit beside somebody else's work.
+        step("lecture", "Unit lecture", ["ADOW-SM-SM.01.1"],
+             {"video": {"src": "lecture-video/measure-it.3a8d2567.mp4",
+                        "captions": CAPTIONS,
+                        "poster": "lecture-video/measure-it.4ef46df3.jpg"},
+              "underFilm": "An introduction to measuring: which tool, which unit, which scale. It works in centimetres and never mentions a millimetre — the steel rule, the datum, the tape hook and the tolerance are in the steps below."},
+             ask="Watch the film first. It introduces reading a scale; the steps after it take that to the millimetre and onto a steel rule.",
+             error=("Expecting the film to teach this lesson's measuring.",
+                    "It is a Stage 3 primary film: it reads a ruler to the nearest CENTIMETRE, weighs "
+                    "an apple and fills a litre jug. Every one of this lesson's four criteria is finer "
+                    "or more particular than that — reading to the nearest millimetre, working from "
+                    "a true datum rather than a damaged end or a sliding hook, holding a tape true over "
+                    "a long span, and judging a measurement against a stated tolerance. Watch it for "
+                    "what a scale is, then learn the trade's version below.")),
 
         step("findmark", "Find it on the rule", ["ADOW-SM-SM.01.1"],
              {"finish": "Whole centimetres first, then the millimetres past them. That is the whole method.",

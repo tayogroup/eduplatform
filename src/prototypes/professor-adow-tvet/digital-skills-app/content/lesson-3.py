@@ -66,7 +66,7 @@ LESSON = {
         # No `parts`. A lecture step is a film and nothing else here; no
         # walkthrough was invented to sit beside somebody else's film.
         step("lecture", "Unit lecture", ["ADOW-DS-DS.03.1"],
-             {"video": {"src": "lecture-video/hardware-and-software.30f07d4a.mp4",
+             {"video": {"src": "lecture-video/hardware-and-software.c023e98c.mp4",
                         "captions": CAPTIONS,
                         "poster": "lecture-video/hardware-and-software.6c330abe.jpg"},
               "underFilm": "An introduction to the difference between the parts you can touch and the programs that run on them. Firmware, sensors and machines that start on their own are in the steps below."},

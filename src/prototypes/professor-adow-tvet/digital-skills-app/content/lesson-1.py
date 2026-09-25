@@ -65,7 +65,7 @@ LESSON = {
         # No `parts`. A lecture step is a film and nothing else here; no
         # walkthrough was invented to sit beside somebody else's film.
         step("lecture", "Unit lecture", ["ADOW-DS-DS.01.2"],
-             {"video": {"src": "lecture-video/machines-things-and-robots.8fbfc745.mp4",
+             {"video": {"src": "lecture-video/machines-things-and-robots.f2eacdfa.mp4",
                         "captions": CAPTIONS,
                         "poster": "lecture-video/machines-things-and-robots.22b7b259.jpg"},
               "underFilm": "An introduction to the idea that a program inside a machine decides what it does. The workshop equipment — the moisture meter, the inverter, the chiller — is in the steps below."},

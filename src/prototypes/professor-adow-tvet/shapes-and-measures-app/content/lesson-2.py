@@ -9,6 +9,16 @@ sheet for a gable, concrete for a trench, water for a tank, feed by mass.
 """
 from _kit import step, opt, q, word
 
+import base64, os
+
+# Inlined, not linked: a published artifact refuses to serve a .vtt whatever
+# content type it is given, so a linked track 404s there silently. The .vtt
+# the renderer wrote stays the source of truth and is read at build time.
+_VTT = os.path.join(os.path.dirname(os.path.abspath(__file__)),
+                    "..", "lecture-video", "area-volume-and-what-they-cost.5d2f46f5.vtt")
+with open(_VTT, "rb") as _fh:
+    CAPTIONS = "data:text/vtt;base64," + base64.b64encode(_fh.read()).decode("ascii")
+
 LESSON = {
     "slug": "area-volume-and-what-they-cost",
     "title": "Area, Volume and What They Cost",
@@ -27,6 +37,31 @@ LESSON = {
         "Convert cubic metres to litres, and find a mass from a volume and a density.",
     ],
     "steps": [
+
+        # THE UNIT LECTURE, before the learner does anything.
+        #
+        # THIS FILM WAS MADE FOR THIS LESSON. It is not borrowed: all 116
+        # storyboards in the Ehel library were scanned first, and nothing
+        # there teaches this. "volume" appears nowhere in a measuring sense,
+        # "area" only in the Stage 4 maths film another lesson already uses,
+        # and the nearest thing to setting out teaches the right angle as a
+        # compass quarter turn. So it is drawn in the trade's own terms, in
+        # the school's own voice, and it covers the whole lesson rather than
+        # a corner of it - which is why it claims every criterion below and
+        # the borrowed films claim one each.
+        #
+        # Re-encoded after rendering for delivery only, because the published
+        # demo has a 64 MB ceiling. Same length, same picture.
+        #
+        # No `parts`: a film and nothing else.
+        step("lecture", "Unit lecture", ["ADOW-SM-SM.03.1", "ADOW-SM-SM.03.2", "ADOW-SM-SM.03.3", "ADOW-SM-SM.03.4", "ADOW-SM-SM.04.1", "ADOW-SM-SM.04.2", "ADOW-SM-SM.04.3"],
+             {"video": {"src": "lecture-video/area-volume-and-what-they-cost.5b2f30f2.mp4",
+                        "captions": CAPTIONS,
+                        "poster": "lecture-video/area-volume-and-what-they-cost.5d39cf0f.jpg"},
+              "underFilm": "Round the edge, across the surface, and inside the solid — with the openings taken off and the litres worked out. Every step below is one of these on a real job."},
+             ask="Watch the film first. It is this lesson end to end; the steps after it put each part on a job.",
+             error=("Watching it instead of working through the steps.",
+                    "The film shows each calculation once, on one clean example. The steps below give you an L-shaped room, a wall with a door and a window in it, a cylinder and a density, and those are where the mistakes live — measuring the longest way across, forgetting an opening, leaving an answer in the wrong unit.")),
 
         step("calc", "Perimeter: the edge of the job", ["ADOW-SM-SM.03.1"],
              {"finish": "Perimeter buys skirting, kerbing, fencing and edging — anything sold by the metre that goes round the outside.",

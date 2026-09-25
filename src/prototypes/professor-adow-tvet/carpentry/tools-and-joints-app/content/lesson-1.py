@@ -54,7 +54,7 @@ LESSON = {
               # made them, so a re-render cannot be shadowed by a CDN holding a
               # path for a year — and a changed film gets a changed name.
               "video": {
-                  "src": "lecture-video/marking-out-and-cutting-a-halving-joint.b8c5e186.mp4",
+                  "src": "lecture-video/marking-out-and-cutting-a-halving-joint.f52c3eac.mp4",
                   "captions": "lecture-video/marking-out-and-cutting-a-halving-joint.30ec7183.vtt",
                   "poster": "lecture-video/marking-out-and-cutting-a-halving-joint.d5d13118.jpg",
               },
@@ -89,7 +89,7 @@ LESSON = {
               # time is faster than a learner can follow. It does not autoplay
               # — it carries sound.
               "demo": {
-                  "src": "lecture-video/wood-cutting-demonstration.5fe57aeb.mp4",
+                  "src": "lecture-video/wood-cutting-demonstration.18b6b485.mp4",
                   "caption": "Wood Cutting Demonstration Video",
                   # THE CLIP IS NARRATED, and its OWN audio is discarded.
                   # Seven lines written against the picture and spoken in

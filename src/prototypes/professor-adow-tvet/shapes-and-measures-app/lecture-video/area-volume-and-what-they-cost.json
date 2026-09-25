@@ -1,0 +1,166 @@
+{
+  "_comment": "Storyboard for the unit lecture film of Area, Volume and What They Cost (Professor Adow TVET, Shapes and Measurements, lesson 2). Drawn rather than borrowed: all 116 storyboards in the Ehel library were scanned and 'volume' appears nowhere in a measuring sense, while 'area' appears only in the Stage 4 maths film another lesson already uses. Every art.at key must be a phrase that appears VERBATIM in its beat's say, or the mark never fires; tools/check-ehel-film-cues.js is the gate for that.",
+  "slug": "area-volume-and-what-they-cost",
+  "lesson": 2,
+  "grade": 3,
+  "stage": 3,
+  "title": "Area, Volume and What They Cost",
+  "subtitle": "Shapes and Measurements",
+  "framework": "Professor Adow TVET — Shapes and Measurements (ADOW-SM)",
+  "_voice": "Daniel. The school's voice, as chosen by the owner on 2026-09-24 and used by the halving-joint film and the lesson narration.",
+  "voice": "onwK4e9ZLuTAKqWW03F9",
+  "brand": {
+    "name": "Professor Adow TVET",
+    "mark": "A",
+    "by": "A short unit lecture from Professor Adow TVET"
+  },
+  "renderer": {
+    "scenes": [
+      "tools/lib/ehel-film-marks.js",
+      "tools/lib/film-scenes/adow-shapes/area-volume-cost.js"
+    ]
+  },
+  "objectives": [
+    ["ADOW-SM-SM.03.1", "Calculate the perimeter of a rectangle and of an L-shaped room."],
+    ["ADOW-SM-SM.03.2", "Calculate the area of a rectangle, a triangle and a circle."],
+    ["ADOW-SM-SM.03.3", "Find the area of an irregular shape by splitting it into rectangles."],
+    ["ADOW-SM-SM.03.4", "Subtract openings from a wall area before ordering."],
+    ["ADOW-SM-SM.04.1", "Calculate the volume of a rectangular solid and of a cylinder."],
+    ["ADOW-SM-SM.04.2", "Convert a volume in cubic metres to litres."],
+    ["ADOW-SM-SM.04.3", "Work out the mass of a quantity of material from its volume and its density."]
+  ],
+  "scenes": [
+    {
+      "id": "title",
+      "kind": "title",
+      "heading": "Area, Volume and What They Cost",
+      "codes": [],
+      "beats": [
+        {
+          "say": "Every job is measured before it is priced. How much floor to cover, how much wall to render, how much water a tank will hold. Get it wrong and somebody pays for the difference.",
+          "art": { "at": { "cover": "How much floor to cover", "pay": "somebody pays" } }
+        }
+      ]
+    },
+    {
+      "id": "perimeter",
+      "kind": "perimeter",
+      "heading": "The distance round the edge",
+      "codes": ["ADOW-SM-SM.03.1"],
+      "beats": [
+        {
+          "say": "Skirting, guttering, fencing and edging are all bought by the distance round the edge. Walk it. Four point two along the top, three down the side, and the same again coming back.",
+          "art": { "at": { "round": "round the edge", "sides": "Four point two", "add": "coming back" } }
+        },
+        {
+          "say": "Rooms are rarely that kind. An L-shaped room has six sides, and every one of them has to be measured, because the two you cannot see from the doorway are the two that get forgotten.",
+          "art": { "at": { "every": "every one of them" } }
+        }
+      ]
+    },
+    {
+      "id": "area",
+      "kind": "area",
+      "heading": "The surface itself",
+      "codes": ["ADOW-SM-SM.03.2"],
+      "beats": [
+        {
+          "say": "Area is the surface itself, and it is measured in squares. Count how many one-metre squares cover this floor and you get eighteen. Multiplying the two sides is the shortcut for that counting, not a different idea.",
+          "art": { "at": { "count": "how many one-metre squares", "shortcut": "the shortcut" } }
+        },
+        {
+          "say": "A triangle is exactly half of the rectangle it sits inside, so it is half the base times the height. A gable end, a hopper, a raking cut: all of them are this.",
+          "art": { "at": { "half": "exactly half" } }
+        },
+        {
+          "say": "A circle needs its radius, the distance from the middle to the edge. Pi times the radius times the radius again. A duct, a tank end, a manhole cover: those are circles, and nothing else will do.",
+          "art": { "at": { "radius": "its radius", "pi": "Pi times the radius" } }
+        }
+      ]
+    },
+    {
+      "id": "split",
+      "kind": "split",
+      "heading": "Shapes that are not rectangles",
+      "codes": ["ADOW-SM-SM.03.3"],
+      "beats": [
+        {
+          "say": "An awkward floor is not one shape. Draw a line and it becomes two rectangles, with nothing left over and nothing counted twice. That check matters more than the arithmetic.",
+          "art": { "at": { "two": "it becomes two rectangles", "nothing": "nothing left over" } }
+        },
+        {
+          "say": "Work each rectangle out, then add them. Three point six and one point four seven adds to five point zero seven square metres. Never measure the longest way across and hope.",
+          "art": { "at": { "adds": "adds to five point zero seven", "never": "Never measure the longest way" } }
+        }
+      ]
+    },
+    {
+      "id": "openings",
+      "kind": "openings",
+      "heading": "What you are not covering",
+      "codes": ["ADOW-SM-SM.03.4"],
+      "beats": [
+        {
+          "say": "Now the wall. There is a door in it and a window in it, and a wall is not a rectangle once there is a way through it.",
+          "art": { "at": { "door": "a door in it", "window": "a window in it", "through": "a way through it" } }
+        },
+        {
+          "say": "Work out the whole wall, then take the openings off. Eight point one four, less the door, less the window, leaves six point four two. Order for the whole wall and you have bought plaster for a doorway.",
+          "art": { "at": { "take": "take the openings off" } }
+        }
+      ]
+    },
+    {
+      "id": "volume",
+      "kind": "volume",
+      "heading": "How much it holds",
+      "codes": ["ADOW-SM-SM.04.1"],
+      "beats": [
+        {
+          "say": "Volume is space rather than surface, so there are three measurements and not two. Two metres long, one point two wide, nought point nine deep. Multiply all three and the trench holds two point one six cubic metres.",
+          "art": { "at": { "deep": "nought point nine deep", "three": "Multiply all three" } }
+        },
+        {
+          "say": "A round tank is the same idea. Work out the area of the circle at the end, then multiply by the height. Any prism is its end times its length.",
+          "art": { "at": { "circle": "the area of the circle", "height": "multiply by the height" } }
+        }
+      ]
+    },
+    {
+      "id": "litres",
+      "kind": "litres",
+      "heading": "Cubic metres into litres",
+      "codes": ["ADOW-SM-SM.04.2"],
+      "beats": [
+        {
+          "say": "Nobody orders water in cubic metres. One cubic metre is a thousand litres, so that trench would take two thousand one hundred and sixty. The unit changes; the quantity does not.",
+          "art": { "at": { "thousand": "a thousand litres" } }
+        }
+      ]
+    },
+    {
+      "id": "density",
+      "kind": "density",
+      "heading": "And what it weighs",
+      "codes": ["ADOW-SM-SM.04.3"],
+      "beats": [
+        {
+          "say": "A volume also weighs something. Water is a thousand kilograms for every cubic metre, so a cubic metre of it is a tonne, and whatever is underneath has to carry that.",
+          "art": { "at": { "weighs": "also weighs something", "carry": "has to carry that" } }
+        }
+      ]
+    },
+    {
+      "id": "recap",
+      "kind": "recap",
+      "heading": "Three questions, three answers",
+      "codes": [],
+      "beats": [
+        {
+          "say": "So: round the edge, add every side. For the surface, length times width, or half base by height, or pi r squared. For what it holds, the area of the end times the length. Measure it, work it out, then order it.",
+          "art": { "at": { "edge": "round the edge", "surface": "For the surface", "holds": "For what it holds", "order": "then order it" } }
+        }
+      ]
+    }
+  ]
+}

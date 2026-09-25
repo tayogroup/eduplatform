@@ -11,6 +11,16 @@ check.
 """
 from _kit import step, opt, q, word
 
+import base64, os
+
+# Inlined, not linked: a published artifact refuses to serve a .vtt whatever
+# content type it is given, so a linked track 404s there silently. The .vtt
+# the renderer wrote stays the source of truth and is read at build time.
+_VTT = os.path.join(os.path.dirname(os.path.abspath(__file__)),
+                    "..", "lecture-video", "square-level-and-setting-out.bed49319.vtt")
+with open(_VTT, "rb") as _fh:
+    CAPTIONS = "data:text/vtt;base64," + base64.b64encode(_fh.read()).decode("ascii")
+
 LESSON = {
     "slug": "square-level-and-setting-out",
     "title": "Square, Level and Setting Out",
@@ -30,6 +40,31 @@ LESSON = {
         "Add a stated waste allowance and present the working.",
     ],
     "steps": [
+
+        # THE UNIT LECTURE, before the learner does anything.
+        #
+        # THIS FILM WAS MADE FOR THIS LESSON. It is not borrowed: all 116
+        # storyboards in the Ehel library were scanned first, and nothing
+        # there teaches this. "volume" appears nowhere in a measuring sense,
+        # "area" only in the Stage 4 maths film another lesson already uses,
+        # and the nearest thing to setting out teaches the right angle as a
+        # compass quarter turn. So it is drawn in the trade's own terms, in
+        # the school's own voice, and it covers the whole lesson rather than
+        # a corner of it - which is why it claims every criterion below and
+        # the borrowed films claim one each.
+        #
+        # Re-encoded after rendering for delivery only, because the published
+        # demo has a 64 MB ceiling. Same length, same picture.
+        #
+        # No `parts`: a film and nothing else.
+        step("lecture", "Unit lecture", ["ADOW-SM-SM.05.1", "ADOW-SM-SM.05.2", "ADOW-SM-SM.05.3", "ADOW-SM-SM.06.1", "ADOW-SM-SM.06.2", "ADOW-SM-SM.06.3"],
+             {"video": {"src": "lecture-video/square-level-and-setting-out.f638b33d.mp4",
+                        "captions": CAPTIONS,
+                        "poster": "lecture-video/square-level-and-setting-out.b7d9591b.jpg"},
+              "underFilm": "What square, level and plumb each mean, the tool that proves each, the diagonals, the 3-4-5, and the waste allowance."},
+             ask="Watch the film first. It proves each of the three, then sets out a corner and counts what goes in it.",
+             error=("Taking the three words as one idea.",
+                    "Square is two things at ninety degrees, level is horizontal and plumb is vertical, and each has its own tool. A wall can be dead plumb and still not square to the wall beside it, so a spirit level held upright proves nothing about a corner. The steps below test the three separately for exactly that reason.")),
 
         step("browse", "Square, level and plumb", ["ADOW-SM-SM.05.1"],
              {"ask": "Three different things, three different tools. Tap each one.",

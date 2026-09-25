@@ -1,0 +1,149 @@
+{
+  "_comment": "Storyboard for the unit lecture film of Square, Level and Setting Out (Professor Adow TVET, Shapes and Measurements, lesson 3). Drawn rather than borrowed: of 116 storyboards in the Ehel library, the only one that teaches the right angle properly is the Stage 4 maths film another lesson already uses, and the next best teaches it as a compass quarter turn. Every art.at key must appear VERBATIM in its beat's say or the mark never fires.",
+  "slug": "square-level-and-setting-out",
+  "lesson": 3,
+  "grade": 3,
+  "stage": 3,
+  "title": "Square, Level and Setting Out",
+  "subtitle": "Shapes and Measurements",
+  "framework": "Professor Adow TVET — Shapes and Measurements (ADOW-SM)",
+  "_voice": "Daniel. The school's voice, owner's choice 2026-09-24.",
+  "voice": "onwK4e9ZLuTAKqWW03F9",
+  "brand": {
+    "name": "Professor Adow TVET",
+    "mark": "A",
+    "by": "A short unit lecture from Professor Adow TVET"
+  },
+  "renderer": {
+    "scenes": [
+      "tools/lib/ehel-film-marks.js",
+      "tools/lib/film-scenes/adow-shapes/square-level-setting-out.js"
+    ]
+  },
+  "objectives": [
+    ["ADOW-SM-SM.05.1", "Explain what square, level and plumb each mean and which tool proves each."],
+    ["ADOW-SM-SM.05.2", "Read a spirit level, including which way the work must move."],
+    ["ADOW-SM-SM.05.3", "Prove a rectangle square by measuring both diagonals."],
+    ["ADOW-SM-SM.06.1", "Set out a right angle on the ground using the 3-4-5 rule."],
+    ["ADOW-SM-SM.06.2", "Calculate the number of units a measured area needs."],
+    ["ADOW-SM-SM.06.3", "Add an allowance for waste and state the percentage used."]
+  ],
+  "scenes": [
+    {
+      "id": "title",
+      "kind": "title",
+      "heading": "Square, Level and Setting Out",
+      "codes": [],
+      "beats": [
+        {
+          "say": "Work that is nearly right does not stop being wrong. A frame with a lean in it will take a door that never shuts. Before anything is fixed, it is proved square, level and plumb — three different words.",
+          "art": { "at": { "lean": "a lean in it", "square": "square, level and plumb" } }
+        }
+      ]
+    },
+    {
+      "id": "words",
+      "kind": "words",
+      "heading": "Three words, three meanings",
+      "codes": ["ADOW-SM-SM.05.1"],
+      "beats": [
+        {
+          "say": "Square means two things meeting at ninety degrees. Level means horizontal. Plumb means vertical. A wall can be plumb and still not square to the wall beside it.",
+          "art": { "at": { "square": "Square means two things", "level": "Level means horizontal", "plumb": "Plumb means vertical" } }
+        },
+        {
+          "say": "Each has its own tool. The try square for the corner, the spirit level for horizontal, the plumb bob for vertical. They do not swap, and a level held upright proves nothing about a corner.",
+          "art": { "at": { "tool": "its own tool", "swap": "They do not swap" } }
+        }
+      ]
+    },
+    {
+      "id": "bubble",
+      "kind": "bubble",
+      "heading": "Reading the bubble",
+      "codes": ["ADOW-SM-SM.05.2"],
+      "beats": [
+        {
+          "say": "Set the level on the work and look at the vial. Here the bubble is not centred. It has run to one end, and that end is the HIGH end — a bubble is lighter than the liquid, so it floats uphill.",
+          "art": { "at": { "centred": "the bubble is not centred", "high": "the HIGH end" } }
+        },
+        {
+          "say": "So the reading tells you what to do. Lower the end the bubble ran to, or pack up the other one, and it comes down to the middle. Read it, then move the work the way it told you.",
+          "art": { "at": { "lower": "Lower the end", "down": "comes down to the middle" } }
+        }
+      ]
+    },
+    {
+      "id": "diagonals",
+      "kind": "diagonals",
+      "heading": "Proving a rectangle square",
+      "codes": ["ADOW-SM-SM.05.3"],
+      "beats": [
+        {
+          "say": "A frame can have four correct sides and still be a parallelogram. The check is the diagonals: measure from this corner to the far one, then the other pair the same way.",
+          "art": { "at": { "corner": "from this corner", "other": "then the other pair" } }
+        },
+        {
+          "say": "If the two are equal, the frame is square. If they differ, push the long diagonal shorter until they are equal, and only then is it square. Two numbers settle it, and no squinting is needed.",
+          "art": { "at": { "equal": "the two are equal" } }
+        }
+      ]
+    },
+    {
+      "id": "threefourfive",
+      "kind": "threefourfive",
+      "heading": "A right angle on the ground",
+      "codes": ["ADOW-SM-SM.06.1"],
+      "beats": [
+        {
+          "say": "On the ground there is no square big enough, so the sides do the work. Measure three along one line, four along the other, and when the distance between those points is exactly five, the corner is a right angle.",
+          "art": { "at": { "three": "Measure three along", "four": "four along the other", "five": "exactly five" } }
+        },
+        {
+          "say": "Any multiple of those numbers does the same job, and bigger is better over a long building: three hundred, four hundred, five hundred, or one point five, two, two point five.",
+          "art": { "at": { "multiple": "Any multiple" } }
+        }
+      ]
+    },
+    {
+      "id": "units",
+      "kind": "units",
+      "heading": "How many it takes",
+      "codes": ["ADOW-SM-SM.06.2"],
+      "beats": [
+        {
+          "say": "Once it is set out you can count what goes in it. Divide the length by the width of one board: four point two divided by nought point six is seven a row, and three rows makes twenty one.",
+          "art": { "at": { "divide": "Divide the length", "twenty": "makes twenty one" } }
+        }
+      ]
+    },
+    {
+      "id": "waste",
+      "kind": "waste",
+      "heading": "Then the allowance",
+      "codes": ["ADOW-SM-SM.06.3"],
+      "beats": [
+        {
+          "say": "Twenty one is what the job needs measured, and it is not what you order. Every cut leaves an offcut, and some of it is unusable, so an allowance for waste goes on top — ten per cent here.",
+          "art": { "at": { "measured": "what the job needs measured", "waste": "an allowance for waste" } }
+        },
+        {
+          "say": "Twenty one and ten per cent is twenty three point one, so you order twenty four. Always round up, because you cannot buy a tenth of a board, and say which percentage you used so the next person can check it.",
+          "art": { "at": { "order": "you order twenty four", "round": "Always round up" } }
+        }
+      ]
+    },
+    {
+      "id": "recap",
+      "kind": "recap",
+      "heading": "What proves what",
+      "codes": [],
+      "beats": [
+        {
+          "say": "So: for square, both diagonals equal. For level and plumb, the bubble, and remember which end is high. For setting out, three, four, five, then count what fits and add the waste. Prove it, then build to it.",
+          "art": { "at": { "square": "for square, both diagonals", "bubble": "the bubble", "setting": "For setting out", "prove": "Prove it, then build to it" } }
+        }
+      ]
+    }
+  ]
+}

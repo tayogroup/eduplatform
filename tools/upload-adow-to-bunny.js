@@ -126,8 +126,18 @@ for (const entry of fs.existsSync(coursesDir) ? fs.readdirSync(coursesDir).sort(
 // builder, the content files and __pycache__ are inputs, not output.
 const SKIP_DIRS = new Set(["content", "__pycache__", "courses"]);
 /* .mp4/.vtt/.jpg are here for the unit lecture films. Without them the
-   walk shipped a page whose <video> pointed at nothing on the zone. */
-const APP_EXT = new Set([".html", ".css", ".js", ".svg", ".png", ".woff2", ".mp4", ".vtt", ".jpg"]);
+   walk shipped a page whose <video> pointed at nothing on the zone.
+   .mp3 is here for the lesson narration, and its absence would have been
+   WORSE than a broken video, because nothing would have looked broken:
+   kit.js fetches narration/manifest.json, and on a 404 it sets clips to {}
+   and speaks with the browser voice. The rendered narration would simply
+   not have been on the zone, and every page would have carried on. */
+const APP_EXT = new Set([".html", ".css", ".js", ".svg", ".png", ".woff2", ".mp4", ".vtt", ".jpg", ".mp3"]);
+
+/* The ONLY .json the app serves. A blanket .json would ship the storyboards
+   in lecture-video/ and every app.config.json, which are inputs. */
+const isNarrationManifest = (full) =>
+  path.basename(full) === "manifest.json" && path.basename(path.dirname(full)) === "narration";
 
 // Walk the WHOLE school, not carpentry alone. Shapes and Measurements is a
 // cross-trade module and sits beside carpentry rather than inside it, so a
@@ -140,11 +150,97 @@ const APP_EXT = new Set([".html", ".css", ".js", ".svg", ".png", ".woff2", ".mp4
     const here = rel ? `${rel}/${entry}` : entry;
     if (fs.statSync(full).isDirectory()) {
       if (!SKIP_DIRS.has(entry)) walkApp(full, here);
-    } else if (APP_EXT.has(path.extname(entry).toLowerCase())) {
+    } else if (APP_EXT.has(path.extname(entry).toLowerCase()) || isNarrationManifest(full)) {
       plan.push({ local: full, remote: `app/${here}` });
     }
   }
 })(SCHOOL, "");
+
+// ---- does the plan carry everything the app asks for? ----------------------
+//
+// AN EXTENSION LIST IS A GUESS ABOUT THE FUTURE and it has been wrong twice:
+// once when the films arrived and a page shipped with a <video> pointing at
+// nothing, and once when the narration arrived and .mp3 was not on the list.
+// The second was the dangerous one, because a missing clip does not look
+// broken - the page falls back to the browser voice and says nothing.
+//
+// So this asks the app instead of the list. Every quoted relative path in a
+// page or a script that EXISTS ON DISK must be in the plan. A string that is
+// not really a path does not exist on disk and is ignored, which is what keeps
+// this from crying wolf; a genuine asset that the walk declined to carry is
+// exactly what it catches. It reads scripts too, because the narration
+// manifest is reached by fetch() and appears in no page.
+(function checkReferences() {
+  const shipped = new Set(plan.map((e) => path.resolve(e.local)));
+  const misses = [];
+  const REF = /["'`]([^"'`\s>]+\.[A-Za-z0-9]{2,5})["'`]/g;
+  for (const entry of plan) {
+    const ext = path.extname(entry.local).toLowerCase();
+    if (ext !== ".html" && ext !== ".js" && ext !== ".css") continue;
+    const text = fs.readFileSync(entry.local, "utf8");
+    const dir = path.dirname(entry.local);
+    let m;
+    while ((m = REF.exec(text))) {
+      const ref = m[1];
+      if (/^(https?:|data:|mailto:|#|\/\/)/.test(ref) || ref.startsWith("/")) continue;
+      const target = path.resolve(dir, ref);
+      if (!fs.existsSync(target) || fs.statSync(target).isDirectory()) continue;
+      if (!target.startsWith(path.resolve(SCHOOL))) continue;
+      if (!shipped.has(target)) misses.push(`${path.relative(SCHOOL, entry.local)} -> ${ref}`);
+    }
+  }
+  if (misses.length) {
+    const uniq = [...new Set(misses)].sort();
+    console.error("");
+    console.error("These files exist on disk, are asked for by the app, and are NOT in the upload:");
+    for (const line of uniq) console.error("  " + line);
+    fail(`${uniq.length} referenced file(s) would be missing from the zone. Add the extension to APP_EXT rather than shipping a page that points at nothing.`);
+  }
+  /* A NARRATION DIRECTORY MUST HAVE SHIPPED ITS MANIFEST. Without this the
+     two checks below are vacuous in exactly the case that matters: drop the
+     manifest from the plan and the clip loop has nothing to iterate, so a run
+     with no narration at all on the zone prints a tick. That is the original
+     failure this whole section exists to stop - the page fetches the manifest,
+     gets a 404, sets clips to {} and speaks in the browser voice. */
+  (function narrationManifestsShipped(dir) {
+    for (const entry of fs.readdirSync(dir)) {
+      const full = path.join(dir, entry);
+      if (!fs.statSync(full).isDirectory() || SKIP_DIRS.has(entry)) continue;
+      if (entry === "narration") {
+        const mf = path.join(full, "manifest.json");
+        if (fs.existsSync(mf) && !shipped.has(path.resolve(mf))) {
+          fail(`${path.relative(SCHOOL, mf)} exists but is not in the upload. Every clip beside it would be dead weight on the zone and the lesson would fall back to the browser voice without saying so.`);
+        }
+      }
+      narrationManifestsShipped(full);
+    }
+  })(SCHOOL);
+
+  /* THE SCAN ABOVE STRUCTURALLY CANNOT SEE THE NARRATION CLIPS. They are
+     named only inside narration/manifest.json and reached as
+     "narration/" + hit.file at run time, so no literal in any file mentions
+     them; removing .mp3 from APP_EXT was caught above only by the slides
+     page, which happens to name its track in markup. A manifest is a list of
+     files, so read it as one. */
+  for (const entry of plan) {
+    if (!isNarrationManifest(entry.local)) continue;
+    const dir = path.dirname(entry.local);
+    const listed = JSON.parse(fs.readFileSync(entry.local, "utf8"));
+    const gone = Object.values(listed)
+      .map((v) => v && v.file)
+      .filter(Boolean)
+      .filter((f) => fs.existsSync(path.join(dir, f)) && !shipped.has(path.resolve(dir, f)));
+    if (gone.length) {
+      console.error("");
+      console.error(`${path.relative(SCHOOL, entry.local)} lists clips that are NOT in the upload:`);
+      for (const f of gone.sort()) console.error("  " + f);
+      fail(`${gone.length} narration clip(s) would be missing. The page would fall back to the browser voice and look fine, which is why this is checked.`);
+    }
+    console.log(`  narration: all ${Object.keys(listed).length} clip(s) in ${path.relative(SCHOOL, entry.local)} are in the plan.`);
+  }
+
+  console.log(`  references: every asset the app asks for is in the plan.`);
+})();
 
 // ---- upload ----------------------------------------------------------------
 const manifest = fs.existsSync(MANIFEST_PATH) ? JSON.parse(fs.readFileSync(MANIFEST_PATH, "utf8")) : {};

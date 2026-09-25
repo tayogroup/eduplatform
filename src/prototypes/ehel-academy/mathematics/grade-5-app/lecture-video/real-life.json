@@ -1,0 +1,112 @@
+{
+  "_comment": "Storyboard for the Grade 5 Mathematics unit lecture film, Real Life. Rendered by tools/create-ehel-unit-lecture.js. See lecture-video/BRIEF.md. REVISED 2026-09-25: the previous version invented all three of its worked examples (213 sh x 4 = 852; 356 / 4 = 89; 65 x 6 = 390) and all three choosing-a-method sums (7+5, 34+58, 236+458), justified by the lesson's own self-check claiming 5Ni.04 and 5Ni.05 against W p85, a workbook page outside this app. Verified: the lesson's own 27 word problems (real-life.html PROBLEMS array) sort into seven tools - extend (8), square (7), factors (4), rule (3), percent (2), pattern (2), round (1) - and NOT ONE is an estimate-and-multiply or estimate-and-divide problem in the sense 5Ni.04/5Ni.05 require (round first, then multiply/divide a number up to 1000 by a 1- or 2-digit number). The lesson's only genuinely 'roundable' numbers either are not multiplications at all (27,849 rounds to 28,000, a plain rounding problem) or exceed the 1000 ceiling (2,024 pencils / 8 crates). Its square/cube/root problems (patio 7x7=49, rug root-144=12, block tower 4 cubed=64, orange crate cube-root-125=5, square garden root-64=8) use small factors (4,5,7,8,12) that make a rounding-based estimate misleading rather than useful - rounding 7 up to 10 to estimate 7x7 gives 100 against an exact 49, more than double, which is not 'close to the estimate' and would have been a false demonstration of the method. So this film drops 5Ni.04 and 5Ni.05 rather than reinvent worked examples for them, and is rebuilt entirely from the lesson's own numbers: the patio, rug, garden and block-tower square/cube problems for 'Choosing a method' and 'A square, the other way round'; the orange crate's own trial-and-improvement (try 4, too few; try 5, exact) for 'Estimating first', since that IS the lesson's own guess-then-check method, unlike a rounding estimate the small factors cannot support; Amina's savings and the pencil-boxes division for the jottings/formal examples; and the block tower read end to end for 'Reading the story'. Every number said here appears in real-life.html's own PROBLEMS array and is solved by the method the lesson itself uses for it.",
+  "slug": "real-life",
+  "lesson": 5,
+  "grade": 5,
+  "stage": 5,
+  "title": "Real Life",
+  "subtitle": "Grade 5 Mathematics",
+  "framework": "Cambridge Primary Mathematics 0096",
+  "renderer": {
+    "art": ["math"],
+    "skin": "brown",
+    "scenes": [
+      "tools/lib/ehel-film-marks.js",
+      "tools/lib/film-scenes/math-g5/real-life.js",
+      "tools/lib/film-scenes/math-g5/real-life-2.js",
+      "tools/lib/film-scenes/math-g5/real-life-3.js"
+    ]
+  },
+  "objectives": [],
+  "scenes": [
+    { "id": "title", "kind": "title", "codes": [], "beats": [
+      { "say": "A word problem hides its numbers inside a story. First, you choose a method.",
+        "art": { "at": { "hides": "hides its numbers inside a story", "choose": "you choose a method" } } },
+      { "say": "Estimate first, then decide: mentally, with jottings, or a full formal method.",
+        "art": { "at": { "estimate": "Estimate first", "decide": "then decide", "mentally": "mentally", "jottings": "with jottings", "formal": "a full formal method" } } }
+    ] },
+
+    { "id": "choosing", "kind": "choosing", "heading": "Choosing a method", "codes": [], "beats": [
+      { "say": "Some calculations are quick enough to do in your head, with no working needed.",
+        "art": { "at": { "quick": "quick enough to do in your head" } } },
+      { "say": "7 times 7 is 49 - a patio's tiles, worked out in your head.",
+        "art": { "at": { "patioeq": "7 times 7 is 49", "nowrite": "worked out in your head" } } },
+      { "say": "Bigger numbers need jottings - quick notes to hold your steps.",
+        "art": { "at": { "bigger": "Bigger numbers need jottings", "notes": "quick notes to hold your steps" } } },
+      { "say": "Amina saves 250 shillings, then 5 more weeks of 50: 500 shillings.",
+        "art": { "at": { "savestart": "250 shillings", "saveend": "500 shillings" } } },
+      { "say": "The hardest calculations need a full formal method, step by step.",
+        "art": { "at": { "hardest": "The hardest calculations", "step": "step by step" } } },
+      { "say": "2,024 pencils shared into boxes of 8 makes exactly 253 boxes.",
+        "art": { "at": { "pencils": "2,024 pencils", "formex": "253 boxes" } } },
+      { "say": "Picking the right method is part of solving any problem.",
+        "art": { "at": { "partsolving": "part of solving any problem" } } }
+    ] },
+
+    { "id": "estimating", "kind": "estimating", "heading": "Estimating first", "codes": [], "beats": [
+      { "say": "Before the exact answer, make a sensible first guess.",
+        "art": { "at": { "before": "Before the exact answer", "guess0": "a sensible first guess" } } },
+      { "say": "A crate holds 125 oranges, packed as a solid cube.",
+        "art": { "at": { "crate125": "125 oranges", "cube0": "a solid cube" } } },
+      { "say": "Try 4 along each edge: 4 times 4 times 4 makes 64.",
+        "art": { "at": { "try4": "Try 4 along each edge", "makes64": "4 times 4 times 4 makes 64" } } },
+      { "say": "That is too few - so try one more: 5 along each edge.",
+        "art": { "at": { "toofew": "too few", "try5": "5 along each edge" } } },
+      { "say": "5 times 5 times 5 makes exactly 125 oranges, with nothing left over.",
+        "art": { "at": { "makes125": "5 times 5 times 5 makes exactly 125 oranges" } } },
+      { "say": "A first guess is not the exact answer - just a sensible start.",
+        "art": { "at": { "notexact": "not the exact answer", "sensible": "a sensible start" } } },
+      { "say": "Then check: does your exact answer match the story?",
+        "art": { "at": { "checkq": "Then check", "matchstory": "match the story" } } },
+      { "say": "Estimating first catches a mistake before you finish the sum.",
+        "art": { "at": { "catches": "catches a mistake before you finish the sum" } } }
+    ] },
+
+    { "id": "squares", "kind": "squares", "heading": "A square, the other way round", "codes": [], "beats": [
+      { "say": "A square rug is made from 144 small tiles.",
+        "art": { "at": { "rug144": "144 small tiles" } } },
+      { "say": "How many tiles run along one edge? Try 12 tiles.",
+        "art": { "at": { "howmany": "How many tiles run along one edge", "try12": "Try 12 tiles" } } },
+      { "say": "12 times 12 makes 144 - so 12 tiles along each edge.",
+        "art": { "at": { "twelvesq": "12 times 12 makes 144", "twelveedge": "12 tiles along each edge" } } },
+      { "say": "A square garden covers 64 square metres in total.",
+        "art": { "at": { "garden64": "64 square metres" } } },
+      { "say": "8 times 8 makes 64 - so each side is 8 metres.",
+        "art": { "at": { "eightsq": "8 times 8 makes 64", "eightside": "each side is 8 metres" } } },
+      { "say": "A square number works both ways: find the whole, or find the side.",
+        "art": { "at": { "bothways": "works both ways" } } },
+      { "say": "Any square number is made by multiplying one whole number by itself.",
+        "art": { "at": { "itself": "multiplying one whole number by itself" } } }
+    ] },
+
+    { "id": "story", "kind": "story", "heading": "Reading the story", "codes": [], "beats": [
+      { "say": "A solid cube is built from small blocks, 4 along every edge.",
+        "art": { "at": { "blocks4": "4 along every edge" } } },
+      { "say": "First, find the numbers: 4 blocks, along every edge.",
+        "art": { "at": { "findnum": "find the numbers" } } },
+      { "say": "Next, find the real question: how many blocks in the whole cube?",
+        "art": { "at": { "findask": "find the real question", "wholecube": "how many blocks in the whole cube" } } },
+      { "say": "One layer is 4 rows of 4: 4 times 4 makes 16 blocks.",
+        "art": { "at": { "onelayer": "One layer is 4 rows of 4", "sixteen": "4 times 4 makes 16 blocks" } } },
+      { "say": "Four layers stacked up: 16 times 4 makes 64 blocks in all.",
+        "art": { "at": { "fourlayers": "Four layers stacked up", "sixtyfour": "16 times 4 makes 64 blocks" } } },
+      { "say": "Multiplying is the right tool once you know the numbers.",
+        "art": { "at": { "multtool": "Multiplying is the right tool" } } },
+      { "say": "Read the story first, then choose the tool that fits it.",
+        "art": { "at": { "readfirst": "Read the story first", "choosetool": "choose the tool that fits it" } } }
+    ] },
+
+    { "id": "recap", "kind": "recap", "heading": "What you now know", "codes": [], "beats": [
+      { "say": "Choose your method: mentally, with jottings, or a full formal method.",
+        "art": { "at": { "choose3": "Choose your method", "mentally3": "mentally", "jottings3": "with jottings", "formal3": "a full formal method" } } },
+      { "say": "Make a sensible first guess, then check your exact answer.",
+        "art": { "at": { "guessfirst": "a sensible first guess", "checkexact": "check your exact answer" } } },
+      { "say": "12 times 12 is 144. 4 times 4 times 4 is 64.",
+        "art": { "at": { "recap144": "12 times 12 is 144", "recap64": "4 times 4 times 4 is 64" } } },
+      { "say": "Always read the story first, then pick the tool that fits.",
+        "art": { "at": { "alwaysread": "read the story first", "pickfits": "pick the tool that fits" } } },
+      { "say": "The same two moves work on any of the twenty-seven problems.",
+        "art": { "at": { "samesteps": "any of the twenty-seven problems" } } }
+    ] }
+  ]
+}

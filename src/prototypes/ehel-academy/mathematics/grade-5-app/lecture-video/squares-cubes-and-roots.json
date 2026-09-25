@@ -1,0 +1,115 @@
+{
+  "_comment": "Storyboard for the Grade 5 Mathematics unit lecture film, Squares, Cubes and Roots. Rendered by tools/create-ehel-unit-lecture.js. See lecture-video/BRIEF.md. The three chapters squares/sqroots and cubes/cuberoots split the WORK dict's first two parts (Squares and roots; Cubes and cube roots) into a build chapter and a roots chapter each, because a root is a distinct idea (the inverse question) from the number itself; triangular carries the third part whole. Every number said is the lesson's own: 4x4=16 and the first five squares (squares-cubes-and-roots.html Step 1), the L-shape of 3+3+1=7 turning 3x3 into 4x4 and the odd-number sum 1+3+5+7=16 (Step 2), 50 sitting one dot short of the next square with 49 the biggest square below it - Step 3's own selectable numbers (NUMS3) and its own default (num3 = 50), not the 15/9/6 an earlier draft invented, which Step 3 cannot even select - and the squares to 12 squared (Step 3's note), 7 squared/49 and its root (Step 4), 3 cubed/27 with the two common wrong answers 9 (Step 5), the two roots of 64 and the six cube numbers 1/8/27/64/125/216 against fourteen squares up to 216 (Step 6), the triangular totals 1/3/6/10 and the 4-by-5-rectangle trick (Step 7), and the neighbouring-triangulars-make-a-square fact 6+10=16 from Step 7's own note.",
+  "slug": "squares-cubes-and-roots",
+  "lesson": 1,
+  "grade": 5,
+  "stage": 5,
+  "title": "Squares, Cubes and Roots",
+  "subtitle": "Grade 5 Mathematics",
+  "framework": "Cambridge Primary Mathematics 0096",
+  "renderer": {
+    "art": ["math"],
+    "skin": "brown",
+    "scenes": [
+      "tools/lib/ehel-film-marks.js",
+      "tools/lib/film-scenes/math-g5/squares-cubes-and-roots.js",
+      "tools/lib/film-scenes/math-g5/squares-cubes-and-roots-2.js",
+      "tools/lib/film-scenes/math-g5/squares-cubes-and-roots-3.js"
+    ]
+  },
+  "objectives": [
+    ["5Ni.08", "Use knowledge of multiplication to recognise square numbers (from 1 to 100)."],
+    ["5Nc.04", "Recognise and extend the spatial pattern of square and triangular numbers."],
+    ["6Ni.08", "Use knowledge of multiplication and square numbers to recognise cube numbers (from 1 to 125)."]
+  ],
+  "scenes": [
+    { "id": "title", "kind": "title", "codes": [], "beats": [
+      { "say": "Multiply a number by itself, and you get a square number.",
+        "art": { "at": { "mult": "Multiply a number by itself", "square": "a square number" } } },
+      { "say": "Do it again, and you get a cube, or a triangle of dots.",
+        "art": { "at": { "cube": "a cube", "triangle": "a triangle of dots" } } }
+    ] },
+
+    { "id": "squares", "kind": "squares", "heading": "Square numbers", "codes": ["5Ni.08", "5Nc.04"], "beats": [
+      { "say": "Four rows of four dots make a square: four squared.",
+        "art": { "at": { "rows": "Four rows of four dots", "squared": "four squared" } } },
+      { "say": "Four squared means four times four, which is sixteen.",
+        "art": { "at": { "squared2": "Four squared", "times": "four times four", "sixteen": "sixteen" } } },
+      { "say": "The first square numbers are one, four, nine, sixteen, twenty five.",
+        "art": { "at": { "first": "The first square numbers", "list": "one, four, nine, sixteen, twenty five" } } },
+      { "say": "Turn a three by three square into a four by four one.",
+        "art": { "at": { "three3": "a three by three square", "four4": "a four by four one" } } },
+      { "say": "That adds an L shape of seven new dots: three, three, and one.",
+        "art": { "at": { "l": "an L shape", "seven": "seven new dots" } } },
+      { "say": "Odd numbers build squares: one, plus three, plus five, plus seven.",
+        "art": { "at": { "odd": "Odd numbers build squares", "one1": "one,", "three1": "plus three", "five1": "plus five", "seven1": "plus seven" } } }
+    ] },
+
+    { "id": "sqroots", "kind": "sqroots", "heading": "Square roots", "codes": [], "beats": [
+      { "say": "Not every number is a square number.",
+        "art": { "at": { "not": "Not every number", "sq": "a square number" } } },
+      { "say": "The biggest square under fifty is forty nine, so one dot is left over.",
+        "art": { "at": { "big": "The biggest square under fifty", "fortynine": "forty nine", "oneleft": "one dot is left over" } } },
+      { "say": "Know squares to twelve squared: one, four, nine, to a hundred forty four.",
+        "art": { "at": { "know": "Know squares to twelve squared", "uptolist": "to a hundred forty four" } } },
+      { "say": "Seven squared is forty nine. What is the square root of forty nine?",
+        "art": { "at": { "sevensq": "Seven squared is forty nine", "root": "the square root of forty nine" } } },
+      { "say": "The square root of forty nine is seven: squaring undoes rooting.",
+        "art": { "at": { "rootans": "The square root of forty nine is seven", "undo": "squaring undoes rooting" } } }
+    ] },
+
+    { "id": "cubes", "kind": "cubes", "heading": "Cube numbers", "codes": ["6Ni.08"], "beats": [
+      { "say": "A cube number multiplies a number by itself three times.",
+        "art": { "at": { "cubedef": "A cube number", "three": "by itself three times" } } },
+      { "say": "Three cubed is three times three times three, which is twenty seven.",
+        "art": { "at": { "threecubed": "Three cubed", "answer": "twenty seven" } } },
+      { "say": "It is not three plus three plus three, and not three times three.",
+        "art": { "at": { "notplus": "three plus three plus three", "nottimes": "three times three" } } },
+      { "say": "A cube is a square, stacked three layers high.",
+        "art": { "at": { "square2": "a square", "layers": "stacked three layers high" } } },
+      { "say": "Each layer is a three by three square of nine blocks.",
+        "art": { "at": { "layer2": "Each layer", "nine2": "nine blocks" } } }
+    ] },
+
+    { "id": "cuberoots", "kind": "cuberoots", "heading": "Cube roots", "codes": [], "beats": [
+      { "say": "A cube root asks the opposite: how many blocks on each edge?",
+        "art": { "at": { "cuberoot": "A cube root", "edge": "how many blocks on each edge" } } },
+      { "say": "Sixty four is four times four times four; its cube root is four.",
+        "art": { "at": { "sixtyfour": "Sixty four is four times four times four", "cuberootfour": "its cube root is four" } } },
+      { "say": "But the square root of sixty four is eight: eight times eight.",
+        "art": { "at": { "sqrt64": "the square root of sixty four is eight", "eighttimes": "eight times eight" } } },
+      { "say": "The six cube numbers to know are one, eight, twenty seven and sixty four.",
+        "art": { "at": { "sixcubes": "The six cube numbers to know", "listA": "one, eight, twenty seven and sixty four" } } },
+      { "say": "Then one hundred twenty five, and two hundred sixteen.",
+        "art": { "at": { "listB": "one hundred twenty five", "listC": "two hundred sixteen" } } },
+      { "say": "Up to two hundred sixteen, there are fourteen squares but only six cubes.",
+        "art": { "at": { "upto216": "Up to two hundred sixteen", "fourteen6": "fourteen squares but only six cubes" } } }
+    ] },
+
+    { "id": "triangular", "kind": "triangular", "heading": "Triangular numbers", "codes": ["5Nc.04"], "beats": [
+      { "say": "A triangular number is built from rows that grow by one.",
+        "art": { "at": { "tri": "A triangular number", "grow": "rows that grow by one" } } },
+      { "say": "One row, then two, then three: the totals are one, three, six.",
+        "art": { "at": { "rows123": "One row, then two, then three", "totals": "one, three, six" } } },
+      { "say": "Four rows make ten dots, drawn as a triangle.",
+        "art": { "at": { "fourrows": "Four rows", "ten": "ten dots" } } },
+      { "say": "A second triangle, upside down, turns it into a rectangle.",
+        "art": { "at": { "upside": "A second triangle, upside down", "rect": "a rectangle" } } },
+      { "say": "Four rows by five columns is twenty, so one triangle is ten.",
+        "art": { "at": { "foursbyfive": "Four rows by five columns", "twenty": "twenty", "tenagain": "one triangle is ten" } } },
+      { "say": "Six plus ten is sixteen: two triangular numbers make a square.",
+        "art": { "at": { "sixten": "Six plus ten is sixteen", "squarefact": "two triangular numbers make a square" } } }
+    ] },
+
+    { "id": "recap", "kind": "recap", "heading": "What you now know", "codes": ["5Ni.08", "5Nc.04", "6Ni.08"], "beats": [
+      { "say": "A square number is a number times itself: four squared is sixteen.",
+        "art": { "at": { "sq": "A square number", "four2": "four squared is sixteen" } } },
+      { "say": "A cube number multiplies it three times: three cubed is twenty seven.",
+        "art": { "at": { "cb": "A cube number", "threecubed2": "three cubed is twenty seven" } } },
+      { "say": "Roots undo them: the square root of forty nine is seven.",
+        "art": { "at": { "roots": "Roots undo them", "root2": "the square root of forty nine is seven" } } },
+      { "say": "And triangular numbers grow from rows: one, three, six, ten.",
+        "art": { "at": { "tring": "triangular numbers grow from rows", "seq2": "one, three, six, ten" } } }
+    ] }
+  ]
+}

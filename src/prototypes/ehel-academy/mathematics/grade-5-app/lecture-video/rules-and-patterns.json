@@ -1,0 +1,122 @@
+{
+  "_comment": "Storyboard for the Grade 5 Mathematics unit lecture film, Rules and Patterns. Rendered by tools/create-ehel-unit-lecture.js. See lecture-video/BRIEF.md. Chapters follow the lesson's own steps 8-13: a rule builds a sequence forwards (step 8, 5,9,13,17 and 3,7,11,15), the rule read backwards from the gaps and the 2,4,6 vs 2,4,8 trap (step 9), the triangle-and-circle two-unknowns puzzle (step 10), squares and cubes caught by their gaps of gaps (step 11), the matchstick-square pattern and its +3 rule (step 12), and decimal hops past zero on a number line (step 13). Every number said is the lesson's own: 5,9,13,17 and 3,7,11,15; 2,4,6 and 2,4,8; triangle+circle=10, triangle-circle=4, triangle=7, circle=3; squares' gap of gaps of 2, cubes' 12,18,24; matchstick squares 4,7,10 and pattern 10's 31; and 2,1.5,1,0.5,0,-0.5 and 1-3=-2. Note for the owner: BRIEF.md's earlier draft said this lesson's third part reopens as the next lesson's first part; that was corrected in the BRIEF itself (2026-09-25) as a regex artefact, and this film's checking agent independently confirmed the same thing by reading both lessons' WORK entries directly - the three parts here are self-contained. Revised 2026-09-25 against the lead's review: 5Nc.04 (square AND triangular numbers) was claimed but only half-delivered - hiddensquares draws squares/cubes, shapepatterns draws matchstick squares, and neither is a triangular number; the lesson's own Step 12 'Dot staircase' (count(n) = n(n+1)/2, 1/3/6/10/15) is the triangular pattern and this film does not draw it. The beat budget was already at the 36-beat cap (checked with --dry before deciding), so a new beat was not free, and squares-cubes-and-roots.json already claims 5Nc.04 with a full triangular-numbers chapter (rows growing by one, 1/3/6/10, the 6+10=16 square fact) - so 5Nc.04 is dropped here rather than added a second time; hiddensquares and shapepatterns now carry no code. seqrule's beat 5 used to leave the 6th term an unresolved '?' after saying the rule fires 5 times; it now resolves it in the lesson's own shortcut shape (start + (n-1)*step), read off the start-3 row already on screen: 3 + 5x4 = 23 (the lesson's own default row, start 5 + 5x4 = 25, is the same shortcut one beat earlier in the film's own numbers). hiddensquares beats 3-4 (squares, cubes) said 'a gap of 2' and 'their gaps are 12,18,24' as if those were the first-order gaps; both are second-order (gaps of the gaps, per beat 2's own 'look at the gaps of the gaps instead'), so both now say 'the gaps of their gaps'. Checked and NOT applied: the About list and self-check (G p36) claim the lesson teaches finding a recursion rule from non-consecutive terms; every SEQS and HIDDEN entry in rules-and-patterns.html gives four consecutive terms, and no step gives a gapped one - reported under problems, not fixed, because the lesson is not this film's file.",
+  "slug": "rules-and-patterns",
+  "lesson": 2,
+  "grade": 5,
+  "stage": 5,
+  "title": "Rules and Patterns",
+  "subtitle": "Grade 5 Mathematics",
+  "framework": "Cambridge Primary Mathematics 0096",
+  "renderer": {
+    "art": ["math"],
+    "skin": "brown",
+    "scenes": [
+      "tools/lib/ehel-film-marks.js",
+      "tools/lib/film-scenes/math-g5/rules-and-patterns.js",
+      "tools/lib/film-scenes/math-g5/rules-and-patterns-2.js",
+      "tools/lib/film-scenes/math-g5/rules-and-patterns-3.js"
+    ]
+  },
+  "objectives": [
+    ["5Nc.03", "Use the relationship between repeated addition of a constant and multiplication to find any term of a linear sequence."],
+    ["5Nc.02", "Recognise the use of objects, shapes or symbols to represent two unknown quantities in addition and subtraction calculations."],
+    ["5Nc.01", "Count on and count back in steps of constant size, and extend beyond zero to include negative numbers."]
+  ],
+  "scenes": [
+    { "id": "title", "kind": "title", "codes": [], "beats": [
+      { "say": "3, 7, 11, 15. Can you see the rule that makes this sequence?",
+        "art": { "at": { "seq": "3, 7, 11, 15", "rule": "the rule that makes this sequence" } } },
+      { "say": "A term-to-term rule links every term to the very next one, step by step.",
+        "art": { "at": { "ttr": "A term-to-term rule", "next": "the very next one" } } }
+    ] },
+
+    { "id": "seqrule", "kind": "seqrule", "heading": "Start, then keep going", "codes": ["5Nc.03"], "beats": [
+      { "say": "A sequence is a list of numbers in order, one after another. Each number in it is a term.",
+        "art": { "at": { "seq": "A sequence", "term": "a term" } } },
+      { "say": "Pick a start number and a rule to follow. Start at 5, and the rule is add 4.",
+        "art": { "at": { "five": "Start at 5", "rule": "add 4" } } },
+      { "say": "Use the rule again and again: 5, 9, 13, 17.",
+        "art": { "at": { "terms": "5, 9, 13, 17", "again": "again and again" } } },
+      { "say": "Start at 3 instead, with the very same rule: 3, 7, 11, 15.",
+        "art": { "at": { "three": "Start at 3", "terms2": "3, 7, 11, 15" } } },
+      { "say": "The rule fires 5 times to reach the 6th term. That's 3, plus 5 times 4 — 23.",
+        "art": { "at": { "fivetimes": "5 times", "sixth": "the 6th term", "answer": "23" } } }
+    ] },
+
+    { "id": "findrule", "kind": "findrule", "heading": "Find the rule from the gaps", "codes": ["5Nc.03"], "beats": [
+      { "say": "Now you are given the terms, and the rule is hidden from you. Look closely at the gap.",
+        "art": { "at": { "hidden": "the rule is hidden", "gap": "the gap" } } },
+      { "say": "2, 4, 6: the gap is 2 every time, so the rule is add 2.",
+        "art": { "at": { "seqA": "2, 4, 6", "addtwo": "add 2" } } },
+      { "say": "2, 4, 8 starts the same way, but the next gap is 4, not 2.",
+        "art": { "at": { "seqB": "2, 4, 8", "gap4": "the next gap is 4" } } },
+      { "say": "So the rule is not add 2 after all. It doubles each time.",
+        "art": { "at": { "notadd": "not add 2", "doubles": "doubles each time" } } },
+      { "say": "Always check every gap, never just the first one.",
+        "art": { "at": { "every": "every gap", "firstone": "the first one" } } }
+    ] },
+
+    { "id": "twounknowns", "kind": "twounknowns", "heading": "Two shapes, two facts", "codes": ["5Nc.02"], "beats": [
+      { "say": "In this puzzle, a shape can stand for a number that nobody has told you yet.",
+        "art": { "at": { "shape": "a shape", "unknown": "a number that nobody has told you yet" } } },
+      { "say": "Triangle plus circle equals 10, the first fact.",
+        "art": { "at": { "fact1": "Triangle plus circle equals 10" } } },
+      { "say": "Triangle minus circle equals 4, the second fact.",
+        "art": { "at": { "fact2": "Triangle minus circle equals 4" } } },
+      { "say": "Add the two facts together, and the circle cancels itself out completely.",
+        "art": { "at": { "addfacts": "Add the two facts", "cancel": "the circle cancels itself out" } } },
+      { "say": "That leaves two triangles equal 14, so one triangle is 7.",
+        "art": { "at": { "twotri": "two triangles equal 14", "seven": "one triangle is 7" } } },
+      { "say": "Put 7 back into a fact, and the circle is 3.",
+        "art": { "at": { "putback": "Put 7 back", "three": "the circle is 3" } } }
+    ] },
+
+    { "id": "hiddensquares", "kind": "hiddensquares", "heading": "Squares and cubes hiding", "codes": [], "beats": [
+      { "say": "Sometimes the gaps between one term and the next are not all the same.",
+        "art": { "at": { "notsame": "not all the same" } } },
+      { "say": "When that happens, look at the gaps of the gaps instead.",
+        "art": { "at": { "gapsofgaps": "the gaps of the gaps" } } },
+      { "say": "Square numbers: the gaps of their gaps settle on 2.",
+        "art": { "at": { "squares": "Square numbers", "gaptwo": "the gaps of their gaps settle on 2" } } },
+      { "say": "Cube numbers grow faster: the gaps of their gaps are 12, 18, 24.",
+        "art": { "at": { "cubes": "Cube numbers", "seq3": "12, 18, 24" } } },
+      { "say": "Add 4 has gaps of gaps of 0, because they never change.",
+        "art": { "at": { "addfour": "Add 4", "zerogap": "gaps of gaps of 0" } } }
+    ] },
+
+    { "id": "shapepatterns", "kind": "shapepatterns", "heading": "Shape patterns", "codes": [], "beats": [
+      { "say": "Matchstick squares grow in a pattern too. Count the sticks in each one.",
+        "art": { "at": { "squares2": "Matchstick squares" } } },
+      { "say": "Pattern 1 uses 4 sticks. Pattern 2 uses 7 sticks.",
+        "art": { "at": { "p1": "Pattern 1 uses 4 sticks", "p2": "Pattern 2 uses 7 sticks" } } },
+      { "say": "Pattern 3 needs 10 sticks. The gap is always 3.",
+        "art": { "at": { "p3": "Pattern 3 needs 10 sticks", "gap3": "The gap is always 3" } } },
+      { "say": "One more square shares a side, so it costs only 3 new sticks.",
+        "art": { "at": { "shares": "shares a side", "newsticks": "3 new sticks" } } },
+      { "say": "So pattern 10 needs 31 sticks, with no building at all.",
+        "art": { "at": { "p10": "pattern 10 needs 31 sticks", "nobuild": "no building at all" } } }
+    ] },
+
+    { "id": "numberline", "kind": "numberline", "heading": "Steps past zero", "codes": ["5Nc.01"], "beats": [
+      { "say": "A step in a sequence can be smaller than 1, and it can go past zero.",
+        "art": { "at": { "smaller": "smaller than 1", "pastzero": "past zero" } } },
+      { "say": "Start at 2, and subtract 0.5 on every hop.",
+        "art": { "at": { "starttwo": "Start at 2", "halfstep": "subtract 0.5" } } },
+      { "say": "2, 1.5, 1, 0.5, 0, then minus 0.5: every hop the same size.",
+        "art": { "at": { "hops": "2, 1.5, 1, 0.5, 0, then minus 0.5" } } },
+      { "say": "From 1, subtract 3, and you land on minus 2, not on 2.",
+        "art": { "at": { "fromone": "From 1, subtract 3", "minustwo": "minus 2" } } }
+    ] },
+
+    { "id": "recap", "kind": "recap", "heading": "What you now know", "codes": ["5Nc.03", "5Nc.02", "5Nc.01"], "beats": [
+      { "say": "A rule builds a sequence. Always check every gap first.",
+        "art": { "at": { "rulebuild": "A rule builds a sequence", "gapcheck": "every gap" } } },
+      { "say": "Two facts about two shapes are always exactly enough.",
+        "art": { "at": { "twofacts": "Two facts", "enough": "always exactly enough" } } },
+      { "say": "Squares and cubes hide inside the gaps of the gaps.",
+        "art": { "at": { "hide": "Squares and cubes", "gog": "the gaps of the gaps" } } },
+      { "say": "Shapes on paper and hops along a line follow the very same rule.",
+        "art": { "at": { "shapesnl": "Shapes on paper and hops along a line", "samerule": "the very same rule" } } }
+    ] }
+  ]
+}

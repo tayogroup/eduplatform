@@ -1,0 +1,124 @@
+{
+  "_comment": "Storyboard for the Grade 5 Mathematics unit lecture film, How Whole Numbers Are Built. Rendered by tools/create-ehel-unit-lecture.js. See lecture-video/BRIEF.md. The chapters follow the lesson's own three lecture parts (odd, even and the order of operations; factors and multiples; divisibility and primes), split into six teaching chapters for the six ideas Steps 14-20 actually carry: odd numbers making a square and even numbers making a rectangle (Steps 14-15), the order of operations (Step 16), factors and multiples in pairs (Step 17), highest common factor and lowest common multiple (Step 18), divisibility rules (Step 19) and prime numbers found with the sieve of Eratosthenes (Step 20). Every number said is the lesson's own: 1+3+5+7=16=4 squared, 2+4+6+8=20=4x5, 3 plus 4 times 5 (35 wrong, 23 correct), 10 take away 2 take away 3 is 5, 12 divide by 4 times 3 is 9 (not 1, the same equal-rank rule applied to times and divide), the factors of 24 in four pairs, 36 with nine factors, the pair 12 and 18 (HCF 6, LCM 36), 7,315 divided by 7 is 1,045, and the sieve crossing out 2, 3, 5 and 7 on a 1-100 grid. The order chapter does not teach brackets: Step 16's own note says brackets are the next thing in the Cambridge sequence, and the lesson's own objectives list this skill as order of operations 'where there are no brackets' - so the film stops at equal-rank left-to-right instead.",
+  "slug": "how-whole-numbers-are-built",
+  "lesson": 3,
+  "grade": 5,
+  "stage": 5,
+  "title": "How Whole Numbers Are Built",
+  "subtitle": "Grade 5 Mathematics",
+  "framework": "Cambridge Primary Mathematics 0096",
+  "renderer": {
+    "art": ["math"],
+    "skin": "brown",
+    "scenes": [
+      "tools/lib/ehel-film-marks.js",
+      "tools/lib/film-scenes/math-g5/how-whole-numbers-are-built.js",
+      "tools/lib/film-scenes/math-g5/how-whole-numbers-are-built-2.js",
+      "tools/lib/film-scenes/math-g5/how-whole-numbers-are-built-3.js"
+    ]
+  },
+  "objectives": [
+    ["5Ni.03", "Understand that the four operations follow a particular order."],
+    ["4Ni.07", "Understand the relationship between multiples and factors."],
+    ["6Ni.06", "Understand common multiples and common factors."],
+    ["5Ni.07", "Use knowledge of factors and multiples to understand tests of divisibility by 4 and 8."],
+    ["5Ni.06", "Understand and explain the difference between prime and composite numbers."]
+  ],
+  "scenes": [
+    { "id": "title", "kind": "title", "codes": [], "beats": [
+      { "say": "Every whole number is odd or even, and some are prime.",
+        "art": { "at": { "oddeven": "odd or even", "prime": "prime" } } },
+      { "say": "You will order operations, find factors, and spot primes.",
+        "art": { "at": { "order": "order operations", "factors": "find factors", "primes": "spot primes" } } }
+    ] },
+
+    { "id": "oddeven", "kind": "oddeven", "heading": "Odd numbers and even numbers", "codes": [], "beats": [
+      { "say": "Odd numbers are the simplest sequence: start at 1 and add 2 each time.",
+        "art": { "at": { "odd": "Odd numbers", "add2": "add 2 each time" } } },
+      { "say": "Add the first four odd numbers: 1, 3, 5, 7 makes 16.",
+        "art": { "at": { "four": "first four", "sixteen": "makes 16" } } },
+      { "say": "16 is 4 squared: a 4 by 4 square of dots.",
+        "art": { "at": { "squared": "4 squared", "square": "4 by 4 square" } } },
+      { "say": "Even numbers start at 2 and also add 2.",
+        "art": { "at": { "even": "Even numbers", "add2e": "also add 2" } } },
+      { "say": "Add 2, 4, 6, 8 and you get 20: a 4 by 5 rectangle.",
+        "art": { "at": { "twenty": "get 20", "rect": "4 by 5 rectangle" } } }
+    ] },
+
+    { "id": "order", "kind": "order", "heading": "The order of operations", "codes": ["5Ni.03"], "beats": [
+      { "say": "Look at this expression: 3 plus 4 times 5 has two possible answers.",
+        "art": { "at": { "expr": "3 plus 4 times 5", "two": "two possible answers" } } },
+      { "say": "Left to right gives 35. Times first gives 23.",
+        "art": { "at": { "left35": "Left to right gives 35", "times23": "Times first gives 23" } } },
+      { "say": "Times and divide always come before plus and take away.",
+        "art": { "at": { "timesdiv": "Times and divide", "before": "before plus and take away" } } },
+      { "say": "Same rank goes left to right: 10 take away 2 take away 3 is 5.",
+        "art": { "at": { "rank": "left to right", "ex": "10 take away 2 take away 3 is 5" } } },
+      { "say": "Times and divide are equal rank too, exactly like plus and take away, so they also work left to right.",
+        "art": { "at": { "equalrank": "equal rank too", "left2right": "work left to right" } } },
+      { "say": "12 divide by 4 times 3 makes 9. Right to left instead would wrongly give 1.",
+        "art": { "at": { "expr2": "12 divide by 4 times 3 makes 9", "wrongly": "wrongly give 1" } } }
+    ] },
+
+    { "id": "factors", "kind": "factors", "heading": "Factors and multiples", "codes": ["4Ni.07"], "beats": [
+      { "say": "A factor divides in exactly. A multiple is the times table.",
+        "art": { "at": { "factor": "A factor divides in exactly", "multiple": "the times table" } } },
+      { "say": "Factor lists stop, but multiple lists go on for ever.",
+        "art": { "at": { "stop": "Factor lists stop", "forever": "go on for ever" } } },
+      { "say": "24 has four factor pairs: 1 times 24, 2 times 12, 3 times 8, 4 times 6.",
+        "art": { "at": { "pairs": "four factor pairs", "list": "1 times 24, 2 times 12, 3 times 8, 4 times 6" } } },
+      { "say": "That makes eight factors of 24 altogether.",
+        "art": { "at": { "eight": "eight factors" } } },
+      { "say": "36 is a square number: it has nine factors, not ten.",
+        "art": { "at": { "square36": "36 is a square number", "nine": "nine factors, not ten" } } }
+    ] },
+
+    { "id": "common", "kind": "common", "heading": "What two numbers share", "codes": ["6Ni.06"], "beats": [
+      { "say": "A common factor divides exactly into both numbers.",
+        "art": { "at": { "commonfactor": "A common factor", "both": "both numbers" } } },
+      { "say": "A common multiple appears in both times tables.",
+        "art": { "at": { "commonmultiple": "A common multiple", "tables": "both times tables" } } },
+      { "say": "We say highest common factor, but lowest common multiple.",
+        "art": { "at": { "highest": "highest common factor", "lowest": "lowest common multiple" } } },
+      { "say": "12 and 18 have highest common factor 6, and lowest common multiple 36.",
+        "art": { "at": { "hcf6": "highest common factor 6", "lcm36": "lowest common multiple 36" } } }
+    ] },
+
+    { "id": "divisibility", "kind": "divisibility", "heading": "Divisibility rules", "codes": ["5Ni.07"], "beats": [
+      { "say": "A divisibility rule checks a number without dividing the whole number.",
+        "art": { "at": { "rule": "A divisibility rule", "without": "without dividing the whole number" } } },
+      { "say": "Rules exist for 2, 3, 4, 5, 6, 8, 9 and 10.",
+        "art": { "at": { "list": "2, 3, 4, 5, 6, 8, 9 and 10" } } },
+      { "say": "There is no useful rule for 7.",
+        "art": { "at": { "none": "no useful rule for 7" } } },
+      { "say": "Divisible by 4 checks the last two digits; by 8, the last three.",
+        "art": { "at": { "byfour": "the last two digits", "byeight": "the last three" } } },
+      { "say": "7,315 divided by 7 is 1,045 exactly, with no shortcut to spot it.",
+        "art": { "at": { "num": "7,315 divided by 7 is 1,045", "noshortcut": "no shortcut to spot it" } } }
+    ] },
+
+    { "id": "primes", "kind": "primes", "heading": "Prime numbers", "codes": ["5Ni.06"], "beats": [
+      { "say": "A prime number has exactly two factors: 1 and itself.",
+        "art": { "at": { "prime1": "A prime number", "two2": "exactly two factors" } } },
+      { "say": "A composite number has more than two, built from smaller numbers.",
+        "art": { "at": { "composite": "A composite number", "built": "built from smaller numbers" } } },
+      { "say": "The sieve of Eratosthenes finds primes by crossing out multiples.",
+        "art": { "at": { "sieve": "The sieve of Eratosthenes", "crossing": "crossing out multiples" } } },
+      { "say": "Cross out multiples of 2, then 3, then 5, then 7, to 100.",
+        "art": { "at": { "steps": "2, then 3, then 5, then 7", "hundred": "to 100" } } },
+      { "say": "1 is neither prime nor composite. 2 is the only even prime.",
+        "art": { "at": { "one1": "1 is neither prime nor composite", "twoprime": "2 is the only even prime" } } }
+    ] },
+
+    { "id": "recap", "kind": "recap", "heading": "What you now know", "codes": ["5Ni.03", "4Ni.07", "6Ni.06", "5Ni.07", "5Ni.06"], "beats": [
+      { "say": "Odd numbers make a square; even numbers make a rectangle.",
+        "art": { "at": { "oddr": "Odd numbers make a square", "evenr": "even numbers make a rectangle" } } },
+      { "say": "Times and divide come before plus and take away.",
+        "art": { "at": { "timesfirst": "Times and divide", "beforepa": "before plus and take away" } } },
+      { "say": "A factor divides in; a multiple counts up.",
+        "art": { "at": { "factorr": "A factor divides in", "multipler": "a multiple counts up" } } },
+      { "say": "A prime number has exactly two factors, and rules can test divisibility.",
+        "art": { "at": { "primer": "exactly two factors", "rulesr": "rules can test divisibility" } } }
+    ] }
+  ]
+}

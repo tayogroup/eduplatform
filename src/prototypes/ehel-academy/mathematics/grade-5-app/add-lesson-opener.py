@@ -222,8 +222,29 @@ def about_section(about_li):
     return head + items + '    </ul>\n  </section>\n'
 
 
-def lecture_section(parts):
-    body = "".join(
+def lecture_section(parts, video=None):
+    """The Unit lecture: the film if this lesson has one, then the three parts.
+
+    THE FILM DOES NOT REPLACE THE PARTS, unlike Grades 1-4 where it stands in
+    for a narrated click-through. Grade 5 is a page a learner SCANS - that is
+    why this build has no deck - so the three named parts stay readable under
+    the video. A learner who does not watch still has the whole lesson.
+
+    No finish() is invented for the film ending: this build reports progress
+    as "section reached", by an IntersectionObserver over each
+    <section class="step">, so being here is what counts.
+    """
+    film = ""
+    if video:
+        film = (
+            '    <div class="lec-film">\n'
+            '      <video controls playsinline preload="none" poster="%s" src="%s">\n'
+            '        <track kind="captions" srclang="en" label="English" src="%s">\n'
+            '      </video>\n'
+            '      <p class="lec-note">%s</p>\n'
+            '    </div>\n'
+        ) % (esc(video["poster"]), esc(video["src"]), esc(video["vtt"]), esc(video["note"]))
+    body = film + "".join(
         '      <div class="opener-part"><p class="opener-phase">Part %d of %d</p>'
         '<h3>%s</h3><p>%s</p></div>\n' % (i + 1, len(parts), esc(title), esc(text))
         for i, (title, text) in enumerate(parts)
@@ -234,7 +255,8 @@ def lecture_section(parts):
         '       Grade 4\'s narrated click-through. -->\n'
         '  <section class="step" id="opener-lecture">\n'
         '    <div class="step-head"><span class="step-num">Lecture</span><h2>Unit lecture</h2></div>\n'
-        '    <p class="intro">The whole lesson, in three parts.</p>\n'
+        '    <p class="intro">%s</p>\n' % ("The whole lesson as a film, then the same three parts to read."
+            if video else "The whole lesson, in three parts.") +
         '%s'
         '  </section>\n' % (MARK, body)
     )
@@ -256,6 +278,12 @@ def words_section():
 CSS = """<style>/* %s - see add-lesson-opener.py */
   .opener-list { margin: 10px 0 0; padding-left: 22px; display: flex; flex-direction: column; gap: 9px;
     font-size: 15.5px; line-height: 1.5; color: var(--ink); }
+  /* the unit lecture film, when the lesson has one. It sits ABOVE the three
+     parts, which stay - Grade 5 is a page a learner scans. */
+  .lec-film { max-width: 760px; margin: 0 0 16px; }
+  .lec-film video { width: 100%; display: block; border-radius: 16px; background: #000;
+    aspect-ratio: 16 / 9; }
+  .lec-note { margin: 7px 0 0; font-size: 14px; line-height: 1.45; color: var(--muted, #667); }
   .opener-part { margin-top: 14px; padding-top: 14px; border-top: 1px solid var(--line); }
   .opener-part:first-of-type { margin-top: 10px; padding-top: 0; border-top: none; }
   .opener-phase { margin: 0 0 3px; color: var(--teal); font-weight: 700; font-size: 12px;
@@ -426,7 +454,7 @@ for f in sorted(os.listdir(HERE)):
     # <section class="step" id="sN">). Local ids, no renumbering of the
     # global s1..s27 sequence - see this tool's own docstring for why.
     nav_close = out.index("</nav>") + len("</nav>")
-    new_sections = about_section(data["about"]) + lecture_section(data["parts"]) + words_section()
+    new_sections = about_section(data["about"]) + lecture_section(data["parts"], data.get("video")) + words_section()
     out = out[:nav_close] + new_sections + out[nav_close:]
 
     # ---- 3. CSS and JS, each their own block, appended at the end - not

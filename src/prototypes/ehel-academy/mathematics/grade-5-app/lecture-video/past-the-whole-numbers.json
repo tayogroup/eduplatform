@@ -1,0 +1,126 @@
+{
+  "_comment": "Storyboard for the Grade 5 Mathematics unit lecture film, Past the Whole Numbers. Rendered by tools/create-ehel-unit-lecture.js. See lecture-video/BRIEF.md. Grade 5 is a page a learner scans, not a deck: this film sits above the lesson's five static steps and does not replace them. The chapters follow the lesson's own WORK parts, in order (Place value with decimals; Negative numbers and rounding; Fractions, percentages and ratio), each split into one chapter per idea: decimals (step 23), moving the digits (step 24), negative numbers (step 22), rounding (step 21), fractions and percentages (steps 25-26), ratio and proportion (step 27). Every number said is the lesson's own: 0.65 vs 0.7, 3.5 x 10 = 35, 5 degrees C and negative 3 degrees C, 149 rounding straight to 100 (never via 150), 3.7 rounds to 4 but 4.5 rounds to 5, 65% = 65/100 = 0.65, and the 3:2 counter mix. The lesson's own two flagged wrong claims (3.7 and 4.5 both rounding to 4; Pia's 15.73 = 10 + 5.7 + 0.3) are never asserted as true; the film corrects the first directly.",
+  "slug": "past-the-whole-numbers",
+  "lesson": 4,
+  "grade": 5,
+  "stage": 5,
+  "title": "Past the Whole Numbers",
+  "subtitle": "Grade 5 Mathematics",
+  "framework": "Cambridge Primary Mathematics 0096",
+  "renderer": {
+    "art": ["math"],
+    "skin": "brown",
+    "scenes": [
+      "tools/lib/ehel-film-marks.js",
+      "tools/lib/film-scenes/math-g5/past-the-whole-numbers.js",
+      "tools/lib/film-scenes/math-g5/past-the-whole-numbers-2.js",
+      "tools/lib/film-scenes/math-g5/past-the-whole-numbers-3.js"
+    ]
+  },
+  "objectives": [
+    ["5Np.01", "Understand and explain the value of each digit in decimals (tenths and hundredths)."],
+    ["5Np.02", "Use knowledge of place value to multiply and divide whole numbers by 10, 100 and 1000."],
+    ["5Np.03", "Use knowledge of place value to multiply and divide decimals by 10 and 100."],
+    ["4Np.04", "Understand the relative size of quantities to compare and order positive and negative numbers, using the symbols =, > and <."],
+    ["5Np.05", "Round numbers with one decimal place to the nearest whole number."],
+    ["5Nf.04", "Recognise that proper fractions, decimals (one decimal place) and percentages can have equivalent values."],
+    ["5Nf.11", "Understand that: a proportion compares part to whole a ratio compares part to part of two or more quantities."]
+  ],
+  "scenes": [
+    { "id": "title", "kind": "title", "codes": [], "beats": [
+      { "say": "Numbers do not stop at the ones column. They carry on, in both directions.",
+        "art": { "at": { "ones": "the ones column", "both": "both directions" } } },
+      { "say": "Today: past the decimal point, and below zero into negatives.",
+        "art": { "at": { "point": "the decimal point", "zero": "below zero" } } }
+    ] },
+
+    { "id": "decimals", "kind": "decimals", "heading": "Place value with decimals", "codes": ["5Np.01"], "beats": [
+      { "say": "Place value carries on past the point too.",
+        "art": { "at": { "point": "past the point" } } },
+      { "say": "The first column after the point is tenths. The next is hundredths.",
+        "art": { "at": { "tenths": "tenths", "hundredths": "hundredths" } } },
+      { "say": "Each column is worth ten times less than the one before it.",
+        "art": { "at": { "ten": "ten times less" } } },
+      { "say": "0.65 has more digits written down than 0.7, but it is the smaller number.",
+        "art": { "at": { "sixtyFive": "0.65", "seven": "0.7", "smaller": "the smaller number" } } },
+      { "say": "The comparison is decided in the tenths column: seven tenths beats six tenths.",
+        "art": { "at": { "tenthsCol": "the tenths column", "seven2": "seven tenths beats six tenths" } } }
+    ] },
+
+    { "id": "moving", "kind": "moving", "heading": "Moving the digits", "codes": ["5Np.02", "5Np.03"], "beats": [
+      { "say": "Multiplying by ten is taught as add a zero. That only works for whole numbers.",
+        "art": { "at": { "zero": "add a zero", "whole": "whole numbers" } } },
+      { "say": "3.5 times ten is 35 - not 3.50.",
+        "art": { "at": { "threeFive": "3.5 times ten is 35", "notThat": "not 3.50" } } },
+      { "say": "What really happens: every digit moves one column to the left.",
+        "art": { "at": { "moves": "every digit moves one column to the left" } } },
+      { "say": "The point stays exactly where it always was.",
+        "art": { "at": { "stays": "The point stays exactly where it always was" } } },
+      { "say": "Dividing goes backwards: one column for ten, two for a hundred, three for a thousand.",
+        "art": { "at": { "dividing": "Dividing goes backwards", "oneCol": "one column for ten", "twoCol": "two for a hundred", "threeCol": "three for a thousand" } } }
+    ] },
+
+    { "id": "negative", "kind": "negative", "heading": "Negative numbers", "codes": ["4Np.04"], "beats": [
+      { "say": "Counting down from 5 carries on past zero: negative 1, negative 2, negative 3.",
+        "art": { "at": { "zero2": "past zero", "neg": "negative 1, negative 2, negative 3" } } },
+      { "say": "Morning was 5 degrees. Night was negative 3 degrees.",
+        "art": { "at": { "morning": "5 degrees", "night": "negative 3 degrees" } } },
+      { "say": "That is 8 degrees apart: 5 steps down to zero, then 3 more.",
+        "art": { "at": { "eight": "8 degrees apart", "stepsDown": "5 steps down to zero", "more": "then 3 more" } } },
+      { "say": "The minus sign shows which side of zero, not how big the number is.",
+        "art": { "at": { "side": "which side of zero", "big": "not how big the number is" } } },
+      { "say": "So negative 7 is lower than negative 3, though 7 is bigger than 3.",
+        "art": { "at": { "lower": "negative 7 is lower than negative 3", "bigger": "7 is bigger than 3" } } }
+    ] },
+
+    { "id": "rounding", "kind": "rounding", "heading": "Rounding", "codes": ["5Np.05"], "beats": [
+      { "say": "Rounding reads just one digit: the one right after the place.",
+        "art": { "at": { "one": "just one digit", "after": "the one right after the place" } } },
+      { "say": "149 to the nearest ten is 150.",
+        "art": { "at": { "oneFortyNine": "149", "oneFifty": "150" } } },
+      { "say": "Round straight from 149, not twice - to the nearest hundred it is 100, not 200.",
+        "art": { "at": { "straight": "Round straight from 149", "notTwice": "not twice", "oneHundred": "it is 100", "notTwoHundred": "not 200" } } },
+      { "say": "Exactly halfway always rounds up. Everyone agrees, so everyone gets the same answer.",
+        "art": { "at": { "halfway": "Exactly halfway always rounds up" } } },
+      { "say": "The same rule works on decimals: 3.7 rounds to 4, but 4.5 rounds to 5, not 4.",
+        "art": { "at": { "threeSeven": "3.7 rounds to 4", "fourFive": "4.5 rounds to 5", "notFour": "not 4" } } }
+    ] },
+
+    { "id": "fracpct", "kind": "fracpct", "heading": "Fractions and percentages", "codes": ["5Nf.04"], "beats": [
+      { "say": "A fraction cuts a whole into equal parts. The bottom number counts the cuts.",
+        "art": { "at": { "cuts": "cuts a whole into equal parts", "bottom": "The bottom number counts the cuts" } } },
+      { "say": "1/4 has the bigger bottom number, but it is the smaller amount.",
+        "art": { "at": { "quarter": "1/4", "smaller": "the smaller amount" } } },
+      { "say": "0.65 is a fraction too: 65 out of 100, or 13 out of 20.",
+        "art": { "at": { "sixtyFive": "0.65", "outOf100": "65 out of 100", "outOf20": "13 out of 20" } } },
+      { "say": "Per cent means for each hundred, so 65% is 65 out of 100 as well.",
+        "art": { "at": { "percent": "Per cent means for each hundred", "pctOutOf": "65 out of 100" } } },
+      { "say": "65%, 65/100 and 0.65 are one number, three different costumes.",
+        "art": { "at": { "costumes": "three different costumes" } } }
+    ] },
+
+    { "id": "ratio", "kind": "ratio", "heading": "Ratio and proportion", "codes": ["5Nf.11"], "beats": [
+      { "say": "This mix has 3 orange counters and 2 teal ones.",
+        "art": { "at": { "orange": "3 orange counters", "teal": "2 teal ones" } } },
+      { "say": "A ratio compares part to part: 3 to 2, written 3:2.",
+        "art": { "at": { "ratio": "A ratio compares part to part", "threeTwo": "written 3:2" } } },
+      { "say": "3:2 does not mean the fraction 3/2 - both numbers are just parts.",
+        "art": { "at": { "notFraction": "does not mean the fraction 3/2", "parts": "both numbers are just parts" } } },
+      { "say": "Add the parts for the whole: 3 plus 2 is 5 counters in all.",
+        "art": { "at": { "addParts": "Add the parts for the whole", "five": "5 counters in all" } } },
+      { "say": "3 out of 5 is a proportion, part to whole: 60%.",
+        "art": { "at": { "proportion": "a proportion, part to whole", "sixty": "60%" } } }
+    ] },
+
+    { "id": "recap", "kind": "recap", "heading": "What you now know", "codes": ["5Np.01", "5Np.02", "5Np.03", "4Np.04", "5Np.05", "5Nf.04", "5Nf.11"], "beats": [
+      { "say": "Place value carries on past the point, and past zero into negatives.",
+        "art": { "at": { "point": "past the point", "negatives": "past zero into negatives" } } },
+      { "say": "Times ten moves every digit one column left. The point never moves.",
+        "art": { "at": { "moves": "moves every digit one column left" } } },
+      { "say": "Round on the one digit after the place, straight from the start, every time.",
+        "art": { "at": { "oneDigit": "the one digit after the place" } } },
+      { "say": "A fraction, a decimal and a percentage can be one number. A ratio is part to part.",
+        "art": { "at": { "oneNumber": "can be one number", "partToPart": "part to part" } } }
+    ] }
+  ]
+}

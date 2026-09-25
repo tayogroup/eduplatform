@@ -1,0 +1,167 @@
+{
+  "_comment": "Storyboard for the unit lecture film of Replace a Broken Tile (Professor Adow TVET, Home Repair, lesson 1). Made rather than borrowed: nothing in the Ehel library is about tiling, and this is a trade job for an adult. The task sequence follows a tiling guide the owner supplied on 2026-09-25. Every art.at key must appear VERBATIM in its beat's say or the mark never fires.",
+  "slug": "replace-a-broken-tile",
+  "lesson": 1,
+  "grade": 3,
+  "stage": 3,
+  "title": "Replace a Broken Tile",
+  "subtitle": "Home Repair",
+  "framework": "Professor Adow TVET — Home Repair (ADOW-HR)",
+  "_voice": "Daniel. The school's voice, owner's choice 2026-09-24.",
+  "voice": "onwK4e9ZLuTAKqWW03F9",
+  "brand": {
+    "name": "Professor Adow TVET",
+    "mark": "A",
+    "by": "A short unit lecture from Professor Adow TVET"
+  },
+  "renderer": {
+    "scenes": [
+      "tools/lib/ehel-film-marks.js",
+      "tools/lib/film-scenes/adow-home-repair/replace-a-broken-tile.js"
+    ]
+  },
+  "objectives": [
+    ["ADOW-HR-HR.01.1", "Name the tools and the protective equipment, and what each protects against."],
+    ["ADOW-HR-HR.01.2", "Mask and drill the tile to the depth of the tile only."],
+    ["ADOW-HR-HR.01.3", "Rake the grout from all four joints before anything is broken."],
+    ["ADOW-HR-HR.01.4", "Chip the tile out from the centre outwards."],
+    ["ADOW-HR-HR.01.5", "Clear the old adhesive back to a flat bed, bevel side down."],
+    ["ADOW-HR-HR.01.6", "Dry-fit, and read a rocking tile as an uneven bed."],
+    ["ADOW-HR-HR.01.7", "Butter sparingly and set flush."],
+    ["ADOW-HR-HR.01.8", "Space, cure, grout, finish and polish."]
+  ],
+  "scenes": [
+    {
+      "id": "title",
+      "kind": "title",
+      "heading": "Replace a Broken Tile",
+      "codes": [],
+      "beats": [
+        {
+          "say": "One tile in this wall is broken. It is already ruined, and nothing you do to it can make it worse. The eight sound tiles around it are the job, and every decision from here is about them.",
+          "art": { "at": { "broken": "One tile in this wall is broken", "eight": "The eight sound tiles" } }
+        }
+      ]
+    },
+    {
+      "id": "ppe",
+      "kind": "ppe",
+      "heading": "Before anything else",
+      "codes": ["ADOW-HR-HR.01.1"],
+      "beats": [
+        {
+          "say": "Safety goggles, because a struck tile does not crumble, it splinters, and it splinters upwards. Thick gloves, because a freshly broken glazed edge cuts like glass, which is very nearly what it is.",
+          "art": { "at": { "goggles": "Safety goggles", "gloves": "Thick gloves" } }
+        }
+      ]
+    },
+    {
+      "id": "mask",
+      "kind": "mask",
+      "heading": "Masking and drilling",
+      "codes": ["ADOW-HR-HR.01.2"],
+      "beats": [
+        {
+          "say": "Two strips of masking tape across the diagonals, forming an X. The tape stops the drill slipping on the glaze, and later it carries most of the broken tile away with it.",
+          "art": { "at": { "diagonals": "across the diagonals", "slipping": "stops the drill slipping" } }
+        },
+        {
+          "say": "Now drill holes along both strips with a five millimetre masonry bit. Only as deep as the tile. Wrap a piece of tape around the bit as a depth stop, because behind the tile is wall, and in a kitchen or a bathroom there is often a pipe in it.",
+          "art": { "at": { "holes": "drill holes along both strips", "depth": "as a depth stop" } }
+        }
+      ]
+    },
+    {
+      "id": "rake",
+      "kind": "rake",
+      "heading": "Freeing it from its neighbours",
+      "codes": ["ADOW-HR-HR.01.3"],
+      "beats": [
+        {
+          "say": "Before a single blow, rake the grout out of all four joints. Set grout ties the tile to the tiles beside it, and while that rim is there a crack has somewhere to travel. Take it out and the tile becomes an island.",
+          "art": { "at": { "four": "all four joints", "island": "becomes an island" } }
+        }
+      ]
+    },
+    {
+      "id": "chip",
+      "kind": "chip",
+      "heading": "Taking it out",
+      "codes": ["ADOW-HR-HR.01.4"],
+      "beats": [
+        {
+          "say": "The cold chisel starts in the middle, where the drilling has already weakened it, and works outwards to the tape. Start at an edge and you are working against the neighbour, not the wall.",
+          "art": { "at": { "middle": "starts in the middle" } }
+        },
+        {
+          "say": "Strike the chisel. Never lever it, because the only thing to lever against is the tile next door, and a tile is weak in bending. Peel the tape, lift the last pieces with the wood chisel, and the old adhesive is what is left.",
+          "art": { "at": { "lever": "Never lever it", "adhesive": "the old adhesive" } }
+        }
+      ]
+    },
+    {
+      "id": "bed",
+      "kind": "bed",
+      "heading": "Clearing the bed",
+      "codes": ["ADOW-HR-HR.01.5"],
+      "beats": [
+        {
+          "say": "Take the old adhesive back with the wood chisel held bevel side down, so the tool rides up out of the work rather than digging in behind the tile beside it. What you want is flat. Nothing after this sits right on a bed that is not.",
+          "art": { "at": { "bevel": "bevel side down", "flat": "What you want is flat" } }
+        }
+      ]
+    },
+    {
+      "id": "fit",
+      "kind": "fit",
+      "heading": "The dry fit",
+      "codes": ["ADOW-HR-HR.01.6"],
+      "beats": [
+        {
+          "say": "Offer the new tile up before any adhesive is opened. If it rocks, that is the wall talking and not the tile: there is a high spot still on the bed. Go back to the chisel now, while it costs you a minute.",
+          "art": { "at": { "rocks": "If it rocks" } }
+        }
+      ]
+    },
+    {
+      "id": "set",
+      "kind": "set",
+      "heading": "Setting it",
+      "codes": ["ADOW-HR-HR.01.7"],
+      "beats": [
+        {
+          "say": "Spread adhesive on the back of the tile with the notched spreader, and use it sparingly. Too much and the tile stands proud of its neighbours, and you will feel that step every time you wipe the wall.",
+          "art": { "at": { "sparingly": "use it sparingly" } }
+        },
+        {
+          "say": "Press it home until every edge and corner is flush, clean the adhesive off the face, then put the spacers in and leave it. Twenty four hours, or whatever the container says. The adhesive holds the tile; nothing else does yet.",
+          "art": { "at": { "flush": "every edge and corner is flush", "hours": "Twenty four hours" } }
+        }
+      ]
+    },
+    {
+      "id": "grout",
+      "kind": "grout",
+      "heading": "Grout and finish",
+      "codes": ["ADOW-HR-HR.01.8"],
+      "beats": [
+        {
+          "say": "When it has cured, take the spacers out and grout the four joints, then run the plastic tool along them for an even line. Polish it off with a dry cloth, and if the job is right nobody can tell which tile it was.",
+          "art": { "at": { "grout": "grout the four joints", "which": "which tile it was" } }
+        }
+      ]
+    },
+    {
+      "id": "recap",
+      "kind": "recap",
+      "heading": "Four things, in order",
+      "codes": [],
+      "beats": [
+        {
+          "say": "So: protect yourself and the tiles around it. Release it by raking all four joints. Remove it from the centre outwards, striking and never levering. Replace it on a flat bed, sparingly, flush, and then wait. The repair you cannot find is the finished one.",
+          "art": { "at": { "protect": "protect yourself", "release": "Release it", "remove": "Remove it from the centre", "replace": "Replace it on a flat bed", "finished": "is the finished one" } }
+        }
+      ]
+    }
+  ]
+}

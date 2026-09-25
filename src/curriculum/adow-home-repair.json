@@ -1,0 +1,102 @@
+{
+  "framework": "Professor Adow TVET — Home Repair",
+  "curriculumCode": "ADOW-HR",
+  "level": "Trade · Construction & Building Trades",
+  "published": "2026-09-25",
+  "note": "A TRADE module, and a deliberately small one: it opens with a single job done end to end rather than a survey of maintenance. Replacing a broken wall tile is the right first job because every step of it is reversible in theory and unforgiving in practice — the tile comes out in pieces, the neighbours are one slip away from joining it, and the finish is judged by eye from a metre away. It is also the job a householder most often pays for and most often attempts themselves.",
+  "source": "The task sequence follows a tiling guide supplied by the owner on 2026-09-25 (masking, drilling, raking, chipping from the centre out, clearing the bed, dry-fitting, buttering, spacing, curing, grouting, polishing). The criteria are written from that sequence for an adult learner at grade 8–11; the wording is this school's, not the guide's.",
+  "terminology": "UK / East African.",
+  "codePrefix": "ADOW-HR",
+  "codeScheme": "ADOW-HR-<unit>.<n>",
+  "servesDepartments": ["construction"],
+  "assessmentModes": {
+    "knowledge": "Assessable by the platform: identification, reasoning, written answer.",
+    "both": "Taught and practised here; signed off on real work by an assessor.",
+    "practical": "Bench or site only. The platform can teach it and cannot assess it."
+  },
+  "weightingNote": "Only a quarter of this module is assessable on screen, and that is the honest figure for a hand trade. Naming the tools, and reading a rocking tile as an uneven bed, are judgements a screen can test. Everything between the first drill hole and the last wipe of grout is judged on the wall: whether the neighbours survived, whether the tile sits flush, whether the grout line is even. A platform that claimed otherwise would be selling a certificate rather than a skill.",
+  "leadsToNote": "NO unit codes are claimed. The only Kenyan framework in this repo is the carpentry one (TVET CDACC Carpentry & Joinery Level 4) and it says nothing about tiling. An invented code would be worse than an honest blank, so every leadsTo here is empty until a real tiling or building-maintenance framework is in hand.",
+  "modules": [
+    {
+      "key": "home-repair",
+      "code": "HR",
+      "title": "Home Repair",
+      "description": "Common repairs in a finished building, done without making the damage worse. The module opens with wall tiling: taking a broken tile out of a finished wall and putting a new one back so that nobody can tell which one it was.",
+      "units": [
+        {
+          "number": 1,
+          "code": "HR.01",
+          "title": "Replace a broken wall tile",
+          "criteria": [
+            {
+              "code": "ADOW-HR-HR.01.1",
+              "text": "Name the tools and materials a tile replacement needs, and state the personal protective equipment that is not optional — goggles and thick gloves — and what each one is protecting against.",
+              "assessmentMode": "knowledge",
+              "evidence": "Labelling task; oral questioning.",
+              "leadsTo": []
+            },
+            {
+              "code": "ADOW-HR-HR.01.2",
+              "text": "Mask the broken tile with two diagonal strips forming an X, and drill along the tape with a 5 mm masonry bit to the depth of the TILE ONLY, using a depth guide rather than judgement.",
+              "assessmentMode": "both",
+              "evidence": "Observed on a practice board; the depth guide is checked before drilling.",
+              "leadsTo": []
+            },
+            {
+              "code": "ADOW-HR-HR.01.3",
+              "text": "Rake out the grout on all four sides of the tile before any of it is broken, and explain why the grout is removed first rather than last.",
+              "assessmentMode": "both",
+              "evidence": "Observed; the neighbouring grout lines are inspected afterwards.",
+              "leadsTo": []
+            },
+            {
+              "code": "ADOW-HR-HR.01.4",
+              "text": "Chip the tile out with a cold chisel working from the CENTRE outwards to the masked lines, and say why starting at an edge risks the tile beside it.",
+              "assessmentMode": "both",
+              "evidence": "Observed on a practice board; surrounding tiles inspected for chips.",
+              "leadsTo": []
+            },
+            {
+              "code": "ADOW-HR-HR.01.5",
+              "text": "Clear the old adhesive back to a flat bed with the wood chisel held bevel side down, without slipping into the surrounding tiles.",
+              "assessmentMode": "both",
+              "evidence": "Observed; the bed is checked flat before the new tile is offered up.",
+              "leadsTo": []
+            },
+            {
+              "code": "ADOW-HR-HR.01.6",
+              "text": "Dry-fit the replacement before any adhesive is mixed, and read a tile that rocks as a bed that is not flat rather than a tile that is wrong.",
+              "assessmentMode": "knowledge",
+              "evidence": "Scenario question; oral questioning.",
+              "leadsTo": []
+            },
+            {
+              "code": "ADOW-HR-HR.01.7",
+              "text": "Butter the back of the tile sparingly with the adhesive spreader and set it so that every edge and corner finishes flush with its neighbours, cleaning adhesive off the face before it goes off.",
+              "assessmentMode": "practical",
+              "evidence": "Signed off on real work: flushness is judged by hand and eye across the finished wall.",
+              "leadsTo": []
+            },
+            {
+              "code": "ADOW-HR-HR.01.8",
+              "text": "Space the tile, leave it the adhesive manufacturer's stated curing time before touching it, then grout, finish the line with the plastic tool and polish off when dry.",
+              "assessmentMode": "both",
+              "evidence": "Observed across two sessions; the stated curing time is read off the container rather than assumed.",
+              "leadsTo": []
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "counts": {
+    "modules": 1,
+    "units": 1,
+    "criteria": 8,
+    "byAssessmentMode": {
+      "knowledge": 2,
+      "both": 5,
+      "practical": 1
+    }
+  }
+}

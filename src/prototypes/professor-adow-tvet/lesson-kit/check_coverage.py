@@ -55,6 +55,20 @@ PROBES = {
     # satisfy by quoting itself: "embedded" is in the criterion AND is the
     # idea, whereas probing DS.01.6 for "shared" would pass on the step
     # heading alone, so it probes "log out" instead.
+    # Home Repair, added 2026-09-25 with the tiling lesson. Each probe is a
+    # word the LESSON must use, not a word the criterion uses: "goggles"
+    # rather than "protective equipment", "bevel side down" rather than
+    # "chisel technique". A probe that restates the criterion passes on the
+    # criterion being copied into the page, which proves nothing.
+    "ADOW-HR-HR.01.1": ["goggles"],
+    "ADOW-HR-HR.01.2": ["masonry"],
+    "ADOW-HR-HR.01.3": ["raked"],
+    "ADOW-HR-HR.01.4": ["centre outwards"],
+    "ADOW-HR-HR.01.5": ["bevel side down"],
+    "ADOW-HR-HR.01.6": ["rocks"],
+    "ADOW-HR-HR.01.7": ["sparingly"],
+    "ADOW-HR-HR.01.8": ["curing"],
+
     "ADOW-DS-DS.01.1": ["output"],
     "ADOW-DS-DS.01.2": ["probe"],
     "ADOW-DS-DS.01.3": ["embedded"],

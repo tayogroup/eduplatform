@@ -324,7 +324,7 @@ LESSON["lecture"] = LESSON["lecture"] + [
 # names are content hashes, so a re-render gets new ones and must be re-listed
 # here and in app.config.json extraPages.
 LESSON["video"] = {
-    "src": "lecture-video/computers-everywhere.16b93198.mp4",
+    "src": "lecture-video/computers-everywhere.4ae6aec3.mp4",
     "captions": "lecture-video/computers-everywhere.8d4a4942.vtt",
     "poster": "lecture-video/computers-everywhere.c2a3425a.jpg",
     "note": "About three minutes. Watch it through, then go back over it a part at a time below.",

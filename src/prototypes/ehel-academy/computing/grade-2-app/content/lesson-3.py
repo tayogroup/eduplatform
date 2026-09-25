@@ -282,3 +282,15 @@ LESSON["words"] = LESSON["words"] + [
     word("bug", "\U0001F41B", "A mistake in a program.",
          ["There is a bug: the cat goes the wrong way.", "Find the bug and fix it."]),
 ]
+
+# The unit lecture film. It plays in this lesson's own Unit lecture step,
+# above the parts, so no step moves. Made by tools/create-ehel-unit-lecture.js
+# from lecture-video/programs-and-repeats.json. The names are content hashes, so a
+# re-render gets new ones and must be re-listed here and in app.config.json
+# extraPages.
+LESSON["video"] = {
+    "src": "lecture-video/programs-and-repeats.8ae48cde.mp4",
+    "captions": "lecture-video/programs-and-repeats.0eea35bb.vtt",
+    "poster": "lecture-video/programs-and-repeats.70955e55.jpg",
+    "note": "About 3 minutes. Watch it through, then go back over it a part at a time below.",
+}

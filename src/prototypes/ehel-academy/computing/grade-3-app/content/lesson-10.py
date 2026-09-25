@@ -263,3 +263,15 @@ LESSON["words"] = LESSON["words"] + [
     word("sort", "\U0001F522", "To put the rows in order by one column.",
          ["Sort by age, smallest first.", "Sorting moves whole rows, so nobody loses their data."]),
 ]
+
+# The unit lecture film. It plays in this lesson's own Unit lecture step,
+# above the parts, so no step moves. Made by tools/create-ehel-unit-lecture.js
+# from lecture-video/spreadsheets.json. The names are content hashes, so a
+# re-render gets new ones and must be re-listed here and in app.config.json
+# extraPages.
+LESSON["video"] = {
+    "src": "lecture-video/spreadsheets.1b9ac02c.mp4",
+    "captions": "lecture-video/spreadsheets.84b49231.vtt",
+    "poster": "lecture-video/spreadsheets.7b19a4cc.jpg",
+    "note": "About 3 minutes. Watch it through, then go back over it a part at a time below.",
+}

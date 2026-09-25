@@ -306,3 +306,15 @@ LESSON["talk"] = talk(
     "Ask each pair for one thing that would stop working tonight if the internet went off, "
     "and one thing that would not."
 )
+
+# The unit lecture film. It plays in this lesson's own Unit lecture step,
+# above the parts, so no step moves. Made by tools/create-ehel-unit-lecture.js
+# from lecture-video/networks-and-the-internet.json. The names are content hashes, so a
+# re-render gets new ones and must be re-listed here and in app.config.json
+# extraPages.
+LESSON["video"] = {
+    "src": "lecture-video/networks-and-the-internet.1a12633d.mp4",
+    "captions": "lecture-video/networks-and-the-internet.6250e6af.vtt",
+    "poster": "lecture-video/networks-and-the-internet.997e3a5d.jpg",
+    "note": "About 2 and a half minutes. Watch it through, then go back over it a part at a time below.",
+}

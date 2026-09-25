@@ -303,3 +303,15 @@ label_ct(LESSON, "Follow the algorithm: a cup of tea", "Algorithmic thinking")
 label_ct(LESSON, "Follow the algorithm: bedtime", "Algorithmic thinking")
 label_ct(LESSON, "Only the steps you need: post a letter", "Decomposition")
 label_ct(LESSON, "Precise, or not?", "Algorithmic thinking")
+
+# The unit lecture film. It plays in this lesson's own Unit lecture step,
+# above the parts, so no step moves. Made by tools/create-ehel-unit-lecture.js
+# from lecture-video/precise-instructions.json. The names are content hashes, so a
+# re-render gets new ones and must be re-listed here and in app.config.json
+# extraPages.
+LESSON["video"] = {
+    "src": "lecture-video/precise-instructions.2a28e8ea.mp4",
+    "captions": "lecture-video/precise-instructions.11e9dc2e.vtt",
+    "poster": "lecture-video/precise-instructions.2f5ece58.jpg",
+    "note": "About 3 minutes. Watch it through, then go back over it a part at a time below.",
+}

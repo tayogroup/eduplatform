@@ -261,3 +261,15 @@ LESSON["words"] = LESSON["words"] + [
     word("message", "\u2709\ufe0f", "The words somebody wants to send to somebody else.",
          ["Write the message, then encode it.", "The message passes through many computers."]),
 ]
+
+# The unit lecture film. It plays in this lesson's own Unit lecture step,
+# above the parts, so no step moves. Made by tools/create-ehel-unit-lecture.js
+# from lecture-video/secret-codes.json. The names are content hashes, so a
+# re-render gets new ones and must be re-listed here and in app.config.json
+# extraPages.
+LESSON["video"] = {
+    "src": "lecture-video/secret-codes.ebdb8e54.mp4",
+    "captions": "lecture-video/secret-codes.40b54e6d.vtt",
+    "poster": "lecture-video/secret-codes.fad212d7.jpg",
+    "note": "About 3 minutes. Watch it through, then go back over it a part at a time below.",
+}

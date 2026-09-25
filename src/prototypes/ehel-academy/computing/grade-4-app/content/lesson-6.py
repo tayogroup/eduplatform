@@ -269,3 +269,15 @@ LESSON["talk"] = talk(
     "checking every single bulb?",
     "Ask which part they tested first, and why that one."
 )
+
+# The unit lecture film. It plays in this lesson's own Unit lecture step,
+# above the parts, so no step moves. Made by tools/create-ehel-unit-lecture.js
+# from lecture-video/inputs-outputs-and-parts.json. The names are content hashes, so a
+# re-render gets new ones and must be re-listed here and in app.config.json
+# extraPages.
+LESSON["video"] = {
+    "src": "lecture-video/inputs-outputs-and-parts.d11e971a.mp4",
+    "captions": "lecture-video/inputs-outputs-and-parts.1d172348.vtt",
+    "poster": "lecture-video/inputs-outputs-and-parts.9d06d72a.jpg",
+    "note": "About 2 and a half minutes. Watch it through, then go back over it a part at a time below.",
+}

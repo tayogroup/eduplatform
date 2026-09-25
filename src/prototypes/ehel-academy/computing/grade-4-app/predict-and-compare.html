@@ -675,6 +675,17 @@
   .lec-p { margin: 0; font-size: 19px; line-height: 1.55; max-width: 34em; }
   .lec-note { margin: 4px 0 0; color: var(--muted); font-size: 13.5px; }
 
+  /* ---- the unit lecture film, where a lesson has one ----
+     The Science kit's rule: wider than the .lec column below it, because the
+     film is the lecture and the parts are the way back through it, and 16:9
+     fixed by aspect-ratio so a phone in portrait gets the whole frame. */
+  .lec-film { width: 100%; max-width: 46em; margin: 0 auto 18px; text-align: center; }
+  .lec-film video {
+    width: 100%; aspect-ratio: 16 / 9; display: block;
+    border-radius: 20px; border: 3px solid var(--line); background: #0B1D2C;
+  }
+  .lec-film .lec-note { margin-top: 8px; }
+
   /* ---- the words: a card opens a panel ---- */
   .cardsgrid.words { max-width: 720px; }
   .wordpanel { width: 100%; max-width: 560px; padding: 16px 18px; border-radius: 20px; border: 3px solid var(--teal); background: var(--card); text-align: left; }
@@ -1034,6 +1045,20 @@
      fallback is only for the instant before the first measurement. */
   body:has(#seb-session-bar) .w-dock,
   body:has(#seb-session-bar) .w-drawer { bottom: var(--seb-lift, 78px); }
+  /* AND THE SAME LIFT IN FOCUS MODE. The rule above is specificity (1,1,1)
+     (:has() takes the specificity of its most specific argument, and
+     #seb-session-bar is an id); the plain `.w-dock, .w-drawer` rule further
+     down that spends --wehel-foot-lift is (0,1,0), so with a session bar on
+     screen the footer lift was being thrown away entirely, not merely
+     outranked, and the dock sat back on top of Next - the exact bug fixed
+     below, returning in the one launch mode (focus mode: live class, exam)
+     that also happens to carry a session bar. Composes the two offsets
+     instead of letting one replace the other, and sits after the rule above
+     so it wins on source order at equal specificity. Found and fixed by a
+     peer session porting this to Grade 2 - see 81c06f0940. */
+  body:has(#seb-session-bar) .w-dock,
+  body:has(#seb-session-bar) .w-drawer {
+    bottom: calc(var(--seb-lift, 78px) + var(--wehel-foot-lift, 0px)); }
   .w-dock { position: fixed; right: 14px; bottom: 14px; z-index: 70; display: inline-flex;
     align-items: center; gap: 8px; border: none; border-radius: 999px; cursor: pointer;
     background: var(--plum); color: var(--plum-ink, #fff); font: inherit; font-size: 16px; font-weight: 700;
@@ -1051,6 +1076,24 @@
   .w-toast { position: fixed; left: 50%; bottom: 88px; transform: translateX(-50%); z-index: 90;
     background: var(--ink); color: var(--ground); padding: 10px 16px; border-radius: 999px;
     font-weight: 700; font-size: 15px; box-shadow: var(--shadow); }
+
+  /* The dock's resting spot (bottom:14) can land on the Back/Next footer when
+     a step is short enough that .foot is the last thing on screen -- routine
+     on a phone or tablet, where the viewport is short relative to the deck --
+     and reaches the same collision on a step long enough to NEED scrolling,
+     at the scroll position where .foot comes into view, because .foot is the
+     last thing in the document and the dock's footprint is fixed to the
+     viewport rather than to a point in the page. A trailing padding-bottom on
+     .wrap fixes neither case: .foot's position is set by the content ABOVE
+     it, so padding added after it never moves it, which is what the first
+     attempt at this got wrong (verified in the browser -- the overlap
+     survived it unchanged, in the fits-without-scrolling case this comment
+     first shipped for). Lift the dock clear instead, exactly as it already
+     lifts above the session bar below, but tracked on scroll as well as
+     resize -- see the script -- because unlike the session bar, .foot is
+     ordinary content and its distance from the viewport's bottom edge is a
+     function of scroll position, not a constant once measured. */
+  .w-dock, .w-drawer { bottom: calc(14px + var(--wehel-foot-lift, 0px)); }
 
   /* WEHEL-THEME-START -- the tutor PANEL, dressed in this page's palette.
      The dock and the drawer above already use --card/--line/--ink, so before
@@ -1241,17 +1284,6 @@
     .eh-find input { width: 96px; }
     .eh-found { top: var(--eh-found-top-narrow, 100px); }
   }
-
-  /* ---- Computing's own header-bar sizing - own-header-css.py ----
-     The shared add-header-bars.py draws this bar with `.eh-b1right` at
-     `flex: 0 0 auto`, which was right before add-lesson-search.py began
-     injecting a 141px search field into it. A no-shrink flex item sizes to
-     max-content whatever the viewport does: 44px off the right at 375px, with
-     the voice toggle carried off the screen. Appended here, last in the sheet,
-     so it wins on order without editing a file that belongs to every subject. */
-  .eh-b1right { flex: 0 1 auto; min-width: 0; }
-  .eh-icon { flex: 0 0 auto; }
-  @media (max-width: 480px) { .eh-picker { display: none; } }
 </style>
 
 <a class="skip" href="#deck">Skip to the lesson</a>
@@ -1297,9 +1329,9 @@
         <p class="score" id="score1"></p>
       </div>
     </section>
-    <section class="slide" data-objectives="4CT.05 4CT.03 4CT.04" data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>This is the lesson, told to you before you do it.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>Listen to each part.</s><s>Look at the picture while you listen.</s><s>Press Next part to go on, and Listen again to hear it twice.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="empathetic" styledegree="1.3"><prosody rate="-6%"><s>Listening is not the same as hearing.</s><s>Sit still, and actually listen.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>Press Listen.</s></mstts:express-as>' data-say="Listen to the lesson, one part at a time. Press Next part when you are ready.">
+    <section class="slide" data-objectives="4CT.05 4CT.03 4CT.04" data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>This is the lesson, told to you before you do it.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>Listen to each part.</s><s>Look at the picture while you listen.</s><s>Press Next part to go on, and Listen again to hear it twice.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="empathetic" styledegree="1.3"><prosody rate="-6%"><s>Listening is not the same as hearing.</s><s>Sit still, and actually listen.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>Press Listen.</s></mstts:express-as>' data-say="Watch the lesson. Then go back through it a part at a time below.">
       <div class="slide-head"><span class="n">2</span><h2>Unit lecture</h2></div>
-      <div class="say"><button type="button" class="speak" aria-label="Read it to me">&#128266;</button><span id="ask2">Listen to the lesson, one part at a time. Press Next part when you are ready.</span></div>
+      <div class="say"><button type="button" class="speak" aria-label="Read it to me">&#128266;</button><span id="ask2">Watch the lesson. Then go back through it a part at a time below.</span></div>
       <div class="stage">
         <div id="stage2"></div>
         <div class="choices" id="ch2"></div>
@@ -1602,7 +1634,13 @@
               "title": "Shorter is not the same as better",
               "say": "When you compare two algorithms, it is tempting to pick the shorter one. But shorter only wins if it still does the job. An algorithm that leaves a step out is shorter and wrong. So compare against the PURPOSE first. Does each one do what was asked? Only then compare the steps, the time and the cost."
             }
-          ]
+          ],
+          "video": {
+            "src": "lecture-video/predict-and-compare.02749be9.mp4",
+            "captions": "lecture-video/predict-and-compare.a01cd0e1.vtt",
+            "poster": "lecture-video/predict-and-compare.f508756a.jpg",
+            "note": "About 3 minutes. Watch it through, then go back over it a part at a time below."
+          }
         }
       },
       {
@@ -9380,16 +9418,40 @@
     ONLEAVE[o.finish] = () => finish(o.finish);
   }
 
-  /* ---- the unit lecture: the lesson told in parts, by the voice ---- */
+  /* ---- the unit lecture: the lesson told in parts, by the voice ----
+     A lesson with a film (LESSON["video"], see _shell.py) shows it above the
+     parts, as the Science kit's lecture() does: the film is the lecture, and
+     the parts are the way back through it. Without one, every line below
+     draws and reports exactly what it always did. */
   function lecture(o) {
     const el = o.el;
     const parts = o.parts || [];
-    let k = 0, furthest = 0;
+    const film = o.video || null;
+    let k = 0, furthest = 0, watched = false;
     const id = el.stage + "l";
+
+    /* The film is painted ONCE and then left alone: paint() rewrites the
+       stage on every Next part, and a <video> inside that markup would be torn
+       out and rebuilt mid-play. preload="none" because the deck paints every
+       slide at load, and a child who never reaches this step should not
+       download the film. The caption track is offered, not default: the film
+       already draws the spoken sentence into its own picture. */
+    function filmHtml() {
+      return '<div class="lec-film">' +
+        '<video id="' + id + 'v" controls playsinline preload="none"' +
+        (film.poster ? ' poster="' + esc(film.poster) + '"' : "") +
+        ' src="' + esc(film.src) + '">' +
+        (film.captions ? '<track kind="captions" srclang="en" label="English" src="' + esc(film.captions) + '">' : "") +
+        "</video>" +
+        '<p class="lec-note">' + esc(film.note || "Watch the lesson, then go through it a part at a time below.") + "</p>" +
+        "</div>";
+    }
+
     function paint() {
       const p = parts[k];
       $(el.stage).className = "stagewide";
       $(el.stage).innerHTML =
+        (film ? filmHtml() : "") +
         '<div class="lec">' +
         '<p class="phase">Part ' + (k + 1) + " of " + parts.length + "</p>" +
         picHtml(p.pic, "pic lecpic") +
@@ -9400,25 +9462,76 @@
         (k > 0 ? '<button type="button" class="big small ghost" id="' + id + 'back">&#9664; Last part</button>' : "") +
         '<button type="button" class="big small" id="' + id + 'next">' + (k + 1 < parts.length ? "Next part &#9654;" : "I heard it all &#10003;") + "</button>" +
         "</div>" +
-        '<p class="lec-note">Read aloud by the lesson\'s voice. There is no video for this lesson yet.</p>' +
+        (film ? "" : '<p class="lec-note">Read aloud by the lesson\'s voice. There is no video for this lesson yet.</p>') +
         "</div>";
       furthest = Math.max(furthest, k + 1);
-      reportAttempt(o.finish, furthest, parts.length, "parts");
-      $(el.score).textContent = furthest + " of " + parts.length + " parts heard";
-      $(id + "hear").addEventListener("click", () => say(p.title + ". " + p.say));
-      if (k > 0) $(id + "back").addEventListener("click", () => { k--; paint(); sayHere(o.finish, parts[k].title + ". " + parts[k].say); });
+      report();
+      $(id + "hear").addEventListener("click", () => { quiet(); say(p.title + ". " + p.say); });
+      if (k > 0) $(id + "back").addEventListener("click", () => { k--; repaint(); quiet(); sayHere(o.finish, parts[k].title + ". " + parts[k].say); });
       $(id + "next").addEventListener("click", () => {
-        if (k + 1 < parts.length) { k++; paint(); sayHere(o.finish, parts[k].title + ". " + parts[k].say); }
-        else {
-          $(el.fb).className = "fb good"; $(el.fb).textContent = o.done;
-          reportAttempt(o.finish, parts.length, parts.length, "parts");
-          finish(o.finish, o.done);
-        }
+        if (k + 1 < parts.length) { k++; repaint(); quiet(); sayHere(o.finish, parts[k].title + ". " + parts[k].say); }
+        else done();
       });
+      if (film) wireFilm();
     }
+
+    /* A part read aloud pauses the film, as the film starting stops the
+       lesson's voice (wireFilm): the two are the same voice, and without this
+       pressing Next part mid-film had both talking at once (found by playing
+       the film in the page, 2026-09-18). Nothing, without a film. */
+    function quiet() {
+      if (!film) return;
+      const v = $(id + "v");
+      if (v && !v.paused) v.pause();
+    }
+
+    /* Moving a part must not restart the film, so with a film on screen the
+       <video> element is lifted out, the stage redrawn, and the same element
+       put back in place of the fresh one. */
+    function repaint() {
+      if (!film) return paint();
+      const v = $(id + "v");
+      if (v && v.parentNode) v.parentNode.removeChild(v);
+      paint();
+      const fresh = $(id + "v");
+      if (v && fresh && fresh.parentNode) fresh.parentNode.replaceChild(v, fresh);
+    }
+
+    function report() {
+      reportAttempt(o.finish, watched ? parts.length : furthest, parts.length, "parts");
+      $(el.score).textContent = watched
+        ? "Film watched · " + furthest + " of " + parts.length + " parts read"
+        : furthest + " of " + parts.length + " parts heard";
+    }
+
+    function done() {
+      $(el.fb).className = "fb good"; $(el.fb).textContent = o.done;
+      reportAttempt(o.finish, parts.length, parts.length, "parts");
+      finish(o.finish, o.done);
+    }
+
+    function wireFilm() {
+      const v = $(id + "v");
+      if (!v || v.dataset.wired) return;
+      v.dataset.wired = "1";
+      /* the lesson's voice and the film's voice are the same person, so the
+         lesson's stops when the film starts */
+      v.addEventListener("play", () => { try { VOICE.stop(); } catch (_) { /* nothing */ } });
+      /* watching it through IS the step; the parts stay below to go back over */
+      v.addEventListener("ended", () => { watched = true; report(); done(); });
+    }
+
     if (!parts.length) return;
     paint();
-    ONSHOW[o.finish] = () => afterVoice(() => sayHere(o.finish, parts[k].title + ". " + parts[k].say));
+    if (film) {
+      /* show() only swaps which slide is visible, so a film left playing
+         would go on talking under the next step. Nothing is said on arrival
+         either: the child is about to press play, and a voice reading part
+         one over the opening seconds is the collision wireFilm() prevents. */
+      ONLEAVE[o.finish] = () => { const v = $(id + "v"); if (v && !v.paused) v.pause(); };
+    } else {
+      ONSHOW[o.finish] = () => afterVoice(() => sayHere(o.finish, parts[k].title + ". " + parts[k].say));
+    }
   }
 
   /* ---- the computing words: hear each one, then show you know them ---- */
@@ -9877,7 +9990,7 @@
   const STICKERS = [["🧭", "I know what it is for"], ["🎬", "I heard the lesson"], ["🔤", "Computing words"], ["🔮", "Loop predictor"], ["🔁", "Repeat finder"], ["⚖️", "Algorithm comparer"], ["⚖️", "Contrast thinker"], ["📝", "Compare checker"], ["🎮", "I played the games"], ["🏠", "Unplugged at home"], ["⭐", "Star computer scientist"], ["🌍", "Computing world"], ["🗂️", "My resources"]];
 
   unitOverview(Object.assign({ el: { ask: "ask1", say: "ask1", stage: "stage1", ch: "ch1", fb: "fb1", score: "score1" }, finish: 0, done: "Now you know what this lesson is for. Off you go." }, LESSON.steps[0].data));
-  lecture(Object.assign({ el: { ask: "ask2", say: "ask2", stage: "stage2", ch: "ch2", fb: "fb2", score: "score2" }, finish: 1, done: "That is the whole lesson in 5 parts. Now do it yourself." }, LESSON.steps[1].data));
+  lecture(Object.assign({ el: { ask: "ask2", say: "ask2", stage: "stage2", ch: "ch2", fb: "fb2", score: "score2" }, finish: 1, done: "You have watched the whole lesson. Now do it yourself." }, LESSON.steps[1].data));
   computingWords(Object.assign({ el: { ask: "ask3", say: "ask3", stage: "stage3", ch: "ch3", fb: "fb3", score: "score3" }, finish: 2, done: "You know the computing words of this lesson." }, LESSON.steps[2].data));
   robotGrid(Object.assign({ el: { ask: "ask4", say: "ask4", stage: "stage4", ch: "ch4", fb: "fb4", score: "score4" }, finish: 3, done: "Three looped programs, predicted before Go." }, LESSON.steps[3].data));
   loopSpot(Object.assign({ el: { ask: "ask5", say: "ask5", stage: "stage5", ch: "ch5", fb: "fb5", score: "score5" }, finish: 4, done: "Twenty-two steps became seven with a loop." }, LESSON.steps[4].data));
@@ -10292,6 +10405,33 @@
       .setProperty("--seb-lift", (seb.offsetHeight + 30) + "px");
     lift();
     try { new ResizeObserver(lift).observe(seb); } catch (e) { addEventListener("resize", lift); }
+  })();
+
+  /* How far the dock has to lift to clear the Back/Next footer - see
+     --wehel-foot-lift in the stylesheet. Unlike the session bar above, .foot
+     is ordinary content rather than a second fixed element, so its distance
+     from the viewport's bottom edge is a function of SCROLL POSITION, not a
+     constant a page-load measurement can capture once - a step long enough to
+     need scrolling reaches the same collision the moment .foot is scrolled
+     into view. Re-measured on scroll (rAF-throttled to at most once a frame,
+     so it costs nothing while the page is still) as well as on resize. */
+  (function () {
+    const foot = document.querySelector(".foot");
+    if (!foot) return;
+    const lift = () => {
+      const overlap = window.innerHeight - foot.getBoundingClientRect().top;
+      document.documentElement.style
+        .setProperty("--wehel-foot-lift", (overlap > 0 ? overlap + 14 : 0) + "px");
+    };
+    let queued = false;
+    const onScroll = () => {
+      if (queued) return;
+      queued = true;
+      requestAnimationFrame(() => { queued = false; lift(); });
+    };
+    lift();
+    addEventListener("scroll", onScroll, { passive: true });
+    try { new ResizeObserver(lift).observe(foot); } catch (e) { addEventListener("resize", lift); }
   })();
 
   /* 2. Wehel. Mounted on first open, not on load: the panel asks the server for

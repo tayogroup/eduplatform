@@ -268,3 +268,15 @@ LESSON["talk"] = talk(
     "you wrote it that way?",
     "Ask for one comment worth writing, and one that would waste everybody's time."
 )
+
+# The unit lecture film. It plays in this lesson's own Unit lecture step,
+# above the parts, so no step moves. Made by tools/create-ehel-unit-lecture.js
+# from lecture-video/programs-with-loops.json. The names are content hashes, so a
+# re-render gets new ones and must be re-listed here and in app.config.json
+# extraPages.
+LESSON["video"] = {
+    "src": "lecture-video/programs-with-loops.8a76c701.mp4",
+    "captions": "lecture-video/programs-with-loops.b221bc04.vtt",
+    "poster": "lecture-video/programs-with-loops.65684bf8.jpg",
+    "note": "About 3 minutes. Watch it through, then go back over it a part at a time below.",
+}

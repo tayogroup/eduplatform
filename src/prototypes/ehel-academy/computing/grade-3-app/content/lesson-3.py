@@ -308,3 +308,15 @@ label_ct(LESSON, "What will the change do?", "Logical thinking")
 label_ct(LESSON, "Predict again: the kite", "Logical thinking")
 label_ct(LESSON, "Why sections help", "Decomposition")
 label_ct(LESSON, "Check: think it through", "Logical thinking")
+
+# The unit lecture film. It plays in this lesson's own Unit lecture step,
+# above the parts, so no step moves. Made by tools/create-ehel-unit-lecture.js
+# from lecture-video/think-it-through.json. The names are content hashes, so a
+# re-render gets new ones and must be re-listed here and in app.config.json
+# extraPages.
+LESSON["video"] = {
+    "src": "lecture-video/think-it-through.09080ebe.mp4",
+    "captions": "lecture-video/think-it-through.925906ce.vtt",
+    "poster": "lecture-video/think-it-through.8b335f88.jpg",
+    "note": "About 2 and a half minutes. Watch it through, then go back over it a part at a time below.",
+}

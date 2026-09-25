@@ -281,3 +281,15 @@ LESSON["talk"] = talk(
     "Ask each pair for one advantage of sharing a network, and one thing that sharing "
     "costs."
 )
+
+# The unit lecture film. It plays in this lesson's own Unit lecture step,
+# above the parts, so no step moves. Made by tools/create-ehel-unit-lecture.js
+# from lecture-video/networks-around-us.json. The names are content hashes, so a
+# re-render gets new ones and must be re-listed here and in app.config.json
+# extraPages.
+LESSON["video"] = {
+    "src": "lecture-video/networks-around-us.a11692b4.mp4",
+    "captions": "lecture-video/networks-around-us.446546ca.vtt",
+    "poster": "lecture-video/networks-around-us.51b6df87.jpg",
+    "note": "About 2 and a half minutes. Watch it through, then go back over it a part at a time below.",
+}

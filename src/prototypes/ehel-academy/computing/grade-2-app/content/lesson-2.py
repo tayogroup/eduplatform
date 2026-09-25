@@ -288,3 +288,15 @@ label_ct(LESSON, "Find the bug and fix it: a cup of tea", "Logical thinking")
 label_ct(LESSON, "Find the bug and fix it: bedtime", "Logical thinking")
 label_ct(LESSON, "Precise, or vague?", "Algorithmic thinking")
 label_ct(LESSON, "Follow it exactly: feed the cat", "Algorithmic thinking")
+
+# The unit lecture film. It plays in this lesson's own Unit lecture step,
+# above the parts, so no step moves. Made by tools/create-ehel-unit-lecture.js
+# from lecture-video/bugs-and-predictions.json. The names are content hashes, so a
+# re-render gets new ones and must be re-listed here and in app.config.json
+# extraPages.
+LESSON["video"] = {
+    "src": "lecture-video/bugs-and-predictions.899a1876.mp4",
+    "captions": "lecture-video/bugs-and-predictions.395cd30f.vtt",
+    "poster": "lecture-video/bugs-and-predictions.381e72fb.jpg",
+    "note": "About 3 minutes. Watch it through, then go back over it a part at a time below.",
+}

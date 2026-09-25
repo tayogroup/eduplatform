@@ -265,3 +265,15 @@ label_ct(LESSON, "Write the main algorithm", "Decomposition")
 label_ct(LESSON, "Follow the calls", "Decomposition")
 label_ct(LESSON, "Why sub-routines help", "Decomposition")
 label_ct(LESSON, "Check: sub-routines", "Decomposition")
+
+# The unit lecture film. It plays in this lesson's own Unit lecture step,
+# above the parts, so no step moves. Made by tools/create-ehel-unit-lecture.js
+# from lecture-video/sub-routines.json. The names are content hashes, so a
+# re-render gets new ones and must be re-listed here and in app.config.json
+# extraPages.
+LESSON["video"] = {
+    "src": "lecture-video/sub-routines.c4de9dfc.mp4",
+    "captions": "lecture-video/sub-routines.4c9a32b0.vtt",
+    "poster": "lecture-video/sub-routines.ed17a538.jpg",
+    "note": "About 3 minutes. Watch it through, then go back over it a part at a time below.",
+}

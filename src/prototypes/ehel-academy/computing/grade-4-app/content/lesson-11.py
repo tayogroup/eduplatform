@@ -255,3 +255,15 @@ LESSON["talk"] = talk(
     "be fine?",
     "Ask why a stolen encrypted laptop is a smaller problem than a stolen unencrypted one."
 )
+
+# The unit lecture film. It plays in this lesson's own Unit lecture step,
+# above the parts, so no step moves. Made by tools/create-ehel-unit-lecture.js
+# from lecture-video/when-networks-fail.json. The names are content hashes, so a
+# re-render gets new ones and must be re-listed here and in app.config.json
+# extraPages.
+LESSON["video"] = {
+    "src": "lecture-video/when-networks-fail.20ca461a.mp4",
+    "captions": "lecture-video/when-networks-fail.504f780c.vtt",
+    "poster": "lecture-video/when-networks-fail.99e3782e.jpg",
+    "note": "About 2 and a half minutes. Watch it through, then go back over it a part at a time below.",
+}

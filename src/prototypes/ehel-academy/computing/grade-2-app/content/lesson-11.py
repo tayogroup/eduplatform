@@ -292,3 +292,15 @@ LESSON["talk"] = talk(
     "Ask each pair for one job they would give a robot and one they would keep for a "
     "person."
 )
+
+# The unit lecture film. It plays in this lesson's own Unit lecture step,
+# above the parts, so no step moves. Made by tools/create-ehel-unit-lecture.js
+# from lecture-video/computers-devices-and-robots.json. The names are content hashes, so a
+# re-render gets new ones and must be re-listed here and in app.config.json
+# extraPages.
+LESSON["video"] = {
+    "src": "lecture-video/computers-devices-and-robots.b8968df3.mp4",
+    "captions": "lecture-video/computers-devices-and-robots.cb41e7f5.vtt",
+    "poster": "lecture-video/computers-devices-and-robots.08ba86a0.jpg",
+    "note": "About 2 and a half minutes. Watch it through, then go back over it a part at a time below.",
+}

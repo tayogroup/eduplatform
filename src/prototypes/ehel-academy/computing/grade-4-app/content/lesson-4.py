@@ -276,3 +276,15 @@ label_ct(LESSON, "Take the branch", "Algorithmic thinking")
 label_ct(LESSON, "Build an algorithm with a repeat", "Algorithmic thinking")
 label_ct(LESSON, "In the loop, or outside it?", "Algorithmic thinking")
 label_ct(LESSON, "Check: inputs and loops", "Algorithmic thinking")
+
+# The unit lecture film. It plays in this lesson's own Unit lecture step,
+# above the parts, so no step moves. Made by tools/create-ehel-unit-lecture.js
+# from lecture-video/inputs-decide-outputs.json. The names are content hashes, so a
+# re-render gets new ones and must be re-listed here and in app.config.json
+# extraPages.
+LESSON["video"] = {
+    "src": "lecture-video/inputs-decide-outputs.6c51b98b.mp4",
+    "captions": "lecture-video/inputs-decide-outputs.7dcbca16.vtt",
+    "poster": "lecture-video/inputs-decide-outputs.072747c0.jpg",
+    "note": "About 2 and a half minutes. Watch it through, then go back over it a part at a time below.",
+}

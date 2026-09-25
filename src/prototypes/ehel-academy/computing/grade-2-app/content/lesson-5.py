@@ -249,3 +249,15 @@ LESSON["talk"] = talk(
     "Ask each pair for one thing a good debugging partner does, and one thing they should "
     "not do."
 )
+
+# The unit lecture film. It plays in this lesson's own Unit lecture step,
+# above the parts, so no step moves. Made by tools/create-ehel-unit-lecture.js
+# from lecture-video/debugging-together.json. The names are content hashes, so a
+# re-render gets new ones and must be re-listed here and in app.config.json
+# extraPages.
+LESSON["video"] = {
+    "src": "lecture-video/debugging-together.10dda51c.mp4",
+    "captions": "lecture-video/debugging-together.2c518415.vtt",
+    "poster": "lecture-video/debugging-together.523ee4be.jpg",
+    "note": "About 2 and a half minutes. Watch it through, then go back over it a part at a time below.",
+}

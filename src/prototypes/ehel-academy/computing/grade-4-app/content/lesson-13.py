@@ -301,3 +301,15 @@ LESSON["talk"] = talk(
     "open.",
     "Ask why a video fills a phone and a whole book does not."
 )
+
+# The unit lecture film. It plays in this lesson's own Unit lecture step,
+# above the parts, so no step moves. Made by tools/create-ehel-unit-lecture.js
+# from lecture-video/software-sensors-and-files.json. The names are content hashes, so a
+# re-render gets new ones and must be re-listed here and in app.config.json
+# extraPages.
+LESSON["video"] = {
+    "src": "lecture-video/software-sensors-and-files.4874a0f1.mp4",
+    "captions": "lecture-video/software-sensors-and-files.3c60b74f.vtt",
+    "poster": "lecture-video/software-sensors-and-files.691b0993.jpg",
+    "note": "About 3 minutes. Watch it through, then go back over it a part at a time below.",
+}

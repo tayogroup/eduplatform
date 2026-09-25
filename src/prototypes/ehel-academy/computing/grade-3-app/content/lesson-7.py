@@ -263,3 +263,15 @@ LESSON["words"] = LESSON["words"] + [
     word("system", "\u2699\ufe0f", "A sensor, a program that decides, and an output, working together.",
          ["A door that opens by itself is a system.", "Sense, decide, act: that is a system."]),
 ]
+
+# The unit lecture film. It plays in this lesson's own Unit lecture step,
+# above the parts, so no step moves. Made by tools/create-ehel-unit-lecture.js
+# from lecture-video/press-shake-clap.json. The names are content hashes, so a
+# re-render gets new ones and must be re-listed here and in app.config.json
+# extraPages.
+LESSON["video"] = {
+    "src": "lecture-video/press-shake-clap.d1fe6c3b.mp4",
+    "captions": "lecture-video/press-shake-clap.e2a5affc.vtt",
+    "poster": "lecture-video/press-shake-clap.e47c8862.jpg",
+    "note": "About 2 and a half minutes. Watch it through, then go back over it a part at a time below.",
+}

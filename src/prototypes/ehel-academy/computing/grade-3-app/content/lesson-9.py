@@ -295,3 +295,15 @@ LESSON["talk"] = talk(
     "In pairs: name a problem in this school that counting something would help solve.",
     "Ask which way of showing the data answered their question fastest, and why that one."
 )
+
+# The unit lecture film. It plays in this lesson's own Unit lecture step,
+# above the parts, so no step moves. Made by tools/create-ehel-unit-lecture.js
+# from lecture-video/data-problems.json. The names are content hashes, so a
+# re-render gets new ones and must be re-listed here and in app.config.json
+# extraPages.
+LESSON["video"] = {
+    "src": "lecture-video/data-problems.4ea1bc36.mp4",
+    "captions": "lecture-video/data-problems.5a818e52.vtt",
+    "poster": "lecture-video/data-problems.62fdf5d6.jpg",
+    "note": "About 3 minutes. Watch it through, then go back over it a part at a time below.",
+}

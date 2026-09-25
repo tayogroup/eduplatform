@@ -264,3 +264,15 @@ LESSON["words"] = LESSON["words"] + [
 # the move comes from that objective's own wording. Steps outside the CT strand
 # keep no label rather than be given a guessed one.
 label_ct(LESSON, "Take the robot to the shop, home and school", "Algorithmic thinking")
+
+# The unit lecture film. It plays in this lesson's own Unit lecture step,
+# above the parts, so no step moves. Made by tools/create-ehel-unit-lecture.js
+# from lecture-video/bee-bot-journeys.json. The names are content hashes, so a
+# re-render gets new ones and must be re-listed here and in app.config.json
+# extraPages.
+LESSON["video"] = {
+    "src": "lecture-video/bee-bot-journeys.cfe6063d.mp4",
+    "captions": "lecture-video/bee-bot-journeys.8a2d39fa.vtt",
+    "poster": "lecture-video/bee-bot-journeys.3d0c8983.jpg",
+    "note": "About 2 and a half minutes. Watch it through, then go back over it a part at a time below.",
+}

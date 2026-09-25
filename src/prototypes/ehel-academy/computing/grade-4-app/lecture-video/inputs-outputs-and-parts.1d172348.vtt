@@ -1,0 +1,161 @@
+WEBVTT
+
+1
+00:00:04.400 --> 00:00:09.276
+Press A and the cat jumps. Press
+B and the very same cat spins.
+
+2
+00:00:09.496 --> 00:00:13.304
+One sprite, two inputs, two
+scripts, two different outputs.
+
+3
+00:00:13.804 --> 00:00:19.098
+A program can wait for an input: a
+key, a button, a click on a sprite.
+
+4
+00:00:19.318 --> 00:00:24.009
+Press A. That input has a script
+of its own, and the cat jumps.
+
+5
+00:00:24.229 --> 00:00:27.944
+Press B. A different script
+runs, and the same cat spins.
+
+6
+00:00:28.164 --> 00:00:32.390
+Click the cat and it says hello.
+Press the space bar and it hides.
+
+7
+00:00:32.610 --> 00:00:36.883
+Four inputs, four scripts, four
+different outputs, from one sprite.
+
+8
+00:00:37.383 --> 00:00:43.698
+Before you build an object, plan it.
+What is its input? What is its output?
+
+9
+00:00:43.918 --> 00:00:47.634
+The cat's input is the A
+key. Its output is a jump.
+
+10
+00:00:47.854 --> 00:00:50.640
+The door's input is the
+player walking into it.
+
+11
+00:00:50.860 --> 00:00:54.157
+Its output is the door
+opening and playing a creak.
+
+12
+00:00:54.377 --> 00:00:58.789
+The score sign waits for the ball
+to hit the goal, then adds one.
+
+13
+00:00:59.009 --> 00:01:02.260
+Nothing happens without
+an input, so plan both.
+
+14
+00:01:02.760 --> 00:01:08.379
+This program is in three named parts:
+the reset, the jumps, the greeting.
+
+15
+00:01:08.599 --> 00:01:12.361
+Run part one on its own. The cat
+goes home. That part is fine.
+
+16
+00:01:12.581 --> 00:01:17.225
+Run part two. The cat spins,
+and we wanted two jumps.
+
+17
+00:01:17.445 --> 00:01:21.021
+So the bug is in part two, and
+nowhere else in the program.
+
+18
+00:01:21.241 --> 00:01:26.349
+Testing one part at a time tells you
+where, instead of leaving you to guess.
+
+19
+00:01:26.849 --> 00:01:31.493
+Fix the block in the part that
+failed. Take out spin, put in jump.
+
+20
+00:01:31.713 --> 00:01:35.567
+Now run part two again. Two
+jumps. That part passes.
+
+21
+00:01:35.787 --> 00:01:39.410
+Only when every part passes
+does the whole program pass.
+
+22
+00:01:39.630 --> 00:01:43.438
+The next program had two bugs,
+hiding in two different parts.
+
+23
+00:01:43.658 --> 00:01:47.419
+Part by part found them one at
+a time, which is far easier.
+
+24
+00:01:47.919 --> 00:01:52.331
+There is a bad way to find a bug:
+changing things until it works.
+
+25
+00:01:52.551 --> 00:01:55.895
+That sometimes works, and it
+teaches you nothing at all.
+
+26
+00:01:56.115 --> 00:02:00.898
+The good way is debugging systematically.
+Split the program into parts.
+
+27
+00:02:01.118 --> 00:02:05.019
+Run one part. Check its result
+against what you expected.
+
+28
+00:02:05.239 --> 00:02:09.744
+Move on only when that part is
+right. The error has nowhere to hide.
+
+29
+00:02:10.244 --> 00:02:15.631
+Each input runs its own script, so a
+different input gives a different output.
+
+30
+00:02:15.851 --> 00:02:20.495
+Plan an object by naming its input
+and its output before you build.
+
+31
+00:02:20.715 --> 00:02:25.591
+Test one part at a time. The
+part that fails holds the bug.
+
+32
+00:02:25.811 --> 00:02:30.176
+Fix that block, run the part again,
+and the error has nowhere to hide.

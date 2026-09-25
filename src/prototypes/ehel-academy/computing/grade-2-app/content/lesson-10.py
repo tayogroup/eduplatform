@@ -313,3 +313,15 @@ LESSON["talk"] = talk(
     "cannot.",
     "Ask which feature of that tablet makes it easiest to use, and who it helps most."
 )
+
+# The unit lecture film. It plays in this lesson's own Unit lecture step,
+# above the parts, so no step moves. Made by tools/create-ehel-unit-lecture.js
+# from lecture-video/hardware-and-software.json. The names are content hashes, so a
+# re-render gets new ones and must be re-listed here and in app.config.json
+# extraPages.
+LESSON["video"] = {
+    "src": "lecture-video/hardware-and-software.30f07d4a.mp4",
+    "captions": "lecture-video/hardware-and-software.316ffab1.vtt",
+    "poster": "lecture-video/hardware-and-software.6c330abe.jpg",
+    "note": "About 3 minutes. Watch it through, then go back over it a part at a time below.",
+}

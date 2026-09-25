@@ -295,3 +295,15 @@ LESSON["talk"] = talk(
     "before correcting any of them.",
     "Ask each pair for one job a server does that their own device does not."
 )
+
+# The unit lecture film. It plays in this lesson's own Unit lecture step,
+# above the parts, so no step moves. Made by tools/create-ehel-unit-lecture.js
+# from lecture-video/clients-servers-and-the-web.json. The names are content hashes, so a
+# re-render gets new ones and must be re-listed here and in app.config.json
+# extraPages.
+LESSON["video"] = {
+    "src": "lecture-video/clients-servers-and-the-web.aa0fd4cc.mp4",
+    "captions": "lecture-video/clients-servers-and-the-web.a10ed225.vtt",
+    "poster": "lecture-video/clients-servers-and-the-web.0f581c06.jpg",
+    "note": "About 3 minutes. Watch it through, then go back over it a part at a time below.",
+}

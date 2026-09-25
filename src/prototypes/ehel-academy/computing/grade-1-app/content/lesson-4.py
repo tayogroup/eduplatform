@@ -300,3 +300,15 @@ LESSON["talk"] = talk(
 # the move comes from that objective's own wording. Steps outside the CT strand
 # keep no label rather than be given a guessed one.
 label_ct(LESSON, "Algorithm, or program?", "Algorithmic thinking")
+
+# The unit lecture film. It plays in this lesson's own Unit lecture step,
+# above the parts, so no step moves. Made by tools/create-ehel-unit-lecture.js
+# from lecture-video/algorithm-to-program.json. The names are content hashes, so a
+# re-render gets new ones and must be re-listed here and in app.config.json
+# extraPages.
+LESSON["video"] = {
+    "src": "lecture-video/algorithm-to-program.82a1d337.mp4",
+    "captions": "lecture-video/algorithm-to-program.ed337afe.vtt",
+    "poster": "lecture-video/algorithm-to-program.d9c54a8b.jpg",
+    "note": "About 2 and a half minutes. Watch it through, then go back over it a part at a time below.",
+}

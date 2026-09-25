@@ -280,3 +280,15 @@ LESSON["words"] = LESSON["words"] + [
     word("chart", "\U0001F4CA", "A picture of data, drawn so you can compare it.",
          ["The chart shows cats are most popular.", "A chart makes the biggest one easy to see."]),
 ]
+
+# The unit lecture film. It plays in this lesson's own Unit lecture step,
+# above the parts, so no step moves. Made by tools/create-ehel-unit-lecture.js
+# from lecture-video/presenting-data.json. The names are content hashes, so a
+# re-render gets new ones and must be re-listed here and in app.config.json
+# extraPages.
+LESSON["video"] = {
+    "src": "lecture-video/presenting-data.4b3d5b85.mp4",
+    "captions": "lecture-video/presenting-data.7159dd48.vtt",
+    "poster": "lecture-video/presenting-data.4b3b93aa.jpg",
+    "note": "About 2 and a half minutes. Watch it through, then go back over it a part at a time below.",
+}

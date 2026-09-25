@@ -243,3 +243,15 @@ LESSON["talk"] = talk(
     "Put a Pigpen message on the board with no key. In pairs: how would you even start?",
     "Ask which cipher was harder to break, and whether hard to read is the same as safe."
 )
+
+# The unit lecture film. It plays in this lesson's own Unit lecture step,
+# above the parts, so no step moves. Made by tools/create-ehel-unit-lecture.js
+# from lecture-video/caesar-and-pigpen.json. The names are content hashes, so a
+# re-render gets new ones and must be re-listed here and in app.config.json
+# extraPages.
+LESSON["video"] = {
+    "src": "lecture-video/caesar-and-pigpen.c1986b21.mp4",
+    "captions": "lecture-video/caesar-and-pigpen.3ca79db2.vtt",
+    "poster": "lecture-video/caesar-and-pigpen.99cb532d.jpg",
+    "note": "About 3 minutes. Watch it through, then go back over it a part at a time below.",
+}

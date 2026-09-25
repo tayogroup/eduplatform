@@ -344,3 +344,15 @@ LESSON["talk"] = talk(
     "own.",
     "Ask each pair for one thing they would never share over a network, and why."
 )
+
+# The unit lecture film. It plays in this lesson's own Unit lecture step,
+# above the parts, so no step moves. Made by tools/create-ehel-unit-lecture.js
+# from lecture-video/connected-devices.json. The names are content hashes, so a
+# re-render gets new ones and must be re-listed here and in app.config.json
+# extraPages.
+LESSON["video"] = {
+    "src": "lecture-video/connected-devices.2cf9bba7.mp4",
+    "captions": "lecture-video/connected-devices.0106545c.vtt",
+    "poster": "lecture-video/connected-devices.85cffb9b.jpg",
+    "note": "About 3 minutes. Watch it through, then go back over it a part at a time below.",
+}

@@ -293,3 +293,15 @@ label_ct(LESSON, "Meet Robo", "Algorithmic thinking")
 label_ct(LESSON, "Drive Robo to the flower", "Algorithmic thinking")
 label_ct(LESSON, "Left or right?", "Algorithmic thinking")
 label_ct(LESSON, "Directions at work", "Algorithmic thinking")
+
+# The unit lecture film. It plays in this lesson's own Unit lecture step,
+# above the parts, so no step moves. Made by tools/create-ehel-unit-lecture.js
+# from lecture-video/forward-back-left-right.json. The names are content hashes, so a
+# re-render gets new ones and must be re-listed here and in app.config.json
+# extraPages.
+LESSON["video"] = {
+    "src": "lecture-video/forward-back-left-right.b82bd9dc.mp4",
+    "captions": "lecture-video/forward-back-left-right.b61d09e8.vtt",
+    "poster": "lecture-video/forward-back-left-right.cf8c896f.jpg",
+    "note": "About 2 and a half minutes. Watch it through, then go back over it a part at a time below.",
+}

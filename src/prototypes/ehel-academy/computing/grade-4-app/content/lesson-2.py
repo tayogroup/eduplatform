@@ -245,3 +245,15 @@ label_ct(LESSON, "Where does the loop leave Robo?", "Logical thinking")
 label_ct(LESSON, "Find the repeat", "Pattern recognition")
 label_ct(LESSON, "Compare and contrast", "Evaluation")
 label_ct(LESSON, "Check: predict and compare", "Pattern recognition")
+
+# The unit lecture film. It plays in this lesson's own Unit lecture step,
+# above the parts, so no step moves. Made by tools/create-ehel-unit-lecture.js
+# from lecture-video/predict-and-compare.json. The names are content hashes, so a
+# re-render gets new ones and must be re-listed here and in app.config.json
+# extraPages.
+LESSON["video"] = {
+    "src": "lecture-video/predict-and-compare.02749be9.mp4",
+    "captions": "lecture-video/predict-and-compare.a01cd0e1.vtt",
+    "poster": "lecture-video/predict-and-compare.f508756a.jpg",
+    "note": "About 3 minutes. Watch it through, then go back over it a part at a time below.",
+}

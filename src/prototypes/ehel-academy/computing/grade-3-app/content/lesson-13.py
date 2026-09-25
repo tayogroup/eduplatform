@@ -304,3 +304,15 @@ LESSON["talk"] = talk(
     "Ask each pair to name the hardware and the software in one device, and say what each "
     "half does."
 )
+
+# The unit lecture film. It plays in this lesson's own Unit lecture step,
+# above the parts, so no step moves. Made by tools/create-ehel-unit-lecture.js
+# from lecture-video/systems-inputs-and-files.json. The names are content hashes, so a
+# re-render gets new ones and must be re-listed here and in app.config.json
+# extraPages.
+LESSON["video"] = {
+    "src": "lecture-video/systems-inputs-and-files.dc4563a4.mp4",
+    "captions": "lecture-video/systems-inputs-and-files.43425617.vtt",
+    "poster": "lecture-video/systems-inputs-and-files.b2858db5.jpg",
+    "note": "About 3 minutes. Watch it through, then go back over it a part at a time below.",
+}

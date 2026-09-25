@@ -287,3 +287,15 @@ label_ct(LESSON, "Cut the waste: baking a cake", "Algorithmic thinking")
 label_ct(LESSON, "Cut the waste: wrapping a present", "Algorithmic thinking")
 label_ct(LESSON, "Find the steps that repeat: laying the table", "Pattern recognition")
 label_ct(LESSON, "Check: concise", "Pattern recognition")
+
+# The unit lecture film. It plays in this lesson's own Unit lecture step,
+# above the parts, so no step moves. Made by tools/create-ehel-unit-lecture.js
+# from lecture-video/concise-algorithms.json. The names are content hashes, so a
+# re-render gets new ones and must be re-listed here and in app.config.json
+# extraPages.
+LESSON["video"] = {
+    "src": "lecture-video/concise-algorithms.52ee31d4.mp4",
+    "captions": "lecture-video/concise-algorithms.b998fb42.vtt",
+    "poster": "lecture-video/concise-algorithms.54b143d2.jpg",
+    "note": "About 2 and a half minutes. Watch it through, then go back over it a part at a time below.",
+}

@@ -350,3 +350,15 @@ LESSON["words"] = LESSON["words"] + [
     word("count", "\U0001F522", "To find how many.",
          ["Count how many chose cats.", "The count tells you which one won."]),
 ]
+
+# The unit lecture film. It plays in this lesson's own Unit lecture step,
+# above the parts, so no step moves. Made by tools/create-ehel-unit-lecture.js
+# from lecture-video/data-detectives.json. The names are content hashes, so a
+# re-render gets new ones and must be re-listed here and in app.config.json
+# extraPages.
+LESSON["video"] = {
+    "src": "lecture-video/data-detectives.de14875e.mp4",
+    "captions": "lecture-video/data-detectives.9436bfcf.vtt",
+    "poster": "lecture-video/data-detectives.41a407e1.jpg",
+    "note": "About 2 and a half minutes. Watch it through, then go back over it a part at a time below.",
+}

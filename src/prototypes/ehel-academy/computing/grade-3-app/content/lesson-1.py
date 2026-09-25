@@ -293,3 +293,15 @@ label_ct(LESSON, "Correct the algorithm", "Algorithmic thinking")
 label_ct(LESSON, "Edit the algorithm", "Algorithmic thinking")
 label_ct(LESSON, "Follow, understand, edit or correct?", "Algorithmic thinking")
 label_ct(LESSON, "Check: linear algorithms", "Algorithmic thinking")
+
+# The unit lecture film. It plays in this lesson's own Unit lecture step,
+# above the parts, so no step moves. Made by tools/create-ehel-unit-lecture.js
+# from lecture-video/follow-edit-correct.json. The names are content hashes, so a
+# re-render gets new ones and must be re-listed here and in app.config.json
+# extraPages.
+LESSON["video"] = {
+    "src": "lecture-video/follow-edit-correct.a70713d0.mp4",
+    "captions": "lecture-video/follow-edit-correct.1fbddb36.vtt",
+    "poster": "lecture-video/follow-edit-correct.1fa8d052.jpg",
+    "note": "About 3 minutes. Watch it through, then go back over it a part at a time below.",
+}

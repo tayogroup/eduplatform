@@ -253,3 +253,15 @@ LESSON["talk"] = talk(
     "In pairs: name three things in this building that sense something and then decide.",
     "Ask where the program sits in sense, decide, act - and what would happen without it."
 )
+
+# The unit lecture film. It plays in this lesson's own Unit lecture step,
+# above the parts, so no step moves. Made by tools/create-ehel-unit-lecture.js
+# from lecture-video/bitsy-loops.json. The names are content hashes, so a
+# re-render gets new ones and must be re-listed here and in app.config.json
+# extraPages.
+LESSON["video"] = {
+    "src": "lecture-video/bitsy-loops.d314f49b.mp4",
+    "captions": "lecture-video/bitsy-loops.30206933.vtt",
+    "poster": "lecture-video/bitsy-loops.e1508fe4.jpg",
+    "note": "About 3 minutes. Watch it through, then go back over it a part at a time below.",
+}

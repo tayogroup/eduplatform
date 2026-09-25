@@ -316,3 +316,15 @@ LESSON["talk"] = talk(
     "waste of time. Say why.",
     "Ask each pair what they would do differently if they collected it all again tomorrow."
 )
+
+# The unit lecture film. It plays in this lesson's own Unit lecture step,
+# above the parts, so no step moves. Made by tools/create-ehel-unit-lecture.js
+# from lecture-video/collecting-data.json. The names are content hashes, so a
+# re-render gets new ones and must be re-listed here and in app.config.json
+# extraPages.
+LESSON["video"] = {
+    "src": "lecture-video/collecting-data.1c4a593f.mp4",
+    "captions": "lecture-video/collecting-data.031c58ad.vtt",
+    "poster": "lecture-video/collecting-data.6bb1fcba.jpg",
+    "note": "About 2 and a half minutes. Watch it through, then go back over it a part at a time below.",
+}

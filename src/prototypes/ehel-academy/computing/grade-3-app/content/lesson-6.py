@@ -252,3 +252,15 @@ LESSON["talk"] = talk(
     "waiting for the others.",
     "Ask what would go wrong if the characters took turns instead of running together."
 )
+
+# The unit lecture film. It plays in this lesson's own Unit lecture step,
+# above the parts, so no step moves. Made by tools/create-ehel-unit-lecture.js
+# from lecture-video/many-things-at-once.json. The names are content hashes, so a
+# re-render gets new ones and must be re-listed here and in app.config.json
+# extraPages.
+LESSON["video"] = {
+    "src": "lecture-video/many-things-at-once.7d496473.mp4",
+    "captions": "lecture-video/many-things-at-once.7ae3587f.vtt",
+    "poster": "lecture-video/many-things-at-once.ef34e48f.jpg",
+    "note": "About 2 and a half minutes. Watch it through, then go back over it a part at a time below.",
+}

@@ -1,0 +1,183 @@
+{
+  "_comment": "Storyboard for the unit lecture film of Repair a Dripping Tap (Professor Adow TVET, Home Repair, lesson 2). Scoped deliberately: the owner's source document covers seven faucet types across nine pages, and this film does ONE job end to end — the washer (compression) tap — because that is the one the document details fully and the one a learner will actually meet. Washerless types appear only in the identify scene, so a learner knows when this procedure does NOT apply. Every art.at key must appear VERBATIM in its beat's say. UK / East African terms: tap, spout, gland nut, gland packing.",
+  "slug": "repair-a-dripping-tap",
+  "lesson": 2,
+  "grade": 3,
+  "stage": 3,
+  "title": "Repair a Dripping Tap",
+  "subtitle": "Home Repair",
+  "framework": "Professor Adow TVET — Home Repair (ADOW-HR)",
+  "_voice": "Daniel. The school's voice, owner's choice 2026-09-24.",
+  "voice": "onwK4e9ZLuTAKqWW03F9",
+  "brand": {
+    "name": "Professor Adow TVET",
+    "mark": "A",
+    "by": "A short unit lecture from Professor Adow TVET"
+  },
+  "renderer": {
+    "scenes": [
+      "tools/lib/ehel-film-marks.js",
+      "tools/lib/film-scenes/adow-home-repair/repair-a-dripping-tap.js"
+    ]
+  },
+  "objectives": [
+    ["ADOW-HR-HR.02.1", "Identify a washer (compression) tap against a washerless one."],
+    ["ADOW-HR-HR.02.2", "Isolate the supply at the correct point and prove it."],
+    ["ADOW-HR-HR.02.3", "Strip a compression tap in order without marking it."],
+    ["ADOW-HR-HR.02.4", "Tell a drip at the spout from a weep at the stem."],
+    ["ADOW-HR-HR.02.5", "Replace the washer and its brass screw, matched."],
+    ["ADOW-HR-HR.02.6", "Judge whether the seat is renewable or must be dressed."],
+    ["ADOW-HR-HR.02.7", "Renew the gland packing or the stem O-ring."],
+    ["ADOW-HR-HR.02.8", "Reassemble in reverse, greased, hand tight plus a half turn."]
+  ],
+  "scenes": [
+    {
+      "id": "title",
+      "kind": "title",
+      "heading": "Repair a Dripping Tap",
+      "codes": [],
+      "beats": [
+        {
+          "say": "A tap that drips is not about to fail. It has already failed, and every drop is going down the drain paid for. Closing it harder stops the noise for a day and drives the damage deeper into the tap.",
+          "art": { "at": { "drips": "A tap that drips", "harder": "Closing it harder" } }
+        }
+      ]
+    },
+    {
+      "id": "types",
+      "kind": "types",
+      "heading": "Which kind is it?",
+      "codes": ["ADOW-HR-HR.02.1"],
+      "beats": [
+        {
+          "say": "Decide that before you touch a spanner. A washer tap screws down: the handle turns several times and it closes by pressing rubber onto brass. That is the tap this film repairs.",
+          "art": { "at": { "screws": "A washer tap screws down", "several": "turns several times" } }
+        },
+        {
+          "say": "A washerless tap moves a quarter turn, or is a single lever, and inside it is a cartridge, a disc pack or a ball. It has no washer to change, so this procedure does not apply and you fit a kit instead.",
+          "art": { "at": { "quarter": "moves a quarter turn", "kit": "you fit a kit instead" } }
+        }
+      ]
+    },
+    {
+      "id": "isolate",
+      "kind": "isolate",
+      "heading": "Water off, and proved off",
+      "codes": ["ADOW-HR-HR.02.2"],
+      "beats": [
+        {
+          "say": "Turn the water off at the service valve under the fitting if there is one, and at the main stop tap if there is not. Shut the hot supply at the heater as well.",
+          "art": { "at": { "valve": "at the service valve", "heater": "at the heater" } }
+        },
+        {
+          "say": "Then open the tap and let it run dry. That is not a formality. It is the only proof you have shut the right valve, and it costs you ten seconds against a room full of water.",
+          "art": { "at": { "dry": "let it run dry", "proof": "the only proof" } }
+        }
+      ]
+    },
+    {
+      "id": "diagnose",
+      "kind": "diagnose",
+      "heading": "Two leaks, two faults",
+      "codes": ["ADOW-HR-HR.02.4"],
+      "beats": [
+        {
+          "say": "Look at where the water is coming from, because there are two faults and they are not the same. Water from the spout is the washer or the seat: the tap is not closing.",
+          "art": { "at": { "spout": "Water from the spout" } }
+        },
+        {
+          "say": "Water around the handle is a weep at the stem, and that is the gland packing or the O-ring. Strip a tap for the wrong one and you will fit a new washer to a fault that was never there.",
+          "art": { "at": { "handle": "Water around the handle", "wrong": "Strip a tap for the wrong one" } }
+        }
+      ]
+    },
+    {
+      "id": "strip",
+      "kind": "strip",
+      "heading": "Taking the headwork apart",
+      "codes": ["ADOW-HR-HR.02.3"],
+      "beats": [
+        {
+          "say": "Prise or unscrew the cap in the middle of the handle. Under it is one screw. Take it out, and the handle lifts off the stem. If it is stuck, put the screw back a couple of turns and pull against that.",
+          "art": { "at": { "cap": "unscrew the cap", "screw": "Under it is one screw", "lifts": "the handle lifts off" } }
+        },
+        {
+          "say": "Now slacken the gland nut and thread the whole stem out by turning it in the OPEN direction. Pad your plier jaws with tape before they touch chrome, and go gently on plastic.",
+          "art": { "at": { "gland": "slacken the gland nut", "open": "in the OPEN direction", "pad": "Pad your plier jaws" } }
+        }
+      ]
+    },
+    {
+      "id": "washer",
+      "kind": "washer",
+      "heading": "The washer",
+      "codes": ["ADOW-HR-HR.02.5"],
+      "beats": [
+        {
+          "say": "On the end of the stem is the washer, held by a brass screw. A washer that has gone hard, or has a groove pressed into it, is your drip. Undo the screw and take the old one off.",
+          "art": { "at": { "groove": "has a groove pressed into it", "undo": "Undo the screw" } }
+        },
+        {
+          "say": "Take the old washer with you and match it for size and style. Guessing gets you one that almost fits, which leaks. If the brass screw is chewed, renew that too, in brass and not in steel.",
+          "art": { "at": { "match": "match it for size", "brass": "renew that too" } }
+        }
+      ]
+    },
+    {
+      "id": "seat",
+      "kind": "seat",
+      "heading": "And the seat under it",
+      "codes": ["ADOW-HR-HR.02.6"],
+      "beats": [
+        {
+          "say": "If this tap eats washers every few months, the washer is not the fault. The seat is: the brass ring the washer closes onto has been cut, and it is cutting each new washer in turn.",
+          "art": { "at": { "eats": "eats washers", "cut": "has been cut" } }
+        },
+        {
+          "say": "Shine a torch down the body. A square, hexagonal or slotted hole means the seat unscrews, and a seat wrench turns it out anticlockwise. A plain round hole means it does not, and you dress it in place until it is smooth.",
+          "art": { "at": { "torch": "Shine a torch", "square": "A square, hexagonal or slotted hole", "dress": "you dress it in place" } }
+        }
+      ]
+    },
+    {
+      "id": "packing",
+      "kind": "packing",
+      "heading": "The weep at the stem",
+      "codes": ["ADOW-HR-HR.02.7"],
+      "beats": [
+        {
+          "say": "For the other fault, renew the gland packing. Wrap one turn around the stem under the nut, in the direction the nut tightens, so that doing the nut up winds the packing in rather than unwinding it. Some stems take an O-ring instead: match it and fit it.",
+          "art": { "at": { "wrap": "Wrap one turn", "direction": "in the direction the nut tightens" } }
+        }
+      ]
+    },
+    {
+      "id": "rebuild",
+      "kind": "rebuild",
+      "heading": "Putting it back",
+      "codes": ["ADOW-HR-HR.02.8"],
+      "beats": [
+        {
+          "say": "Back together in the reverse order of taking it apart, with a smear of silicone grease on the stem threads so the handle turns sweetly.",
+          "art": { "at": { "reverse": "in the reverse order", "grease": "silicone grease" } }
+        },
+        {
+          "say": "The gland nut goes hand tight and then half a turn more. Not as hard as it will go: over-tighten it and the handle becomes stiff and the packing is crushed. Turn the water back on slowly and watch both places before you walk away.",
+          "art": { "at": { "half": "half a turn more", "slowly": "back on slowly" } }
+        }
+      ]
+    },
+    {
+      "id": "recap",
+      "kind": "recap",
+      "heading": "The whole job",
+      "codes": [],
+      "beats": [
+        {
+          "say": "So: identify the kind. Isolate, and prove it dry. Read which leak it is. Strip it in order, padded. Washer and seat for a spout drip, packing for a stem weep. Then reverse, greased, hand tight and a half turn.",
+          "art": { "at": { "identify": "identify the kind", "isolate": "Isolate, and prove it dry", "read": "Read which leak", "reverse": "Then reverse" } }
+        }
+      ]
+    }
+  ]
+}

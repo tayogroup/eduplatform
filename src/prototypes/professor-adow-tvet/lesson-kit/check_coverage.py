@@ -60,6 +60,16 @@ PROBES = {
     # rather than "protective equipment", "bevel side down" rather than
     # "chisel technique". A probe that restates the criterion passes on the
     # criterion being copied into the page, which proves nothing.
+    # HR.02, the tap lesson, added 2026-09-25.
+    "ADOW-HR-HR.02.1": ["washerless"],
+    "ADOW-HR-HR.02.2": ["run dry"],
+    "ADOW-HR-HR.02.3": ["OPEN direction"],
+    "ADOW-HR-HR.02.4": ["gland packing"],
+    "ADOW-HR-HR.02.5": ["brass screw"],
+    "ADOW-HR-HR.02.6": ["dress"],
+    "ADOW-HR-HR.02.7": ["wound"],
+    "ADOW-HR-HR.02.8": ["half a turn"],
+
     "ADOW-HR-HR.01.1": ["goggles"],
     "ADOW-HR-HR.01.2": ["masonry"],
     "ADOW-HR-HR.01.3": ["raked"],

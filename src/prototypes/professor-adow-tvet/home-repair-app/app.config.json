@@ -1,5 +1,5 @@
 {
-  "_comment": "Home Repair — a TRADE module under Construction & Building Trades, not a core one. It opens with a single job done end to end (replacing a broken wall tile) rather than a survey of maintenance, because the whole difficulty of a repair in a finished building is the work you must NOT damage, and that only shows up when one job is followed all the way through. Built by ../lesson-kit/build.py.",
+  "_comment": "Home Repair — a TRADE module under Construction & Building Trades, not a core one. It is built JOB BY JOB, each done end to end rather than as a survey of maintenance, because the whole difficulty of a repair in a finished building is the work you must NOT damage, and that only shows up when one job is followed all the way through. Built by ../lesson-kit/build.py.",
   "school": "Professor Adow TVET",
   "module": "home-repair",
   "moduleTitle": "Home Repair",
@@ -7,17 +7,21 @@
   "levelNumber": 3,
   "levelLabel": "Trade",
   "standards": "src/curriculum/adow-home-repair.json",
-  "_extraScripts": "kit.js carries every step kind this module uses (lecture, label, safety, order, browse, questions, words); tiling.js is this module's own pictures and adds no renderer. A tiling page loads no carpentry file and no digital one.",
+  "_extraScripts": "kit.js carries every step kind this module uses (lecture, label, safety, order, browse, questions, words). tiling.js and taps.js are this module's own pictures, one file per job, and neither adds a renderer. A home-repair page loads no carpentry file and no digital one.",
   "extraScripts": [
-    "tiling.js"
+    "tiling.js",
+    "taps.js"
   ],
   "hub": "index.html",
-  "hubIntro": "Repairs in a finished building, done without making the damage worse. The module opens with wall tiling: taking a broken tile out of a wall that is already grouted and putting a new one back so that nobody can tell which one it was.",
-  "leadsNote": "No Kenyan unit codes are claimed. The only national framework in this repo is the Carpentry & Joinery Level 4 one, and it says nothing about tiling — so every criterion here carries an empty leadsTo until a real tiling or building-maintenance framework is in hand. A claimed code that does not exist is worse than an honest blank.",
-  "endNote": "You can plan a tile replacement, take the old one out without touching its neighbours and set the new one flush. What none of this gives you is the hand for it: the weight of the blow, the feel of a tile that is still holding, and whether the finished joint reads as a repair from a metre away. That is signed off at a wall, by an assessor, and nowhere else.",
+  "hubIntro": "Repairs in a finished building, done without making the damage worse. Wall tiling: one broken tile out of a grouted wall and a new one back so nobody can tell which it was. And taps: reading which of the two leaks you have before you touch a spanner, and knowing when the washer is innocent.",
+  "leadsNote": "No Kenyan unit codes are claimed. The only national framework in this repo is the Carpentry & Joinery Level 4 one, and it says nothing about tiling or about plumbing — so every criterion here carries an empty leadsTo until a real building-maintenance framework is in hand. A claimed code that does not exist is worse than an honest blank.",
+  "endNote": "You can plan a tile replacement and a tap repair, take the old work out without damaging what stays, and read a fault before you reach for a part. What none of this gives you is the hand for it: the weight of the blow, the feel of a tile that is still holding, how far a gland nut goes past hand tight, and whether the finished work reads as a repair from a metre away. That is signed off on real work, by an assessor, and nowhere else.",
   "lessons": [
     {
       "content": "lesson-1.py"
+    },
+    {
+      "content": "lesson-2.py"
     }
   ]
 }

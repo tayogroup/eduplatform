@@ -94,7 +94,7 @@ WORK = {
  },
  "patterns-and-squares": {
   "video": {
-   "src": "lecture-video/patterns-and-squares.8d748703.mp4",
+   "src": "lecture-video/patterns-and-squares.098d3449.mp4",
    "poster": "lecture-video/patterns-and-squares.fef25628.jpg",
    "vtt": "lecture-video/patterns-and-squares.a7f360cc.vtt",
    "note": "The whole lesson in about 3 minutes. When the film ends, this step is done.",
@@ -222,7 +222,7 @@ WORK = {
  },
  "where-things-are": {
   "video": {
-   "src": "lecture-video/where-things-are.403c475b.mp4",
+   "src": "lecture-video/where-things-are.957319ae.mp4",
    "poster": "lecture-video/where-things-are.a18bf7df.jpg",
    "vtt": "lecture-video/where-things-are.5cb133ff.vtt",
    "note": "The whole lesson in about 2 and a half minutes. When the film ends, this step is done.",

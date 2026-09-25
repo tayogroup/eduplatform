@@ -960,6 +960,14 @@
     else {
       out += Tx(530, 406, "6 programs", "lab big gold", "start", { opacity: big }) +
         Tx(730, 406, "·  1 computer", "lab big", "start", { opacity: on(t, one, 0.45) });
+      /* "A computer can run many programs" - the six rows sweep gold in turn, so
+         the word "many" is the six already on screen being counted, not a new
+         claim. The cue was declared and read by nothing until 2026-09-25. */
+      var many = cue(lastB, "many");
+      if (many != null) for (var mq = 0; mq < APPS.length; mq++) {
+        var ms = bump(t, many + mq * 0.09, 0.42);
+        if (ms > 0.01) out += R(520, 96 + mq * 50, 640, 44, 12, "none", P.gold, 3, { opacity: ms * 0.9 });
+      }
     }
     return svg(out);
   }
@@ -1200,6 +1208,17 @@
         f += R(468, 262 - 39 * lift, 60, 50, 6, P.goldDeep, P.edge, 2) + L(468, 287 - 39 * lift, 528, 287 - 39 * lift, P.edge, 2);
         f += G(boxBot({ t: t, xray: on(t, cue(bi, "computer"), 0.6), glow: 0.6 + 0.4 * breathe(t), lift: lift, turn: clamp(step, 0, 2) * 4 }),
           { transform: tr(bx, 150, 1.3) + " " + around(80, 100, 1 + 0.06 * bump(t, cue(bi, "machine"), 0.6)) });
+        /* "makes it MOVE and do a job": motion lines trail the bot as it goes.
+           The cue was declared and read by nothing until 2026-09-25. */
+        var mv = on(t, cue(bi, "move"), 0.4);
+        if (mv > 0) for (var mk = 0; mk < 3; mk++) {
+          /* floored at x=8: the bot starts at bx=40, so an unclamped trail runs
+             18 px off the left edge - caught by --sweep, which prints only its
+             first twelve overflows, so this one hid behind the cap. */
+          var mx = Math.max(8, bx - 26 - mk * 16);
+          f += L(mx, 188 + mk * 14, mx + 18, 188 + mk * 14, P.gold, 3,
+            { opacity: mv * (0.75 - mk * 0.2) });
+        }
         var po = on(t, prog, 0.4);
         for (var j = 0; j < 3; j++) {
           var lit = step >= j && step < j + 1, bo = on(t, prog == null ? null : prog + j * 0.15, 0.35);
@@ -1243,7 +1262,11 @@
         return f;
       }
       var no = cue(bi, "not"), ped = cue(bi, "pedal");
-      f += G(bike(t * 3), { transform: tr(40, 0) });
+      /* The bike used to be drawn from the beat's first frame, so "A bicycle"
+         named something already there and its cue drove nothing. It now rides
+         in on its own word. Fixed 2026-09-25. */
+      var bk = cue(bi, "bike"), bo2 = bk == null ? 1 : on(t, bk, 0.45);
+      f += G(bike(t * 3), { transform: tr(40, 0), opacity: bo2 });
       f += cross(560, 80, 30, popIn(t, no, 0.4)) + Tx(560, 140, "not a robot", "lab mid", "middle", { opacity: on(t, no, 0.4) }) +
         Tx(560, 166, "no computer inside", "lab small muted", "middle", { opacity: on(t, no == null ? null : no + 0.4, 0.4) });
       var pe = on(t, ped, 0.4);

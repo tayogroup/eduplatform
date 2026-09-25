@@ -131,10 +131,23 @@ into one script, so they share one scope.
 
 ### Length
 
-**1,950 to 2,300 characters of narration**, in **28 to 36 beats**. That is
-about 2:35 to 3:00 of film. `--dry` counts both. The estimate it gives runs about 5 to
-10% long: the Grade 1 films measured 14.7 characters a second against the
-estimate's 13.96.
+**1,950 to 2,300 characters of narration**, in **28 to 36 beats**. Those two
+numbers are the rule; `--dry` counts both. A film inside them is the right
+length, whatever the clock says.
+
+**Do not trim a film to hit a time.** Measured over all 47 finished Computing
+films on 2026-09-25, this subject's voice runs **12.67 characters a second**
+(spread 11.84 to 13.30, and not one film reached the 14.7 a figure from another
+subject's Grade 1 set once suggested). So the character band above really means
+**about 2:35 to 3:05**, and at the top of the band with a slow, technical film
+it means up to 3:14 - `systems-inputs-and-files` is 2,293 characters at 12.16
+a second and measures 3:09. That film is INSIDE both rules and is correct.
+Technical nouns - biometric, RFID, spreadsheet, cipher - read slower than
+everyday words, so a film heavy in them sits at the slow end by nature.
+
+`--dry`'s own estimate assumes 13.96 a second, so it runs about 8 to 12% SHORT
+of the real thing for this subject. Check the measured length after `--narrate`,
+never the estimate - but check it to learn, not to cut.
 
 A beat's line should be **30 to 120 characters**. A line under about 30
 characters lasts under two seconds, and a picture that waits for it flicks past

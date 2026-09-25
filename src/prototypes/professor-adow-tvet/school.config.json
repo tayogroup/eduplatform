@@ -1,5 +1,5 @@
 {
-  "_comment": "Professor Adow TVET — school-level constants, read by tools/generate-adow-catalog.js and tools/upload-adow-to-bunny.js. This school is hosted by eduplatform but is NOT under Ehel Academy: its own storage zone, its own catalogue, its own consumer record in Moodle. See docs/professor-adow-tvet-setup-plan.md. The three TODO values below are Phase 0 decisions; the uploader refuses to run while any of them still says TODO.",
+  "_comment": "Professor Adow TVET — school-level constants, read by tools/generate-adow-catalog.js and tools/upload-adow-to-bunny.js. This school is hosted by eduplatform but is NOT under Ehel Academy: its own storage zone, its own catalogue, its own consumer record in Moodle. See docs/professor-adow-tvet-setup-plan.md. Phase 0 was completed on 2026-09-25: the zone was created and verified by an authenticated storage read (200, empty), and the pull zone by a root request that reached a Bunny edge. appDomain is a STAND-IN - nothing reads it today, and it becomes the real hostname when a Professor Adow domain is registered.",
   "school": "professor-adow-tvet",
   "name": "Professor Adow TVET",
   "catalogContract": "1.0",
@@ -7,9 +7,9 @@
   "idPrefix": "adow",
 
   "_storage": "Phase 0. The zone is created in the Bunny dashboard; the key is that zone's own password and goes in .env as BUNNY_TVET_KEY — never Ehel's BUNNY_KEY and never Quraan's generic BUNNY_STORAGE_ACCESS_KEY.",
-  "storageZone": "TODO-adowtvet",
-  "cdnHost": "TODO.b-cdn.net",
-  "appDomain": "TODO",
+  "storageZone": "adowtvet",
+  "cdnHost": "adowtvet.b-cdn.net",
+  "appDomain": "adowtvet.b-cdn.net",
 
   "_departments": "Order here is the order departments appear in the catalogue. A department earns a Moodle category only when it has at least one course whose course-manifest.json exists.",
   "departments": [

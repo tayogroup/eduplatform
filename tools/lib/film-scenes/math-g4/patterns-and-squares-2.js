@@ -160,7 +160,10 @@
       g += row.markup;
       /* "A shape in a sum": the triangle pops; "nobody has told you yet": a ? over it */
       g += psqRing(row.x[2], yy, sz * 0.82, on(t, cShape, 0.45) * (1 - solved), P.gold, 4);
-      g += MK.qmark(row.x[2], yy - sz * 1.05, 26, on(t, cNum, 0.45) * big * (1 - solved));
+      /* floored at its own radius: in the large-calculation beat sz is big
+         enough that yy - sz * 1.05 puts the mark's TOP 5 px above the frame
+         (measured at 59.9 s: cy 21.37, r 26). Caught 2026-09-25. */
+      g += MK.qmark(row.x[2], Math.max(26, yy - sz * 1.05), 26, on(t, cNum, 0.45) * big * (1 - solved));
 
       /* the bar model: 15 and the triangle make 22 */
       var barO = on(t, cEq, 0.6);

@@ -124,6 +124,12 @@
     if (!(u > 0)) return "";
     var a = a0 + (a1 - a0) * clamp(u, 0, 1);
     if (Math.abs(a - a0) < 0.6) return "";
+    /* A 360 DEGREE SWEEP IS INVISIBLE. An SVG elliptical arc whose start and
+       end points coincide draws NOTHING, so the one caller that sweeps all the
+       way round - the "four turns make a full turn" compass - lost its circle
+       at the exact instant it completed. It was never seen closed. Stop a
+       degree short: 359 reads as closed and renders. Found 2026-09-25. */
+    if (Math.abs(a - a0) >= 359.5) a = a0 + (a > a0 ? 359 : -359);
     var r0 = a0 * Math.PI / 180, r1 = a * Math.PI / 180;
     var big = Math.abs(a - a0) > 180 ? 1 : 0, sweep = a > a0 ? 1 : 0;
     return Pth("M" + n2(cx + r * Math.cos(r0)) + "," + n2(cy + r * Math.sin(r0)) +
@@ -246,11 +252,21 @@
       out += wtaRightAngle(900, 360, 150, ra, P.gold);
       out += MK.pill(1010, 300, "90°", popIn(t, cRight == null ? null : cRight + 0.4, 0.4), { size: 32, col: P.gold });
     }
-    /* "a full turn": the arrow's sweep carries all the way round, past the four */
-    var fullU = wtaStep(t, cFull, 1.6);
+    /* "a full turn": the arrow's sweep carries all the way round, past the four.
+       1.15 s, NOT 1.6. This is the last beat of the chapter, so the cut at its
+       end is hard - nothing carries over. Measured on the narrated timeline:
+       the cue fires at 31.822 s and the chapter ends at 33.074 s, so 1.6 s put
+       the circle 78% round when it vanished, under the words "Four turns make a
+       full turn". 0.95 s closes it at 32.77 s against a MEASURED vanish point
+       of 32.97 s - and the vanish point is what matters, not the beat's nominal
+       end of 33.07: the picture is gone ~0.1 s before that. 1.15 s was tried
+       first and left no margin at all. Found 2026-09-25 by
+       reading the last frame of every beat; --sweep and the cue checks all pass
+       it, because nothing throws and nothing leaves the stage. */
+    var fullU = wtaStep(t, cFull, 0.95);
     if (fullU > 0) {
       out += wtaArc(WTA_HUB[0], WTA_HUB[1], WTA_R * 0.42, -90, 270, fullU, P.gold, 5);
-      var reached = tally(t, cFull, 4, 1.6);
+      var reached = tally(t, cFull, 4, 0.95);
       for (var q = 0; q < reached; q++) {
         var aq = wtaRoseAng(q * 2) * Math.PI / 180, rq = WTA_R * 0.42;
         out += C(WTA_HUB[0] + rq * Math.cos(aq), WTA_HUB[1] + rq * Math.sin(aq), 8, P.gold);

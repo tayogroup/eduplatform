@@ -58,14 +58,16 @@ LESSON = {
               "finish": "Tools are grouped by what they DO. That is why a mallet and a claw hammer are both striking tools and still are not interchangeable."},
              error=("Reaching for a claw hammer to drive a chisel, because it is the heavier tool.",
                     "A steel face on a wooden handle splits it, and a split handle is how a chisel "
-                    "ends up loose in the hand. The mallet exists for this one job.")),
+                    "ends up loose in the hand. The mallet exists for this one job."),
+             say="Every tool on a joiner's bench belongs to one of four jobs: measuring and marking, cutting, planing, or striking. Put each tool with the job it does."),
 
         step("label", "The smoothing plane", ["ADOW-CJ-CF.01.2"],
              {"tool": "plane"},
              error=("Keeping even pressure from one end of the stroke to the other.",
                     "The pressure moves: on the front knob as the plane goes on, on the rear tote "
                     "as it comes off. Even pressure rounds both ends of the board, and a board "
-                    "rounded at the ends is not straight however many shavings you take.")),
+                    "rounded at the ends is not straight however many shavings you take."),
+             say="The smoothing plane, the tool that takes a sawn surface to a finished one. Tap each part as it is named. The sole, the tote, the knob, the lever cap and the iron beneath it."),
 
         step("inspect", "Four tools off the rack",
              ["ADOW-CJ-CF.02.1", "ADOW-CJ-CF.02.2", "ADOW-CJ-CF.02.3", "ADOW-CJ-CF.02.4"],
@@ -113,7 +115,8 @@ LESSON = {
               ]},
              error=("Sharpening being treated as fussiness rather than safety.",
                     "A blunt edge has to be forced through the wood, and the moment it breaks free "
-                    "it goes wherever the force was pointed. Most chisel injuries are made by blunt chisels.")),
+                    "it goes wherever the force was pointed. Most chisel injuries are made by blunt chisels."),
+             say="Four tools as you would find them on the rack. A tool is looked over before it is picked up, not after it has let go in the hand. Take each one in turn and say what you see."),
 
         step("questions", "Choosing the timber", ["ADOW-CJ-CF.04.1"],
              {"items": [
@@ -140,7 +143,8 @@ LESSON = {
                     opt("Because glue is expensive", False,
                         "Glue is the cheapest thing in the workshop.")],
                    "A joint is somewhere the timber can fail and somewhere your time goes. One that the stock size made unnecessary is pure cost."),
-             ]}),
+             ]},
+             say="Before a board is touched it has to be chosen, and a board chosen too short can never be corrected. Work through each one."),
 
         step("order", "The stages of preparation", ["ADOW-CJ-CF.04.2", "ADOW-CJ-CF.04.3"],
              {"ask": "A rough-sawn board to a finished piece. Tap the stages in the order you would do them.",
@@ -193,7 +197,8 @@ LESSON = {
              error=("Setting the gauge against the rule by eye and locking it without checking.",
                     "The thumbscrew often drags the stem a fraction as it tightens. Set it, lock it, "
                     "and THEN measure it again — a gauge one millimetre out puts every line one "
-                    "millimetre out, invisibly and consistently.")),
+                    "millimetre out, invisibly and consistently."),
+             say="The marking gauge. Slide the fence along the stem to the size you are asked for, and lock it. Every line this gauge scores will be that distance from the face side."),
 
         step("safety", "At the surface planer",
              ["ADOW-CJ-CF.03.3", "ADOW-CJ-CF.03.4", "ADOW-CJ-CF.03.5"],
@@ -256,7 +261,8 @@ LESSON = {
                     opt("It has gone soft and will bend", False,
                         "The opposite — it has work-hardened, which is what makes it brittle.")],
                    "A mushroomed head is brittle, and a fragment leaves it at the speed of the blow, at about eye height. Dress it back before it is used."),
-             ]}),
+             ]},
+             say="The whole of this lesson, asked back. Take your time over each one."),
 
         step("words", "The words of this job", ["ADOW-CJ-CF.01.2"],
              {"items": [
@@ -268,6 +274,7 @@ LESSON = {
                  word("tote", "The rear handle of a plane. The pressure moves to it at the end of the stroke."),
                  word("mushroomed", "A striking head spread and hardened at the edges by repeated blows. Brittle, and taken out of service."),
                  word("push block", "The block that feeds short stock over a planer so that a hand never has to."),
-             ]}),
+             ]},
+             say="The words a carpenter uses for this work. You will hear every one of them at the bench, so read each in turn."),
     ],
 }

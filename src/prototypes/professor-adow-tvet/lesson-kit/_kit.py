@@ -25,7 +25,7 @@ precaution. build.py refuses one that does not.
 """
 
 
-def step(kind, title, criteria, data, ask=None, error=None, done=None):
+def step(kind, title, criteria, data, ask=None, error=None, done=None, say=None):
     """One step of a lesson.
 
     criteria: the performance-criterion codes this step exercises, e.g.
@@ -34,6 +34,13 @@ def step(kind, title, criteria, data, ask=None, error=None, done=None):
               back off the BUILT page.
     error:    what apprentices actually get wrong here, as (what, why).
               This is the slot that makes a page read as trade-written.
+    say:      WHAT THE VOICE READS when the step puts no question on the
+              screen. A `label`, `words` or `questions` step has no `ask`
+              and none in its renderer's data, so the voice fell back to
+              reading the heading - "The smoothing plane." - and stopping.
+              This is narration only: it is not drawn, so writing it
+              cannot move anything on the page. Prefer `ask` when the
+              learner should SEE the instruction too.
     """
     return {
         "kind": kind,
@@ -43,6 +50,7 @@ def step(kind, title, criteria, data, ask=None, error=None, done=None):
         "data": data,
         "error": error,
         "done": done,
+        "say": say,
     }
 
 

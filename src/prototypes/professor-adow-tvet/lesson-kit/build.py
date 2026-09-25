@@ -119,8 +119,27 @@ def render_step(n, step, criteria):
     codes = " ".join(
         '<code>%s</code>' % esc(c) for c in step["criteria"])
     out = []
-    out.append('<section class="slide" data-step="%d" data-kind="%s" data-criteria="%s">'
-               % (n, esc(step["kind"]), esc(",".join(step["criteria"]))))
+    # WHAT THE VOICE READS, decided here and carried on the slide, rather
+    # than scraped back off the DOM when the step is shown. Scraping gave
+    # two defects that the page hid:
+    #
+    #   * a step whose question lives in its RENDERER's data - browse,
+    #     order, sort all put it there - had no [data-say], so the voice
+    #     fell back to the heading and read "The smoothing plane." and
+    #     nothing else. Nine of this lesson's seventeen spoken lines were
+    #     a heading read aloud.
+    #   * the Explain note ran its label straight into the sentence, so
+    #     the voice said "What goes wrong hereReaching for a claw hammer".
+    #     `.carp-error b` is display:block, so on screen the label sits on
+    #     its own line and looks right; only textContent has no separator,
+    #     and only the voice was ever wrong.
+    #
+    # Both are invisible to a reader of the page and to any check that
+    # looks at it. Here `ask` and `error` are still two fields.
+    sdata = step.get("data") if isinstance(step.get("data"), dict) else {}
+    spoken = step.get("ask") or step.get("say") or sdata.get("ask") or step["title"]
+    out.append('<section class="slide" data-step="%d" data-kind="%s" data-criteria="%s" data-spoken="%s">'
+               % (n, esc(step["kind"]), esc(",".join(step["criteria"])), esc(spoken)))
     out.append('  <div class="slide-head"><span class="n">%d</span><h2>%s</h2></div>' % (n, esc(step["title"])))
     out.append('  <p><span class="carp-mode %s">%s</span></p>' % (cls, esc(label)))
     if step.get("ask"):
@@ -131,8 +150,9 @@ def render_step(n, step, criteria):
         # hidden until Explain is pressed. It used to sit open under every
         # step, which meant the commonest mistake in the trade was on screen
         # before the learner had tried the thing.
-        out.append('  <div class="carp-error" data-explain hidden><b>What goes wrong here</b>%s %s</div>'
-                   % (esc(what), esc(why)))
+        out.append('  <div class="carp-error" data-explain data-spoken="%s" hidden>'
+                   '<b>What goes wrong here</b>%s %s</div>'
+                   % (esc("What goes wrong here. %s %s" % (what, why)), esc(what), esc(why)))
     out.append('  <p class="carp-crit">%s</p>' % codes)
     out.append('</section>')
     return "\n".join(out)
@@ -198,7 +218,7 @@ PAGE = """<!doctype html>
       <div class="carp-error"><b>Where this leads</b>{leads}</div>
     </section>
 {steps}
-    <section class="slide" data-step="{last}" data-kind="end">
+    <section class="slide" data-step="{last}" data-kind="end" data-spoken="End of the lesson. {endnote_spoken}">
       <div class="slide-head"><span class="n">✓</span><h2>End of the lesson</h2></div>
       <p class="carp-caption">{endnote}</p>
       <div class="bigbtns"><a class="big teal" href="{hub}" style="text-decoration:none;display:grid;place-items:center">Back to the module</a></div>
@@ -260,14 +280,19 @@ PAGE = """<!doctype html>
       var line = slides[at].querySelector('[data-say]');
       var note = slides[at].querySelector('[data-explain]');
       var heading = slides[at].querySelector('h2');
-      var spoken = line ? line.textContent
-                        : (heading ? heading.textContent : '') + '. ' +
-                          (slides[at].querySelector('.carp-caption') || {{ textContent: '' }}).textContent;
-      var bar = window.CARP.sayBar(spoken.trim(), note ? function (btn) {{
+      /* The bar still SHOWS what it always showed - a renderer that draws
+         its own question must not have it repeated above - but it SPEAKS
+         the line build.py worked out, which is that question rather than
+         the heading. */
+      var shown = line ? line.textContent
+                       : (heading ? heading.textContent : '') + '. ' +
+                         (slides[at].querySelector('.carp-caption') || {{ textContent: '' }}).textContent;
+      var spoken = slides[at].dataset.spoken || shown;
+      var bar = window.CARP.sayBar(shown.trim(), note ? function (btn) {{
         note.hidden = !note.hidden;
         btn.setAttribute('aria-pressed', note.hidden ? 'false' : 'true');
-        if (!note.hidden) window.CARP.voice.say(note.textContent);
-      }} : null);
+        if (!note.hidden) window.CARP.voice.say(note.dataset.spoken || note.textContent);
+      }} : null, spoken.trim());
       if (line) line.replaceWith(bar); else slides[at].querySelector('.slide-head').after(bar);
     }}
 
@@ -472,6 +497,9 @@ def build_lesson(lesson, cfg, criteria, out_dir, lib, renderers, siblings):
         steps="\n".join(steps_html),
         last=last,
         endnote=esc(cfg.get("endNote", "")),
+        # The closing line is spoken too. It is the same sentence, escaped
+        # again for an attribute rather than a text node.
+        endnote_spoken=esc(cfg.get("endNote", "")),
         hub=esc(cfg["hub"]),
         lib=esc(lib),
         picker="".join(

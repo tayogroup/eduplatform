@@ -641,10 +641,60 @@
      The seam is `voice.say`. Swapping in recorded clips later means
      changing this one function, not every step that talks.
      ================================================================== */
+  /* THE HASH IS DUPLICATED IN tools/create-adow-lesson-narration.js and must
+     stay identical to it. FNV-1a, 32-bit, 8 hex characters. It is not sha256
+     because `say` is called from a click handler and has to stay synchronous;
+     crypto.subtle is async. A disagreement between the two sides shows up as
+     a clip that was bought and is never played, which is why the check after
+     rendering counts fallbacks rather than trusting these to agree. */
+  function clipKey(t) {
+    const s = String(t).replace(/\s+/g, " ").trim();
+    let h = 0x811c9dc5;
+    for (let i = 0; i < s.length; i++) {
+      h ^= s.charCodeAt(i);
+      h = (h + ((h << 1) + (h << 4) + (h << 7) + (h << 8) + (h << 24))) >>> 0;
+    }
+    return h.toString(16).padStart(8, "0");
+  }
+
   const voice = {
     muted: false,
     supported: typeof window.speechSynthesis !== "undefined",
+    clips: null,          /* hash -> { file }, once the manifest has loaded */
+    playing: null,
+    fellBack: 0,          /* lines spoken by the browser because no clip matched */
+
+    /* Fire-and-forget. A lesson opened before this resolves simply uses the
+       browser voice for a moment; nothing waits on it, and an app with no
+       narration directory is the normal case rather than an error. */
+    load() {
+      fetch("narration/manifest.json", { cache: "no-store" })
+        .then((r) => (r.ok ? r.json() : null))
+        .then((m) => { voice.clips = m || {}; })
+        .catch(() => { voice.clips = {}; });
+    },
+
     say(text) {
+      if (voice.muted || !text) return;
+      voice.hush();
+      const hit = voice.clips && voice.clips[clipKey(text)];
+      if (hit) {
+        try {
+          const a = new Audio("narration/" + hit.file);
+          voice.playing = a;
+          /* A clip that will not play - a file that never uploaded, a codec
+             the browser refuses - must not leave the step silent, so the
+             browser voice still gets its turn. */
+          a.addEventListener("error", () => { voice.playing = null; voice.speak(text); }, { once: true });
+          a.play().catch(() => { voice.playing = null; voice.speak(text); });
+          return;
+        } catch (e) { /* fall through to the browser voice */ }
+      }
+      voice.fellBack++;
+      voice.speak(text);
+    },
+
+    speak(text) {
       if (!voice.supported || voice.muted || !text) return;
       try {
         window.speechSynthesis.cancel();
@@ -654,16 +704,27 @@
         window.speechSynthesis.speak(u);
       } catch (e) { /* a browser that refuses is not an error worth showing */ }
     },
+
     hush() {
+      if (voice.playing) {
+        try { voice.playing.pause(); } catch (e) {}
+        voice.playing = null;
+      }
       if (!voice.supported) return;
       try { window.speechSynthesis.cancel(); } catch (e) {}
     },
   };
+  voice.load();
 
   /* The voice bar: a speaker, what is being said, and Explain. Same shape
      as the Ehel `.say` bar, and the Explain button reveals the step's own
      "what goes wrong here" note rather than opening a second panel. */
-  function sayBar(text, onExplain) {
+  /* `spoken` defaults to `text`. It exists because what the bar SHOWS and
+     what it READS are not always the same line: a browse or order step
+     draws its own question inside the stage, so repeating it in the bar
+     would put it on screen twice - but reading the heading instead left
+     the voice saying "The smoothing plane." and stopping. */
+  function sayBar(text, onExplain, spoken) {
     const bar = document.createElement("div");
     bar.className = "say";
     const b = document.createElement("button");
@@ -671,7 +732,7 @@
     b.className = "speak";
     b.setAttribute("aria-label", "Read it to me");
     b.textContent = "🔊";
-    b.addEventListener("click", () => voice.say(text));
+    b.addEventListener("click", () => voice.say(spoken || text));
     const span = document.createElement("span");
     span.textContent = text;
     bar.appendChild(b);

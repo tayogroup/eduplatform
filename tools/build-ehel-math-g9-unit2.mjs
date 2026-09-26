@@ -194,42 +194,49 @@ const methods = [
 ];
 
 const workedExamples = [
-  { id: "we01", outcomeId: "lo01", difficulty: "Basic", title: "Order of operations when substituting",
+  { id: "we01", outcomeId: "lo01", difficulty: "Basic", twm: "critiquing", title: "Order of operations when substituting",
     prompt: "Work out 4x + 4 when x = 2.",
     solution: "Substitute: 4 x 2 + 4. Multiplication comes before addition, so 8 + 4 = 12. Working left to right without regard to order would give 4 x 6 = 24, which is wrong." },
-  { id: "we02", outcomeId: "lo01", difficulty: "Basic", title: "An index attaches to one letter",
+  { id: "we02", outcomeId: "lo01", difficulty: "Basic", twm: "characterising", title: "An index attaches to one letter",
     prompt: "Work out 2x^2 when x = 3.",
     solution: "The index belongs to the x alone, so square first: 3^2 = 9, then double: 2 x 9 = 18. It is not (2 x 3)^2 = 36. Writing 2 x (3)^2 makes the order unmistakable." },
   { id: "we03", outcomeId: "lo02", difficulty: "Core", title: "Substituting negatives",
     prompt: "Work out a^3 + 2b when a = -2 and b = -1.",
     solution: "(-2)^3 = -8, because an odd power of a negative is negative. 2 x (-1) = -2. So the value is -8 + (-2) = -10." },
-  { id: "we04", outcomeId: "lo02", difficulty: "Core", title: "Even powers and the bracket",
+  { id: "we04", outcomeId: "lo02", difficulty: "Core", twm: "characterising", title: "Even powers and the bracket",
     prompt: "Work out a^2 when a = -2, and explain how it differs from -a^2.",
     solution: "a^2 = (-2)^2 = 4, because the two minus signs pair off. But -a^2 means -(a^2) = -(4) = -4: the index is applied first and the minus afterwards. The bracket is what decides, so always write the substituted negative in one." },
   { id: "we05", outcomeId: "lo03", difficulty: "Core", title: "Words to an expression",
     prompt: "A number is squared, the result multiplied by three, then one subtracted. Write this as an expression.",
     solution: "Call the number n. Squared gives n^2, multiplied by three gives 3n^2, and subtracting one gives 3n^2 - 1. Note this is not (3n)^2 - 1, which would multiply before squaring." },
-  { id: "we06", outcomeId: "lo04", difficulty: "Core", title: "An expression back into words",
+  { id: "we06", outcomeId: "lo04", difficulty: "Core", twm: "characterising", title: "An expression back into words",
     prompt: "Describe in words what 2(x + 5) represents for a rectangle x long and 5 wide.",
     solution: "It is the perimeter: add the length and the width to get one long-and-short pair, then double it because the rectangle has two of each. Expanding gives 2x + 10, which says the same thing as twice the length plus twice the width." },
-  { id: "we07", outcomeId: "lo05", difficulty: "Core", title: "Index laws with a variable",
+  { id: "we07", outcomeId: "lo05", difficulty: "Core", twm: "generalising", title: "Index laws with a variable",
     prompt: "Simplify x^3 x x^4 and x^6 divided by x^2.",
     solution: "Multiplying powers of the same variable adds the indices: x^3 x x^4 = x^7. Dividing subtracts them: x^6 divided by x^2 = x^4." },
   { id: "we08", outcomeId: "lo05", difficulty: "Core", title: "Coefficients and indices together",
     prompt: "Simplify 3a^2 x 5a^3 and 10x^5 divided by 2x^2.",
     solution: "Handle numbers and letters separately. 3 x 5 = 15 and a^2 x a^3 = a^5, so the answer is 15a^5. For the division, 10 divided by 2 = 5 and x^5 divided by x^2 = x^3, giving 5x^3." },
-  { id: "we09", outcomeId: "lo06", difficulty: "Core", title: "Expanding two brackets",
+  { id: "we09", outcomeId: "lo06", difficulty: "Core", twm: "generalising", title: "Expanding two brackets",
     prompt: "Expand and simplify (x + 3)(x + 2).",
     solution: "The four products are x^2, 2x, 3x and 6. Collecting the middle terms, 2x + 3x = 5x, so the answer is x^2 + 5x + 6. Check at x = 1: (4)(3) = 12 and 1 + 5 + 6 = 12." },
-  { id: "we10", outcomeId: "lo06", difficulty: "Extension", title: "The difference of two squares",
+  { id: "we10", outcomeId: "lo06", difficulty: "Extension", twm: "conjecturing", title: "The difference of two squares",
     prompt: "Show that (x + 3)(x - 3) simplifies to x^2 - 9.",
     solution: "The four products are x^2, -3x, 3x and -9. The middle terms -3x and 3x cancel, leaving x^2 - 9. This happens whenever the two brackets differ only in the sign, which is why the pattern is worth recognising." },
   { id: "we11", outcomeId: "lo07", difficulty: "Core", title: "Simplifying an algebraic fraction",
     prompt: "Simplify 10x/2 and 6a^3/3a.",
     solution: "For 10x/2, divide the numbers: 10 divided by 2 = 5, giving 5x. For 6a^3/3a, divide the numbers, 6 divided by 3 = 2, and subtract the indices, a^3 divided by a = a^2, giving 2a^2. Cancelling works because the same factor appears top and bottom." },
-  { id: "we12", outcomeId: "lo08", difficulty: "Core", title: "Changing the subject",
+  { id: "we12", outcomeId: "lo08", difficulty: "Core", twm: "convincing", title: "Changing the subject",
     prompt: "Make a the subject of v = u + at, then find a when v = 11, u = 3 and t = 4.",
     solution: "Subtract u from both sides: v - u = at. Divide both sides by t: a = (v - u)/t. Substituting, a = (11 - 3)/4 = 8/4 = 2. Checking forwards: u + at = 3 + 2 x 4 = 11, which is v." },
+  // From the Stage 9 Teacher's Resource, which uses this exact division as its
+  // worked illustration of CRITIQUING - two correct methods, and the learner is
+  // asked which they prefer and why. It is the only kind of question where
+  // there is no wrong answer to find, which is why it is worth having verbatim.
+  { id: "we13", outcomeId: "lo07", difficulty: "Extension", twm: "critiquing", title: "Two correct methods, side by side",
+    prompt: "Arun and Zara both simplify 6x^5 divided by 3x^2 and both get 2x^3. Arun writes: 6 divided by 3 = 2, and x^5 divided by x^2 = x^(5-2) = x^3. Zara writes: 6x^5/3x^2 = 2x^(5-2) = 2x^3. Whose method do you prefer, and why?",
+    solution: "Neither is wrong - they agree, and the answer 2x^3 is correct. Arun separates the numbers from the letters and does each in its own line, so every step is visible and a reader can check either half on its own. Zara does both in one line, which is quicker once you trust the rule. A fair answer says what each method is better FOR rather than picking a winner: Arun's is easier to follow and to mark, Zara's is faster under time pressure. Critiquing means being able to follow both pieces of working and then say which you would use, with a reason." },
 ];
 
 const practice = [

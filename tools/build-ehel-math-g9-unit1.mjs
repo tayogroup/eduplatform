@@ -198,19 +198,19 @@ const methods = [
 ];
 
 const workedExamples = [
-  { id: "we01", outcomeId: "lo01", difficulty: "Basic", title: "Rational or irrational",
+  { id: "we01", outcomeId: "lo01", difficulty: "Basic", twm: "classifying", title: "Rational or irrational",
     prompt: "Say whether each is rational or irrational: 13, 39/4, the square root of 2.",
     solution: "13 is rational: it is 13/1. 39/4 is rational by definition and equals 9.75, a decimal that stops. The square root of 2 is irrational: its decimal begins 1.414213562... and never stops or repeats, and it cannot be written as a fraction of whole numbers." },
-  { id: "we02", outcomeId: "lo02", difficulty: "Basic", title: "What the decimal tells you",
+  { id: "we02", outcomeId: "lo02", difficulty: "Basic", twm: "characterising", title: "What the decimal tells you",
     prompt: "34/15 = 2.2666666... Is it rational?",
     solution: "Yes. The 6 repeats forever, and a repeating block is a pattern, so the number is rational - indeed it was given as a fraction, 34/15. Only a decimal that neither stops nor repeats belongs to an irrational number." },
-  { id: "we03", outcomeId: "lo03", difficulty: "Basic", title: "Which roots are surds",
+  { id: "we03", outcomeId: "lo03", difficulty: "Basic", twm: "classifying", title: "Which roots are surds",
     prompt: "Which of these are surds: the square roots of 4, 5, 9 and 10?",
     solution: "The square root of 4 is 2 and the square root of 9 is 3, both whole numbers, so neither is a surd. The square roots of 5 and 10 cannot be simplified to rational numbers, so both are surds." },
-  { id: "we04", outcomeId: "lo04", difficulty: "Core", title: "Estimating a square root",
+  { id: "we04", outcomeId: "lo04", difficulty: "Core", twm: "specialising", title: "Estimating a square root",
     prompt: "Estimate the square root of 30 to one decimal place.",
     solution: "30 lies between the square numbers 25 and 36, so the root lies between 5 and 6. 5.5 x 5.5 = 30.25, just too big. 5.4 x 5.4 = 29.16, too small. So the root is between 5.4 and 5.5, and closer to 5.5 because 30.25 overshoots by only 0.25. To 1 decimal place it is 5.5." },
-  { id: "we05", outcomeId: "lo04", difficulty: "Core", title: "Estimating a cube root",
+  { id: "we05", outcomeId: "lo04", difficulty: "Core", twm: "specialising", title: "Estimating a cube root",
     prompt: "Estimate the cube root of 30.",
     solution: "30 lies between the cube numbers 27 and 64, so the cube root lies between 3 and 4, and much nearer 3 because 30 is only just above 27. Trying 3.1: 3.1 x 3.1 x 3.1 = 29.791, very slightly under 30. So the cube root of 30 is a little over 3.1." },
   { id: "we06", outcomeId: "lo05", difficulty: "Core", title: "A large number in standard form",
@@ -222,18 +222,25 @@ const workedExamples = [
   { id: "we08", outcomeId: "lo05", difficulty: "Core", title: "Back to an ordinary number",
     prompt: "Write 2.8 x 10^4 and 9.81 x 10^-3 as ordinary numbers.",
     solution: "2.8 x 10^4 moves the point 4 places right: 28000. 9.81 x 10^-3 moves it 3 places left: 0.00981." },
-  { id: "we09", outcomeId: "lo05", difficulty: "Extension", title: "Spotting what is not standard form",
+  { id: "we09", outcomeId: "lo05", difficulty: "Extension", twm: "critiquing", title: "Spotting what is not standard form",
     prompt: "Explain why 15 x 10^7 is not in standard form, and correct it.",
     solution: "The first part must be at least 1 and less than 10, and 15 is not. Rewrite 15 as 1.5 x 10^1, so 15 x 10^7 = 1.5 x 10^1 x 10^7 = 1.5 x 10^8." },
-  { id: "we10", outcomeId: "lo06", difficulty: "Core", title: "Powers of ten",
+  { id: "we10", outcomeId: "lo06", difficulty: "Core", twm: "generalising", title: "Powers of ten",
     prompt: "Work out 3.2 x 10^5 and 47 divided by 10^3.",
     solution: "3.2 x 10^5 moves the digits 5 places left, filling with zeros: 320000. 47 divided by 10^3 moves them 3 places right: 0.047. The same answer comes from 47 x 10^-3, because dividing by 10^3 and multiplying by 10^-3 are the same instruction." },
-  { id: "we11", outcomeId: "lo07", difficulty: "Core", title: "Zero and negative indices",
+  { id: "we11", outcomeId: "lo07", difficulty: "Core", twm: "conjecturing", title: "Zero and negative indices",
     prompt: "Work out 3^0, 3^-1 and 2^-3.",
     solution: "Follow the pattern leftwards: 3^2 = 9, 3^1 = 3, and dividing by 3 again gives 3^0 = 1. Continuing, 3^-1 = 1/3. A negative index means the reciprocal, so 2^-3 = 1/2^3 = 1/8." },
-  { id: "we12", outcomeId: "lo08", difficulty: "Core", title: "The index laws",
+  { id: "we12", outcomeId: "lo08", difficulty: "Core", twm: "generalising", title: "The index laws",
     prompt: "Simplify 2^3 x 2^4, 5^4 divided by 5^2, and 7^3 divided by 7^3.",
     solution: "Multiplying adds the indices: 2^3 x 2^4 = 2^7 = 128. Dividing subtracts them: 5^4 divided by 5^2 = 5^2 = 25. And 7^3 divided by 7^3 = 7^0 = 1, which agrees with the obvious fact that any number divided by itself is 1." },
+  // From the Stage 9 Teacher's Resource, which names this as its worked example
+  // of GENERALISING (its note on Exercise 1.2 Question 14). The arithmetic is
+  // already in we10; what is new is the statement covering every case at once,
+  // including the negative indices where a learner is least likely to trust it.
+  { id: "we13", outcomeId: "lo06", difficulty: "Extension", twm: "generalising", title: "What multiplying by ten does to the index",
+    prompt: "Look at 10^-2, 10^-1, 10^0, 10^1, 10^2. What happens to the index each time you multiply by 10? What happens when you divide by 10? Does your answer hold for negative indices too?",
+    solution: "Multiplying by 10 increases the index by 1 every time: 10^1 x 10 = 10^2, and 10^-2 x 10 = 10^-1. Dividing by 10 decreases it by 1: 10^2 divided by 10 = 10^1, and 10^-1 divided by 10 = 10^-2. Both hold for negative indices exactly as for positive ones, because the index is just a count of how many tens are multiplied and a negative index counts them the other way. That is the whole content of standard form: a number's digits stay put and the index records how far the point has moved." },
 ];
 
 const practice = [
@@ -404,6 +411,10 @@ const reference = {
   ],
   commonMistakes: [
     ["Calling every infinite decimal irrational", "A recurring decimal is infinite but rational, such as 0.333..."],
+    // The Stage 9 Teacher's Resource lists this as the unit's own common
+    // misconception, and the unit already TEACHES it (squaring a calculator's
+    // root of 2 gives 1.999999998944, not 2) without ever naming it as a trap.
+    ["Trusting a calculator's square root as exact", "The root of a positive integer that is not a square number is irrational, so the display is rounded"],
     ["Writing 15 x 10^7 as standard form", "The first part must be less than 10; it is 1.5 x 10^8"],
     ["Treating a^0 as 0", "Any non-zero number to the power zero is 1"],
     ["Adding indices with different bases", "The laws need the same base; 2^3 x 5^2 is just 8 x 25"],

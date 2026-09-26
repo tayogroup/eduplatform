@@ -86,6 +86,14 @@ eq("47 x 10^-3", 47 * 1e-3, 0.047);
 eq("4700 / 10^4", 4700 / 1e4, 0.47);
 eq("3e8 x 100", 3e8 * 100, 3e10);
 
+// ---- the Teacher's Resource generalisation: multiplying by 10 raises the index
+// by exactly 1 and dividing lowers it by 1, across the negative range too. Tested
+// over the whole span the example quotes rather than at one convenient point.
+for (let k = -4; k <= 4; k += 1) {
+  eq("10^" + k + " x 10 = 10^" + (k + 1), 10 ** k * 10, 10 ** (k + 1));
+  eq("10^" + k + " / 10 = 10^" + (k - 1), +(10 ** k / 10).toPrecision(12), +(10 ** (k - 1)).toPrecision(12));
+}
+
 // ---- indices
 eq("powers of 3", [3 ** 1, 3 ** 2, 3 ** 3, 3 ** 4, 3 ** 5, 3 ** 6].join(","), "3,9,27,81,243,729");
 eq("3^0", 3 ** 0, 1);
@@ -105,6 +113,7 @@ says("small number example", "7.1 x 10^-7");
 says("negative index", "1/8");
 says("index law product", "2^7 = 128");
 says("index law quotient", "5^2 = 25");
+says("the generalisation", "increases the index by 1");
 
 // ---- structure
 const nOut = u.outcomes.length;

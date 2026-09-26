@@ -101,6 +101,11 @@ eq("the counter-example values", (1 + 3) * (1 + 2) + " vs " + (1 ** 2 + 6), "12 
 identity("10x/2 = 5x", (x) => 10 * x / 2, (x) => 5 * x);
 identity("6a^3/3a = 2a^2", (a) => (a === 0 ? 0 : 6 * a ** 3 / (3 * a)), (a) => (a === 0 ? 0 : 2 * a ** 2));
 identity("8a^4/2a = 4a^3", (a) => (a === 0 ? 0 : 8 * a ** 4 / (2 * a)), (a) => (a === 0 ? 0 : 4 * a ** 3));
+// the Teacher's Resource critique example: BOTH of Arun's and Zara's routes must
+// land on the same correct answer, or the example has no point
+identity("6x^5 / 3x^2 = 2x^3", (x) => (x === 0 ? 0 : 6 * x ** 5 / (3 * x ** 2)), (x) => (x === 0 ? 0 : 2 * x ** 3));
+eq("Arun's route: 6/3 and 5-2", (6 / 3) + "," + (5 - 2), "2,3");
+eq("Zara's route: the same exponent", 5 - 2, 3);
 
 // ---- (3n)^2 vs 3n^2: the unit claims they agree at exactly one value
 eq("(3n)^2 at n = 2", (3 * 2) ** 2, 36);
@@ -133,6 +138,7 @@ says("the index law product", "x^7");
 says("changing the subject", "a = (v - u)/t");
 says("the pay formula rearranged", "H = (P - W)/R");
 says("the order-of-operations answer", "8 + 4 = 12");
+says("the critique example", "6x^5 divided by 3x^2");
 
 // ---- structure
 const nOut = u.outcomes.length;

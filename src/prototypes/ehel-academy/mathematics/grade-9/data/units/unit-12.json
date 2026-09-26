@@ -1,6 +1,6 @@
 {
   "schemaVersion": "Ehel Mathematics Runtime v1.1",
-  "generatedAt": "2026-09-26T14:45:35.099Z",
+  "generatedAt": "2026-09-26T15:10:42.952Z",
   "stage": {
     "id": 9,
     "label": "Stage 9"
@@ -329,6 +329,7 @@
       "id": "we02",
       "outcomeId": "lo01",
       "difficulty": "Basic",
+      "twm": "critiquing",
       "title": "When adding would be wrong",
       "prompt": "Roll a dice. Find P(even or more than 4).",
       "solution": "Even is {2, 4, 6} and more than 4 is {5, 6}. The 6 is in both, so these are NOT mutually exclusive and adding 3/6 + 2/6 = 5/6 would count the 6 twice. List instead: 'even or more than 4' is satisfied by {2, 4, 5, 6}, which is 4 outcomes, so the probability is 4/6 = 2/3."
@@ -353,6 +354,7 @@
       "id": "we05",
       "outcomeId": "lo03",
       "difficulty": "Core",
+      "twm": "characterising",
       "title": "Testing for independence",
       "prompt": "Roll a dice. X is 'the score is even', Y is 'the score is more than 2'. Are X and Y independent?",
       "solution": "If X happens the score is 2, 4 or 6; two of those are more than 2, so P(Y) = 2/3. If X does not happen the score is 1, 3 or 5; two of those are more than 2, so P(Y) = 2/3. The value of P(Y) does not change, so X and Y are independent."
@@ -361,6 +363,7 @@
       "id": "we06",
       "outcomeId": "lo03",
       "difficulty": "Core",
+      "twm": "classifying",
       "title": "Events that are not independent",
       "prompt": "A bag holds 6 red and 4 blue beads. Two are taken without replacement. Is the colour of the second bead independent of the first?",
       "solution": "No. If the first bead is red, 5 reds remain out of 9, so P(red) = 5/9. If the first is blue, 6 reds remain out of 9, so P(red) = 6/9. The probability changes, so the events are not independent. Taking the bead out changed what was left."
@@ -385,6 +388,7 @@
       "id": "we09",
       "outcomeId": "lo06",
       "difficulty": "Extension",
+      "twm": "convincing",
       "title": "At least one",
       "prompt": "A coin is flipped twice. Find the probability of at least one head.",
       "solution": "The four outcomes HH, HT, TH, TT are equally likely, each 1/4. 'At least one head' is satisfied by HH, HT and TH, so the probability is 3/4. The quicker route is the opposite event: the only way to fail is TT, with probability 1/2 x 1/2 = 1/4, so at least one head has probability 1 - 1/4 = 3/4."
@@ -401,6 +405,7 @@
       "id": "we11",
       "outcomeId": "lo07",
       "difficulty": "Core",
+      "twm": "specialising",
       "title": "Relative frequency",
       "prompt": "Zara rolls a dice 50 times and gets 12 sixes. Find the relative frequency of a six and compare it with the theoretical probability.",
       "solution": "Relative frequency = 12/50 = 0.24. The theoretical probability is 1/6 = 0.167 to 3 decimal places. The experiment gave more sixes than theory predicts, but 50 rolls is a small experiment and a gap of this size is ordinary."
@@ -409,6 +414,7 @@
       "id": "we12",
       "outcomeId": "lo08",
       "difficulty": "Core",
+      "twm": "generalising",
       "title": "Expected frequency",
       "prompt": "A fair coin is flipped 80 times. Find the expected frequency of heads, and say what it means if 46 heads are observed.",
       "solution": "Expected frequency = probability x trials = 1/2 x 80 = 40 heads. Observing 46 is 6 above expectation, a relative frequency of 46/80 = 0.575 against a theoretical 0.5. This does not show the coin is biased: an expected value is the long-run average, not a promise about any one run of 80."

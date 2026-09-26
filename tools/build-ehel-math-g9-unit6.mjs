@@ -1,0 +1,551 @@
+// Build Mathematics Grade 9, Unit 6: Statistical Investigations.
+//
+// Seventh Grade 9 unit. Authored from the Stage 9 Learner's Book pages 130-139
+// and Workbook pages 77-80.
+//
+// TWO SECTIONS, TWO OBJECTIVES:
+//
+//   6.1 Data collection and sampling -> 9Ss.01
+//   6.2 Bias                         -> 9Ss.02
+//
+// THIS IS THE FIRST GRADE 9 UNIT WHOSE SUBJECT IS MOSTLY JUDGEMENT, and that
+// changes what the content has to be. The other units teach procedures whose
+// answers are right or wrong; this one teaches choices that are well or badly
+// justified. So most items here ask for a REASON and the model answer is an
+// argument rather than a number - and where a question genuinely has one answer,
+// such as how many men belong in a representative sample of 40, it is computed
+// exactly as everywhere else.
+//
+// The companion checker therefore reports honestly that most of this unit cannot
+// be verified by computation, and counts only what can. Padding a statistics unit
+// with arithmetic to make the checker look busy would be the same error as a
+// coverage number that is not evidence of teaching.
+//
+// 9Ss.01 SAYS "SELECT, TRIAL AND JUSTIFY", and the trial is the part that gets
+// dropped. The Learner's Book is explicit - "It is a good idea to test your data
+// collection method in a small trial. You might want to change your design after
+// you have done this" - and its own worked example chooses shoe size over foot
+// length not because it is more accurate (it is less) but because measuring
+// someone's foot is intrusive. That trade-off between accuracy and what people
+// will actually consent to is the heart of the objective, so it is taught
+// directly rather than left implied.
+//
+//   node tools/build-ehel-math-g9-unit6.mjs [--write]
+
+import fs from "node:fs";
+import path from "node:path";
+import url from "node:url";
+
+const HERE = path.dirname(url.fileURLToPath(import.meta.url));
+const OUT = path.resolve(HERE, "..", "src", "prototypes", "ehel-academy",
+  "mathematics", "grade-9", "data", "units", "unit-6.json");
+const WRITE = process.argv.includes("--write");
+
+const FW = path.resolve(HERE, "..", "src", "curriculum", "cambridge-mathematics-0862.json");
+const fw = {};
+(function walk(o) {
+  if (!o || typeof o !== "object") return;
+  if (Array.isArray(o)) return o.forEach(walk);
+  if (typeof o.code === "string" && /^9Ss\.\d{2}$/.test(o.code)) fw[o.code] = o.text;
+  Object.values(o).forEach(walk);
+})(JSON.parse(fs.readFileSync(FW, "utf8")));
+
+const OBJ = ["9Ss.01", "9Ss.02"];
+for (const c of OBJ) if (!fw[c]) throw new Error("0862 has no " + c);
+
+const outcomes = [
+  "Turn a vague interest into a statistical question that data could actually answer.",
+  "Write a prediction that data can test, and say what would count as evidence against it.",
+  "Decide what data to collect, and classify it as categorical, discrete or continuous.",
+  "Choose a sampling method and justify the choice, including what the choice gives up.",
+  "Run a small trial of a data collection method and change the design in response to it.",
+  "Work out the numbers needed for a representative sample from the proportions in a population.",
+  "Identify sources of bias in a question, a sample or a way of collecting replies.",
+  "Rewrite a biased question, and redesign a collection method to remove a source of bias.",
+];
+
+const concepts = [
+  {
+    id: "concept-1-statistical-questions",
+    title: "A Question Data Can Answer",
+    explanation:
+      "'Are people's hands and feet related?' is an interest, not yet a question data can answer. A " +
+      "statistical question names what you will measure and about whom: 'In this school, do teenagers " +
+      "with longer feet have wider hand spans?' The test of a good one is that you can say, before " +
+      "collecting anything, what measurements you would take and roughly what the answer would look " +
+      "like. If you cannot, the question still needs work.",
+    example:
+      "Vague: 'Are taller people different?' Better: 'Are height and shoe size connected?' Better still, " +
+      "because it names the group: 'Among boys in this school, do taller boys have larger shoe sizes " +
+      "than shorter boys?' Each version is more answerable than the last, and none of them needed data " +
+      "to improve.",
+  },
+  {
+    id: "concept-2-predictions",
+    title: "A Prediction Is Something That Could Be Wrong",
+    explanation:
+      "A prediction says in advance what you expect the data to show. It is only useful if it could turn " +
+      "out false - 'some people have big hands' predicts nothing, because no result could contradict it. " +
+      "Writing the prediction before collecting data also stops you from deciding afterwards that " +
+      "whatever you found is what you expected, which is the easiest way to fool yourself in statistics.",
+    example:
+      "Testable: 'Taller boys have a larger shoe size than shorter boys.' You can say what would " +
+      "contradict it - finding that shoe size does not increase with height. Not testable: 'Height is " +
+      "interesting.' Also weak: 'Some tall people have big feet', which is true whatever happens.",
+  },
+  {
+    id: "concept-3-kinds-of-data",
+    title: "Categorical, Discrete, Continuous",
+    explanation:
+      "The same quantity can give you different kinds of data depending on how you record it, and the " +
+      "kind you choose decides what you can do with it later. Categorical data puts things in named " +
+      "groups. Discrete data counts in separate steps. Continuous data can take any value in a range and " +
+      "comes from measuring. Deciding this before you collect is important, because you cannot recover " +
+      "continuous data from categories you have already reduced it to.",
+    example:
+      "Height measured with a tape is CONTINUOUS. The same height recorded as short, average or tall is " +
+      "CATEGORICAL - and once written that way, the measurements are gone. Shoe size is DISCRETE: sizes " +
+      "go up in steps and a shoe size of 7.3 does not exist, even though feet themselves vary " +
+      "continuously.",
+  },
+  {
+    id: "concept-4-choosing-and-trialling",
+    title: "Choose a Method, Then Test the Method",
+    explanation:
+      "A data collection method is a design, and designs are best tested small before they are used for " +
+      "real. A trial on a handful of people tells you what the plan did not anticipate: a question people " +
+      "misread, a measurement that takes too long, something people would rather not do. Changing the " +
+      "design after a trial is the method working, not a sign of poor planning. And the most accurate " +
+      "measurement is not always the right one - a method people will not cooperate with collects no " +
+      "data at all.",
+    example:
+      "To compare hands and feet you could measure foot length, which is continuous and accurate, or " +
+      "record shoe size, which is discrete and less precise. Shoe size is often the better choice, " +
+      "because measuring someone's foot is intrusive and people may refuse. For hands, drawing round " +
+      "them on squared paper and counting squares gives an area, but measuring hand span is far quicker - " +
+      "and a trial of both is how you decide which to use.",
+  },
+  {
+    id: "concept-5-representative-samples",
+    title: "A Representative Sample Keeps the Proportions",
+    explanation:
+      "A sample stands in for a population, so it should look like that population in the ways that " +
+      "matter. If a third of the employees are men, then about a third of the sample should be men. The " +
+      "arithmetic is a percentage of the sample size, rounded to a whole number of people. Other " +
+      "characteristics may matter too - age, job, salary - and a sample that is balanced on one and " +
+      "badly skewed on another is only partly representative.",
+    example:
+      "A company employs 187 men and 362 women, so 549 people, of whom 187/549 = 34.1% are men. For a " +
+      "sample of 40, that is 0.341 x 40 = 13.6, which is 14 men to the nearest person, and 26 women. " +
+      "The check is that the two parts add to the sample size: 14 + 26 = 40.",
+  },
+  {
+    id: "concept-6-bias",
+    title: "Bias: Three Places It Hides",
+    explanation:
+      "Bias is anything that makes your result lean away from the truth in a predictable direction. It " +
+      "arrives in three main ways. The QUESTION can push people towards an answer - 'Do you agree that...' " +
+      "invites agreement. The SAMPLE can be the wrong people - asking outside a sports stadium who " +
+      "exercises. And the REPLIES can be self-selected: if only 105 of 350 people answer, the 245 who " +
+      "did not may differ from those who did, and you cannot know how. Each has its own fix, and none of " +
+      "them is 'collect more data'.",
+    example:
+      "'Do you agree that global warming is caused by humans?' is leading; 'What do you think causes " +
+      "global warming?' is not. 'In a survey of 142 customers, 85% said Supremo Shampoo made their hair " +
+      "feel softer' is an advertisement - the sample were probably existing customers, and 'softer' is " +
+      "the company's word, not the customer's. A 30% reply rate means 70% of the sample is unexplained.",
+  },
+];
+
+const methods = [
+  { id: "method-1", outcomeId: "lo01", difficulty: "Core", title: "How to sharpen a statistical question",
+    example: "Turn 'are hands and feet related?' into a question data can answer.",
+    steps: ["Name exactly what you will measure: foot length or shoe size, hand span or hand length.",
+      "Name who you will ask: teenagers in this school.",
+      "Say what relationship you are looking for: larger feet going with larger hands.",
+      "Write it as one sentence: 'Among teenagers in this school, do those with larger shoe sizes have wider hand spans?'",
+      "Test the question by describing the answer you would accept before you collect anything."] },
+  { id: "method-2", outcomeId: "lo03", difficulty: "Core", title: "How to decide what kind of data to collect",
+    example: "You want to record people's heights.",
+    steps: ["Decide how you will record it: a measurement, a count, or a named group.",
+      "A tape measure gives CONTINUOUS data.",
+      "Sorting into short, average and tall gives CATEGORICAL data.",
+      "Ask what you will want to do with it later - you cannot get measurements back from categories.",
+      "Choose the kind that supports the analysis you plan, then say why."] },
+  { id: "method-3", outcomeId: "lo05", difficulty: "Core", title: "How to run a trial and use it",
+    example: "You plan to measure hand span and foot length on 60 people.",
+    steps: ["Try the whole method on five people first.",
+      "Record what went wrong: a question misread, a measurement too slow, someone uncomfortable.",
+      "Time it, and multiply up to see whether 60 is realistic.",
+      "Change the design in response - for instance, switch from foot length to shoe size.",
+      "Write down what you changed and why, because that is part of justifying the method."] },
+  { id: "method-4", outcomeId: "lo06", difficulty: "Core", title: "How to work out a representative sample",
+    example: "187 men and 362 women. Choose a representative sample of 40.",
+    steps: ["Find the population total: 187 + 362 = 549.",
+      "Find the proportion in each group: 187 / 549 = 34.1% men.",
+      "Apply that proportion to the sample size: 0.341 x 40 = 13.6.",
+      "Round to whole people: 14 men, and therefore 26 women.",
+      "Check the parts add to the sample size: 14 + 26 = 40."] },
+  { id: "method-5", outcomeId: "lo07", difficulty: "Core", title: "How to look for bias",
+    example: "A hotel emails past guests an online survey about service and value.",
+    steps: ["Check the QUESTION: does its wording push towards one answer?",
+      "Check the SAMPLE: are these the right people, and who is missing?",
+      "Check the REPLIES: who chose to answer, and who did not?",
+      "Here the replies are self-selected - guests with strong feelings answer, and guests with no email or no internet never appear.",
+      "Name the direction of the bias, not just its presence."] },
+  { id: "method-6", outcomeId: "lo08", difficulty: "Core", title: "How to fix a biased question",
+    example: "Rewrite 'Do you agree that entry to this exhibition should be free?'",
+    steps: ["Find the part that pushes: 'Do you agree that' invites yes.",
+      "Remove any loaded or flattering words.",
+      "Offer the alternatives even-handedly, or ask openly.",
+      "Rewrite: 'Should entry to this exhibition be free, or should there be a charge?'",
+      "Check that someone with the opposite view would feel able to say so."] },
+];
+
+const workedExamples = [
+  { id: "we01", outcomeId: "lo01", difficulty: "Core", twm: "characterising", title: "Sharpening a question",
+    prompt: "You are interested in whether hands and feet go together. Write three versions of a question, each better than the last.",
+    solution: "Version 1: 'Are people's hands and feet related?' - too vague to collect for. Version 2: 'Are shoe size and hand span connected?' - now it names measurements. Version 3: 'Among teenagers in this school, do those with larger shoe sizes have wider hand spans?' - it names the measurements AND the group. Only the third tells you what to do on Monday morning." },
+  { id: "we02", outcomeId: "lo02", difficulty: "Core", twm: "critiquing", title: "Which predictions can be tested",
+    prompt: "Which of these can be tested with data? (a) Taller boys have larger shoe sizes. (b) Height is interesting. (c) Some tall people have big feet.",
+    solution: "Only (a). It says what to expect and could be contradicted - if shoe size did not rise with height, it would be wrong. (b) makes no claim about data at all. (c) is true whatever the data show, because you only need one example, so no result could ever count against it. A prediction that cannot fail is not a prediction." },
+  { id: "we03", outcomeId: "lo03", difficulty: "Core", twm: "classifying", title: "Classifying the same quantity three ways",
+    prompt: "Height, shoe size, and height recorded as short/average/tall. Classify each as categorical, discrete or continuous.",
+    solution: "Height with a tape measure is continuous: it can take any value in a range. Shoe size is discrete: the sizes are separate steps and there is no size 7.3. Short, average and tall are categorical: named groups with no measurement kept. Notice that height appears twice - the kind of data depends on how you record it, not on the quantity itself." },
+  { id: "we04", outcomeId: "lo03", difficulty: "Extension", twm: "convincing", title: "Why the choice cannot be undone",
+    prompt: "Why does it matter that you decide between continuous and categorical BEFORE collecting?",
+    solution: "Because the reduction only goes one way. From a list of measured heights you can always sort people into short, average and tall afterwards; from a list of those three labels you can never recover the measurements. So recording categories throws away information you may later need - to find a mean, or to draw a scatter graph - and no amount of care afterwards brings it back." },
+  { id: "we05", outcomeId: "lo04", difficulty: "Core", twm: "critiquing", title: "Accuracy is not the only criterion",
+    prompt: "To compare feet, you could measure foot length or record shoe size. Foot length is more accurate. Which should you use, and why?",
+    solution: "Shoe size is often the better choice despite being less accurate. Measuring someone's foot means asking them to remove a shoe and be measured, which is intrusive and which some people will refuse - and a method people will not cooperate with collects no data at all. Shoe size is quick, needs no contact and is easy to report. The trade-off is real precision against real cooperation, and the second sometimes wins." },
+  { id: "we06", outcomeId: "lo05", difficulty: "Core", twm: "improving", title: "What a trial tells you",
+    prompt: "You plan to measure hand area by drawing round each hand on squared paper and counting squares, for 60 people. Trial it on five. What might you change?",
+    solution: "The trial will probably show that drawing round a hand and counting squares takes several minutes per person, so 60 people is hours of work, and that the count depends on how carefully the outline was drawn. Measuring hand span with a ruler takes seconds and is repeatable. So the design changes to hand span - and recording that you trialled both, and why you switched, is part of justifying the method rather than an admission of poor planning." },
+  { id: "we07", outcomeId: "lo06", difficulty: "Core", twm: "characterising", title: "A representative sample of 40",
+    prompt: "A company employs 187 men and 362 women. Choose a representative sample of 40, and list other factors to consider.",
+    solution: "The population is 187 + 362 = 549. Men are 187/549 = 34.1%, so the sample should be 34.1% men: 0.341 x 40 = 13.6, which is 14 men to the nearest person, leaving 26 women. Check: 14 + 26 = 40. Other factors worth balancing are age, job type and salary - a sample correct on sex and badly skewed on age is only partly representative." },
+  { id: "we08", outcomeId: "lo06", difficulty: "Core", twm: "specialising", title: "A second representative sample",
+    prompt: "A college has 200 girls and 150 boys. Choose a representative sample of 30.",
+    solution: "The total is 350. Girls are 200/350 = 57.1%, so 0.571 x 30 = 17.1, giving 17 girls. Boys are 150/350 = 42.9%, so 0.429 x 30 = 12.9, giving 13 boys. Check: 17 + 13 = 30. With just TWO groups the check can never fail, because the two proportions add to 1 and so the two roundings always go opposite ways. It is with three or more groups that the parts really can miss the total." },
+  { id: "we14", outcomeId: "lo06", difficulty: "Extension", twm: "specialising", title: "When the rounded parts do not add up",
+    prompt: "A school has five year groups of equal size and wants a representative sample of 30. Work out each part by rounding, then add them. What happens, and what do you do about it?",
+    solution: "Each year group is a fifth of the school, so each part is 30 / 5 = 6 exactly, and 5 x 6 = 30 - no problem. Now try a sample of 32: each part is 6.4, which rounds to 6, and 5 x 6 = 30, two short. With three or more groups the roundings no longer cancel out, so you must check the total and hand the leftover places to the groups whose fractions were largest - here, any two of the five. Note that with only two groups this can never happen, because their proportions add to 1 and their fractional parts always round in opposite directions." },
+  { id: "we09", outcomeId: "lo07", difficulty: "Core", twm: "critiquing", title: "Reading an advertisement as a statistician",
+    prompt: "'In a survey of 142 customers, 85% said Supremo Shampoo made their hair feel softer.' What is the purpose, and name two sources of bias.",
+    solution: "The purpose is to sell shampoo, not to report a finding - which is the first thing to notice. Two sources of bias: the sample were CUSTOMERS, people who already buy it and are more likely to approve, so the sample is not the general public; and the word 'softer' is the company's, so the question was probably 'Did it make your hair feel softer?', which invites yes. A third is that nothing says how the 142 were chosen, or how many were asked in total." },
+  { id: "we10", outcomeId: "lo07", difficulty: "Core", twm: "characterising", title: "A low reply rate is a source of bias",
+    prompt: "A statistician gives out 350 questionnaires about a housing development and receives 105 replies. Find the reply rate and explain how it could cause bias.",
+    solution: "105/350 = 30% replied. The bias is that the 70% who did not reply may differ systematically from those who did - people who strongly oppose the development have a reason to write back, while those who do not mind may not bother. So the replies could overstate opposition, and there is no way to check from the data itself, because the missing people are exactly the ones you have no information about." },
+  { id: "we11", outcomeId: "lo08", difficulty: "Core", twm: "improving", title: "Rewriting four leading questions",
+    prompt: "Rewrite these to remove bias: (a) Do you agree that global warming is caused by humans? (b) Do you think entry to this exhibition should be free? (c) Are you overweight? (d) Do you think you take enough exercise?",
+    solution: "(a) 'What do you think causes global warming?' - 'Do you agree' invites yes. (b) 'Should entry to this exhibition be free, or should there be a charge?' - the original offers only one option. (c) 'What is your height and mass?' - the original asks for a judgement people are reluctant to make about themselves, and 'overweight' is undefined. (d) 'How many hours of exercise did you do last week?' - 'enough' means different things to different people, and few will say no." },
+  { id: "we12", outcomeId: "lo08", difficulty: "Extension", twm: "improving", title: "Redesigning a taste test",
+    prompt: "People are given the original and a new recipe and asked 'Do you prefer the new recipe?' 85% say yes. Why might this be biased, and how would you redesign it?",
+    solution: "Two problems. The question names one option and asks for agreement, so it leans towards yes. And if people know which drink is new they may favour novelty, or favour what they think the tester wants. Redesign it so the two drinks are unlabelled, presented in an order that varies between people, and the question is neutral: 'Which of these two do you prefer, A or B?' with 'no preference' allowed. Then the taster should not know which is which either." },
+  { id: "we13", outcomeId: "lo07", difficulty: "Extension", twm: "critiquing", title: "A misleading graph",
+    prompt: "A bar chart of student numbers starts its vertical axis at 40 rather than 0. Why is this misleading, and what would you draw instead?",
+    solution: "Starting at 40 cuts the bottom off every bar, so the bars' heights no longer stand in the same ratio as the numbers: a group of 50 and a group of 92 look like 10 and 52, a five-fold difference instead of not quite double. The fix is to begin the vertical axis at 0 so that bar height is proportional to frequency. If the interesting variation really is at the top of the range, say so in words or use a clearly marked broken axis rather than a silent one." },
+];
+
+const practice = [
+  { id: "p01", level: "Warm-up", prompt: "Classify: height measured with a tape measure.", answer: "Continuous", hint: "It comes from measuring." },
+  { id: "p02", level: "Warm-up", prompt: "Classify: shoe size.", answer: "Discrete", hint: "Separate steps, no size 7.3." },
+  { id: "p03", level: "Warm-up", prompt: "Classify: people sorted into short, average and tall.", answer: "Categorical", hint: "Named groups." },
+  { id: "p04", level: "Core", prompt: "A college has 200 girls and 150 boys. How many girls in a representative sample of 30?", answer: "17", hint: "200/350 of 30." },
+  { id: "p05", level: "Core", prompt: "187 men and 362 women. How many men in a representative sample of 40?", answer: "14", hint: "34.1% of 40." },
+  { id: "p06", level: "Core", prompt: "350 questionnaires produce 105 replies. What is the reply rate?", answer: "30%", hint: "105 out of 350." },
+  { id: "p07", level: "Core", prompt: "Why is 'Do you agree that entry should be free?' biased, and how would you fix it?", answer: "'Do you agree' invites yes and only one option is offered. Better: 'Should entry be free, or should there be a charge?'", hint: "Look at the opening words." },
+  { id: "p08", level: "Core", prompt: "Write a testable prediction about estimation ability in your school.", answer: "For example: 'Older learners estimate the length of a line more accurately than younger learners.' It names what is measured and could be shown false.", hint: "It must be able to turn out wrong." },
+  { id: "p09", level: "Core", prompt: "Give one advantage and one disadvantage of collecting opinions through social media.", answer: "Advantage: a very large number of replies quickly and cheaply. Disadvantage: the people who reply are self-selected and exclude anyone not on that platform, so the sample is not representative.", hint: "Think about who is missing." },
+  { id: "p10", level: "Challenge", prompt: "A table shows 50 and 92 students in two groups, but the bar chart's axis starts at 40. Explain the effect in numbers.", answer: "The bars show 10 and 52 units of height for 50 and 92 students - a ratio of about 1 to 5 instead of the true 1 to 1.84, so the difference looks nearly three times bigger than it is.", hint: "Subtract 40 from each and compare the ratios." },
+  { id: "p11", level: "Challenge", prompt: "A hotel emails past guests an online survey about service. Name three separate sources of bias.", answer: "The replies are self-selected, so guests with strong opinions answer. Guests with no email address or no internet never appear at all. And guests who had a bad enough experience may not return or engage, so the worst cases are the most likely to be missing.", hint: "Question, sample, replies." },
+  { id: "p12", level: "Challenge", prompt: "You plan to measure hand area by counting squares for 60 people. After a trial on 5 you change the design. What did the trial show, and what is the justification for changing?", answer: "The trial shows it takes minutes per person, so 60 is impractical, and the count depends on how the outline was drawn, so it is not repeatable. Switching to hand span is faster and more consistent. Recording the trial and the reason is part of justifying the method, which is what the objective asks for.", hint: "Time it and repeat it." },
+];
+
+const fluency = [
+  { id: "fl01", outcomeId: "lo03", difficulty: "Round 1", prompt: "Height from a tape measure is which kind of data?", answer: "Continuous", hint: "Measured.", errorFeedback: "Measurements over a range are continuous." },
+  { id: "fl02", outcomeId: "lo03", difficulty: "Round 1", prompt: "Shoe size is which kind of data?", answer: "Discrete", hint: "Counted in steps.", errorFeedback: "There is no shoe size 7.3." },
+  { id: "fl03", outcomeId: "lo03", difficulty: "Round 1", prompt: "Short, average, tall is which kind of data?", answer: "Categorical", hint: "Named groups.", errorFeedback: "No measurement is kept." },
+  { id: "fl04", outcomeId: "lo06", difficulty: "Round 1", prompt: "187 men and 362 women. What is the population total?", answer: "549", hint: "Add them.", errorFeedback: "187 + 362 = 549." },
+  { id: "fl05", outcomeId: "lo06", difficulty: "Round 2", prompt: "What percentage of 549 is 187, to 1 dp?", answer: "34.1%", hint: "187 divided by 549.", errorFeedback: "187/549 = 0.3406, so 34.1%." },
+  { id: "fl06", outcomeId: "lo06", difficulty: "Round 2", prompt: "How many men in a representative sample of 40?", answer: "14", hint: "34.1% of 40.", errorFeedback: "0.341 x 40 = 13.6, so 14." },
+  { id: "fl07", outcomeId: "lo06", difficulty: "Round 2", prompt: "How many girls in a representative sample of 30 from 200 girls and 150 boys?", answer: "17", hint: "200/350 of 30.", errorFeedback: "0.571 x 30 = 17.1, so 17." },
+  { id: "fl08", outcomeId: "lo07", difficulty: "Round 2", prompt: "105 replies from 350 questionnaires is what reply rate?", answer: "30%", hint: "Divide.", errorFeedback: "105/350 = 0.3, so 30%." },
+  { id: "fl09", outcomeId: "lo07", difficulty: "Round 3", prompt: "Name the bias in asking about exercise outside a sports stadium.", answer: "Selection bias - the sample is far more active than the general public.", hint: "Who is there?", errorFeedback: "The place chooses the people." },
+  { id: "fl10", outcomeId: "lo08", difficulty: "Round 3", prompt: "What is wrong with 'Do you agree that...?'", answer: "It is leading - it invites agreement.", hint: "Which answer does it suggest?", errorFeedback: "Ask openly instead." },
+  { id: "fl11", outcomeId: "lo02", difficulty: "Round 3", prompt: "Is 'some tall people have big feet' a testable prediction?", answer: "No", hint: "Could any result contradict it?", errorFeedback: "One example makes it true, so nothing can refute it." },
+  { id: "fl12", outcomeId: "lo07", difficulty: "Round 3", prompt: "A bar chart's axis starts at 40 instead of 0. What is the effect?", answer: "Differences look much bigger than they are, because bar height is no longer proportional to frequency.", hint: "What happened to the bottom of each bar?", errorFeedback: "Every bar lost 40 units, which changes their ratios." },
+];
+
+const explorations = concepts.map((c, i) => ({
+  id: "explore-" + (i + 1),
+  outcomeId: "lo0" + [1, 2, 3, 5, 6, 7][i],
+  difficulty: ["Discover", "Core", "Core", "Core", "Core", "Extension"][i],
+  title: c.title,
+  context: c.explanation,
+  prompt: [
+    "Write three versions of a question about hands and feet, each more answerable than the last. What did each version add?",
+    "Of 'taller boys have larger shoe sizes', 'height is interesting' and 'some tall people have big feet', which could be shown false?",
+    "Record the same five heights three ways: measured, as short/average/tall, and as shoe sizes. Which recording could you undo?",
+    "Trial a hand-area-by-counting-squares method on five people. Time it. What would you change before doing 60?",
+    "A company has 187 men and 362 women. Work out a representative sample of 40, then check your two numbers add to 40.",
+    "'In a survey of 142 customers, 85% said our shampoo made hair feel softer.' Find two sources of bias.",
+  ][i],
+  answer: [
+    "Version 2 named the measurements, version 3 named the group. Both improvements came from thinking, not from data.",
+    "Only the first. The second makes no claim about data; the third is true on one example, so nothing could contradict it.",
+    "Only the measurements can be reduced to categories afterwards - the reverse is impossible, so information is lost for good.",
+    "It takes minutes per person and depends on how the outline was drawn. Switch to hand span: seconds, and repeatable.",
+    "34.1% of 40 is 13.6, so 14 men and 26 women, and 14 + 26 = 40.",
+    "The sample were existing customers, and 'softer' is the company's own word, so the question probably invited yes.",
+  ][i],
+  modelType: "concept-model-" + (i + 1),
+  hint: [
+    "What is missing that would tell you what to do tomorrow?",
+    "Ask what result would count against each one.",
+    "Try going backwards from the labels to the numbers.",
+    "Multiply your trial time by twelve.",
+    "Find the proportion first.",
+    "Who was asked, and who chose the words?",
+  ][i],
+  explanation: c.example,
+}));
+
+const visualModels = concepts.map((c, i) => ({
+  id: "model-" + (i + 1),
+  outcomeId: "lo0" + [1, 2, 3, 5, 6, 7][i],
+  title: c.title,
+  modelType: "concept-model-" + (i + 1),
+  purpose: c.explanation,
+  defaultNumber: [3, 2, 3, 5, 40, 30][i],
+}));
+
+const activities = [
+  { title: "Question workshop", materials: "cards, paper.",
+    steps: ["Each person writes one vague interest about the class on a card.",
+      "Swap cards and rewrite the interest as a statistical question naming what is measured and about whom.",
+      "Swap again and try to say what data you would collect on Monday.",
+      "Where you could not, hand it back with a note on what is still missing."] },
+  { title: "Predictions that can fail", materials: "paper.",
+    steps: ["Write six predictions about the class, three testable and three not.",
+      "Swap and sort them into the two piles.",
+      "For every testable one, write what result would show it is wrong.",
+      "For the others, explain what makes them untestable."] },
+  { title: "One quantity, three kinds of data", materials: "tape measure, paper.",
+    steps: ["Measure the height of ten people to the nearest centimetre.",
+      "Write the same data as short, average and tall.",
+      "Try to recover the original measurements from the labels.",
+      "Write one sentence about what that shows, and one about when categories are still the right choice."] },
+  { title: "Trial, then redesign", materials: "squared paper, ruler, a timer.",
+    steps: ["Plan to record hand size for the whole class by drawing round hands and counting squares.",
+      "Trial it on five people, timing each one.",
+      "Multiply up to estimate the time for the whole class.",
+      "Redesign the method, and record exactly what the trial told you.",
+      "Run the new method on the same five and compare how consistent the two were."] },
+  { title: "Build a representative sample", materials: "paper.",
+    steps: ["Get the real numbers of learners by year group in your school.",
+      "Work out a representative sample of 50, year group by year group.",
+      "Check the parts add to 50, and adjust if rounding lost or gained one.",
+      "Now do it again balancing on TWO characteristics at once, and describe what made that harder."] },
+  { title: "Bias hunt", materials: "newspapers, advertisements, screenshots of online polls.",
+    steps: ["Collect six real claims based on surveys.",
+      "For each, decide whether the bias is in the question, the sample, the replies, or the graph.",
+      "Write one sentence naming the DIRECTION the bias would push the result.",
+      "Rewrite the two worst ones so they would give a fair answer."] },
+];
+
+const realProblems = [
+  { id: "rp01", outcomeId: "lo06", difficulty: "Core", context: "Work",
+    prompt: "A company employs 187 men and 362 women. A manager wants a representative sample of 40 for a staff survey. How many of each, and what else should be balanced?",
+    answer: "549 employees, of whom 187/549 = 34.1% are men. So 0.341 x 40 = 13.6, giving 14 men and 26 women, and 14 + 26 = 40. Age, job type and salary should also be balanced - a sample right on sex and skewed towards senior staff would still misrepresent the workforce.",
+    hint: "Find the proportion, then apply it to 40.", errorFeedback: "187 + 362 = 549, and 187/549 is about 34%." },
+  { id: "rp02", outcomeId: "lo07", difficulty: "Core", context: "Home",
+    prompt: "A council posts 350 questionnaires about a new housing development and gets 105 back. It reports that most residents oppose the plan. What is wrong with that conclusion?",
+    answer: "Only 105/350 = 30% replied, so the claim rests on 30% of the sample and says nothing about the other 70%. People who strongly oppose a development have a reason to reply, while those who do not mind often do not bother, so the replies probably overstate opposition. The missing 245 are exactly the people about whom there is no information.",
+    hint: "Work out the reply rate first.", errorFeedback: "105/350 = 30%." },
+  { id: "rp03", outcomeId: "lo08", difficulty: "Core", context: "Market",
+    prompt: "A shop owner wants to know whether to open on Sundays and asks customers in the shop on a Saturday: 'Don't you think it would be convenient if we opened on Sundays too?' Give two reasons this is biased and rewrite the survey.",
+    answer: "The question is leading - 'Don't you think' and 'convenient' both push towards yes. And the sample is people already in the shop on a weekend, who are the most likely to want more opening hours; anyone who cannot shop at weekends is absent. Better: ask on several different days, including online for people who do not visit, with a neutral question such as 'Which days would you be most likely to shop here?' listing all seven.",
+    hint: "One problem is the words, one is who was asked.", errorFeedback: "Consider who is NOT in the shop on Saturday." },
+  { id: "rp04", outcomeId: "lo04", difficulty: "Extension", context: "Science",
+    prompt: "You want to know whether learners who sleep longer score better on a memory test. Describe the data you would collect, its kind, and one thing a trial would probably change.",
+    answer: "Sleep could be hours reported to the nearest half hour, which is continuous, and the memory score is discrete. A trial would probably show that people's reported sleep for 'last night' is unreliable and unrepresentative, so the design changes to an average over a week, recorded each morning. It might also show the test is too easy and everyone scores near the top, which would hide any difference.",
+    hint: "Think about what one night's self-report is worth.", errorFeedback: "A single night is not typical of anyone." },
+  { id: "rp05", outcomeId: "lo07", difficulty: "Extension", context: "Market",
+    prompt: "An advertisement says '9 out of 10 dentists recommend this toothpaste.' What would you need to know before believing it?",
+    answer: "How many dentists were asked in total, and how they were chosen - 9 out of 10 may be nine of ten, or nine hundred of a thousand asked after five thousand declined. What the question was, since 'recommend' could mean 'would recommend over nothing at all'. Whether the dentists were paid or supplied by the company. And what the other options were: recommending it does not mean preferring it to any rival.",
+    hint: "Ask about the sample and the wording.", errorFeedback: "A ratio tells you nothing about how the sample was chosen." },
+  { id: "rp06", outcomeId: "lo03", difficulty: "Core", context: "Home",
+    prompt: "You are recording how long learners take to travel to school. Would you use categories or measurements, and why does the decision have to be made first?",
+    answer: "Measurements, in minutes, which are continuous. That way you can find a mean, draw a scatter graph against distance, and group the data later into whatever bands are useful. If you record bands such as 'under 15 minutes' from the start, you can never recover the times, so any analysis needing the actual numbers is closed off before you begin.",
+    hint: "Which choice can be undone later?", errorFeedback: "Measurements can become categories; categories cannot become measurements." },
+];
+
+const reasoningPrompts = [
+  { id: "reason01", outcomeId: "lo02", difficulty: "Core", responseMode: "text",
+    prompt: "Why is a prediction that cannot turn out wrong useless in a statistical investigation?",
+    keyIdeas: ["A prediction must be refutable", "'Some tall people have big feet' is always true", "Nothing is learned from a test that cannot fail"],
+    modelAnswer: "The point of collecting data is to find out whether something is so, which means the data must be able to say no. 'Some tall people have big feet' is made true by a single example, so no result could ever count against it and collecting data changes nothing you believed. A useful prediction such as 'taller boys have larger shoe sizes' names a pattern that the data could fail to show, and that is precisely why testing it is worth the effort." },
+  { id: "reason02", outcomeId: "lo04", difficulty: "Core", responseMode: "text",
+    prompt: "The book chooses shoe size over foot length even though foot length is more accurate. Is that a good decision?",
+    keyIdeas: ["Accuracy is one criterion among several", "An intrusive method loses cooperation", "No data is worse than less precise data"],
+    modelAnswer: "Yes, and the reason is that accuracy is only worth having on data you actually collect. Measuring a foot means asking someone to remove a shoe and be handled, which some will refuse and others will resent, so the more accurate method can easily produce a smaller and more skewed sample than the cruder one. Shoe size is quick, needs no contact and is easy to report honestly. The judgement is precision against cooperation, and here cooperation matters more." },
+  { id: "reason03", outcomeId: "lo03", difficulty: "Extension", responseMode: "text",
+    prompt: "Why is deciding between continuous and categorical data a decision you cannot postpone?",
+    keyIdeas: ["The reduction is one-way", "Measurements can be grouped later", "Categories lose the numbers for good"],
+    modelAnswer: "Because the two are not symmetrical. From measured heights you can always produce the categories short, average and tall afterwards, choosing the boundaries once you see the data. From the categories you can never get the measurements back, so a mean, a range or a scatter graph becomes impossible. Recording categories is therefore a decision to throw information away, and it has to be taken knowingly, before collection, rather than discovered later." },
+  { id: "reason04", outcomeId: "lo07", difficulty: "Core", responseMode: "text",
+    prompt: "A 30% reply rate is a source of bias. Why can you not fix it by simply noting the rate and carrying on?",
+    keyIdeas: ["The missing people may differ systematically", "The data cannot tell you how", "Reporting the rate is honest but not a fix"],
+    modelAnswer: "Because the problem is not that the sample is small but that it is selected by the respondents themselves. Those who replied had a reason to, and on a contested subject that reason often correlates with their opinion, so the replies lean in a direction you cannot measure. The data contain no information about the 70% who stayed silent - that is exactly what makes them missing. Reporting the rate is honest and necessary, but the only real fixes are chasing non-respondents or comparing the two groups on something you already know about both." },
+  { id: "reason05", outcomeId: "lo08", difficulty: "Extension", responseMode: "text",
+    prompt: "Why does a taste test need the drinks unlabelled AND the order varied?",
+    keyIdeas: ["Labels bias towards novelty or expectation", "Order affects judgement independently", "Two separate effects need two separate controls"],
+    modelAnswer: "They guard against two different effects. If the taster knows which drink is new, their answer can be swayed by curiosity or by guessing what the tester hopes for, so the labels must go. Even unlabelled, the drink tasted first sets a reference for the second, so a fixed order would favour one position consistently across every taster. Varying the order spreads that effect out instead of letting it accumulate. Removing one control and keeping the other leaves a bias that the remaining control cannot touch." },
+  { id: "reason06", outcomeId: "lo07", difficulty: "Extension", responseMode: "text",
+    prompt: "A bar chart whose axis starts at 40 is described as misleading rather than wrong. What is the difference?",
+    keyIdeas: ["Every number plotted is correct", "The visual impression is not", "A reader judges by bar height"],
+    modelAnswer: "Nothing on the chart states a false number - each bar ends at the right place against the scale, and the scale is printed. It is misleading because readers compare bar heights rather than reading values, and cutting 40 off every bar destroys the proportionality those heights rely on: 50 and 92 become 10 and 52, so a difference of under twice looks like a difference of five times. The chart tells the truth in a form that predictably causes a false conclusion, which is why the fix is to start at zero rather than to add a note." },
+];
+
+const reference = {
+  rules: [
+    { title: "A Statistical Question Names Two Things", text: "What will be measured, and about whom. If it names neither, it is an interest rather than a question." },
+    { title: "A Prediction Must Be Able to Fail", text: "If no possible result would contradict it, testing it teaches you nothing." },
+    { title: "The Kind of Data Is a Choice", text: "Categorical, discrete or continuous depends on how you record, not on the quantity. Measurements can become categories; categories cannot become measurements." },
+    { title: "Trial Before You Collect", text: "Test the method on a handful of people, and change the design in response. Record what the trial told you." },
+    { title: "Keep the Proportions", text: "In a representative sample, each group's share of the sample matches its share of the population. Check the parts add to the sample size." },
+    { title: "Bias Hides in Three Places", text: "The question, the sample, and who chose to reply. Name the direction it pushes, not just that it exists." },
+  ],
+  terms: [
+    ["Statistical question", "A question that names what is measured and about whom"],
+    ["Prediction", "A statement in advance of what the data will show, which could turn out false"],
+    ["Categorical data", "Data recorded as named groups"],
+    ["Discrete data", "Numerical data that goes up in separate steps"],
+    ["Continuous data", "Numerical data from measuring, which can take any value in a range"],
+    ["Representative sample", "A sample whose proportions match the population's"],
+    ["Bias", "Anything that makes a result lean away from the truth in a predictable direction"],
+    ["Non-response", "The people in a sample who do not reply, and about whom nothing is known"],
+  ],
+  commonMistakes: [
+    ["Collecting first and deciding the question later", "Then any pattern found can be called the one you expected"],
+    ["Recording categories when you will need numbers", "Categories cannot be turned back into measurements"],
+    ["Choosing the most accurate method regardless", "An intrusive method people refuse collects no data at all"],
+    ["Treating a low reply rate as only a small sample", "It is a selected sample, and the selection is by the respondents"],
+    ["Fixing bias by asking more people", "A leading question asked of more people gives a more confident wrong answer"],
+  ],
+};
+
+const assessment = {
+  passPercent: 80,
+  questions: [
+    { id: "q01", type: "Application", outcomeId: "lo03", difficulty: "Basic", question: "Shoe size is which kind of data?", options: ["Discrete", "Continuous", "Categorical", "Qualitative"], answer: "Discrete", hint: "Does size 7.3 exist?", explanation: "Shoe sizes go up in separate steps, so the data is discrete." },
+    { id: "q02", type: "Application", outcomeId: "lo03", difficulty: "Basic", question: "Height measured with a tape measure is:", options: ["Continuous", "Discrete", "Categorical", "Biased"], answer: "Continuous", hint: "It comes from measuring.", explanation: "It can take any value in a range." },
+    { id: "q03", type: "Application", outcomeId: "lo06", difficulty: "Core", question: "187 men and 362 women. How many men should be in a representative sample of 40?", options: ["14", "20", "13", "34"], answer: "14", hint: "Find the proportion first.", explanation: "187/549 = 34.1%, and 0.341 x 40 = 13.6, so 14." },
+    { id: "q04", type: "Application", outcomeId: "lo06", difficulty: "Core", question: "200 girls and 150 boys. How many girls in a representative sample of 30?", options: ["17", "15", "20", "13"], answer: "17", hint: "200 out of 350.", explanation: "0.571 x 30 = 17.1, so 17 girls and 13 boys." },
+    { id: "q05", type: "Application", outcomeId: "lo07", difficulty: "Core", question: "350 questionnaires give 105 replies. The reply rate is:", options: ["30%", "35%", "3.3%", "70%"], answer: "30%", hint: "Divide.", explanation: "105/350 = 0.3, so 30%." },
+    { id: "q06", type: "Reasoning", outcomeId: "lo02", difficulty: "Core", question: "Which is a testable prediction?", options: ["Height is interesting", "Some tall people have big feet", "Taller boys have larger shoe sizes", "Feet matter"], answer: "Taller boys have larger shoe sizes", hint: "Which one could be shown false?", explanation: "Only that one names a pattern the data could fail to show." },
+    { id: "q07", type: "Reasoning", outcomeId: "lo08", difficulty: "Core", question: "Why is 'Do you agree that entry should be free?' biased?", options: ["It is too long", "It invites agreement and offers one option", "Free entry is impossible", "It asks about money"], answer: "It invites agreement and offers one option", hint: "Look at the opening words.", explanation: "'Do you agree' leads towards yes, and no alternative is offered." },
+    { id: "q08", type: "Reasoning", outcomeId: "lo07", difficulty: "Extension", question: "A bar chart's vertical axis starts at 40. This is:", options: ["Wrong, because the numbers are false", "Misleading, because bar heights are no longer proportional", "Fine, since the scale is printed", "Only a problem for continuous data"], answer: "Misleading, because bar heights are no longer proportional", hint: "How do readers compare bars?", explanation: "Every plotted value is correct, but readers judge by height, and cutting 40 off each bar destroys the ratios." },
+  ],
+};
+
+const games = {
+  masteryScore: 3,
+  games: [
+    { id: "u6-game-1", icon: "?", skill: "Kinds of data", title: "Quick Match: Kinds of Data", description: "Four short challenges on classifying data.", type: "choice",
+      rounds: [
+        { prompt: "Height from a tape measure", choices: ["Continuous", "Discrete", "Categorical", "Biased"], answer: "Continuous", clue: "Measured over a range." },
+        { prompt: "Shoe size", choices: ["Discrete", "Continuous", "Categorical", "Ordinal"], answer: "Discrete", clue: "Separate steps." },
+        { prompt: "Short, average, tall", choices: ["Categorical", "Continuous", "Discrete", "Numerical"], answer: "Categorical", clue: "Named groups." },
+        { prompt: "Number of lessons in a day", choices: ["Discrete", "Continuous", "Categorical", "Sampled"], answer: "Discrete", clue: "You count it." },
+      ] },
+    { id: "u6-game-2", icon: "?", skill: "Samples and bias", title: "Quick Match: Samples and Bias", description: "Four short challenges on sampling and bias.", type: "choice",
+      rounds: [
+        { prompt: "187 men, 362 women. Population total?", choices: ["549", "540", "175", "362"], answer: "549", clue: "Add them." },
+        { prompt: "Men in a representative sample of 40?", choices: ["14", "20", "13", "34"], answer: "14", clue: "34.1% of 40." },
+        { prompt: "105 replies from 350. Reply rate?", choices: ["30%", "35%", "70%", "3%"], answer: "30%", clue: "Divide." },
+        { prompt: "Asking about exercise outside a stadium is which bias?", choices: ["Selection bias", "Leading question", "Non-response", "Rounding"], answer: "Selection bias", clue: "The place chooses the people." },
+      ] },
+  ],
+};
+
+const unit = {
+  schemaVersion: "Ehel Mathematics Runtime v1.1",
+  generatedAt: new Date().toISOString(),
+  stage: { id: 9, label: "Stage 9" },
+  subject: "Mathematics",
+  term: { id: 2, label: "Term 2" },
+  unit: {
+    unitId: "math-g09-u06",
+    unitNo: 6,
+    unitTitle: "Statistical Investigations",
+    unitOverview:
+      "Welcome to Unit 6. This unit is different from the others in Grade 9: its questions do not have " +
+      "single right answers, they have well-justified and badly-justified ones. You learn to turn a vague " +
+      "interest into a question data could actually answer, to write a prediction that is capable of " +
+      "turning out wrong, and to decide what kind of data to collect - a decision you cannot undo later. " +
+      "You test your own method on a handful of people before trusting it, and change the design when the " +
+      "trial tells you to. Then you learn where bias hides: in the wording of a question, in who was " +
+      "asked, and in who chose to reply. The arithmetic is light. The judgement is the subject.",
+    learningPath: "6.1 Data collection and sampling, 6.2 Bias",
+    reviewStatus: "Authored 2026-09-26 from the Stage 9 Learner's Book pages 130-139 and Workbook pages 77-80. Not yet curriculum-reviewed.",
+  },
+  cambridge: {
+    level: "Cambridge Lower Secondary Mathematics",
+    code: "0862",
+    stage: 9,
+    objectives: OBJ.map((c) => ({ code: c, text: fw[c] })),
+    objectiveMapping: {
+      status: "authored",
+      reviewed: false,
+      method:
+        "6.1 -> 9Ss.01, 6.2 -> 9Ss.02. 9Ss.01 says SELECT, TRIAL and JUSTIFY, and the trial is the part " +
+        "usually dropped, so it is taught directly: a method is tried on five people and the design " +
+        "changed in response, with the change recorded as part of the justification. The remaining three " +
+        "9Ss objectives belong to unit 15 (Interpreting and discussing results): .03 representing data, " +
+        ".04 averages and range including grouped data, .05 interpreting patterns and trends. Objective " +
+        "texts are quoted verbatim from cambridge-mathematics-0862.json.",
+    },
+  },
+  provenance: {
+    contentPackage: null,
+    framework: "Cambridge Lower Secondary Mathematics 0862 - Stage 9",
+    sourceArchive: null,
+    sourceDocuments: ["Cambridge Lower Secondary Maths Learner's Book 9 (2ed, CUP), pages 130-139",
+                      "Cambridge Lower Secondary Mathematics Workbook 9, pages 77-80"],
+    sourceBlockCount: null,
+    transformation:
+      "Authored by hand from the Learner's Book and Workbook. Grade 9 has no content package: " +
+      "outputs/math-content/math-content-model.json holds grades 1-8 only.",
+    reviewStatus: "Not curriculum-reviewed",
+  },
+  media: { lectureStatus: "Video pending", lectureVideo: null, poster: null },
+  outcomes,
+  concepts,
+  explorations,
+  visualModels,
+  methods,
+  workedExamples,
+  practice,
+  activities,
+  reference,
+  fluency,
+  realProblems,
+  reasoningPrompts,
+  assessment,
+  games,
+  selfAssessment: outcomes.map((o) => "I can " + o.charAt(0).toLowerCase() + o.slice(1)),
+};
+
+const json = JSON.stringify(unit, null, 2) + "\n";
+if (WRITE) {
+  fs.mkdirSync(path.dirname(OUT), { recursive: true });
+  fs.writeFileSync(OUT, json, "utf8");
+}
+console.log("  Grade 9 Unit 6: " + outcomes.length + " outcomes, " + concepts.length + " concepts, " +
+  workedExamples.length + " worked examples, " + practice.length + " practice, " + fluency.length +
+  " fluency, " + realProblems.length + " real problems, " + reasoningPrompts.length + " reasoning, " +
+  assessment.questions.length + " assessment, " + activities.length + " activities");
+console.log("  objectives: " + OBJ.join(", ") + "   (9Ss.03/.04/.05 belong to unit 15)");
+console.log("  " + json.length + " bytes " + (WRITE ? "written to " + path.relative(process.cwd(), OUT) : "(--write to save)"));

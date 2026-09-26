@@ -455,17 +455,17 @@ const games = {
   games: [
     { id: "u6-game-1", icon: "?", skill: "Kinds of data", title: "Quick Match: Kinds of Data", description: "Four short challenges on classifying data.", type: "choice",
       rounds: [
-        { prompt: "Height from a tape measure", choices: ["Continuous", "Discrete", "Categorical", "Biased"], answer: "Continuous", clue: "Measured over a range." },
-        { prompt: "Shoe size", choices: ["Discrete", "Continuous", "Categorical", "Ordinal"], answer: "Discrete", clue: "Separate steps." },
-        { prompt: "Short, average, tall", choices: ["Categorical", "Continuous", "Discrete", "Numerical"], answer: "Categorical", clue: "Named groups." },
-        { prompt: "Number of lessons in a day", choices: ["Discrete", "Continuous", "Categorical", "Sampled"], answer: "Discrete", clue: "You count it." },
+        { prompt: "Height from a tape measure", choices: ["Continuous", "Discrete", "Categorical", "Biased"], answer: "Continuous", clue: "Measured over a range.", explanation: "A measurement can take any value in a range, which is what makes it continuous." },
+        { prompt: "Shoe size", choices: ["Discrete", "Continuous", "Categorical", "Ordinal"], answer: "Discrete", clue: "Separate steps.", explanation: "Shoe sizes go up in separate steps and there is no size 7.3, so the data is discrete." },
+        { prompt: "Short, average, tall", choices: ["Categorical", "Continuous", "Discrete", "Numerical"], answer: "Categorical", clue: "Named groups.", explanation: "These are named groups with no measurement kept, so the data is categorical." },
+        { prompt: "Number of lessons in a day", choices: ["Discrete", "Continuous", "Categorical", "Sampled"], answer: "Discrete", clue: "You count it.", explanation: "Lessons are counted in whole steps, so the data is discrete rather than continuous." },
       ] },
     { id: "u6-game-2", icon: "?", skill: "Samples and bias", title: "Quick Match: Samples and Bias", description: "Four short challenges on sampling and bias.", type: "choice",
       rounds: [
-        { prompt: "187 men, 362 women. Population total?", choices: ["549", "540", "175", "362"], answer: "549", clue: "Add them." },
-        { prompt: "Men in a representative sample of 40?", choices: ["14", "20", "13", "34"], answer: "14", clue: "34.1% of 40." },
-        { prompt: "105 replies from 350. Reply rate?", choices: ["30%", "35%", "70%", "3%"], answer: "30%", clue: "Divide." },
-        { prompt: "Asking about exercise outside a stadium is which bias?", choices: ["Selection bias", "Leading question", "Non-response", "Rounding"], answer: "Selection bias", clue: "The place chooses the people." },
+        { prompt: "187 men, 362 women. Population total?", choices: ["549", "540", "175", "362"], answer: "549", clue: "Add them.", explanation: "The population is everyone in it: 187 + 362 = 549." },
+        { prompt: "Men in a representative sample of 40?", choices: ["14", "20", "13", "34"], answer: "14", clue: "34.1% of 40.", explanation: "Men are 187/549 = 34.1% of the staff, and 34.1% of 40 is 13.6, which is 14 people." },
+        { prompt: "105 replies from 350. Reply rate?", choices: ["30%", "35%", "70%", "3%"], answer: "30%", clue: "Divide.", explanation: "105 divided by 350 is 0.3, so 30% replied - and nothing is known about the other 70%." },
+        { prompt: "Asking about exercise outside a stadium is which bias?", choices: ["Selection bias", "Leading question", "Non-response", "Rounding"], answer: "Selection bias", clue: "The place chooses the people.", explanation: "The place chose the people: anyone outside a sports stadium is far more likely to exercise than the general public." },
       ] },
   ],
 };

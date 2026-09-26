@@ -441,17 +441,17 @@ const games = {
   games: [
     { id: "u1-game-1", icon: "?", skill: "Standard form", title: "Quick Match: Standard Form", description: "Four short challenges on standard form.", type: "choice",
       rounds: [
-        { prompt: "Write 4670 in standard form.", choices: ["4.67 x 10^2", "4.67 x 10^3", "46.7 x 10^2", "4.67 x 10^4"], answer: "4.67 x 10^3", clue: "Count the places the point moves." },
-        { prompt: "Write 2.8 x 10^4 as an ordinary number.", choices: ["280", "2800", "28000", "280000"], answer: "28000", clue: "Four places to the left." },
-        { prompt: "Write 0.00045 in standard form.", choices: ["4.5 x 10^-4", "4.5 x 10^-3", "4.5 x 10^4", "45 x 10^-5"], answer: "4.5 x 10^-4", clue: "Small number, negative power." },
-        { prompt: "Which is NOT in standard form?", choices: ["1.5 x 10^8", "9.99 x 10^-2", "15 x 10^7", "3 x 10^0"], answer: "15 x 10^7", clue: "The first part must be less than 10." },
+        { prompt: "Write 4670 in standard form.", choices: ["4.67 x 10^2", "4.67 x 10^3", "46.7 x 10^2", "4.67 x 10^4"], answer: "4.67 x 10^3", clue: "Count the places the point moves.", explanation: "Move the point so one non-zero digit stands before it, giving 4.67, and count the places it moved: 3, so the index is 3." },
+        { prompt: "Write 2.8 x 10^4 as an ordinary number.", choices: ["280", "2800", "28000", "280000"], answer: "28000", clue: "Four places to the left.", explanation: "A positive index of 4 moves every digit four places towards the larger columns, filling the gaps with zeros: 28000." },
+        { prompt: "Write 0.00045 in standard form.", choices: ["4.5 x 10^-4", "4.5 x 10^-3", "4.5 x 10^4", "45 x 10^-5"], answer: "4.5 x 10^-4", clue: "Small number, negative power.", explanation: "The first non-zero digit is 4, giving 4.5, and it sits four places below the units column, so the index is -4." },
+        { prompt: "Which is NOT in standard form?", choices: ["1.5 x 10^8", "9.99 x 10^-2", "15 x 10^7", "3 x 10^0"], answer: "15 x 10^7", clue: "The first part must be less than 10.", explanation: "Standard form needs the first part to be at least 1 and less than 10. 15 is not, so it should be written 1.5 x 10^8." },
       ] },
     { id: "u1-game-2", icon: "?", skill: "Indices", title: "Quick Match: Indices", description: "Four short challenges on index laws.", type: "choice",
       rounds: [
-        { prompt: "What is 7^0?", choices: ["0", "1", "7", "undefined"], answer: "1", clue: "Follow the pattern leftwards." },
-        { prompt: "Simplify 5^4 divided by 5^2.", choices: ["5^2", "5^6", "5^8", "1^2"], answer: "5^2", clue: "Subtract the indices." },
-        { prompt: "What is 2^-3 as a fraction?", choices: ["1/6", "1/8", "-8", "8"], answer: "1/8", clue: "Reciprocal of 2^3." },
-        { prompt: "Simplify 3^5 x 3^2.", choices: ["3^7", "3^10", "9^7", "3^3"], answer: "3^7", clue: "Add the indices." },
+        { prompt: "What is 7^0?", choices: ["0", "1", "7", "undefined"], answer: "1", clue: "Follow the pattern leftwards.", explanation: "Any non-zero number to the power zero is 1: 7^1 divided by 7^1 is both 7^0 and 1." },
+        { prompt: "Simplify 5^4 divided by 5^2.", choices: ["5^2", "5^6", "5^8", "1^2"], answer: "5^2", clue: "Subtract the indices.", explanation: "Dividing powers of the same base subtracts the indices: 4 - 2 = 2." },
+        { prompt: "What is 2^-3 as a fraction?", choices: ["1/6", "1/8", "-8", "8"], answer: "1/8", clue: "Reciprocal of 2^3.", explanation: "A negative index means the reciprocal, so 2^-3 is 1 over 2^3, which is 1/8." },
+        { prompt: "Simplify 3^5 x 3^2.", choices: ["3^7", "3^10", "9^7", "3^3"], answer: "3^7", clue: "Add the indices.", explanation: "Multiplying powers of the same base adds the indices: 5 + 2 = 7." },
       ] },
   ],
 };

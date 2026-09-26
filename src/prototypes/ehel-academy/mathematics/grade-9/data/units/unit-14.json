@@ -1,6 +1,6 @@
 {
   "schemaVersion": "Ehel Mathematics Runtime v1.1",
-  "generatedAt": "2026-09-26T18:19:29.868Z",
+  "generatedAt": "2026-09-26T19:31:31.592Z",
   "stage": {
     "id": 9,
     "label": "Stage 9"
@@ -1095,7 +1095,8 @@
               "135 cm squared"
             ],
             "answer": "135 cm cubed",
-            "clue": "Multiply."
+            "clue": "Multiply.",
+            "explanation": "A prism's volume is the area of its cross-section times its length: 15 x 9 = 135."
           },
           {
             "prompt": "Triangle legs 6 and 5, length 10",
@@ -1106,7 +1107,8 @@
               "30 cm cubed"
             ],
             "answer": "150 cm cubed",
-            "clue": "Half of 6 x 5 first."
+            "clue": "Half of 6 x 5 first.",
+            "explanation": "The triangular cross-section is half of 6 x 5 = 15, and 15 x 10 = 150."
           },
           {
             "prompt": "Cylinder radius 3, height 8, to 1 dp",
@@ -1117,7 +1119,8 @@
               "678.6 cm cubed"
             ],
             "answer": "226.2 cm cubed",
-            "clue": "pi x 9 x 8."
+            "clue": "pi x 9 x 8.",
+            "explanation": "A cylinder is a prism with a circular cross-section: pi x 9 = 28.27, times 8 gives 226.2."
           },
           {
             "prompt": "Volume 256, cross-section 32. Length?",
@@ -1128,7 +1131,8 @@
               "8192 cm"
             ],
             "answer": "8 cm",
-            "clue": "Divide."
+            "clue": "Divide.",
+            "explanation": "Volume divided by cross-sectional area gives the length: 256 / 32 = 8."
           }
         ]
       },
@@ -1149,7 +1153,8 @@
               "120 cm squared"
             ],
             "answer": "94 cm squared",
-            "clue": "Three pairs."
+            "clue": "Three pairs.",
+            "explanation": "Six faces in three identical pairs: 2(12 + 15 + 20) = 94."
           },
           {
             "prompt": "Cylinder radius 5, height 12, to 3 s.f.",
@@ -1160,7 +1165,8 @@
               "942 cm squared"
             ],
             "answer": "534 cm squared",
-            "clue": "Two circles plus a rectangle."
+            "clue": "Two circles plus a rectangle.",
+            "explanation": "Two circles at 78.54 each, plus a rectangle pi x 10 long by 12 high, which is 376.99. The total is 534 to 3 s.f."
           },
           {
             "prompt": "Planes of symmetry of a regular hexagonal prism",
@@ -1171,7 +1177,8 @@
               "13"
             ],
             "answer": "7",
-            "clue": "n + 1."
+            "clue": "n + 1.",
+            "explanation": "A prism on a regular n-gon has n + 1 planes: six upright from the hexagon plus one horizontal."
           },
           {
             "prompt": "Planes of symmetry of a cube",
@@ -1182,7 +1189,8 @@
               "6"
             ],
             "answer": "9",
-            "clue": "The rule has an exception."
+            "clue": "The rule has an exception.",
+            "explanation": "Three parallel to the faces plus six through pairs of opposite edges - more than n + 1, because a cube's three dimensions are equal."
           }
         ]
       }

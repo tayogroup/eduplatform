@@ -462,17 +462,17 @@ const games = {
   games: [
     { id: "u12-game-1", icon: "?", skill: "Add or multiply", title: "Quick Match: Add or Multiply", description: "Four short challenges on choosing the operation.", type: "choice",
       rounds: [
-        { prompt: "P(A) = 0.2, P(B) = 0.5, mutually exclusive. P(A or B)?", choices: ["0.1", "0.7", "0.3", "1.0"], answer: "0.7", clue: "Mutually exclusive 'or' events add." },
-        { prompt: "P(A) = 1/2, P(B) = 1/4, independent. P(A and B)?", choices: ["3/4", "1/8", "1/6", "1/2"], answer: "1/8", clue: "Independent 'and' events multiply." },
-        { prompt: "The only outcomes are A and B. P(A) = 0.45. P(B)?", choices: ["0.45", "0.55", "0.9", "1.45"], answer: "0.55", clue: "They add to 1." },
-        { prompt: "Two fair coins. P(two tails)?", choices: ["1/2", "1/4", "3/4", "1/3"], answer: "1/4", clue: "1/2 x 1/2." },
+        { prompt: "P(A) = 0.2, P(B) = 0.5, mutually exclusive. P(A or B)?", choices: ["0.1", "0.7", "0.3", "1.0"], answer: "0.7", clue: "Mutually exclusive 'or' events add.", explanation: "Mutually exclusive events cannot both happen, so their probabilities simply add: 0.2 + 0.5 = 0.7." },
+        { prompt: "P(A) = 1/2, P(B) = 1/4, independent. P(A and B)?", choices: ["3/4", "1/8", "1/6", "1/2"], answer: "1/8", clue: "Independent 'and' events multiply.", explanation: "For independent events you multiply: 1/2 x 1/4 = 1/8." },
+        { prompt: "The only outcomes are A and B. P(A) = 0.45. P(B)?", choices: ["0.45", "0.55", "0.9", "1.45"], answer: "0.55", clue: "They add to 1.", explanation: "All the mutually exclusive outcomes total 1, so P(B) = 1 - 0.45 = 0.55." },
+        { prompt: "Two fair coins. P(two tails)?", choices: ["1/2", "1/4", "3/4", "1/3"], answer: "1/4", clue: "1/2 x 1/2.", explanation: "Each coin gives a tail with probability 1/2, and the flips are independent, so 1/2 x 1/2 = 1/4." },
       ] },
     { id: "u12-game-2", icon: "?", skill: "Frequency", title: "Quick Match: Frequency", description: "Four short challenges on expected and relative frequency.", type: "choice",
       rounds: [
-        { prompt: "A fair coin flipped 60 times. Expected heads?", choices: ["30", "60", "6", "15"], answer: "30", clue: "Probability times trials." },
-        { prompt: "A dice rolled 120 times. Expected number of sixes?", choices: ["20", "60", "12", "6"], answer: "20", clue: "1/6 of 120." },
-        { prompt: "9 successes in 36 trials. Relative frequency?", choices: ["0.25", "0.36", "4", "0.09"], answer: "0.25", clue: "9 divided by 36." },
-        { prompt: "What does running more trials make settle?", choices: ["The counts", "The proportion", "The theoretical probability", "Nothing"], answer: "The proportion", clue: "More trials narrow the gap in proportion, not in count." },
+        { prompt: "A fair coin flipped 60 times. Expected heads?", choices: ["30", "60", "6", "15"], answer: "30", clue: "Probability times trials.", explanation: "Expected frequency is the probability times the number of trials: 1/2 x 60 = 30." },
+        { prompt: "A dice rolled 120 times. Expected number of sixes?", choices: ["20", "60", "12", "6"], answer: "20", clue: "1/6 of 120.", explanation: "A six has probability 1/6, and 1/6 of 120 is 20." },
+        { prompt: "9 successes in 36 trials. Relative frequency?", choices: ["0.25", "0.36", "4", "0.09"], answer: "0.25", clue: "9 divided by 36.", explanation: "Relative frequency is successes divided by trials: 9 / 36 = 0.25." },
+        { prompt: "What does running more trials make settle?", choices: ["The counts", "The proportion", "The theoretical probability", "Nothing"], answer: "The proportion", clue: "More trials narrow the gap in proportion, not in count.", explanation: "More trials make the PROPORTION settle towards the theoretical probability; the count itself keeps growing." },
       ] },
   ],
 };

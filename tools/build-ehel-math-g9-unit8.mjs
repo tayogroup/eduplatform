@@ -459,17 +459,17 @@ const games = {
   games: [
     { id: "u8-game-1", icon: "?", skill: "Decimals of fractions", title: "Quick Match: Terminate or Recur", description: "Four short challenges on deducing the decimal.", type: "choice",
       rounds: [
-        { prompt: "1/8", choices: ["Terminates", "Recurs", "Neither", "Both"], answer: "Terminates", clue: "8 = 2x2x2." },
-        { prompt: "1/9", choices: ["Recurs", "Terminates", "Neither", "Both"], answer: "Recurs", clue: "9 = 3x3." },
-        { prompt: "7/40", choices: ["Terminates", "Recurs", "Neither", "Both"], answer: "Terminates", clue: "Only 2s and 5s." },
-        { prompt: "3/14", choices: ["Recurs", "Terminates", "Neither", "Both"], answer: "Recurs", clue: "14 contains a 7." },
+        { prompt: "1/8", choices: ["Terminates", "Recurs", "Neither", "Both"], answer: "Terminates", clue: "8 = 2x2x2.", explanation: "8 = 2 x 2 x 2, only 2s, so the decimal stops - at 0.125." },
+        { prompt: "1/9", choices: ["Recurs", "Terminates", "Neither", "Both"], answer: "Recurs", clue: "9 = 3x3.", explanation: "9 = 3 x 3, and a 3 in the denominator means the decimal repeats for ever: 0.111..." },
+        { prompt: "7/40", choices: ["Terminates", "Recurs", "Neither", "Both"], answer: "Terminates", clue: "Only 2s and 5s.", explanation: "40 = 2 x 2 x 2 x 5, only 2s and 5s, so it terminates - at 0.175." },
+        { prompt: "3/14", choices: ["Recurs", "Terminates", "Neither", "Both"], answer: "Recurs", clue: "14 contains a 7.", explanation: "14 = 2 x 7, and the 7 means it can never be rewritten over a power of ten." },
       ] },
     { id: "u8-game-2", icon: "?", skill: "Fraction arithmetic", title: "Quick Match: Fraction Arithmetic", description: "Four short challenges on multiplying, dividing and ordering.", type: "choice",
       rounds: [
-        { prompt: "2/3 x 3/4", choices: ["1/2", "6/7", "5/7", "8/9"], answer: "1/2", clue: "Cancel the 3s." },
-        { prompt: "3/4 divided by 2/5", choices: ["1 7/8", "3/10", "8/15", "6/20"], answer: "1 7/8", clue: "Turn it upside down." },
-        { prompt: "2 1/2 x 1 1/3", choices: ["3 1/3", "2 1/6", "3 1/6", "2 5/6"], answer: "3 1/3", clue: "Convert first." },
-        { prompt: "1.5 x 3.5 x 24", choices: ["126", "84", "36", "120"], answer: "126", clue: "1.5 x 24 = 36." },
+        { prompt: "2/3 x 3/4", choices: ["1/2", "6/7", "5/7", "8/9"], answer: "1/2", clue: "Cancel the 3s.", explanation: "Cancel the 3s and then the 2 into the 4, leaving 1/2. Multiplying first gives 6/12, which simplifies to the same." },
+        { prompt: "3/4 divided by 2/5", choices: ["1 7/8", "3/10", "8/15", "6/20"], answer: "1 7/8", clue: "Turn it upside down.", explanation: "Multiply by the reciprocal: 3/4 x 5/2 = 15/8. It exceeds 3/4 because 2/5 is less than 1." },
+        { prompt: "2 1/2 x 1 1/3", choices: ["3 1/3", "2 1/6", "3 1/6", "2 5/6"], answer: "3 1/3", clue: "Convert first.", explanation: "Convert first: 5/2 x 4/3 = 10/3. Multiplying the whole parts separately would wrongly give 2 1/6." },
+        { prompt: "1.5 x 3.5 x 24", choices: ["126", "84", "36", "120"], answer: "126", clue: "1.5 x 24 = 36.", explanation: "Reorder it: 1.5 x 24 = 36, and 36 x 3.5 = 126. The laws of arithmetic let you pick the easy pair." },
       ] },
   ],
 };

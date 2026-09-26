@@ -35,7 +35,14 @@ const SCHEMA_VERSION = "Ehel Topic Index v1.0";
 // `stages` is the learner-visible set — GP omits 5 (withdrawn), Intensive
 // English has two CEFR levels.
 const SUBJECTS = {
-  mathematics: { param: "stage", stageWord: "Stage", stages: [1, 2, 3, 4, 5, 6, 7, 8], dir: (n) => `grade-${n}` },
+  // 1-9. Stage 9 was authored on 2026-09-26 and this list read [1..8], which is
+  // precisely the failure the Intensive English comment below already describes:
+  // a list that is simply short indexes nothing for the new stage and reports a
+  // clean total, so a tutoring learner searching a Stage 9 topic is told it does
+  // not exist. Same shape as check-math-cambridge.mjs's `grade <= 8` loop bound,
+  // fixed the same day. When a stage is added, this list is the second place to
+  // look after the framework.
+  mathematics: { param: "stage", stageWord: "Stage", stages: [1, 2, 3, 4, 5, 6, 7, 8, 9], dir: (n) => `grade-${n}` },
   science: { param: "stage", stageWord: "Stage", stages: [1, 2, 3, 4, 5, 6, 7, 8], dir: (n) => `grade-${n}` },
   computing: { param: "stage", stageWord: "Stage", stages: [1, 2, 3, 4, 5, 6, 7, 8], dir: (n) => `grade-${n}` },
   "global-perspectives": { param: "stage", stageWord: "Stage", stages: [1, 2, 3, 4, 6, 7, 8], dir: (n) => `grade-${n}` },

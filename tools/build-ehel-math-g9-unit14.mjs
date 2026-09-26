@@ -469,17 +469,17 @@ const games = {
   games: [
     { id: "u14-game-1", icon: "?", skill: "Volume", title: "Quick Match: Volume", description: "Four short challenges on prisms and cylinders.", type: "choice",
       rounds: [
-        { prompt: "Cross-section 15 cm squared, length 9 cm", choices: ["135 cm cubed", "24 cm cubed", "1215 cm cubed", "135 cm squared"], answer: "135 cm cubed", clue: "Multiply." },
-        { prompt: "Triangle legs 6 and 5, length 10", choices: ["150 cm cubed", "300 cm cubed", "60 cm cubed", "30 cm cubed"], answer: "150 cm cubed", clue: "Half of 6 x 5 first." },
-        { prompt: "Cylinder radius 3, height 8, to 1 dp", choices: ["226.2 cm cubed", "75.4 cm cubed", "150.8 cm cubed", "678.6 cm cubed"], answer: "226.2 cm cubed", clue: "pi x 9 x 8." },
-        { prompt: "Volume 256, cross-section 32. Length?", choices: ["8 cm", "16 cm", "224 cm", "8192 cm"], answer: "8 cm", clue: "Divide." },
+        { prompt: "Cross-section 15 cm squared, length 9 cm", choices: ["135 cm cubed", "24 cm cubed", "1215 cm cubed", "135 cm squared"], answer: "135 cm cubed", clue: "Multiply.", explanation: "A prism's volume is the area of its cross-section times its length: 15 x 9 = 135." },
+        { prompt: "Triangle legs 6 and 5, length 10", choices: ["150 cm cubed", "300 cm cubed", "60 cm cubed", "30 cm cubed"], answer: "150 cm cubed", clue: "Half of 6 x 5 first.", explanation: "The triangular cross-section is half of 6 x 5 = 15, and 15 x 10 = 150." },
+        { prompt: "Cylinder radius 3, height 8, to 1 dp", choices: ["226.2 cm cubed", "75.4 cm cubed", "150.8 cm cubed", "678.6 cm cubed"], answer: "226.2 cm cubed", clue: "pi x 9 x 8.", explanation: "A cylinder is a prism with a circular cross-section: pi x 9 = 28.27, times 8 gives 226.2." },
+        { prompt: "Volume 256, cross-section 32. Length?", choices: ["8 cm", "16 cm", "224 cm", "8192 cm"], answer: "8 cm", clue: "Divide.", explanation: "Volume divided by cross-sectional area gives the length: 256 / 32 = 8." },
       ] },
     { id: "u14-game-2", icon: "?", skill: "Surface area and symmetry", title: "Quick Match: Surface and Symmetry", description: "Four short challenges on surface area and planes of symmetry.", type: "choice",
       rounds: [
-        { prompt: "Surface area of a 3 by 4 by 5 cuboid", choices: ["94 cm squared", "47 cm squared", "60 cm squared", "120 cm squared"], answer: "94 cm squared", clue: "Three pairs." },
-        { prompt: "Cylinder radius 5, height 12, to 3 s.f.", choices: ["534 cm squared", "377 cm squared", "79 cm squared", "942 cm squared"], answer: "534 cm squared", clue: "Two circles plus a rectangle." },
-        { prompt: "Planes of symmetry of a regular hexagonal prism", choices: ["7", "6", "12", "13"], answer: "7", clue: "n + 1." },
-        { prompt: "Planes of symmetry of a cube", choices: ["9", "5", "3", "6"], answer: "9", clue: "The rule has an exception." },
+        { prompt: "Surface area of a 3 by 4 by 5 cuboid", choices: ["94 cm squared", "47 cm squared", "60 cm squared", "120 cm squared"], answer: "94 cm squared", clue: "Three pairs.", explanation: "Six faces in three identical pairs: 2(12 + 15 + 20) = 94." },
+        { prompt: "Cylinder radius 5, height 12, to 3 s.f.", choices: ["534 cm squared", "377 cm squared", "79 cm squared", "942 cm squared"], answer: "534 cm squared", clue: "Two circles plus a rectangle.", explanation: "Two circles at 78.54 each, plus a rectangle pi x 10 long by 12 high, which is 376.99. The total is 534 to 3 s.f." },
+        { prompt: "Planes of symmetry of a regular hexagonal prism", choices: ["7", "6", "12", "13"], answer: "7", clue: "n + 1.", explanation: "A prism on a regular n-gon has n + 1 planes: six upright from the hexagon plus one horizontal." },
+        { prompt: "Planes of symmetry of a cube", choices: ["9", "5", "3", "6"], answer: "9", clue: "The rule has an exception.", explanation: "Three parallel to the faces plus six through pairs of opposite edges - more than n + 1, because a cube's three dimensions are equal." },
       ] },
   ],
 };

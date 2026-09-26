@@ -452,17 +452,17 @@ const games = {
   games: [
     { id: "u2-game-1", icon: "?", skill: "Substitution", title: "Quick Match: Substitution", description: "Four short challenges on substituting values.", type: "choice",
       rounds: [
-        { prompt: "4x + 4 when x = 2", choices: ["12", "24", "10", "16"], answer: "12", clue: "Multiply before adding." },
-        { prompt: "2x^2 when x = 3", choices: ["36", "18", "12", "6"], answer: "18", clue: "The index is on the x alone." },
-        { prompt: "a^2 when a = -2", choices: ["-4", "4", "-2", "2"], answer: "4", clue: "Even power of a negative." },
-        { prompt: "a^3 when a = -2", choices: ["-8", "8", "-6", "6"], answer: "-8", clue: "Odd power keeps the minus." },
+        { prompt: "4x + 4 when x = 2", choices: ["12", "24", "10", "16"], answer: "12", clue: "Multiply before adding.", explanation: "Multiplication comes before addition: 4 x 2 = 8, then 8 + 4 = 12. Working left to right would wrongly give 24." },
+        { prompt: "2x^2 when x = 3", choices: ["36", "18", "12", "6"], answer: "18", clue: "The index is on the x alone.", explanation: "The index belongs to the x alone, so square first: 3^2 = 9, then double it to get 18." },
+        { prompt: "a^2 when a = -2", choices: ["-4", "4", "-2", "2"], answer: "4", clue: "Even power of a negative.", explanation: "An even power of a negative number is positive, because the two minus signs pair off: (-2) x (-2) = 4." },
+        { prompt: "a^3 when a = -2", choices: ["-8", "8", "-6", "6"], answer: "-8", clue: "Odd power keeps the minus.", explanation: "An odd power of a negative number stays negative: (-2) x (-2) x (-2) = -8." },
       ] },
     { id: "u2-game-2", icon: "?", skill: "Manipulating", title: "Quick Match: Manipulating", description: "Four short challenges on indices, expanding and fractions.", type: "choice",
       rounds: [
-        { prompt: "Simplify x^3 x x^4", choices: ["x^7", "x^12", "x^1", "2x^7"], answer: "x^7", clue: "Add the indices." },
-        { prompt: "Simplify x^6 / x^2", choices: ["x^3", "x^4", "x^8", "x^2"], answer: "x^4", clue: "Subtract the indices." },
-        { prompt: "Expand (x + 3)(x - 3)", choices: ["x^2 - 9", "x^2 + 9", "x^2 - 6x - 9", "x^2 - 6"], answer: "x^2 - 9", clue: "The middle terms cancel." },
-        { prompt: "Simplify 10x/2", choices: ["5x", "8x", "10x", "5"], answer: "5x", clue: "Divide the numbers." },
+        { prompt: "Simplify x^3 x x^4", choices: ["x^7", "x^12", "x^1", "2x^7"], answer: "x^7", clue: "Add the indices.", explanation: "Multiplying powers of the same variable adds the indices, because three x's times four x's is seven x's." },
+        { prompt: "Simplify x^6 / x^2", choices: ["x^3", "x^4", "x^8", "x^2"], answer: "x^4", clue: "Subtract the indices.", explanation: "Dividing subtracts the indices: two of the six x's cancel, leaving four." },
+        { prompt: "Expand (x + 3)(x - 3)", choices: ["x^2 - 9", "x^2 + 9", "x^2 - 6x - 9", "x^2 - 6"], answer: "x^2 - 9", clue: "The middle terms cancel.", explanation: "The four products are x^2, -3x, +3x and -9. The middle two cancel, leaving x^2 - 9." },
+        { prompt: "Simplify 10x/2", choices: ["5x", "8x", "10x", "5"], answer: "5x", clue: "Divide the numbers.", explanation: "Divide the numbers and leave the letter: 10 divided by 2 is 5, so 5x." },
       ] },
   ],
 };

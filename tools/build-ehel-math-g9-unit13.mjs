@@ -475,17 +475,17 @@ const games = {
   games: [
     { id: "u13-game-1", icon: "?", skill: "Bearings and position", title: "Quick Match: Bearings and Position", description: "Four short challenges on bearings, scales and segments.", type: "choice",
       rounds: [
-        { prompt: "Bearing of east", choices: ["090", "180", "270", "000"], answer: "090", clue: "Clockwise from north." },
-        { prompt: "1 cm to 100 m. Draw 800 m as", choices: ["8 cm", "80 cm", "0.8 cm", "800 cm"], answer: "8 cm", clue: "Divide." },
-        { prompt: "1 cm to 100 m. 8.6 cm means", choices: ["860 m", "86 m", "8600 m", "8.6 m"], answer: "860 m", clue: "Multiply." },
-        { prompt: "One quarter along from (0,0) to (8,4)", choices: ["(2, 1)", "(4, 2)", "(6, 3)", "(2, 2)"], answer: "(2, 1)", clue: "A quarter of each." },
+        { prompt: "Bearing of east", choices: ["090", "180", "270", "000"], answer: "090", clue: "Clockwise from north.", explanation: "Bearings are measured clockwise from north, so east is a quarter turn - 090, written with three figures." },
+        { prompt: "1 cm to 100 m. Draw 800 m as", choices: ["8 cm", "80 cm", "0.8 cm", "800 cm"], answer: "8 cm", clue: "Divide.", explanation: "Going from real life to the drawing you divide: 800 / 100 = 8 cm." },
+        { prompt: "1 cm to 100 m. 8.6 cm means", choices: ["860 m", "86 m", "8600 m", "8.6 m"], answer: "860 m", clue: "Multiply.", explanation: "Going from the drawing back to real life you multiply: 8.6 x 100 = 860 m." },
+        { prompt: "One quarter along from (0,0) to (8,4)", choices: ["(2, 1)", "(4, 2)", "(6, 3)", "(2, 2)"], answer: "(2, 1)", clue: "A quarter of each.", explanation: "Take a quarter of each distance separately: a quarter of 8 is 2 and a quarter of 4 is 1." },
       ] },
     { id: "u13-game-2", icon: "?", skill: "Transformation", title: "Quick Match: Transformation", description: "Four short challenges on transformations and enlargement.", type: "choice",
       rounds: [
-        { prompt: "Reflect (2,1) in the y-axis", choices: ["(-2, 1)", "(2, -1)", "(-2, -1)", "(1, 2)"], answer: "(-2, 1)", clue: "The x sign changes." },
-        { prompt: "3 by 4 rectangle enlarged by 2. Perimeter?", choices: ["28 cm", "14 cm", "48 cm", "56 cm"], answer: "28 cm", clue: "Double the perimeter." },
-        { prompt: "3 by 4 rectangle enlarged by 3. Area?", choices: ["108 cm squared", "36 cm squared", "42 cm squared", "12 cm squared"], answer: "108 cm squared", clue: "Nine times." },
-        { prompt: "Image of a reflection then a rotation is", choices: ["Congruent", "Similar only", "Enlarged", "Unpredictable"], answer: "Congruent", clue: "Both preserve lengths." },
+        { prompt: "Reflect (2,1) in the y-axis", choices: ["(-2, 1)", "(2, -1)", "(-2, -1)", "(1, 2)"], answer: "(-2, 1)", clue: "The x sign changes.", explanation: "Reflecting in the y-axis changes the sign of the x-coordinate and leaves y alone." },
+        { prompt: "3 by 4 rectangle enlarged by 2. Perimeter?", choices: ["28 cm", "14 cm", "48 cm", "56 cm"], answer: "28 cm", clue: "Double the perimeter.", explanation: "Every length doubles, so the perimeter doubles: 14 cm becomes 28 cm." },
+        { prompt: "3 by 4 rectangle enlarged by 3. Area?", choices: ["108 cm squared", "36 cm squared", "42 cm squared", "12 cm squared"], answer: "108 cm squared", clue: "Nine times.", explanation: "Area scales by the SQUARE of the factor: 3 squared is 9, and 9 x 12 = 108." },
+        { prompt: "Image of a reflection then a rotation is", choices: ["Congruent", "Similar only", "Enlarged", "Unpredictable"], answer: "Congruent", clue: "Both preserve lengths.", explanation: "Both a reflection and a rotation preserve every length and angle, so the image is the same shape and size." },
       ] },
   ],
 };

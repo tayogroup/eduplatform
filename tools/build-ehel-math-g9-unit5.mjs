@@ -460,17 +460,17 @@ const games = {
   games: [
     { id: "u5-game-1", icon: "?", skill: "Polygon angles", title: "Quick Match: Polygon Angles", description: "Four short challenges on interior and exterior angles.", type: "choice",
       rounds: [
-        { prompt: "Interior sum of a pentagon", choices: ["540", "360", "720", "900"], answer: "540", clue: "Three triangles." },
-        { prompt: "Interior angle of a regular hexagon", choices: ["120", "60", "720", "135"], answer: "120", clue: "720 divided by 6." },
-        { prompt: "Exterior angle of a regular decagon", choices: ["36", "144", "360", "18"], answer: "36", clue: "360 divided by 10." },
-        { prompt: "Exterior angle 45 degrees. Sides?", choices: ["8", "45", "6", "10"], answer: "8", clue: "360 divided by 45." },
+        { prompt: "Interior sum of a pentagon", choices: ["540", "360", "720", "900"], answer: "540", clue: "Three triangles.", explanation: "A pentagon splits into 3 triangles from one vertex, and 3 x 180 = 540." },
+        { prompt: "Interior angle of a regular hexagon", choices: ["120", "60", "720", "135"], answer: "120", clue: "720 divided by 6.", explanation: "A hexagon's angles total (6 - 2) x 180 = 720, and all six are equal, so each is 720 / 6 = 120." },
+        { prompt: "Exterior angle of a regular decagon", choices: ["36", "144", "360", "18"], answer: "36", clue: "360 divided by 10.", explanation: "The exterior angles of any polygon total 360, so each of ten equal ones is 360 / 10 = 36." },
+        { prompt: "Exterior angle 45 degrees. Sides?", choices: ["8", "45", "6", "10"], answer: "8", clue: "360 divided by 45.", explanation: "All the exterior angles total 360 whatever n is, so the number of sides is 360 / 45 = 8." },
       ] },
     { id: "u5-game-2", icon: "?", skill: "Pythagoras", title: "Quick Match: Pythagoras", description: "Four short challenges on right-angled triangles.", type: "choice",
       rounds: [
-        { prompt: "Sides 6 and 8. Hypotenuse?", choices: ["10", "14", "48", "7"], answer: "10", clue: "36 + 64." },
-        { prompt: "Sides 5 and 12. Hypotenuse?", choices: ["13", "17", "60", "7"], answer: "13", clue: "25 + 144." },
-        { prompt: "Hypotenuse 13, side 5. Other side?", choices: ["12", "18", "8", "14"], answer: "12", clue: "Subtract the squares." },
-        { prompt: "Hypotenuse 6.0, side 3.5. Other side to 1 dp?", choices: ["4.9", "6.9", "2.5", "5.2"], answer: "4.9", clue: "36 - 12.25." },
+        { prompt: "Sides 6 and 8. Hypotenuse?", choices: ["10", "14", "48", "7"], answer: "10", clue: "36 + 64.", explanation: "6^2 + 8^2 = 36 + 64 = 100, and the square root of 100 is 10." },
+        { prompt: "Sides 5 and 12. Hypotenuse?", choices: ["13", "17", "60", "7"], answer: "13", clue: "25 + 144.", explanation: "5^2 + 12^2 = 25 + 144 = 169, whose square root is 13." },
+        { prompt: "Hypotenuse 13, side 5. Other side?", choices: ["12", "18", "8", "14"], answer: "12", clue: "Subtract the squares.", explanation: "A shorter side means subtracting: 169 - 25 = 144, so the side is 12." },
+        { prompt: "Hypotenuse 6.0, side 3.5. Other side to 1 dp?", choices: ["4.9", "6.9", "2.5", "5.2"], answer: "4.9", clue: "36 - 12.25.", explanation: "Subtract rather than add: 36 - 12.25 = 23.75, whose root is 4.9 to 1 dp - properly less than the hypotenuse." },
       ] },
   ],
 };

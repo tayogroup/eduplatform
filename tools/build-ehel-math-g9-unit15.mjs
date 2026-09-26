@@ -475,17 +475,17 @@ const games = {
   games: [
     { id: "u15-game-1", icon: "?", skill: "Representing data", title: "Quick Match: Representing Data", description: "Four short challenges on polygons, correlation and diagrams.", type: "choice",
       rounds: [
-        { prompt: "Plot class 70-80, frequency 7, at", choices: ["(75, 7)", "(70, 7)", "(80, 7)", "(7, 75)"], answer: "(75, 7)", clue: "Midpoint." },
-        { prompt: "Car age against value", choices: ["Negative", "Positive", "None", "Both"], answer: "Negative", clue: "Older is worth less." },
-        { prompt: "Car age against distance travelled", choices: ["Positive", "Negative", "None", "Both"], answer: "Positive", clue: "Both rise together." },
-        { prompt: "Can a grouped table be split into finer classes?", choices: ["No", "Yes", "Only if widths are equal", "Only for continuous data"], answer: "No", clue: "The values are gone." },
+        { prompt: "Plot class 70-80, frequency 7, at", choices: ["(75, 7)", "(70, 7)", "(80, 7)", "(7, 75)"], answer: "(75, 7)", clue: "Midpoint.", explanation: "Plot at the midpoint of the class, and the midpoint of 70 to 80 is 75." },
+        { prompt: "Car age against value", choices: ["Negative", "Positive", "None", "Both"], answer: "Negative", clue: "Older is worth less.", explanation: "As a car gets older it is usually worth less, so the points slope downwards." },
+        { prompt: "Car age against distance travelled", choices: ["Positive", "Negative", "None", "Both"], answer: "Positive", clue: "Both rise together.", explanation: "An older car has usually been driven further, so the points slope upwards." },
+        { prompt: "Can a grouped table be split into finer classes?", choices: ["No", "Yes", "Only if widths are equal", "Only for continuous data"], answer: "No", clue: "The values are gone.", explanation: "The table records only how many fell in each class, never where within it, so finer classes cannot be recovered." },
       ] },
     { id: "u15-game-2", icon: "?", skill: "Comparing distributions", title: "Quick Match: Averages and Spread", description: "Four short challenges on comparing two sets of data.", type: "choice",
       rounds: [
-        { prompt: "Mean of 14,14,14,15,16,17,18,19,26,27", choices: ["18", "16.5", "14", "16"], answer: "18", clue: "Total 180." },
-        { prompt: "Median of the same set", choices: ["16.5", "18", "17", "14"], answer: "16.5", clue: "Average the middle two." },
-        { prompt: "Estimated mean of 60-70:4, 70-80:7, 80-90:6, 90-100:3", choices: ["79 kg", "80 kg", "75 kg", "85 kg"], answer: "79 kg", clue: "1580 / 20." },
-        { prompt: "Which measure answers consistency?", choices: ["The range", "The mode", "The median", "The mean"], answer: "The range", clue: "It measures spread." },
+        { prompt: "Mean of 14,14,14,15,16,17,18,19,26,27", choices: ["18", "16.5", "14", "16"], answer: "18", clue: "Total 180.", explanation: "The ten values total 180, and 180 / 10 = 18." },
+        { prompt: "Median of the same set", choices: ["16.5", "18", "17", "14"], answer: "16.5", clue: "Average the middle two.", explanation: "With ten values the median is the mean of the 5th and 6th: (16 + 17) / 2 = 16.5." },
+        { prompt: "Estimated mean of 60-70:4, 70-80:7, 80-90:6, 90-100:3", choices: ["79 kg", "80 kg", "75 kg", "85 kg"], answer: "79 kg", clue: "1580 / 20.", explanation: "Midpoint times frequency totals 1580, and 1580 / 20 = 79. It is an estimate because the individual masses are unknown." },
+        { prompt: "Which measure answers consistency?", choices: ["The range", "The mode", "The median", "The mean"], answer: "The range", clue: "It measures spread.", explanation: "The range measures spread rather than size, so it is the measure that answers consistency." },
       ] },
   ],
 };

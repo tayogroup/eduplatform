@@ -1,6 +1,6 @@
 {
   "schemaVersion": "Ehel Mathematics Runtime v1.1",
-  "generatedAt": "2026-09-26T15:53:07.303Z",
+  "generatedAt": "2026-09-26T19:31:29.841Z",
   "stage": {
     "id": 9,
     "label": "Stage 9"
@@ -1079,7 +1079,8 @@
               "Biased"
             ],
             "answer": "Continuous",
-            "clue": "Measured over a range."
+            "clue": "Measured over a range.",
+            "explanation": "A measurement can take any value in a range, which is what makes it continuous."
           },
           {
             "prompt": "Shoe size",
@@ -1090,7 +1091,8 @@
               "Ordinal"
             ],
             "answer": "Discrete",
-            "clue": "Separate steps."
+            "clue": "Separate steps.",
+            "explanation": "Shoe sizes go up in separate steps and there is no size 7.3, so the data is discrete."
           },
           {
             "prompt": "Short, average, tall",
@@ -1101,7 +1103,8 @@
               "Numerical"
             ],
             "answer": "Categorical",
-            "clue": "Named groups."
+            "clue": "Named groups.",
+            "explanation": "These are named groups with no measurement kept, so the data is categorical."
           },
           {
             "prompt": "Number of lessons in a day",
@@ -1112,7 +1115,8 @@
               "Sampled"
             ],
             "answer": "Discrete",
-            "clue": "You count it."
+            "clue": "You count it.",
+            "explanation": "Lessons are counted in whole steps, so the data is discrete rather than continuous."
           }
         ]
       },
@@ -1133,7 +1137,8 @@
               "362"
             ],
             "answer": "549",
-            "clue": "Add them."
+            "clue": "Add them.",
+            "explanation": "The population is everyone in it: 187 + 362 = 549."
           },
           {
             "prompt": "Men in a representative sample of 40?",
@@ -1144,7 +1149,8 @@
               "34"
             ],
             "answer": "14",
-            "clue": "34.1% of 40."
+            "clue": "34.1% of 40.",
+            "explanation": "Men are 187/549 = 34.1% of the staff, and 34.1% of 40 is 13.6, which is 14 people."
           },
           {
             "prompt": "105 replies from 350. Reply rate?",
@@ -1155,7 +1161,8 @@
               "3%"
             ],
             "answer": "30%",
-            "clue": "Divide."
+            "clue": "Divide.",
+            "explanation": "105 divided by 350 is 0.3, so 30% replied - and nothing is known about the other 70%."
           },
           {
             "prompt": "Asking about exercise outside a stadium is which bias?",
@@ -1166,7 +1173,8 @@
               "Rounding"
             ],
             "answer": "Selection bias",
-            "clue": "The place chooses the people."
+            "clue": "The place chooses the people.",
+            "explanation": "The place chose the people: anyone outside a sports stadium is far more likely to exercise than the general public."
           }
         ]
       }

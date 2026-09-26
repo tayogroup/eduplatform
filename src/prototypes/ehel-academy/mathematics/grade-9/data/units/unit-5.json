@@ -1,6 +1,6 @@
 {
   "schemaVersion": "Ehel Mathematics Runtime v1.1",
-  "generatedAt": "2026-09-26T15:46:24.320Z",
+  "generatedAt": "2026-09-26T19:31:29.609Z",
   "stage": {
     "id": 9,
     "label": "Stage 9"
@@ -1093,7 +1093,8 @@
               "900"
             ],
             "answer": "540",
-            "clue": "Three triangles."
+            "clue": "Three triangles.",
+            "explanation": "A pentagon splits into 3 triangles from one vertex, and 3 x 180 = 540."
           },
           {
             "prompt": "Interior angle of a regular hexagon",
@@ -1104,7 +1105,8 @@
               "135"
             ],
             "answer": "120",
-            "clue": "720 divided by 6."
+            "clue": "720 divided by 6.",
+            "explanation": "A hexagon's angles total (6 - 2) x 180 = 720, and all six are equal, so each is 720 / 6 = 120."
           },
           {
             "prompt": "Exterior angle of a regular decagon",
@@ -1115,7 +1117,8 @@
               "18"
             ],
             "answer": "36",
-            "clue": "360 divided by 10."
+            "clue": "360 divided by 10.",
+            "explanation": "The exterior angles of any polygon total 360, so each of ten equal ones is 360 / 10 = 36."
           },
           {
             "prompt": "Exterior angle 45 degrees. Sides?",
@@ -1126,7 +1129,8 @@
               "10"
             ],
             "answer": "8",
-            "clue": "360 divided by 45."
+            "clue": "360 divided by 45.",
+            "explanation": "All the exterior angles total 360 whatever n is, so the number of sides is 360 / 45 = 8."
           }
         ]
       },
@@ -1147,7 +1151,8 @@
               "7"
             ],
             "answer": "10",
-            "clue": "36 + 64."
+            "clue": "36 + 64.",
+            "explanation": "6^2 + 8^2 = 36 + 64 = 100, and the square root of 100 is 10."
           },
           {
             "prompt": "Sides 5 and 12. Hypotenuse?",
@@ -1158,7 +1163,8 @@
               "7"
             ],
             "answer": "13",
-            "clue": "25 + 144."
+            "clue": "25 + 144.",
+            "explanation": "5^2 + 12^2 = 25 + 144 = 169, whose square root is 13."
           },
           {
             "prompt": "Hypotenuse 13, side 5. Other side?",
@@ -1169,7 +1175,8 @@
               "14"
             ],
             "answer": "12",
-            "clue": "Subtract the squares."
+            "clue": "Subtract the squares.",
+            "explanation": "A shorter side means subtracting: 169 - 25 = 144, so the side is 12."
           },
           {
             "prompt": "Hypotenuse 6.0, side 3.5. Other side to 1 dp?",
@@ -1180,7 +1187,8 @@
               "5.2"
             ],
             "answer": "4.9",
-            "clue": "36 - 12.25."
+            "clue": "36 - 12.25.",
+            "explanation": "Subtract rather than add: 36 - 12.25 = 23.75, whose root is 4.9 to 1 dp - properly less than the hypotenuse."
           }
         ]
       }

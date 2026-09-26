@@ -1,6 +1,6 @@
 {
   "schemaVersion": "Ehel Mathematics Runtime v1.1",
-  "generatedAt": "2026-09-26T16:04:38.637Z",
+  "generatedAt": "2026-09-26T19:31:30.064Z",
   "stage": {
     "id": 9,
     "label": "Stage 9"
@@ -1086,7 +1086,8 @@
               "201"
             ],
             "answer": "50.3",
-            "clue": "pi x 16."
+            "clue": "pi x 16.",
+            "explanation": "A = pi x r^2 = pi x 16 = 50.265, which is 50.3 to 3 significant figures."
           },
           {
             "prompt": "Circumference, diameter 10 cm, 3 s.f.",
@@ -1097,7 +1098,8 @@
               "62.8"
             ],
             "answer": "31.4",
-            "clue": "pi x d."
+            "clue": "pi x d.",
+            "explanation": "C = pi x d = pi x 10 = 31.4. The circumference formula uses the diameter, not the radius."
           },
           {
             "prompt": "Area, diameter 7 m, 3 s.f.",
@@ -1108,7 +1110,8 @@
               "77.0"
             ],
             "answer": "38.5",
-            "clue": "Halve it first."
+            "clue": "Halve it first.",
+            "explanation": "Halve the diameter first: r = 3.5, so A = pi x 12.25 = 38.5. Using 7 would give four times too much."
           },
           {
             "prompt": "Perimeter of a semicircle, radius 5 cm",
@@ -1119,7 +1122,8 @@
               "39.3"
             ],
             "answer": "25.7",
-            "clue": "Add the diameter."
+            "clue": "Add the diameter.",
+            "explanation": "Half the circumference is 15.7, and cutting the circle created a straight edge of 10, so the perimeter is 25.7."
           }
         ]
       },
@@ -1140,7 +1144,8 @@
               "22"
             ],
             "answer": "42",
-            "clue": "20 + 22."
+            "clue": "20 + 22.",
+            "explanation": "The two rectangles are 20 and 22 square centimetres, and 20 + 22 = 42."
           },
           {
             "prompt": "Triangle base 12 height 6, plus 8 by 5",
@@ -1151,7 +1156,8 @@
               "36"
             ],
             "answer": "76",
-            "clue": "36 + 40."
+            "clue": "36 + 40.",
+            "explanation": "Half of 12 x 6 is 36, the rectangle is 8 x 5 = 40, and 36 + 40 = 76."
           },
           {
             "prompt": "1 microlitre in litres",
@@ -1162,7 +1168,8 @@
               "1 x 10^6"
             ],
             "answer": "1 x 10^-6",
-            "clue": "A millionth."
+            "clue": "A millionth.",
+            "explanation": "Micro means a millionth, and a millionth written as a power of ten is 10^-6."
           },
           {
             "prompt": "1 gigametre in metres",
@@ -1173,7 +1180,8 @@
               "1 x 10^-9"
             ],
             "answer": "1 x 10^9",
-            "clue": "A billion."
+            "clue": "A billion.",
+            "explanation": "Giga means a billion, which as a power of ten is 10^9."
           }
         ]
       }

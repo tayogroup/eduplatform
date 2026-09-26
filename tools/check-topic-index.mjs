@@ -44,7 +44,12 @@ const EHEL = path.join(ROOT, "src", "prototypes", "ehel-academy");
 // the count precisely on the floor and pass. A floor set at what you had before
 // the last thing you added cannot see that thing disappear.
 const TOPIC_FLOORS = {
-  mathematics: 4191,
+  // 4191 -> 4686 on 2026-09-26, when Stage 9's fifteen authored units were
+  // indexed for the first time and added 491 topics. The old value was reached
+  // when mathematics had eight stages, so leaving it here would have let the
+  // whole of Stage 9 vanish from the index and still pass by 495 — which is
+  // precisely the formality this comment warns about two paragraphs up.
+  mathematics: 4686,
   // Raised from 1254 to 1376 on 2026-09-17 when six authored units were added
   // to Stages 5 and 6, then to 1394 the same day when eighteen authored
   // concepts closed the Stage 1-4 content gap exposed by the 0846 -> 0097

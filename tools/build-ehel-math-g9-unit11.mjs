@@ -453,17 +453,17 @@ const games = {
   games: [
     { id: "u11-game-1", icon: "?", skill: "Using ratios", title: "Quick Match: Using Ratios", description: "Four short challenges on parts and shares.", type: "choice",
       rounds: [
-        { prompt: "5:2, the 2 part is 80 g. One part?", choices: ["40 g", "80 g", "16 g", "160 g"], answer: "40 g", clue: "Divide by 2." },
-        { prompt: "3:5, the 3 part is $75. The 5 part?", choices: ["$125", "$45", "$75", "$200"], answer: "$125", clue: "One part is $25." },
-        { prompt: "1:2:4, the 2 part is 15 kg. Total?", choices: ["52.5 kg", "45 kg", "105 kg", "30 kg"], answer: "52.5 kg", clue: "7 parts." },
-        { prompt: "Simplify 45:60:75", choices: ["3:4:5", "9:12:15", "5:6:7", "1:2:3"], answer: "3:4:5", clue: "Divide by 15." },
+        { prompt: "5:2, the 2 part is 80 g. One part?", choices: ["40 g", "80 g", "16 g", "160 g"], answer: "40 g", clue: "Divide by 2.", explanation: "The 80 g is two parts, so one part is 80 / 2 = 40 g." },
+        { prompt: "3:5, the 3 part is $75. The 5 part?", choices: ["$125", "$45", "$75", "$200"], answer: "$125", clue: "One part is $25.", explanation: "One part is 75 / 3 = $25, so the five-part share is 5 x 25 = $125." },
+        { prompt: "1:2:4, the 2 part is 15 kg. Total?", choices: ["52.5 kg", "45 kg", "105 kg", "30 kg"], answer: "52.5 kg", clue: "7 parts.", explanation: "One part is 15 / 2 = 7.5 kg and there are 7 parts altogether, so 7 x 7.5 = 52.5 kg." },
+        { prompt: "Simplify 45:60:75", choices: ["3:4:5", "9:12:15", "5:6:7", "1:2:3"], answer: "3:4:5", clue: "Divide by 15.", explanation: "All three parts share a factor of 15, and dividing by it gives 3:4:5." },
       ] },
     { id: "u11-game-2", icon: "?", skill: "Proportion", title: "Quick Match: Direct, Inverse or Neither", description: "Four short challenges on proportion and maximum ratios.", type: "choice",
       rounds: [
-        { prompt: "Tins bought and total cost", choices: ["Direct", "Inverse", "Neither", "Both"], answer: "Direct", clue: "The ratio is constant." },
-        { prompt: "Speed and time for a fixed journey", choices: ["Inverse", "Direct", "Neither", "Both"], answer: "Inverse", clue: "The product is the distance." },
-        { prompt: "A house's age and its value", choices: ["Neither", "Direct", "Inverse", "Both"], answer: "Neither", clue: "No constant ratio or product." },
-        { prompt: "A 4:1 limit room with 18 children needs", choices: ["5 staff", "4 staff", "4.5 staff", "72 staff"], answer: "5 staff", clue: "Round up." },
+        { prompt: "Tins bought and total cost", choices: ["Direct", "Inverse", "Neither", "Both"], answer: "Direct", clue: "The ratio is constant.", explanation: "Twice as many tins costs twice as much, so the cost per tin is constant - a constant ratio." },
+        { prompt: "Speed and time for a fixed journey", choices: ["Inverse", "Direct", "Neither", "Both"], answer: "Inverse", clue: "The product is the distance.", explanation: "Doubling the speed halves the time, and speed times time is the fixed distance - a constant product." },
+        { prompt: "A house's age and its value", choices: ["Neither", "Direct", "Inverse", "Both"], answer: "Neither", clue: "No constant ratio or product.", explanation: "They are related, but neither their ratio nor their product is constant, so no proportional model fits." },
+        { prompt: "A 4:1 limit room with 18 children needs", choices: ["5 staff", "4 staff", "4.5 staff", "72 staff"], answer: "5 staff", clue: "Round up.", explanation: "18 / 4 = 4.5, and the ratio is a maximum, so you round UP - four adults would breach the limit." },
       ] },
   ],
 };

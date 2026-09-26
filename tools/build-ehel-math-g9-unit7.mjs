@@ -465,17 +465,17 @@ const games = {
   games: [
     { id: "u7-game-1", icon: "?", skill: "Circles", title: "Quick Match: Circles", description: "Four short challenges on circumference and area.", type: "choice",
       rounds: [
-        { prompt: "Area, radius 4 cm, 3 s.f.", choices: ["50.3", "25.1", "12.6", "201"], answer: "50.3", clue: "pi x 16." },
-        { prompt: "Circumference, diameter 10 cm, 3 s.f.", choices: ["31.4", "78.5", "15.7", "62.8"], answer: "31.4", clue: "pi x d." },
-        { prompt: "Area, diameter 7 m, 3 s.f.", choices: ["38.5", "154", "22.0", "77.0"], answer: "38.5", clue: "Halve it first." },
-        { prompt: "Perimeter of a semicircle, radius 5 cm", choices: ["25.7", "15.7", "31.4", "39.3"], answer: "25.7", clue: "Add the diameter." },
+        { prompt: "Area, radius 4 cm, 3 s.f.", choices: ["50.3", "25.1", "12.6", "201"], answer: "50.3", clue: "pi x 16.", explanation: "A = pi x r^2 = pi x 16 = 50.265, which is 50.3 to 3 significant figures." },
+        { prompt: "Circumference, diameter 10 cm, 3 s.f.", choices: ["31.4", "78.5", "15.7", "62.8"], answer: "31.4", clue: "pi x d.", explanation: "C = pi x d = pi x 10 = 31.4. The circumference formula uses the diameter, not the radius." },
+        { prompt: "Area, diameter 7 m, 3 s.f.", choices: ["38.5", "154", "22.0", "77.0"], answer: "38.5", clue: "Halve it first.", explanation: "Halve the diameter first: r = 3.5, so A = pi x 12.25 = 38.5. Using 7 would give four times too much." },
+        { prompt: "Perimeter of a semicircle, radius 5 cm", choices: ["25.7", "15.7", "31.4", "39.3"], answer: "25.7", clue: "Add the diameter.", explanation: "Half the circumference is 15.7, and cutting the circle created a straight edge of 10, so the perimeter is 25.7." },
       ] },
     { id: "u7-game-2", icon: "?", skill: "Areas and units", title: "Quick Match: Areas and Units", description: "Four short challenges on compound shapes and prefixes.", type: "choice",
       rounds: [
-        { prompt: "5 by 4 plus 11 by 2", choices: ["42", "40", "66", "22"], answer: "42", clue: "20 + 22." },
-        { prompt: "Triangle base 12 height 6, plus 8 by 5", choices: ["76", "112", "40", "36"], answer: "76", clue: "36 + 40." },
-        { prompt: "1 microlitre in litres", choices: ["1 x 10^-6", "1 x 10^-3", "1 x 10^-9", "1 x 10^6"], answer: "1 x 10^-6", clue: "A millionth." },
-        { prompt: "1 gigametre in metres", choices: ["1 x 10^9", "1 x 10^6", "1 x 10^3", "1 x 10^-9"], answer: "1 x 10^9", clue: "A billion." },
+        { prompt: "5 by 4 plus 11 by 2", choices: ["42", "40", "66", "22"], answer: "42", clue: "20 + 22.", explanation: "The two rectangles are 20 and 22 square centimetres, and 20 + 22 = 42." },
+        { prompt: "Triangle base 12 height 6, plus 8 by 5", choices: ["76", "112", "40", "36"], answer: "76", clue: "36 + 40.", explanation: "Half of 12 x 6 is 36, the rectangle is 8 x 5 = 40, and 36 + 40 = 76." },
+        { prompt: "1 microlitre in litres", choices: ["1 x 10^-6", "1 x 10^-3", "1 x 10^-9", "1 x 10^6"], answer: "1 x 10^-6", clue: "A millionth.", explanation: "Micro means a millionth, and a millionth written as a power of ten is 10^-6." },
+        { prompt: "1 gigametre in metres", choices: ["1 x 10^9", "1 x 10^6", "1 x 10^3", "1 x 10^-9"], answer: "1 x 10^9", clue: "A billion.", explanation: "Giga means a billion, which as a power of ten is 10^9." },
       ] },
   ],
 };

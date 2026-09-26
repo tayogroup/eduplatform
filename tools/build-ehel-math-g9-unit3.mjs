@@ -445,17 +445,17 @@ const games = {
   games: [
     { id: "u3-game-1", icon: "?", skill: "Powers of ten", title: "Quick Match: Powers of Ten", description: "Four short challenges on moving the digits.", type: "choice",
       rounds: [
-        { prompt: "2.8 x 10^2", choices: ["280", "28", "2800", "0.028"], answer: "280", clue: "Two places up." },
-        { prompt: "34 divided by 10^2", choices: ["3.4", "0.34", "340", "0.034"], answer: "0.34", clue: "Two places down." },
-        { prompt: "2.8 x 10^-2", choices: ["0.028", "0.28", "280", "28"], answer: "0.028", clue: "A negative power divides." },
-        { prompt: "0.03 divided by 10^-2", choices: ["3", "0.3", "0.0003", "300"], answer: "3", clue: "Dividing by a negative power multiplies." },
+        { prompt: "2.8 x 10^2", choices: ["280", "28", "2800", "0.028"], answer: "280", clue: "Two places up.", explanation: "The index is 2, so every digit moves two places towards the larger columns: 280." },
+        { prompt: "34 divided by 10^2", choices: ["3.4", "0.34", "340", "0.034"], answer: "0.34", clue: "Two places down.", explanation: "Dividing by 10^2 moves the digits two places the other way: 0.34." },
+        { prompt: "2.8 x 10^-2", choices: ["0.028", "0.28", "280", "28"], answer: "0.028", clue: "A negative power divides.", explanation: "A negative index means a division, so this is 2.8 divided by 100, which is 0.028." },
+        { prompt: "0.03 divided by 10^-2", choices: ["3", "0.3", "0.0003", "300"], answer: "3", clue: "Dividing by a negative power multiplies.", explanation: "Dividing by 10^-2 is the same as multiplying by 100, so the answer is larger than you started with: 3." },
       ] },
     { id: "u3-game-2", icon: "?", skill: "Percentages and bounds", title: "Quick Match: Change and Bounds", description: "Four short challenges on multipliers and rounding.", type: "choice",
       rounds: [
-        { prompt: "Multiplier for +15%", choices: ["1.15", "0.85", "1.5", "0.15"], answer: "1.15", clue: "115% is left." },
-        { prompt: "Multiplier for -20%", choices: ["0.8", "1.2", "0.2", "0.98"], answer: "0.8", clue: "80% is left." },
-        { prompt: "$300 increased by 15%", choices: ["$345", "$315", "$255", "$450"], answer: "$345", clue: "x 1.15." },
-        { prompt: "Lower bound when a number rounds to 25", choices: ["24.5", "24.9", "25.5", "24"], answer: "24.5", clue: "Half a unit below." },
+        { prompt: "Multiplier for +15%", choices: ["1.15", "0.85", "1.5", "0.15"], answer: "1.15", clue: "115% is left.", explanation: "An increase of 15% leaves 115% of the original, and 115% as a decimal is 1.15." },
+        { prompt: "Multiplier for -20%", choices: ["0.8", "1.2", "0.2", "0.98"], answer: "0.8", clue: "80% is left.", explanation: "A decrease of 20% leaves 80% of the original, which is 0.8." },
+        { prompt: "$300 increased by 15%", choices: ["$345", "$315", "$255", "$450"], answer: "$345", clue: "x 1.15.", explanation: "One multiplication does the whole job: 300 x 1.15 = 345." },
+        { prompt: "Lower bound when a number rounds to 25", choices: ["24.5", "24.9", "25.5", "24"], answer: "24.5", clue: "Half a unit below.", explanation: "Half the rounding unit below the value: 25 - 0.5 = 24.5, and 24.5 is included because it rounds up to 25." },
       ] },
   ],
 };

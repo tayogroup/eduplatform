@@ -457,17 +457,17 @@ const games = {
   games: [
     { id: "u10-game-1", icon: "?", skill: "Functions and intercepts", title: "Quick Match: Functions and Intercepts", description: "Four short challenges on two-variable functions and axis crossings.", type: "choice",
       rounds: [
-        { prompt: "Ali a, Bella b, total $37", choices: ["a + b = 37", "ab = 37", "a - b = 37", "37a = b"], answer: "a + b = 37", clue: "Add them." },
-        { prompt: "2x + 4y = 32 crosses the x-axis at", choices: ["(16, 0)", "(0, 8)", "(8, 0)", "(0, 16)"], answer: "(16, 0)", clue: "Put y = 0." },
-        { prompt: "3x + 2y = 18 crosses the y-axis at", choices: ["(0, 9)", "(6, 0)", "(0, 6)", "(9, 0)"], answer: "(0, 9)", clue: "Put x = 0." },
-        { prompt: "x + 5y = 15 crosses the x-axis at", choices: ["(15, 0)", "(0, 3)", "(3, 0)", "(0, 15)"], answer: "(15, 0)", clue: "Put y = 0." },
+        { prompt: "Ali a, Bella b, total $37", choices: ["a + b = 37", "ab = 37", "a - b = 37", "37a = b"], answer: "a + b = 37", clue: "Add them.", explanation: "The two amounts add to the total, and neither letter is the input - it describes every possible pair." },
+        { prompt: "2x + 4y = 32 crosses the x-axis at", choices: ["(16, 0)", "(0, 8)", "(8, 0)", "(0, 16)"], answer: "(16, 0)", clue: "Put y = 0.", explanation: "On the x-axis y is zero, so 2x = 32 and x = 16." },
+        { prompt: "3x + 2y = 18 crosses the y-axis at", choices: ["(0, 9)", "(6, 0)", "(0, 6)", "(9, 0)"], answer: "(0, 9)", clue: "Put x = 0.", explanation: "On the y-axis x is zero, so 2y = 18 and y = 9." },
+        { prompt: "x + 5y = 15 crosses the x-axis at", choices: ["(15, 0)", "(0, 3)", "(3, 0)", "(0, 15)"], answer: "(15, 0)", clue: "Put y = 0.", explanation: "Setting y = 0 leaves x = 15, so the line crosses there." },
       ] },
     { id: "u10-game-2", icon: "?", skill: "Gradient and intercept", title: "Quick Match: Gradient and Intercept", description: "Four short challenges on y = mx + c and compound measures.", type: "choice",
       rounds: [
-        { prompt: "Gradient of 3x + y = 15", choices: ["-3", "3", "15", "-15"], answer: "-3", clue: "y = -3x + 15." },
-        { prompt: "Gradient of x + 2y = 10", choices: ["-0.5", "0.5", "5", "-2"], answer: "-0.5", clue: "Divide by 2." },
-        { prompt: "Gradient of ax + by = c", choices: ["-a/b", "a/b", "c/b", "-b/a"], answer: "-a/b", clue: "Rearrange with letters." },
-        { prompt: "Speed from (100, 240) on a distance-time graph", choices: ["2.4 m/s", "240 m/s", "100 m/s", "0.42 m/s"], answer: "2.4 m/s", clue: "Distance over time." },
+        { prompt: "Gradient of 3x + y = 15", choices: ["-3", "3", "15", "-15"], answer: "-3", clue: "y = -3x + 15.", explanation: "Making y the subject gives y = -3x + 15, so the gradient is -3." },
+        { prompt: "Gradient of x + 2y = 10", choices: ["-0.5", "0.5", "5", "-2"], answer: "-0.5", clue: "Divide by 2.", explanation: "y = -x/2 + 5, so the gradient is -0.5. Dividing by the coefficient of y is what finishes the job." },
+        { prompt: "Gradient of ax + by = c", choices: ["-a/b", "a/b", "c/b", "-b/a"], answer: "-a/b", clue: "Rearrange with letters.", explanation: "Rearranging with letters gives y = (-a/b)x + c/b, so the gradient is always -a/b." },
+        { prompt: "Speed from (100, 240) on a distance-time graph", choices: ["2.4 m/s", "240 m/s", "100 m/s", "0.42 m/s"], answer: "2.4 m/s", clue: "Distance over time.", explanation: "The gradient is 240 metres divided by 100 seconds, and those units are what make it a speed." },
       ] },
   ],
 };

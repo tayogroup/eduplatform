@@ -456,17 +456,17 @@ const games = {
   games: [
     { id: "u4-game-1", icon: "?", skill: "Equations", title: "Quick Match: Equations", description: "Four short challenges on solving and constructing.", type: "choice",
       rounds: [
-        { prompt: "Solve 5(x + 3) = 10x - 20", choices: ["x = 7", "x = 1", "x = 5", "x = 35"], answer: "x = 7", clue: "Divide by 5 first." },
-        { prompt: "Solve 4(x + 3) = 2(x + 11)", choices: ["x = 5", "x = 8", "x = 4", "x = 10"], answer: "x = 5", clue: "4x + 12 = 2x + 22." },
-        { prompt: "Solve 8(x - 4) + 4(5 - x) = 0", choices: ["x = 3", "x = 4", "x = 0", "x = 12"], answer: "x = 3", clue: "4x - 12 = 0." },
-        { prompt: "Two numbers n and 2(n + 3) add to 90. n = ?", choices: ["28", "30", "42", "29"], answer: "28", clue: "3n + 6 = 90." },
+        { prompt: "Solve 5(x + 3) = 10x - 20", choices: ["x = 7", "x = 1", "x = 5", "x = 35"], answer: "x = 7", clue: "Divide by 5 first.", explanation: "Every term is a multiple of 5, so dividing first gives x + 3 = 2x - 4 and x = 7. Expanding gives the same answer." },
+        { prompt: "Solve 4(x + 3) = 2(x + 11)", choices: ["x = 5", "x = 8", "x = 4", "x = 10"], answer: "x = 5", clue: "4x + 12 = 2x + 22.", explanation: "Expanding gives 4x + 12 = 2x + 22, so 2x = 10 and x = 5. Checking, both sides come to 32." },
+        { prompt: "Solve 8(x - 4) + 4(5 - x) = 0", choices: ["x = 3", "x = 4", "x = 0", "x = 12"], answer: "x = 3", clue: "4x - 12 = 0.", explanation: "Expanding gives 8x - 32 + 20 - 4x = 4x - 12, and 4x - 12 = 0 gives x = 3." },
+        { prompt: "Two numbers n and 2(n + 3) add to 90. n = ?", choices: ["28", "30", "42", "29"], answer: "28", clue: "3n + 6 = 90.", explanation: "The sum gives n + 2(n + 3) = 90, so 3n + 6 = 90 and n = 28. The two numbers are 28 and 62." },
       ] },
     { id: "u4-game-2", icon: "?", skill: "Pairs and sets", title: "Quick Match: Pairs and Sets", description: "Four short challenges on simultaneous equations and inequalities.", type: "choice",
       rounds: [
-        { prompt: "y = 2x - 1 and y = x + 5", choices: ["x = 6, y = 11", "x = 4, y = 7", "x = 6, y = 13", "x = 2, y = 3"], answer: "x = 6, y = 11", clue: "Set them equal." },
-        { prompt: "x + y = 10 and x - y = 4", choices: ["x = 7, y = 3", "x = 3, y = 7", "x = 14, y = 4", "x = 6, y = 4"], answer: "x = 7, y = 3", clue: "Add them." },
-        { prompt: "Solve 2x - 3 < 19", choices: ["x < 11", "x > 11", "x < 8", "x < 22"], answer: "x < 11", clue: "Add 3, then halve." },
-        { prompt: "Solve 3x > 4x + 12", choices: ["x < -12", "x > -12", "x < 12", "x > 12"], answer: "x < -12", clue: "Dividing by a negative reverses it." },
+        { prompt: "y = 2x - 1 and y = x + 5", choices: ["x = 6, y = 11", "x = 4, y = 7", "x = 6, y = 13", "x = 2, y = 3"], answer: "x = 6, y = 11", clue: "Set them equal.", explanation: "Both expressions equal y, so 2x - 1 = x + 5, giving x = 6 and then y = 11." },
+        { prompt: "x + y = 10 and x - y = 4", choices: ["x = 7, y = 3", "x = 3, y = 7", "x = 14, y = 4", "x = 6, y = 4"], answer: "x = 7, y = 3", clue: "Add them.", explanation: "The y terms are opposite, so adding the equations removes y: 2x = 14, x = 7, and then y = 3." },
+        { prompt: "Solve 2x - 3 < 19", choices: ["x < 11", "x > 11", "x < 8", "x < 22"], answer: "x < 11", clue: "Add 3, then halve.", explanation: "Add 3 to both sides for 2x < 22, then halve. Nothing was divided by a negative, so the sign does not change." },
+        { prompt: "Solve 3x > 4x + 12", choices: ["x < -12", "x > -12", "x < 12", "x > 12"], answer: "x < -12", clue: "Dividing by a negative reverses it.", explanation: "Collecting gives -x > 12, and dividing by -1 reverses the sign to x < -12. At x = -13 the original really is true." },
       ] },
   ],
 };

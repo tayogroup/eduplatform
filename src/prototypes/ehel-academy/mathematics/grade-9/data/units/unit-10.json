@@ -1,6 +1,6 @@
 {
   "schemaVersion": "Ehel Mathematics Runtime v1.1",
-  "generatedAt": "2026-09-26T17:49:42.262Z",
+  "generatedAt": "2026-09-26T19:31:30.698Z",
   "stage": {
     "id": 9,
     "label": "Stage 9"
@@ -1095,7 +1095,8 @@
               "37a = b"
             ],
             "answer": "a + b = 37",
-            "clue": "Add them."
+            "clue": "Add them.",
+            "explanation": "The two amounts add to the total, and neither letter is the input - it describes every possible pair."
           },
           {
             "prompt": "2x + 4y = 32 crosses the x-axis at",
@@ -1106,7 +1107,8 @@
               "(0, 16)"
             ],
             "answer": "(16, 0)",
-            "clue": "Put y = 0."
+            "clue": "Put y = 0.",
+            "explanation": "On the x-axis y is zero, so 2x = 32 and x = 16."
           },
           {
             "prompt": "3x + 2y = 18 crosses the y-axis at",
@@ -1117,7 +1119,8 @@
               "(9, 0)"
             ],
             "answer": "(0, 9)",
-            "clue": "Put x = 0."
+            "clue": "Put x = 0.",
+            "explanation": "On the y-axis x is zero, so 2y = 18 and y = 9."
           },
           {
             "prompt": "x + 5y = 15 crosses the x-axis at",
@@ -1128,7 +1131,8 @@
               "(0, 15)"
             ],
             "answer": "(15, 0)",
-            "clue": "Put y = 0."
+            "clue": "Put y = 0.",
+            "explanation": "Setting y = 0 leaves x = 15, so the line crosses there."
           }
         ]
       },
@@ -1149,7 +1153,8 @@
               "-15"
             ],
             "answer": "-3",
-            "clue": "y = -3x + 15."
+            "clue": "y = -3x + 15.",
+            "explanation": "Making y the subject gives y = -3x + 15, so the gradient is -3."
           },
           {
             "prompt": "Gradient of x + 2y = 10",
@@ -1160,7 +1165,8 @@
               "-2"
             ],
             "answer": "-0.5",
-            "clue": "Divide by 2."
+            "clue": "Divide by 2.",
+            "explanation": "y = -x/2 + 5, so the gradient is -0.5. Dividing by the coefficient of y is what finishes the job."
           },
           {
             "prompt": "Gradient of ax + by = c",
@@ -1171,7 +1177,8 @@
               "-b/a"
             ],
             "answer": "-a/b",
-            "clue": "Rearrange with letters."
+            "clue": "Rearrange with letters.",
+            "explanation": "Rearranging with letters gives y = (-a/b)x + c/b, so the gradient is always -a/b."
           },
           {
             "prompt": "Speed from (100, 240) on a distance-time graph",
@@ -1182,7 +1189,8 @@
               "0.42 m/s"
             ],
             "answer": "2.4 m/s",
-            "clue": "Distance over time."
+            "clue": "Distance over time.",
+            "explanation": "The gradient is 240 metres divided by 100 seconds, and those units are what make it a speed."
           }
         ]
       }

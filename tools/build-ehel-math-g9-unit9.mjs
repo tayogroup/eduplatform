@@ -463,17 +463,17 @@ const games = {
   games: [
     { id: "u9-game-1", icon: "?", skill: "Classifying sequences", title: "Quick Match: What Kind of Sequence", description: "Four short challenges on differences.", type: "choice",
       rounds: [
-        { prompt: "20, 18, 16, 14", choices: ["Linear", "Quadratic", "Neither", "Cubic"], answer: "Linear", clue: "Differences all -2." },
-        { prompt: "2, 5, 10, 17, 26", choices: ["Quadratic", "Linear", "Neither", "Cubic"], answer: "Quadratic", clue: "Second differences all 2." },
-        { prompt: "2, 4, 8, 16, 32", choices: ["Neither", "Linear", "Quadratic", "Cubic"], answer: "Neither", clue: "It doubles." },
-        { prompt: "1, 4, 9, 16, 25", choices: ["Quadratic", "Linear", "Neither", "Cubic"], answer: "Quadratic", clue: "The square numbers." },
+        { prompt: "20, 18, 16, 14", choices: ["Linear", "Quadratic", "Neither", "Cubic"], answer: "Linear", clue: "Differences all -2.", explanation: "The first differences are all -2, and constant first differences mean a linear sequence." },
+        { prompt: "2, 5, 10, 17, 26", choices: ["Quadratic", "Linear", "Neither", "Cubic"], answer: "Quadratic", clue: "Second differences all 2.", explanation: "The first differences are 3, 5, 7, 9 and the second differences are all 2, so the rule involves n squared." },
+        { prompt: "2, 4, 8, 16, 32", choices: ["Neither", "Linear", "Quadratic", "Cubic"], answer: "Neither", clue: "It doubles.", explanation: "Neither the first nor the second differences are constant - the sequence doubles each time." },
+        { prompt: "1, 4, 9, 16, 25", choices: ["Quadratic", "Linear", "Neither", "Cubic"], answer: "Quadratic", clue: "The square numbers.", explanation: "These are the square numbers, and their second differences are all 2." },
       ] },
     { id: "u9-game-2", icon: "?", skill: "nth term and functions", title: "Quick Match: Rules and Functions", description: "Four short challenges on nth terms and functions.", type: "choice",
       rounds: [
-        { prompt: "nth term of 5, 8, 11, 14", choices: ["3n + 2", "3n", "n + 3", "2n + 3"], answer: "3n + 2", clue: "Difference 3." },
-        { prompt: "nth term of 1, 5, 9, 13", choices: ["4n - 3", "4n + 1", "3n + 1", "4n"], answer: "4n - 3", clue: "b is negative." },
-        { prompt: "nth term of 2, 5, 10, 17", choices: ["n squared + 1", "2n squared", "3n - 1", "n squared - 1"], answer: "n squared + 1", clue: "Second difference 2." },
-        { prompt: "A machine x5 then -1, input 3", choices: ["14", "10", "15", "4"], answer: "14", clue: "Multiply first." },
+        { prompt: "nth term of 5, 8, 11, 14", choices: ["3n + 2", "3n", "n + 3", "2n + 3"], answer: "3n + 2", clue: "Difference 3.", explanation: "The difference is 3, so start with 3n; at n = 1 that gives 3 while the term is 5, so add 2." },
+        { prompt: "nth term of 1, 5, 9, 13", choices: ["4n - 3", "4n + 1", "3n + 1", "4n"], answer: "4n - 3", clue: "b is negative.", explanation: "The difference is 4, so start with 4n; at n = 1 that gives 4 while the term is 1, so subtract 3." },
+        { prompt: "nth term of 2, 5, 10, 17", choices: ["n squared + 1", "2n squared", "3n - 1", "n squared - 1"], answer: "n squared + 1", clue: "Second difference 2.", explanation: "The second difference is 2, so the rule starts with n squared, and subtracting n squared leaves 1 every time." },
+        { prompt: "A machine x5 then -1, input 3", choices: ["14", "10", "15", "4"], answer: "14", clue: "Multiply first.", explanation: "Follow the boxes in order: 5 x 3 = 15, then subtract 1 to get 14." },
       ] },
   ],
 };

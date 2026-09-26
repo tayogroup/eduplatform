@@ -61,6 +61,9 @@ LESSON = {
              {"video": {"src": "lecture-video/square-level-and-setting-out.f638b33d.mp4",
                         "captions": CAPTIONS,
                         "poster": "lecture-video/square-level-and-setting-out.b7d9591b.jpg"},
+              # The same film, at the learner's pace. A SIBLING of "video",
+              # not a key inside it: R.lecture reads data.slides.
+              "slides": "lecture-video/square-level-and-setting-out.089c774a.slides.html",
               "underFilm": "What square, level and plumb each mean, the tool that proves each, the diagonals, the 3-4-5, and the waste allowance."},
              ask="Watch the film first. It proves each of the three, then sets out a corner and counts what goes in it.",
              error=("Taking the three words as one idea.",

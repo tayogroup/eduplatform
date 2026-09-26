@@ -63,6 +63,12 @@ LESSON = {
              {"video": {"src": "lecture-video/replace-a-broken-tile.4784cee3.mp4",
                         "captions": CAPTIONS,
                         "poster": "lecture-video/replace-a-broken-tile.80df7dd9.jpg"},
+              # THE SAME FILM, AT THE LEARNER'S PACE. A SIBLING of "video",
+              # not a key inside it: R.lecture reads data.slides, and nested
+              # in the video object it would never be found. The deck is
+              # built by --slides from this storyboard and these drawings,
+              # so it cannot drift from the film; it loads its own audio.
+              "slides": "lecture-video/replace-a-broken-tile.0b22fcd5.slides.html",
               "underFilm": "The whole job, start to finish. The steps below take each part of it onto a wall that already has grout in it."},
              ask="Watch the film first. It walks the whole job; the steps after it are where the mistakes live.",
              error=("Watching it and thinking the hard part is the breaking.",

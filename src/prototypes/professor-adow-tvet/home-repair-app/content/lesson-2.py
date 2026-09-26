@@ -71,6 +71,12 @@ LESSON = {
              {"video": {"src": "lecture-video/repair-a-dripping-tap.a781e151.mp4",
                         "captions": CAPTIONS,
                         "poster": "lecture-video/repair-a-dripping-tap.be8c491b.jpg"},
+              # THE SAME FILM, AT THE LEARNER'S PACE. A SIBLING of "video",
+              # not a key inside it: R.lecture reads data.slides, and nested
+              # in the video object it would never be found. The deck is
+              # built by --slides from this storyboard and these drawings,
+              # so it cannot drift from the film; it loads its own audio.
+              "slides": "lecture-video/repair-a-dripping-tap.93fa181f.slides.html",
               "underFilm": "The whole job, in section, so you can see what the stem does to the washer and what the washer does to the seat."},
              ask="Watch the film first. Everything that matters in this job happens inside the tap.",
              error=("Thinking the skill is in the spanner work.",

@@ -58,6 +58,9 @@ LESSON = {
              {"video": {"src": "lecture-video/area-volume-and-what-they-cost.5b2f30f2.mp4",
                         "captions": CAPTIONS,
                         "poster": "lecture-video/area-volume-and-what-they-cost.5d39cf0f.jpg"},
+              # The same film, at the learner's pace. A SIBLING of "video",
+              # not a key inside it: R.lecture reads data.slides.
+              "slides": "lecture-video/area-volume-and-what-they-cost.3f35f76f.slides.html",
               "underFilm": "Round the edge, across the surface, and inside the solid — with the openings taken off and the litres worked out. Every step below is one of these on a real job."},
              ask="Watch the film first. It is this lesson end to end; the steps after it put each part on a job.",
              error=("Watching it instead of working through the steps.",

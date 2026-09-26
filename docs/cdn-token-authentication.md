@@ -198,6 +198,43 @@ named the deployed version exactly. **Verify the running artefact, not the commi
 holds an encoded-path token, which now 403s on the HTML. Relaunching fixes it.
 Tokens live 12 hours.
 
+## The rollout: 36 patterns, three rules, and two traps
+
+Live since 2026-09-26 on **30 standalone builds + 6 shell subject entries**, HTML
+documents only. Verified: unsigned 403 and signed 200 on every one of the 36, with
+the films, the per-build shell modules, the shared `app/shell/course-app.js` and the
+crest all still serving unsigned.
+
+**Bunny's hard limit is 25 patterns per rule** — max 5 conditions per rule, max 5
+patterns per condition, and it refuses with `edgerule.invalid` rather than
+truncating. 35 patterns therefore needs two rules (25 + 10), plus the original
+Computing G4 rule. Rollback is disabling all three.
+
+**The dashboard collapses newlines into spaces.** Pasting 35 patterns one per line
+into the pattern field saved them as ONE pattern with spaces in it. That matches
+nothing, so it failed open and protected nothing — no outage, and no error either.
+If you paste a list, read the rule back and count the patterns; the tell is a single
+pattern containing a space. The API is the reliable route.
+
+**Mathematics `grade-5-v2` is deliberately excluded.** Its `wire-platform.py` carries
+a param allowlist — `["pwsToken","pwsEndpoint","studentid","category"]` — which drops
+the CDN token on the first click into a lesson, so protecting it would 403 that
+build. Add those four params to that list before including it.
+
+### Delivery was audited per build, not assumed
+
+Because of the film incident, every build was checked for whether it actually SENDS
+the token on in-app `.html` navigation before being protected: 30 of 31 append the
+whole query string, Maths G5 is the exception above. All 50 `window.open` calls are
+`window.open("", "_blank")` with `document.write` — no CDN request, so the print
+sheets are unaffected. Maths G4's 25 extra `.html` files are `*-body.html` build
+fragments and audit pages, not navigation targets.
+
+The shell subject apps pass for reasons written into the shell: the subject switch
+goes through `course_launch.php`, so a cross-subject jump re-launches and mints that
+subject's own token, and `homeHref`/`sessionHref` build from `new URL(location.href)`
+and only set or delete named params, so the token survives.
+
 ## Widening it: turn it on in this order
 
 1. **Deploy the PHP.** Inert: with no key configured `pqpg_cdn_sign_dir_url()`

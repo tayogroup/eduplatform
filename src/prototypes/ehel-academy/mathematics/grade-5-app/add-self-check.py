@@ -66,6 +66,26 @@ SCALE = [("yes", "I can do this"),
 
 # lesson -> [(statement, source)]   W = Stage 5 Workbook, G = Teacher's Guide
 WORK = {
+ "shapes-and-angles": [
+  ("I can identify lines of symmetry in designs and patterns", "W p16"),
+  ("I can complete symmetrical designs and patterns", "W p16"),
+  ("I can identify, name and label acute, right and obtuse angles", "W p16"),
+  ("I can find the missing angle on a straight line", "W p16"),
+  ("I can identify, name and describe the properties of isosceles, equilateral and scalene triangles", "W p16"),
+  ("I can find equal lengths and angles in triangles", "W p16"),
+  ("I can estimate and measure the perimeter of 2D shapes", "W p70"),
+  ("I can reason about shapes with the same area or perimeter", "W p70"),
+  ("I can find the area of a compound shape by splitting it into rectangles", "W p68"),
+  # p70 reads just "I can sketch 3D shapes", which is 22 characters and trips
+  # this tool's 25-char truncation floor - the floor is there to catch a
+  # statement clipped during extraction, and cannot tell that one apart from a
+  # statement Cambridge simply wrote short. Widened to name the solids Step 34
+  # actually asks the learner to sketch and describe, rather than lowering the
+  # floor or padding the sentence with words that add nothing.
+  ("I can sketch and describe 3D shapes such as cubes, cuboids and prisms", "W p70"),
+  ("I can identify nets for open and closed cubes", "W p70"),
+  ("I can identify 3D shapes from different perspectives", "W p70"),
+ ],
  "squares-cubes-and-roots": [
   ("I can find a square number as the result of multiplying a number by itself", "G p154"),
   ("I can explain that square numbers can be represented as square arrays with the same number of rows and columns", "G p154"),

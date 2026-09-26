@@ -11,41 +11,43 @@
    "steps": [
     {
      "i": 0,
-     "a": "s1",
-     "h": "A square number makes a square",
-     "t": "Take a number, and lay out that many rows of that many dots. If you get a square, the total is a SQUARE NUMBER. 4 rows of 4 dots is 16, so 16 is a square number, and we write it 4², read \"four squared\". Slide the side of the square and watch the total. Dots along each side: 4 16 = 4² The first twelve square numbers The little 2 means \"times itself\". 4² is 4 × 4 = 16, not 4 × 2. Say it \"four squared\", because it is the number of dots in a four-by-four square. Every square number is a number multiplied by itself.",
-     "gh": "geometry",
-     "g": "geometry",
+     "a": "opener-about",
+     "h": "What this lesson is about",
+     "t": "By the end of this lesson you will be able to... Find a square number as the result of multiplying a number by itself. Show that square numbers can be built as square arrays. Explain the link between consecutive odd numbers and square numbers. Explain why a number is not a square number. Build a triangular number, and the next one from the one before.",
+     "gh": "",
+     "g": "geometry odd and even position",
      "gm": {
-      "geometry": "square"
+      "geometry": "square",
+      "odd and even": "odd",
+      "position": "between"
      }
     },
     {
      "i": 1,
-     "a": "s2",
-     "h": "Growing squares: add the next odd number",
-     "t": "To turn a 3-by-3 square into a 4-by-4 square you add an L shape down one side and along the bottom. That is 3 + 3 + 1 = 7 new dots. Every L is an odd number, and each one is 2 bigger than the last. So the square numbers go 1, 4, 9, 16, 25 and the gaps between them go 3, 5, 7, 9. Slide to grow the square and watch the L. Grow from 3 × 3 to 4 × 4 The sequence so far Odd numbers build squares. 1 + 3 = 4, then + 5 = 9, then + 7 = 16, then + 9 = 25. Add the first five odd numbers and you get 5². That is why the gaps between square numbers keep growing: this is a sequence, but NOT one with a \"same step every time\" rule. Spot the mistake Your teacher says: 3 + 5 + 7 must make a square number, because they are consecutive odd numbers.",
-     "gh": "addition odd and even sequence",
-     "g": "addition geometry odd and even position sequence",
+     "a": "opener-lecture",
+     "h": "Unit lecture",
+     "t": "The whole lesson, in three parts. Part 1 of 3 Squares and roots A square number comes from multiplying a whole number by itself - 4 x 4 = 16, so 16 is a square number, and its square root is 4. Part 2 of 3 Cubes and cube roots A cube number comes from multiplying a whole number by itself three times - stack a square, three layers high, and you have a cube. Part 3 of 3 Triangular numbers A triangular number is built from rows that grow by one each time - 1, then 1+2, then 1+2+3 - and can be drawn as a triangle of dots.",
+     "gh": "",
+     "g": "fraction geometry",
      "gm": {
-      "addition": "add",
-      "geometry": "shape",
-      "odd and even": "odd",
-      "position": "between",
-      "sequence": "growing"
+      "fraction": "a whole",
+      "geometry": "square"
      }
     },
     {
      "i": 2,
-     "a": "s3",
-     "h": "Is it a square number?",
-     "t": "Given a number of dots, try to arrange them into a full square. If they fit exactly, it is a square number. If some are left over, it sits BETWEEN two square numbers. Pick a number and see the biggest square you can make. How many dots Working Know the squares up to 12² by heart and you can answer this without any dots. They are 1, 4, 9, 16, 25, 36, 49, 64, 81, 100, 121, 144. A number that is not on that list is not a square number (up to 144).",
-     "gh": "geometry",
-     "g": "comparison geometry position subtraction",
+     "a": "opener-words",
+     "h": "Math words",
+     "t": "Tap each word to see what it means and how to use it. Then show you know them. Step 1 A square number makes a square Take a number, and lay out that many rows of that many dots. If you get a square, the total is a SQUARE NUMBER. 4 rows of 4 dots is 16, so 16 is a square number, and we write it 4², read \"four squared\". Slide the side of the square and watch the total. Dots along each side: 4 16 = 4² The first twelve square numbers The little 2 means \"times itself\". 4² is 4 × 4 = 16, not 4 × 2. Say it \"four squared\", because it is the number of dots in a four-by-four square. Every square number is a number multiplied by itself. Step 2 Growing squares: add the next odd number To turn a 3-by-3 square into a 4-by-4 square you add an L shape down one side and along the bottom. That is 3 + 3 + 1 = 7 new dots. Every L is an odd number, and each one is 2 bigger than the last. So the square numbers go 1, 4, 9, 16, 25 and the gaps between them go 3, 5, 7, 9. Slide to grow the square and watch the L. Grow from 3 × 3 to 4 × 4 The sequence so far Odd numbers build squares. 1 + 3 = 4, then + 5 = 9, then + 7 = 16, then + 9 = 25. Add the first five odd numbers and you get 5². That is why the gaps between square numbers keep growing: this is a sequence, but NOT one with a \"same step every time\" rule. Spot the mistake Your teacher says: 3 + 5 + 7 must make a square number, because they are consecutive odd numbers. Step 3 Is it a square number? Given a number of dots, try to arrange them into a full square. If they fit exactly, it is a square number. If some are left over, it sits BETWEEN two square numbers. Pick a number and see the biggest square you can make. How many dots Working Know the squares up to 12² by heart and you can answer this without any dots. They are 1, 4, 9, 16, 25, 36,",
+     "gh": "",
+     "g": "addition comparison geometry odd and even position sequence subtraction",
      "gm": {
+      "addition": "add",
       "comparison": "biggest",
-      "geometry": "square",
+      "geometry": "shape",
+      "odd and even": "odd",
       "position": "between",
+      "sequence": "growing",
       "subtraction": "left over"
      }
     },
@@ -80,32 +82,21 @@
      "i": 5,
      "a": "s6",
      "h": "Cube roots: how long is the edge?",
-     "t": "Step 4 undid a square, and this undoes a cube. Here is a pile of blocks. If they build a solid cube with none left over and no gaps, how many go along each edge? That number is the CUBE ROOT, written ∛64 = 4. Pick an edge and the cube gets built. You can see whether it swallows the pile exactly, runs out early, or asks for more than you have. Find the cube root of How many along each edge? Working The cube roots worth knowing Roots that are not whole numbers The same number has a different square root and cube root. √64 = 8, because 8 × 8 = 64. ∛64 = 4, because 4 × 4 × 4 = 64. The square root splits the number into two equal parts multiplied; the cube root splits it into three. And there are far fewer cubes to recognise than squares. Up to 216 there are fourteen square numbers and only six cube numbers. So a cube root is usually found by trying two or three edges rather than remembered.",
+     "t": "Step 4 undid a square, and this undoes a cube. Here is a pile of blocks. If they build a solid cube with none left over and no gaps, how many go along each edge? That number is the CUBE ROOT, written ∛64 = 4. Pick an edge and the cube gets built. You can see whether it swallows the pile exactly, runs out early, or asks for more than you have. Find the cube root of How many along each edge? Working The cube roots worth knowing Roots that are not whole numbers The same number has a different square root and cube root. √64 = 8, because 8 × 8 = 64. ∛64 = 4, because 4 × 4 × 4 = 64. The square root splits the number into two equal parts multiplied; the cube root splits it into three. And there are far fewer cubes to recognise than squares. Up to 216 there are fourteen square numbers and only six cube numbers. So a cube root is usually found by trying two or three edges rather than remembered. Step 7 Triangular numbers: rows that grow by one Put 1 dot on the top row, 2 on the next, 3 on the next, and you build a triangle. The number of dots is a TRIANGULAR number: 1, 3, 6, 10, 15. Adding all those rows up is slow, so there is a trick. Turn a second triangle upside down, push it against the first, and the two make a neat rectangle. Slide the rows, then press the second view to see it happen. How many rows: 4 One triangle Two triangles make a rectangle 10 dots in 4 rows Every triangle, and what it makes with the one before Two triangles make a rectangle, and two triangles in a row make a square. A triangle of 4 rows and an upside-down copy fit into a 4 by 5 rectangle of 20 dots. So one triangle is 20 ÷ 2 = 10. That is where rows × (rows + 1) ÷ 2 comes from. It works however many rows you have, without adding a single one of them up. The other pairing is a surprise. Add two trian",
      "gh": "geometry measurement",
-     "g": "comparison fraction geometry measurement subtraction",
+     "g": "addition comparison fraction geometry measurement position subtraction",
      "gm": {
+      "addition": "adding",
       "comparison": "more than",
       "fraction": "equal parts",
       "geometry": "edges",
       "measurement": "how long",
+      "position": "next to",
       "subtraction": "left over"
      }
     },
     {
      "i": 6,
-     "a": "s7",
-     "h": "Triangular numbers: rows that grow by one",
-     "t": "Put 1 dot on the top row, 2 on the next, 3 on the next, and you build a triangle. The number of dots is a TRIANGULAR number: 1, 3, 6, 10, 15. Adding all those rows up is slow, so there is a trick. Turn a second triangle upside down, push it against the first, and the two make a neat rectangle. Slide the rows, then press the second view to see it happen. How many rows: 4 One triangle Two triangles make a rectangle 10 dots in 4 rows Every triangle, and what it makes with the one before Two triangles make a rectangle, and two triangles in a row make a square. A triangle of 4 rows and an upside-down copy fit into a 4 by 5 rectangle of 20 dots. So one triangle is 20 ÷ 2 = 10. That is where rows × (rows + 1) ÷ 2 comes from. It works however many rows you have, without adding a single one of them up. The other pairing is a surprise. Add two triangular numbers that sit NEXT to each other in the list, 6 + 10, and you get 16, a square number. Every neighbouring pair does it, which is why the last column of the table is full of squares. Spot the mistake Your teacher says: 27 is a triangular number.",
-     "gh": "",
-     "g": "addition geometry position",
-     "gm": {
-      "addition": "adding",
-      "geometry": "square",
-      "position": "next to"
-     }
-    },
-    {
-     "i": 7,
      "a": "selfcheck",
      "h": "What I can do",
      "t": "",
@@ -121,26 +112,46 @@
    "steps": [
     {
      "i": 0,
-     "a": "s8",
-     "h": "Sequences with a rule: start, then keep doing it",
-     "t": "A sequence is a list of numbers in order, and a term is one number in the list. A rule like \"start at 5 and add 4\" makes the whole sequence: each term comes from the one before it. Pick a start number and a rule, then read the terms off the strip. The arrows show the rule being used again and again. Start at 3 5 10 50 100 1 The rule add 3 add 4 add 7 add 25 subtract 3 subtract 6 double add 0.5 How many terms: 6 Working Two things make a sequence: where it starts and the rule. \"Add 4\" starting at 5 gives 5, 9, 13, 17. The same rule starting at 3 gives 3, 7, 11, 15: different sequence, same rule. And the rule is used one time FEWER than the number of terms: to reach the 6th term you use it 5 times.",
+     "a": "opener-about",
+     "h": "What this lesson is about",
+     "t": "By the end of this lesson you will be able to... Identify missing numbers in linear sequences. Explain why a sequence is linear. Find the difference between terms in a sequence. Use a term-to-term rule to extend a sequence. Work out a recursion rule from terms that are not consecutive.",
      "gh": "",
-     "g": "addition comparison multiplication",
+     "g": "position",
      "gm": {
-      "addition": "add",
-      "comparison": "in order",
-      "multiplication": "double"
+      "position": "between"
      }
     },
     {
      "i": 1,
-     "a": "s9",
-     "h": "Find the rule from the terms",
-     "t": "Now the sequence is given and the rule is hidden. Look at the GAP between one term and the next. If the gap is the same every time, the rule is \"add that\" or \"subtract that\". If the gaps change, look closer: maybe each term is double the last, or maybe the gaps are the odd numbers from Step 2. Pick a sequence and reveal it one move at a time. Pick a sequence 1 · Show the gaps 2 · Say the rule 3 · Next two terms Working Check the rule on EVERY gap, not just the first. 2, 4, 6 looks like \"add 2\" and 2, 4, 8 looks like \"add 2\" for one gap. But the next gap is 4, so the rule there is \"double\". One gap can fool you; two or three gaps cannot.",
+     "a": "opener-lecture",
+     "h": "Unit lecture",
+     "t": "The whole lesson, in three parts. Part 1 of 3 Sequences and rules A sequence follows a rule from one term to the next - a term-to-term rule tells you exactly how to get from any term to the one after it. Part 2 of 3 Linear sequences A linear sequence changes by the same amount every time - find that difference once, and you can extend the sequence as far as you like. Part 3 of 3 Patterns in shapes A growing pattern of shapes hides a number sequence - count the pieces in each shape, and the rule for the shapes is the rule for the numbers too.",
      "gh": "",
-     "g": "addition money multiplication odd and even position",
+     "g": "geometry sequence",
+     "gm": {
+      "geometry": "shape",
+      "sequence": "pattern"
+     }
+    },
+    {
+     "i": 2,
+     "a": "opener-words",
+     "h": "Math words",
+     "t": "Tap each word to see what it means and how to use it. Then show you know them.",
+     "gh": "",
+     "g": "",
+     "gm": {}
+    },
+    {
+     "i": 3,
+     "a": "s8",
+     "h": "Sequences with a rule: start, then keep doing it",
+     "t": "A sequence is a list of numbers in order, and a term is one number in the list. A rule like \"start at 5 and add 4\" makes the whole sequence: each term comes from the one before it. Pick a start number and a rule, then read the terms off the strip. The arrows show the rule being used again and again. Start at 3 5 10 50 100 1 The rule add 3 add 4 add 7 add 25 subtract 3 subtract 6 double add 0.5 How many terms: 6 Working Two things make a sequence: where it starts and the rule. \"Add 4\" starting at 5 gives 5, 9, 13, 17. The same rule starting at 3 gives 3, 7, 11, 15: different sequence, same rule. And the rule is used one time FEWER than the number of terms: to reach the 6th term you use it 5 times. Step 9 Find the rule from the terms Now the sequence is given and the rule is hidden. Look at the GAP between one term and the next. If the gap is the same every time, the rule is \"add that\" or \"subtract that\". If the gaps change, look closer: maybe each term is double the last, or maybe the gaps are the odd numbers from Step 2. Pick a sequence and reveal it one move at a time. Pick a sequence 1 · Show the gaps 2 · Say the rule 3 · Next two terms Working Check the rule on EVERY gap, not just the first. 2, 4, 6 looks like \"add 2\" and 2, 4, 8 looks like \"add 2\" for one gap. But the next gap is 4, so the rule there is \"double\". One gap can fool you; two or three gaps cannot.",
+     "gh": "",
+     "g": "addition comparison money multiplication odd and even position",
      "gm": {
       "addition": "add",
+      "comparison": "in order",
       "money": "change",
       "multiplication": "double",
       "odd and even": "odd",
@@ -148,36 +159,24 @@
      }
     },
     {
-     "i": 2,
+     "i": 4,
      "a": "s10",
      "h": "Two shapes, two facts",
-     "t": "In the last two steps you knew the rule and worked out the terms. Now you know two facts and have to work out two numbers. A shape standing in for a number nobody has told you yet is where algebra begins. Two facts about two shapes are always exactly enough. One would leave you guessing and three could contradict each other. They add to … and differ by … 7 is the triangle All six, side by side Adding the two facts is the trick, and it works because one shape cancels itself out. Put &#9650; + &#9679; = 10 underneath &#9650; &minus; &#9679; = 4 and add them. The ● is added once and taken away once, so it disappears entirely. That leaves ▲ + ▲ = 14. That is one shape on its own, and halving it finishes the job. Subtracting the facts instead makes the &#9650; disappear the same way. Two facts, two unknowns. One fact on its own leaves a whole list of answers. \"They add to 10\" is true of 9 and 1, 8 and 2, 7 and 3 and more. The second fact is what cuts the list down to one. And the shapes are only placeholders. A letter would do exactly the same job, which is what secondary school does. Write x and y instead of &#9650; and &#9679; and nothing else about the method changes.",
+     "t": "In the last two steps you knew the rule and worked out the terms. Now you know two facts and have to work out two numbers. A shape standing in for a number nobody has told you yet is where algebra begins. Two facts about two shapes are always exactly enough. One would leave you guessing and three could contradict each other. They add to … and differ by … 7 is the triangle All six, side by side Adding the two facts is the trick, and it works because one shape cancels itself out. Put &#9650; + &#9679; = 10 underneath &#9650; &minus; &#9679; = 4 and add them. The ● is added once and taken away once, so it disappears entirely. That leaves ▲ + ▲ = 14. That is one shape on its own, and halving it finishes the job. Subtracting the facts instead makes the &#9650; disappear the same way. Two facts, two unknowns. One fact on its own leaves a whole list of answers. \"They add to 10\" is true of 9 and 1, 8 and 2, 7 and 3 and more. The second fact is what cuts the list down to one. And the shapes are only placeholders. A letter would do exactly the same job, which is what secondary school does. Write x and y instead of &#9650; and &#9679; and nothing else about the method changes. Step 11 Squares and cubes hiding in a sequence Step 8 said to look at the gaps, and that if they are all the same the rule is \"add that\". So what do you do when the gaps are NOT the same? Look at the gaps of the gaps. Squares and cubes turn up as sequences all the time, and this is how you catch them. Pick a sequence and say what is hiding in it. Pick a sequence What is hiding in it? The same gap every time Square numbers Cube numbers The gaps, and the gaps of those Working The gaps of the gaps are the giveaway. Every square-number sequence settles on the same one: 2, every single time. That holds whether th",
      "gh": "geometry",
-     "g": "addition fraction geometry subtraction",
+     "g": "addition fraction geometry money position sequence subtraction",
      "gm": {
       "addition": "adding",
       "fraction": "a whole",
       "geometry": "shape",
+      "money": "change",
+      "position": "above",
+      "sequence": "growing",
       "subtraction": "minus"
      }
     },
     {
-     "i": 3,
-     "a": "s11",
-     "h": "Squares and cubes hiding in a sequence",
-     "t": "Step 8 said to look at the gaps, and that if they are all the same the rule is \"add that\". So what do you do when the gaps are NOT the same? Look at the gaps of the gaps. Squares and cubes turn up as sequences all the time, and this is how you catch them. Pick a sequence and say what is hiding in it. Pick a sequence What is hiding in it? The same gap every time Square numbers Cube numbers The gaps, and the gaps of those Working The gaps of the gaps are the giveaway. Every square-number sequence settles on the same one: 2, every single time. That holds whether the squares climb from 1², starting further along at 3², sitting one above a square, or counting back down from 10². Cube numbers never settle that quickly, because a cube climbs faster than a square: their gaps of gaps are 12, 18, 24 and still growing. And a plain \"add 4\" sequence has gaps of gaps of 0, because its gaps never change at all.",
-     "gh": "",
-     "g": "addition geometry money position sequence",
-     "gm": {
-      "addition": "add",
-      "geometry": "square",
-      "money": "change",
-      "position": "above",
-      "sequence": "growing"
-     }
-    },
-    {
-     "i": 4,
+     "i": 5,
      "a": "s12",
      "h": "Shape patterns: count, then find the rule",
      "t": "Patterns made of matchsticks or dots grow by a rule too. Count how many pieces pattern 1, pattern 2 and pattern 3 use, write the counts as a sequence, and the gap tells you the rule. Then you can say how many pieces pattern 10 needs without building it. Pick a pattern and slide through it. Pick a pattern Pattern number: 3 Working The gap is what one more piece of the pattern costs. One more square on the end of a row of matchstick squares needs 3 sticks, not 4, because it shares a side. That is why the counts go up in 3s. Look at the picture to see WHY the rule is what it is, and the sequence to see WHAT it is.",
@@ -189,7 +188,7 @@
      }
     },
     {
-     "i": 5,
+     "i": 6,
      "a": "s13",
      "h": "Steps on a number line: decimals, and below zero",
      "t": "A rule does not have to be a whole number, and a sequence does not have to stop at zero. \"Start at 2, subtract 0.5\" gives 2, 1.5, 1, 0.5, 0, −0.5. Watch the hops on the line: every hop is the same size, and the line simply carries on past zero into the negative numbers. Pick a start and a step. Start at: 2 The step add 0.5 add 1.5 add 2 add 3 subtract 0.5 subtract 2 subtract 3 Working Going down past zero. 1, then 1 − 3 is −2, not 2. On the line, subtracting means hopping LEFT, and the numbers left of zero are negative: −1, −2, −3. The hops stay the same size, so the pattern does not change just because the sign did.",
@@ -204,7 +203,7 @@
      }
     },
     {
-     "i": 6,
+     "i": 7,
      "a": "selfcheck",
      "h": "What I can do",
      "t": "",
@@ -220,6 +219,36 @@
    "steps": [
     {
      "i": 0,
+     "a": "opener-about",
+     "h": "What this lesson is about",
+     "t": "By the end of this lesson you will be able to... Use the order of operations correctly, where there are no brackets. Use related facts and inverse operations for missing number problems. Use a test of divisibility to recognise multiples of 4. Explain what a prime number is. Use the sieve of Eratosthenes to find prime numbers to 100.",
+     "gh": "",
+     "g": "",
+     "gm": {}
+    },
+    {
+     "i": 1,
+     "a": "opener-lecture",
+     "h": "Unit lecture",
+     "t": "The whole lesson, in three parts. Part 1 of 3 Odd, even and the order of operations Whole numbers are either odd or even, and a calculation with more than one operation must be done in the correct order, or the answer changes. Part 2 of 3 Factors and multiples A factor divides exactly into a number; a multiple is what you get by multiplying it. Every number shares factors with some numbers and not others. Part 3 of 3 Divisibility and primes A divisibility rule lets you check whether a number divides exactly without doing the whole division. A prime number has exactly two factors: 1 and itself.",
+     "gh": "",
+     "g": "comparison odd and even",
+     "gm": {
+      "comparison": "more than",
+      "odd and even": "odd"
+     }
+    },
+    {
+     "i": 2,
+     "a": "opener-words",
+     "h": "Math words",
+     "t": "Tap each word to see what it means and how to use it. Then show you know them.",
+     "gh": "",
+     "g": "",
+     "gm": {}
+    },
+    {
+     "i": 3,
      "a": "s14",
      "h": "The odd numbers, and what they add up to",
      "t": "The odd numbers are the simplest sequence of all: start at 1 and add 2 for ever. They are the numbers you cannot share into two equal piles, and on the strip below they are every other one. Two things are worth knowing about them, and neither needs counting. One is where any odd number sits in the list. The other is what happens when you add the first few of them up. How many odd numbers: 4 Added end to end 16 = 4² Working Where does an odd number sit? Halve the next number up. Every position, its odd number, and the running total Step 2 showed this from the other side. There, each L you added to a square was the next odd number, which is why the squares grew 1, 4, 9, 16. Here is the same fact read as a list: add up the first few odd numbers and you always land exactly on a square. The other half of this step is the position. Counting along to the 50th odd number is slow, but 2 × 50 − 1 = 99 is quick. Going back the other way, (99 + 1) ÷ 2 = 50 tells you where 99 sits without counting a single one.",
@@ -235,12 +264,12 @@
      }
     },
     {
-     "i": 1,
+     "i": 4,
      "a": "s15",
      "h": "The even numbers, and the rectangle they make",
-     "t": "The even numbers are the other half of the strip: start at 2 and add 2 for ever. They are the numbers you CAN share into two equal piles, and that is the whole trick to them. Every row below is split down the middle into two equal halves, because every even number is a double. Step 14 added the odd numbers up and landed on a square. Do the same with the evens and you land somewhere just as tidy, but not the same shape. How many even numbers: 4 Each row split into two equal halves 20 = 4 × 5 Where does an even number sit? Halve it. The evens against the odds Odd numbers make a square, even numbers make a rectangle. The first four odd numbers add to 16, a 4 by 4 square. The first four even numbers add to 20, a 4 by 5 rectangle: one row taller. The gap between the two totals is never a surprise. Every even number is exactly one more than the odd number just before it. There are n of them, so the evens total is always n more. And because every even number is a double, adding them up is really adding the counting numbers twice over. 2 + 4 + 6 + 8 is two lots of 1 + 2 + 3 + 4. That is twice the triangle from Step 7.",
+     "t": "The even numbers are the other half of the strip: start at 2 and add 2 for ever. They are the numbers you CAN share into two equal piles, and that is the whole trick to them. Every row below is split down the middle into two equal halves, because every even number is a double. Step 14 added the odd numbers up and landed on a square. Do the same with the evens and you land somewhere just as tidy, but not the same shape. How many even numbers: 4 Each row split into two equal halves 20 = 4 × 5 Where does an even number sit? Halve it. The evens against the odds Odd numbers make a square, even numbers make a rectangle. The first four odd numbers add to 16, a 4 by 4 square. The first four even numbers add to 20, a 4 by 5 rectangle: one row taller. The gap between the two totals is never a surprise. Every even number is exactly one more than the odd number just before it. There are n of them, so the evens total is always n more. And because every even number is a double, adding them up is really adding the counting numbers twice over. 2 + 4 + 6 + 8 is two lots of 1 + 2 + 3 + 4. That is twice the triangle from Step 7. Step 16 The order of the operations 3 + 4 &times; 5 has two possible answers. Work along the line and you get 35; do the multiplication first and you get 23. Only one of those is what the expression means. The way it is settled will be familiar from Step 21: it is a convention . Everybody agreed on it so that everybody reads the same line the same way, and nobody discovered it. The agreement is that &times; and &divide; are done before + and &minus; . An expression 23 is the answer What the agreement is worth Operations of the same rank are done left to right, and that matters more than it looks. 10 &minus; 2 &minus; 3 is 5 because you take 2 away and then 3. Work",
      "gh": "geometry",
-     "g": "addition comparison division fraction geometry measurement multiplication odd and even position",
+     "g": "addition comparison division fraction geometry measurement money multiplication odd and even position subtraction",
      "gm": {
       "addition": "adding",
       "comparison": "more than",
@@ -248,27 +277,15 @@
       "fraction": "half",
       "geometry": "shape",
       "measurement": "taller",
+      "money": "change",
       "multiplication": "double",
       "odd and even": "odd",
-      "position": "between"
-     }
-    },
-    {
-     "i": 2,
-     "a": "s16",
-     "h": "The order of the operations",
-     "t": "3 + 4 &times; 5 has two possible answers. Work along the line and you get 35; do the multiplication first and you get 23. Only one of those is what the expression means. The way it is settled will be familiar from Step 21: it is a convention . Everybody agreed on it so that everybody reads the same line the same way, and nobody discovered it. The agreement is that &times; and &divide; are done before + and &minus; . An expression 23 is the answer What the agreement is worth Operations of the same rank are done left to right, and that matters more than it looks. 10 &minus; 2 &minus; 3 is 5 because you take 2 away and then 3. Working from the right instead would give 10 &minus; (2 &minus; 3), which is 11. 12 &divide; 4 &times; 3 is 9 for the same reason, where right-to-left would give 1. So the rule is really two rules: multiplication and division first, and then equal ranks in reading order. Nothing here is a discovery. Every one of these expressions could have been given the other meaning if people had agreed differently. The convention exists because an expression that means two things is useless. Halfway rounding both ways would be useless in exactly the same way. And when the convention gives the wrong shape, brackets override it. If you really do want the 3 + 4 done first, you write (3 + 4) &times; 5, and the brackets say so out loud. That is the next thing after this one in the Cambridge sequence. It is the only way to change the order rather than merely complain about it. Spot the mistake Pia works out 3 + 5 x 2 and writes 16.",
-     "gh": "",
-     "g": "comparison geometry money subtraction",
-     "gm": {
-      "comparison": "more than",
-      "geometry": "shape",
-      "money": "change",
+      "position": "between",
       "subtraction": "minus"
      }
     },
     {
-     "i": 3,
+     "i": 5,
      "a": "s17",
      "h": "Factors and multiples",
      "t": "A factor of a number divides into it exactly, with nothing left over. A multiple of a number is what you get by counting it up: the times table. They point in opposite directions, and the difference between them is the thing to hold on to. The factors of a number are a short list that stops. Its multiples go on for ever. Factors also come in pairs , and where the two halves of a pair meet turns out to be the square root from Step 4. Pick a number Its factors, joined up in pairs 8 factors And the other direction: its multiples All eight, side by side Factors stop. Multiples do not. Every number has a first factor (1) and a last one (itself), so the list is finite and you can write all of it down. Nothing is the last multiple, so you write the first few and then three dots. The pairs are why you never have to test very far. Sorting the factors of 24 into pairs gives 1 &times; 24, 2 &times; 12, 3 × 8, 4 × 6. After 4 the pairs would just repeat backwards, because 4 &times; 6 and 6 &times; 4 are the same pair. The turning point is the square root, which is exactly the stopping rule Step 4 gave you. And a square number is the only kind with an odd number of factors . One of its pairs is a number paired with itself. 36 gives 1 &times; 36, 2 &times; 18, 3 &times; 12, 4 &times; 9 and then 6 &times; 6, which is nine factors, not ten. The next step is about the numbers at the other extreme - the ones with exactly two.",
@@ -285,41 +302,19 @@
      }
     },
     {
-     "i": 4,
+     "i": 6,
      "a": "s18",
      "h": "What two numbers share",
-     "t": "Put two numbers side by side and ask what they have in common. A common factor divides into both of them; a common multiple is in both times tables. Watch the names carefully, because they are not the same shape. We talk about the highest common factor but the lowest common multiple. Step 17 already explained why. Factor lists stop, so there is a highest one to find. Multiple lists never stop, so there is no highest - only a first. Two numbers Their factors, and the overlap 6 highest common factor Multiples of Multiples of 36 lowest common multiple All six pairs Highest for factors, lowest for multiples - and the asymmetry is not a quirk of the words. Both factor lists stop, so the numbers in both stop too, and asking for the highest is a fair question with an answer. Neither multiple list stops, so their common ones go on for ever: 36, 72, 108, 144 and so on without end. There is nothing to call a highest common multiple, so the one worth naming is the first. Two shapes come up again and again. When one number divides the other, they have done the work for you. 8 and 16 share a highest factor of 8 and a lowest multiple of 16, the two numbers themselves. When they share nothing but 1, as 7 and 11 do, the lowest common multiple is simply the two multiplied together. And one thing is worth checking on every row of the table. The highest common factor times the lowest common multiple always comes to the two numbers multiplied. 6 &times; 36 = 216, and 12 &times; 18 = 216 as well.",
+     "t": "Put two numbers side by side and ask what they have in common. A common factor divides into both of them; a common multiple is in both times tables. Watch the names carefully, because they are not the same shape. We talk about the highest common factor but the lowest common multiple. Step 17 already explained why. Factor lists stop, so there is a highest one to find. Multiple lists never stop, so there is no highest - only a first. Two numbers Their factors, and the overlap 6 highest common factor Multiples of Multiples of 36 lowest common multiple All six pairs Highest for factors, lowest for multiples - and the asymmetry is not a quirk of the words. Both factor lists stop, so the numbers in both stop too, and asking for the highest is a fair question with an answer. Neither multiple list stops, so their common ones go on for ever: 36, 72, 108, 144 and so on without end. There is nothing to call a highest common multiple, so the one worth naming is the first. Two shapes come up again and again. When one number divides the other, they have done the work for you. 8 and 16 share a highest factor of 8 and a lowest multiple of 16, the two numbers themselves. When they share nothing but 1, as 7 and 11 do, the lowest common multiple is simply the two multiplied together. And one thing is worth checking on every row of the table. The highest common factor times the lowest common multiple always comes to the two numbers multiplied. 6 &times; 36 = 216, and 12 &times; 18 = 216 as well. Step 19 Divisibility rules Step 17 asked what divides into a number, and answered it by trying every number in turn. For the small divisors you do not have to. Each one has a rule that reads only part of the number, sometimes a single digit. It tells you the answer without dividing at all. Pick a n",
      "gh": "division",
-     "g": "division geometry",
-     "gm": {
-      "division": "share",
-      "geometry": "shape"
-     }
-    },
-    {
-     "i": 5,
-     "a": "s19",
-     "h": "Divisibility rules",
-     "t": "Step 17 asked what divides into a number, and answered it by trying every number in turn. For the small divisors you do not have to. Each one has a rule that reads only part of the number, sometimes a single digit. It tells you the answer without dividing at all. Pick a number and a divisor below, and the digits the rule actually looks at will light up. There is a rule for 2, 3, 4, 5, 6, 8, 9 and 10. There is no useful one for 7, and that gap is worth knowing about. A number Divide it by 00 the last two digits Every rule at once, for Three of the rules are really other rules wearing a hat. 6 is just 2 and 3 together, because a number divisible by both is divisible by their product. 9's rule is the same digit-sum test as 3's, asking for a multiple of 9 instead of 3. So anything that passes 9 passes 3 as well, and never the other way round. And 8's rule is the last three digits for the same reason 4's is the last two. 1,000 is a multiple of 8 and 100 is a multiple of 4. Everything above those columns divides cleanly and can be ignored. The digit-sum rules are the surprising ones, and there is a reason for them. 10 leaves 1 when you divide by 9, and so do 100 and 1,000 and every power after them. So the only thing a number leaves over when divided by 9 is what its digits add up to. That is why adding them works. It is also why the same trick is no use at all for 4 or 8. And then there is 7. No rule for it is quicker than dividing. That is why the next step settles 2, 3 and 5 at a glance, and then has to work out 47 ÷ 7 by hand. 7,315 is the case to look at: nothing visible about it suggests 7 goes into it, and 7 &times; 1,045 = 7,315. Spot the mistake Banko says: every multiple of 4 is also a multiple of 8.",
-     "gh": "",
-     "g": "addition place value position",
+     "g": "addition comparison division geometry odd and even place value position sequence subtraction",
      "gm": {
       "addition": "adding",
-      "place value": "digit",
-      "position": "above"
-     }
-    },
-    {
-     "i": 6,
-     "a": "s20",
-     "h": "The prime numbers, the sequence with no rule",
-     "t": "A prime number has exactly two factors: 1 and itself. Nothing else divides into it without a remainder. A number with more than two factors is called composite , which means put together. It can be built by multiplying smaller numbers, the way 21 is built from 3 and 7. There is no formula for them. You cannot write down the nth prime the way you can write 2n &minus; 1 for the nth odd number. So instead of building the primes you find them, by crossing out everything that is not one. Start with the multiples of 2, which is the whole of Step 15 gone in one move. Cross out the multiples of 51 still standing, besides 1 Is it prime? Count what divides into it. Everything that divides into it The first twelve primes, and the gaps between them Every whole number above 1 is one or the other. Exactly two factors and it is prime . More than two and it is composite , meaning it can be put together by multiplying smaller numbers. 21 is 3 × 7, 49 is 7 &times; 7, and every number this sieve crosses out is one. 1 is the single exception . That is why it sits dashed on the square rather than crossed out or shaded: with one factor it is neither. Every other sequence in this lesson has a rule. This one has none. The gaps go 1, 2, 2, 4, 2, 4, 2, 4, 6, 2, 6, 4. No pattern anybody has ever found, and that is not for want of looking. Three things are worth carrying away. 2 is the only even prime . Every other even number can be shared into two equal piles, which is exactly what Step 15 was about. A square number is never prime once you are past 1. n × n always has n as a factor: 49 has 7, 100 has 10. And the first number left standing after each crossing-out is the square of the next one to try : 9, then 25, then 49. That is why 7 is where you can stop on a hundred square. The next try would",
-     "gh": "",
-     "g": "comparison geometry odd and even position sequence subtraction",
-     "gm": {
       "comparison": "more than",
-      "geometry": "square",
+      "division": "share",
+      "geometry": "shape",
       "odd and even": "odd",
+      "place value": "digit",
       "position": "between",
       "sequence": "pattern",
       "subtraction": "minus"
@@ -342,9 +337,31 @@
    "steps": [
     {
      "i": 0,
-     "a": "s21",
-     "h": "Rounding",
-     "t": "Rounding replaces a number with the nearest round one, so it can be said, remembered and compared without carrying every digit around. It is the same kind of move as Step 19: look at one particular digit and decide. The difference is which digit. A divisibility rule reads the digits at the end of the number. Rounding reads the single digit just after the place you are rounding to. Nothing else matters at all. A number To the nearest Which one is it nearer? 3,500 to the nearest 100 The same number, rounded four ways And the same rule on a number with a decimal Round in one move, from the number you started with. Rounding twice is the mistake worth guarding against, and 149 is the clearest case. To the nearest ten it is 150, and 150 to the nearest hundred is 200. But 149 to the nearest hundred is 100 , because its tens digit is 4. The first answer went through a number that was already not the original. The second reading of 5-or-more was made about a digit that rounding had put there. 3,449 does the same thing: 3,450 then 3,500, against a true answer of 3,400. Exactly halfway goes up, and that is a convention rather than a fact. 3,450 is the same distance from 3,400 as from 3,500, so nothing about the number decides it. Everybody agrees to go up, so everybody gets the same answer. And a rounded number is not the number. 27,849 people rounds to 28,000. That is a fair thing to print in a headline and the wrong thing to put on a ticket order. The whole point of rounding is that you have deliberately thrown some of the number away, so it is worth knowing how much. Here it is 151 people. Spot the mistake Your teacher says: 3.7 and 4.5 both round to 4 to the nearest whole number.",
+     "a": "opener-about",
+     "h": "What this lesson is about",
+     "t": "By the end of this lesson you will be able to... Explain the values of repeated digits in a number, including decimals. Decompose numbers into their place value parts, including decimals. Multiply and divide whole numbers by 10, 100 and 1000. Position positive and negative numbers around zero. Round numbers with one decimal place to the nearest whole number.",
+     "gh": "",
+     "g": "",
+     "gm": {}
+    },
+    {
+     "i": 1,
+     "a": "opener-lecture",
+     "h": "Unit lecture",
+     "t": "The whole lesson, in three parts. Part 1 of 3 Place value with decimals Place value carries on past the decimal point - the first digit after it is tenths, the next is hundredths, each worth ten times less than the one before. Part 2 of 3 Negative numbers and rounding Negative numbers sit to the left of zero on a number line. Rounding a decimal means finding which whole number, or which tenth, it is nearer to. Part 3 of 3 Fractions, percentages and ratio A fraction, a percentage and a ratio can all describe the same relationship between two amounts, just written in different ways.",
+     "gh": "",
+     "g": "comparison place value position",
+     "gm": {
+      "comparison": "less than",
+      "place value": "digit",
+      "position": "between"
+     }
+    },
+    {
+     "i": 2,
+     "a": "opener-words",
+     "h": "Math words",
+     "t": "Tap each word to see what it means and how to use it. Then show you know them. Step 21 Rounding Rounding replaces a number with the nearest round one, so it can be said, remembered and compared without carrying every digit around. It is the same kind of move as Step 19: look at one particular digit and decide. The difference is which digit. A divisibility rule reads the digits at the end of the number. Rounding reads the single digit just after the place you are rounding to. Nothing else matters at all. A number To the nearest Which one is it nearer? 3,500 to the nearest 100 The same number, rounded four ways And the same rule on a number with a decimal Round in one move, from the number you started with. Rounding twice is the mistake worth guarding against, and 149 is the clearest case. To the nearest ten it is 150, and 150 to the nearest hundred is 200. But 149 to the nearest hundred is 100 , because its tens digit is 4. The first answer went through a number that was already not the original. The second reading of 5-or-more was made about a digit that rounding had put there. 3,449 does the same thing: 3,450 then 3,500, against a true answer of 3,400. Exactly halfway goes up, and that is a convention rather than a fact. 3,450 is the same distance from 3,400 as from 3,500, so nothing about the number decides it. Everybody agrees to go up, so everybody gets the same answer. And a rounded number is not the number. 27,849 people rounds to 28,000. That is a fair thing to print in a headline and the wrong thing to put on a ticket order. The whole point of rounding is that you have deliberately thrown some of the number away, so it is worth knowing how much. Here it is 151 people. Spot the mistake Your teacher says: 3.7 and 4.5 both round to 4 to the nearest whole number.",
      "gh": "",
      "g": "multiplication place value",
      "gm": {
@@ -353,45 +370,21 @@
      }
     },
     {
-     "i": 1,
+     "i": 3,
      "a": "s22",
      "h": "Below zero",
      "t": "Counting down from 5 does not stop at 0. It carries straight on into −1, −2, −3. The number line runs just as far to the left of zero as it does to the right. The minus sign is not saying how big a number is - it is saying which side of zero it is on. That one idea settles everything else in this step. It settles the thing almost everybody gets wrong the first time: &minus;7 is lower than &minus;3, even though 7 is bigger than 3. Morning: 5 °C Night: −3 °C 8 degrees apart Which of each pair is the lower number? Written down, the sign always opens towards the bigger number, so &minus;7 < &minus;3 reads &ldquo;minus seven is less than minus three&rdquo;, and &minus;10 = &minus;10 says they are the same number twice. The minus sign says which side of zero, not how big. On the right of zero the numbers get bigger as you go along. On the left they get smaller , so the digits count downwards. &minus;1, &minus;2, &minus;3 are each lower than the one before. That is the whole reason &minus;7 sits below &minus;3 while 7 sits above 3. Reading it off the line takes no thought at all. Whichever mark is further left is the lower number, every time, no matter what the digits say. Zero is neither. It is not positive and not negative. It is the one number that only marks the boundary. Every negative number is below it, and every positive one is above. So any negative beats any positive to the bottom, however small its digits look: &minus;1 is colder than 40. Counting across zero is done in two parts. From 5 down to &minus;3 you go 5 steps to reach zero and 3 more after it, which is 8. And 8 is exactly 5 + 3. That is why the distance between a positive and a negative is found by adding rather than subtracting. And this is not only about temperature. A submarine at &minus;40 metres is fo",
      "gh": "position",
-     "g": "addition comparison multiplication position subtraction",
+     "g": "addition comparison fraction measurement multiplication place value position subtraction",
      "gm": {
       "addition": "adding",
       "comparison": "less than",
+      "fraction": "a whole",
+      "measurement": "longer",
       "multiplication": "twice",
+      "place value": "digit",
       "position": "between",
       "subtraction": "minus"
-     }
-    },
-    {
-     "i": 2,
-     "a": "s23",
-     "h": "Decimals",
-     "t": "Step 22 carried the number line to the left of zero. This one fills in what was always sitting between the whole numbers. Every column after the point is worth a tenth of the one before it: tenths, then hundredths, then thousandths. The point itself is only there to show where the whole numbers stop. Watch out for the mirror image of the last step&rsquo;s trap. There, bigger digits could mean a lower number. Here, more digits can mean a smaller one. 0.65 is longer to write than 0.7 and it is less. A number Where it sits, and the same place magnified 65 hundredths Which of each pair is the bigger number? Longer is not bigger. 0.65 has more digits than 0.7 and is smaller. The comparison is decided in the tenths column and never gets as far as the hundredths. 7 tenths beats 6 tenths and the rest is not consulted. That is why the method is to line the points up and read from the left , stopping at the first column where the two differ. The first difference really does settle it , because one of any column beats every 9 you could write after it. 9 hundredths and 9 thousandths together come to 0.099, which is still short of a single tenth. A zero at the end changes nothing; a zero in the middle changes everything. 0.2, 0.20 and 0.200 are the same number. That is why money is written £0.70 rather than £0.7: two columns, because there are a hundred pence in a pound. But 3.04 and 3.4 are nowhere near each other. The zero is holding the tenths column empty, so 3.04 is barely past 3 while 3.4 is nearly halfway to 4. And rounding works exactly as it did in Step 21. Look at the next digit along and nothing else. To round 3.04 to one decimal place, read the hundredths digit, 4, and round down to 3.0. Spot the mistake Pia regroups 15.73 as 10 + 5.7 + 0.3.",
-     "gh": "",
-     "g": "measurement place value position",
-     "gm": {
-      "measurement": "longer",
-      "place value": "digit",
-      "position": "between"
-     }
-    },
-    {
-     "i": 3,
-     "a": "s24",
-     "h": "Moving the digits",
-     "t": "Multiplying by 10 is often taught as &ldquo;add a zero&rdquo;. That is a description of what happens to whole numbers, not an explanation. It stops being true the moment there is a decimal point. 3.5 × 10 is 35, and adding a zero would give 3.50, which is just 3.5 again. What really happens is that every digit moves one column to the left and the point stays exactly where it always was. A number Multiply or divide by Before After 35 the answer &ldquo;Add a zero&rdquo; is a coincidence, not a rule. It works for whole numbers because a whole number always has an empty ones column waiting once everything shifts left. A zero is what you write in an empty column. It fails for 3.5 because the digit moving into the ones column is the 5, and there is nothing left to fill. Say &ldquo;every digit moves one column&rdquo; and both cases come out right. Dividing is the same move backwards. By 10 is one column to the right, by 100 is two, by 1000 is three. Dividing by 10 three times in a row is exactly dividing by 1000. That is why the columns are worth thinking about rather than the zeros. The point never moves. It marks the boundary between the ones and the tenths. That boundary is a fact about the columns rather than about this number, so nothing you multiply by can shift it. Spot the mistake Guss sorts 62.5 into the group of numbers with 5 hundredths.",
-     "gh": "",
-     "g": "addition fraction place value position",
-     "gm": {
-      "addition": "adding",
-      "fraction": "a whole",
-      "place value": "digit",
-      "position": "between"
      }
     },
     {
@@ -455,9 +448,32 @@
    "steps": [
     {
      "i": 0,
-     "a": "s28",
-     "h": "Squares and sequences in real life",
-     "t": "A word problem never says \"this is a sequence\". So do it in two moves: first decide which tool the problem needs, then do the maths. Twenty-seven problems, one at a time. Move 1 · What kind of problem is this? A square, cube or triangle number Keep doing the rule Find the rule from the terms Count the pattern, then the rule Check what divides into it Round it to a useful place Turn it into a percentage Move 2 · Work it out Next problem 0 % Do them again Count the hops, not the terms. To get from the 1st term to the 8th you use the rule 7 times. Writing the sequence out is never wrong, but \"start + 7 × step\" gets there faster.",
+     "a": "opener-about",
+     "h": "What this lesson is about",
+     "t": "By the end of this lesson you will be able to... Apply skills of rounding and calculating to problems. Decide whether to work mentally, with jottings or using a formal method. Estimate and multiply whole numbers by 1-digit or 2-digit numbers. Estimate and divide whole numbers by 1-digit numbers.",
+     "gh": "",
+     "g": "estimation place value",
+     "gm": {
+      "estimation": "estimate",
+      "place value": "digit"
+     }
+    },
+    {
+     "i": 1,
+     "a": "opener-lecture",
+     "h": "Unit lecture",
+     "t": "The whole lesson, in three parts. Part 1 of 3 Choosing a method Some calculations are quick enough to do in your head, some need jottings, and some need a full written method - part of solving a problem is choosing which. Part 2 of 3 Estimating first Before working out an exact answer, a quick estimate tells you roughly what to expect, so you can tell if your exact answer is reasonable. Part 3 of 3 Reading the story A real-life problem hides its numbers inside a story - read it carefully, find what is being asked, then choose your method.",
+     "gh": "",
+     "g": "estimation",
+     "gm": {
+      "estimation": "estimate"
+     }
+    },
+    {
+     "i": 2,
+     "a": "opener-words",
+     "h": "Math words",
+     "t": "Tap each word to see what it means and how to use it. Then show you know them. Step 28 Squares and sequences in real life A word problem never says \"this is a sequence\". So do it in two moves: first decide which tool the problem needs, then do the maths. Twenty-seven problems, one at a time. Move 1 · What kind of problem is this? A square, cube or triangle number Keep doing the rule Find the rule from the terms Count the pattern, then the rule Check what divides into it Round it to a useful place Turn it into a percentage Move 2 · Work it out Next problem 0 % Do them again Count the hops, not the terms. To get from the 1st term to the 8th you use the rule 7 times. Writing the sequence out is never wrong, but \"start + 7 × step\" gets there faster.",
      "gh": "",
      "g": "geometry sequence",
      "gm": {
@@ -466,7 +482,106 @@
      }
     },
     {
+     "i": 3,
+     "a": "selfcheck",
+     "h": "What I can do",
+     "t": "",
+     "gh": "",
+     "g": "",
+     "gm": {}
+    }
+   ]
+  },
+  {
+   "file": "shapes-and-angles.html",
+   "title": "Shapes and Angles",
+   "steps": [
+    {
+     "i": 0,
+     "a": "opener-about",
+     "h": "What this lesson is about",
+     "t": "By the end of this lesson you will be able to... Identify, describe, classify and sketch isosceles, equilateral or scalene triangles. Estimate and measure perimeter and area of 2D shapes, understanding that shapes with the same perimeter can have different areas. Draw compound shapes that can be divided into rectangles and squares, and estimate, measure and calculate their perimeter and area. Identify, describe and sketch 3D shapes in different orientations. Identify and sketch different nets for a cube. Use knowledge of reflective symmetry to identify and complete symmetrical patterns. Estimate, compare and classify angles, using geometric vocabulary including acute, right and obtuse. Know that the sum of the angles on a straight line is 180 degrees, and use this to calculate missing angles.",
+     "gh": "",
+     "g": "comparison estimation geometry measurement sequence symmetry",
+     "gm": {
+      "comparison": "compare",
+      "estimation": "estimate",
+      "geometry": "shapes",
+      "measurement": "measure",
+      "sequence": "patterns",
+      "symmetry": "symmetry"
+     }
+    },
+    {
      "i": 1,
+     "a": "opener-lecture",
+     "h": "Unit lecture",
+     "t": "The whole lesson, in three parts. Part 1 of 3 Sorting by the sides Triangles are named by how many sides are the same length - all three, exactly two, or none. The angles always agree with the sides, so an equilateral triangle has three equal angles and a scalene triangle has none. Part 2 of 3 Naming an angle by eye A right angle is 90 degrees, the corner of a page. Smaller than that is acute and larger is obtuse, so you can classify an angle by holding a corner against it without measuring anything. Part 3 of 3 Round the edge, or inside Perimeter is the distance all the way round and area is how many squares fit inside. They answer different questions, which is why two rectangles can use the same length of fence and hold different amounts of room.",
+     "gh": "",
+     "g": "geometry measurement statistics",
+     "gm": {
+      "geometry": "sides",
+      "measurement": "measuring",
+      "statistics": "sorting"
+     }
+    },
+    {
+     "i": 2,
+     "a": "opener-words",
+     "h": "Math words",
+     "t": "Tap each word to see what it means and how to use it. Then show you know them. Step 29 Three kinds of triangle Triangles are sorted by how many of their sides are the same length. Pick a kind and look at what that does to the angles and to the lines of symmetry — the sides and the angles always agree with each other. Choose a kind of triangle What is true about it Equal sides and equal angles come as a pair. Where two sides are the same length, the two angles opposite them are equal too. That is why a scalene triangle, with no two sides the same, also has no two angles the same — and why it has no line of symmetry at all. Step 30 Acute, right or obtuse A right angle is exactly 90°, the corner of a page. Everything smaller is acute, everything larger (up to a straight line) is obtuse. Drag the arm and name the angle before you read the label. Open the angle Your turn: what kind is it? Estimate against the right angle. You do not need a protractor to classify one. Hold the corner of a page against it: if the arm falls inside the corner it is acute, if it falls outside it is obtuse.",
+     "gh": "",
+     "g": "estimation geometry symmetry",
+     "gm": {
+      "estimation": "estimate",
+      "geometry": "sides",
+      "symmetry": "symmetry"
+     }
+    },
+    {
+     "i": 3,
+     "a": "s31",
+     "h": "Angles on a straight line",
+     "t": "Two angles that sit together on a straight line always add to 180°. That is enough to work out one you cannot measure, as long as you know the other. Move the arm Find the missing angle Subtract from 180, not from 90. The commonest slip is to reach for 90 because a right angle is the angle you know best. On a straight line the total is 180°, so the missing angle is 180 minus the one you have. Step 32 Perimeter is not area Perimeter is the distance all the way round the edge. Area is how many squares fit inside. They measure different things, and changing a shape can move one while the other stays exactly where it was. Build a rectangle Every rectangle with perimeter 24 Same perimeter, different area. All of those rectangles use 24 cm of edge, and their areas run from 11 to 36 squares. So knowing the perimeter tells you nothing on its own about how much room is inside — the squarer the rectangle, the more area the same edge encloses.",
+     "gh": "",
+     "g": "addition geometry measurement subtraction",
+     "gm": {
+      "addition": "add",
+      "geometry": "shape",
+      "measurement": "measure",
+      "subtraction": "minus"
+     }
+    },
+    {
+     "i": 4,
+     "a": "s33",
+     "h": "Cut it into rectangles",
+     "t": "A compound shape is not a shape with its own formula — it is rectangles stuck together. Cut it into rectangles you can already do, work each one out, then add. For the perimeter, walk all the way round the outside instead. Working The cut line is not part of the perimeter. When you split the shape, the new edge down the middle belongs to both rectangles — it helps you find the AREA, but it is inside the shape, so it is never walked when you measure the distance round the outside. Step 34 Solids and the nets that fold into them A solid keeps its faces, edges and vertices however you turn it — a cube lying on a corner is still a cube. A net is that solid opened flat, and not every arrangement of six squares folds back up. Choose a solid Which of these fold into a cube? Six squares is necessary, not sufficient. Every one of these has six squares. A net fails when two squares would land on the same face as it folds — so count the squares first, then check the arrangement.",
+     "gh": "",
+     "g": "addition division geometry measurement",
+     "gm": {
+      "addition": "add",
+      "division": "split",
+      "geometry": "shape",
+      "measurement": "measure"
+     }
+    },
+    {
+     "i": 5,
+     "a": "s35",
+     "h": "Finish the symmetrical pattern",
+     "t": "A mirror line means every square has a partner the same distance away on the other side. Click the squares on the right to complete the reflection. Where the mirror is Count from the line, not from the edge. A square two columns from the mirror reflects to two columns from the mirror on the other side. Counting from the edge of the grid instead is what makes a pattern come out shifted.",
+     "gh": "sequence symmetry",
+     "g": "geometry odd and even sequence symmetry",
+     "gm": {
+      "geometry": "square",
+      "odd and even": "partner",
+      "sequence": "pattern",
+      "symmetry": "symmetrical"
+     }
+    },
+    {
+     "i": 6,
      "a": "selfcheck",
      "h": "What I can do",
      "t": "",

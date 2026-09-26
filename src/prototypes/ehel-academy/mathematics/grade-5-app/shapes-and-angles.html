@@ -1,0 +1,1577 @@
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Shapes and Angles</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400&display=swap">
+<style>
+  :root, :root:not([data-theme="light"]), :root[data-theme="dark"] {
+    /* Ehel navy, lifted coral/teal/gold — copied from mathematics/grade-1-app/g1v2 so the two
+       lessons are the same design rather than two designs that resemble each other. It is
+       unconditionally dark there and here: the navy IS the design, not a dark mode. */
+    --ground: #142B3E;
+    --card: #1B3A52;
+    --cell: #22485F;
+    --line: #2B5673;
+    --ink: #FFFFFF;
+    --muted: #93AABE;
+    --accent: #E9744F;
+    --accent-ink: #2A1F05;
+    --accent-soft: rgba(233, 116, 79, 0.18);
+    --teal: #35BFB2;
+    --teal-soft: #143A4A;
+    --sel-ink: #06231F;
+    --plum: #B78BD1;
+    --gold: #F4C95D;
+    --gold-press: #D0A326;
+    --good: #4FD1A0;
+    --good-soft: rgba(79, 209, 160, 0.18);
+    --bad: #F0806F;
+    --bad-soft: rgba(240, 128, 111, 0.18);
+    --shadow: 0 1px 2px rgba(0, 0, 0, 0.35), 0 22px 50px rgba(0, 0, 0, 0.45);
+    color-scheme: dark;
+  }
+  * { box-sizing: border-box; }
+  html { background: #183B56; }
+  body::before { content: ""; position: fixed; inset: 0; z-index: -1;
+    background: linear-gradient(135deg, #183B56 0%, #24556B 100%); }
+  body { margin: 0; background: var(--ground); color: var(--ink); font-family: "Atkinson Hyperlegible", "Segoe UI", Arial, sans-serif; font-size: 17px; line-height: 1.55; -webkit-font-smoothing: antialiased; }
+  h1, h2, h3 { letter-spacing: -0.02em; font-family: "Inter", "Segoe UI", sans-serif; font-weight: 800; line-height: 1.15; margin: 0; text-wrap: balance; }
+  p { margin: 0; }
+  [hidden] { display: none !important; }
+  button { font: inherit; color: inherit; cursor: pointer; }
+  button:focus-visible, input:focus-visible, [tabindex]:focus-visible { outline: 3px solid var(--teal); outline-offset: 2px; }
+  .wrap { max-width: 900px; margin: 0 auto; padding: 24px 20px 80px; }
+
+  /* header */
+  .hero { display: grid; grid-template-columns: 1fr auto; gap: 24px; align-items: end; padding: 12px 0 28px; }
+  .eyebrow { font-size: 13px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--teal); margin-bottom: 10px; }
+  .hero h1 { font-size: clamp(38px, 6vw, 60px); font-weight: 700; }
+  .hero h1 em { font-style: normal; color: var(--accent); }
+  .hero .lede { max-width: 32em; margin-top: 12px; color: var(--muted); font-size: 18px; }
+  .hero-mini { display: grid; grid-template-columns: repeat(5, 12px); gap: 4px; padding: 10px; background: var(--card); border: 1px solid var(--line); border-radius: 10px; }
+  .hero-mini i { display: block; width: 12px; height: 12px; border-radius: 50%; background: var(--accent); }
+  .hero-mini i.l { background: var(--teal); }
+  @media (max-width: 680px) { .hero { grid-template-columns: 1fr; } .hero-mini { justify-self: start; } }
+
+  .steps-nav { position: sticky; top: 0; z-index: 5; display: flex; gap: 6px; padding: 10px 0; margin: 0 0 28px; background: rgba(24, 59, 86, 0.94); border-bottom: 1px solid var(--line); overflow-x: auto; }
+  .steps-nav a { flex: 0 0 auto; display: inline-flex; align-items: center; gap: 8px; padding: 8px 14px; border-radius: 999px; border: 1px solid var(--line); background: var(--card); color: var(--ink); text-decoration: none; font-size: 15px; white-space: nowrap; }
+  .steps-nav a b { display: inline-grid; place-items: center; width: 22px; height: 22px; border-radius: 50%; background: var(--teal); color: var(--sel-ink); font-family: "Inter", "Segoe UI", sans-serif; font-size: 13px; }
+  .steps-nav a.check b { background: var(--accent); color: var(--accent-ink); }
+  .steps-nav .navgroup { flex: 0 0 auto; display: inline-flex; align-items: center; padding: 0 12px 0 10px;
+    font: 700 11px "Atkinson Hyperlegible", system-ui, sans-serif; text-transform: uppercase;
+    letter-spacing: 0.06em; color: var(--muted); white-space: nowrap; border-left: 2px solid var(--line); }
+  .steps-nav .navgroup:first-child { border-left: 0; padding-left: 0; }
+  .route { margin: 14px 0 0; padding: 12px 16px; border-left: 4px solid var(--teal); border-radius: 0 10px 10px 0;
+    background: var(--teal-soft); color: var(--ink); font-size: 15px; line-height: 1.55; }
+  .route b { color: var(--teal); }
+
+
+  /* step cards */
+  .step { background: rgba(20, 43, 62, 0.88); border: 1px solid var(--line); border-radius: 18px; box-shadow: var(--shadow); padding: 28px; margin-bottom: 28px; scroll-margin-top: 70px; min-width: 0; overflow-x: clip; }
+  .step-head { display: flex; flex-wrap: wrap; align-items: baseline; gap: 14px; margin-bottom: 8px; }
+  .step-num { font-family: "Inter", "Segoe UI", sans-serif; font-weight: 700; font-size: 15px; letter-spacing: 0.06em; color: var(--teal); text-transform: uppercase; white-space: nowrap; }
+  .step h2 { font-size: clamp(26px, 3.6vw, 34px); }
+  .step .intro { max-width: 36em; color: var(--muted); margin: 6px 0 22px; }
+  .two-col { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 28px; align-items: start; }
+  @media (max-width: 680px) { .two-col { grid-template-columns: minmax(0, 1fr); } }
+
+  .picker-lab { font-size: 13px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); margin: 14px 0 4px; }
+  .chips { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 8px; }
+  .chip { padding: 8px 14px; border-radius: 999px; border: 1.5px solid var(--line); background: var(--card); font-weight: 700; font-variant-numeric: tabular-nums; }
+  .chip:hover { border-color: var(--teal); }
+  .chip.on { background: var(--teal); border-color: var(--teal); color: var(--sel-ink); }
+  .chip.accent.on { background: var(--accent); border-color: var(--accent); color: var(--accent-ink); }
+  .chip.good:not(.on) { background: var(--good-soft); border-color: var(--good); }
+  .chip.oops:not(.on) { background: var(--bad-soft); border-color: var(--bad); }
+  input[type="range"] { width: 100%; accent-color: var(--accent); margin: 10px 0; }
+  .chip.on { box-shadow: 0 4px 0 rgba(0, 0, 0, 0.28); }
+  .chip.on:active { transform: translateY(2px); box-shadow: 0 2px 0 rgba(0, 0, 0, 0.28); }
+  .btn { padding: 10px 18px; border-radius: 999px; border: 0; background: var(--accent); color: var(--accent-ink); font-weight: 700; }
+  .btn.ghost { background: transparent; border: 1.5px solid var(--line); color: var(--ink); }
+  .btn:disabled { opacity: 0.45; cursor: default; }
+  .tools { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 16px; }
+
+  .working { display: grid; gap: 8px; margin-top: 14px; font-variant-numeric: tabular-nums; }
+  .working .line { display: grid; grid-template-columns: auto 1fr; gap: 12px; align-items: baseline; padding: 10px 14px; border-radius: 10px; background: var(--teal-soft); }
+  .working .line.total { background: var(--accent-soft); }
+  .working .line .k { font-family: "Inter", "Segoe UI", sans-serif; font-weight: 600; max-width: 12em; }
+  .working .line .v { font-size: 18px; }
+  .working .line .v b { color: var(--accent); }
+  @media (max-width: 480px) { .working .line { grid-template-columns: minmax(0, 1fr); gap: 2px; } .working .line .k { max-width: none; } }
+  .note { margin-top: 18px; padding: 14px 16px; border-radius: 12px; background: var(--accent-soft); border-left: 4px solid var(--accent); max-width: 40em; }
+  .note b { font-family: "Inter", "Segoe UI", sans-serif; font-weight: 600; }
+  .said { font-size: 19px; }
+  .said b { color: var(--accent); }
+  .big-num { font-family: "Inter", "Segoe UI", sans-serif; font-weight: 700; font-size: clamp(52px, 9vw, 84px); line-height: 1; color: var(--accent); font-variant-numeric: tabular-nums; }
+  .big-num small { font-size: 0.45em; color: var(--ink); font-weight: 600; margin-left: 6px; }
+  .answer { display: grid; gap: 4px; margin-top: 10px; padding: 12px 16px; border-radius: 12px; background: var(--teal-soft); }
+  .answer .lab { font-size: 12px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--teal); }
+  .answer .val { font-family: "Inter", "Segoe UI", sans-serif; font-size: 22px; font-weight: 700; color: var(--teal); font-variant-numeric: tabular-nums; }
+  .verdict { margin-top: 8px; min-height: 1.5em; font-weight: 700; }
+  .verdict.good { color: var(--good); }
+  .verdict.bad { color: var(--bad); }
+  .table-wrap { overflow-x: auto; }
+  table.plain { width: 100%; border-collapse: collapse; font-variant-numeric: tabular-nums; }
+  table.plain th, table.plain td { text-align: left; padding: 10px 12px; border-bottom: 1px solid var(--line); }
+  table.plain th { font-size: 12px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); }
+  table.plain td.num, table.plain th.num { text-align: right; }
+  table.plain td.how { color: var(--muted); font-size: 15px; }
+  table.plain tr.now td { font-family: "Inter", "Segoe UI", sans-serif; font-weight: 600; font-size: 18px; background: var(--teal-soft); }
+
+  /* dots */
+  .dots { display: grid; gap: 4px; width: 100%; max-width: 360px; padding: 10px; border-radius: 14px; background: var(--cell); aspect-ratio: 1; }
+  .dots i { display: block; width: 100%; aspect-ratio: 1; border-radius: 50%; background: var(--accent); transition: background 120ms ease; }
+  .dots i.l { background: var(--teal); }
+  .dots i.extra { background: var(--bad); }
+  .dots i.ghost { background: transparent; border: 2px dashed var(--line); }
+  .dots i.ok { background: var(--good); }
+  .dots.loose { aspect-ratio: auto; }
+  .sq-list { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 10px; }
+  .sq-list button { padding: 6px 10px; border-radius: 10px; border: 1.5px solid var(--line); background: var(--card); font-variant-numeric: tabular-nums; font-size: 15px; }
+  .sq-list button b { font-family: "Inter", "Segoe UI", sans-serif; font-weight: 600; }
+  .sq-list button.on { background: var(--accent); border-color: var(--accent); color: var(--accent-ink); }
+  .sq-list button.on b { color: inherit; }
+
+  /* cubes */
+  .cube { width: 100%; max-width: 380px; display: block; margin-top: 8px; }
+  .cube polygon { stroke: var(--card); stroke-width: 1; }
+  .cube .top { fill: var(--accent); }
+  .cube .left { fill: color-mix(in srgb, var(--accent) 74%, black); }
+  .cube .right { fill: color-mix(in srgb, var(--accent) 87%, black); }
+  .cube .top.hi { fill: var(--teal); }
+  .cube .left.hi { fill: color-mix(in srgb, var(--teal) 74%, black); }
+  .cube .right.hi { fill: color-mix(in srgb, var(--teal) 87%, black); }
+  .cube.done .top { fill: var(--good); }
+  .cube.done .left { fill: color-mix(in srgb, var(--good) 74%, black); }
+  .cube.done .right { fill: color-mix(in srgb, var(--good) 87%, black); }
+  .dots.blocks i { border-radius: 3px; }
+  .cmp { display: grid; gap: 10px; margin-top: 14px; }
+  .cmp-row { display: grid; grid-template-columns: 86px 1fr auto; gap: 10px; align-items: center; }
+  .cmp-lab { font-size: 12px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); }
+  .cmp-bar { position: relative; height: 26px; border-radius: 8px; background: var(--cell); overflow: hidden; }
+  .cmp-bar .fill { position: absolute; inset: 0 auto 0 0; background: var(--teal); transition: width 200ms ease; }
+  .cmp-bar .fill.mine { background: var(--accent); }
+  .cmp-bar .fill.match { background: var(--good); }
+  .cmp-val { font-family: "Inter", "Segoe UI", sans-serif; font-weight: 600; font-variant-numeric: tabular-nums; min-width: 3.5em; text-align: right; }
+
+  /* triangles */
+  .tri { width: 100%; max-width: 380px; display: block; margin-top: 8px; }
+  .tri circle.t { fill: var(--accent); }
+  .tri circle.t2 { fill: var(--teal); }
+
+  /* sequence strip */
+  .seq { display: flex; flex-wrap: wrap; align-items: center; gap: 6px 4px; margin-top: 10px; }
+  .seq .term { display: grid; place-items: center; min-width: 54px; padding: 10px 12px; border-radius: 12px; background: var(--teal-soft); font-family: "Inter", "Segoe UI", sans-serif; font-weight: 600; font-size: 20px; font-variant-numeric: tabular-nums; }
+  .seq .term.start { background: var(--accent); color: var(--accent-ink); }
+  .seq .term.next { background: var(--good-soft); outline: 2px dashed var(--good); }
+  .seq .term.hidden-term { background: var(--cell); color: var(--muted); }
+  .seq .term small { display: block; font-family: "Atkinson Hyperlegible", sans-serif; font-size: 10px; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; color: var(--muted); }
+  .seq .term.start small { color: var(--accent-ink); opacity: 0.85; }
+  .seq .jump { display: grid; place-items: center; font-size: 13px; font-weight: 700; color: var(--teal); min-width: 40px; }
+  .seq .jump span { display: block; line-height: 1; }
+  .seq .jump .arrow { font-size: 18px; color: var(--muted); }
+  .seq .jump.hide span:first-child { visibility: hidden; }
+  .seq .dots3 { color: var(--muted); font-weight: 700; padding: 0 4px; }
+
+  /* the odd numbers: a strip of counting numbers, and the running total as one bar */
+  .numstrip { display: flex; flex-wrap: wrap; gap: 4px; margin-top: 10px; }
+  .numstrip span { display: grid; place-items: center; width: 34px; height: 34px; border-radius: 8px; background: var(--cell); color: var(--muted); font-weight: 700; font-variant-numeric: tabular-nums; }
+  .numstrip span.odd, .numstrip span.even { background: var(--card); border: 1.5px solid var(--line); color: var(--ink); }
+  .numstrip span.odd.on, .numstrip span.even.on { background: var(--accent); border-color: var(--accent); color: var(--accent-ink); }
+  .evens { width: 100%; max-width: 380px; display: block; margin-top: 8px; }
+  .evens circle.a { fill: var(--accent); }
+  .evens circle.b { fill: var(--teal); }
+  .hundred { display: grid; grid-template-columns: repeat(10, 1fr); gap: 3px; margin-top: 8px; }
+  .hundred span { display: grid; place-items: center; aspect-ratio: 1; border-radius: 6px; font-weight: 700;
+    font-size: clamp(9px, 2.4vw, 13px); font-variant-numeric: tabular-nums;
+    background: var(--accent); border: 1.5px solid var(--accent); color: var(--accent-ink); }
+  .hundred span.out { background: transparent; border-color: transparent; color: var(--muted); opacity: 0.45; text-decoration: line-through; }
+  .hundred span.one { background: transparent; border: 1.5px dashed var(--line); color: var(--muted); text-decoration: none; opacity: 1; }
+  .hundred span.seed { background: var(--teal); border-color: var(--teal); color: var(--sel-ink); }
+  .facs { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 8px; }
+  .facs span { padding: 4px 11px; border-radius: 999px; border: 1.5px solid var(--line); font-weight: 700; font-size: 14px; color: var(--muted); }
+  .facs span.mid { background: var(--accent-soft); border-color: var(--accent); color: var(--accent); }
+  .rainbow { width: 100%; max-width: 400px; display: block; margin-top: 8px; }
+  .rainbow path { fill: none; stroke: var(--teal); stroke-width: 2.5; stroke-linecap: round; }
+  .rainbow path.self { stroke: var(--accent); stroke-width: 3; }
+  .rainbow circle { fill: var(--teal); }
+  .rainbow circle.self { fill: var(--accent); }
+  .rainbow text { font: 700 13px "Atkinson Hyperlegible", system-ui, sans-serif; fill: var(--ink); text-anchor: middle; }
+  .rainbow text.self { fill: var(--accent); }
+  .mults { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 8px; }
+  .mults span { padding: 6px 12px; border-radius: 8px; background: var(--teal-soft); color: var(--teal);
+    font-weight: 700; font-variant-numeric: tabular-nums; }
+  .mults span.first, .mults span.both { background: var(--accent); color: var(--accent-ink); }
+  .venn { width: 100%; max-width: 400px; display: block; margin-top: 8px; }
+  .venn circle { fill: var(--teal); fill-opacity: 0.2; stroke: var(--teal); stroke-width: 2; }
+  .venn text { font: 700 15px "Atkinson Hyperlegible", system-ui, sans-serif; fill: var(--ink); text-anchor: middle; }
+  .venn text.mid { fill: var(--accent); }
+  .venn text.head { font-size: 16px; fill: var(--teal); }
+  .venn text.cap { font-size: 11px; font-weight: 400; fill: var(--muted); letter-spacing: 0.06em; }
+  .venn text.none { font-weight: 400; fill: var(--muted); }
+  .digits { display: flex; gap: 6px; flex-wrap: wrap; margin-top: 8px; }
+  .digits span { display: grid; place-items: center; min-width: 46px; padding: 12px 8px; border-radius: 12px;
+    background: var(--cell); color: var(--muted); font: 600 28px "Inter", "Segoe UI", sans-serif;
+    font-variant-numeric: tabular-nums; transition: background 120ms ease, color 120ms ease; }
+  .digits span.lit { background: var(--accent); color: var(--accent-ink); }
+  .digits span.place { background: var(--teal); color: var(--sel-ink); }
+  .roundline { width: 100%; max-width: 420px; display: block; margin-top: 8px; }
+  .roundline .near { fill: var(--accent-soft); }
+  .roundline .axis { stroke: var(--ink); stroke-width: 2; }
+  .roundline .tick { stroke: var(--ink); stroke-width: 2; }
+  .roundline .tick.half { stroke: var(--muted); stroke-width: 1.5; stroke-dasharray: 3 3; }
+  .roundline .drop { stroke: var(--accent); stroke-width: 2; stroke-dasharray: 4 3; }
+  .roundline .dot { fill: var(--accent); stroke: var(--card); stroke-width: 2.5; }
+  .roundline text { font: 700 13px "Atkinson Hyperlegible", system-ui, sans-serif; fill: var(--ink); text-anchor: middle; }
+  .roundline text.half { font-weight: 400; fill: var(--muted); font-size: 12px; }
+  .roundline text.here { fill: var(--accent); font-size: 15px; }
+  .roundline text.win { fill: var(--accent); }
+  .negline { width: 100%; max-width: 460px; display: block; margin-top: 8px; }
+  .negline .span { fill: var(--accent-soft); }
+  .negline .axis { stroke: var(--ink); stroke-width: 2; }
+  .negline .tick { stroke: var(--muted); stroke-width: 1.2; }
+  .negline .tick.big { stroke: var(--ink); stroke-width: 1.8; }
+  .negline .zero { stroke: var(--teal); stroke-width: 2.5; }
+  .negline .dotA { fill: var(--teal); stroke: var(--card); stroke-width: 2.5; }
+  .negline .dotB { fill: var(--accent); stroke: var(--card); stroke-width: 2.5; }
+  .negline text { font: 700 12px "Atkinson Hyperlegible", system-ui, sans-serif; fill: var(--muted); text-anchor: middle; }
+  .negline text.num { fill: var(--ink); font-size: 11px; }
+  .negline text.nought { fill: var(--teal); font-size: 13px; }
+  .negline text.labA { fill: var(--teal); font-size: 14px; }
+  .negline text.labB { fill: var(--accent); font-size: 14px; }
+  .negline text.gap { fill: var(--accent); font-size: 12px; }
+  .negline text.ends { font-weight: 400; font-size: 11px; }
+  .digits span.col { display: flex; flex-direction: column; align-items: center; justify-content: center;
+    gap: 3px; padding: 9px 7px 7px; min-width: 58px; }
+  .digits span.col small { font: 700 9px "Atkinson Hyperlegible", system-ui, sans-serif;
+    text-transform: uppercase; letter-spacing: 0.03em; opacity: 0.85; }
+  .digits span.pt { min-width: 0; padding: 9px 1px; background: transparent; color: var(--accent); font-size: 34px; align-self: center; }
+  .zoomline { width: 100%; max-width: 460px; display: block; margin-top: 8px; }
+  .zoomline .axis { stroke: var(--ink); stroke-width: 2; }
+  .zoomline .tick { stroke: var(--muted); stroke-width: 1.2; }
+  .zoomline .tick.big { stroke: var(--ink); stroke-width: 1.8; }
+  .zoomline .fan { fill: var(--accent-soft); stroke: none; }
+  .zoomline .fanline { stroke: var(--accent); stroke-width: 1.2; stroke-dasharray: 4 3; fill: none; }
+  .zoomline .dot { fill: var(--accent); stroke: var(--card); stroke-width: 2.5; }
+  .zoomline text { font: 700 12px "Atkinson Hyperlegible", system-ui, sans-serif; fill: var(--ink); text-anchor: middle; }
+  .zoomline text.here { fill: var(--accent); font-size: 15px; }
+  .zoomline text.cap { font-weight: 400; font-size: 11px; fill: var(--muted); }
+  .fbar { display: flex; gap: 8px; margin-top: 10px; }
+  .fbar .whole { display: flex; gap: 2px; flex: 1; padding: 3px; border: 2px solid var(--line); border-radius: 10px; }
+  .fbar .whole.fine { gap: 0; padding: 2px; }
+  .fbar i { display: block; flex: 1; height: 54px; border-radius: 4px; background: var(--cell); }
+  .fbar .whole.fine i { border-radius: 0; }
+  .fbar i.on { background: var(--accent); }
+  .eqrow { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 8px; align-items: center; }
+  .eqrow span { padding: 6px 12px; border-radius: 8px; background: var(--teal-soft); color: var(--teal);
+    font-weight: 700; font-variant-numeric: tabular-nums; }
+  .eqrow span.same { background: var(--accent); color: var(--accent-ink); }
+  .eqrow b { color: var(--muted); font-weight: 700; }
+  .pcgrid { display: flex; gap: 10px; margin-top: 10px; flex-wrap: wrap; }
+  .pcgrid .hun { display: grid; grid-template-columns: repeat(10, 1fr); gap: 2px; flex: 1;
+    min-width: 140px; max-width: 210px; padding: 4px; border: 2px solid var(--line); border-radius: 10px; }
+  .pcgrid i { display: block; aspect-ratio: 1; border-radius: 2px; background: var(--cell); }
+  .pcgrid i.on { background: var(--accent); }
+  .ubar { display: grid; gap: 10px; margin-top: 12px; }
+  .ubar .row { display: flex; align-items: center; gap: 10px; }
+  .ubar .sym { width: 28px; text-align: center; font-size: 22px; line-height: 1; }
+  .ubar .sym.a { color: var(--teal); }
+  .ubar .sym.b { color: var(--accent); }
+  .ubar .track { flex: 1; display: flex; gap: 4px; align-items: center; }
+  .ubar .fill { height: 34px; border-radius: 8px; background: var(--teal); }
+  .ubar .fill.b { background: var(--accent); }
+  .ubar .gap { height: 34px; border-radius: 8px; border: 2px dashed var(--muted); box-sizing: border-box; }
+  .ubar .val { width: 34px; font-weight: 700; font-variant-numeric: tabular-nums; }
+  .counters { display: flex; flex-wrap: wrap; gap: 7px; margin-top: 12px; }
+  .counters i { display: block; width: 30px; height: 30px; border-radius: 50%; background: var(--accent); }
+  .counters i.two { background: var(--teal); }
+  .expr { display: grid; gap: 8px; margin-top: 12px; }
+  .expr .line { display: flex; flex-wrap: wrap; gap: 5px; align-items: center; }
+  .expr span { padding: 6px 11px; border-radius: 8px; background: var(--cell); color: var(--muted);
+    font: 600 21px "Inter", "Segoe UI", sans-serif; font-variant-numeric: tabular-nums; }
+  .expr span.on { background: var(--accent); color: var(--accent-ink); }
+  .expr span.done { background: var(--teal); color: var(--sel-ink); }
+  .expr b { color: var(--muted); font-size: 13px; font-weight: 700; padding: 0 4px; }
+  .stage { margin-left: auto; font: 700 11px "Atkinson Hyperlegible", system-ui, sans-serif;
+    letter-spacing: 0.05em; text-transform: uppercase; padding: 4px 11px; border-radius: 999px;
+    background: var(--teal-soft); color: var(--teal); white-space: nowrap; align-self: center; }
+  .stage.up { background: var(--accent-soft); color: var(--accent); }
+  .stage.beyond { background: var(--cell); color: var(--muted); }
+  .say { display: flex; align-items: center; gap: 12px; margin: 14px 0 0; padding: 10px 12px;
+    background: var(--teal-soft); border: 1px solid var(--line); border-radius: 14px; }
+  .say .ico { flex: 0 0 auto; width: 38px; height: 38px; border-radius: 50%; background: var(--teal);
+    color: var(--sel-ink); display: grid; place-items: center; font-size: 19px; }
+  .say .lab { flex: 1; min-width: 0; font-size: 15px; color: var(--muted); }
+  .say button { flex: 0 0 auto; border: 0; cursor: pointer; padding: 9px 18px; border-radius: 999px;
+    background: var(--gold); color: var(--accent-ink); font: 700 15px "Atkinson Hyperlegible", system-ui, sans-serif;
+    box-shadow: 0 4px 0 var(--gold-press); }
+  .say button:active { transform: translateY(2px); box-shadow: 0 2px 0 var(--gold-press); }
+  .say button.on { background: var(--accent); color: var(--accent-ink); box-shadow: 0 4px 0 #A8461F; }
+  .digits span.sep { min-width: 0; padding: 12px 0; background: transparent; color: var(--muted); }
+  .mults span.ever { background: transparent; color: var(--muted); }
+  .oddbar { display: flex; height: 42px; border-radius: 10px; overflow: hidden; border: 1px solid var(--line); margin-top: 10px; }
+  .oddbar div { display: grid; place-items: center; min-width: 0; background: var(--teal); color: var(--sel-ink); border-right: 2px solid var(--card); font-family: "Inter", "Segoe UI", sans-serif; font-weight: 600; font-size: 13px; }
+  .oddbar div:last-child { border-right: 0; }
+  .oddbar div.last { background: var(--accent); color: var(--accent-ink); }
+
+  /* second gaps */
+  .gaps2 { display: flex; flex-wrap: wrap; gap: 6px; align-items: center; margin-top: 10px; }
+  .gaps2 span { padding: 6px 12px; border-radius: 10px; background: var(--cell); font-family: "Inter", "Segoe UI", sans-serif; font-weight: 600; font-variant-numeric: tabular-nums; }
+  .gaps2 span.flat { background: var(--good-soft); color: var(--good); }
+  .gaps2 b { font-family: "Atkinson Hyperlegible", sans-serif; font-size: 12px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); margin-right: 4px; }
+
+  /* number line */
+  .numline { width: 100%; max-width: 720px; display: block; margin-top: 8px; }
+  .numline .axis { stroke: var(--ink); stroke-width: 2; }
+  .numline .tick { stroke: var(--ink); stroke-width: 1.5; }
+  .numline .tick.minor { stroke: var(--muted); stroke-width: 1; }
+  .numline .lab { font-family: "Inter", "Segoe UI", sans-serif; font-weight: 600; font-size: 12px; fill: var(--ink); text-anchor: middle; }
+  .numline .lab.zero { fill: var(--accent); }
+  .numline .hop { fill: none; stroke: var(--accent); stroke-width: 2.5; }
+  .numline .dot { fill: var(--accent); stroke: var(--card); stroke-width: 2; }
+  .numline .dot.start { fill: var(--teal); }
+  .numline .hoplab { font-family: "Atkinson Hyperlegible", sans-serif; font-weight: 700; font-size: 11px; fill: var(--teal); text-anchor: middle; }
+
+  /* patterns */
+  .pattern { width: 100%; max-width: 720px; display: block; margin-top: 8px; }
+  .pattern .stick { stroke: var(--accent); stroke-width: 6; stroke-linecap: round; }
+  .pattern .stick.new { stroke: var(--teal); }
+  .pattern .dot { fill: var(--accent); }
+  .pattern .dot.new { fill: var(--teal); }
+  .pattern .table { fill: var(--cell); stroke: var(--ink); stroke-width: 2; }
+  .pattern .lab { font-family: "Inter", "Segoe UI", sans-serif; font-weight: 600; font-size: 13px; fill: var(--muted); text-anchor: middle; }
+
+  /* word problems and quiz */
+  .wp-top { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 8px 12px; margin-bottom: 12px; }
+  .wp-dots { display: flex; flex-wrap: wrap; gap: 6px; }
+  .wp-dots i { width: 12px; height: 12px; border-radius: 50%; background: var(--cell); border: 1.5px solid var(--line); }
+  .wp-dots i.now { background: var(--teal); border-color: var(--teal); }
+  .wp-dots i.good { background: var(--good); border-color: var(--good); }
+  .wp-dots i.oops { background: var(--bad); border-color: var(--bad); }
+  .wp-count { font-size: 13px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); }
+  .wp-card { padding: 22px; border-radius: 14px; background: var(--ground); border: 1px solid var(--line); }
+  .wp-scene { font-size: 12px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--teal); }
+  .wp-text { font-size: 20px; line-height: 1.5; max-width: 34em; margin-top: 6px; }
+  .wp-card .picker-lab { color: var(--teal); }
+  .q-why { margin-top: 10px; color: var(--muted); min-height: 1.4em; }
+  .q-why.good { color: var(--good); }
+  .q-why.bad { color: var(--bad); }
+  .wp-card .working .line { background: var(--card); }
+  .wp-card .working .line.total { background: var(--accent-soft); }
+  .q { padding: 18px 0; border-top: 1px solid var(--line); }
+  .q:first-of-type { border-top: 0; padding-top: 4px; }
+  .q .stem { font-weight: 700; margin-bottom: 10px; }
+  .q .stem span { color: var(--teal); margin-right: 8px; font-family: "Inter", "Segoe UI", sans-serif; }
+  .opts { display: flex; flex-wrap: wrap; gap: 8px; }
+  .opt { padding: 10px 16px; border-radius: 12px; border: 1.5px solid var(--line); background: var(--card); font-variant-numeric: tabular-nums; }
+  .opt:hover { border-color: var(--teal); }
+  .opt.right { background: var(--good-soft); border-color: var(--good); }
+  .opt.wrong { background: var(--bad-soft); border-color: var(--bad); }
+  .q .why { margin-top: 10px; color: var(--muted); min-height: 1.4em; }
+  .q .why.good { color: var(--good); }
+  .q .why.bad { color: var(--bad); }
+  .result { margin-top: 18px; padding: 18px 20px; border-radius: 14px; background: var(--teal-soft); display: none; align-items: center; gap: 18px; }
+  .result.show { display: flex; }
+  .result .big-num { font-size: 56px; color: var(--teal); }
+  .result p { max-width: 30em; }
+  .recap { display: grid; grid-template-columns: repeat(auto-fit, minmax(190px, 1fr)); gap: 12px; }
+  .recap div { padding: 14px 16px; border-radius: 12px; background: var(--ground); border: 1px solid var(--line); }
+  .recap b { display: block; font-family: "Inter", "Segoe UI", sans-serif; font-weight: 600; font-size: 18px; margin-bottom: 4px; color: var(--teal); }
+  @media (prefers-reduced-motion: reduce) { *, *::before, *::after { transition: none !important; animation: none !important; } }
+
+  /* ==================================================================
+     On paper. A browser prints no background colour unless the person
+     printing ticks a box, and this design is light text on navy — so
+     without this block the headings and every note print as nothing.
+     ================================================================== */
+  @media print {
+    :root, :root:not([data-theme="light"]), :root[data-theme="dark"] {
+      --ground: #FFFFFF; --card: #FFFFFF; --cell: #E4EEE9; --line: #C7D8D3;
+      --ink: #1B2A2F; --muted: #55686C;
+      --accent: #C2482C; --accent-ink: #FFFFFF; --accent-soft: #FBE3D8;
+      --teal: #146B65; --teal-soft: #DCEFEC; --sel-ink: #FFFFFF;
+      --gold: #C99700; --gold-press: #A87F00; --plum: #6E3F88;
+      --good: #23694A; --good-soft: #DFF1E6; --bad: #A3382E; --bad-soft: #F7DEDA;
+      --shadow: none;
+      color-scheme: light;
+    }
+    html { background: #FFFFFF; }
+    body::before { display: none; }
+    body { background: #FFFFFF; color: var(--ink); font-size: 12pt; }
+
+    /* things that cannot work on paper */
+    .steps-nav, .say, .hero-mini, .btn, .tools { display: none !important; }
+
+    /* one step per sheet, so a teacher can hand out a single step */
+    .step { background: #FFFFFF; box-shadow: none; border-radius: 0;
+      break-before: page; margin: 0 0 10px; }
+    .wrap > .step:first-of-type { break-before: auto; }
+    .note, .working .line, .wp-card, .recap > div, table.plain tr { break-inside: avoid; }
+    h1, h2 { break-after: avoid; }
+
+    /* where a fill IS the meaning, it has to reach the paper */
+    .dots i, .hundred span, .fbar i, .pcgrid i, .counters i, .mults span, .digits span,
+    .expr span, .eqrow span, .facs span, .chip, .stage, .route, .note, .working .line,
+    .numstrip span, .oddbar div, .tenframe i, table.plain tr.now, .big-num span {
+      -webkit-print-color-adjust: exact; print-color-adjust: exact;
+    }
+
+    /* and where it is not, say it with weight instead of colour */
+    .chip { border: 1px solid var(--line); }
+    .chip.on { border: 2px solid var(--accent); font-weight: 700; }
+    a[href^="#"] { color: inherit; text-decoration: none; }
+  }
+  .steps-nav { flex-wrap: wrap; overflow-x: visible; }
+  .backlink { margin: 0 0 12px; }
+  .backlink a { color: var(--teal); text-decoration: none; font-weight: 700; font-size: 15px; }
+  .backlink a:hover { text-decoration: underline; }
+</style>
+
+<div class="wrap">
+  <p class="backlink"><a href="index.html">&larr; Grade 5 Mathematics</a></p>
+  <header class="hero">
+    <div>
+      <p class="eyebrow">Mathematics · Grade 5 · Part 6 of 6</p>
+      <h1>Shapes and Angles</h1>
+      <p class="lede">Sort triangles by their sides and their symmetry, measure and classify an angle by eye, use the 180° on a straight line to find one you cannot see, separate perimeter from area and watch one change while the other stays put, cut a compound shape into rectangles, fold a net into a cube, and finish a symmetrical pattern.</p>
+    </div>
+    <div class="hero-mini" aria-hidden="true" id="heroMini"></div>
+
+  
+    <div class="top-actions"></div>
+  </header>
+  <details class="kit"><summary>For the grown-up: what to have to hand</summary><p>A ruler, and a sheet of squared paper for the perimeter and area work. The corner of any piece of paper is a ready-made right angle for testing whether an angle is acute or obtuse. For the nets, six paper squares taped edge to edge, or a small cardboard box cut open along its edges and laid flat - folding a real one is what makes an arrangement that cannot fold obvious.</p></details>
+  <details class="tiers"><summary>Support and challenge</summary><div class="tier"><b>An easier way in</b><p>Start with the corner of a piece of paper as your right angle. Hold it against each angle in the lesson and say only whether the angle is smaller or bigger than the corner - acute or obtuse - before worrying about the number of degrees.</p></div><div class="tier"><b>A harder challenge</b><p>Every rectangle in Step 32 has whole-number sides. Find the rectangle with perimeter 24 that has the LARGEST area, then try perimeter 20 and perimeter 36. What shape does the biggest-area rectangle always turn out to be, and why?</p></div></details>
+      <!-- ehel-g5-search: search this grade's lesson content. The field sits with
+         the step list because that is this page's table of contents. -->
+    <div class="lsearch">
+      <label class="lsearch-lab" for="lsq">Search the lessons</label>
+      <input id="lsq" type="search" autocomplete="off" placeholder="try &quot;square number&quot; or &quot;rounding&quot;">
+      <div id="lsout" class="lsearch-out" role="status" aria-live="polite"></div>
+    </div>
+  <nav class="steps-nav" aria-label="Steps in this lesson">
+    <a href="#opener-about"><b>🔎</b> What this lesson is about</a>
+    <a href="#opener-lecture"><b>🎥</b> Unit lecture</a>
+    <a href="#opener-words"><b>🗣️</b> Math words</a>
+    <a href="#s29"><b>29</b> Three kinds of triangle</a>
+    <a href="#s30"><b>30</b> Acute, right or obtuse</a>
+    <a href="#s31"><b>31</b> Angles on a straight line</a>
+    <a href="#s32"><b>32</b> Perimeter is not area</a>
+    <a href="#s33"><b>33</b> Cut it into rectangles</a>
+    <a href="#s34"><b>34</b> Solids and the nets that fold into them</a>
+    <a href="#s35"><b>35</b> Finish the symmetrical pattern</a>
+    <a href="#selfcheck"><b>&#10003;</b> What I can do</a>
+  </nav>
+  <!-- ehel-g5-lesson-opener: what this lesson is about - static, no finish() exists to
+       gate a button on, so nothing here needs to be clicked. -->
+  <section class="step" id="opener-about">
+    <div class="step-head"><span class="step-num">About</span><h2>What this lesson is about</h2></div>
+    <p class="intro">By the end of this lesson you will be able to&hellip;</p>
+    <ul class="opener-list">
+      <li>Identify, describe, classify and sketch isosceles, equilateral or scalene triangles.</li>
+      <li>Estimate and measure perimeter and area of 2D shapes, understanding that shapes with the same perimeter can have different areas.</li>
+      <li>Draw compound shapes that can be divided into rectangles and squares, and estimate, measure and calculate their perimeter and area.</li>
+      <li>Identify, describe and sketch 3D shapes in different orientations.</li>
+      <li>Identify and sketch different nets for a cube.</li>
+      <li>Use knowledge of reflective symmetry to identify and complete symmetrical patterns.</li>
+      <li>Estimate, compare and classify angles, using geometric vocabulary including acute, right and obtuse.</li>
+      <li>Know that the sum of the angles on a straight line is 180 degrees, and use this to calculate missing angles.</li>
+    </ul>
+  </section>
+
+  <!-- ehel-g5-lesson-opener: unit lecture - a short static walkthrough in named parts
+       rather than Grade 4's narrated click-through; a film is shown
+       above it when this lesson has one. -->
+  <section class="step" id="opener-lecture">
+    <div class="step-head"><span class="step-num">Lecture</span><h2>Unit lecture</h2></div>
+    <p class="intro">The whole lesson, in three parts.</p>
+      <div class="opener-part"><p class="opener-phase">Part 1 of 3</p><h3>Sorting by the sides</h3><p>Triangles are named by how many sides are the same length - all three, exactly two, or none. The angles always agree with the sides, so an equilateral triangle has three equal angles and a scalene triangle has none.</p></div>
+      <div class="opener-part"><p class="opener-phase">Part 2 of 3</p><h3>Naming an angle by eye</h3><p>A right angle is 90 degrees, the corner of a page. Smaller than that is acute and larger is obtuse, so you can classify an angle by holding a corner against it without measuring anything.</p></div>
+      <div class="opener-part"><p class="opener-phase">Part 3 of 3</p><h3>Round the edge, or inside</h3><p>Perimeter is the distance all the way round and area is how many squares fit inside. They answer different questions, which is why two rectangles can use the same length of fence and hold different amounts of room.</p></div>
+  </section>
+
+  <!-- ehel-g5-lesson-opener: math words - the one opener step built fully interactive,
+       matching Grade 4's tap-card-then-quiz shape, minus say()/finish()
+       which do not exist on this build. -->
+  <section class="step" id="opener-words">
+    <div class="step-head"><span class="step-num">Words</span><h2>Math words</h2></div>
+    <p class="intro">Tap each word to see what it means and how to use it. Then show you know them.</p>
+    <div id="openerWords"></div>
+  </section>
+
+
+  <!-- STEP 29 -->
+  <section class="step" id="s29" data-twm="classifying">
+    <div class="step-head"><span class="step-num">Step 29</span><h2>Three kinds of triangle</h2></div>
+    <p class="intro">Triangles are sorted by how many of their sides are the same length. Pick a kind and look at what that does to the angles and to the lines of symmetry — the sides and the angles always agree with each other.</p>
+    <p class="picker-lab">Choose a kind of triangle</p>
+    <div class="chips" id="triPick"></div>
+    <div class="two-col" style="margin-top:14px">
+      <div>
+        <div id="triStage" aria-hidden="true"></div>
+        <p class="verdict" id="triSay" aria-live="polite"></p>
+      </div>
+      <div>
+        <p class="picker-lab">What is true about it</p>
+        <div class="working" id="triWork" aria-live="polite"></div>
+        <div class="note"><b>Equal sides and equal angles come as a pair.</b> Where two sides are the same length, the two angles opposite them are equal too. That is why a scalene triangle, with no two sides the same, also has no two angles the same — and why it has no line of symmetry at all.</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- STEP 30 -->
+  <section class="step" id="s30" data-twm="specialising">
+    <div class="step-head"><span class="step-num">Step 30</span><h2>Acute, right or obtuse</h2></div>
+    <p class="intro">A right angle is exactly 90°, the corner of a page. Everything smaller is acute, everything larger (up to a straight line) is obtuse. Drag the arm and name the angle before you read the label.</p>
+    <div class="two-col" style="margin-top:14px">
+      <div>
+        <div id="angStage" aria-hidden="true"></div>
+        <label class="picker-lab" for="angRange">Open the angle</label>
+        <input id="angRange" type="range" min="5" max="175" value="35" step="1" style="width:100%">
+      </div>
+      <div>
+        <p class="picker-lab">Your turn: what kind is it?</p>
+        <div class="chips" id="angGuess"></div>
+        <p class="verdict" id="angSay" aria-live="polite"></p>
+        <div class="working" id="angWork" aria-live="polite"></div>
+        <div class="note"><b>Estimate against the right angle.</b> You do not need a protractor to classify one. Hold the corner of a page against it: if the arm falls inside the corner it is acute, if it falls outside it is obtuse.</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- STEP 31 -->
+  <section class="step" id="s31">
+    <div class="step-head"><span class="step-num">Step 31</span><h2>Angles on a straight line</h2></div>
+    <p class="intro">Two angles that sit together on a straight line always add to 180°. That is enough to work out one you cannot measure, as long as you know the other.</p>
+    <div class="two-col" style="margin-top:14px">
+      <div>
+        <div id="lineStage" aria-hidden="true"></div>
+        <label class="picker-lab" for="lineRange">Move the arm</label>
+        <input id="lineRange" type="range" min="15" max="165" value="55" step="5" style="width:100%">
+      </div>
+      <div>
+        <p class="picker-lab">Find the missing angle</p>
+        <div class="working" id="lineWork" aria-live="polite"></div>
+        <div class="chips" id="lineGuess"></div>
+        <p class="verdict" id="lineSay" aria-live="polite"></p>
+        <div class="note"><b>Subtract from 180, not from 90.</b> The commonest slip is to reach for 90 because a right angle is the angle you know best. On a straight line the total is 180°, so the missing angle is 180 minus the one you have.</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- STEP 32 -->
+  <section class="step" id="s32" data-twm="generalising">
+    <div class="step-head"><span class="step-num">Step 32</span><h2>Perimeter is not area</h2></div>
+    <p class="intro">Perimeter is the distance all the way round the edge. Area is how many squares fit inside. They measure different things, and changing a shape can move one while the other stays exactly where it was.</p>
+    <p class="picker-lab">Build a rectangle</p>
+    <div class="chips" id="rectW"></div>
+    <div class="chips" id="rectH"></div>
+    <div class="two-col" style="margin-top:14px">
+      <div>
+        <div id="rectStage" aria-hidden="true"></div>
+        <div class="working" id="rectWork" aria-live="polite"></div>
+      </div>
+      <div>
+        <p class="picker-lab">Every rectangle with perimeter 24</p>
+        <div class="working" id="permTable"></div>
+        <div class="note"><b>Same perimeter, different area.</b> All of those rectangles use 24 cm of edge, and their areas run from 11 to 36 squares. So knowing the perimeter tells you nothing on its own about how much room is inside — the squarer the rectangle, the more area the same edge encloses.</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- STEP 33 -->
+  <section class="step" id="s33">
+    <div class="step-head"><span class="step-num">Step 33</span><h2>Cut it into rectangles</h2></div>
+    <p class="intro">A compound shape is not a shape with its own formula — it is rectangles stuck together. Cut it into rectangles you can already do, work each one out, then add. For the perimeter, walk all the way round the outside instead.</p>
+    <div class="two-col" style="margin-top:14px">
+      <div>
+        <div id="compStage" aria-hidden="true"></div>
+        <div class="chips" id="compPick"></div>
+      </div>
+      <div>
+        <p class="picker-lab">Working</p>
+        <div class="working" id="compWork" aria-live="polite"></div>
+        <div class="note"><b>The cut line is not part of the perimeter.</b> When you split the shape, the new edge down the middle belongs to both rectangles — it helps you find the AREA, but it is inside the shape, so it is never walked when you measure the distance round the outside.</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- STEP 34 -->
+  <section class="step" id="s34" data-twm="classifying">
+    <div class="step-head"><span class="step-num">Step 34</span><h2>Solids and the nets that fold into them</h2></div>
+    <p class="intro">A solid keeps its faces, edges and vertices however you turn it — a cube lying on a corner is still a cube. A net is that solid opened flat, and not every arrangement of six squares folds back up.</p>
+    <p class="picker-lab">Choose a solid</p>
+    <div class="chips" id="solidPick"></div>
+    <div class="two-col" style="margin-top:14px">
+      <div>
+        <div id="solidStage" aria-hidden="true"></div>
+        <div class="working" id="solidWork" aria-live="polite"></div>
+      </div>
+      <div>
+        <p class="picker-lab">Which of these fold into a cube?</p>
+        <div id="netStage" aria-hidden="true"></div>
+        <p class="verdict" id="netSay" aria-live="polite"></p>
+        <div class="note"><b>Six squares is necessary, not sufficient.</b> Every one of these has six squares. A net fails when two squares would land on the same face as it folds — so count the squares first, then check the arrangement.</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- STEP 35 -->
+  <section class="step" id="s35">
+    <div class="step-head"><span class="step-num">Step 35</span><h2>Finish the symmetrical pattern</h2></div>
+    <p class="intro">A mirror line means every square has a partner the same distance away on the other side. Click the squares on the right to complete the reflection.</p>
+    <div class="two-col" style="margin-top:14px">
+      <div>
+        <div id="symStage"></div>
+        <p class="verdict" id="symSay" aria-live="polite"></p>
+      </div>
+      <div>
+        <p class="picker-lab">Where the mirror is</p>
+        <div class="chips" id="symPick"></div>
+        <div class="working" id="symWork" aria-live="polite"></div>
+        <div class="note"><b>Count from the line, not from the edge.</b> A square two columns from the mirror reflects to two columns from the mirror on the other side. Counting from the edge of the grid instead is what makes a pattern come out shifted.</div>
+      </div>
+    </div>
+  </section>
+    <!-- ehel-g5-self-check: Cambridge's own Stage 5 statements. A step in this page's
+         own idiom, not a deck slide - Grade 5 keeps its design. -->
+    <section class="step" id="selfcheck">
+      <div class="step-head"><span class="step-num">Check</span><h2>What I can do</h2></div>
+      <p class="intro">Cambridge asks these about this lesson. Tick the ones that are true for you. Nothing here is marked and nobody is told &mdash; it is for you.</p>
+      <div id="sclist"></div>
+    </section>
+  
+</div>
+
+<script>
+(function () {
+  const $ = (id) => document.getElementById(id);
+  const SVGNS = "http://www.w3.org/2000/svg";
+  function svg(w, h) {
+    const s = document.createElementNS(SVGNS, "svg");
+    s.setAttribute("viewBox", "0 0 " + w + " " + h);
+    s.setAttribute("width", "100%");
+    s.style.maxWidth = w + "px";
+    s.style.display = "block";
+    return s;
+  }
+  function el(tag, attrs) {
+    const n = document.createElementNS(SVGNS, tag);
+    for (const k in attrs) n.setAttribute(k, attrs[k]);
+    return n;
+  }
+  const INK = "currentColor";
+  function lines(list) {
+    return list.map((l) => '<div class="line' + (l.total ? " total" : "") +
+      '"><span class="k">' + l.k + '</span><span class="v">' + l.v + "</span></div>").join("");
+  }
+  function chips(host, items, onPick, startIndex) {
+    host.innerHTML = "";
+    items.forEach((it, i) => {
+      const b = document.createElement("button");
+      b.type = "button";
+      b.className = "chip" + (i === startIndex ? " on" : "");
+      b.textContent = it.label;
+      b.dataset.i = i;
+      host.appendChild(b);
+    });
+    host.addEventListener("click", (e) => {
+      const b = e.target.closest(".chip");
+      if (!b) return;
+      [...host.querySelectorAll(".chip")].forEach((c) => c.classList.remove("on"));
+      b.classList.add("on");
+      onPick(Number(b.dataset.i));
+    });
+  }
+
+  /* ---- hero: a small triangle-and-angle motif ---- */
+  (function () {
+    const m = $("heroMini");
+    if (!m) return;
+    const s = svg(120, 120);
+    s.appendChild(el("polygon", { points: "60,14 108,100 12,100", fill: "none", stroke: INK, "stroke-width": "3", "stroke-linejoin": "round", opacity: "0.85" }));
+    s.appendChild(el("path", { d: "M 34 100 A 22 22 0 0 0 48 74", fill: "none", stroke: INK, "stroke-width": "2.5", opacity: "0.6" }));
+    m.appendChild(s);
+  })();
+
+  /* ---------- STEP 29: three kinds of triangle ---------- */
+  (function () {
+    const stage = $("triStage"), say = $("triSay"), work = $("triWork");
+    if (!stage) return;
+    const KINDS = [
+      { label: "Equilateral", pts: [[110, 18], [196, 166], [24, 166]],
+        equalSides: 3, equalAngles: 3, sym: 3,
+        angles: "60°, 60°, 60°",
+        sides: "all three the same",
+        blurb: "All three sides the same length, so all three angles are 60°." },
+      { label: "Isosceles", pts: [[110, 18], [186, 166], [34, 166]],
+        equalSides: 2, equalAngles: 2, sym: 1,
+        angles: "two equal, one different",
+        sides: "two the same",
+        blurb: "Two sides the same length, so the two angles opposite them are equal." },
+      { label: "Scalene", pts: [[150, 22], [196, 166], [24, 166]],
+        equalSides: 0, equalAngles: 0, sym: 0,
+        angles: "all three different",
+        sides: "no two the same",
+        blurb: "No two sides the same length, so no two angles are the same either." },
+    ];
+    // which sides carry the equal-length ticks, per kind
+    const TICKS = [[0, 1, 2], [0, 1], []];
+    function mid(a, b) { return [(a[0] + b[0]) / 2, (a[1] + b[1]) / 2]; }
+    function draw(i) {
+      const k = KINDS[i];
+      stage.innerHTML = "";
+      const s = svg(220, 190);
+      s.appendChild(el("polygon", {
+        points: k.pts.map((p) => p.join(",")).join(" "),
+        fill: "none", stroke: INK, "stroke-width": "3", "stroke-linejoin": "round",
+      }));
+      // tick marks on the equal sides
+      const edges = [[k.pts[0], k.pts[1]], [k.pts[0], k.pts[2]], [k.pts[1], k.pts[2]]];
+      TICKS[i].forEach((e) => {
+        const [a, b] = edges[e], m = mid(a, b);
+        const dx = b[0] - a[0], dy = b[1] - a[1];
+        const len = Math.hypot(dx, dy), nx = -dy / len * 7, ny = dx / len * 7;
+        s.appendChild(el("line", {
+          x1: m[0] - nx, y1: m[1] - ny, x2: m[0] + nx, y2: m[1] + ny,
+          stroke: INK, "stroke-width": "2.5",
+        }));
+      });
+      stage.appendChild(s);
+      say.textContent = k.blurb;
+      work.innerHTML = lines([
+        { k: "Sides", v: k.sides },
+        { k: "Angles", v: k.angles },
+        { k: "Equal sides", v: String(k.equalSides) },
+        { k: "Lines of symmetry", v: String(k.sym), total: true },
+      ]);
+    }
+    chips($("triPick"), KINDS, draw, 0);
+    draw(0);
+  })();
+
+  /* ---------- STEP 30: acute, right, obtuse ---------- */
+  (function () {
+    const stage = $("angStage"), range = $("angRange"), say = $("angSay"),
+          work = $("angWork"), guess = $("angGuess");
+    if (!stage) return;
+    const NAMES = ["Acute", "Right angle", "Obtuse"];
+    let picked = -1;
+    const kindOf = (d) => (d < 90 ? 0 : d === 90 ? 1 : 2);
+    function draw() {
+      const d = Number(range.value);
+      stage.innerHTML = "";
+      const s = svg(240, 180), ox = 40, oy = 150, R = 130;
+      const rad = (d * Math.PI) / 180;
+      const tx = ox + R * Math.cos(rad), ty = oy - R * Math.sin(rad);
+      s.appendChild(el("line", { x1: ox, y1: oy, x2: ox + R, y2: oy, stroke: INK, "stroke-width": "3", "stroke-linecap": "round" }));
+      s.appendChild(el("line", { x1: ox, y1: oy, x2: tx, y2: ty, stroke: INK, "stroke-width": "3", "stroke-linecap": "round" }));
+      // the arc
+      const ar = 34;
+      const ax = ox + ar, ay = oy;
+      const bx = ox + ar * Math.cos(rad), by = oy - ar * Math.sin(rad);
+      s.appendChild(el("path", {
+        d: "M " + ax + " " + ay + " A " + ar + " " + ar + " 0 0 0 " + bx + " " + by,
+        fill: "none", stroke: INK, "stroke-width": "2.5", opacity: "0.65",
+      }));
+      stage.appendChild(s);
+      const k = kindOf(d);
+      work.innerHTML = lines([
+        { k: "Angle", v: d + "°" },
+        { k: "Compared with 90°", v: d < 90 ? "less than" : d === 90 ? "exactly" : "more than" },
+        { k: "It is", v: NAMES[k], total: true },
+      ]);
+      if (picked >= 0) {
+        say.textContent = picked === k
+          ? "Yes — " + d + "° is " + NAMES[k].toLowerCase() + "."
+          : "Not quite. " + d + "° is " + NAMES[k].toLowerCase() + ", because it is " +
+            (d < 90 ? "smaller" : d === 90 ? "exactly the same as" : "bigger") + " than a right angle.";
+      }
+    }
+    chips(guess, NAMES.map((n) => ({ label: n })), (i) => { picked = i; draw(); }, -1);
+    range.addEventListener("input", () => { picked = -1; say.textContent = ""; draw(); });
+    draw();
+  })();
+
+  /* ---------- STEP 31: angles on a straight line ---------- */
+  (function () {
+    const stage = $("lineStage"), range = $("lineRange"), work = $("lineWork"),
+          guess = $("lineGuess"), say = $("lineSay");
+    if (!stage) return;
+    function draw() {
+      const a = Number(range.value), b = 180 - a;
+      stage.innerHTML = "";
+      const s = svg(280, 170), ox = 140, oy = 140, R = 125;
+      const rad = (a * Math.PI) / 180;
+      s.appendChild(el("line", { x1: ox - R, y1: oy, x2: ox + R, y2: oy, stroke: INK, "stroke-width": "3", "stroke-linecap": "round" }));
+      s.appendChild(el("line", {
+        x1: ox, y1: oy, x2: ox + R * Math.cos(rad), y2: oy - R * Math.sin(rad),
+        stroke: INK, "stroke-width": "3", "stroke-linecap": "round",
+      }));
+      const arc = (r, from, to) => {
+        const f = (from * Math.PI) / 180, t = (to * Math.PI) / 180;
+        return "M " + (ox + r * Math.cos(f)) + " " + (oy - r * Math.sin(f)) +
+          " A " + r + " " + r + " 0 0 0 " + (ox + r * Math.cos(t)) + " " + (oy - r * Math.sin(t));
+      };
+      s.appendChild(el("path", { d: arc(30, 0, a), fill: "none", stroke: INK, "stroke-width": "2.5", opacity: "0.7" }));
+      s.appendChild(el("path", { d: arc(46, a, 180), fill: "none", stroke: INK, "stroke-width": "2.5", opacity: "0.35" }));
+      work.innerHTML = lines([
+        { k: "The angle you can see", v: a + "°" },
+        { k: "On a straight line", v: "180°" },
+        { k: "So the other one is", v: "180 − " + a + " = " + b + "°", total: true },
+      ]);
+      // four options, one right
+      const wrong = [90 - a, a, 180 + a].map(Math.abs).filter((n) => n !== b && n > 0 && n < 180);
+      const opts = [b].concat(wrong.slice(0, 2)).map((n) => ({ label: n + "°", v: n }));
+      while (opts.length < 3) opts.push({ label: (b + 10) + "°", v: b + 10 });
+      for (let i = opts.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [opts[i], opts[j]] = [opts[j], opts[i]]; }
+      say.textContent = "";
+      chips(guess, opts, (i) => {
+        say.textContent = opts[i].v === b
+          ? "Correct — " + a + "° and " + b + "° make 180°."
+          : "That is not it. " + a + " + " + opts[i].v + " = " + (a + opts[i].v) + ", and a straight line is 180°.";
+      }, -1);
+      stage.appendChild(s);
+    }
+    range.addEventListener("input", draw);
+    draw();
+  })();
+
+  /* ---------- STEP 32: perimeter is not area ---------- */
+  (function () {
+    const stage = $("rectStage"), work = $("rectWork"), table = $("permTable");
+    if (!stage) return;
+    let w = 6, h = 3;
+    function draw() {
+      stage.innerHTML = "";
+      const cell = Math.min(26, Math.floor(260 / Math.max(w, 1)));
+      const s = svg(w * cell + 4, h * cell + 4);
+      for (let r = 0; r < h; r++) for (let c = 0; c < w; c++) {
+        s.appendChild(el("rect", {
+          x: c * cell + 2, y: r * cell + 2, width: cell, height: cell,
+          fill: "none", stroke: INK, "stroke-width": "1", opacity: "0.45",
+        }));
+      }
+      s.appendChild(el("rect", { x: 2, y: 2, width: w * cell, height: h * cell, fill: "none", stroke: INK, "stroke-width": "3" }));
+      stage.appendChild(s);
+      work.innerHTML = lines([
+        { k: "Width and height", v: w + " cm by " + h + " cm" },
+        { k: "Perimeter", v: "2 × (" + w + " + " + h + ") = " + (2 * (w + h)) + " cm" },
+        { k: "Area", v: w + " × " + h + " = " + (w * h) + " cm²", total: true },
+      ]);
+    }
+    const nums = (n) => Array.from({ length: n }, (_, i) => ({ label: String(i + 1) }));
+    const wHost = $("rectW"), hHost = $("rectH");
+    wHost.insertAdjacentHTML("beforebegin", '<p class="picker-lab" style="margin-top:8px">Width</p>');
+    hHost.insertAdjacentHTML("beforebegin", '<p class="picker-lab" style="margin-top:8px">Height</p>');
+    chips(wHost, nums(10), (i) => { w = i + 1; draw(); }, 5);
+    chips(hHost, nums(8), (i) => { h = i + 1; draw(); }, 2);
+    // every rectangle with perimeter 24, whole-number sides, w >= h
+    const rows = [];
+    for (let hh = 1; hh * 2 <= 12; hh++) {
+      const ww = 12 - hh;
+      if (ww >= hh) rows.push({ k: ww + " by " + hh, v: "area " + ww * hh + " cm²" });
+    }
+    table.innerHTML = lines(rows);
+    draw();
+  })();
+
+  /* ---------- STEP 33: compound shapes ---------- */
+  (function () {
+    const stage = $("compStage"), work = $("compWork");
+    if (!stage) return;
+    // an L: full 8x6 with a 3x3 bite out of the top right
+    const W = 8, H = 6, BW = 3, BH = 3;
+    let split = 0; // 0 none, 1 horizontal cut, 2 vertical cut
+    const cell = 30;
+    function draw() {
+      stage.innerHTML = "";
+      const s = svg(W * cell + 6, H * cell + 6);
+      const path = "M 3 3 H " + (3 + (W - BW) * cell) + " V " + (3 + BH * cell) +
+        " H " + (3 + W * cell) + " V " + (3 + H * cell) + " H 3 Z";
+      s.appendChild(el("path", { d: path, fill: "none", stroke: INK, "stroke-width": "3", "stroke-linejoin": "round" }));
+      for (let r = 0; r < H; r++) for (let c = 0; c < W; c++) {
+        if (r < BH && c >= W - BW) continue;
+        s.appendChild(el("rect", { x: 3 + c * cell, y: 3 + r * cell, width: cell, height: cell, fill: "none", stroke: INK, "stroke-width": "1", opacity: "0.35" }));
+      }
+      if (split === 1) s.appendChild(el("line", { x1: 3, y1: 3 + BH * cell, x2: 3 + W * cell, y2: 3 + BH * cell, stroke: INK, "stroke-width": "2.5", "stroke-dasharray": "6 5" }));
+      if (split === 2) s.appendChild(el("line", { x1: 3 + (W - BW) * cell, y1: 3, x2: 3 + (W - BW) * cell, y2: 3 + H * cell, stroke: INK, "stroke-width": "2.5", "stroke-dasharray": "6 5" }));
+      stage.appendChild(s);
+      const total = W * H - BW * BH;
+      let rows;
+      if (split === 1) {
+        rows = [
+          { k: "Top rectangle", v: (W - BW) + " × " + BH + " = " + (W - BW) * BH },
+          { k: "Bottom rectangle", v: W + " × " + (H - BH) + " = " + W * (H - BH) },
+          { k: "Total area", v: ((W - BW) * BH) + " + " + (W * (H - BH)) + " = " + total + " cm²", total: true },
+        ];
+      } else if (split === 2) {
+        rows = [
+          { k: "Left rectangle", v: (W - BW) + " × " + H + " = " + (W - BW) * H },
+          { k: "Right rectangle", v: BW + " × " + (H - BH) + " = " + BW * (H - BH) },
+          { k: "Total area", v: ((W - BW) * H) + " + " + (BW * (H - BH)) + " = " + total + " cm²", total: true },
+        ];
+      } else {
+        rows = [
+          { k: "Squares inside", v: "count them: " + total },
+          { k: "Distance round the outside", v: (2 * W + 2 * H) + " cm" },
+          { k: "Try a cut", v: "both cuts give the same area", total: true },
+        ];
+      }
+      work.innerHTML = lines(rows);
+    }
+    chips($("compPick"), [{ label: "No cut" }, { label: "Cut across" }, { label: "Cut down" }],
+      (i) => { split = i; draw(); }, 0);
+    draw();
+  })();
+
+  /* ---------- STEP 34: solids and nets ---------- */
+  (function () {
+    const stage = $("solidStage"), work = $("solidWork"), netStage = $("netStage"), netSay = $("netSay");
+    if (!stage) return;
+    const SOLIDS = [
+      { label: "Cube", f: 6, e: 12, v: 8, note: "Six square faces, all the same." },
+      { label: "Cuboid", f: 6, e: 12, v: 8, note: "Six rectangular faces, opposite ones matching." },
+      { label: "Square pyramid", f: 5, e: 8, v: 5, note: "A square base and four triangles meeting at a point." },
+      { label: "Triangular prism", f: 5, e: 9, v: 6, note: "Two triangular ends joined by three rectangles." },
+      { label: "Cylinder", f: 3, e: 2, v: 0, note: "Two circular ends and one curved surface; its edges are curved." },
+    ];
+    function draw(i) {
+      const s = SOLIDS[i];
+      stage.innerHTML = '<p class="verdict">' + s.note + "</p>";
+      work.innerHTML = lines([
+        { k: "Faces", v: String(s.f) },
+        { k: "Edges", v: String(s.e) },
+        { k: "Vertices", v: String(s.v), total: true },
+      ]);
+    }
+    chips($("solidPick"), SOLIDS, draw, 0);
+    draw(0);
+
+    // four candidate nets of six squares; two fold into a cube, two do not
+    const NETS = [
+      { ok: true,  cells: [[1, 0], [1, 1], [1, 2], [1, 3], [0, 1], [2, 1]], why: "a cross — four in a line with one either side" },
+      { ok: false, cells: [[0, 0], [1, 0], [0, 1], [1, 1], [0, 2], [1, 2]], why: "a 2 by 3 block — folding it lands two squares on the same face" },
+      { ok: true,  cells: [[0, 0], [1, 0], [1, 1], [2, 1], [2, 2], [3, 2]], why: "a staircase — it still folds, one square per face" },
+      { ok: false, cells: [[0, 0], [1, 0], [2, 0], [3, 0], [4, 0], [1, 1]], why: "five in a row leaves no square for the sixth face" },
+    ];
+    const cell = 22;
+    netStage.innerHTML = "";
+    const wrapDiv = document.createElement("div");
+    wrapDiv.style.cssText = "display:flex;flex-wrap:wrap;gap:14px";
+    NETS.forEach((n, idx) => {
+      const b = document.createElement("button");
+      b.type = "button";
+      b.className = "chip";
+      b.style.cssText = "padding:8px;border-radius:12px";
+      const cols = Math.max(...n.cells.map((c) => c[0])) + 1;
+      const rows = Math.max(...n.cells.map((c) => c[1])) + 1;
+      const s = svg(cols * cell + 4, rows * cell + 4);
+      n.cells.forEach((c) => s.appendChild(el("rect", {
+        x: c[0] * cell + 2, y: c[1] * cell + 2, width: cell, height: cell,
+        fill: "none", stroke: INK, "stroke-width": "2",
+      })));
+      b.appendChild(s);
+      b.addEventListener("click", () => {
+        [...wrapDiv.querySelectorAll(".chip")].forEach((c) => c.classList.remove("good", "oops"));
+        b.classList.add(n.ok ? "good" : "oops");
+        netSay.textContent = (n.ok ? "Yes — it folds: " : "No — it does not fold: ") + n.why + ".";
+      });
+      wrapDiv.appendChild(b);
+    });
+    netStage.appendChild(wrapDiv);
+  })();
+
+  /* ---------- STEP 35: complete the symmetrical pattern ---------- */
+  (function () {
+    const stage = $("symStage"), say = $("symSay"), work = $("symWork");
+    if (!stage) return;
+    const N = 6, cell = 34;
+    // The half that is drawn for the learner. Every cell here sits in columns
+    // 0..2, which is the fixed half ONLY while the mirror is vertical - under a
+    // horizontal mirror the fixed half is rows 0..2 instead, and three of these
+    // cells are in rows 3 and 4. Left unchanged they would render as given
+    // pattern inside the half the learner is meant to click, and their partners
+    // would land in the half that cannot be clicked, so the horizontal mirror
+    // could never be completed. Transposing the pattern moves it into whichever
+    // half is fixed; the shape a learner sees is the same figure on its side.
+    const HALF = [[0, 1], [1, 1], [1, 2], [2, 0], [2, 2], [2, 3], [0, 4], [1, 4]];
+    let vertical = true;
+    let on = new Set();
+    const key = (c, r) => c + "," + r;
+    const given = () => (vertical ? HALF : HALF.map(([c, r]) => [r, c]));
+    function target() {
+      const t = new Set();
+      given().forEach(([c, r]) => t.add(vertical ? key(N - 1 - c, r) : key(c, N - 1 - r)));
+      return t;
+    }
+    function draw() {
+      stage.innerHTML = "";
+      const s = svg(N * cell + 6, N * cell + 6);
+      for (let r = 0; r < N; r++) for (let c = 0; c < N; c++) {
+        const isFixedHalf = vertical ? c < N / 2 : r < N / 2;
+        const fixed = given().some(([lc, lr]) => lc === c && lr === r);
+        const filled = fixed || on.has(key(c, r));
+        const rect = el("rect", {
+          x: c * cell + 3, y: r * cell + 3, width: cell, height: cell,
+          fill: filled ? INK : "none", stroke: INK, "stroke-width": "1",
+          opacity: filled ? "0.85" : "0.3",
+        });
+        if (!isFixedHalf) {
+          rect.style.cursor = "pointer";
+          rect.addEventListener("click", () => {
+            const k = key(c, r);
+            if (on.has(k)) on.delete(k); else on.add(k);
+            draw();
+          });
+        }
+        s.appendChild(rect);
+      }
+      const m = vertical ? N / 2 * cell + 3 : 0;
+      if (vertical) s.appendChild(el("line", { x1: m, y1: 3, x2: m, y2: N * cell + 3, stroke: INK, "stroke-width": "2.5", "stroke-dasharray": "5 4" }));
+      else s.appendChild(el("line", { x1: 3, y1: N / 2 * cell + 3, x2: N * cell + 3, y2: N / 2 * cell + 3, stroke: INK, "stroke-width": "2.5", "stroke-dasharray": "5 4" }));
+      stage.appendChild(s);
+      const t = target();
+      const same = on.size === t.size && [...t].every((k) => on.has(k));
+      say.textContent = same ? "That is it — every square now has its partner the same distance from the line."
+        : on.size === 0 ? "" : "Not yet — " + on.size + " of " + t.size + " placed, and they must mirror the distance from the line.";
+      work.innerHTML = lines([
+        { k: "Mirror line", v: vertical ? "vertical" : "horizontal" },
+        { k: "Squares to place", v: String(t.size) },
+        { k: "Placed so far", v: String(on.size), total: true },
+      ]);
+    }
+    chips($("symPick"), [{ label: "Vertical mirror" }, { label: "Horizontal mirror" }],
+      (i) => { vertical = i === 0; on = new Set(); draw(); }, 0);
+    draw();
+  })();
+})();
+</script>
+<script>
+/* ehel-g5-self-check - see add-self-check.py.
+   Its own script tag rather than a line inside the page's existing IIFE: that
+   closure owns every picker on the page, and threading an unrelated widget
+   through it would put this one edit inside the thing most likely to be edited
+   next. Nothing here is a score - no mark, no report, no pass depends on it. */
+(function () {
+  const KEY = "ehel-g5-sc-shapes-and-angles";
+  const ITEMS = [{ t: "I can identify lines of symmetry in designs and patterns", p: "W p16" }, { t: "I can complete symmetrical designs and patterns", p: "W p16" }, { t: "I can identify, name and label acute, right and obtuse angles", p: "W p16" }, { t: "I can find the missing angle on a straight line", p: "W p16" }, { t: "I can identify, name and describe the properties of isosceles, equilateral and scalene triangles", p: "W p16" }, { t: "I can find equal lengths and angles in triangles", p: "W p16" }, { t: "I can estimate and measure the perimeter of 2D shapes", p: "W p70" }, { t: "I can reason about shapes with the same area or perimeter", p: "W p70" }, { t: "I can find the area of a compound shape by splitting it into rectangles", p: "W p68" }, { t: "I can sketch and describe 3D shapes such as cubes, cuboids and prisms", p: "W p70" }, { t: "I can identify nets for open and closed cubes", p: "W p70" }, { t: "I can identify 3D shapes from different perspectives", p: "W p70" }];
+  const SCALE = [["yes", "I can do this"], ["trying", "I can do this, but I need to keep trying"], ["notyet", "I can't do this yet"]];
+  const host = document.getElementById("sclist");
+  if (!host) return;
+  const esc = (t) => String(t).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/"/g, "&quot;");
+  const load = () => { try { return JSON.parse(localStorage.getItem(KEY) || "{}") || {}; } catch (e) { return {}; } };
+  const save = (m) => { try { localStorage.setItem(KEY, JSON.stringify(m)); } catch (e) {} };
+  function paint() {
+    const marks = load();
+    host.innerHTML = ITEMS.map((it, i) =>
+      '<div class="sc-row"><p class="sc-say">' + esc(it.t)
+      + ' <span class="sc-src">' + esc(it.p) + '</span></p>'
+      + SCALE.map(([v, label]) =>
+          '<button type="button" class="sc-opt' + (marks[i] === v ? " on" : "")
+          + '" data-i="' + i + '" data-v="' + v + '" aria-pressed="'
+          + (marks[i] === v) + '">' + esc(label) + "</button>").join("")
+      + "</div>").join("");
+  }
+  host.addEventListener("click", (e) => {
+    const b = e.target.closest(".sc-opt");
+    if (!b) return;
+    const marks = load(), i = Number(b.dataset.i);
+    /* tapping the same one again clears it: a child who changes their mind must
+       be able to say nothing, not only swap to another answer */
+    marks[i] = marks[i] === b.dataset.v ? "" : b.dataset.v;
+    save(marks);
+    paint();
+  });
+  paint();
+})();
+</script>
+
+
+</body>
+</html>
+
+<style>/* ehel-g5-differentiation - see add-differentiation.py */
+  .tiers { margin: 14px 0 0; border: 1px dashed var(--line); border-radius: 12px;
+    padding: 0 14px; background: transparent; }
+  .tiers[open] { padding-bottom: 12px; }
+  .tiers > summary { cursor: pointer; list-style: none; padding: 9px 0; min-height: 44px;
+    display: flex; align-items: center; gap: 8px;
+    font-family: inherit; font-size: 14px; font-weight: 700; color: var(--muted); }
+  .tiers > summary::-webkit-details-marker { display: none; }
+  .tiers > summary::after { content: "+"; margin-left: auto; font-size: 18px; }
+  .tiers[open] > summary::after { content: "\2013"; }
+  .tiers .tier { margin: 10px 0 0; }
+  .tiers .tier:first-child { margin-top: 0; }
+  .tiers .tier b { display: block; font-size: 12px; letter-spacing: .05em;
+    text-transform: uppercase; color: var(--teal); margin: 0 0 3px; }
+  .tiers .tier p { margin: 0; font-size: 15px; line-height: 1.5; color: var(--ink); }
+</style>
+<style>/* ehel-g5-self-check - see add-self-check.py */
+  #sclist { margin-top: 6px; }
+  #sclist .sc-row { padding: 11px 0; border-top: 1px solid var(--line); }
+  #sclist .sc-say { margin: 0 0 7px; font-size: 15.5px; line-height: 1.5; color: var(--ink); }
+  #sclist .sc-src { font-size: 12px; color: var(--muted); white-space: nowrap; }
+  #sclist .sc-opt { font: inherit; font-size: 13px; padding: 6px 12px; margin: 0 7px 7px 0;
+    border-radius: 999px; border: 1px solid var(--line);
+    background: var(--card); color: var(--muted); cursor: pointer; }
+  #sclist .sc-opt.on { background: var(--good-soft); border-color: var(--good);
+    color: var(--good); font-weight: 600; }
+</style>
+
+<script>
+/* ehel-g5-lesson-opener: Math words for shapes-and-angles - a tap-card grid, a reveal panel, then a closing
+   matching quiz once every word has been opened. Own local esc() AND own
+   local shuffle(): every existing <script> on this page is its own IIFE
+   (checked directly - this file alone has four, none sharing scope with
+   any other), so shuffle(), though it exists elsewhere on the page, is
+   not reachable from here any more than esc() is - confirmed the hard
+   way, by a live ReferenceError the first time this ran in a browser.
+   No say(), no finish(): this build has neither, and the section being
+   scrolled into view is what marks it seen. */
+(function () {
+  const WORDS = [{ w: "equilateral", pic: "🔺", meaning: "A triangle with all three sides the same length, so all three angles are 60 degrees.", uses: ["Sketch an equilateral triangle and mark its equal sides."] }, { w: "isosceles", pic: "📐", meaning: "A triangle with two sides the same length, so the two angles opposite them are equal.", uses: ["Name the equal angles in this isosceles triangle."] }, { w: "scalene", pic: "📏", meaning: "A triangle with no two sides the same length, and so no two angles the same.", uses: ["Explain why a scalene triangle has no line of symmetry."] }, { w: "acute", pic: "📉", meaning: "An angle smaller than a right angle - less than 90 degrees.", uses: ["Classify this angle as acute, right or obtuse."] }, { w: "obtuse", pic: "📈", meaning: "An angle larger than a right angle but smaller than a straight line - between 90 and 180 degrees.", uses: ["Find the obtuse angle in this shape."] }, { w: "perimeter", pic: "🚶", meaning: "The distance all the way round the outside edge of a shape.", uses: ["Measure the perimeter of this rectangle in centimetres."] }, { w: "area", pic: "🟦", meaning: "How much surface a shape covers, counted in squares.", uses: ["Work out the area of this compound shape."] }, { w: "net", pic: "📦", meaning: "A solid opened out flat, showing every face, which folds back up into the solid.", uses: ["Sketch a net that folds into a cube."] }, { w: "symmetrical", pic: "🦋", meaning: "Having a mirror line, so that every part has a matching part the same distance away on the other side.", uses: ["Complete the pattern so that it is symmetrical."] }];
+  const host = document.getElementById("openerWords");
+  if (!host) return;
+  const esc = (t) => String(t).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/"/g, "&quot;");
+  const shuffle = (arr) => { const a = arr.slice(); for (let i = a.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [a[i], a[j]] = [a[j], a[i]]; } return a; };
+  const heard = new Set();
+  let open = -1;
+  function paintGrid() {
+    host.innerHTML = '<div class="ow-grid" id="owGrid">' + WORDS.map((w, k) =>
+      '<button type="button" class="ow-card' + (heard.has(k) ? ' heard' : '') + '" data-k="' + k + '">' +
+      '<span class="ow-pic" aria-hidden="true">' + w.pic + '</span>' + esc(w.w) + '</button>').join('') + '</div>' +
+      '<div class="ow-panel" id="owPanel"' + (open < 0 ? ' hidden' : '') + '></div>' +
+      '<div class="ow-go" id="owGo" style="' + (heard.size === WORDS.length ? '' : 'display:none') + '">' +
+      '<button type="button" class="ow-btn" id="owQuizGo">Show I know them &#9654;</button></div>';
+    if (open >= 0) paintPanel();
+    document.getElementById("owGrid").addEventListener("click", (e) => {
+      const b = e.target.closest(".ow-card"); if (!b) return;
+      open = Number(b.dataset.k); heard.add(open);
+      paintGrid();
+    });
+    if (heard.size === WORDS.length) {
+      const goBtn = document.getElementById("owQuizGo");
+      if (goBtn) goBtn.addEventListener("click", () => quiz());
+    }
+  }
+  function paintPanel() {
+    const w = WORDS[open];
+    const p = document.getElementById("owPanel");
+    p.hidden = false;
+    p.innerHTML = '<div class="ow-panel-head"><span class="ow-panel-pic" aria-hidden="true">' + w.pic + '</span>' +
+      '<div><p class="ow-panel-word">' + esc(w.w) + '</p><p class="ow-panel-meaning">' + esc(w.meaning) + '</p></div></div>' +
+      '<p class="ow-uses-h">Use it</p><ul class="ow-uses">' + w.uses.map((u) => '<li>' + esc(u) + '</li>').join('') + '</ul>';
+  }
+  function quiz() {
+    const order = shuffle(WORDS.map((_, k) => k));
+    let i = 0, right = 0, lock = false;
+    function draw() {
+      lock = false;
+      const k = order[i], w = WORDS[k];
+      const others = shuffle(WORDS.map((_, j) => j).filter((j) => j !== k)).slice(0, Math.min(2, WORDS.length - 1));
+      const opts = shuffle([k].concat(others));
+      host.innerHTML = '<p class="intro">Which word means: <b>' + esc(w.meaning) + '</b></p>' +
+        '<div class="ow-quiz-opts" id="owChoices">' + opts.map((j) =>
+          '<button type="button" class="ow-quiz-btn" data-ok="' + (j === k ? 1 : 0) + '">' +
+          '<span class="ow-quiz-pic" aria-hidden="true">' + WORDS[j].pic + '</span>' + esc(WORDS[j].w) + '</button>').join('') + '</div>' +
+        '<p class="ow-fb" id="owFb"></p>';
+      document.getElementById("owChoices").addEventListener("click", (e) => {
+        const b = e.target.closest(".ow-quiz-btn"); if (!b || lock) return;
+        lock = true;
+        const ok = b.dataset.ok === "1";
+        document.getElementById("owChoices").querySelectorAll(".ow-quiz-btn").forEach((c) => {
+          c.disabled = true; if (c.dataset.ok === "1") c.classList.add("right");
+        });
+        if (!ok) b.classList.add("wrong"); else right++;
+        const fb = document.getElementById("owFb");
+        fb.className = "ow-fb" + (ok ? " good" : "");
+        fb.textContent = ok ? "That's it! " + w.w + "." : "That word is " + w.w + ". " + w.meaning;
+        i++;
+        setTimeout(() => {
+          if (i >= WORDS.length) {
+            host.innerHTML = '<p class="intro">You know ' + right + ' of ' + WORDS.length + ' math words.</p>';
+          } else draw();
+        }, 2200);
+      });
+    }
+    draw();
+  }
+  paintGrid();
+})();
+</script>
+
+<style>/* ehel-g5-lesson-opener - see add-lesson-opener.py */
+  .opener-list { margin: 10px 0 0; padding-left: 22px; display: flex; flex-direction: column; gap: 9px;
+    font-size: 15.5px; line-height: 1.5; color: var(--ink); }
+  /* the unit lecture film, when the lesson has one. It sits ABOVE the three
+     parts, which stay - Grade 5 is a page a learner scans. */
+  .lec-film { max-width: 760px; margin: 0 0 16px; }
+  .lec-film video { width: 100%; display: block; border-radius: 16px; background: #000;
+    aspect-ratio: 16 / 9; }
+  .lec-note { margin: 7px 0 0; font-size: 14px; line-height: 1.45; color: var(--muted, #667); }
+  .opener-part { margin-top: 14px; padding-top: 14px; border-top: 1px solid var(--line); }
+  .opener-part:first-of-type { margin-top: 10px; padding-top: 0; border-top: none; }
+  .opener-phase { margin: 0 0 3px; color: var(--teal); font-weight: 700; font-size: 12px;
+    letter-spacing: .08em; text-transform: uppercase; }
+  .opener-part h3 { margin: 0 0 5px; font-size: 17px; }
+  .opener-part p:last-child { margin: 0; font-size: 15.5px; line-height: 1.5; color: var(--ink); }
+  .ow-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(120px, 1fr)); gap: 10px;
+    margin-top: 10px; }
+  .ow-card { display: flex; flex-direction: column; align-items: center; gap: 5px; padding: 12px 8px 10px;
+    border-radius: 14px; border: 2px solid var(--line); background: var(--card); color: var(--ink);
+    font-weight: 700; font-size: 15px; line-height: 1.2; font: inherit; cursor: pointer; }
+  .ow-card .ow-pic { font-size: clamp(34px, 7vw, 46px); line-height: 1.1; }
+  .ow-card.heard { border-color: var(--teal); background: var(--teal-soft); }
+  .ow-panel { margin-top: 12px; padding: 14px 16px; border-radius: 16px; border: 2px solid var(--teal);
+    background: var(--card); text-align: left; }
+  .ow-panel-head { display: flex; align-items: center; gap: 14px; }
+  .ow-panel-pic { font-size: 34px; }
+  .ow-panel-word { margin: 0; font-weight: 700; font-size: 22px; color: var(--ink); }
+  .ow-panel-meaning { margin: 4px 0 0; font-size: 15.5px; line-height: 1.45; color: var(--ink); }
+  .ow-uses-h { margin: 10px 0 3px; color: var(--teal); font-weight: 700; font-size: 11.5px;
+    letter-spacing: .08em; text-transform: uppercase; }
+  .ow-uses { margin: 0; padding-left: 18px; font-size: 14.5px; font-style: italic; color: var(--ink); }
+  .ow-go { margin-top: 12px; }
+  .ow-btn { font: inherit; font-size: 14px; font-weight: 700; padding: 9px 16px; border-radius: 12px;
+    border: 1px solid var(--line); background: var(--card); color: var(--ink); cursor: pointer; }
+  .ow-quiz-opts { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 10px; }
+  .ow-quiz-btn { min-width: 100px; padding: 10px 14px; border-radius: 14px; border: 2px solid var(--line);
+    background: var(--card); color: var(--ink); font-weight: 700; font: inherit; cursor: pointer; }
+  .ow-quiz-btn .ow-quiz-pic { display: block; font-size: 32px; line-height: 1.1; }
+  .ow-quiz-btn.right { background: var(--good-soft); border-color: var(--good); }
+  .ow-quiz-btn.wrong { background: var(--bad-soft); border-color: var(--bad); }
+  .ow-quiz-btn:disabled { cursor: default; }
+  .ow-fb { margin: 10px 0 0; font-size: 14.5px; color: var(--muted); }
+  .ow-fb.good { color: var(--good); font-weight: 700; }
+</style>
+
+<style>/* ehel-g5-materials-note - see add-materials-note.py */
+  .kit { margin: 14px 0 0; border: 1px dashed var(--line); border-radius: 12px;
+    padding: 0 14px; background: transparent; }
+  .kit[open] { padding-bottom: 12px; }
+  .kit > summary { cursor: pointer; list-style: none; padding: 9px 0; min-height: 44px;
+    display: flex; align-items: center; gap: 8px;
+    font-family: inherit; font-size: 14px; font-weight: 700; color: var(--muted); }
+  .kit > summary::-webkit-details-marker { display: none; }
+  .kit > summary::after { content: "+"; margin-left: auto; font-size: 18px; }
+  .kit[open] > summary::after { content: "\2013"; }
+  .kit p { margin: 0; font-size: 15px; line-height: 1.5; color: var(--ink); }
+
+
+  .hero { position: relative; }
+  .top-actions { grid-column: 1 / -1; display: flex; flex-wrap: wrap; gap: 8px;
+    justify-content: flex-end; margin-top: 4px; }
+  .top-actions button { font: inherit; font-size: 13.5px; font-weight: 700;
+    padding: 8px 12px; border-radius: 10px; border: 1px solid var(--line);
+    background: var(--card, #fff); color: var(--ink); cursor: pointer; }
+</style>
+
+<!-- WIRE-JS-START ehel-g5-platform -->
+<script type="module">
+  /* Hand-raise, class chat, Wehel - see wire-platform.py. No deck exists here,
+     so this mounts the same singletons G1-4 mount, without a deck-header
+     home for them: placeLearnerControls() falls back to .top-actions when
+     there is no .gc-top, which is always true on this build. */
+  import { mountLearnerControls } from "./learner-controls.js";
+  import { mountWehelChat, stopBrowserSpeech } from "./wehel.js";
+  import { escapeHtml } from "./course-shell.js";
+  import "./seb-session.js";
+
+  const q = new URLSearchParams(location.search);
+  const launchToken = (q.get("pwsToken") || "").replace(/[^A-Za-z0-9._-]/g, "");
+  const launchEndpoint = (q.get("pwsEndpoint") || "").trim();
+
+  let toastEl = null;
+  function toast(message) {
+    if (toastEl) toastEl.remove();
+    toastEl = document.createElement("div");
+    toastEl.className = "w-toast";
+    toastEl.textContent = message;
+    document.body.appendChild(toastEl);
+    setTimeout(() => { if (toastEl) { toastEl.remove(); toastEl = null; } }, 3200);
+  }
+
+  try {
+    mountLearnerControls({
+      token: q.get("pwsToken") || "", launchToken, launchEndpoint,
+      progressUnit: "l06",
+    });
+  } catch (e) { console.error("learner controls:", e); }
+
+  if (launchToken) {
+    const dock = document.createElement("button");
+    dock.type = "button"; dock.className = "w-dock"; dock.textContent = "\u{1F4AC} Ask Wehel";
+    const drawer = document.createElement("div");
+    drawer.className = "w-drawer"; drawer.hidden = true;
+    drawer.innerHTML = '<div class="w-drawer-head">Wehel Tutor<button type="button" aria-label="Close">\u00d7</button></div><div class="w-drawer-body"></div>';
+    let panel = null;
+    function open() {
+      drawer.hidden = false; dock.hidden = true;
+      if (panel) return;
+      try {
+        panel = mountWehelChat({
+          container: drawer.querySelector(".w-drawer-body"),
+          meta: {
+            subject: "mathematics", subjectLabel: "Mathematics", grade: 5,
+            unitNo: 6, unitTitle: "Shapes and Angles",
+            learnerCategory: q.get("category") || "",
+          },
+          store: {},
+          ui: { escapeHtml, toast },
+          tutorLabel: "Wehel Tutor",
+          placeholder: "Ask about Shapes and Angles\u2026",
+          quickPrompts: [
+            { label: "I do not understand", message: "I do not understand this step. Please explain it again in a simpler way, with a small example." },
+            { label: "Give me a hint", message: "Give me a hint for this step, not the answer, so I can try it myself." },
+            { label: "Make it easier", message: "This is too hard for me right now. Break it into a smaller, easier step and start me there." },
+            { label: "Quiz me", message: "Quiz me on this lesson, one question at a time." },
+          ],
+        });
+      } catch (e) {
+        console.error("wehel:", e);
+        drawer.hidden = true; dock.hidden = false;
+        toast("Wehel is not available on this page.");
+      }
+    }
+    function close() { drawer.hidden = true; dock.hidden = false; }
+    dock.addEventListener("click", open);
+    drawer.querySelector("button").addEventListener("click", close);
+    document.addEventListener("keydown", (e) => { if (e.key === "Escape" && !drawer.hidden) close(); });
+    document.body.append(dock, drawer);
+
+    window.__ehelTutorQuiet = stopBrowserSpeech;
+    let tutorReading = false;
+    new MutationObserver(() => {
+      const now = !!drawer.querySelector(".voice-button.is-playing");
+      if (now && !tutorReading && window.__ehelVoiceStop) window.__ehelVoiceStop();
+      tutorReading = now;
+    }).observe(drawer, { subtree: true, childList: true, attributes: true, attributeFilter: ["class"] });
+  }
+</script>
+<!-- WIRE-JS-END ehel-g5-platform -->
+
+<script type="module">
+  /* Progress reporting for a page with no deck and no check - see
+     wire-platform.py. "Section reached" replaces "step finished": an
+     IntersectionObserver marks a step section seen the first time any part
+     of it enters the viewport, and unit.completed fires once every
+     section has been seen, the same rule every other grade's last finish()
+     closes the unit with. */
+  import { createProgressClient } from "./progress-client.js";
+
+  const q = new URLSearchParams(location.search);
+  const endpoint = (q.get("pwsEndpoint") || "").trim();
+  const token = (q.get("pwsToken") || "").replace(/[^A-Za-z0-9._-]/g, "");
+
+  const COURSE = "ehel-math-g05";
+  const UNIT = "l06";
+  const STUDENT = q.get("studentid") || "local";
+
+  const ws = createProgressClient({
+    course: COURSE, student: STUDENT,
+    backend: endpoint ? "remote" : "local",
+    endpoint: endpoint || undefined,
+    token: token || undefined,
+    onAuthLost: () => notice("Your session has expired. Your work is saved on this device \u2014 open the lesson again from your class page."),
+    onDeliveryFailing: () => notice(navigator.onLine
+      ? "Your work is saved here, but it is not reaching your school right now."
+      : "You are offline. Your work is saved here and will be sent when you are back."),
+    onDeliveryRecovered: () => clearNotice(),
+  });
+
+  const emit = (e) => { try { ws.emit(e); } catch (_) { /* never break the lesson */ } };
+
+  let noticeEl = null;
+  function notice(text) {
+    if (!noticeEl) {
+      noticeEl = document.createElement("p");
+      noticeEl.className = "progress-notice";
+      noticeEl.setAttribute("role", "status");
+      document.querySelector(".wrap")?.prepend(noticeEl);
+    }
+    noticeEl.textContent = text;
+  }
+  function clearNotice() { if (noticeEl) { noticeEl.remove(); noticeEl = null; } }
+
+  const sections = [...document.querySelectorAll("section.step")];
+  const STEPS = Math.max(1, sections.length);
+  const sectionId = (i) => "step-" + String(i + 1).padStart(2, "0");
+  const labelOf = (i) => (sections[i]?.querySelector("h2, h3")?.textContent || "").trim() || sectionId(i);
+
+  const doneIds = new Set();
+  let unitSent = false;
+
+  /* NOT SENT UNTIL THE BASELINE HAS LANDED. progress.summary REPLACES the
+     unit's sectionsDone rather than merging into it (the same contract every
+     other grade's wire-progress.py relies on), so a report sent before
+     hydrate() resolves would tell the server "only the section just seen is
+     done" and erase a completed lesson's record the moment it is reopened -
+     the exact failure the shared progress-client.js docs warn a new
+     session's first event can cause. Measured locally hydrate() resolves
+     near-instantly (backend "local" just reads localStorage), which hid this
+     the first time it was tested; a real launch's network round trip would
+     not be as forgiving, so this waits regardless of how fast hydrate looks
+     in a browser with nothing else to do. */
+  let ready = false;
+  let pendingIndex = null;
+
+  function report(i) {
+    const ev = {
+      type: "progress.summary", unit: UNIT,
+      sectionsDone: [...doneIds],
+      resume: sectionId(i), resumeLabel: labelOf(i),
+      xp: doneIds.size,
+    };
+    emit(ev);
+    if (doneIds.size >= STEPS && !unitSent) {
+      unitSent = true;
+      emit({ type: "unit.completed", unit: UNIT });
+    }
+  }
+
+  function markSeen(i) {
+    const id = sectionId(i);
+    if (doneIds.has(id)) return;
+    doneIds.add(id);
+    if (ready) report(i);
+    else pendingIndex = i;             /* flushed once hydrate has landed */
+  }
+
+  /* Seen once, reported once - a section scrolled past twice (a learner
+     re-reading) must not re-fire and must not un-finish the unit. threshold
+     0 fires the instant any pixel is visible, which matches "reached" rather
+     than "read": a section a learner scrolls straight past still counts, the
+     same honesty a step's finish() has always had - a tap counts the moment
+     it happens, not after a dwell time nothing here can honestly measure.
+     Observing starts immediately, before hydrate resolves, because the
+     FIRST section is often already on screen at load and markSeen() queues
+     rather than sends - nothing is lost by starting early, only reported
+     early. */
+  if ("IntersectionObserver" in window && sections.length) {
+    const io = new IntersectionObserver((entries) => {
+      for (const en of entries) {
+        if (!en.isIntersecting) continue;
+        markSeen(sections.indexOf(en.target));
+      }
+    }, { threshold: 0 });
+    sections.forEach((s) => io.observe(s));
+  }
+
+  (async () => {
+    try {
+      const doc = await ws.hydrate();
+      const u = doc && doc.units && doc.units[UNIT];
+      if (u) {
+        const doneIdx = (Array.isArray(u.sectionsDone) ? u.sectionsDone : [])
+          .map((id) => { const m = /^step-(\d{2})$/.exec(String(id || "")); return m ? Number(m[1]) - 1 : -1; })
+          .filter((i) => i >= 0);
+        for (const i of doneIdx) doneIds.add(sectionId(i));
+      }
+    } catch (_) { /* never break the lesson - proceed with whatever was seen locally */ }
+    ready = true;
+    if (pendingIndex !== null) report(pendingIndex);
+  })();
+</script>
+<script>
+/* ehel-g5-search - see add-lesson-search.py.
+   One matcher, both hosts: the hub and every lesson page get this same body.
+   It tells them apart by asking the page - a result in THIS document scrolls
+   to the step, anything else navigates, carrying ?from=g5 exactly as the hub's
+   own lesson links do. */
+(function () {
+  const box = document.getElementById("lsq"), out = document.getElementById("lsout");
+  if (!box || !out) return;
+  const HERE = location.pathname.split("/").pop() || "index.html";
+  let INDEX = null, pending = null;
+  const esc = (t) => String(t).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/"/g, "&quot;");
+
+  fetch("lesson-search.json").then((r) => r.json()).then((d) => {
+    INDEX = d;
+    if (pending !== null) { const q = pending; pending = null; run(q); }
+  }).catch(() => { out.innerHTML = '<p class="ls-none">The lesson list could not be loaded.</p>'; });
+
+  /* Word-PREFIX, not substring: a substring search for "even" answers with
+     "seven" and "eleven". Each token must start a word somewhere in the step. */
+  const toks = (q) => q.toLowerCase().split(/[^a-z0-9]+/).filter((t) => t.length > 1);
+  const hasAll = (hay, ts) => ts.every((t) =>
+    new RegExp("(?:^|[^a-z0-9])" + t.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")).test(hay));
+
+  function snippet(text, ts) {
+    const low = text.toLowerCase();
+    let at = -1;
+    for (const t of ts) {
+      const m = low.search(new RegExp("(?:^|[^a-z0-9])" + t.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")));
+      if (m >= 0 && (at < 0 || m < at)) at = m;
+    }
+    if (at < 0) at = 0;
+    const from = Math.max(0, at - 40);
+    let s = text.slice(from, from + 170);
+    if (from > 0) s = "..." + s;
+    if (from + 170 < text.length) s += "...";
+    let html = esc(s);
+    for (const t of ts) {
+      html = html.replace(new RegExp("((?:^|[^a-z0-9]))(" + t.replace(/[.*+?^${}()|[\]\\]/g, "\\$&") + "[a-z0-9]*)", "gi"),
+        (m0, a, b) => a + "<mark>" + b + "</mark>");
+    }
+    return html;
+  }
+
+  function run(q) {
+    const ts = toks(q);
+    if (!ts.length) { out.innerHTML = ""; return; }
+    if (!INDEX) { pending = q; return; }
+    const hits = [];
+    for (const l of INDEX.lessons) {
+      for (const s of l.steps) {
+        const hay = (s.h + " " + s.t + " " + (s.g || "")).toLowerCase();
+        if (hasAll(hay, ts)) hits.push({ l: l, s: s });
+      }
+    }
+    if (!hits.length) {
+      out.innerHTML = '<p class="ls-none">Nothing in this grade matches "'
+        + esc(q) + '".</p>';
+      return;
+    }
+    out.innerHTML = hits.slice(0, 12).map((h) => {
+      const here = h.l.file === HERE;
+      const href = (here ? "" : h.l.file + "?from=g5") + "#" + h.s.a;
+      return '<a class="ls-hit" href="' + href + '">'
+        + '<span class="ls-where">' + esc(h.l.title) + (here ? " - this lesson" : "")
+        + '</span><p class="ls-head">' + esc(h.s.h) + "</p>"
+        + '<p class="ls-snip">' + snippet(h.s.t, ts) + "</p></a>";
+    }).join("") + (hits.length > 12
+      ? '<p class="ls-none">' + (hits.length - 12) + " more.</p>" : "");
+  }
+
+  box.addEventListener("input", () => run(box.value));
+  out.addEventListener("click", (e) => {
+    const a = e.target.closest(".ls-hit");
+    if (!a) return;
+    const href = a.getAttribute("href");
+    if (href.charAt(0) !== "#") return;          // another lesson: let it navigate
+    e.preventDefault();
+    const el = document.getElementById(href.slice(1));
+    if (el) { history.replaceState(null, "", href); el.scrollIntoView({ block: "start" }); }
+  });
+})();
+</script>
+<style>/* ehel-g5-search - see add-lesson-search.py */
+  .lsearch { margin: 0 0 18px; }
+  .lsearch-lab { display: block; font-size: 12.5px; letter-spacing: .05em;
+    text-transform: uppercase; color: var(--muted); margin: 0 0 6px; }
+  .lsearch input { font: inherit; font-size: 15px; width: 100%; max-width: 30rem;
+    padding: 9px 13px; border-radius: 10px; border: 1px solid var(--line);
+    background: var(--card); color: var(--ink); }
+  .lsearch-out { margin-top: 10px; }
+  .lsearch-out:empty { display: none; }
+  .ls-hit { display: block; text-decoration: none; color: inherit;
+    padding: 9px 12px; border: 1px solid var(--line); border-radius: 10px;
+    background: var(--card); margin-bottom: 7px; }
+  .ls-hit:hover, .ls-hit:focus-visible { border-color: var(--accent); }
+  .ls-where { font-size: 12px; color: var(--muted); }
+  .ls-head { font-weight: 600; font-size: 15px; margin: 1px 0 2px; }
+  .ls-snip { font-size: 13.5px; color: var(--muted); line-height: 1.5; }
+  .ls-snip mark { background: var(--accent-soft); color: var(--accent);
+    padding: 0 2px; border-radius: 3px; }
+  .ls-none { font-size: 14px; color: var(--muted); }
+</style>

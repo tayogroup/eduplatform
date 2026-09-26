@@ -86,6 +86,34 @@ MARK = "ehel-g5-lesson-opener"
 #   words: [(word, pic, meaning, [use, ...])]  "Math words" - full interactive tap-card + quiz
 # }
 WORK = {
+ "shapes-and-angles": {
+  "about": [
+   "Identify, describe, classify and sketch isosceles, equilateral or scalene triangles.",
+   "Estimate and measure perimeter and area of 2D shapes, understanding that shapes with the same perimeter can have different areas.",
+   "Draw compound shapes that can be divided into rectangles and squares, and estimate, measure and calculate their perimeter and area.",
+   "Identify, describe and sketch 3D shapes in different orientations.",
+   "Identify and sketch different nets for a cube.",
+   "Use knowledge of reflective symmetry to identify and complete symmetrical patterns.",
+   "Estimate, compare and classify angles, using geometric vocabulary including acute, right and obtuse.",
+   "Know that the sum of the angles on a straight line is 180 degrees, and use this to calculate missing angles.",
+  ],
+  "parts": [
+   ("Sorting by the sides", "Triangles are named by how many sides are the same length - all three, exactly two, or none. The angles always agree with the sides, so an equilateral triangle has three equal angles and a scalene triangle has none."),
+   ("Naming an angle by eye", "A right angle is 90 degrees, the corner of a page. Smaller than that is acute and larger is obtuse, so you can classify an angle by holding a corner against it without measuring anything."),
+   ("Round the edge, or inside", "Perimeter is the distance all the way round and area is how many squares fit inside. They answer different questions, which is why two rectangles can use the same length of fence and hold different amounts of room."),
+  ],
+  "words": [
+   ("equilateral", "\U0001F53A", "A triangle with all three sides the same length, so all three angles are 60 degrees.", ["Sketch an equilateral triangle and mark its equal sides."]),
+   ("isosceles", "\U0001F4D0", "A triangle with two sides the same length, so the two angles opposite them are equal.", ["Name the equal angles in this isosceles triangle."]),
+   ("scalene", "\U0001F4CF", "A triangle with no two sides the same length, and so no two angles the same.", ["Explain why a scalene triangle has no line of symmetry."]),
+   ("acute", "\U0001F4C9", "An angle smaller than a right angle - less than 90 degrees.", ["Classify this angle as acute, right or obtuse."]),
+   ("obtuse", "\U0001F4C8", "An angle larger than a right angle but smaller than a straight line - between 90 and 180 degrees.", ["Find the obtuse angle in this shape."]),
+   ("perimeter", "\U0001F6B6", "The distance all the way round the outside edge of a shape.", ["Measure the perimeter of this rectangle in centimetres."]),
+   ("area", "\U0001F7E6", "How much surface a shape covers, counted in squares.", ["Work out the area of this compound shape."]),
+   ("net", "\U0001F4E6", "A solid opened out flat, showing every face, which folds back up into the solid.", ["Sketch a net that folds into a cube."]),
+   ("symmetrical", "\U0001F98B", "Having a mirror line, so that every part has a matching part the same distance away on the other side.", ["Complete the pattern so that it is symmetrical."]),
+  ],
+ },
  "squares-cubes-and-roots": {
   "about": [
    "Find a square number as the result of multiplying a number by itself.",
@@ -249,16 +277,23 @@ def lecture_section(parts, video=None):
         '<h3>%s</h3><p>%s</p></div>\n' % (i + 1, len(parts), esc(title), esc(text))
         for i, (title, text) in enumerate(parts)
     )
+    # ONE % OPERATOR OVER THE WHOLE TEMPLATE, not two spliced with +.
+    # This used to read `'…%s</p>\n' % (intro) + '%s…' % (MARK, body)`, which
+    # does not do what it looks like: adjacent string literals concatenate
+    # BEFORE the % binds, so the first operator saw the whole block above it -
+    # two %s - and was handed one argument. TypeError, every run, for everyone.
+    # It was introduced with the film branch and nothing ran the tool after.
+    intro = ("The whole lesson as a film, then the same three parts to read."
+             if video else "The whole lesson, in three parts.")
     return (
-        '\n  <!-- %s: unit lecture - no video and no voice exist on this build,\n'
-        '       so this is a short static walkthrough in named parts rather than\n'
-        '       Grade 4\'s narrated click-through. -->\n'
+        '\n  <!-- %s: unit lecture - a short static walkthrough in named parts\n'
+        '       rather than Grade 4\'s narrated click-through; a film is shown\n'
+        '       above it when this lesson has one. -->\n'
         '  <section class="step" id="opener-lecture">\n'
         '    <div class="step-head"><span class="step-num">Lecture</span><h2>Unit lecture</h2></div>\n'
-        '    <p class="intro">%s</p>\n' % ("The whole lesson as a film, then the same three parts to read."
-            if video else "The whole lesson, in three parts.") +
+        '    <p class="intro">%s</p>\n'
         '%s'
-        '  </section>\n' % (MARK, body)
+        '  </section>\n' % (MARK, intro, body)
     )
 
 
@@ -281,7 +316,7 @@ CSS = """<style>/* %s - see add-lesson-opener.py */
   /* the unit lecture film, when the lesson has one. It sits ABOVE the three
      parts, which stay - Grade 5 is a page a learner scans. */
   .lec-film { max-width: 760px; margin: 0 0 16px; }
-  .lec-film video { width: 100%; display: block; border-radius: 16px; background: #000;
+  .lec-film video { width: 100%%; display: block; border-radius: 16px; background: #000;
     aspect-ratio: 16 / 9; }
   .lec-note { margin: 7px 0 0; font-size: 14px; line-height: 1.45; color: var(--muted, #667); }
   .opener-part { margin-top: 14px; padding-top: 14px; border-top: 1px solid var(--line); }

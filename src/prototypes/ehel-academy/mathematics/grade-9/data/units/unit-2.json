@@ -1,0 +1,1156 @@
+{
+  "schemaVersion": "Ehel Mathematics Runtime v1.1",
+  "generatedAt": "2026-09-26T15:00:53.960Z",
+  "stage": {
+    "id": 9,
+    "label": "Stage 9"
+  },
+  "subject": "Mathematics",
+  "term": {
+    "id": 1,
+    "label": "Term 1"
+  },
+  "unit": {
+    "unitId": "math-g09-u02",
+    "unitNo": 2,
+    "unitTitle": "Expressions and Formulae",
+    "unitOverview": "Welcome to Unit 2. Algebra is how you say something true about every number at once, and this unit is about writing and reshaping those statements. You substitute values into expressions, keeping the order of operations that letters make easy to forget; you turn descriptions in words into expressions and back again; you apply the index laws to letters rather than numbers; you multiply two brackets together and simplify what comes out; and you rearrange a formula so that whichever quantity you need is the one sitting alone. None of these is a new arithmetic - they are the arithmetic you already have, said in a language that covers every case at once.",
+    "learningPath": "2.1 Substituting into expressions, 2.2 Constructing expressions, 2.3 Expressions and indices, 2.4 Expanding the product of two linear expressions, 2.5 Simplifying algebraic fractions, 2.6 Deriving and using formulae",
+    "reviewStatus": "Authored 2026-09-26 from the Stage 9 Learner's Book, pages 24-56. Not yet curriculum-reviewed."
+  },
+  "cambridge": {
+    "level": "Cambridge Lower Secondary Mathematics",
+    "code": "0862",
+    "stage": 9,
+    "objectives": [
+      {
+        "code": "9Ae.01",
+        "text": "Understand that the laws of arithmetic and order of operations apply to algebraic terms and expressions (four operations and integer powers)."
+      },
+      {
+        "code": "9Ae.03",
+        "text": "Understand that a situation can be represented either in words or as an algebraic expression, and move between the two representations (including squares, cubes and roots)."
+      },
+      {
+        "code": "9Ae.02",
+        "text": "Understand how to manipulate algebraic expressions including: expanding the product of two algebraic expressions applying the laws of indices simplifying algebraic fractions."
+      },
+      {
+        "code": "9Ae.04",
+        "text": "Understand that a situation can be represented either in words or as a formula (including squares and cubes), and manipulate using knowledge of inverse operations to change the subject of a formula."
+      }
+    ],
+    "objectiveMapping": {
+      "status": "authored",
+      "reviewed": false,
+      "method": "From the Learner's Book sections: 2.1 -> 9Ae.01, 2.2 -> 9Ae.03, 2.3/2.4/2.5 -> 9Ae.02 (whose own text names those three moves), 2.6 -> 9Ae.04. 9Ae.05, 9Ae.06 and 9Ae.07 (equations, simultaneous equations, inequalities) are deliberately NOT here: they are unit 4's three sections, and this unit never solves an equation. Objective texts are quoted verbatim from cambridge-mathematics-0862.json."
+    }
+  },
+  "provenance": {
+    "contentPackage": null,
+    "framework": "Cambridge Lower Secondary Mathematics 0862 - Stage 9",
+    "sourceArchive": null,
+    "sourceDocuments": [
+      "Cambridge Lower Secondary Maths Learner's Book 9 (2ed, CUP), pages 24-56",
+      "Cambridge Lower Secondary Mathematics Workbook 9, unit 2"
+    ],
+    "sourceBlockCount": null,
+    "transformation": "Authored by hand from the Learner's Book. Grade 9 has no content package: outputs/math-content/math-content-model.json holds grades 1-8 only.",
+    "reviewStatus": "Not curriculum-reviewed"
+  },
+  "media": {
+    "lectureStatus": "Video pending",
+    "lectureVideo": null,
+    "poster": null
+  },
+  "outcomes": [
+    "Substitute numbers into an expression, applying the correct order of operations to algebraic terms.",
+    "Substitute negative numbers and evaluate terms with integer powers correctly.",
+    "Construct an algebraic expression from a description in words, including squares, cubes and roots.",
+    "Describe in words what an algebraic expression represents.",
+    "Apply the laws of indices to algebraic terms, adding indices to multiply and subtracting to divide.",
+    "Expand the product of two linear expressions and simplify the result.",
+    "Simplify an algebraic fraction by cancelling factors common to the numerator and denominator.",
+    "Derive a formula from a situation, and change its subject using inverse operations."
+  ],
+  "concepts": [
+    {
+      "id": "concept-1-substituting-and-order",
+      "title": "Substituting, and the Order That Survives",
+      "explanation": "Algebra does not have its own arithmetic. The order of operations you learned for numbers applies unchanged to algebraic terms: brackets and indices first, then multiplication and division, and additions and subtractions last. Substituting is simply replacing each letter with its value and then obeying that order. Most mistakes here are not algebra mistakes at all - they are order-of-operations mistakes that the letters made easier to miss.",
+      "example": "Work out 4x + 4 when x = 2. Replace x: 4 x 2 + 4. Multiplication before addition gives 8 + 4 = 12, not 4 x 6 = 24. Now a harder one: 2x^2 when x = 3. The index belongs to the x alone, so square first and then double: 2 x 9 = 18, not (2 x 3)^2 = 36. Writing the substitution with brackets - 2 x (3)^2 - makes the order impossible to misread."
+    },
+    {
+      "id": "concept-2-negatives-and-powers",
+      "title": "Negative Values and Integer Powers",
+      "explanation": "Substituting a negative number is where care pays. An even power of a negative number is positive and an odd power is negative, because the minus signs pair off. The bracket is not decoration: (-2)^2 is 4, while -2^2 is -4, because in the second the index attaches to the 2 and the minus is applied afterwards. When you substitute a negative value, put it in brackets every time and the sign looks after itself.",
+      "example": "Work out a^3 + 2b when a = -2 and b = -1. First a^3 = (-2)^3 = -8, an odd power so negative. Then 2b = 2 x (-1) = -2. So the expression is -8 + (-2) = -10. Had the power been even, a^2 = (-2)^2 = 4, positive."
+    },
+    {
+      "id": "concept-3-constructing-expressions",
+      "title": "From Words to an Expression, and Back",
+      "explanation": "An expression is a sentence about a quantity written in symbols. Going from words to symbols means choosing a letter for the unknown, then translating each phrase in turn: 'three more than' is + 3, 'twice' is x 2, 'the square of' is ^2. Going the other way is just as much a skill, and it is the one that catches errors - if you cannot say in words what your expression means, it probably does not mean what you intended.",
+      "example": "A rectangle is x long and 5 wide, beside a square of side 2x. The perimeter of the rectangle is 2(x + 5), which expands to 2x + 10. In words: twice the length plus twice the width. Going backwards, the expression 3n^2 - 1 says 'square the number, multiply by three, then take one away' - and note that it does NOT say 'multiply by three then square', which would be (3n)^2."
+    },
+    {
+      "id": "concept-4-indices-in-algebra",
+      "title": "The Index Laws With Letters",
+      "explanation": "The laws of indices you used for numbers work exactly the same with letters, for the same reason: they count repeated factors. Multiplying powers of the same variable adds the indices; dividing subtracts them. The condition is the one that always applies - the base must match. x^3 times x^4 simplifies; x^3 times y^4 does not, because there is nothing common to count.",
+      "example": "x^3 x x^4 = x^7, because three x's times four x's is seven x's. x^6 divided by x^2 = x^4, because two of them cancel. With coefficients, handle the numbers and the letters separately: 3a^2 x 5a^3 = 15a^5. And 10x^5 divided by 2x^2 = 5x^3."
+    },
+    {
+      "id": "concept-5-expanding-two-brackets",
+      "title": "Expanding the Product of Two Linear Expressions",
+      "explanation": "To multiply two brackets, every term in the first must meet every term in the second - four products for two pairs. Then collect the like terms, which is usually where the two middle terms combine into one. Working down a list rather than trusting memory is what stops a term going missing, and the commonest error is exactly that: three products written instead of four.",
+      "example": "(x + 3)(x + 2) gives x x x = x^2, x x 2 = 2x, 3 x x = 3x and 3 x 2 = 6. Collecting: x^2 + 5x + 6. A special case worth recognising: (x + 3)(x - 3) gives x^2 - 3x + 3x - 9, and the middle terms cancel to leave x^2 - 9. Check any expansion by substituting a number into both forms - at x = 1, (1 + 3)(1 + 2) = 12 and 1 + 5 + 6 = 12."
+    },
+    {
+      "id": "concept-6-formulae-and-subject",
+      "title": "Formulae, and Changing the Subject",
+      "explanation": "A formula is a rule connecting quantities, with one of them - the subject - sitting alone on one side. Which variable should be the subject depends on what you are given and what you want, so you rearrange. Changing the subject uses inverse operations, applied to both sides in the reverse of the order that built the formula: undo the additions before the multiplications, exactly as you would unwrap a parcel.",
+      "example": "In physics, v = u + at, where v is the subject. To make a the subject: subtract u from both sides to get v - u = at, then divide both sides by t, giving a = (v - u)/t. Check with numbers: if u = 3, a = 2 and t = 4 then v = 3 + 8 = 11, and the rearranged formula gives a = (11 - 3)/4 = 2, which agrees."
+    }
+  ],
+  "explorations": [
+    {
+      "id": "explore-1",
+      "outcomeId": "lo01",
+      "difficulty": "Discover",
+      "title": "Substituting, and the Order That Survives",
+      "context": "Algebra does not have its own arithmetic. The order of operations you learned for numbers applies unchanged to algebraic terms: brackets and indices first, then multiplication and division, and additions and subtractions last. Substituting is simply replacing each letter with its value and then obeying that order. Most mistakes here are not algebra mistakes at all - they are order-of-operations mistakes that the letters made easier to miss.",
+      "prompt": "Work out 4x + 4 when x = 2, two ways: obeying the order of operations, and working strictly left to right. Which is right, and why?",
+      "answer": "12 is right. Multiplication comes before addition; left to right gives 24 and ignores the order.",
+      "modelType": "concept-model-1",
+      "hint": "Which operation does the order put first?",
+      "explanation": "Work out 4x + 4 when x = 2. Replace x: 4 x 2 + 4. Multiplication before addition gives 8 + 4 = 12, not 4 x 6 = 24. Now a harder one: 2x^2 when x = 3. The index belongs to the x alone, so square first and then double: 2 x 9 = 18, not (2 x 3)^2 = 36. Writing the substitution with brackets - 2 x (3)^2 - makes the order impossible to misread."
+    },
+    {
+      "id": "explore-2",
+      "outcomeId": "lo02",
+      "difficulty": "Core",
+      "title": "Negative Values and Integer Powers",
+      "context": "Substituting a negative number is where care pays. An even power of a negative number is positive and an odd power is negative, because the minus signs pair off. The bracket is not decoration: (-2)^2 is 4, while -2^2 is -4, because in the second the index attaches to the 2 and the minus is applied afterwards. When you substitute a negative value, put it in brackets every time and the sign looks after itself.",
+      "prompt": "Work out a^2 and -a^2 when a = -2. Why do they differ?",
+      "answer": "a^2 = 4 and -a^2 = -4. The bracket decides whether the minus is squared or applied afterwards.",
+      "modelType": "concept-model-2",
+      "hint": "Where does the index attach in each?",
+      "explanation": "Work out a^3 + 2b when a = -2 and b = -1. First a^3 = (-2)^3 = -8, an odd power so negative. Then 2b = 2 x (-1) = -2. So the expression is -8 + (-2) = -10. Had the power been even, a^2 = (-2)^2 = 4, positive."
+    },
+    {
+      "id": "explore-3",
+      "outcomeId": "lo03",
+      "difficulty": "Core",
+      "title": "From Words to an Expression, and Back",
+      "context": "An expression is a sentence about a quantity written in symbols. Going from words to symbols means choosing a letter for the unknown, then translating each phrase in turn: 'three more than' is + 3, 'twice' is x 2, 'the square of' is ^2. Going the other way is just as much a skill, and it is the one that catches errors - if you cannot say in words what your expression means, it probably does not mean what you intended.",
+      "prompt": "Write an expression for the perimeter of a rectangle x by 5 in two different ways, then show they are equal.",
+      "answer": "2(x + 5) and 2x + 10 - expanding the first gives the second.",
+      "modelType": "concept-model-3",
+      "hint": "One method adds then doubles; the other doubles each side.",
+      "explanation": "A rectangle is x long and 5 wide, beside a square of side 2x. The perimeter of the rectangle is 2(x + 5), which expands to 2x + 10. In words: twice the length plus twice the width. Going backwards, the expression 3n^2 - 1 says 'square the number, multiply by three, then take one away' - and note that it does NOT say 'multiply by three then square', which would be (3n)^2."
+    },
+    {
+      "id": "explore-4",
+      "outcomeId": "lo05",
+      "difficulty": "Core",
+      "title": "The Index Laws With Letters",
+      "context": "The laws of indices you used for numbers work exactly the same with letters, for the same reason: they count repeated factors. Multiplying powers of the same variable adds the indices; dividing subtracts them. The condition is the one that always applies - the base must match. x^3 times x^4 simplifies; x^3 times y^4 does not, because there is nothing common to count.",
+      "prompt": "Simplify x^3 x x^4 and x^3 x y^4. Why does only one of them simplify?",
+      "answer": "x^3 x x^4 = x^7. The second has different bases, so there is nothing common to count.",
+      "modelType": "concept-model-4",
+      "hint": "The laws count repeated factors - of what?",
+      "explanation": "x^3 x x^4 = x^7, because three x's times four x's is seven x's. x^6 divided by x^2 = x^4, because two of them cancel. With coefficients, handle the numbers and the letters separately: 3a^2 x 5a^3 = 15a^5. And 10x^5 divided by 2x^2 = 5x^3."
+    },
+    {
+      "id": "explore-5",
+      "outcomeId": "lo06",
+      "difficulty": "Core",
+      "title": "Expanding the Product of Two Linear Expressions",
+      "context": "To multiply two brackets, every term in the first must meet every term in the second - four products for two pairs. Then collect the like terms, which is usually where the two middle terms combine into one. Working down a list rather than trusting memory is what stops a term going missing, and the commonest error is exactly that: three products written instead of four.",
+      "prompt": "Expand (x + 3)(x + 2) and count your products. How many should there be?",
+      "answer": "Four: x^2, 2x, 3x, 6, collecting to x^2 + 5x + 6.",
+      "modelType": "concept-model-5",
+      "hint": "Every term in the first bracket meets every term in the second.",
+      "explanation": "(x + 3)(x + 2) gives x x x = x^2, x x 2 = 2x, 3 x x = 3x and 3 x 2 = 6. Collecting: x^2 + 5x + 6. A special case worth recognising: (x + 3)(x - 3) gives x^2 - 3x + 3x - 9, and the middle terms cancel to leave x^2 - 9. Check any expansion by substituting a number into both forms - at x = 1, (1 + 3)(1 + 2) = 12 and 1 + 5 + 6 = 12."
+    },
+    {
+      "id": "explore-6",
+      "outcomeId": "lo08",
+      "difficulty": "Extension",
+      "title": "Formulae, and Changing the Subject",
+      "context": "A formula is a rule connecting quantities, with one of them - the subject - sitting alone on one side. Which variable should be the subject depends on what you are given and what you want, so you rearrange. Changing the subject uses inverse operations, applied to both sides in the reverse of the order that built the formula: undo the additions before the multiplications, exactly as you would unwrap a parcel.",
+      "prompt": "Make a, then t, the subject of v = u + at. Which was harder, and why?",
+      "answer": "a = (v - u)/t and t = (v - u)/a. Both take the same two steps in the same order.",
+      "modelType": "concept-model-6",
+      "hint": "Undo the addition before the multiplication.",
+      "explanation": "In physics, v = u + at, where v is the subject. To make a the subject: subtract u from both sides to get v - u = at, then divide both sides by t, giving a = (v - u)/t. Check with numbers: if u = 3, a = 2 and t = 4 then v = 3 + 8 = 11, and the rearranged formula gives a = (11 - 3)/4 = 2, which agrees."
+    }
+  ],
+  "visualModels": [
+    {
+      "id": "model-1",
+      "outcomeId": "lo01",
+      "title": "Substituting, and the Order That Survives",
+      "modelType": "concept-model-1",
+      "purpose": "Algebra does not have its own arithmetic. The order of operations you learned for numbers applies unchanged to algebraic terms: brackets and indices first, then multiplication and division, and additions and subtractions last. Substituting is simply replacing each letter with its value and then obeying that order. Most mistakes here are not algebra mistakes at all - they are order-of-operations mistakes that the letters made easier to miss.",
+      "defaultNumber": 2
+    },
+    {
+      "id": "model-2",
+      "outcomeId": "lo02",
+      "title": "Negative Values and Integer Powers",
+      "modelType": "concept-model-2",
+      "purpose": "Substituting a negative number is where care pays. An even power of a negative number is positive and an odd power is negative, because the minus signs pair off. The bracket is not decoration: (-2)^2 is 4, while -2^2 is -4, because in the second the index attaches to the 2 and the minus is applied afterwards. When you substitute a negative value, put it in brackets every time and the sign looks after itself.",
+      "defaultNumber": -2
+    },
+    {
+      "id": "model-3",
+      "outcomeId": "lo03",
+      "title": "From Words to an Expression, and Back",
+      "modelType": "concept-model-3",
+      "purpose": "An expression is a sentence about a quantity written in symbols. Going from words to symbols means choosing a letter for the unknown, then translating each phrase in turn: 'three more than' is + 3, 'twice' is x 2, 'the square of' is ^2. Going the other way is just as much a skill, and it is the one that catches errors - if you cannot say in words what your expression means, it probably does not mean what you intended.",
+      "defaultNumber": 5
+    },
+    {
+      "id": "model-4",
+      "outcomeId": "lo05",
+      "title": "The Index Laws With Letters",
+      "modelType": "concept-model-4",
+      "purpose": "The laws of indices you used for numbers work exactly the same with letters, for the same reason: they count repeated factors. Multiplying powers of the same variable adds the indices; dividing subtracts them. The condition is the one that always applies - the base must match. x^3 times x^4 simplifies; x^3 times y^4 does not, because there is nothing common to count.",
+      "defaultNumber": 3
+    },
+    {
+      "id": "model-5",
+      "outcomeId": "lo06",
+      "title": "Expanding the Product of Two Linear Expressions",
+      "modelType": "concept-model-5",
+      "purpose": "To multiply two brackets, every term in the first must meet every term in the second - four products for two pairs. Then collect the like terms, which is usually where the two middle terms combine into one. Working down a list rather than trusting memory is what stops a term going missing, and the commonest error is exactly that: three products written instead of four.",
+      "defaultNumber": 3
+    },
+    {
+      "id": "model-6",
+      "outcomeId": "lo08",
+      "title": "Formulae, and Changing the Subject",
+      "modelType": "concept-model-6",
+      "purpose": "A formula is a rule connecting quantities, with one of them - the subject - sitting alone on one side. Which variable should be the subject depends on what you are given and what you want, so you rearrange. Changing the subject uses inverse operations, applied to both sides in the reverse of the order that built the formula: undo the additions before the multiplications, exactly as you would unwrap a parcel.",
+      "defaultNumber": 4
+    }
+  ],
+  "methods": [
+    {
+      "id": "method-1",
+      "outcomeId": "lo01",
+      "difficulty": "Core",
+      "title": "How to substitute into an expression",
+      "example": "Work out 2x^2 + 3 when x = 3.",
+      "steps": [
+        "Write the expression with brackets where each letter was: 2 x (3)^2 + 3.",
+        "Work out indices first: (3)^2 = 9.",
+        "Then multiplication: 2 x 9 = 18.",
+        "Then addition last: 18 + 3 = 21."
+      ]
+    },
+    {
+      "id": "method-2",
+      "outcomeId": "lo02",
+      "difficulty": "Core",
+      "title": "How to substitute a negative number",
+      "example": "Work out a^3 + 2b when a = -2 and b = -1.",
+      "steps": [
+        "Put every negative value in brackets: (-2)^3 + 2 x (-1).",
+        "Work out the power, watching whether the index is odd or even: (-2)^3 = -8.",
+        "Work out the other term: 2 x (-1) = -2.",
+        "Combine: -8 + (-2) = -10."
+      ]
+    },
+    {
+      "id": "method-3",
+      "outcomeId": "lo03",
+      "difficulty": "Core",
+      "title": "How to construct an expression",
+      "example": "A number is squared, multiplied by three, then one is subtracted. Write the expression.",
+      "steps": [
+        "Choose a letter for the unknown: n.",
+        "Translate each phrase in order: squared gives n^2.",
+        "Multiplied by three gives 3n^2.",
+        "One subtracted gives 3n^2 - 1.",
+        "Read it back in words to check it says what you meant."
+      ]
+    },
+    {
+      "id": "method-4",
+      "outcomeId": "lo05",
+      "difficulty": "Core",
+      "title": "How to use the index laws with letters",
+      "example": "Simplify 3a^2 x 5a^3 and 10x^5 divided by 2x^2.",
+      "steps": [
+        "Check the bases match.",
+        "Deal with the numbers: 3 x 5 = 15, and 10 divided by 2 = 5.",
+        "Add the indices when multiplying: a^2 x a^3 = a^5, giving 15a^5.",
+        "Subtract them when dividing: x^5 divided by x^2 = x^3, giving 5x^3."
+      ]
+    },
+    {
+      "id": "method-5",
+      "outcomeId": "lo06",
+      "difficulty": "Core",
+      "title": "How to expand two brackets",
+      "example": "Expand and simplify (x + 3)(x + 2).",
+      "steps": [
+        "Multiply the first term of the first bracket by both terms of the second: x^2 and 2x.",
+        "Multiply the second term of the first bracket by both terms of the second: 3x and 6.",
+        "You should have four products - count them.",
+        "Collect like terms: 2x + 3x = 5x.",
+        "Write the answer: x^2 + 5x + 6, and check by substituting x = 1 into both forms."
+      ]
+    },
+    {
+      "id": "method-6",
+      "outcomeId": "lo08",
+      "difficulty": "Core",
+      "title": "How to change the subject",
+      "example": "Make a the subject of v = u + at.",
+      "steps": [
+        "Decide which variable you want alone.",
+        "Undo what is done to it, in reverse order, doing the same to both sides.",
+        "Subtract u from both sides: v - u = at.",
+        "Divide both sides by t: (v - u)/t = a.",
+        "Rewrite with the new subject on the left: a = (v - u)/t, and test with numbers."
+      ]
+    }
+  ],
+  "workedExamples": [
+    {
+      "id": "we01",
+      "outcomeId": "lo01",
+      "difficulty": "Basic",
+      "title": "Order of operations when substituting",
+      "prompt": "Work out 4x + 4 when x = 2.",
+      "solution": "Substitute: 4 x 2 + 4. Multiplication comes before addition, so 8 + 4 = 12. Working left to right without regard to order would give 4 x 6 = 24, which is wrong."
+    },
+    {
+      "id": "we02",
+      "outcomeId": "lo01",
+      "difficulty": "Basic",
+      "title": "An index attaches to one letter",
+      "prompt": "Work out 2x^2 when x = 3.",
+      "solution": "The index belongs to the x alone, so square first: 3^2 = 9, then double: 2 x 9 = 18. It is not (2 x 3)^2 = 36. Writing 2 x (3)^2 makes the order unmistakable."
+    },
+    {
+      "id": "we03",
+      "outcomeId": "lo02",
+      "difficulty": "Core",
+      "title": "Substituting negatives",
+      "prompt": "Work out a^3 + 2b when a = -2 and b = -1.",
+      "solution": "(-2)^3 = -8, because an odd power of a negative is negative. 2 x (-1) = -2. So the value is -8 + (-2) = -10."
+    },
+    {
+      "id": "we04",
+      "outcomeId": "lo02",
+      "difficulty": "Core",
+      "title": "Even powers and the bracket",
+      "prompt": "Work out a^2 when a = -2, and explain how it differs from -a^2.",
+      "solution": "a^2 = (-2)^2 = 4, because the two minus signs pair off. But -a^2 means -(a^2) = -(4) = -4: the index is applied first and the minus afterwards. The bracket is what decides, so always write the substituted negative in one."
+    },
+    {
+      "id": "we05",
+      "outcomeId": "lo03",
+      "difficulty": "Core",
+      "title": "Words to an expression",
+      "prompt": "A number is squared, the result multiplied by three, then one subtracted. Write this as an expression.",
+      "solution": "Call the number n. Squared gives n^2, multiplied by three gives 3n^2, and subtracting one gives 3n^2 - 1. Note this is not (3n)^2 - 1, which would multiply before squaring."
+    },
+    {
+      "id": "we06",
+      "outcomeId": "lo04",
+      "difficulty": "Core",
+      "title": "An expression back into words",
+      "prompt": "Describe in words what 2(x + 5) represents for a rectangle x long and 5 wide.",
+      "solution": "It is the perimeter: add the length and the width to get one long-and-short pair, then double it because the rectangle has two of each. Expanding gives 2x + 10, which says the same thing as twice the length plus twice the width."
+    },
+    {
+      "id": "we07",
+      "outcomeId": "lo05",
+      "difficulty": "Core",
+      "title": "Index laws with a variable",
+      "prompt": "Simplify x^3 x x^4 and x^6 divided by x^2.",
+      "solution": "Multiplying powers of the same variable adds the indices: x^3 x x^4 = x^7. Dividing subtracts them: x^6 divided by x^2 = x^4."
+    },
+    {
+      "id": "we08",
+      "outcomeId": "lo05",
+      "difficulty": "Core",
+      "title": "Coefficients and indices together",
+      "prompt": "Simplify 3a^2 x 5a^3 and 10x^5 divided by 2x^2.",
+      "solution": "Handle numbers and letters separately. 3 x 5 = 15 and a^2 x a^3 = a^5, so the answer is 15a^5. For the division, 10 divided by 2 = 5 and x^5 divided by x^2 = x^3, giving 5x^3."
+    },
+    {
+      "id": "we09",
+      "outcomeId": "lo06",
+      "difficulty": "Core",
+      "title": "Expanding two brackets",
+      "prompt": "Expand and simplify (x + 3)(x + 2).",
+      "solution": "The four products are x^2, 2x, 3x and 6. Collecting the middle terms, 2x + 3x = 5x, so the answer is x^2 + 5x + 6. Check at x = 1: (4)(3) = 12 and 1 + 5 + 6 = 12."
+    },
+    {
+      "id": "we10",
+      "outcomeId": "lo06",
+      "difficulty": "Extension",
+      "title": "The difference of two squares",
+      "prompt": "Show that (x + 3)(x - 3) simplifies to x^2 - 9.",
+      "solution": "The four products are x^2, -3x, 3x and -9. The middle terms -3x and 3x cancel, leaving x^2 - 9. This happens whenever the two brackets differ only in the sign, which is why the pattern is worth recognising."
+    },
+    {
+      "id": "we11",
+      "outcomeId": "lo07",
+      "difficulty": "Core",
+      "title": "Simplifying an algebraic fraction",
+      "prompt": "Simplify 10x/2 and 6a^3/3a.",
+      "solution": "For 10x/2, divide the numbers: 10 divided by 2 = 5, giving 5x. For 6a^3/3a, divide the numbers, 6 divided by 3 = 2, and subtract the indices, a^3 divided by a = a^2, giving 2a^2. Cancelling works because the same factor appears top and bottom."
+    },
+    {
+      "id": "we12",
+      "outcomeId": "lo08",
+      "difficulty": "Core",
+      "title": "Changing the subject",
+      "prompt": "Make a the subject of v = u + at, then find a when v = 11, u = 3 and t = 4.",
+      "solution": "Subtract u from both sides: v - u = at. Divide both sides by t: a = (v - u)/t. Substituting, a = (11 - 3)/4 = 8/4 = 2. Checking forwards: u + at = 3 + 2 x 4 = 11, which is v."
+    }
+  ],
+  "practice": [
+    {
+      "id": "p01",
+      "level": "Warm-up",
+      "prompt": "Work out 3x + 5 when x = 4.",
+      "answer": "17",
+      "hint": "Multiply before adding."
+    },
+    {
+      "id": "p02",
+      "level": "Warm-up",
+      "prompt": "Work out x^2 - 1 when x = 5.",
+      "answer": "24",
+      "hint": "Square first."
+    },
+    {
+      "id": "p03",
+      "level": "Warm-up",
+      "prompt": "Simplify y^2 x y^5.",
+      "answer": "y^7",
+      "hint": "Add the indices."
+    },
+    {
+      "id": "p04",
+      "level": "Core",
+      "prompt": "Work out 2b^2 when b = -3.",
+      "answer": "18",
+      "hint": "Square the negative first; an even power is positive."
+    },
+    {
+      "id": "p05",
+      "level": "Core",
+      "prompt": "Write an expression for 'five less than twice a number n'.",
+      "answer": "2n - 5",
+      "hint": "Twice first, then subtract."
+    },
+    {
+      "id": "p06",
+      "level": "Core",
+      "prompt": "Simplify 12m^6 divided by 4m^2.",
+      "answer": "3m^4",
+      "hint": "Divide the numbers, subtract the indices."
+    },
+    {
+      "id": "p07",
+      "level": "Core",
+      "prompt": "Expand and simplify (x + 4)(x + 1).",
+      "answer": "x^2 + 5x + 4",
+      "hint": "Four products, then collect."
+    },
+    {
+      "id": "p08",
+      "level": "Core",
+      "prompt": "Expand and simplify (x + 5)(x - 5).",
+      "answer": "x^2 - 25",
+      "hint": "The middle terms cancel."
+    },
+    {
+      "id": "p09",
+      "level": "Core",
+      "prompt": "Simplify 8a^4 / 2a.",
+      "answer": "4a^3",
+      "hint": "Numbers and letters separately."
+    },
+    {
+      "id": "p10",
+      "level": "Challenge",
+      "prompt": "Make t the subject of v = u + at.",
+      "answer": "t = (v - u)/a",
+      "hint": "Subtract u, then divide by a."
+    },
+    {
+      "id": "p11",
+      "level": "Challenge",
+      "prompt": "Make H the subject of P = RH + W, then find H when P = 91, W = 65 and R = 5.20.",
+      "answer": "H = (P - W)/R, so H = (91 - 65)/5.2 = 26/5.2 = 5 hours.",
+      "hint": "Subtract W first, then divide by R."
+    },
+    {
+      "id": "p12",
+      "level": "Challenge",
+      "prompt": "Zara says (3n)^2 and 3n^2 are the same. Show that she is wrong using n = 2.",
+      "answer": "(3n)^2 = (6)^2 = 36, but 3n^2 = 3 x 4 = 12. They differ because in the first the whole 3n is squared and in the second only the n is.",
+      "hint": "Substitute n = 2 into both."
+    }
+  ],
+  "activities": [
+    {
+      "title": "Substitution relay",
+      "materials": "paper, a dice.",
+      "steps": [
+        "Write five expressions using x, including one with a power and one with a bracket.",
+        "Roll the dice to choose a value of x and work all five out.",
+        "Swap with a partner and check each other's.",
+        "For any disagreement, write down which step of the order of operations caused it."
+      ]
+    },
+    {
+      "title": "The bracket that matters",
+      "materials": "paper.",
+      "steps": [
+        "Work out (3n)^2 and 3n^2 for n = 1, 2, 3 and 4.",
+        "Put the results in a table side by side.",
+        "Describe in words what each expression does to n.",
+        "Write one sentence explaining why they are never equal except at one value of n - and find that value."
+      ]
+    },
+    {
+      "title": "Four products, every time",
+      "materials": "squared paper.",
+      "steps": [
+        "Draw a rectangle and split it into four smaller rectangles with sides x, 3 and x, 2.",
+        "Write the area of each small rectangle.",
+        "Add them and simplify.",
+        "Compare with expanding (x + 3)(x + 2) algebraically.",
+        "Explain why the diagram guarantees you never miss a term."
+      ]
+    },
+    {
+      "title": "Rearranging a real formula",
+      "materials": "paper.",
+      "steps": [
+        "Start from v = u + at and make each of u, a and t the subject in turn.",
+        "For each rearrangement, write the two inverse operations you used and their order.",
+        "Test every version with u = 3, a = 2, t = 4, v = 11.",
+        "Write a rule of thumb for which operation to undo first."
+      ]
+    },
+    {
+      "title": "Words in, symbols out",
+      "materials": "paper.",
+      "steps": [
+        "Write five descriptions in words, each involving a square, a cube or a root.",
+        "Swap with a partner and convert each to an expression.",
+        "Swap back and check whether the expression says what you meant.",
+        "Where you disagreed, decide whether the words or the symbols were ambiguous."
+      ]
+    },
+    {
+      "title": "Fraction cancelling audit",
+      "materials": "paper.",
+      "steps": [
+        "Write six algebraic fractions such as 10x/2, 6a^3/3a and 12m^6/4m^2.",
+        "Simplify each, writing the number step and the index step separately.",
+        "Check each answer by substituting a value into the original and the simplified form.",
+        "List any that gave different answers and find what went wrong."
+      ]
+    }
+  ],
+  "reference": {
+    "rules": [
+      {
+        "title": "Order Survives the Letters",
+        "text": "The order of operations applies to algebraic terms exactly as to numbers: brackets and indices, then multiplication and division, then addition and subtraction."
+      },
+      {
+        "title": "Bracket Every Substituted Negative",
+        "text": "Write (-2)^2, not -2^2. The bracket decides whether the minus is inside the power or applied after it."
+      },
+      {
+        "title": "The Index Laws With Letters",
+        "text": "For the same base, multiplying adds the indices and dividing subtracts them. Different bases cannot be combined."
+      },
+      {
+        "title": "Four Products",
+        "text": "Expanding two brackets gives every term of the first times every term of the second - four products for two pairs. Count them before collecting."
+      },
+      {
+        "title": "Undo In Reverse",
+        "text": "To change the subject, apply inverse operations to both sides in the reverse of the order that built the formula."
+      }
+    ],
+    "terms": [
+      [
+        "Expression",
+        "A collection of terms in letters and numbers, with no equals sign"
+      ],
+      [
+        "Formula",
+        "A rule connecting quantities, with one variable as the subject"
+      ],
+      [
+        "Subject",
+        "The variable written alone on one side of a formula"
+      ],
+      [
+        "Substitute",
+        "To replace each letter with a given value"
+      ],
+      [
+        "Coefficient",
+        "The number multiplying a letter, as the 3 in 3a"
+      ],
+      [
+        "Expand",
+        "To multiply out brackets"
+      ],
+      [
+        "Algebraic fraction",
+        "A fraction containing a letter"
+      ],
+      [
+        "Inverse operation",
+        "The operation that undoes another, such as subtraction undoing addition"
+      ]
+    ],
+    "commonMistakes": [
+      [
+        "Working left to right when substituting",
+        "Obey the order of operations; 4x + 4 at x = 2 is 12, not 24"
+      ],
+      [
+        "Squaring the coefficient too",
+        "In 2x^2 only the x is squared; (2x)^2 squares both"
+      ],
+      [
+        "Losing the cross terms",
+        "Expanding two brackets gives four products, not two"
+      ],
+      [
+        "Combining different bases",
+        "x^3 x y^4 cannot be simplified; the bases must match"
+      ],
+      [
+        "Undoing in the wrong order",
+        "Remove what was added last before what was multiplied first"
+      ]
+    ]
+  },
+  "fluency": [
+    {
+      "id": "fl01",
+      "outcomeId": "lo01",
+      "difficulty": "Round 1",
+      "prompt": "Work out 4x + 4 when x = 2.",
+      "answer": "12",
+      "hint": "Multiply before adding.",
+      "errorFeedback": "4 x 2 = 8, then 8 + 4 = 12."
+    },
+    {
+      "id": "fl02",
+      "outcomeId": "lo01",
+      "difficulty": "Round 1",
+      "prompt": "Work out 2x^2 when x = 3.",
+      "answer": "18",
+      "hint": "Square first, then double.",
+      "errorFeedback": "The index is on the x alone: 2 x 9 = 18."
+    },
+    {
+      "id": "fl03",
+      "outcomeId": "lo05",
+      "difficulty": "Round 1",
+      "prompt": "Simplify x^3 x x^4.",
+      "answer": "x^7",
+      "hint": "Add the indices.",
+      "errorFeedback": "Multiplying powers of the same base adds indices."
+    },
+    {
+      "id": "fl04",
+      "outcomeId": "lo05",
+      "difficulty": "Round 1",
+      "prompt": "Simplify x^6 divided by x^2.",
+      "answer": "x^4",
+      "hint": "Subtract the indices.",
+      "errorFeedback": "6 - 2 = 4, so x^4."
+    },
+    {
+      "id": "fl05",
+      "outcomeId": "lo02",
+      "difficulty": "Round 2",
+      "prompt": "Work out a^3 when a = -2.",
+      "answer": "-8",
+      "hint": "Odd power of a negative.",
+      "errorFeedback": "(-2)^3 = -8, because an odd power keeps the minus."
+    },
+    {
+      "id": "fl06",
+      "outcomeId": "lo02",
+      "difficulty": "Round 2",
+      "prompt": "Work out a^2 when a = -2.",
+      "answer": "4",
+      "hint": "Even power of a negative.",
+      "errorFeedback": "(-2)^2 = 4, because the minus signs pair off."
+    },
+    {
+      "id": "fl07",
+      "outcomeId": "lo05",
+      "difficulty": "Round 2",
+      "prompt": "Simplify 3a^2 x 5a^3.",
+      "answer": "15a^5",
+      "hint": "Numbers and letters separately.",
+      "errorFeedback": "3 x 5 = 15 and a^2 x a^3 = a^5."
+    },
+    {
+      "id": "fl08",
+      "outcomeId": "lo07",
+      "difficulty": "Round 2",
+      "prompt": "Simplify 10x/2.",
+      "answer": "5x",
+      "hint": "Divide the numbers.",
+      "errorFeedback": "10 divided by 2 is 5, so 5x."
+    },
+    {
+      "id": "fl09",
+      "outcomeId": "lo06",
+      "difficulty": "Round 3",
+      "prompt": "Expand and simplify (x + 3)(x + 2).",
+      "answer": "x^2 + 5x + 6",
+      "hint": "Four products, then collect.",
+      "errorFeedback": "x^2 + 2x + 3x + 6 collects to x^2 + 5x + 6."
+    },
+    {
+      "id": "fl10",
+      "outcomeId": "lo06",
+      "difficulty": "Round 3",
+      "prompt": "Expand and simplify (x + 3)(x - 3).",
+      "answer": "x^2 - 9",
+      "hint": "The middle terms cancel.",
+      "errorFeedback": "-3x + 3x = 0, leaving x^2 - 9."
+    },
+    {
+      "id": "fl11",
+      "outcomeId": "lo07",
+      "difficulty": "Round 3",
+      "prompt": "Simplify 6a^3 / 3a.",
+      "answer": "2a^2",
+      "hint": "Divide numbers, subtract indices.",
+      "errorFeedback": "6/3 = 2 and a^3/a = a^2."
+    },
+    {
+      "id": "fl12",
+      "outcomeId": "lo08",
+      "difficulty": "Round 3",
+      "prompt": "Make a the subject of v = u + at.",
+      "answer": "a = (v - u)/t",
+      "hint": "Subtract u, then divide by t.",
+      "errorFeedback": "Undo the addition first, then the multiplication."
+    }
+  ],
+  "realProblems": [
+    {
+      "id": "rp01",
+      "outcomeId": "lo03",
+      "difficulty": "Core",
+      "context": "Home",
+      "prompt": "A rectangular room is x metres long and 5 metres wide. Write expressions for its perimeter and its area, and evaluate both when x = 3.",
+      "answer": "Perimeter = 2(x + 5) = 2x + 10, which is 16 m when x = 3. Area = 5x, which is 15 square metres.",
+      "hint": "Perimeter adds all four sides; area multiplies two.",
+      "errorFeedback": "2(3 + 5) = 16 and 5 x 3 = 15."
+    },
+    {
+      "id": "rp02",
+      "outcomeId": "lo08",
+      "difficulty": "Core",
+      "context": "Work",
+      "prompt": "A worker's pay is P = RH + W, where R is the hourly rate, H the hours and W a fixed bonus. Make H the subject and find the hours worked when P = 91, W = 65 and R = 5.20.",
+      "answer": "H = (P - W)/R = (91 - 65)/5.2 = 26/5.2 = 5 hours.",
+      "hint": "Subtract the bonus first, then divide by the rate.",
+      "errorFeedback": "Undo the addition of W before undoing the multiplication by R."
+    },
+    {
+      "id": "rp03",
+      "outcomeId": "lo01",
+      "difficulty": "Core",
+      "context": "Science",
+      "prompt": "The speed of an object is v = u + at. Find v when u = 3 m/s, a = 2 m/s^2 and t = 4 s.",
+      "answer": "v = 3 + 2 x 4 = 3 + 8 = 11 m/s.",
+      "hint": "Multiplication before addition.",
+      "errorFeedback": "Work out at first: 2 x 4 = 8, then add u."
+    },
+    {
+      "id": "rp04",
+      "outcomeId": "lo06",
+      "difficulty": "Extension",
+      "context": "Home",
+      "prompt": "A square lawn of side x has a path of width 3 added along two adjacent sides, making a larger rectangle (x + 3) by (x + 2) after trimming. Expand to find the total area, and evaluate at x = 4.",
+      "answer": "(x + 3)(x + 2) = x^2 + 5x + 6. At x = 4 that is 16 + 20 + 6 = 42 square metres, which agrees with 7 x 6 = 42.",
+      "hint": "Expand first, then substitute - and check against the direct multiplication.",
+      "errorFeedback": "Four products: x^2, 2x, 3x, 6."
+    },
+    {
+      "id": "rp05",
+      "outcomeId": "lo05",
+      "difficulty": "Extension",
+      "context": "Science",
+      "prompt": "A cube has side 2a. Write an expression for its volume, simplified using the index laws, and evaluate when a = 3.",
+      "answer": "Volume = (2a)^3 = 8a^3. When a = 3 that is 8 x 27 = 216 cubic units, which matches 6^3 = 216.",
+      "hint": "The whole of 2a is cubed, not just the a.",
+      "errorFeedback": "(2a)^3 cubes both the 2 and the a: 2^3 x a^3 = 8a^3."
+    },
+    {
+      "id": "rp06",
+      "outcomeId": "lo07",
+      "difficulty": "Extension",
+      "context": "Market",
+      "prompt": "A trader shares 6a^3 shillings equally among 3a helpers. Write and simplify an expression for each share, and evaluate when a = 4.",
+      "answer": "Each share is 6a^3/3a = 2a^2 shillings. When a = 4 that is 2 x 16 = 32 shillings.",
+      "hint": "Divide the numbers, subtract the indices.",
+      "errorFeedback": "6/3 = 2 and a^3/a = a^2, so 2a^2."
+    }
+  ],
+  "reasoningPrompts": [
+    {
+      "id": "reason01",
+      "outcomeId": "lo01",
+      "difficulty": "Core",
+      "responseMode": "text",
+      "prompt": "Arun works out 4x + 4 when x = 2 and gets 24. What has he done, and what should he have done?",
+      "keyIdeas": [
+        "He worked left to right",
+        "Multiplication comes before addition",
+        "The answer is 12"
+      ],
+      "modelAnswer": "He added before multiplying, treating it as 4 x (2 + 4) = 24. The order of operations puts multiplication before addition, so it is 4 x 2 = 8 and then 8 + 4 = 12. The mistake is not about algebra at all - it is the order of operations, which the letters simply made easier to overlook."
+    },
+    {
+      "id": "reason02",
+      "outcomeId": "lo02",
+      "difficulty": "Core",
+      "responseMode": "text",
+      "prompt": "Explain why (-2)^2 and -2^2 give different answers.",
+      "keyIdeas": [
+        "The bracket decides what is squared",
+        "(-2)^2 squares the whole negative number",
+        "-2^2 squares 2 then negates"
+      ],
+      "modelAnswer": "In (-2)^2 the bracket means the whole of -2 is squared, and the two minus signs pair off to give 4. In -2^2 there is no bracket, so the index attaches to the 2 alone, giving 4, and the minus is applied afterwards to give -4. This is why a substituted negative should always be written in brackets."
+    },
+    {
+      "id": "reason03",
+      "outcomeId": "lo05",
+      "difficulty": "Core",
+      "responseMode": "text",
+      "prompt": "Why can x^3 x x^4 be simplified but x^3 x y^4 cannot?",
+      "keyIdeas": [
+        "The laws count repeated factors",
+        "The factors must be identical",
+        "x and y are different things"
+      ],
+      "modelAnswer": "Adding indices works because it counts how many copies of the same factor are multiplied: three x's times four x's is seven x's, so x^7. With x^3 x y^4 the factors are different, so there is nothing to count together and no single index to write. The rule is a counting argument, and counting requires the things counted to be the same."
+    },
+    {
+      "id": "reason04",
+      "outcomeId": "lo06",
+      "difficulty": "Extension",
+      "responseMode": "text",
+      "prompt": "Sofia expands (x + 3)(x + 2) and gets x^2 + 6. What has she missed, and how could she have caught it?",
+      "keyIdeas": [
+        "She multiplied only the first and last terms",
+        "There should be four products",
+        "Substituting a value would reveal it"
+      ],
+      "modelAnswer": "She multiplied x by x and 3 by 2 and stopped, so she has two products instead of four - the cross terms 2x and 3x are missing, and they collect to 5x. The answer is x^2 + 5x + 6. Substituting x = 1 would have caught it immediately: the original gives 4 x 3 = 12, while her answer gives 1 + 6 = 7."
+    },
+    {
+      "id": "reason05",
+      "outcomeId": "lo08",
+      "difficulty": "Extension",
+      "responseMode": "text",
+      "prompt": "When changing the subject of v = u + at to make a the subject, why must you subtract u before dividing by t?",
+      "keyIdeas": [
+        "Undo in reverse order",
+        "The addition was applied last",
+        "Dividing first would need brackets around everything"
+      ],
+      "modelAnswer": "The formula builds a up by multiplying by t and then adding u, so undoing it reverses that order: remove the addition first, then the multiplication. Dividing the whole equation by t first is not wrong, but it gives v/t = u/t + a, which still needs the u/t removed - more work for the same result. Undoing in reverse order is the shortest route."
+    },
+    {
+      "id": "reason06",
+      "outcomeId": "lo04",
+      "difficulty": "Extension",
+      "responseMode": "text",
+      "prompt": "Is 2(x + 5) a better or worse way of writing the perimeter than 2x + 10? Argue for one.",
+      "keyIdeas": [
+        "They are equal",
+        "The factorised form shows the structure",
+        "The expanded form is easier to evaluate"
+      ],
+      "modelAnswer": "They are equal, so neither is more correct, and which is better depends on the job. 2(x + 5) shows where it came from - a length-plus-width pair, doubled - so it explains the rectangle. 2x + 10 is quicker to evaluate and easier to compare with another expression. A good answer picks one and says what it is better FOR, rather than calling the other wrong."
+    }
+  ],
+  "assessment": {
+    "passPercent": 80,
+    "questions": [
+      {
+        "id": "q01",
+        "type": "Application",
+        "outcomeId": "lo01",
+        "difficulty": "Basic",
+        "question": "Work out 4x + 4 when x = 2.",
+        "options": [
+          "12",
+          "24",
+          "16",
+          "20"
+        ],
+        "answer": "12",
+        "hint": "Multiply before adding.",
+        "explanation": "4 x 2 = 8, then 8 + 4 = 12."
+      },
+      {
+        "id": "q02",
+        "type": "Application",
+        "outcomeId": "lo01",
+        "difficulty": "Basic",
+        "question": "Work out 2x^2 when x = 3.",
+        "options": [
+          "36",
+          "18",
+          "12",
+          "81"
+        ],
+        "answer": "18",
+        "hint": "Where does the index attach?",
+        "explanation": "Only the x is squared: 2 x 9 = 18."
+      },
+      {
+        "id": "q03",
+        "type": "Application",
+        "outcomeId": "lo02",
+        "difficulty": "Core",
+        "question": "Work out a^3 when a = -2.",
+        "options": [
+          "8",
+          "-8",
+          "6",
+          "-6"
+        ],
+        "answer": "-8",
+        "hint": "Odd or even power?",
+        "explanation": "(-2)^3 = -8, because an odd power of a negative stays negative."
+      },
+      {
+        "id": "q04",
+        "type": "Application",
+        "outcomeId": "lo05",
+        "difficulty": "Core",
+        "question": "Simplify 3a^2 x 5a^3.",
+        "options": [
+          "15a^5",
+          "15a^6",
+          "8a^5",
+          "15a^"
+        ],
+        "answer": "15a^5",
+        "hint": "Numbers and letters separately.",
+        "explanation": "3 x 5 = 15 and a^2 x a^3 = a^5."
+      },
+      {
+        "id": "q05",
+        "type": "Application",
+        "outcomeId": "lo06",
+        "difficulty": "Core",
+        "question": "Expand and simplify (x + 3)(x + 2).",
+        "options": [
+          "x^2 + 6",
+          "x^2 + 5x + 6",
+          "x^2 + 6x + 5",
+          "2x + 5"
+        ],
+        "answer": "x^2 + 5x + 6",
+        "hint": "Four products.",
+        "explanation": "x^2 + 2x + 3x + 6 collects to x^2 + 5x + 6."
+      },
+      {
+        "id": "q06",
+        "type": "Application",
+        "outcomeId": "lo07",
+        "difficulty": "Core",
+        "question": "Simplify 6a^3 / 3a.",
+        "options": [
+          "2a^2",
+          "2a^3",
+          "3a^2",
+          "2a"
+        ],
+        "answer": "2a^2",
+        "hint": "Divide numbers, subtract indices.",
+        "explanation": "6/3 = 2 and a^3/a = a^2."
+      },
+      {
+        "id": "q07",
+        "type": "Application",
+        "outcomeId": "lo08",
+        "difficulty": "Core",
+        "question": "Make a the subject of v = u + at.",
+        "options": [
+          "a = v - u - t",
+          "a = (v - u)/t",
+          "a = v/t - u",
+          "a = t(v - u)"
+        ],
+        "answer": "a = (v - u)/t",
+        "hint": "Subtract u, then divide by t.",
+        "explanation": "Undo the addition first, then the multiplication."
+      },
+      {
+        "id": "q08",
+        "type": "Reasoning",
+        "outcomeId": "lo05",
+        "difficulty": "Extension",
+        "question": "Why can x^3 x y^4 not be simplified?",
+        "options": [
+          "The indices differ",
+          "The bases differ",
+          "The result is too large",
+          "Only division can be simplified"
+        ],
+        "answer": "The bases differ",
+        "hint": "What do the index laws count?",
+        "explanation": "The laws count copies of the SAME factor; x and y are different, so there is nothing to combine."
+      }
+    ]
+  },
+  "games": {
+    "masteryScore": 3,
+    "games": [
+      {
+        "id": "u2-game-1",
+        "icon": "?",
+        "skill": "Substitution",
+        "title": "Quick Match: Substitution",
+        "description": "Four short challenges on substituting values.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "4x + 4 when x = 2",
+            "choices": [
+              "12",
+              "24",
+              "10",
+              "16"
+            ],
+            "answer": "12",
+            "clue": "Multiply before adding."
+          },
+          {
+            "prompt": "2x^2 when x = 3",
+            "choices": [
+              "36",
+              "18",
+              "12",
+              "6"
+            ],
+            "answer": "18",
+            "clue": "The index is on the x alone."
+          },
+          {
+            "prompt": "a^2 when a = -2",
+            "choices": [
+              "-4",
+              "4",
+              "-2",
+              "2"
+            ],
+            "answer": "4",
+            "clue": "Even power of a negative."
+          },
+          {
+            "prompt": "a^3 when a = -2",
+            "choices": [
+              "-8",
+              "8",
+              "-6",
+              "6"
+            ],
+            "answer": "-8",
+            "clue": "Odd power keeps the minus."
+          }
+        ]
+      },
+      {
+        "id": "u2-game-2",
+        "icon": "?",
+        "skill": "Manipulating",
+        "title": "Quick Match: Manipulating",
+        "description": "Four short challenges on indices, expanding and fractions.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "Simplify x^3 x x^4",
+            "choices": [
+              "x^7",
+              "x^12",
+              "x^1",
+              "2x^7"
+            ],
+            "answer": "x^7",
+            "clue": "Add the indices."
+          },
+          {
+            "prompt": "Simplify x^6 / x^2",
+            "choices": [
+              "x^3",
+              "x^4",
+              "x^8",
+              "x^2"
+            ],
+            "answer": "x^4",
+            "clue": "Subtract the indices."
+          },
+          {
+            "prompt": "Expand (x + 3)(x - 3)",
+            "choices": [
+              "x^2 - 9",
+              "x^2 + 9",
+              "x^2 - 6x - 9",
+              "x^2 - 6"
+            ],
+            "answer": "x^2 - 9",
+            "clue": "The middle terms cancel."
+          },
+          {
+            "prompt": "Simplify 10x/2",
+            "choices": [
+              "5x",
+              "8x",
+              "10x",
+              "5"
+            ],
+            "answer": "5x",
+            "clue": "Divide the numbers."
+          }
+        ]
+      }
+    ]
+  },
+  "selfAssessment": [
+    "I can substitute numbers into an expression, applying the correct order of operations to algebraic terms.",
+    "I can substitute negative numbers and evaluate terms with integer powers correctly.",
+    "I can construct an algebraic expression from a description in words, including squares, cubes and roots.",
+    "I can describe in words what an algebraic expression represents.",
+    "I can apply the laws of indices to algebraic terms, adding indices to multiply and subtracting to divide.",
+    "I can expand the product of two linear expressions and simplify the result.",
+    "I can simplify an algebraic fraction by cancelling factors common to the numerator and denominator.",
+    "I can derive a formula from a situation, and change its subject using inverse operations."
+  ]
+}

@@ -97,31 +97,84 @@ The signing key is the zone's existing **ZoneSecurityKey** (already set, 36
 characters — nothing needs generating). It is what goes in the Moodle admin
 field.
 
-## LIVE for Computing Grade 4 since 2026-09-26
+## LIVE for Computing Grade 4 since 2026-09-26 — HTML DOCUMENTS ONLY
 
-Enforcing now. `*/app/computing/grade-4-v2/*` requires a signed URL; everything
-else on the zone is unchanged. Measured on the live zone at enable time, 8/8: an
-unsigned hub and an unsigned lesson page both 403; Moodle's own signed launch
-served, with extra params, `./course-shell.js` and the `lecture-video/` film;
-Computing Grade 3 and `app/shared/` still served unsigned.
+Enforcing now, pattern `*/app/computing/grade-4-v2/*.html`. A pasted lesson or hub
+URL gets 403; everything the page then fetches is served without a token.
 
-Zone state: `ZoneSecurityEnabled` **False** (deliberately — the edge rule does the
-work), 7 edge rules = the original 6 cache rules plus one Enable Token
-Authentication rule.
+Zone state: `ZoneSecurityEnabled` **False** (the edge rule does the work), 7 edge
+rules = the original 6 cache rules plus one Enable Token Authentication rule.
+**Rollback is one action: disable that rule.**
 
-**Rollback is one action:** disable that edge rule. Do NOT blank the Moodle key
-while it is enabled — every launch would be unsigned and every learner refused.
+### Why *.html and not the whole directory
 
-**The deploy order bit once and is worth remembering.** The PHP was deployed, the
-decoded-path defect was found afterwards, and the fix was committed but not
-re-deployed — so the server went on signing the encoded path while the repo was
-correct. It was caught by verifying a REAL launch URL's token against the zone key
-before enabling anything, which cost one paste and would otherwise have 403'd every
-Grade 4 learner. Verify the artefact, not the commit.
+The first attempt matched `*/app/computing/grade-4-v2/*` and **broke the film**,
+reported by the owner within minutes. The cause is the distinction that matters
+most here:
 
-**One-time window:** any learner who launched before the corrected file was
-installed holds an encoded-path token, which now 403s. Relaunching fixes it. Their
-tokens live 12 hours.
+> **A token's SCOPE covering a file is not the page DELIVERING a token on that
+> request.**
+
+The directory token authorises everything under the folder — verified, 8/8. But
+the page does not put the token on most of its own subresource requests:
+
+| what the page fetches | carries the token? |
+| --- | --- |
+| lesson `.html` links, the picker, the hub | **yes** — `location.search` appended verbatim |
+| word audio (`w.file + location.search`) | **yes** |
+| `<link rel="modulepreload">` ×4 (`course-shell.js`, `learner-controls.js`, `wehel.js`, `seb-session.js`) | **no** — static build-time HTML |
+| the film's `src`, `poster` and `captions` | **no** — built without `location.search` |
+| `../../shared/ehel-academy-logo.png` | no, and outside the prefix anyway |
+
+So protecting the directory 403'd the film, its captions, its poster **and all four
+shell modules**. Only the film was reported, because browser cache was hiding the
+rest — which is the more alarming half.
+
+`check-cdn-token-signing.php` printed "9 subresources covered" throughout. That
+was true about scope and silent about delivery, and its wording is now corrected
+to say so.
+
+### The pattern is query-safe, and that had to be checked
+
+`*.html` matches on the PATH, not the full URL. Verified against the edge:
+`index.html`, `index.html?stage=4&unit=1`, `?from=comp4`, three junk params, and a
+query ending in `.js` are all refused. Had matching included the query string,
+`index.html?anything` would have bypassed the rule completely — a silent total
+defeat of the feature, not a partial one.
+
+### What this protects, and what it does not
+
+**Protected:** the lesson and hub documents. Without them there is no lesson, so
+this is what "prevent access outside Moodle" actually needs.
+
+**Not protected:** the mp4, vtt, poster, the four shell modules and the CSS are
+fetchable by anyone who knows the exact URL (the film's filename is content-hashed,
+so guessing it is not trivial, but it is not a secret). This is consistent with
+`media/` and `content/`, which are wholly public and hold every narration clip on
+the platform — gating this folder's mp4 while `media/` is open would be theatre.
+
+Closing that gap means every build appending `location.search` to its film and
+module references, and the modulepreload tags are static HTML emitted at build
+time. That is a rebuild and redeploy of all 24 lesson apps, and it is a separate
+job — not a config change.
+
+### Measured on the live zone
+
+9/9 at enable time: pasted hub and pasted lesson URL (with params) both 403;
+Moodle's signed launch and signed in-app navigation served; the film, its captions,
+`course-shell.js` and `wehel.js` all served unsigned; Computing Grade 3 untouched.
+
+### The deploy-order trap, recorded because it nearly shipped
+
+The PHP was deployed, the decoded-path defect was found afterwards, and the fix
+was committed but not re-deployed — so the server signed the encoded path while the
+repo was correct and every gate was green. Caught by recomputing a REAL launch
+URL's token against the zone key and seeing it match the ENCODED variant, which
+named the deployed version exactly. **Verify the running artefact, not the commit.**
+
+**One-time window:** anyone who launched before the corrected file was installed
+holds an encoded-path token, which now 403s on the HTML. Relaunching fixes it.
+Tokens live 12 hours.
 
 ## Widening it: turn it on in this order
 

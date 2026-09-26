@@ -101,11 +101,19 @@ foreach (['stage=4', 'unit=1', 'pwsEndpoint=', 'pwsToken=aaa.bbb.ccc', 'studenti
     }
 }
 
-// 4. Everything a lesson page fetches must be UNDER the signed directory, or it
-//    is a file the edge will refuse once the zone rule covers this prefix. The
-//    shared logo is deliberately outside and is listed as such: the edge rule
-//    protects exactly the signed prefix, so app/shared/ stays public. If that
-//    rule is ever widened to app/, this list is what tells you what breaks.
+// 4. SCOPE ONLY, AND THIS CHECK ONCE MISLED BADLY. It asserts which files fall
+//    under the signed directory -- that a token minted for the app folder would
+//    AUTHORISE them. It says nothing about whether the page ever SENDS the token
+//    on those requests, and on 2026-09-26 it did not: the four modulepreload
+//    tags are static build-time HTML, and the film's src/poster/captions are
+//    built without location.search, so enabling the rule over the whole
+//    directory 403'd the film and the shell modules while this check read
+//    "9 subresources covered". Covered by the token's scope, never sent one.
+//
+//    That is why the live edge rule matches *.html only. Scope is not delivery;
+//    this half is the scope half. Delivery is a property of the built pages and
+//    nothing in this file can see it -- docs/cdn-token-authentication.md has the
+//    measurement.
 $inside = ['course-shell.js', 'learner-controls.js', 'seb-session.js', 'wehel.js',
            'lecture-video/film.mp4', 'lecture-video/film.vtt', 'lecture-video/film.jpg',
            'bitsy-loops.html', 'index.html'];
@@ -156,5 +164,5 @@ if ($fail) {
     exit(1);
 }
 echo "CDN token signing: ok (known answer, edge params, launch preserved, "
-   . count($inside) . " subresources covered, blank key inert)\n";
+   . count($inside) . " subresources IN SCOPE (not proof they send a token), blank key inert)\n";
 exit(0);

@@ -986,6 +986,28 @@
 </script>
 
 
+
+<script>/* ehel-g5-carry-cdn-token - see carry-cdn-token.py
+   Keep the launch AND the Bunny CDN token alive on every in-app link. The edge
+   refuses a lesson document with no token, so a dropped param is a 403 rather
+   than a silently unreported lesson. Carries everything except `from`, which
+   each link sets for itself. */
+  (function () {
+    var src = new URLSearchParams(location.search);
+    src.delete("from");
+    if (!src.toString()) return;
+    document.querySelectorAll('a[href]').forEach(function (a) {
+      var raw = a.getAttribute("href");
+      if (!raw || /^(#|https?:|mailto:|javascript:)/i.test(raw)) return;
+      var url;
+      try { url = new URL(raw, location.href); } catch (e) { return; }
+      if (url.origin !== location.origin) return;
+      if (!/\.html$/i.test(url.pathname)) return;
+      src.forEach(function (v, k) { if (!url.searchParams.has(k)) url.searchParams.set(k, v); });
+      a.setAttribute("href", url.pathname.split("/").pop() + "?" + url.searchParams.toString());
+    });
+  })();
+</script>
 </body>
 </html>
 <style>/* ehel-g5-self-check - see add-self-check.py */

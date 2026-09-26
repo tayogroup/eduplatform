@@ -216,10 +216,19 @@ nothing, so it failed open and protected nothing — no outage, and no error eit
 If you paste a list, read the rule back and count the patterns; the tell is a single
 pattern containing a space. The API is the reliable route.
 
-**Mathematics `grade-5-v2` is deliberately excluded.** Its `wire-platform.py` carries
-a param allowlist — `["pwsToken","pwsEndpoint","studentid","category"]` — which drops
-the CDN token on the first click into a lesson, so protecting it would 403 that
-build. Add those four params to that list before including it.
+**Mathematics `grade-5-v2` was the one exception and is now fixed and protected**
+(37 patterns). It needed TWO fixes, not the obvious one: its hub carried a param
+allowlist that dropped the four token params on hub→lesson, AND every lesson page
+carried a bare `href="index.html"` back-link with no query at all, so lesson→hub
+dropped everything. Adding four names to the allowlist would have tested fine from
+the hub and failed the first time a child pressed back.
+`grade-5-app/carry-cdn-token.py` carries the whole query on every internal `.html`
+link instead, matching the other thirty builds.
+
+One finding from that build worth keeping: `URLSearchParams.toString()` re-encodes
+the space in `Ehel Primary` as **`+`**, not `%20`, so it sends a differently encoded
+`token_path` than Moodle does. **The edge accepts both** — measured. Every other
+build appends `location.search` verbatim and never hits this.
 
 ### Delivery was audited per build, not assumed
 

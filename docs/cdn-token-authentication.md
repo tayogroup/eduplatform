@@ -97,7 +97,33 @@ The signing key is the zone's existing **ZoneSecurityKey** (already set, 36
 characters — nothing needs generating). It is what goes in the Moodle admin
 field.
 
-## Turn it on in this order
+## LIVE for Computing Grade 4 since 2026-09-26
+
+Enforcing now. `*/app/computing/grade-4-v2/*` requires a signed URL; everything
+else on the zone is unchanged. Measured on the live zone at enable time, 8/8: an
+unsigned hub and an unsigned lesson page both 403; Moodle's own signed launch
+served, with extra params, `./course-shell.js` and the `lecture-video/` film;
+Computing Grade 3 and `app/shared/` still served unsigned.
+
+Zone state: `ZoneSecurityEnabled` **False** (deliberately — the edge rule does the
+work), 7 edge rules = the original 6 cache rules plus one Enable Token
+Authentication rule.
+
+**Rollback is one action:** disable that edge rule. Do NOT blank the Moodle key
+while it is enabled — every launch would be unsigned and every learner refused.
+
+**The deploy order bit once and is worth remembering.** The PHP was deployed, the
+decoded-path defect was found afterwards, and the fix was committed but not
+re-deployed — so the server went on signing the encoded path while the repo was
+correct. It was caught by verifying a REAL launch URL's token against the zone key
+before enabling anything, which cost one paste and would otherwise have 403'd every
+Grade 4 learner. Verify the artefact, not the commit.
+
+**One-time window:** any learner who launched before the corrected file was
+installed holds an encoded-path token, which now 403s. Relaunching fixes it. Their
+tokens live 12 hours.
+
+## Widening it: turn it on in this order
 
 1. **Deploy the PHP.** Inert: with no key configured `pqpg_cdn_sign_dir_url()`
    returns the URL unchanged. *(Done 2026-09-26, hash-verified.)*

@@ -1,325 +1,280 @@
-# Maths 5–9 Build Handoff
+# Maths 5–9: Build Record and Reference
 
-Cambridge Mathematics Grades 5 to 9 — delegating the build to a second account
-on a second workstation. Every figure below was measured on the primary machine
-on 2026-09-26, not recalled.
+Cambridge Mathematics Grades 5 to 9. Every figure below was measured, not
+recalled; where a figure came from a tool the tool is named so it can be re-run.
 
-Live copy (owner's account): https://claude.ai/artifact/HjLcVMYHdnDp2vbmvXRgrm
+**This file began on 2026-09-26 as a handoff brief for delegating the build to a
+second Claude account on a second workstation. The owner cancelled the delegation
+the same day and the work was done in-session instead.** The two phases that only
+described that arrangement — creating the second account, and coordinating two
+machines against one `origin` — have been removed. Everything else was kept,
+because it is about this repo rather than about who is typing, and most of it was
+bought by an incident.
 
-## Scope and the state of each grade today
+Live copy (owner's account): https://claude.ai/artifact/HjLcVMYHdnDp2vbmvXRgrm —
+**stale as of 2026-09-26**, still showing Grades 6/7/8 at 90–91% and Grade 9 at
+zero. Refresh or retire it.
 
-Five grades, two Cambridge frameworks, and five genuinely different jobs. This
-is not one task repeated five times — read the last column before estimating
-anything.
+## Where the five grades stand
 
-| Grade | Framework | Objectives in stage | Claimed now | Coverage | What exists today |
+| Grade | Framework | Objectives | Claimed | Coverage | State |
 | --- | --- | --- | --- | --- | --- |
-| 5 | 0096 Primary | 51 | 51 | **100%** | Standalone app, 10 lessons + check. **Done and deployed 2026-09-26.** Still no shell units — the manifest claims 18 and `data/units/` does not exist |
-| 6 | 0096 Primary | 54 | 49 | 91% | 17 shell units, mapped. No standalone app |
-| 7 | 0862 Lower Sec | 63 | 57 | 90% | 16 shell units, mapped. No standalone app |
-| 8 | 0862 Lower Sec | 61 | 55 | 90% | 16 shell units, mapped. No standalone app |
-| 9 | 0862 Lower Sec | 55 | 0 | **0%** | Nothing. No units, no app, not in `catalog.json` |
+| 5 | 0096 Primary | 51 | 51 | **100%** | Standalone app, 10 lessons + check. Deployed and routed 2026-09-26 |
+| 6 | 0096 Primary | 54 | 54 | **100%** | 17 shell units. Closed 2026-09-26 (`2c5c4447da`), deployed |
+| 7 | 0862 Lower Sec | 63 | 63 | **100%** | 16 shell units. Closed 2026-09-26 (`05526cf574`), deployed |
+| 8 | 0862 Lower Sec | 61 | 61 | **100%** | 16 shell units. Closed 2026-09-26 (`9605e5fb03`), deployed |
+| 9 | 0862 Lower Sec | 55 | 55 | **100%** | **15 shell units, authored 2026-09-26. Committed, NOT deployed** |
 
-The work splits three ways.
+All five grades are at full objective coverage against their stage. That sentence
+is worth reading narrowly — see **A coverage number is not evidence** at the end.
 
-**Grade 5 is finished.** It was at 41% — five whole strands absent — and is now
-51/51, live on the CDN and routed. Five lessons and 32 interactive steps were
-added on 2026-09-26: Shapes and Angles (`5Gg`), Where Things Are and How They
-Move (`5Gp`), Time and How We Write It (`5Gt`), Data and Chance (`5Ss`/`5Sp`)
-and Calculating with Wholes and Parts (the remaining `5Ni`/`5Nf`). What it
-taught the tooling is in **Building a lesson in grade-5-app** below, and the
-second machine should read that before starting Grade 9, which is the same
-shape of job.
+### What is still outstanding
 
-The 18-unit shell course question is still open and unchanged: a manifest
-claiming 18 units over an empty `data/units/` is a live inconsistency that
-should be decided rather than left.
+Nothing about objective coverage. These are the open items:
 
-**Grades 6, 7 and 8 need the last five or six objectives each**, plus the
-curriculum sign-off their mapping has never had. This is now the first work.
+| # | Item | Whose |
+| --- | --- | --- |
+| 1 | **Grade 9 is not deployed.** No `course-manifest.json`, no `catalog.json` entry, no Moodle course, no routing | build + operator |
+| 2 | **No unit has been curriculum-reviewed.** Every Grade 9 unit records `reviewStatus: "Not curriculum-reviewed"`, and the Stage 7/8 mappings carry `reviewed: false` | curriculum |
+| 3 | **Grade 5's shell course claims 18 units over an empty `data/units/`.** A live inconsistency, unchanged since first noted | decision |
+| 4 | **No Teacher's Guide exists for Stage 8 or Stage 9** — see below | purchasing |
+| 5 | **145 TWM tags in Grades 6–8 have no regeneration path** — see below | build |
 
-**Grade 9 is net new** — 55 objectives, no scaffolding, no catalogue entry.
+## Grade 9, as built
 
-## Blockers to clear before any authoring starts
+Fifteen units, one per unit of the Stage 9 Learner's Book, authored 2026-09-26
+from the Learner's Book and Workbook. Each unit is produced by a committed
+builder and verified by a committed checker:
 
-Five of these were found by measuring rather than assuming, and two of them will
-stop the second machine dead on day one.
+```
+tools/build-ehel-math-g9-unit{N}.mjs --write     # writes grade-9/data/units/unit-{N}.json
+tools/check-ehel-math-g9-unit{N}.mjs             # recomputes every claim in it
+```
 
-### 1. Every Stage 7, 8 and 9 book is an image-only PDF
-
-This is the big one. Tested by sampling five pages from the middle of each book
-and counting extracted characters:
-
-| Book | Pages | Extractable text | Verdict |
+| Unit | Title | Objectives | Checks |
 | --- | --- | --- | --- |
-| Primary Maths 5 Teacher's Guide | 202 | 13,754 chars / 5pp | Text OK |
-| Primary Maths 6 Teacher's Guide | 200 | 11,295 chars / 5pp | Text OK |
-| Maths Learner's Book 7 | 388 | 0 | Needs OCR |
-| Primary Maths Teacher's Resources 7 | 222 | 0 | Needs OCR |
-| Lower Sec Learner's Book 8 | 395 | 0 | Needs OCR |
-| LS Mathematics Workbook 8 | 237 | 0 | Needs OCR |
-| LS Maths Learner's Book 9 | 354 | 0 | Needs OCR |
-| LS Mathematics Workbook 9 | 205 | 0 | Needs OCR |
+| 1 | Number and calculation | 9Ni.01–.04, 9Np.01 | 67 |
+| 2 | Expressions and formulae | 9Ae.01–.04 | 82 |
+| 3 | Decimals, percentages and rounding | 9Np.01, 9Np.02, 9Nf.05, 9Nf.06 | 133 |
+| 4 | Equations and inequalities | 9Ae.05–.07 | 109 |
+| 5 | Angles | 9Gg.07–.11 | 163 |
+| 6 | Statistical investigations | 9Ss.01, 9Ss.02 | 104 |
+| 7 | Shapes and measurements | 9Gg.01–.03 | 128 |
+| 8 | Fractions | 9Nf.01–.04 | 135 |
+| 9 | Sequences and functions | 9As.01–.03 | 115 |
+| 10 | Graphs | 9As.04–.07 | 128 |
+| 11 | Ratio and proportion | 9Nf.07, 9Nf.08 | 131 |
+| 12 | Probability | 9Sp.01–.04 | 73 |
+| 13 | Position and transformation | 9Gp.01–.07 | 122 |
+| 14 | Volume, surface area and symmetry | 9Gg.04–.06 | 119 |
+| 15 | Interpreting and discussing results | 9Ss.03–.05 | 121 |
 
-That is **1,801 pages across six books** with no text layer. Stages 5 and 6 are
-already OCR'd and fine. Until the 7 to 9 books are OCR'd, no extraction, no
-answer-key checking and no misconception mining is possible for those grades.
-
-### 2. There is no Teacher's Guide for Stage 8 or Stage 9
-
-Only a Learner's Book and a Workbook exist for each. The Teacher's Guide is what
-the misconception tooling mines — the Grade 5 spot-the-mistake tool refuses to
-emit an item unless it cites a Guide page, and it found 44 named mistakes in the
-Stage 5 Guide. Grades 8 and 9 have no equivalent source, so either those two
-books get acquired or that feature is consciously dropped for 8 and 9.
-
-### 3. A full clone is a 24 GB download
-
-`.git` is 28 GB on disk, size-pack 23.79 GiB, because `src/media` (1.4 GB of
-audio and video) is tracked rather than ignored. A plain `git clone` over a
-normal connection is hours. Use a filtered clone — the recipe is in Phase 0.
-
-### 4. The extracted book JSONs are gone
-
-The Stage 3 to 6 book extractions lived in a session scratchpad and have been
-cleared. Nothing in the repo holds them. They are re-derivable from the PDFs, but
-budget the re-extraction rather than expecting to find them.
-
-### 5. Some lesson apps are GENERATED, and a rebuild silently deletes hand-applied work
-
-Found on 2026-09-25 while fixing Grade 3, and it is the trap most likely to cost
-the second machine a day.
-
-Grade 3's lessons are composed from `grade-3-app/src/l{N}-slides.html` +
-`l{N}-content.js` by `src/build.sh`. Most of the tools that add teaching steps
-patch the **built** page instead. So:
-
-- Commit `3248172174` added Story problems to all eight lessons.
-- Commit `eac9d39980` added the lesson-opener steps and recomposed — which
-  rewrote the pages from fragments that had never carried the practice steps.
-  **Spot the mistake, Try this one and Story problems vanished from all eight
-  lessons**, 9,256 bytes per page, and Grade 3 shipped without them until
-  2026-09-25.
-
-The commit reads as purely additive. The loss is visible only if you diff the
-list of step headings, which nobody did.
-
-**A second instance is still live.** A plain rebuild of Grade 3 today also
-deletes the unit lecture films — `lessonFilm()`, the `<video>` element, its CSS —
-because `96b103173f` patched the built pages surgically. The film code went into
-`src/add-lesson-opener.py`, but all 16 fragments already carry that tool's
-marker, so it skips them and the films never reach `src/`. Measured: rebuilding
-drops `rows-and-rules` from 225,564 to 224,291 bytes.
-
-**Before running any build script in a lesson app, check whether the app is
-generated**, and diff the step headings before and after. `build-all.sh` states
-the rule itself: a tool that patches a built lesson has its work discarded by the
-next build unless it is in the build's own chain. Grades 1 and 4 have the same
-composed shape. Grade 5 does **not** — it has no `src/`, so pages are authored
-directly and there is nothing to lose this way.
-
-## Phase 0 — the second account and machine
-
-These are owner actions. Nobody else can do them, and none of the later phases
-work until they are done.
-
-1. **Create the second Claude account** and confirm it has a plan with Claude
-   Code access.
-2. **Grant that account's GitHub identity write access** to
-   `github.com/tayogroup/eduplatform` (private). Read access is not enough — the
-   build commits content.
-3. **Do not try to reuse the `backup` remote.** It points at a local Windows path
-   on the primary machine and is meaningless on a second computer. The second
-   machine gets `origin` only.
-4. **Match the toolchain:** Node 24.x (currently v24.14.1) and Python 3.13.x
-   (currently 3.13.5). Older Node fails on the lesson-app tooling.
-5. **Clone without the media history** — a plain clone is 24 GB:
+**1,730 checks, all passing.** Verify the whole grade in one line:
 
 ```bash
-git clone --filter=blob:none --no-checkout https://github.com/tayogroup/eduplatform.git
+for n in 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15; do node tools/check-ehel-math-g9-unit$n.mjs; done
 ```
 
-```bash
-git sparse-checkout init --cone && git sparse-checkout set src/prototypes/ehel-academy/mathematics src/curriculum tools docs && git checkout main
-```
+Coverage, measured against the framework rather than asserted: 55 of 55 placed,
+none missing, none invented. **One objective is claimed by two units and that is
+deliberate** — `9Np.01` in units 1 and 3. Unit 1 uses powers of ten in the service
+of standard form and the index laws; unit 3's section 3.1 is the skill's own
+dedicated section and carries the negative powers at length. Grade 7 already has
+this shape with `9Gg.11` in units 8 and 5. Two units teaching one objective is
+honest; two units each teaching a third of it and both claiming the whole would
+not be.
 
-6. **Transfer `.env` out of band** — a password manager or encrypted transfer,
-   never a commit, never chat, never a screenshot. The second machine needs
-   `BUNNY_KEY` for storage read-backs. It does not need the TTS keys unless
-   narration is in scope, and leaving them off is a deliberate safety margin:
-   several generators bill per character even on a bare invocation with no
-   arguments.
-7. **Install the pre-commit hook** in the new clone: `sh tools/hooks/install.sh`.
-   It is per-clone, so a fresh clone has no hook until this runs.
-8. **Verify the setup** before any content work, from the repo root:
+### Grade 9 has no content package, and that is why it is authored
 
-```bash
-npm run validate:units && npm run check:alphabet && npm run check:math-cambridge
-```
+`build:math` reads `outputs/math-content/math-content-model.json`, which holds
+**grades 1–8 only**. There is no Stage 9 pack, so Grade 9 units cannot be
+generated and are written by hand. The practical consequence: the builders in
+`tools/` are the source of truth, and editing a `unit-{N}.json` directly will be
+overwritten the next time its builder runs. Fix the builder.
 
-All three must exit 0 on a clean clone. If `check:math-cambridge` fails on a
-fresh clone, that is a real pre-existing failure worth reporting back, not
-something to work around.
+That also means Grade 9 is immune to the rebuild-deletes-work trap below, in the
+same way Grade 5 is — nothing composes it from fragments.
 
-### Day-one handover checklist
+## How the Grade 9 checkers were written, and why it matters
 
-Everything the second account needs in hand before it can start. All of it comes
-from the owner; none of it can be obtained from the second machine.
+The checkers are not a formality and they are not uniform. Six of them found
+real defects in content I had just written, so the design is worth carrying to any
+future grade.
 
-| # | Item | Who | Done when |
-| --- | --- | --- | --- |
-| 1 | Second Claude account with Claude Code access | owner | signed in |
-| 2 | GitHub write access to tayogroup/eduplatform | owner | a test push to a branch succeeds |
-| 3 | Node 24.x and Python 3.13.x installed | second machine | versions match |
-| 4 | Filtered clone of the repo | second machine | the three gates exit 0 |
-| 5 | `.env` with `BUNNY_KEY`, transferred out of band | owner | a storage read-back returns 200 |
-| 6 | Pre-commit hook installed in the new clone | second machine | `tools/hooks/install.sh` has run |
-| 7 | Cambridge maths PDFs for Stages 5–9 copied over, outside the repo | owner | present and gitignored |
-| 8 | Stage 7, 8 and 9 books OCR'd | second machine | 5-page sample extracts thousands of characters |
-| 9 | Stage 8 and 9 Teacher's Guides acquired, or the gap accepted in writing | owner | decided either way |
-| 10 | This document available to the second account | owner | in the clone, or the link shared |
-| 11 | Agreement that mathematics is the second machine's lane | both | stated once, in writing |
+**Recompute, never restate.** A checker that asserts the answer the builder wrote
+tests nothing. Each of these derives the value independently and compares.
 
-Items 7, 8 and 9 are the ones that gate real work. Items 1 to 6 are an afternoon;
-item 8 is 1,801 pages of OCR; item 9 may be a purchase.
+**Test a rule as a rule, not as an instance.** The generalisations are where a
+defect hides:
 
-**The first task to give them is Grades 6, 7 and 8** — five or six objectives
-each, against books that are already usable for 6 and need OCR for 7 and 8.
-That is a real, finishable piece of work that teaches the repo's conventions
-before anyone meets the blank page of Grade 9.
+- Unit 5 checks `(n − 2) × 180` against a second, independent derivation
+  (`n × 180 − 360`) for every n from 3 to 20, and the exterior-angle total for
+  every n up to 100 — the whole content of that claim is its independence from n.
+- Unit 10 computes each gradient twice, from the symbolic `−a/b` and by solving at
+  two values of x, for 936 combinations of a, b and c.
+- Unit 8 checks the terminating-decimal rule against long division for every
+  fraction with denominator up to 60 — 1,770 comparisons of a rule against the
+  thing it predicts.
+- Unit 14 **computes** planes of symmetry by testing which reflections map a
+  solid's vertices onto themselves, so the cube's 9 is discovered by the same
+  procedure that finds a square prism's 5.
+- Unit 13 **implements** the transformations and applies 300 random sequences to a
+  triangle, because the claim is "any combination".
 
-Grade 5 is no longer on that list: it was built out to 51/51 on 2026-09-26 and
-is live. Its build is the worked example for Grade 9 and is written up under
-**Building a lesson in grade-5-app**.
+**Assert that the loop ran.** Every such loop checks its own iteration count. A
+rule check over an empty range is this repo's most repeated silent pass.
 
-## Phase 1 — the books, and OCR for Stages 7 to 9
+**Test a set claim as a partition.** Unit 4's inequalities are the clearest case:
+"`3x > 4x + 12` has solution `x < −12`" and the error it guards against
+(`x > −12`) *share the boundary*, so a checker confirming the boundary would pass
+both. Each inequality is instead sampled across a range, requiring the original
+statement to be true throughout the claimed set and false throughout its
+complement. Unit 3 does the same for rounding bounds — the claim is that every
+value in `[24.5, 25.5)` rounds to 25, not merely that the endpoints are right.
 
-The Cambridge books are **not in the repo**. They sit in the primary machine's
-Downloads folder, untracked, and they are the input everything else depends on.
-They must be transferred, and most of them must be OCR'd.
+**Use the right arithmetic.** Unit 8 works in exact rationals (numerator and
+denominator as integers) because 1/3 has no double representation. Unit 3 uses a
+tolerance throughout, because `1.15 × 300` is `344.99999999999994` and a checker
+using `===` would report correct content as wrong. Unit 7 implements significant
+figures properly rather than reaching for `toFixed`, because 254.469 is 254 to
+3 s.f. and 254.5 to 1 d.p. and both appear for the same circle.
 
-### What exists, by stage
+**Name the pi.** Unit 7's source uses three values — the calculator's, 3.14 and
+3.142 — with three different rounding instructions. An answer is only checkable
+against the pi it was computed with; a checker using `Math.PI` throughout would
+have failed the correct content.
 
-| Stage | Learner's Book | Workbook | Teacher's Guide | Text layer |
-| --- | --- | --- | --- | --- |
-| 5 | yes | yes | yes | OCR'd, good |
-| 6 | yes | yes (two copies) | yes | OCR'd, good |
-| 7 | yes | yes | yes (Teacher's Resources) | none — OCR needed |
-| 8 | yes | yes | **missing** | none — OCR needed |
-| 9 | yes | yes | **missing** | none — OCR needed |
+**Say what you cannot reach.** Unit 6 is mostly judgement, so its checker computes
+the numeric claims, structurally checks that every judgement item carries a model
+answer, and then *prints the 22 items whose correctness it cannot verify*. A green
+tick over that unit would overclaim. This is the same discipline as
+`check-math-answer-keys.mjs` reporting unchecked questions rather than counting
+them as passes.
 
-Both framework PDFs are also present: 0096 Primary and 0862 Lower Secondary.
+### Six defects the checkers caught in content that had just been written
 
-### Steps
+Recorded because they are the argument for the checkers existing:
 
-1. **Transfer the maths PDFs** to the second machine. Keep them outside the repo
-   — a folder like `C:/cambridge-books/maths/stage-N/`. They are copyrighted
-   texts and large; they must never be committed. Confirm `.gitignore` covers
-   wherever they land.
-2. **OCR the six image-only books.** `ocrmypdf` is the straightforward option:
-
-```bash
-ocrmypdf --skip-text --optimize 1 --output-type pdf in.pdf out_OCR.pdf
-```
-
-Budget real time — 1,801 pages. Follow the existing naming convention and suffix
-the output `_OCR.pdf`, matching the Stage 5 and 6 files.
-
-3. **Verify each OCR result before trusting it.** Sample five pages from the
-   middle and count extracted characters; anything under a few thousand per five
-   pages has failed and needs re-running at a higher DPI. A silently bad OCR
-   produces confident garbage downstream, which is far worse than a file that
-   plainly has no text.
-4. **Acquire the Stage 8 and Stage 9 Teacher's Guides**, or record the decision
-   to ship those two grades without misconception content. This is a purchasing
-   decision, not an engineering one — flag it to the owner rather than quietly
-   dropping the feature.
-5. **Re-extract the book JSONs** for Stages 5 to 9 once the text layers are
-   sound, and this time write them somewhere durable and gitignored rather than a
-   scratchpad. The previous extractions were lost to a cleared temp directory.
-
-## Phase 2 — the frameworks are already done
-
-Good news, and the one phase that needs almost nothing. Both Cambridge frameworks
-are already extracted, in the repo, and cover all five grades:
-
-| File | Covers | Objectives | Source PDF recorded |
-| --- | --- | --- | --- |
-| `cambridge-mathematics-0096.json` | Stages 1–6 | 288 | 0096 Primary Curriculum Framework 2020 |
-| `cambridge-mathematics-0862.json` | Stages 7–9 | 179 | 0862 Lower Secondary Framework 2020 |
-
-Per-stage totals, which are the denominators for every coverage claim in this
-document: **Stage 5 = 51, Stage 6 = 54, Stage 7 = 63, Stage 8 = 61, Stage 9 = 55.**
-
-**Stage 9 is in 0862 already** — 55 objectives — so Grade 9 does not need any new
-extraction, only authoring.
-
-**Do not re-point anything at 0845.** That older Primary framework PDF is still
-in the Downloads folder and is a superseded edition. The repo deliberately uses
-0096. If a framework check fails, fix the framework or the mapping — do not
-switch editions to make a gate pass.
-
-If a framework file is ever re-extracted, both of these must exit 0 before it is
-merged:
-
-```bash
-npm run validate:frameworks && npm run validate:curriculum-units -- --strict-cambridge
-```
-
-## Phase 3 — the build, grade by grade
-
-### Grade 5 — DONE, and the worked example for Grade 9
-
-Finished on 2026-09-26: 51/51, deployed, and already routed so it reached
-learners on upload. Nothing here is outstanding except the shell-course
-decision noted in Scope.
-
-Read this section anyway before building Grade 9. It is the only standalone
-maths app anyone has extended, and the two traps below cost real time.
-
-Grade 5 keeps the upper-stage page design — no deck, no scoring, no sticker
-shelf. That is the documented rule for Stages 5 and above, not a gap to fill.
-
-**The source pages are already located** — done on the primary machine on
-2026-09-25. In
-`Cambridge_Primary_Mathematics_5_Learners_Book_Hodder_OCR.pdf` (205 pages, text
-layer good):
-
-| Content | Learner's Book pages |
+| Where | Defect |
 | --- | --- |
-| Symmetry | 24–25, 31–32 |
-| Angles — acute, obtuse | 26–29 |
-| Triangles — isosceles, equilateral, scalene | 30–32 |
-| Nets | 69, 138, 140 |
-| Perimeter and area | 133–137, 140, 142 |
-| Coordinates | 114–116, 142 |
-| Translation and reflection | 111, 113, 116, 154–157 |
+| Unit 7 | A metal strip given as 309 cm; 188.5 + 120 is 308.5, so **308** to 3 s.f. |
+| Unit 7 | A diameter given as "9.995 cm, which is 10 cm to 3 s.f."; 31.4/π is 9.9949, which is **9.99** and never 10 |
+| Unit 6 | A claim that rounded sample parts "can miss the total", attached to a **two-group** example where they provably never can |
+| Unit 9 | Two answers containing self-correcting prose — "Wait − 4 × 8 + 33 = 65" — and an answer arguing with itself about whether a rule overtakes at n = 9 or n = 10 (it is 10) |
+| Unit 14 | The checker's own plane-counting enumerated angles over `[0, 2π)`, counting every mirror plane **twice** |
+| Unit 15 | The checker's expected true mean was wrong (1545/20 is 77.25, not 77.8) |
 
-Unit 2 of the book is "Angles and shapes" and carries the Maths words the lesson
-should teach: symmetry, horizontal, vertical, diagonal, symmetrical.
+The Unit 7 pair are the ones that matter: both were plausible-looking numbers in
+an answer a learner would copy, and neither would have survived a second reading
+by the person who wrote them, because they *looked* right.
 
-**The lessons are NOT templated.** Each step is a bespoke interactive widget
-with its own hand-written JavaScript — a dot grid that rearranges, a chip
-picker, a live working panel. Measured: 85–128 KB per lesson, of which about
-20–35 KB is genuinely custom; the rest is shared CSS and tool-injected platform
-wiring. The five new lessons came to 32 steps and took a full working session
-each. Budget the same for Grade 9.
+**A guard now exists for the Unit 9 class of defect.** Units 9 to 15 fail if the
+built JSON contains `Wait −`, `no wait`, `let me check` or similar. Units 1 to 8
+do **not** carry it yet — lifting it into a shared gate across all fifteen is a
+small job and is not done.
+
+## Thinking and Working Mathematically: a tag nothing read
+
+Found 2026-09-26 by comparing the Stage 9 Teacher's Resource sample against the
+tree. Worth knowing before touching it:
+
+- 145 worked examples in Grades 6–8 carry a `twm` tag, and
+  `shell/subjects/mathematics.js` renders it to the learner as
+  `Thinking: characterising`.
+- **Nothing in the repo read it.** No gate, no builder, and it is absent from
+  `math-content-model.json`.
+- Six tags read `critiquing improving` — Cambridge's pair name with the
+  conjunction dropped, reaching a child's screen as two words jammed together.
+  Four of those six were on examples asking for one characteristic, not two.
+- `conjecturing` was used **zero** times across all 145 — one of the eight
+  characteristics absent from the whole subject.
+
+`npm run check:math-twm` (`tools/check-ehel-math-twm.mjs`, wired into
+`check:math`) now validates that every tag is one of the eight characteristics or
+one of the four pair names, holds per-grade coverage floors, and asserts that
+Grades 1–4 carry none. Grade 9 carries 193 tags, in its **builders**, so a rebuild
+keeps them.
+
+**Two things remain open.** The 145 Grades 6–8 tags still have no regeneration
+path — a `build:math --force` discards them and git history is their only other
+copy, which wants either `twm` carried in the content model or a tool that
+reassigns every tag. And `src/curriculum/cambridge-mathematics-0862.json`
+contains **no TWM material at all**, so the vocabulary is grounded in the
+Teacher's Resource and not yet in the repo.
+
+## The books, and OCR
+
+### Stage 7–9 books are image-only PDFs, and the fix is not ocrmypdf
+
+Six books, 1,801 pages, no text layer. Stages 5 and 6 were already fine.
+
+**The naive OCR silently half-fails.** `ocrmypdf` rasterises each page at a DPI
+relative to the page's own box, and the Stage 9 Learner's Book has a page box of
+0.87 × 1.08 inches carrying a 3296 × 2331 embedded image — an effective 3805 DPI.
+At default settings that page rasterises to a few hundred pixels wide, far too
+small to read. Result: 252 of 354 pages came back under 50 characters, and what
+did come through was garbled.
+
+`tools/ocr-embedded-images.py` goes at the **embedded images** instead, which are
+full resolution and each hold a whole two-page spread. Measured on the same book:
+178 unique images for 354 pages, 0 empty, 2,280 characters per spread, 413k
+total — the whole book including units 10 to 15, which the broken version had as
+blank.
+
+**The check that matters is the blank-page rate, not the average.** That book
+averaged 298 characters per page *because* 102 pages were fine and 252 were
+empty. A mean hides a bimodal failure completely. Always count how many pages came
+back under 50 characters.
+
+```bash
+python tools/ocr-embedded-images.py <in.pdf> <out.txt> [--limit N]
+```
+
+### The extracted text does not survive the session
+
+Recorded in the first version of this doc as blocker 4, and it happened again
+during the Grade 9 build: `lb9-full.txt` lives in a session scratchpad, which is
+cleared. **Nothing in the repo holds any book extraction.** They are re-derivable
+from the PDFs, but budget the re-OCR — it is about ten minutes of tesseract for a
+354-page book — rather than expecting to find them.
+
+### There is no Teacher's Guide for Stage 8 or Stage 9
+
+Only a Learner's Book and a Workbook exist for each. The Guide is what the
+misconception tooling mines — the Grade 5 spot-the-mistake tool refuses to emit an
+item unless it cites a Guide page, and it found 44 named mistakes in the Stage 5
+Guide.
+
+Grade 9's units were written without one. The `reference.commonMistakes` entries
+in them are authored from the Learner's Book's own error-finding examples (Ari
+adding where he should subtract, Zara's mode argument, Cain's sign slip) and from
+the Stage 9 **Teacher's Resource sample**, which is front matter plus Unit 1 only
+and carries one flagged misconception for that unit. That is thinner than the
+Stage 5 provision, and it is a purchasing decision rather than an engineering one.
 
 ## Building a lesson in grade-5-app
 
-The mechanics, in the order that works. Both traps below were hit on the real
-build and neither is documented anywhere in the repo.
+Grade 5 is the only standalone maths app anyone has extended, and it is the
+template for any future standalone build. Both traps below were hit on the real
+build and neither is documented anywhere else in the repo.
 
-1. Write the page: take lines 1–427 of an existing lesson (the `<head>` and the
-   shared `<style>`), swap the `<title>`, then author your own `<div class="wrap">`
-   with a hero, a `<nav class="steps-nav">` listing only YOUR steps, the
+The lessons are **not** templated: each step is a bespoke interactive widget with
+hand-written JavaScript. Measured at 85–128 KB per lesson, of which 20–35 KB is
+genuinely custom. Five lessons came to 32 steps and took a working session each.
+
+Grade 5 keeps the upper-stage page design — no deck, no scoring, no sticker
+shelf. That is the documented rule for Stages 5 and above, not a gap.
+
+1. Write the page: take lines 1–427 of an existing lesson (the `<head>` and shared
+   `<style>`), swap the `<title>`, then author your own `<div class="wrap">` with a
+   hero, a `<nav class="steps-nav">` listing only YOUR steps, the
    `<section class="step" id="sN">` blocks, and one `<script>`. Step ids are
-   **global across the app**, so continue from the highest one in use.
-2. Register it in `app.config.json` with `title`, `blurb`, `materials`,
-   `support` and `challenge`. The last three are what the materials-note and
-   differentiation tools read; a lesson without them is silently skipped.
-3. Add the data the tools need: a `WORK` entry in `add-self-check.py`, a `WORK`
-   entry in `add-lesson-opener.py`, and rows in the `STAGES` table inside
+   **global across the app** — continue from the highest in use.
+2. Register it in `app.config.json` with `title`, `blurb`, `materials`, `support`
+   and `challenge`. The last three are what the materials-note and differentiation
+   tools read; a lesson without them is silently skipped.
+3. Add a `WORK` entry in `add-self-check.py`, a `WORK` entry in
+   `add-lesson-opener.py`, and rows in the `STAGES` table in
    `check-what-you-know.html`.
 4. Run the chain **in this order**, from `grade-5-app/`:
 
@@ -327,146 +282,149 @@ build and neither is documented anywhere in the repo.
 python add-self-check.py --write && python add-lesson-opener.py --write && python add-materials-note.py --write && python add-differentiation.py --write && python add-twm-stamps.py --write && python wire-platform.py --write && python add-lesson-search.py --write
 ```
 
-5. Add a card to the hub by hand. See the second trap.
+5. Add a card to the hub **by hand**. See Trap 2.
 
 ### Trap 1 — add-self-check MUST run before add-lesson-opener
 
-`add-self-check.py` asserts that the nav entry count equals the step count, and
-it counts nav entries with `<a href="#s`. The opener adds three steps whose
-links are `#opener-about`, `#opener-lecture` and `#opener-words`, which do not
-match that pattern — so once the opener has run, self-check refuses with
-"nav has N entries for M steps before this runs". Run it first and both pass.
-
-This cost two rebuilds on the real build. The page is deterministic from its
-parts, so recovering is just re-concatenating the head and the body and running
-the chain again, but it is an hour if you do not know why it is refusing.
+`add-self-check.py` asserts the nav entry count equals the step count, counting
+entries with `<a href="#s`. The opener adds three steps whose links are
+`#opener-about`, `#opener-lecture` and `#opener-words`, which do not match — so
+once the opener has run, self-check refuses with "nav has N entries for M steps
+before this runs". Run it first and both pass. This cost two rebuilds.
 
 ### Trap 2 — the hub is NOT generated from app.config.json
 
-`grade-5-app/index.html` lists the lessons as hand-written
-`<a class="lesson …" href="…?from=g5">` cards. `split-into-lessons.py` built it
-once as a one-time migration and it has been hand-maintained since, so the
-whole tool chain above wires a lesson **completely** and still leaves it
-unreachable: no card, and (after the first one) not even in the "Jump to a
-lesson" picker.
+`grade-5-app/index.html` lists lessons as hand-written
+`<a class="lesson … href="…?from=g5">` cards. `split-into-lessons.py` built it once
+as a migration and it has been hand-maintained since, so the whole chain above
+wires a lesson **completely** and still leaves it unreachable.
 
-All five new lessons shipped into this state before it was noticed. **What
-caught it was the deploy plan**: `index.html` came back byte-identical, same
-hash, after four lessons had been added. A hub that does not change when the
-course grows by four lessons is the tell.
-
-So: after adding a lesson, add its card, add its picker entry, and correct any
-count in the lede. Then diff the hub before deploying — if its hash has not
-moved, the lesson is not reachable.
+All five new lessons shipped into that state before it was noticed. **What caught
+it was the deploy plan**: `index.html` came back byte-identical, same hash, after
+four lessons had been added. A hub that does not change when the course grows by
+four lessons is the tell. So after adding a lesson, add its card, add its picker
+entry, correct any count in the lede, and diff the hub before deploying.
 
 ### One thing that looks like a bug and is not
 
-`check-what-you-know.html` carries `id="s29"`, and so does
-`shapes-and-angles.html`, because the new numbering started at s29 without
-checking the check page. It is not a duplicate "Step 29": the check page renders
-that section as `<span class="step-num">Check</span>`, not a number, and the
-search index is keyed by file as well as anchor. Renumbering would touch a
-working page including its `$("s29").scrollIntoView()` retry handler, for no
-learner-visible gain. Left alone deliberately.
+`check-what-you-know.html` carries `id="s29"` and so does `shapes-and-angles.html`.
+It is not a duplicate "Step 29": the check page renders that section as
+`<span class="step-num">Check</span>`, and the search index is keyed by file as
+well as anchor. Renumbering would touch a working page including its
+`$("s29").scrollIntoView()` retry handler for no learner-visible gain. Left alone
+deliberately.
 
-### Grades 6, 7 and 8 — finish the last five or six objectives each
+## Some lesson apps are GENERATED, and a rebuild silently deletes hand-applied work
 
-All three are shell-course only, at 90 to 91%, mapped under `cambridge.objectives`
-in each unit JSON. The remaining codes, measured today:
+Still live. The trap most likely to cost a day.
 
-| Grade | Unclaimed objectives |
-| --- | --- |
-| 6 | `6Gg.03`, `6Nc.01`, `6Nc.03`, `6Sp.02`, `6Ss.04` |
-| 7 | `7Ae.01`, `7Gg.03`, `7Gg.11`, `7Gp.01`, `7Ni.02`, `7Sp.01` |
-| 8 | `8Ae.05`, `8As.07`, `8Gg.04`, `8Ni.02`, `8Ni.03`, `8Ss.01` |
+Grade 3's lessons are composed from `grade-3-app/src/l{N}-slides.html` +
+`l{N}-content.js` by `src/build.sh`. Most tools that add teaching steps patch the
+**built** page instead. So:
 
-For each: find the unit where the objective belongs, add teaching content that
-genuinely covers it, then add the code and its verbatim framework text to that
-unit's `cambridge.objectives`.
+- `3248172174` added Story problems to all eight lessons.
+- `eac9d39980` added lesson-opener steps and recomposed — rewriting the pages from
+  fragments that had never carried the practice steps. **Spot the mistake, Try
+  this one and Story problems vanished from all eight lessons**, 9,256 bytes per
+  page, and Grade 3 shipped without them until 2026-09-25.
 
-**Add the content first and the code second.** A citation gate proves the code is
-real and in the right stage; it cannot tell whether anything teaches it. This repo
-has already shipped a level reporting 176 of 176 objectives cited where one of
-them had zero coverage of its actual subject. To check delivery, grep the units
-for the words the objective is about and read what comes back.
+The commit reads as purely additive. The loss is visible only by diffing the list
+of step headings.
 
-### Grade 9 — net new
+**A second instance is still live and was re-confirmed during this work.** A plain
+rebuild of Grade 3 today also deletes the unit lecture films — `lessonFilm()`, the
+`<video>` element, its CSS — because `96b103173f` patched the built pages
+surgically. The film code went into `src/add-lesson-opener.py`, but all 16
+fragments already carry that tool's marker, so it skips them and the films never
+reach `src/`. Measured: rebuilding drops `rows-and-rules` from 225,564 to 224,291
+bytes. Running `build-all.sh` during the Grade 5 work deleted the films in the
+working tree and they had to be restored with `git checkout`.
 
-Nothing exists. This needs a full course: 16 or 17 units against Stage 9's 55
-objectives, a `course-manifest.json`, a `catalog.json` entry, and a Moodle course.
-Treat Grade 8 as the structural template and copy its shape rather than inventing
-one. Do not start this until the Stage 9 books are OCR'd.
+**Before running any build script in a lesson app, check whether the app is
+generated**, and diff the step headings before and after. Grades 1, 3 and 4 have
+the composed shape. Grade 5 does **not** — no `src/`, so pages are authored
+directly. Grade 9's shell units are authored by builders in `tools/`, so the same
+rule applies in reverse: edit the builder, never the JSON.
 
-## Phase 4 — the gates
-
-Run from the repo root. All must exit 0 before anything ships.
+## The gates
 
 ```bash
-npm run validate:units && npm run check:alphabet && npm run check:math-cambridge && npm run validate:frameworks
+npm run check:math            # the whole maths chain, including the two below
+npm run check:math-cambridge  # shell-course units against the frameworks
+npm run check:math-twm         # the TWM tags
+npm run validate:units && npm run check:alphabet && npm run validate:frameworks
 ```
 
-If any PHP was touched, `npm run check:php` as well — it is not in `npm test`
-because it spawns a parser per file, so running it is on you.
+If any PHP was touched, `npm run check:php` as well — not in `npm test` because it
+spawns a parser per file, so running it is on you.
 
-### Two gaps in the gates, both worth knowing
+### What each gate does and does not prove
 
-**The framework gate does not read the standalone apps — and this is now
-closed.** `check:math-cambridge` walks the shell-course units only; the apps
-make their own objective claims and nothing validated them. That gap is filled
-by `tools/check-ehel-math-app-objectives.mjs`, wired into `check:math`. It
-requires every code an app names to exist in a mathematics framework, requires
-own-stage claims to be in that stage, holds coverage to a floor, and counts
-coverage only from files listed in `app.config.json` so a claim in a retired
-file cannot inflate it. All five maths apps are at 100% of their stage,
-234/234, and the gate is mutation-tested four ways.
+**`check:math-cambridge` walks the shell-course units only.** It checks that each
+unit's stage matches its folder, the framework matches the stage, every claimed
+code exists in that framework at that stage, and the stored objective text still
+matches the framework's. Its loop bound read `grade <= 8` until 2026-09-26 — right
+while Stage 9 did not exist and silently wrong the moment it did, because a unit
+nothing validates looks exactly like a unit that passed. It now reads `<= 9`.
 
-**An earlier version of this section made a claim that was false, and the
-correction is the more useful lesson.** It said `grade-1-app` "declares
-`8Wx.31`, a Stage 8 code sitting in a Stage 1 app". It does not. `8Wx.31` is
-in no Cambridge framework and in no text file of any maths app: it is a byte
-sequence inside
+**The standalone apps make their own claims**, checked by
+`tools/check-ehel-math-app-objectives.mjs`. It requires every code an app names to
+exist in a mathematics framework, requires own-stage claims to be in that stage,
+holds coverage to a floor, and counts coverage only from files listed in
+`app.config.json` so a claim in a retired file cannot inflate it. All five apps
+are at 100% of their stage, 234/234, mutation-tested four ways.
+
+**An earlier version of this section made a false claim, and the correction is the
+better lesson.** It said `grade-1-app` declares `8Wx.31`, a Stage 8 code in a
+Stage 1 app. It does not. `8Wx.31` is in no framework and in no text file of any
+maths app: it is a byte sequence inside
 `grade-1-app/g1v2/lecture-video/days-months-and-clocks.990f0aab.mp4`, found
 because the grep that measured it walked a binary. The gate therefore reads
-`.html`, `.json` and `.js` only and never opens a media file — a gate that
-reads binaries invents defects, and an invented defect costs more than a missed
-one because somebody acts on it.
+`.html`, `.json` and `.js` only and never opens a media file — **a gate that reads
+binaries invents defects, and an invented defect costs more than a missed one
+because somebody acts on it.**
 
 **Answer keys are verified by arithmetic, not provenance.**
 `check-math-answer-keys.mjs` computes the answer rather than trusting a booklet,
-which is stronger, but it only reaches about 7% of questions — the rest are
-conceptual, diagrammatic or word problems and are reported as unchecked. Its
-coverage may not fall. Four exclusions exist because each once called a correct
-key wrong: estimation questions, algebra, bare `/` read as division, and
-expressions that do not account for every number in the question. Do not remove
-them.
+which is stronger, but reaches only about 7% of questions; the rest are
+conceptual, diagrammatic or word problems and are reported as unchecked. Coverage
+may not fall. Four exclusions exist because each once called a correct key wrong —
+estimation questions, algebra, bare `/` read as division, and expressions that do
+not account for every number in the question. Do not remove them.
+
+**No gate reads a Grade 9 unit's teaching quality.** The fifteen unit checkers
+verify arithmetic and structure. `check:math-cambridge` verifies the codes.
+Nothing verifies that the content teaches what it claims — see the end of this
+file.
 
 ### Verify in the browser, not only in the diff
 
 For any grade at Stage 5 or above, confirm in a real page that there are zero
-`gc-*` nodes under `#app` and that `body.gc-full` is never set. The deck belongs
-to Grades 1 to 4 only. A passing script is not evidence about rendering — a UI
-drive in this repo once passed while two strings rendered jammed together on
-screen.
+`gc-*` nodes under `#app` and that `body.gc-full` is never set. The deck belongs to
+Grades 1 to 4 only. A passing script is not evidence about rendering — a UI drive
+in this repo once passed while two strings rendered jammed together on screen.
 
-## Phase 5 — deploy and routing
+## Deploy and routing
 
-Two channels, and the second machine controls neither end to end.
+Two channels, and the build machine controls neither end to end.
 
 ### Content and lesson apps — to Bunny CDN
 
 ```bash
-node lesson-app-tools/deploy.mjs --app ../grade-5-app
-```
-
-```bash
+node lesson-app-tools/deploy.mjs --app ../grade-5-app                          # plan
 node lesson-app-tools/deploy.mjs --app ../grade-5-app --upload > deploy.log 2>&1
 ```
+
+Shell-course content goes by `tools/upload-content-to-bunny.js <subject>
+[--only <substr>] [--dry]`. The `--only` filter is not optional politeness: the
+Grades 6–8 deploy used `--only content/mathematics/gNN` three times because a
+plain run would have shipped 48 uncommitted peer files from Grades 1, 2 and 4.
 
 The plan step costs nothing and lists every file with its hash. After an upload,
 the **storage read-back is the proof** — an edge read is not, because an edge read
 is itself a write to the cache.
 
-Four rules that were each bought by an incident:
+Four rules, each bought by an incident:
 
 - **Never pipe a deploy through `head` or `tail`.** SIGPIPE kills the upload
   mid-run, and pointers flip per subject as each finishes, so a partial release is
@@ -478,6 +436,16 @@ Four rules that were each bought by an incident:
 - **The release tag is one global number** across all six subjects. Take the
   highest on storage and add one, measured at the moment of use, not at planning
   time. Do not trust a tool's "next free" — it reads a per-worktree manifest.
+
+Storage rules that hold regardless:
+
+- To prove a file is absent, ask storage with the access key. A storage read is
+  passive; an edge read is a write to the cache, and a 404 minted on a version or
+  media path is edge-cached for 37+ hours and cannot be purged with the key in
+  `.env`.
+- A storage listing of a directory that does not exist returns HTTP 200 with an
+  empty array. Read the body and count objects.
+- Never probe a `v{TAG}/` path before its upload lands.
 
 ### PHP and routing — owner and operator only
 
@@ -508,82 +476,59 @@ check that, which is why it is written down.
 them. Hand over a single PowerShell line to paste, then verify the result
 afterwards.
 
-## Coordination between the two machines
+## Commit discipline
 
-A second machine removes the worst hazard of this repo — two sessions editing one
-working tree — and introduces a different one. Separate checkouts cannot corrupt
-each other's index or destroy each other's uncommitted work. But they still share
-`origin`, the Bunny storage zone, and one global release counter.
-
-**Mathematics belongs to the second machine, exclusively.** The house rule is one
-session per subject, and the second account takes maths 5 to 9. The primary
-machine stays off `mathematics/` for the duration; the second machine touches
-nothing else. Files outside its lane are off-limits even when they look broken.
-
-**The release tag is the real collision risk.** It is one number across all six
-subjects, so the second machine releasing maths while the primary releases English
-can both take the same tag. Before any release: announce the tag, take the global
-maximum across all six subject directories on storage, and re-measure at the point
-of use rather than the point of planning. A verified tag goes stale in minutes. An
-unnamed release stamps all six subjects.
-
-**Storage rules that hold regardless of which machine you are on:**
-
-- To prove a file is absent, ask storage with the access key. A storage read is
-  passive; an edge read is a write to the cache, and a 404 minted on a version or
-  media path is edge-cached for 37+ hours and cannot be purged with the key in
-  `.env`.
-- A storage listing of a directory that does not exist returns HTTP 200 with an
-  empty array. Read the body and count objects — a status check reports every
-  candidate tag as taken otherwise.
-- Never probe a `v{TAG}/` path before its upload lands.
-
-**Commit discipline still applies**, because `origin` is shared even though the
-trees are not:
+Several sessions edit this tree at once, so this applies whoever is typing:
 
 - Never `git add -A`, `git add .` or `git commit -a`.
-- Run `git status` bare before every commit. A pathspec-filtered status cannot
-  distinguish "nothing else changed" from "I did not ask".
+- Run `git status` **bare** before every commit. A pathspec-filtered status cannot
+  distinguish "nothing else changed" from "I did not ask". During the Grade 9 work
+  the tree held 243 modified files belonging to a peer's Computing build
+  throughout.
 - Commit with a pathspec in one command: `git commit -F <msg-file> -- <paths>`.
-  Note that this commits the **working tree**, not the index.
-- Before reporting anything as pushed, check `git rev-list origin/main..HEAD`.
-- Pull before starting a session. Two clones drift silently, and maths files are
-  only safe from the peer by convention, not by lock.
+  Note this commits the **working tree**, not the index.
+- Before reporting anything as pushed, check both remotes:
+  `git rev-list origin/main..HEAD` and `git rev-list backup/main..HEAD`.
+- After every commit, confirm it is yours: `git show --stat` for the file count you
+  asked for, and check the subject line and `Co-Authored-By` trailer.
 
-## Definition of done, and what to report back
+## Definition of done
 
 A grade is done when all of these hold. Anything short of all of them is in
 progress, not done.
 
-| # | Criterion |
-| --- | --- |
-| 1 | 100% of the stage's objectives claimed, and each claim backed by content that actually teaches it — verified by reading, not by the citation count |
-| 2 | Every declared code exists in the right framework at the right stage |
-| 3 | All four gates exit 0, plus `check:php` if PHP was touched |
-| 4 | Answer keys checked where the arithmetic checker reaches them, coverage not fallen |
-| 5 | Deployed, with every file hash matched on a storage read-back |
-| 6 | Routed, override read back clean, and `standalone_lessons.json` confirmed on the server |
-| 7 | Opened in a browser at that grade: zero `gc-*` nodes under `#app`, `body.gc-full` never set |
+| # | Criterion | 5 | 6 | 7 | 8 | 9 |
+| --- | --- | --- | --- | --- | --- | --- |
+| 1 | 100% of the stage's objectives claimed | ✓ | ✓ | ✓ | ✓ | ✓ |
+| 2 | Each claim backed by content that teaches it, **verified by reading** | ✓ | ✓ | ✓ | ✓ | authored, not reviewed |
+| 3 | Every declared code exists in the right framework at the right stage | ✓ | ✓ | ✓ | ✓ | ✓ |
+| 4 | All gates exit 0, plus `check:php` if PHP was touched | ✓ | ✓ | ✓ | ✓ | ✓ |
+| 5 | Answer keys checked where the arithmetic checker reaches them | ✓ | ✓ | ✓ | ✓ | 1,730 unit checks |
+| 6 | Deployed, every file hash matched on a storage read-back | ✓ | ✓ | ✓ | ✓ | **no** |
+| 7 | Routed, override read back clean, `standalone_lessons.json` confirmed | ✓ | n/a | n/a | n/a | **no** |
+| 8 | Opened in a browser at that grade: zero `gc-*` nodes, no `body.gc-full` | ✓ | ✓ | ✓ | ✓ | **not yet** |
+| 9 | Curriculum-reviewed | **no** | **no** | **no** | **no** | **no** |
 
-### Report back per grade
+Row 9 is unmet for every grade. Rows 6, 7 and 8 are what stands between Grade 9
+and learners.
 
-Four numbers and one sentence:
-
-- objectives claimed / stage total
-- objectives whose teaching content was **read** and confirmed, which is a
-  different and smaller number
-- answer keys checked / total questions
-- files uploaded / hashes matched on storage
-- one sentence on anything deliberately not done, and why
-
-### Two habits worth carrying over
+## Two habits worth carrying over
 
 **State what was measured, not what was inferred.** Silence is not evidence. This
 document exists because a claim that Grade 3's differentiation had shipped turned
 out to mean the tool was committed and the pages were never patched — the tool's
 own report mode said `0 already done` the whole time and nobody ran it.
 
-**A coverage number is not evidence that anything is taught.** When an objective
-is about something a course could plausibly skip — a strand like probability, or a
-skill like estimation — that is the first place to look, because it is exactly the
-kind a unit can cite in passing while teaching around it.
+**A coverage number is not evidence that anything is taught.** Every grade above
+reads 100%, and that means every objective has a citation backed by content
+someone wrote — not that a reviewer has read the content against the objective.
+This repo has already shipped a level reporting 176 of 176 objectives cited where
+one of them had zero coverage of its actual subject: Cambridge `6Sc.05` is about
+intonation and stress, and across twenty units `intonation` appeared 0 times,
+`schwa` 0, and every hit for `stress` was the vocabulary word "stressful".
+
+To check delivery rather than citation, grep the units for the words the objective
+is about and read what comes back. And when an objective concerns something a
+course could plausibly skip — a strand like probability, or a skill like
+estimation — look there first, because that is exactly the kind a unit can cite in
+passing while teaching around it.

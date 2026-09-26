@@ -410,13 +410,26 @@ because it spawns a parser per file, so running it is on you.
 
 ### Two gaps in the gates, both worth knowing
 
-**The framework gate does not read the standalone apps.** `check:math-cambridge`
-walks the shell-course units only. The apps make their own objective claims and
-nothing validates them. A measured consequence: `grade-1-app` currently declares
-`8Wx.31`, a Stage 8 code sitting in a Stage 1 app, and no gate has ever objected.
-If the second machine builds app-side objective claims for Grade 5, **a new check
-that reads the apps is worth writing** — and would be the single most useful piece
-of tooling to come out of this work.
+**The framework gate does not read the standalone apps — and this is now
+closed.** `check:math-cambridge` walks the shell-course units only; the apps
+make their own objective claims and nothing validated them. That gap is filled
+by `tools/check-ehel-math-app-objectives.mjs`, wired into `check:math`. It
+requires every code an app names to exist in a mathematics framework, requires
+own-stage claims to be in that stage, holds coverage to a floor, and counts
+coverage only from files listed in `app.config.json` so a claim in a retired
+file cannot inflate it. All five maths apps are at 100% of their stage,
+234/234, and the gate is mutation-tested four ways.
+
+**An earlier version of this section made a claim that was false, and the
+correction is the more useful lesson.** It said `grade-1-app` "declares
+`8Wx.31`, a Stage 8 code sitting in a Stage 1 app". It does not. `8Wx.31` is
+in no Cambridge framework and in no text file of any maths app: it is a byte
+sequence inside
+`grade-1-app/g1v2/lecture-video/days-months-and-clocks.990f0aab.mp4`, found
+because the grep that measured it walked a binary. The gate therefore reads
+`.html`, `.json` and `.js` only and never opens a media file — a gate that
+reads binaries invents defects, and an invented defect costs more than a missed
+one because somebody acts on it.
 
 **Answer keys are verified by arithmetic, not provenance.**
 `check-math-answer-keys.mjs` computes the answer rather than trusting a booklet,

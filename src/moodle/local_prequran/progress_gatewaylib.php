@@ -619,11 +619,29 @@ function pqpg_cdn_sign_dir_url(string $url, int $ttl = PQPG_TOKEN_TTL): string {
         return $url;
     }
 
-    // The directory the page lives in, still percent-encoded, because that is
-    // what the edge compares against the request line. parse_url does not
-    // decode, so "/Ehel%20Primary/..." survives as written; decoding it here
-    // would sign a path no request ever carries.
-    $dir = substr($parsed['path'], 0, strrpos($parsed['path'], '/') + 1);
+    // The directory the page lives in, PERCENT-DECODED, because the edge decodes
+    // the request path before it checks the signature. Verified against a live
+    // Bunny zone on 2026-09-26: every path here contains a space ("Ehel
+    // Primary"), and signing "/Ehel%20Primary/..." is refused with 403 while
+    // signing "/Ehel Primary/..." is served 200. Both V1 and V2 behave that way.
+    //
+    // This is the one thing in here that Bunny's own reference signer gets
+    // wrong for our paths, so do not "fix" it back by reading that code:
+    // url_signing.php takes the path from parse_url(), which does NOT decode,
+    // so handing it a URL containing %20 makes it sign a path the edge will
+    // never compute. It is right for paths that need no encoding and misleading
+    // for ours. An earlier version of this function signed the encoded form and
+    // had a comment confidently explaining why that was correct; the gate agreed
+    // with it, because the gate's expected value had been produced by feeding
+    // that same encoded path to the reference signer. Only the edge settled it.
+    //
+    // dirname FIRST, then decode. Decoding first would turn an encoded slash in
+    // a filename into a directory boundary and compute a DIFFERENT directory --
+    // ".../grade-4-v2/weird/" for a file named "weird%2Fname.html" -- so the
+    // token would name a path no request carries and the lesson would 403. The
+    // gate holds this with a %2F case, because the two orderings agree on every
+    // ordinary path and only differ here.
+    $dir = rawurldecode(substr($parsed['path'], 0, strrpos($parsed['path'], '/') + 1));
     if ($dir === '' || $dir === false) {
         return $url;
     }

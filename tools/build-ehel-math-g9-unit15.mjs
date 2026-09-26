@@ -1,0 +1,582 @@
+// Build Mathematics Grade 9, Unit 15: Interpreting and Discussing Results.
+//
+// Fifteenth and LAST Grade 9 unit. Authored from the Stage 9 Learner's Book pages
+// 320-345 and Workbook pages 184-205.
+//
+// FIVE SECTIONS, THREE OBJECTIVES - and the mapping is genuinely MANY-TO-MANY,
+// which is the first time in Grade 9 that has been true. Saying so is the honest
+// thing; forcing a one-per-section table would misdescribe the unit:
+//
+//   9Ss.03 (record, organise, represent; choose and explain which representation)
+//          -> 15.1 frequency polygons, 15.3 stem-and-leaf, 15.5 representing data
+//   9Ss.04 (mode, median, mean and range to compare two distributions,
+//           including grouped data)
+//          -> 15.3 stem-and-leaf, 15.4 grouped data
+//   9Ss.05 (interpret data, identify patterns, trends and relationships within
+//           and between data sets)
+//          -> 15.2 scatter graphs, 15.3 stem-and-leaf
+//
+// 15.3 carries all three because a back-to-back stem-and-leaf diagram IS a
+// representation, a comparison of two distributions, and an interpretation, all at
+// once. With this unit the 9Ss strand is complete - .01 and .02 in unit 6 - and so
+// is Stage 9: all 55 objectives are placed across fifteen units.
+//
+// THE UNIT TURNS ON ONE ERROR AND IT IS THE BOOK'S OWN. Zara looks at two
+// distributions and says one group is better "as their mode is higher". That is a
+// conclusion drawn from one average while the others contradict it, and the unit
+// builds a dataset where exactly that happens: Group Q has the higher MODE while
+// Group P has the higher MEAN and the higher MEDIAN. A learner who has only ever
+// met datasets where the three averages agree cannot be taught to distrust one of
+// them, so the data here is designed to make them disagree.
+//
+// AND GROUPING IS IRREVERSIBLE, which closes a loop opened in unit 6. There, the
+// lesson was that continuous data recorded as categories can never be turned back
+// into measurements. Here the Learner's Book asks whether Arun can refine a
+// grouped frequency table into MORE groups using only the coarser table - and he
+// cannot, for the same reason. It is also why every statistic from grouped data is
+// an ESTIMATE rather than a value, which is the whole of 15.4.
+//
+//   node tools/build-ehel-math-g9-unit15.mjs [--write]
+
+import fs from "node:fs";
+import path from "node:path";
+import url from "node:url";
+
+const HERE = path.dirname(url.fileURLToPath(import.meta.url));
+const OUT = path.resolve(HERE, "..", "src", "prototypes", "ehel-academy",
+  "mathematics", "grade-9", "data", "units", "unit-15.json");
+const WRITE = process.argv.includes("--write");
+
+const FW = path.resolve(HERE, "..", "src", "curriculum", "cambridge-mathematics-0862.json");
+const fw = {};
+(function walk(o) {
+  if (!o || typeof o !== "object") return;
+  if (Array.isArray(o)) return o.forEach(walk);
+  if (typeof o.code === "string" && /^9Ss\.\d{2}$/.test(o.code)) fw[o.code] = o.text;
+  Object.values(o).forEach(walk);
+})(JSON.parse(fs.readFileSync(FW, "utf8")));
+
+const OBJ = ["9Ss.03", "9Ss.04", "9Ss.05"];
+for (const c of OBJ) if (!fw[c]) throw new Error("0862 has no " + c);
+
+const outcomes = [
+  "Draw a frequency polygon by plotting each frequency at the midpoint of its class.",
+  "Read a frequency polygon, and explain why a grouped table cannot be refined into more groups.",
+  "Describe the correlation shown by a scatter graph as positive, negative or none.",
+  "Draw a line of best fit and use it to make a prediction, saying when the prediction is unsafe.",
+  "Draw and read a back-to-back stem-and-leaf diagram, including its key.",
+  "Compare two distributions using the mode, median, mean and range together.",
+  "Explain why a conclusion drawn from one average alone can be wrong when the others disagree.",
+  "Find the modal class, the class containing the median, and estimates of the mean and range for grouped data.",
+];
+
+const concepts = [
+  {
+    id: "concept-1-frequency-polygons",
+    title: "Plot at the Midpoint, Then Join",
+    explanation:
+      "A frequency polygon shows the shape of a distribution of continuous data. Each class is " +
+      "represented by a single point whose height is the frequency and whose horizontal position is the " +
+      "MIDPOINT of the class - not its start and not its end. The points are then joined with straight " +
+      "lines. Using the midpoint is the whole convention: it is the single value that best stands in for " +
+      "everything in that class, and it is the same value you use to estimate a mean from grouped data.",
+    example:
+      "For masses in the classes 60 to 70, 70 to 80, 80 to 90 and 90 to 100 kg with frequencies 4, 7, 6 " +
+      "and 3, plot the points (65, 4), (75, 7), (85, 6) and (95, 3) and join them. The polygon peaks at " +
+      "75, which tells you the modal class is 70 to 80 without any calculation.",
+  },
+  {
+    id: "concept-2-grouping-is-irreversible",
+    title: "Grouping Throws Information Away for Good",
+    explanation:
+      "Once data has been put into groups, the individual values are gone. You can always make groups " +
+      "COARSER by combining them, but you can never make them FINER, because nothing in the grouped table " +
+      "records where within a class each value sat. This is the same one-way reduction as recording " +
+      "measurements as categories in Unit 6, and it has a direct consequence: every statistic you " +
+      "calculate from grouped data is an estimate rather than a value.",
+    example:
+      "From classes of width 10 you can combine 60 to 80 and 80 to 100 into two classes of width 20. But " +
+      "if someone asks for classes of width 5, the grouped table cannot answer - a class of 4 people in " +
+      "60 to 70 might be four people at 61 or four at 69, and the table does not say. Only the original " +
+      "measurements could produce the finer table.",
+  },
+  {
+    id: "concept-3-correlation",
+    title: "Correlation: Positive, Negative or None",
+    explanation:
+      "A scatter graph plots two measurements for each individual, one on each axis, to show whether they " +
+      "are related. If high values of one tend to go with high values of the other, the correlation is " +
+      "POSITIVE and the points slope upwards. If high goes with low, it is NEGATIVE and they slope " +
+      "downwards. If the points show no pattern at all, there is no correlation. Note the word 'tend': " +
+      "correlation describes a trend across the whole set, and individual points may sit well away from " +
+      "it without weakening the conclusion.",
+    example:
+      "As a car gets older it has usually travelled further, so age against distance shows positive " +
+      "correlation. As a car gets older it is usually worth less, so age against value shows negative " +
+      "correlation. A car's age plotted against its owner's shoe size would show none. One elderly car " +
+      "with very low mileage does not overturn the first relationship - it is a single point against a " +
+      "trend.",
+  },
+  {
+    id: "concept-4-line-of-best-fit",
+    title: "A Line of Best Fit, and Where It Stops Being Trustworthy",
+    explanation:
+      "When a scatter graph shows correlation, a straight line drawn through the middle of the points " +
+      "summarises the trend and can be used to estimate a value you did not measure. The line should " +
+      "follow the general direction of the points with roughly as many above it as below. A prediction " +
+      "made INSIDE the range of the data is usually reasonable; one made far outside it is not, because " +
+      "nothing in the data says the trend continues. The line describes where the evidence is, not " +
+      "everywhere.",
+    example:
+      "From a scatter graph of cars aged 1 to 10 years, a line of best fit can estimate the mileage of a " +
+      "6-year-old car quite safely. Using the same line for a 40-year-old car is not safe: no car in the " +
+      "data was anywhere near that old, the line would predict an enormous mileage, and in reality old " +
+      "cars are often driven very little. Correlation also does not establish cause - the two quantities " +
+      "may both depend on something else entirely.",
+  },
+  {
+    id: "concept-5-back-to-back-stem-and-leaf",
+    title: "Two Distributions, One Diagram",
+    explanation:
+      "A back-to-back stem-and-leaf diagram puts two data sets either side of a shared stem, so the two " +
+      "distributions can be compared directly while keeping every original value. That is its advantage " +
+      "over a grouped table: nothing is thrown away, so exact medians, modes and ranges can be read off. " +
+      "The leaves on the left are read RIGHT TO LEFT, outwards from the stem, and the diagram is useless " +
+      "without its key, which says what a stem and a leaf mean together.",
+    example:
+      "With a stem of tens and leaves of units, a row reading 5 4 2 | 1 | 3 7 means the left-hand set " +
+      "contains 12, 14 and 15 and the right-hand set contains 13 and 17. Because every value is still " +
+      "there, you can count to the median exactly rather than only naming the class it falls in.",
+  },
+  {
+    id: "concept-6-comparing-with-all-four",
+    title: "Compare With All Four, Because They Can Disagree",
+    explanation:
+      "To compare two distributions you use the mode, the median, the mean AND the range, and you use " +
+      "them together. The first three are averages and can point in different directions, because each " +
+      "summarises the data differently - the mean is pulled by extreme values, the median is not, and the " +
+      "mode only reports what is commonest. The range is not an average at all: it measures SPREAD, so it " +
+      "answers consistency rather than size. A conclusion resting on one average while the other two " +
+      "contradict it is not a conclusion.",
+    example:
+      "Group P scored 14, 14, 14, 15, 16, 17, 18, 19, 26, 27 and Group Q scored 12, 13, 15, 15, 15, 16, " +
+      "17, 18, 19, 20. Q has the higher MODE, 15 against 14. But P has the higher MEAN, 18 against 16, " +
+      "and the higher MEDIAN, 16.5 against 15.5. So 'Q did better because its mode is higher' is wrong - " +
+      "two measures out of three say otherwise. Q is more CONSISTENT, though: its range is 8 against " +
+      "P's 13, which is a different claim from being better.",
+  },
+];
+
+const methods = [
+  { id: "method-1", outcomeId: "lo01", difficulty: "Core", title: "How to draw a frequency polygon",
+    example: "Masses in classes 60-70, 70-80, 80-90, 90-100 kg with frequencies 4, 7, 6, 3.",
+    steps: ["Work out the midpoint of each class: 65, 75, 85, 95.",
+      "Plot a point at each midpoint, at the height of that class's frequency.",
+      "Join consecutive points with straight lines.",
+      "Label both axes, including the units.",
+      "Read the peak to identify the modal class - here 70 to 80."] },
+  { id: "method-2", outcomeId: "lo03", difficulty: "Core", title: "How to describe a correlation",
+    example: "A scatter graph of cars' ages against their values.",
+    steps: ["Look at the overall direction of the cloud of points, not at individual ones.",
+      "If it slopes upwards from left to right, say POSITIVE correlation.",
+      "If it slopes downwards, say NEGATIVE correlation.",
+      "If there is no direction, say there is no correlation.",
+      "Say it in terms of the quantities: as a car gets older, its value tends to fall."] },
+  { id: "method-3", outcomeId: "lo04", difficulty: "Core", title: "How to use a line of best fit",
+    example: "Predict the mileage of a 6-year-old car from data on cars aged 1 to 10.",
+    steps: ["Draw a straight line following the trend, with roughly as many points above as below.",
+      "Find your value on the horizontal axis and go up to the line.",
+      "Read across to the vertical axis for the estimate.",
+      "Check the value is INSIDE the range of the data - 6 lies between 1 and 10, so it is.",
+      "If it were outside, say the prediction is unreliable and why, rather than giving a number."] },
+  { id: "method-4", outcomeId: "lo05", difficulty: "Core", title: "How to read a back-to-back stem-and-leaf diagram",
+    example: "A row reads 5 4 2 | 1 | 3 7, with a stem of tens.",
+    steps: ["Read the key FIRST - it tells you what the stem and leaves mean.",
+      "For the right-hand set, read outwards from the stem: 13 and 17.",
+      "For the left-hand set, read outwards too, which means RIGHT TO LEFT: 12, 14, 15.",
+      "Note that both sides share the same stem, so the two sets are on the same scale.",
+      "Because every value is kept, you can find exact medians and modes rather than classes."] },
+  { id: "method-5", outcomeId: "lo06", difficulty: "Core", title: "How to compare two distributions",
+    example: "Compare P (14,14,14,15,16,17,18,19,26,27) with Q (12,13,15,15,15,16,17,18,19,20).",
+    steps: ["Work out all four measures for BOTH sets before saying anything.",
+      "Modes: P is 14, Q is 15. Medians: P is 16.5, Q is 15.5. Means: P is 18, Q is 16.",
+      "Ranges: P is 13, Q is 8.",
+      "Compare the averages as a group - two of three favour P, so P scored higher overall.",
+      "Comment on spread separately: Q is more consistent, which is a different claim from being better."] },
+  { id: "method-6", outcomeId: "lo08", difficulty: "Core", title: "How to find statistics for grouped data",
+    example: "Masses of 20 teachers: 60-70:4, 70-80:7, 80-90:6, 90-100:3.",
+    steps: ["Modal class: the class with the greatest frequency, here 70 to 80 with 7.",
+      "Median class: there are 20 values, so find the 10th and 11th. The first 4 are in class one and the 5th to 11th in class two, so the median is in 70 to 80.",
+      "Estimate of range: the highest possible minus the lowest possible, 100 - 60 = 40 kg.",
+      "Estimate of mean: multiply each midpoint by its frequency - 65x4, 75x7, 85x6, 95x3 - and add to get 1580.",
+      "Divide by the total frequency: 1580 / 20 = 79 kg. Say that these are ESTIMATES because the individual values are unknown."] },
+];
+
+const workedExamples = [
+  { id: "we01", outcomeId: "lo01", difficulty: "Core", twm: "characterising", title: "Drawing a frequency polygon",
+    prompt: "Masses of 20 teachers fall in the classes 60-70, 70-80, 80-90 and 90-100 kg with frequencies 4, 7, 6 and 3. Describe the points you would plot.",
+    solution: "Plot each frequency at the MIDPOINT of its class, so the points are (65, 4), (75, 7), (85, 6) and (95, 3), joined with straight lines. The midpoint is used because it is the single value that best represents everything in the class - the same value you would use to estimate the mean. The polygon peaks at 75, so the modal class is 70 to 80." },
+  { id: "we02", outcomeId: "lo02", difficulty: "Extension", twm: "convincing", title: "Arun cannot make more groups",
+    prompt: "Arun has a grouped table with classes of width 10 and wants to redraw it with classes of width 5. Can he do it from the table alone?",
+    solution: "No. The table says 4 teachers had masses between 60 and 70 kg, but not where in that interval they were - all four could be near 61, or near 69, or spread out. To split that class into 60-65 and 65-70 he would need to know the individual values, and grouping discarded them. He can always go the other way and COMBINE classes, because that only adds frequencies together. This is the same one-way reduction as recording measurements as categories in Unit 6." },
+  { id: "we03", outcomeId: "lo03", difficulty: "Basic", twm: "classifying", title: "Naming the correlation",
+    prompt: "Describe the correlation you would expect between a car's age and its total distance travelled, and between a car's age and its value.",
+    solution: "Age against distance is POSITIVE correlation: an older car has usually been driven further, so the points slope upwards. Age against value is NEGATIVE correlation: an older car is usually worth less, so the points slope downwards. Both are trends across the whole set - one old car with very low mileage does not overturn the first, because correlation describes a tendency rather than a rule about every individual." },
+  { id: "we04", outcomeId: "lo04", difficulty: "Core", twm: "critiquing", title: "When a prediction stops being safe",
+    prompt: "A scatter graph shows cars aged 1 to 10 years against their mileage. Is it safe to use the line of best fit to predict the mileage of a 6-year-old car? Of a 40-year-old car?",
+    solution: "For the 6-year-old, yes - 6 lies inside the range 1 to 10, so the line is supported by data on both sides of it. For the 40-year-old, no. No car in the data was anywhere near 40 years old, so nothing in the evidence says the trend continues that far, and in reality very old cars are often driven hardly at all. The honest answer is to say the prediction is unreliable and why, rather than to read a number off an extended line." },
+  { id: "we05", outcomeId: "lo04", difficulty: "Extension", twm: "critiquing", title: "Correlation is not cause",
+    prompt: "A scatter graph shows a strong positive correlation between the number of coats sold and the number of hot drinks sold each week. Does buying a coat make people want hot drinks?",
+    solution: "No. Both quantities rise in cold weather and fall in warm weather, so the temperature explains both and neither causes the other. A correlation shows that two quantities move together; it says nothing about why. This is the same confounding-variable argument as the phones-and-illness example in Unit 6, and the test is always to ask what third thing could be driving both." },
+  { id: "we06", outcomeId: "lo05", difficulty: "Core", twm: "characterising", title: "Reading a back-to-back diagram",
+    prompt: "In a back-to-back stem-and-leaf diagram with a stem of tens, a row reads 5 4 2 | 1 | 3 7. What values does it show?",
+    solution: "The stem is 1, meaning ten. Reading outwards from the stem on the right gives 13 and 17. Reading outwards on the LEFT - which means right to left - gives 12, 14 and 15. Both sides share the stem, so the two data sets are on the same scale and can be compared directly. Without the key you could not know whether the stem meant tens, hundreds or something else." },
+  { id: "we07", outcomeId: "lo05", difficulty: "Core", twm: "improving", title: "Why keep every value",
+    prompt: "What can a back-to-back stem-and-leaf diagram tell you that a grouped frequency table cannot?",
+    solution: "Everything that depends on the individual values. Because the diagram keeps every original number, you can find the exact median by counting to the middle value, the exact mode by looking for the repeated leaf, and the exact range from the largest and smallest. A grouped table can only give you the modal CLASS, the class the median falls in, and estimates of the mean and range. The diagram organises the data without discarding any of it, which is its whole advantage." },
+  { id: "we08", outcomeId: "lo06", difficulty: "Core", twm: "characterising", title: "All four measures for two groups",
+    prompt: "Group P scored 14, 14, 14, 15, 16, 17, 18, 19, 26, 27. Group Q scored 12, 13, 15, 15, 15, 16, 17, 18, 19, 20. Find the mode, median, mean and range of each.",
+    solution: "For P: the mode is 14, appearing three times. The median is the mean of the 5th and 6th values, (16 + 17) / 2 = 16.5. The total is 180 so the mean is 18. The range is 27 - 14 = 13. For Q: the mode is 15, appearing three times. The median is (15 + 16) / 2 = 15.5. The total is 160 so the mean is 16. The range is 20 - 12 = 8." },
+  { id: "we09", outcomeId: "lo07", difficulty: "Extension", twm: "critiquing", title: "Zara's mistake",
+    prompt: "Zara says Group Q did better than Group P because Q's mode is higher. Is she right?",
+    solution: "No. Q's mode is indeed higher, 15 against 14, but P's mean is higher, 18 against 16, and P's median is higher too, 16.5 against 15.5. So two of the three averages contradict her, and a conclusion resting on the one that agrees with you is not a conclusion. The mode only reports the commonest value, which here is at the bottom of P's range - P has three low scores and two very high ones, and the mode notices only the first fact." },
+  { id: "we10", outcomeId: "lo07", difficulty: "Extension", twm: "critiquing", title: "Consistent is not the same as better",
+    prompt: "Marcus says Group Q is better because its results are more consistent. Is 'more consistent' the same as 'better'?",
+    solution: "Q genuinely is more consistent: its range is 8 against P's 13, so its scores are less spread out. But consistency and size are different questions - the range measures SPREAD and says nothing about whether the scores are high. P scored higher on two averages out of three while being less consistent. Whether consistency makes a group 'better' depends on what you want: a reliable performance or a higher total. Marcus has made a true statement about the range and drawn a conclusion the range cannot support on its own." },
+  { id: "we11", outcomeId: "lo08", difficulty: "Core", twm: "characterising", title: "Grouped data: the four statistics",
+    prompt: "Masses of 20 teachers: 60-70 kg has 4, 70-80 has 7, 80-90 has 6, 90-100 has 3. Find the modal class, the median's class, and estimates of the range and mean.",
+    solution: "The modal class is 70 to 80, with the greatest frequency of 7. For the median, 20 values means the 10th and 11th: the first 4 are in 60-70 and the 5th to 11th are in 70-80, so both the 10th and 11th lie in 70 to 80. An estimate of the range is the highest possible minus the lowest possible, 100 - 60 = 40 kg. For the mean, multiply each midpoint by its frequency: 65x4 = 260, 75x7 = 525, 85x6 = 510, 95x3 = 285, totalling 1580. Dividing by 20 gives an estimated mean of 79 kg." },
+  { id: "we12", outcomeId: "lo08", difficulty: "Core", twm: "specialising", title: "A second grouped calculation",
+    prompt: "Heights of 28 students: 140-150 cm has 7, 150-160 has 13, 160-170 has 6, 170-180 has 2. Find the modal class, the median's class, and estimates of the range and mean, to the nearest centimetre.",
+    solution: "The modal class is 150 to 160, with 13. For the median, 28 values means the 14th and 15th: the first 7 are in 140-150 and the 8th to 20th are in 150-160, so both lie in 150 to 160. The range estimate is 180 - 140 = 40 cm. For the mean: 145x7 = 1015, 155x13 = 2015, 165x6 = 990, 175x2 = 350, totalling 4370. Dividing by 28 gives 156.07, so 156 cm to the nearest centimetre." },
+  { id: "we13", outcomeId: "lo08", difficulty: "Extension", twm: "convincing", title: "Why these are estimates",
+    prompt: "Why is the mean of grouped data an estimate rather than a value, and could the true mean be different?",
+    solution: "The calculation assumes every value in a class sits at the class midpoint, which is almost never exactly true. If the four teachers in the 60-70 class actually weighed 61, 62, 63 and 64 kg, their real total is 250 rather than the 260 the midpoint assumes, and the true mean would be lower. The estimate is the best you can do from a grouped table, and it is unbiased in the sense that values above and below the midpoint tend to cancel - but it is an estimate because the information needed for an exact answer was discarded when the data was grouped." },
+  { id: "we14", outcomeId: "lo06", difficulty: "Extension", twm: "improving", title: "Which representation to choose",
+    prompt: "You want to compare two classes' test scores. Would you use a frequency polygon, a scatter graph or a back-to-back stem-and-leaf diagram?",
+    solution: "A back-to-back stem-and-leaf diagram, because you are comparing two distributions of the SAME quantity and it keeps every value, so exact medians, modes and ranges can be read off. A frequency polygon would work for the shape of one distribution but needs grouping, which loses the values. A scatter graph is the wrong tool entirely: it compares two DIFFERENT quantities measured on the same individuals, so it would answer a question nobody asked. Choosing the representation means matching it to the question, not picking the one you like drawing." },
+];
+
+const practice = [
+  { id: "p01", level: "Warm-up", prompt: "What point do you plot for the class 70-80 with frequency 7 on a frequency polygon?", answer: "(75, 7)", hint: "Use the midpoint." },
+  { id: "p02", level: "Warm-up", prompt: "A car's age against its value shows which correlation?", answer: "Negative", hint: "Older means worth less." },
+  { id: "p03", level: "Warm-up", prompt: "Find the range of 12, 13, 15, 15, 15, 16, 17, 18, 19, 20.", answer: "8", hint: "Largest minus smallest." },
+  { id: "p04", level: "Core", prompt: "Find the mode, median and mean of 14, 14, 14, 15, 16, 17, 18, 19, 26, 27.", answer: "Mode 14, median 16.5, mean 18", hint: "The total is 180." },
+  { id: "p05", level: "Core", prompt: "For masses 60-70:4, 70-80:7, 80-90:6, 90-100:3, what is the modal class?", answer: "70 to 80 kg", hint: "Greatest frequency." },
+  { id: "p06", level: "Core", prompt: "For the same table, estimate the mean.", answer: "79 kg", hint: "Midpoints times frequencies, total 1580." },
+  { id: "p07", level: "Core", prompt: "For the same table, estimate the range.", answer: "40 kg", hint: "Highest possible minus lowest possible." },
+  { id: "p08", level: "Core", prompt: "In a back-to-back diagram with a stem of tens, what does 5 4 2 | 1 | 3 7 show?", answer: "Left: 12, 14, 15. Right: 13, 17.", hint: "Read outwards from the stem." },
+  { id: "p09", level: "Core", prompt: "Heights 140-150:7, 150-160:13, 160-170:6, 170-180:2. Estimate the mean to the nearest cm.", answer: "156 cm", hint: "The total is 4370 over 28." },
+  { id: "p10", level: "Challenge", prompt: "Zara says Q did better than P because Q's mode is higher. Using P (14,14,14,15,16,17,18,19,26,27) and Q (12,13,15,15,15,16,17,18,19,20), decide whether she is right.", answer: "No. Q's mode is higher (15 against 14), but P's mean is higher (18 against 16) and so is P's median (16.5 against 15.5). Two of three averages contradict her, so the mode alone cannot support the claim.", hint: "Work out all three averages for both." },
+  { id: "p11", level: "Challenge", prompt: "Explain why Arun cannot turn a grouped table with classes of width 10 into one with classes of width 5.", answer: "The table records only how many values fell in each class of width 10, not where within the class they were, so it cannot say how many were in each half. Combining classes is always possible; splitting them is not, because grouping discarded the individual values.", hint: "What would he need to know?" },
+  { id: "p12", level: "Challenge", prompt: "A scatter graph shows strong positive correlation between coat sales and hot drink sales. Does one cause the other?", answer: "No. Cold weather raises both, so the temperature is a confounding variable explaining the correlation without either quantity causing the other. Correlation shows that two things move together and never says why.", hint: "What third thing affects both?" },
+];
+
+const fluency = [
+  { id: "fl01", outcomeId: "lo01", difficulty: "Round 1", prompt: "Point to plot for class 70-80, frequency 7?", answer: "(75, 7)", hint: "Midpoint.", errorFeedback: "The midpoint of 70 to 80 is 75." },
+  { id: "fl02", outcomeId: "lo03", difficulty: "Round 1", prompt: "Car age against distance travelled: which correlation?", answer: "Positive", hint: "Both rise.", errorFeedback: "Older cars have usually gone further." },
+  { id: "fl03", outcomeId: "lo06", difficulty: "Round 1", prompt: "Range of 12, 13, 15, 15, 15, 16, 17, 18, 19, 20?", answer: "8", hint: "20 - 12.", errorFeedback: "Largest minus smallest." },
+  { id: "fl04", outcomeId: "lo08", difficulty: "Round 1", prompt: "Modal class of 60-70:4, 70-80:7, 80-90:6, 90-100:3?", answer: "70 to 80", hint: "Greatest frequency.", errorFeedback: "7 is the largest frequency." },
+  { id: "fl05", outcomeId: "lo06", difficulty: "Round 2", prompt: "Mean of 14, 14, 14, 15, 16, 17, 18, 19, 26, 27?", answer: "18", hint: "Total 180.", errorFeedback: "180 / 10 = 18." },
+  { id: "fl06", outcomeId: "lo06", difficulty: "Round 2", prompt: "Median of 14, 14, 14, 15, 16, 17, 18, 19, 26, 27?", answer: "16.5", hint: "Mean of the 5th and 6th.", errorFeedback: "(16 + 17) / 2 = 16.5." },
+  { id: "fl07", outcomeId: "lo08", difficulty: "Round 2", prompt: "Estimate the range of 60-70 to 90-100.", answer: "40", hint: "100 - 60.", errorFeedback: "Highest possible minus lowest possible." },
+  { id: "fl08", outcomeId: "lo05", difficulty: "Round 2", prompt: "With a stem of tens, what is the left side of 5 4 2 | 1 |?", answer: "12, 14, 15", hint: "Read outwards.", errorFeedback: "Read right to left from the stem." },
+  { id: "fl09", outcomeId: "lo08", difficulty: "Round 3", prompt: "Estimate the mean of 60-70:4, 70-80:7, 80-90:6, 90-100:3.", answer: "79 kg", hint: "1580 / 20.", errorFeedback: "Sum of midpoint x frequency is 1580." },
+  { id: "fl10", outcomeId: "lo08", difficulty: "Round 3", prompt: "Estimate the mean of 140-150:7, 150-160:13, 160-170:6, 170-180:2, to the nearest cm.", answer: "156 cm", hint: "4370 / 28.", errorFeedback: "4370 / 28 = 156.07." },
+  { id: "fl11", outcomeId: "lo07", difficulty: "Round 3", prompt: "Q's mode is higher but P's mean and median are. Who scored higher overall?", answer: "P", hint: "Count the measures.", errorFeedback: "Two averages out of three favour P." },
+  { id: "fl12", outcomeId: "lo02", difficulty: "Round 3", prompt: "Can a grouped table be split into finer classes?", answer: "No", hint: "What was discarded?", errorFeedback: "The individual values are gone; only combining is possible." },
+];
+
+const explorations = concepts.map((c, i) => ({
+  id: "explore-" + (i + 1),
+  outcomeId: "lo0" + [1, 2, 3, 4, 5, 7][i],
+  difficulty: ["Discover", "Extension", "Core", "Core", "Core", "Extension"][i],
+  title: c.title,
+  context: c.explanation,
+  prompt: [
+    "Plot a frequency polygon for 60-70:4, 70-80:7, 80-90:6, 90-100:3. What would happen if you plotted at the start of each class instead of the midpoint?",
+    "Take a grouped table with classes of width 10 and try to produce one with classes of width 5. What information do you find you need?",
+    "Sketch what a scatter graph of car age against value looks like, and one of car age against distance. What is different?",
+    "Using data on cars aged 1 to 10, use a line of best fit to predict the mileage of a 6-year-old and of a 40-year-old car. Which prediction do you trust?",
+    "Build a back-to-back stem-and-leaf diagram for two sets of test scores. What can you read off it that a grouped table would hide?",
+    "Work out the mode, median and mean of P (14,14,14,15,16,17,18,19,26,27) and Q (12,13,15,15,15,16,17,18,19,20). Do all three agree about which group did better?",
+  ][i],
+  answer: [
+    "The polygon's shape would shift left by half a class width, misplacing the peak - the midpoint is the value that represents the class.",
+    "You need the individual values. The table says how many fell in each class of width 10, never where within it, so splitting is impossible while combining is easy.",
+    "Age against value slopes DOWN (negative correlation); age against distance slopes UP (positive correlation).",
+    "The 6-year-old, because 6 lies inside the range 1 to 10. The 40-year-old prediction has no data anywhere near it.",
+    "Exact medians, modes and ranges, because every original value is kept rather than replaced by a class.",
+    "No. Q's mode is higher but P's mean and median are higher, so two of the three contradict the mode.",
+  ][i],
+  modelType: "concept-model-" + (i + 1),
+  hint: [
+    "Where does the class's single representative value sit?",
+    "Ask what the table does NOT record.",
+    "Which way do the points slope?",
+    "Is your value inside the data's range?",
+    "Is any value replaced by a class?",
+    "Work all three out before deciding.",
+  ][i],
+  explanation: c.example,
+}));
+
+const visualModels = concepts.map((c, i) => ({
+  id: "model-" + (i + 1),
+  outcomeId: "lo0" + [1, 2, 3, 4, 5, 7][i],
+  title: c.title,
+  modelType: "concept-model-" + (i + 1),
+  purpose: c.explanation,
+  defaultNumber: [75, 10, 1, 6, 1, 18][i],
+}));
+
+const activities = [
+  { title: "Polygons from your own class", materials: "tape measure, squared paper.",
+    steps: ["Measure everyone's height and record the exact values.",
+      "Group them into classes of width 10 cm and draw a frequency polygon, plotting at the midpoints.",
+      "Now estimate the mean from your grouped table.",
+      "Work out the TRUE mean from the original measurements and compare.",
+      "Write one sentence on how close the estimate was and why it is not exact."] },
+  { title: "Try to un-group", materials: "the grouped table from the previous activity.",
+    steps: ["Hand your grouped table, and only that, to another pair.",
+      "Ask them to produce a table with classes of width 5 cm.",
+      "Let them try, then show them your original measurements.",
+      "Discuss what they would have had to guess, and how wrong it could have been.",
+      "Write the general rule about which direction grouping can be changed in."] },
+  { title: "Correlation hunt", materials: "squared paper, a tape measure.",
+    steps: ["Choose three pairs of measurements about your class - for example height and arm span, height and shoe size, height and the day of the month they were born.",
+      "Plot a scatter graph for each pair.",
+      "Describe each as positive, negative or no correlation.",
+      "Predict which pair will show none BEFORE plotting, and see whether you were right.",
+      "For one with correlation, draw a line of best fit and mark the range within which a prediction would be safe."] },
+  { title: "Correlation is not cause", materials: "paper.",
+    steps: ["Find or invent four pairs of quantities that correlate strongly.",
+      "For each, try to name a third quantity that could explain both.",
+      "Sort them into pairs where one plausibly causes the other and pairs where a third thing explains it.",
+      "Discuss the ones you disagreed about.",
+      "Write a sentence on what evidence would be needed to show cause rather than correlation."] },
+  { title: "Back-to-back comparison", materials: "squared paper.",
+    steps: ["Collect two sets of the same measurement - two classes, or boys and girls, or two weeks of something.",
+      "Draw a back-to-back stem-and-leaf diagram with a shared stem and a clear key.",
+      "Work out the mode, median, mean and range for BOTH sides.",
+      "Write a comparison using all four, saying explicitly where they agree and where they disagree.",
+      "Swap with another pair and check whether their conclusion rests on more than one measure."] },
+  { title: "Make the averages disagree", materials: "paper.",
+    steps: ["Invent two sets of ten numbers where one set has the higher mode and the other the higher mean.",
+      "Check your sets by calculating all three averages.",
+      "Then try to make a pair where the median and the mean disagree.",
+      "Describe what shape of data makes the mean disagree with the median.",
+      "Write one sentence on why this means a single average is never enough."] },
+];
+
+const realProblems = [
+  { id: "rp01", outcomeId: "lo08", difficulty: "Core", context: "Work",
+    prompt: "A school records the masses of 20 teachers in classes 60-70, 70-80, 80-90 and 90-100 kg with frequencies 4, 7, 6 and 3. Report the modal class, the median's class, and estimates of the mean and range.",
+    answer: "Modal class 70 to 80 kg, since 7 is the greatest frequency. The median is between the 10th and 11th values; the first 4 lie in 60-70 and the 5th to 11th in 70-80, so the median is in 70 to 80. Estimated range 100 - 60 = 40 kg. Estimated mean: the midpoint-times-frequency products are 260, 525, 510 and 285, totalling 1580, and 1580 / 20 = 79 kg.",
+    hint: "Use midpoints for the mean.", errorFeedback: "65x4 + 75x7 + 85x6 + 95x3 = 1580." },
+  { id: "rp02", outcomeId: "lo08", difficulty: "Core", context: "Home",
+    prompt: "Heights of 28 students are grouped as 140-150:7, 150-160:13, 160-170:6, 170-180 cm:2. Estimate the mean height to the nearest centimetre, and say why it is an estimate.",
+    answer: "The midpoint products are 145x7 = 1015, 155x13 = 2015, 165x6 = 990 and 175x2 = 350, totalling 4370. Dividing by 28 gives 156.07, so 156 cm. It is an estimate because the calculation assumes every student in a class stands exactly at the midpoint, which is almost never true - the individual heights were discarded when the data was grouped.",
+    hint: "Sum the midpoint products, then divide by 28.", errorFeedback: "4370 / 28 = 156.07." },
+  { id: "rp03", outcomeId: "lo07", difficulty: "Extension", context: "Work",
+    prompt: "Two teams' sales figures are P: 14,14,14,15,16,17,18,19,26,27 and Q: 12,13,15,15,15,16,17,18,19,20. A manager says Q performed better because its most common figure is higher. Assess the claim and write a fair comparison.",
+    answer: "Q's mode is higher, 15 against 14, but P's mean is 18 against 16 and P's median is 16.5 against 15.5, so two averages out of three favour P. P sold more overall. Q is more consistent - its range is 8 against P's 13 - so a fair comparison says P performed better on average while Q was steadier, and notes that P's mean is lifted by two unusually high figures of 26 and 27.",
+    hint: "Work out all four measures for both.", errorFeedback: "P's mean is 180/10 = 18; Q's is 160/10 = 16." },
+  { id: "rp04", outcomeId: "lo04", difficulty: "Core", context: "Market",
+    prompt: "A dealer has mileage data for cars aged 1 to 10 years showing positive correlation. A customer asks for an estimate of a 6-year-old car's mileage, and another asks about a 40-year-old car. How should the dealer answer each?",
+    answer: "For the 6-year-old, read the line of best fit at 6 and give the estimate - 6 lies inside the range of the data, so the trend is supported on both sides. For the 40-year-old, decline to give a number from the line and explain why: no car in the data was anywhere near 40 years old, so nothing supports extending the trend that far, and very old cars are often driven very little, which would make the line's prediction far too high.",
+    hint: "Is the value inside the data's range?", errorFeedback: "A prediction far outside the data is not supported by it." },
+  { id: "rp05", outcomeId: "lo04", difficulty: "Extension", context: "Market",
+    prompt: "A shop finds a strong positive correlation between coat sales and hot chocolate sales. The owner plans to promote coats in order to sell more hot chocolate. Will it work?",
+    answer: "Almost certainly not. Cold weather drives both sales up and warm weather drives both down, so the temperature is a confounding variable that explains the correlation without either product affecting the other. Selling more coats in warm weather would not make anyone want hot chocolate. Correlation shows two quantities moving together and never establishes that one causes the other.",
+    hint: "What third thing affects both?", errorFeedback: "The weather explains both without either causing the other." },
+  { id: "rp06", outcomeId: "lo06", difficulty: "Core", context: "Home",
+    prompt: "You want to compare the test scores of two classes and report your findings to a parents' evening. Which representation would you choose, and why not the others?",
+    answer: "A back-to-back stem-and-leaf diagram, because it compares two distributions of the same quantity side by side on a shared stem while keeping every original value, so exact medians, modes and ranges can be read off. A frequency polygon would need grouping and would lose the values. A scatter graph is the wrong tool: it compares two different quantities measured on the same individuals, which is not the question being asked.",
+    hint: "Match the representation to the question.", errorFeedback: "A scatter graph compares two different quantities, not two groups." },
+];
+
+const reasoningPrompts = [
+  { id: "reason01", outcomeId: "lo01", difficulty: "Core", responseMode: "text",
+    prompt: "Why is a frequency polygon plotted at the midpoint of each class rather than at its start or end?",
+    keyIdeas: ["The midpoint represents the class", "Starts or ends would shift the whole shape", "It is the same value used to estimate the mean"],
+    modelAnswer: "The midpoint is the single value that best stands in for everything in the class: values above and below it tend to balance, which is exactly why the same midpoint is used to estimate the mean. Plotting at the start or end of each class would shift the entire polygon sideways by half a class width, so the peak would appear in the wrong place and the shape would misreport where the data actually sits. The convention is not arbitrary - it follows from the midpoint being the class's representative value." },
+  { id: "reason02", outcomeId: "lo02", difficulty: "Extension", responseMode: "text",
+    prompt: "Why can grouped classes always be combined but never split?",
+    keyIdeas: ["Combining only adds frequencies", "Splitting needs information the table lacks", "Grouping is a one-way reduction"],
+    modelAnswer: "Combining two classes needs nothing except their frequencies - four in one class and seven in the next makes eleven in the joined class, and that is certainly right. Splitting a class needs to know how its values were distributed WITHIN it, and the table records only the total. Four teachers between 60 and 70 kg could be four at 61 or four at 69, and no arithmetic on the table can distinguish those cases. This is the same one-way reduction as recording measurements as categories in Unit 6: information can be discarded but not recovered." },
+  { id: "reason03", outcomeId: "lo04", difficulty: "Core", responseMode: "text",
+    prompt: "Why is a prediction from a line of best fit safe inside the data's range and unsafe far outside it?",
+    keyIdeas: ["Inside, the trend is supported on both sides", "Outside, nothing says the trend continues", "Real relationships change shape"],
+    modelAnswer: "Inside the range, the line is held in place by real data points on both sides of the value you are predicting, so the estimate is an interpolation between things actually observed. Outside the range there is no such support: the line continues because a ruler continues, not because the evidence does, and real relationships frequently change shape or reverse beyond the observed region. A 40-year-old car is the clear case - the trend for cars aged 1 to 10 would predict an enormous mileage, while in reality very old cars are usually driven hardly at all." },
+  { id: "reason04", outcomeId: "lo07", difficulty: "Extension", responseMode: "text",
+    prompt: "Why can a conclusion drawn from one average be wrong when the data is the same?",
+    keyIdeas: ["Each average summarises differently", "The mode only reports the commonest value", "Two of three can contradict the third"],
+    modelAnswer: "The three averages answer different questions about the same numbers. The mode reports only which value occurs most often, the median reports the middle value and ignores how extreme the others are, and the mean uses every value and is therefore pulled by unusually high or low ones. So they can disagree, and which one you quote can decide your conclusion. In the P and Q data, Q's mode is higher while P's mean and median are both higher - Q has a slightly higher clump at the bottom while P has two very high figures. Quoting the one average that supports your view is not analysis, and the defence is to work out all of them first." },
+  { id: "reason05", outcomeId: "lo06", difficulty: "Core", responseMode: "text",
+    prompt: "The range is listed with the mode, median and mean, but it is not an average. What is it for?",
+    keyIdeas: ["It measures spread, not size", "Consistency is a different question from being higher", "A small range can go with low or high values"],
+    modelAnswer: "The range measures how spread out the data is, not where it sits, so it answers consistency rather than size. Two groups can have identical means and completely different ranges, and a group with a small range could be consistently excellent or consistently poor - the range alone does not say which. That is why a comparison needs both kinds of measure: the averages say which group is higher and the range says which is steadier. Treating a small range as proof of being better, as Marcus does, draws a conclusion the measure cannot support." },
+  { id: "reason06", outcomeId: "lo08", difficulty: "Extension", responseMode: "text",
+    prompt: "Why is an estimated mean from grouped data still worth calculating, given that it is not the true mean?",
+    keyIdeas: ["It is the best available from the table", "Errors above and below the midpoint tend to cancel", "The alternative is no answer at all"],
+    modelAnswer: "It is the best answer the available information supports, and it is usually close. The calculation assumes every value sits at its class midpoint, which is wrong for almost every individual - but the values above the midpoint and below it tend to cancel across a class, so the total is not systematically too high or too low. The alternative is to say nothing at all about the mean, which is less useful than a good estimate honestly labelled as one. What matters is calling it an estimate, so that nobody treats it as exact or draws a conclusion from a difference smaller than the error." },
+];
+
+const reference = {
+  rules: [
+    { title: "Plot at the Midpoint", text: "A frequency polygon plots each frequency at the midpoint of its class, and the points are joined with straight lines." },
+    { title: "Grouping Only Goes One Way", text: "Classes can always be combined and never split, because the individual values were discarded." },
+    { title: "Name the Correlation by the Slope", text: "Upwards is positive, downwards is negative, no pattern is none. Correlation is a trend, not a rule about every point." },
+    { title: "Predict Inside the Range Only", text: "A line of best fit supports interpolation. Far outside the data, say the prediction is unreliable instead of giving a number." },
+    { title: "Correlation Is Not Cause", text: "Two quantities can move together because a third affects both. Ask what that third thing might be." },
+    { title: "Read the Key First", text: "A stem-and-leaf diagram is meaningless without its key. On the left-hand side, read leaves outwards from the stem." },
+    { title: "Compare With All Four", text: "Mode, median, mean AND range. The three averages can disagree, and the range answers consistency rather than size." },
+    { title: "Grouped Statistics Are Estimates", text: "You get the modal class, the median's class, and estimates of the mean and range - never exact values." },
+  ],
+  terms: [
+    ["Frequency polygon", "A graph joining points plotted at class midpoints at the height of each frequency"],
+    ["Class interval", "A group that data has been sorted into"],
+    ["Midpoint", "The value half way between a class's two ends"],
+    ["Correlation", "A tendency for two quantities to vary together"],
+    ["Line of best fit", "A straight line drawn through the trend of a scatter graph"],
+    ["Confounding variable", "A third quantity that affects both of the two being compared"],
+    ["Back-to-back stem-and-leaf", "Two data sets shown either side of a shared stem"],
+    ["Modal class", "The class with the greatest frequency"],
+    ["Estimate of the mean", "The sum of midpoint times frequency, divided by the total frequency"],
+    ["Range", "The largest value minus the smallest; a measure of spread, not an average"],
+  ],
+  commonMistakes: [
+    ["Plotting a frequency polygon at class boundaries", "Use the midpoint, or the whole shape shifts sideways"],
+    ["Trying to split grouped classes", "Only combining is possible; the individual values are gone"],
+    ["Extending a line of best fit far beyond the data", "Say the prediction is unreliable rather than reading a number off"],
+    ["Treating correlation as cause", "Look for a third quantity that could explain both"],
+    ["Quoting the one average that suits your conclusion", "Work out all three; if two disagree with you, the claim fails"],
+    ["Calling a grouped mean exact", "It assumes every value sits at its class midpoint, so it is an estimate"],
+  ],
+};
+
+const assessment = {
+  passPercent: 80,
+  questions: [
+    { id: "q01", type: "Application", outcomeId: "lo01", difficulty: "Basic", question: "On a frequency polygon, the class 70-80 with frequency 7 is plotted at:", options: ["(75, 7)", "(70, 7)", "(80, 7)", "(7, 75)"], answer: "(75, 7)", hint: "Use the midpoint.", explanation: "The midpoint of 70 to 80 is 75." },
+    { id: "q02", type: "Application", outcomeId: "lo03", difficulty: "Basic", question: "A car's age plotted against its value shows:", options: ["Negative correlation", "Positive correlation", "No correlation", "A frequency polygon"], answer: "Negative correlation", hint: "Older means worth less.", explanation: "As age increases the value falls, so the points slope downwards." },
+    { id: "q03", type: "Application", outcomeId: "lo08", difficulty: "Core", question: "For 60-70:4, 70-80:7, 80-90:6, 90-100:3, the estimated mean is:", options: ["79 kg", "80 kg", "75 kg", "1580 kg"], answer: "79 kg", hint: "Midpoints times frequencies.", explanation: "The products total 1580, and 1580 / 20 = 79." },
+    { id: "q04", type: "Application", outcomeId: "lo08", difficulty: "Core", question: "For the same table, the estimated range is:", options: ["40 kg", "30 kg", "20 kg", "79 kg"], answer: "40 kg", hint: "Highest possible minus lowest.", explanation: "100 - 60 = 40 kg." },
+    { id: "q05", type: "Application", outcomeId: "lo06", difficulty: "Core", question: "The median of 14, 14, 14, 15, 16, 17, 18, 19, 26, 27 is:", options: ["16.5", "14", "18", "17"], answer: "16.5", hint: "Ten values, so average the middle two.", explanation: "(16 + 17) / 2 = 16.5." },
+    { id: "q06", type: "Reasoning", outcomeId: "lo07", difficulty: "Extension", question: "Q has the higher mode but P has the higher mean and median. Which group scored higher overall?", options: ["P", "Q", "Neither - it cannot be decided", "Both equally"], answer: "P", hint: "Count how many measures favour each.", explanation: "Two of the three averages favour P, so the mode alone cannot support a claim for Q." },
+    { id: "q07", type: "Reasoning", outcomeId: "lo02", difficulty: "Extension", question: "Why can a grouped table not be split into finer classes?", options: ["The arithmetic is too hard", "It does not record where within a class each value sat", "Classes must all be the same width", "It can be, by halving each frequency"], answer: "It does not record where within a class each value sat", hint: "What information was discarded?", explanation: "Grouping keeps only the totals, so the distribution within a class is unrecoverable." },
+    { id: "q08", type: "Reasoning", outcomeId: "lo04", difficulty: "Extension", question: "Coat sales and hot drink sales correlate strongly. The best explanation is:", options: ["Buying coats makes people want hot drinks", "Cold weather raises both", "The correlation is a coincidence", "Hot drinks make people buy coats"], answer: "Cold weather raises both", hint: "Look for a third quantity.", explanation: "The temperature is a confounding variable affecting both, so neither causes the other." },
+  ],
+};
+
+const games = {
+  masteryScore: 3,
+  games: [
+    { id: "u15-game-1", icon: "?", skill: "Representing data", title: "Quick Match: Representing Data", description: "Four short challenges on polygons, correlation and diagrams.", type: "choice",
+      rounds: [
+        { prompt: "Plot class 70-80, frequency 7, at", choices: ["(75, 7)", "(70, 7)", "(80, 7)", "(7, 75)"], answer: "(75, 7)", clue: "Midpoint." },
+        { prompt: "Car age against value", choices: ["Negative", "Positive", "None", "Both"], answer: "Negative", clue: "Older is worth less." },
+        { prompt: "Car age against distance travelled", choices: ["Positive", "Negative", "None", "Both"], answer: "Positive", clue: "Both rise together." },
+        { prompt: "Can a grouped table be split into finer classes?", choices: ["No", "Yes", "Only if widths are equal", "Only for continuous data"], answer: "No", clue: "The values are gone." },
+      ] },
+    { id: "u15-game-2", icon: "?", skill: "Comparing distributions", title: "Quick Match: Averages and Spread", description: "Four short challenges on comparing two sets of data.", type: "choice",
+      rounds: [
+        { prompt: "Mean of 14,14,14,15,16,17,18,19,26,27", choices: ["18", "16.5", "14", "16"], answer: "18", clue: "Total 180." },
+        { prompt: "Median of the same set", choices: ["16.5", "18", "17", "14"], answer: "16.5", clue: "Average the middle two." },
+        { prompt: "Estimated mean of 60-70:4, 70-80:7, 80-90:6, 90-100:3", choices: ["79 kg", "80 kg", "75 kg", "85 kg"], answer: "79 kg", clue: "1580 / 20." },
+        { prompt: "Which measure answers consistency?", choices: ["The range", "The mode", "The median", "The mean"], answer: "The range", clue: "It measures spread." },
+      ] },
+  ],
+};
+
+const unit = {
+  schemaVersion: "Ehel Mathematics Runtime v1.1",
+  generatedAt: new Date().toISOString(),
+  stage: { id: 9, label: "Stage 9" },
+  subject: "Mathematics",
+  term: { id: 3, label: "Term 3" },
+  unit: {
+    unitId: "math-g09-u15",
+    unitNo: 15,
+    unitTitle: "Interpreting and Discussing Results",
+    unitOverview:
+      "Welcome to Unit 15, the last unit of Stage 9. Unit 6 was about collecting data honestly; this one " +
+      "is about reading it honestly. You draw frequency polygons, plotting at class midpoints, and " +
+      "discover that grouping data throws information away for good - which is why every statistic from a " +
+      "grouped table is an estimate rather than a value. You use scatter graphs to spot relationships " +
+      "between two quantities, learn to say where a line of best fit stops being trustworthy, and meet " +
+      "the fact that two things moving together does not mean one causes the other. Then you compare two " +
+      "distributions properly: with the mode, median, mean AND range, because the three averages can " +
+      "disagree with each other, and a conclusion resting on whichever one suits you is not a conclusion " +
+      "at all.",
+    learningPath: "15.1 Interpreting and drawing frequency polygons, 15.2 Scatter graphs, 15.3 Back-to-back stem-and-leaf diagrams, 15.4 Calculating statistics for grouped data, 15.5 Representing data",
+    reviewStatus: "Authored 2026-09-26 from the Stage 9 Learner's Book pages 320-345 and Workbook pages 184-205. Not yet curriculum-reviewed.",
+  },
+  cambridge: {
+    level: "Cambridge Lower Secondary Mathematics",
+    code: "0862",
+    stage: 9,
+    objectives: OBJ.map((c) => ({ code: c, text: fw[c] })),
+    objectiveMapping: {
+      status: "authored",
+      reviewed: false,
+      method:
+        "THE MAPPING HERE IS GENUINELY MANY-TO-MANY, the first time that is true in Grade 9, and saying " +
+        "so is more honest than forcing a one-per-section table. 9Ss.03 (record, organise and represent; " +
+        "choose and explain which representation) is served by 15.1 frequency polygons, 15.3 " +
+        "stem-and-leaf and 15.5 representing data. 9Ss.04 (mode, median, mean and range to compare two " +
+        "distributions, including grouped data) is served by 15.3 and 15.4. 9Ss.05 (interpret data, " +
+        "identify patterns, trends and relationships within and between data sets) is served by 15.2 " +
+        "scatter graphs and 15.3. Section 15.3 therefore carries all three, because a back-to-back " +
+        "stem-and-leaf diagram IS a representation, a comparison of two distributions and an " +
+        "interpretation at once. With this unit the 9Ss strand is complete - .01 and .02 sit in unit 6 - " +
+        "and so is Stage 9: all 55 objectives are now placed across fifteen units. Objective texts are " +
+        "quoted verbatim from cambridge-mathematics-0862.json.",
+    },
+  },
+  provenance: {
+    contentPackage: null,
+    framework: "Cambridge Lower Secondary Mathematics 0862 - Stage 9",
+    sourceArchive: null,
+    sourceDocuments: ["Cambridge Lower Secondary Maths Learner's Book 9 (2ed, CUP), pages 320-345",
+                      "Cambridge Lower Secondary Mathematics Workbook 9, pages 184-205"],
+    sourceBlockCount: null,
+    transformation:
+      "Authored by hand from the Learner's Book and Workbook. The P and Q datasets in 15.3 are authored " +
+      "rather than taken from the book, chosen so that the mode disagrees with the mean and median - a " +
+      "learner who has only met data where the three averages agree cannot be taught to distrust one of " +
+      "them. Grade 9 has no content package: outputs/math-content/math-content-model.json holds grades " +
+      "1-8 only.",
+    reviewStatus: "Not curriculum-reviewed",
+  },
+  media: { lectureStatus: "Video pending", lectureVideo: null, poster: null },
+  outcomes,
+  concepts,
+  explorations,
+  visualModels,
+  methods,
+  workedExamples,
+  practice,
+  activities,
+  reference,
+  fluency,
+  realProblems,
+  reasoningPrompts,
+  assessment,
+  games,
+  selfAssessment: outcomes.map((o) => "I can " + o.charAt(0).toLowerCase() + o.slice(1)),
+};
+
+const json = JSON.stringify(unit, null, 2) + "\n";
+if (WRITE) {
+  fs.mkdirSync(path.dirname(OUT), { recursive: true });
+  fs.writeFileSync(OUT, json, "utf8");
+}
+console.log("  Grade 9 Unit 15: " + outcomes.length + " outcomes, " + concepts.length + " concepts, " +
+  workedExamples.length + " worked examples, " + practice.length + " practice, " + fluency.length +
+  " fluency, " + realProblems.length + " real problems, " + reasoningPrompts.length + " reasoning, " +
+  assessment.questions.length + " assessment, " + activities.length + " activities");
+console.log("  objectives: " + OBJ.join(", ") + "   (many-to-many across five sections)");
+console.log("  the 9Ss strand is complete - and so is Stage 9: all 55 objectives placed across 15 units");
+console.log("  " + json.length + " bytes " + (WRITE ? "written to " + path.relative(process.cwd(), OUT) : "(--write to save)"));

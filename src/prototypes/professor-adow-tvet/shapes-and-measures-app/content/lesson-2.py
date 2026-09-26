@@ -55,12 +55,12 @@ LESSON = {
         #
         # No `parts`: a film and nothing else.
         step("lecture", "Unit lecture", ["ADOW-SM-SM.03.1", "ADOW-SM-SM.03.2", "ADOW-SM-SM.03.3", "ADOW-SM-SM.03.4", "ADOW-SM-SM.04.1", "ADOW-SM-SM.04.2", "ADOW-SM-SM.04.3"],
-             {"video": {"src": "lecture-video/area-volume-and-what-they-cost.5b2f30f2.mp4",
+             {"video": {"src": "lecture-video/area-volume-and-what-they-cost.88c812be.mp4",
                         "captions": CAPTIONS,
-                        "poster": "lecture-video/area-volume-and-what-they-cost.5d39cf0f.jpg"},
+                        "poster": "lecture-video/area-volume-and-what-they-cost.6748cb27.jpg"},
               # The same film, at the learner's pace. A SIBLING of "video",
               # not a key inside it: R.lecture reads data.slides.
-              "slides": "lecture-video/area-volume-and-what-they-cost.3f35f76f.slides.html",
+              "slides": "lecture-video/area-volume-and-what-they-cost.6b8a0190.slides.html",
               "underFilm": "Round the edge, across the surface, and inside the solid — with the openings taken off and the litres worked out. Every step below is one of these on a real job."},
              ask="Watch the film first. It is this lesson end to end; the steps after it put each part on a job.",
              error=("Watching it instead of working through the steps.",

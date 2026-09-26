@@ -1,0 +1,1197 @@
+{
+  "schemaVersion": "Ehel Mathematics Runtime v1.1",
+  "generatedAt": "2026-09-26T16:11:48.482Z",
+  "stage": {
+    "id": 9,
+    "label": "Stage 9"
+  },
+  "subject": "Mathematics",
+  "term": {
+    "id": 2,
+    "label": "Term 2"
+  },
+  "unit": {
+    "unitId": "math-g09-u08",
+    "unitNo": 8,
+    "unitTitle": "Fractions",
+    "unitOverview": "Welcome to Unit 8. You can already work with fractions; this unit is about doing it well and knowing why the rules are the rules. You learn to tell from a denominator alone whether a fraction's decimal stops or repeats for ever, without dividing it out. You meet the fact that 0.999... is not nearly one but exactly one, with the argument that settles it. You apply the same order of operations you have used everywhere else, and discover that a fraction bar is a bracket in disguise. You cancel before multiplying rather than simplifying afterwards, and you find out why turning a fraction upside down to divide is not a trick but the definition of division. Finally you learn to look at a whole calculation before starting it, because the laws of arithmetic let you choose an easier road to the same answer.",
+    "learningPath": "8.1 Fractions and recurring decimals, 8.2 Fractions and the correct order of operations, 8.3 Multiplying fractions, 8.4 Dividing fractions, 8.5 Making calculations easier",
+    "reviewStatus": "Authored 2026-09-26 from the Stage 9 Learner's Book pages 162-189 and Workbook pages 100-113. Not yet curriculum-reviewed."
+  },
+  "cambridge": {
+    "level": "Cambridge Lower Secondary Mathematics",
+    "code": "0862",
+    "stage": 9,
+    "objectives": [
+      {
+        "code": "9Nf.01",
+        "text": "Deduce whether fractions will have recurring or terminating decimal equivalents."
+      },
+      {
+        "code": "9Nf.02",
+        "text": "Estimate, add and subtract proper and improper fractions, and mixed numbers, using the order of operations."
+      },
+      {
+        "code": "9Nf.03",
+        "text": "Estimate, multiply and divide fractions, interpret division as a multiplicative inverse, and cancel common factors before multiplying or dividing."
+      },
+      {
+        "code": "9Nf.04",
+        "text": "Use knowledge of the laws of arithmetic, inverse operations, equivalence and order of operations (brackets and indices) to simplify calculations containing decimals and fractions."
+      }
+    ],
+    "objectiveMapping": {
+      "status": "authored",
+      "reviewed": false,
+      "method": "8.1 -> 9Nf.01, 8.2 -> 9Nf.02, 8.3 AND 8.4 -> 9Nf.03, 8.5 -> 9Nf.04. Two sections share 9Nf.03 because that objective's own text covers both - 'estimate, multiply and divide fractions, interpret division as a multiplicative inverse, and cancel common factors' - and the book splits them only for length. The same shape as 9Ae.02 in unit 2. 9Nf.01 says DEDUCE, so the unit teaches the prime-factor test as well as building up from unit fractions: a learner should be able to answer for 7/40 without dividing. The remaining 9Nf objectives are elsewhere - .05 and .06 in unit 3, .07 and .08 in unit 11. Objective texts are quoted verbatim from cambridge-mathematics-0862.json."
+    }
+  },
+  "provenance": {
+    "contentPackage": null,
+    "framework": "Cambridge Lower Secondary Mathematics 0862 - Stage 9",
+    "sourceArchive": null,
+    "sourceDocuments": [
+      "Cambridge Lower Secondary Maths Learner's Book 9 (2ed, CUP), pages 162-189",
+      "Cambridge Lower Secondary Mathematics Workbook 9, pages 100-113"
+    ],
+    "sourceBlockCount": null,
+    "transformation": "Authored by hand from the Learner's Book and Workbook. Grade 9 has no content package: outputs/math-content/math-content-model.json holds grades 1-8 only.",
+    "reviewStatus": "Not curriculum-reviewed"
+  },
+  "media": {
+    "lectureStatus": "Video pending",
+    "lectureVideo": null,
+    "poster": null
+  },
+  "outcomes": [
+    "Deduce from a fraction's denominator whether its decimal terminates or recurs, without dividing it out.",
+    "Explain why 0.999... and 1 are the same number.",
+    "Estimate the answer to a fraction calculation before working it out.",
+    "Add and subtract proper fractions, improper fractions and mixed numbers, obeying the order of operations.",
+    "Multiply fractions, cancelling common factors before multiplying rather than after.",
+    "Divide by a fraction by multiplying by its reciprocal, and explain why that works.",
+    "Multiply and divide mixed numbers by converting them to improper fractions first.",
+    "Use the laws of arithmetic to rearrange a calculation into an easier one."
+  ],
+  "concepts": [
+    {
+      "id": "concept-1-terminating-or-recurring",
+      "title": "Which Fractions Terminate, and Why",
+      "explanation": "A fraction's decimal either stops or repeats for ever, and you can tell which without dividing. Put the fraction in its lowest terms and look at the prime factors of the denominator. If they are only 2s and 5s, the decimal terminates; if anything else is in there, it recurs. The reason is that our decimals are built on tenths, and 10 = 2 x 5 - so a denominator made only of 2s and 5s can be scaled up to a power of ten, and one containing a 3 or a 7 never can.",
+      "example": "1/4 = 0.25 terminates, because 4 = 2 x 2. 1/5 = 0.2 terminates. 1/8 = 0.125 terminates, because 8 = 2 x 2 x 2. But 1/9 = 0.111... recurs because 9 = 3 x 3, 1/6 = 0.1666... recurs because 6 contains a 3, and 1/7 = 0.142857142857... recurs. Now 7/40: in lowest terms already, and 40 = 2 x 2 x 2 x 5, so it terminates - and it does, at 0.175, deduced before dividing."
+    },
+    {
+      "id": "concept-2-point-nine-recurring",
+      "title": "0.999... Is Not Nearly One. It Is One.",
+      "explanation": "Follow the pattern of the ninths: 1/9 = 0.111..., 2/9 = 0.222..., and so on up to 8/9 = 0.888... . The pattern says 9/9 = 0.999..., and 9/9 is 1. Both are right, because 0.999... and 1 are two ways of writing the same number, not two numbers that are very close. The way to see it is to ask what their difference would be: any number you name as the gap is too big, because 0.999... has more nines than that. A difference smaller than every positive number is zero.",
+      "example": "Here is the standard argument. Let x = 0.999... . Then 10x = 9.999... . Subtracting, 10x - x = 9.999... - 0.999... = 9, so 9x = 9 and x = 1. Another way: 1/3 = 0.333..., and multiplying both sides by 3 gives 1 = 0.999... . Marcus and Zara have not disagreed; they have written one number twice."
+    },
+    {
+      "id": "concept-3-order-of-operations-with-fractions",
+      "title": "Fractions Do Not Get Their Own Order of Operations",
+      "explanation": "The order of operations applies to fractions exactly as it does to whole numbers and to algebra: brackets and indices first, then multiplication and division, then addition and subtraction. A fraction bar is itself a bracket - everything on top is worked out before the division happens - which is the part that catches people. And adding fractions still needs a common denominator, so an addition can take several lines while a multiplication takes one.",
+      "example": "Work out 1/2 + 1/3 x 3/4. Multiplication first: 1/3 x 3/4 = 1/4. Then 1/2 + 1/4 = 2/4 + 1/4 = 3/4. Doing it left to right would give (1/2 + 1/3) x 3/4 = 5/6 x 3/4 = 5/8, which is different and wrong. For (1 + 2)/(5 - 1), the bar is a bracket on both halves: 3/4."
+    },
+    {
+      "id": "concept-4-multiplying-and-cancelling",
+      "title": "Cancel First, Multiply Second",
+      "explanation": "To multiply fractions you multiply the tops and multiply the bottoms - no common denominator is needed, which makes multiplication easier than addition rather than harder. Cancelling any factor common to a top and a bottom BEFORE multiplying keeps the numbers small and usually removes the need to simplify at the end. It is allowed across the multiplication sign, not just within one fraction, because multiplying fractions makes one big fraction anyway.",
+      "example": "2/3 x 3/4: multiplying first gives 6/12, which then has to be simplified to 1/2. Cancelling first, the 3 on top of the second and the 3 underneath the first divide away, leaving 2/1 x 1/4 = 2/4 = 1/2 - and with a further cancel of the 2, straight to 1/2. Same answer, smaller numbers, and no simplifying at the end."
+    },
+    {
+      "id": "concept-5-dividing-by-a-fraction",
+      "title": "Dividing by a Fraction Is Multiplying by Its Reciprocal",
+      "explanation": "To divide by a fraction, turn it upside down and multiply. That is a rule worth understanding rather than remembering, and the reason is that dividing by a number is the same as multiplying by its multiplicative inverse - the thing you multiply it by to get 1. The inverse of 2/5 is 5/2, because 2/5 x 5/2 = 1. So dividing by 2/5 and multiplying by 5/2 are one operation with two names. Note what follows: dividing by a fraction less than 1 makes the answer BIGGER, exactly as in Unit 3.",
+      "example": "3/4 divided by 2/5 = 3/4 x 5/2 = 15/8 = 1 7/8. Check that it is sensible: 2/5 is less than 1, so the answer should exceed 3/4, and 1 7/8 does. Read it as a question - how many two-fifths fit into three-quarters? Nearly two of them."
+    },
+    {
+      "id": "concept-6-making-calculations-easier",
+      "title": "Rearranging a Calculation Into an Easier One",
+      "explanation": "The laws of arithmetic let you reorder and regroup a multiplication or an addition without changing the answer, and a good choice of order can turn an awkward calculation into one you can do in your head. Look for pairs that make whole numbers or tens. This is not a trick: it is the commutative and associative laws being used deliberately, and the same instinct that cancels before multiplying.",
+      "example": "1.5 x 3.5 x 24 looks unpleasant. Reorder it as 1.5 x 24 x 3.5: the first pair is 36, and 36 x 3.5 = 126. Or take 24 x 3.5 = 84 first, then 84 x 1.5 = 126. Same answer, no written working. Similarly 2/3 x 17 x 3/2 becomes 2/3 x 3/2 x 17 = 1 x 17 = 17, because the two fractions are reciprocals."
+    }
+  ],
+  "explorations": [
+    {
+      "id": "explore-1",
+      "outcomeId": "lo01",
+      "difficulty": "Discover",
+      "title": "Which Fractions Terminate, and Why",
+      "context": "A fraction's decimal either stops or repeats for ever, and you can tell which without dividing. Put the fraction in its lowest terms and look at the prime factors of the denominator. If they are only 2s and 5s, the decimal terminates; if anything else is in there, it recurs. The reason is that our decimals are built on tenths, and 10 = 2 x 5 - so a denominator made only of 2s and 5s can be scaled up to a power of ten, and one containing a 3 or a 7 never can.",
+      "prompt": "Write 1/2, 1/3, 1/4, 1/5, 1/6, 1/7, 1/8, 1/9 and 1/10 as decimals. Which terminate? What do their denominators have in common?",
+      "answer": "1/2, 1/4, 1/5, 1/8 and 1/10 terminate; their denominators contain only 2s and 5s.",
+      "modelType": "concept-model-1",
+      "hint": "Factorise each denominator.",
+      "explanation": "1/4 = 0.25 terminates, because 4 = 2 x 2. 1/5 = 0.2 terminates. 1/8 = 0.125 terminates, because 8 = 2 x 2 x 2. But 1/9 = 0.111... recurs because 9 = 3 x 3, 1/6 = 0.1666... recurs because 6 contains a 3, and 1/7 = 0.142857142857... recurs. Now 7/40: in lowest terms already, and 40 = 2 x 2 x 2 x 5, so it terminates - and it does, at 0.175, deduced before dividing."
+    },
+    {
+      "id": "explore-2",
+      "outcomeId": "lo02",
+      "difficulty": "Extension",
+      "title": "0.999... Is Not Nearly One. It Is One.",
+      "context": "Follow the pattern of the ninths: 1/9 = 0.111..., 2/9 = 0.222..., and so on up to 8/9 = 0.888... . The pattern says 9/9 = 0.999..., and 9/9 is 1. Both are right, because 0.999... and 1 are two ways of writing the same number, not two numbers that are very close. The way to see it is to ask what their difference would be: any number you name as the gap is too big, because 0.999... has more nines than that. A difference smaller than every positive number is zero.",
+      "prompt": "Follow the pattern of ninths up to 9/9. What does the pattern say 9/9 is, and what is 9/9 really?",
+      "answer": "The pattern says 0.999..., and 9/9 is 1. Both are right - they are the same number.",
+      "modelType": "concept-model-2",
+      "hint": "What is nine ninths?",
+      "explanation": "Here is the standard argument. Let x = 0.999... . Then 10x = 9.999... . Subtracting, 10x - x = 9.999... - 0.999... = 9, so 9x = 9 and x = 1. Another way: 1/3 = 0.333..., and multiplying both sides by 3 gives 1 = 0.999... . Marcus and Zara have not disagreed; they have written one number twice."
+    },
+    {
+      "id": "explore-3",
+      "outcomeId": "lo04",
+      "difficulty": "Core",
+      "title": "Fractions Do Not Get Their Own Order of Operations",
+      "context": "The order of operations applies to fractions exactly as it does to whole numbers and to algebra: brackets and indices first, then multiplication and division, then addition and subtraction. A fraction bar is itself a bracket - everything on top is worked out before the division happens - which is the part that catches people. And adding fractions still needs a common denominator, so an addition can take several lines while a multiplication takes one.",
+      "prompt": "Work out 1/2 + 1/3 x 3/4 two ways: obeying the order of operations, and left to right. Which is right?",
+      "answer": "3/4 is right. Left to right gives 5/8, because it adds before multiplying.",
+      "modelType": "concept-model-3",
+      "hint": "Which operation does the order put first?",
+      "explanation": "Work out 1/2 + 1/3 x 3/4. Multiplication first: 1/3 x 3/4 = 1/4. Then 1/2 + 1/4 = 2/4 + 1/4 = 3/4. Doing it left to right would give (1/2 + 1/3) x 3/4 = 5/6 x 3/4 = 5/8, which is different and wrong. For (1 + 2)/(5 - 1), the bar is a bracket on both halves: 3/4."
+    },
+    {
+      "id": "explore-4",
+      "outcomeId": "lo05",
+      "difficulty": "Core",
+      "title": "Cancel First, Multiply Second",
+      "context": "To multiply fractions you multiply the tops and multiply the bottoms - no common denominator is needed, which makes multiplication easier than addition rather than harder. Cancelling any factor common to a top and a bottom BEFORE multiplying keeps the numbers small and usually removes the need to simplify at the end. It is allowed across the multiplication sign, not just within one fraction, because multiplying fractions makes one big fraction anyway.",
+      "prompt": "Work out 2/3 x 3/4 by multiplying first and by cancelling first. Which needed a final simplification?",
+      "answer": "Multiplying first gave 6/12 and needed simplifying; cancelling first gave 1/2 straight away.",
+      "modelType": "concept-model-4",
+      "hint": "Count the steps in each route.",
+      "explanation": "2/3 x 3/4: multiplying first gives 6/12, which then has to be simplified to 1/2. Cancelling first, the 3 on top of the second and the 3 underneath the first divide away, leaving 2/1 x 1/4 = 2/4 = 1/2 - and with a further cancel of the 2, straight to 1/2. Same answer, smaller numbers, and no simplifying at the end."
+    },
+    {
+      "id": "explore-5",
+      "outcomeId": "lo06",
+      "difficulty": "Core",
+      "title": "Dividing by a Fraction Is Multiplying by Its Reciprocal",
+      "context": "To divide by a fraction, turn it upside down and multiply. That is a rule worth understanding rather than remembering, and the reason is that dividing by a number is the same as multiplying by its multiplicative inverse - the thing you multiply it by to get 1. The inverse of 2/5 is 5/2, because 2/5 x 5/2 = 1. So dividing by 2/5 and multiplying by 5/2 are one operation with two names. Note what follows: dividing by a fraction less than 1 makes the answer BIGGER, exactly as in Unit 3.",
+      "prompt": "Work out 3/4 divided by 2/5. Is the answer bigger or smaller than 3/4, and why should it be?",
+      "answer": "1 7/8, which is bigger - dividing by a number less than 1 always increases it.",
+      "modelType": "concept-model-5",
+      "hint": "How many two-fifths fit into three-quarters?",
+      "explanation": "3/4 divided by 2/5 = 3/4 x 5/2 = 15/8 = 1 7/8. Check that it is sensible: 2/5 is less than 1, so the answer should exceed 3/4, and 1 7/8 does. Read it as a question - how many two-fifths fit into three-quarters? Nearly two of them."
+    },
+    {
+      "id": "explore-6",
+      "outcomeId": "lo08",
+      "difficulty": "Extension",
+      "title": "Rearranging a Calculation Into an Easier One",
+      "context": "The laws of arithmetic let you reorder and regroup a multiplication or an addition without changing the answer, and a good choice of order can turn an awkward calculation into one you can do in your head. Look for pairs that make whole numbers or tens. This is not a trick: it is the commutative and associative laws being used deliberately, and the same instinct that cancels before multiplying.",
+      "prompt": "Work out 1.5 x 3.5 x 24 by three different pairings. Do they agree, and which was easiest?",
+      "answer": "All give 126. The easiest pairs 1.5 with 24 to make 36, which can be done mentally.",
+      "modelType": "concept-model-6",
+      "hint": "Which two numbers make something round?",
+      "explanation": "1.5 x 3.5 x 24 looks unpleasant. Reorder it as 1.5 x 24 x 3.5: the first pair is 36, and 36 x 3.5 = 126. Or take 24 x 3.5 = 84 first, then 84 x 1.5 = 126. Same answer, no written working. Similarly 2/3 x 17 x 3/2 becomes 2/3 x 3/2 x 17 = 1 x 17 = 17, because the two fractions are reciprocals."
+    }
+  ],
+  "visualModels": [
+    {
+      "id": "model-1",
+      "outcomeId": "lo01",
+      "title": "Which Fractions Terminate, and Why",
+      "modelType": "concept-model-1",
+      "purpose": "A fraction's decimal either stops or repeats for ever, and you can tell which without dividing. Put the fraction in its lowest terms and look at the prime factors of the denominator. If they are only 2s and 5s, the decimal terminates; if anything else is in there, it recurs. The reason is that our decimals are built on tenths, and 10 = 2 x 5 - so a denominator made only of 2s and 5s can be scaled up to a power of ten, and one containing a 3 or a 7 never can.",
+      "defaultNumber": 40
+    },
+    {
+      "id": "model-2",
+      "outcomeId": "lo02",
+      "title": "0.999... Is Not Nearly One. It Is One.",
+      "modelType": "concept-model-2",
+      "purpose": "Follow the pattern of the ninths: 1/9 = 0.111..., 2/9 = 0.222..., and so on up to 8/9 = 0.888... . The pattern says 9/9 = 0.999..., and 9/9 is 1. Both are right, because 0.999... and 1 are two ways of writing the same number, not two numbers that are very close. The way to see it is to ask what their difference would be: any number you name as the gap is too big, because 0.999... has more nines than that. A difference smaller than every positive number is zero.",
+      "defaultNumber": 9
+    },
+    {
+      "id": "model-3",
+      "outcomeId": "lo04",
+      "title": "Fractions Do Not Get Their Own Order of Operations",
+      "modelType": "concept-model-3",
+      "purpose": "The order of operations applies to fractions exactly as it does to whole numbers and to algebra: brackets and indices first, then multiplication and division, then addition and subtraction. A fraction bar is itself a bracket - everything on top is worked out before the division happens - which is the part that catches people. And adding fractions still needs a common denominator, so an addition can take several lines while a multiplication takes one.",
+      "defaultNumber": 4
+    },
+    {
+      "id": "model-4",
+      "outcomeId": "lo05",
+      "title": "Cancel First, Multiply Second",
+      "modelType": "concept-model-4",
+      "purpose": "To multiply fractions you multiply the tops and multiply the bottoms - no common denominator is needed, which makes multiplication easier than addition rather than harder. Cancelling any factor common to a top and a bottom BEFORE multiplying keeps the numbers small and usually removes the need to simplify at the end. It is allowed across the multiplication sign, not just within one fraction, because multiplying fractions makes one big fraction anyway.",
+      "defaultNumber": 2
+    },
+    {
+      "id": "model-5",
+      "outcomeId": "lo06",
+      "title": "Dividing by a Fraction Is Multiplying by Its Reciprocal",
+      "modelType": "concept-model-5",
+      "purpose": "To divide by a fraction, turn it upside down and multiply. That is a rule worth understanding rather than remembering, and the reason is that dividing by a number is the same as multiplying by its multiplicative inverse - the thing you multiply it by to get 1. The inverse of 2/5 is 5/2, because 2/5 x 5/2 = 1. So dividing by 2/5 and multiplying by 5/2 are one operation with two names. Note what follows: dividing by a fraction less than 1 makes the answer BIGGER, exactly as in Unit 3.",
+      "defaultNumber": 5
+    },
+    {
+      "id": "model-6",
+      "outcomeId": "lo08",
+      "title": "Rearranging a Calculation Into an Easier One",
+      "modelType": "concept-model-6",
+      "purpose": "The laws of arithmetic let you reorder and regroup a multiplication or an addition without changing the answer, and a good choice of order can turn an awkward calculation into one you can do in your head. Look for pairs that make whole numbers or tens. This is not a trick: it is the commutative and associative laws being used deliberately, and the same instinct that cancels before multiplying.",
+      "defaultNumber": 24
+    }
+  ],
+  "methods": [
+    {
+      "id": "method-1",
+      "outcomeId": "lo01",
+      "difficulty": "Core",
+      "title": "How to deduce terminating or recurring",
+      "example": "Does 7/40 terminate? Does 5/12?",
+      "steps": [
+        "Put the fraction in its lowest terms - 7/40 and 5/12 already are.",
+        "Find the prime factors of the DENOMINATOR: 40 = 2 x 2 x 2 x 5; 12 = 2 x 2 x 3.",
+        "Check whether they are only 2s and 5s.",
+        "40 passes, so 7/40 terminates. 12 contains a 3, so 5/12 recurs.",
+        "Only now divide, to confirm: 7/40 = 0.175 and 5/12 = 0.41666..."
+      ]
+    },
+    {
+      "id": "method-2",
+      "outcomeId": "lo04",
+      "difficulty": "Core",
+      "title": "How to add mixed numbers",
+      "example": "Work out 2 1/2 + 1 2/3.",
+      "steps": [
+        "Deal with the whole numbers and the fractions, or convert to improper fractions - either works.",
+        "Converting: 5/2 + 5/3.",
+        "Find a common denominator: 15/6 + 10/6.",
+        "Add the numerators: 25/6.",
+        "Convert back if asked: 4 1/6. Estimate first - about 2.5 + 1.7 = 4.2 - so 4 1/6 is sensible."
+      ]
+    },
+    {
+      "id": "method-3",
+      "outcomeId": "lo05",
+      "difficulty": "Core",
+      "title": "How to multiply fractions",
+      "example": "Work out 2/3 x 3/4.",
+      "steps": [
+        "Look for factors common to any top and any bottom, across the multiplication sign.",
+        "The 3 on top of the second cancels with the 3 under the first.",
+        "The 2 on top of the first cancels with the 4 underneath the second, leaving 1 and 2.",
+        "Multiply what is left: 1 x 1 on top, 1 x 2 underneath, giving 1/2.",
+        "No simplifying is needed at the end, because the cancelling was done first."
+      ]
+    },
+    {
+      "id": "method-4",
+      "outcomeId": "lo06",
+      "difficulty": "Core",
+      "title": "How to divide by a fraction",
+      "example": "Work out 3/4 divided by 2/5.",
+      "steps": [
+        "Write down the reciprocal of the number you are dividing BY: the reciprocal of 2/5 is 5/2.",
+        "Change the division to a multiplication by that reciprocal: 3/4 x 5/2.",
+        "Cancel if you can, then multiply: 15/8.",
+        "Convert to a mixed number if asked: 1 7/8.",
+        "Sanity-check the direction: 2/5 is less than 1, so the answer must be bigger than 3/4."
+      ]
+    },
+    {
+      "id": "method-5",
+      "outcomeId": "lo07",
+      "difficulty": "Core",
+      "title": "How to multiply mixed numbers",
+      "example": "Work out 2 1/2 x 1 1/3.",
+      "steps": [
+        "Convert each mixed number to an improper fraction: 5/2 and 4/3.",
+        "Never multiply the whole parts and the fractions separately - that is not how it works.",
+        "Cancel: the 4 and the 2 share a factor of 2, leaving 5/1 x 2/3.",
+        "Multiply: 10/3.",
+        "Convert back: 3 1/3. Estimate to check: 2.5 x 1.33 is about 3.3."
+      ]
+    },
+    {
+      "id": "method-6",
+      "outcomeId": "lo08",
+      "difficulty": "Core",
+      "title": "How to make a calculation easier",
+      "example": "Work out 1.5 x 3.5 x 24 mentally.",
+      "steps": [
+        "Look at all the numbers before doing anything.",
+        "Find a pair that multiplies to something easy: 1.5 x 24 = 36.",
+        "Reorder the calculation to do that pair first - the commutative law allows it.",
+        "Finish: 36 x 3.5 = 126.",
+        "Check by a different pairing: 24 x 3.5 = 84, and 84 x 1.5 = 126."
+      ]
+    }
+  ],
+  "workedExamples": [
+    {
+      "id": "we01",
+      "outcomeId": "lo01",
+      "difficulty": "Core",
+      "twm": "classifying",
+      "title": "Sorting fractions by their decimals",
+      "prompt": "Without dividing, decide whether 1/4, 1/5, 1/8, 1/9, 1/6 and 1/7 give terminating or recurring decimals.",
+      "solution": "Look at the prime factors of each denominator. 4 = 2x2, 5 = 5, and 8 = 2x2x2 contain only 2s and 5s, so those three terminate: 0.25, 0.2 and 0.125. But 9 = 3x3, 6 = 2x3 and 7 = 7 all contain something else, so those recur: 0.111..., 0.1666... and 0.142857... . The test never required a division."
+    },
+    {
+      "id": "we02",
+      "outcomeId": "lo01",
+      "difficulty": "Core",
+      "twm": "generalising",
+      "title": "Why 2s and 5s are the special ones",
+      "prompt": "Why is it 2s and 5s that make a decimal terminate, rather than any other primes?",
+      "solution": "A terminating decimal is a fraction whose denominator is a power of ten - 0.175 is 175/1000. So a fraction terminates exactly when it can be rewritten with a power of ten underneath. Since 10 = 2 x 5, a power of ten has only 2s and 5s in its prime factors, and multiplying top and bottom can only add factors, never remove them. A denominator containing a 3 can therefore never be turned into a power of ten, so such a fraction can never terminate."
+    },
+    {
+      "id": "we03",
+      "outcomeId": "lo01",
+      "difficulty": "Extension",
+      "twm": "specialising",
+      "title": "Deducing before dividing",
+      "prompt": "Decide whether 7/40, 5/12, 9/20 and 3/14 terminate, then check one of each.",
+      "solution": "40 = 2x2x2x5, only 2s and 5s, so 7/40 terminates. 12 = 2x2x3 contains a 3, so 5/12 recurs. 20 = 2x2x5, so 9/20 terminates. 14 = 2x7 contains a 7, so 3/14 recurs. Checking: 7/40 = 0.175 exactly, and 5/12 = 0.41666... with the 6 repeating. Both deductions hold."
+    },
+    {
+      "id": "we04",
+      "outcomeId": "lo02",
+      "difficulty": "Extension",
+      "twm": "convincing",
+      "title": "Marcus and Zara have not disagreed",
+      "prompt": "Marcus follows the pattern of ninths and says 9/9 = 0.999... . Zara says 9/9 = 1. Who is right?",
+      "solution": "Both, because 0.999... and 1 are the same number written two ways. Here is the argument: let x = 0.999..., so 10x = 9.999... . Subtract: 10x - x = 9, so 9x = 9 and x = 1. A second route: 1/3 = 0.333..., and multiplying both sides by 3 gives 1 = 0.999... . The instinct that there must be a tiny gap fails because any gap you name is already too large - 0.999... has more nines than that - and a positive number smaller than every positive number does not exist."
+    },
+    {
+      "id": "we05",
+      "outcomeId": "lo03",
+      "difficulty": "Core",
+      "twm": "specialising",
+      "title": "Estimating a fraction calculation",
+      "prompt": "Estimate 2 1/2 + 1 2/3 and 2 1/2 x 1 1/3 before working them out.",
+      "solution": "For the addition, 2 1/2 is 2.5 and 1 2/3 is about 1.7, so expect about 4.2. For the multiplication, 2.5 x 1.33 is about 3.3. Exactly: 5/2 + 5/3 = 15/6 + 10/6 = 25/6 = 4 1/6, and 5/2 x 4/3 = 10/3 = 3 1/3. Both are close to their estimates, which is what makes the answers trustworthy - and an estimate would immediately catch multiplying the whole parts separately, which gives 2 x 1 = 2 and a fraction."
+    },
+    {
+      "id": "we06",
+      "outcomeId": "lo04",
+      "difficulty": "Core",
+      "twm": "characterising",
+      "title": "Adding mixed numbers",
+      "prompt": "Work out 2 1/2 + 1 2/3.",
+      "solution": "Convert to improper fractions: 5/2 + 5/3. The common denominator is 6, so 15/6 + 10/6 = 25/6, which is 4 1/6. Unlike multiplication, addition needs the common denominator - which is why adding fractions takes more lines than multiplying them."
+    },
+    {
+      "id": "we07",
+      "outcomeId": "lo04",
+      "difficulty": "Core",
+      "twm": "critiquing",
+      "title": "The order of operations with fractions",
+      "prompt": "Work out 1/2 + 1/3 x 3/4. What answer does working left to right give, and why is it wrong?",
+      "solution": "Multiplication comes first: 1/3 x 3/4 = 1/4 after cancelling. Then 1/2 + 1/4 = 2/4 + 1/4 = 3/4. Left to right would give (1/2 + 1/3) x 3/4 = 5/6 x 3/4 = 15/24 = 5/8, which is a different number. Fractions do not have their own order of operations - it is the same order as for whole numbers and for algebra in Unit 2."
+    },
+    {
+      "id": "we08",
+      "outcomeId": "lo04",
+      "difficulty": "Core",
+      "twm": "characterising",
+      "title": "The fraction bar is a bracket",
+      "prompt": "Work out (1 + 2)/(5 - 1) and explain what the bar is doing.",
+      "solution": "The bar groups everything above it and everything below it, so both are worked out before the division: 3/4. Written on one line it would need brackets, (1 + 2) divided by (5 - 1), and leaving them out would give 1 + 2/5 - 1, which is 0.4 rather than 0.75. The bar is invisible bracketing, which is exactly why it is easy to lose when rewriting a fraction on one line."
+    },
+    {
+      "id": "we09",
+      "outcomeId": "lo05",
+      "difficulty": "Core",
+      "twm": "improving",
+      "title": "Cancelling first is less work",
+      "prompt": "Work out 2/3 x 3/4 two ways: multiplying then simplifying, and cancelling then multiplying.",
+      "solution": "Multiplying first: 2 x 3 = 6 on top, 3 x 4 = 12 underneath, giving 6/12, which then simplifies to 1/2 - and spotting that 6/12 simplifies is an extra step that can be missed. Cancelling first: the 3s cancel and the 2 cancels into the 4, leaving 1/1 x 1/2 = 1/2 immediately. The answers agree; the second route keeps the numbers small and needs no final simplification."
+    },
+    {
+      "id": "we10",
+      "outcomeId": "lo06",
+      "difficulty": "Core",
+      "twm": "convincing",
+      "title": "Why turning it upside down works",
+      "prompt": "Work out 3/4 divided by 2/5, and explain why multiplying by the reciprocal is the same as dividing.",
+      "solution": "3/4 divided by 2/5 = 3/4 x 5/2 = 15/8 = 1 7/8. It works because dividing by a number means multiplying by its multiplicative inverse - the number that multiplies it to give 1 - and the inverse of 2/5 is 5/2, since 2/5 x 5/2 = 10/10 = 1. So the two operations are one operation with two names. Check the direction: 2/5 is less than 1, so the answer must exceed 3/4, and 1 7/8 does."
+    },
+    {
+      "id": "we11",
+      "outcomeId": "lo07",
+      "difficulty": "Core",
+      "twm": "critiquing",
+      "title": "Mixed numbers must be converted first",
+      "prompt": "Work out 2 1/2 x 1 1/3. Someone multiplies the whole parts and the fractions separately and gets 2 1/6. Why is that wrong?",
+      "solution": "Convert first: 5/2 x 4/3. Cancel the 2 into the 4, leaving 5/1 x 2/3 = 10/3 = 3 1/3. The separate-parts method gives 2 x 1 = 2 and 1/2 x 1/3 = 1/6, so 2 1/6 - but it has left out two whole products, 2 x 1/3 and 1 x 1/2, exactly as expanding two brackets in Unit 2 needs all four products. An estimate catches it at once: 2.5 x 1.33 is about 3.3, not 2.2."
+    },
+    {
+      "id": "we12",
+      "outcomeId": "lo06",
+      "difficulty": "Extension",
+      "twm": "specialising",
+      "title": "Dividing mixed numbers",
+      "prompt": "Work out 3 1/3 divided by 1 1/4.",
+      "solution": "Convert both: 10/3 divided by 5/4. Multiply by the reciprocal: 10/3 x 4/5. Cancel the 5 into the 10, leaving 2/3 x 4/1 = 8/3 = 2 2/3. Estimating, 3.33 divided by 1.25 is about 2.7, which agrees."
+    },
+    {
+      "id": "we13",
+      "outcomeId": "lo08",
+      "difficulty": "Core",
+      "twm": "improving",
+      "title": "Choosing an easier order",
+      "prompt": "Work out 1.5 x 3.5 x 24 mentally, then check with a different pairing.",
+      "solution": "Look for a pair that gives something easy. 1.5 x 24 = 36, and 36 x 3.5 = 126. Checking with another pairing: 24 x 3.5 = 84, and 84 x 1.5 = 126. The commutative and associative laws guarantee that any order gives the same answer, so choosing the order is free and can remove all the written working."
+    },
+    {
+      "id": "we14",
+      "outcomeId": "lo08",
+      "difficulty": "Extension",
+      "twm": "generalising",
+      "title": "Spotting reciprocals in a product",
+      "prompt": "Work out 2/3 x 17 x 3/2 without multiplying 2/3 by 17.",
+      "solution": "The first and last numbers are reciprocals: 2/3 x 3/2 = 1. Reordering to put them together gives 1 x 17 = 17. Multiplying left to right would mean 34/3 x 3/2, which reaches the same 17 by a longer road. Looking at all the numbers before starting is what makes the short route visible."
+    }
+  ],
+  "practice": [
+    {
+      "id": "p01",
+      "level": "Warm-up",
+      "prompt": "Does 1/8 terminate or recur?",
+      "answer": "Terminates (0.125), because 8 = 2x2x2",
+      "hint": "Factorise the denominator."
+    },
+    {
+      "id": "p02",
+      "level": "Warm-up",
+      "prompt": "Does 1/6 terminate or recur?",
+      "answer": "Recurs (0.1666...), because 6 contains a 3",
+      "hint": "Factorise the denominator."
+    },
+    {
+      "id": "p03",
+      "level": "Warm-up",
+      "prompt": "Work out 2/3 x 3/4.",
+      "answer": "1/2",
+      "hint": "Cancel first."
+    },
+    {
+      "id": "p04",
+      "level": "Core",
+      "prompt": "Does 7/40 terminate? Deduce it before dividing.",
+      "answer": "Yes - 40 = 2x2x2x5, only 2s and 5s. It is 0.175.",
+      "hint": "Prime factors only."
+    },
+    {
+      "id": "p05",
+      "level": "Core",
+      "prompt": "Work out 2 1/2 + 1 2/3.",
+      "answer": "4 1/6",
+      "hint": "Common denominator 6."
+    },
+    {
+      "id": "p06",
+      "level": "Core",
+      "prompt": "Work out 1/2 + 1/3 x 3/4.",
+      "answer": "3/4",
+      "hint": "Multiplication before addition."
+    },
+    {
+      "id": "p07",
+      "level": "Core",
+      "prompt": "Work out 3/4 divided by 2/5.",
+      "answer": "15/8, or 1 7/8",
+      "hint": "Multiply by the reciprocal."
+    },
+    {
+      "id": "p08",
+      "level": "Core",
+      "prompt": "Work out 2 1/2 x 1 1/3.",
+      "answer": "10/3, or 3 1/3",
+      "hint": "Convert to improper fractions first."
+    },
+    {
+      "id": "p09",
+      "level": "Core",
+      "prompt": "Work out 1.5 x 3.5 x 24 mentally.",
+      "answer": "126",
+      "hint": "1.5 x 24 first."
+    },
+    {
+      "id": "p10",
+      "level": "Challenge",
+      "prompt": "Work out 3 1/3 divided by 1 1/4, and estimate first.",
+      "answer": "Estimate 3.33 / 1.25 is about 2.7. Exactly 10/3 x 4/5 = 8/3 = 2 2/3.",
+      "hint": "Convert, then use the reciprocal."
+    },
+    {
+      "id": "p11",
+      "level": "Challenge",
+      "prompt": "Explain why 0.999... equals 1.",
+      "answer": "Let x = 0.999..., so 10x = 9.999... . Subtracting gives 9x = 9, so x = 1. Equivalently, 1/3 = 0.333... and multiplying both sides by 3 gives 1 = 0.999... . Any gap you name is too big, and a positive number smaller than every positive number does not exist.",
+      "hint": "Multiply by 10 and subtract."
+    },
+    {
+      "id": "p12",
+      "level": "Challenge",
+      "prompt": "Work out 2/3 x 17 x 3/2 in one step, and say which law lets you.",
+      "answer": "The 2/3 and 3/2 are reciprocals and multiply to 1, so the answer is 17. The commutative law lets you reorder the product, and the associative law lets you group the two fractions together.",
+      "hint": "Look at all three numbers before starting."
+    }
+  ],
+  "activities": [
+    {
+      "title": "The terminating test",
+      "materials": "calculator, paper.",
+      "steps": [
+        "List the unit fractions from 1/2 to 1/20.",
+        "For each, factorise the denominator and PREDICT terminating or recurring before dividing.",
+        "Now divide each one out and record which you got wrong.",
+        "You should have got none wrong - if you did, check whether the fraction was in its lowest terms.",
+        "Write the rule in your own words."
+      ]
+    },
+    {
+      "title": "Ninths and the missing gap",
+      "materials": "paper.",
+      "steps": [
+        "Write out the ninths from 1/9 to 8/9 as decimals.",
+        "Continue the pattern to 9/9 and write what the pattern gives.",
+        "Now write what 9/9 actually is.",
+        "Try to name a number between 0.999... and 1. What happens each time?",
+        "Write the subtraction argument out in full: x = 0.999..., 10x = 9.999..., and so on."
+      ]
+    },
+    {
+      "title": "Cancel or simplify",
+      "materials": "paper, a timer.",
+      "steps": [
+        "Write eight fraction multiplications with cancellable factors.",
+        "Do all eight by multiplying first and simplifying afterwards, timing yourself.",
+        "Do all eight again by cancelling first.",
+        "Compare the times and the size of the numbers you handled.",
+        "Note any where you failed to spot that the final answer could be simplified."
+      ]
+    },
+    {
+      "title": "How many fit?",
+      "materials": "paper strips, scissors.",
+      "steps": [
+        "Cut a strip and mark three quarters of it.",
+        "Cut separate pieces two fifths of the strip long.",
+        "Lay them along the three quarters and count how many fit.",
+        "Compare with 3/4 divided by 2/5 = 1 7/8.",
+        "Write one sentence on why the answer is more than one."
+      ]
+    },
+    {
+      "title": "Estimate, then check",
+      "materials": "paper.",
+      "steps": [
+        "Write six calculations mixing addition and multiplication of mixed numbers.",
+        "Estimate each by converting to decimals in your head, and write the estimate first.",
+        "Work each out exactly.",
+        "Deliberately do one by multiplying the whole parts separately, and see how far the estimate is from it.",
+        "Write what that shows about estimating."
+      ]
+    },
+    {
+      "title": "Find the easy order",
+      "materials": "cards.",
+      "steps": [
+        "Write ten three-number products, each with one pair that makes something round.",
+        "Swap with a partner and race to find the easy pairing in each.",
+        "Work out two of them by every possible order to confirm the answers agree.",
+        "Name the two laws of arithmetic that make the reordering legal."
+      ]
+    }
+  ],
+  "reference": {
+    "rules": [
+      {
+        "title": "The Terminating Test",
+        "text": "In lowest terms, a fraction terminates exactly when its denominator's prime factors are only 2s and 5s, because 10 = 2 x 5."
+      },
+      {
+        "title": "0.999... Equals 1",
+        "text": "They are the same number. If x = 0.999... then 10x - x = 9, so x = 1."
+      },
+      {
+        "title": "One Order of Operations",
+        "text": "Brackets and indices, then multiplication and division, then addition and subtraction - for fractions exactly as for anything else. A fraction bar is a bracket."
+      },
+      {
+        "title": "Cancel Before Multiplying",
+        "text": "Divide out any factor common to a top and a bottom, across the multiplication sign, before multiplying."
+      },
+      {
+        "title": "Divide by Multiplying the Reciprocal",
+        "text": "Dividing by a number is multiplying by its multiplicative inverse. The inverse of a/b is b/a."
+      },
+      {
+        "title": "Convert Mixed Numbers First",
+        "text": "Turn mixed numbers into improper fractions before multiplying or dividing. Never multiply the parts separately."
+      }
+    ],
+    "terms": [
+      [
+        "Terminating decimal",
+        "A decimal that stops"
+      ],
+      [
+        "Recurring decimal",
+        "A decimal with a digit or block of digits repeating for ever"
+      ],
+      [
+        "Proper fraction",
+        "A fraction whose numerator is less than its denominator"
+      ],
+      [
+        "Improper fraction",
+        "A fraction whose numerator is at least its denominator"
+      ],
+      [
+        "Mixed number",
+        "A whole number and a proper fraction written together"
+      ],
+      [
+        "Reciprocal",
+        "The result of turning a fraction upside down"
+      ],
+      [
+        "Multiplicative inverse",
+        "The number that multiplies a given number to give 1"
+      ],
+      [
+        "Commutative law",
+        "The rule that the order of a product or a sum does not change it"
+      ]
+    ],
+    "commonMistakes": [
+      [
+        "Dividing out a fraction to see whether it recurs",
+        "Factorise the denominator instead - 2s and 5s terminate"
+      ],
+      [
+        "Thinking 0.999... is less than 1",
+        "There is no gap; they are the same number"
+      ],
+      [
+        "Adding fractions by adding tops and bottoms",
+        "A common denominator is needed first; only multiplication works termwise"
+      ],
+      [
+        "Multiplying mixed numbers part by part",
+        "Convert to improper fractions - two products would be left out"
+      ],
+      [
+        "Working a fraction expression left to right",
+        "The order of operations applies to fractions too"
+      ]
+    ]
+  },
+  "fluency": [
+    {
+      "id": "fl01",
+      "outcomeId": "lo01",
+      "difficulty": "Round 1",
+      "prompt": "Does 1/4 terminate or recur?",
+      "answer": "Terminates",
+      "hint": "4 = 2x2.",
+      "errorFeedback": "Only 2s and 5s, so it terminates: 0.25."
+    },
+    {
+      "id": "fl02",
+      "outcomeId": "lo01",
+      "difficulty": "Round 1",
+      "prompt": "Does 1/9 terminate or recur?",
+      "answer": "Recurs",
+      "hint": "9 = 3x3.",
+      "errorFeedback": "A 3 in the denominator means it recurs."
+    },
+    {
+      "id": "fl03",
+      "outcomeId": "lo05",
+      "difficulty": "Round 1",
+      "prompt": "Work out 2/3 x 3/4.",
+      "answer": "1/2",
+      "hint": "Cancel the 3s.",
+      "errorFeedback": "6/12 simplifies to 1/2."
+    },
+    {
+      "id": "fl04",
+      "outcomeId": "lo01",
+      "difficulty": "Round 1",
+      "prompt": "Write 1/5 as a decimal.",
+      "answer": "0.2",
+      "hint": "It terminates.",
+      "errorFeedback": "1/5 = 0.2."
+    },
+    {
+      "id": "fl05",
+      "outcomeId": "lo01",
+      "difficulty": "Round 2",
+      "prompt": "Does 7/40 terminate?",
+      "answer": "Yes",
+      "hint": "40 = 2x2x2x5.",
+      "errorFeedback": "Only 2s and 5s, so yes: 0.175."
+    },
+    {
+      "id": "fl06",
+      "outcomeId": "lo04",
+      "difficulty": "Round 2",
+      "prompt": "Work out 2 1/2 + 1 2/3.",
+      "answer": "4 1/6",
+      "hint": "Denominator 6.",
+      "errorFeedback": "15/6 + 10/6 = 25/6."
+    },
+    {
+      "id": "fl07",
+      "outcomeId": "lo06",
+      "difficulty": "Round 2",
+      "prompt": "Work out 3/4 divided by 2/5.",
+      "answer": "1 7/8",
+      "hint": "Turn it upside down.",
+      "errorFeedback": "3/4 x 5/2 = 15/8."
+    },
+    {
+      "id": "fl08",
+      "outcomeId": "lo04",
+      "difficulty": "Round 2",
+      "prompt": "Work out 1/2 + 1/3 x 3/4.",
+      "answer": "3/4",
+      "hint": "Multiply first.",
+      "errorFeedback": "1/4 then 1/2 + 1/4."
+    },
+    {
+      "id": "fl09",
+      "outcomeId": "lo07",
+      "difficulty": "Round 3",
+      "prompt": "Work out 2 1/2 x 1 1/3.",
+      "answer": "3 1/3",
+      "hint": "Convert first.",
+      "errorFeedback": "5/2 x 4/3 = 10/3."
+    },
+    {
+      "id": "fl10",
+      "outcomeId": "lo06",
+      "difficulty": "Round 3",
+      "prompt": "Work out 3 1/3 divided by 1 1/4.",
+      "answer": "2 2/3",
+      "hint": "10/3 x 4/5.",
+      "errorFeedback": "8/3 = 2 2/3."
+    },
+    {
+      "id": "fl11",
+      "outcomeId": "lo08",
+      "difficulty": "Round 3",
+      "prompt": "Work out 1.5 x 3.5 x 24.",
+      "answer": "126",
+      "hint": "Reorder it.",
+      "errorFeedback": "1.5 x 24 = 36, then x 3.5."
+    },
+    {
+      "id": "fl12",
+      "outcomeId": "lo02",
+      "difficulty": "Round 3",
+      "prompt": "What number is 0.999...?",
+      "answer": "1",
+      "hint": "Not nearly 1.",
+      "errorFeedback": "Let x = 0.999...; then 10x - x = 9, so x = 1."
+    }
+  ],
+  "realProblems": [
+    {
+      "id": "rp01",
+      "outcomeId": "lo05",
+      "difficulty": "Core",
+      "context": "Home",
+      "prompt": "A recipe needs 3/4 of a cup of rice and you are making 2/3 of the recipe. How much rice?",
+      "answer": "2/3 x 3/4. Cancelling the 3s gives 2/1 x 1/4 = 2/4 = 1/2 cup.",
+      "hint": "Cancel before multiplying.",
+      "errorFeedback": "6/12 simplifies to 1/2."
+    },
+    {
+      "id": "rp02",
+      "outcomeId": "lo06",
+      "difficulty": "Core",
+      "context": "Market",
+      "prompt": "A trader has 3/4 of a sack of grain and sells it in bags holding 2/5 of a sack each. How many full bags, and how much is left?",
+      "answer": "3/4 divided by 2/5 = 3/4 x 5/2 = 15/8 = 1 7/8. So one full bag, with 7/8 of a bag's worth left - which is 7/8 of 2/5 = 7/20 of a sack.",
+      "hint": "Multiply by the reciprocal.",
+      "errorFeedback": "15/8 is one and seven eighths of a bag."
+    },
+    {
+      "id": "rp03",
+      "outcomeId": "lo04",
+      "difficulty": "Core",
+      "context": "Work",
+      "prompt": "A carpenter uses 2 1/2 metres of timber on one job and 1 2/3 metres on another. How much altogether, and what would you expect before calculating?",
+      "answer": "Estimate about 2.5 + 1.7 = 4.2 m. Exactly, 5/2 + 5/3 = 15/6 + 10/6 = 25/6 = 4 1/6 metres, which agrees with the estimate.",
+      "hint": "Common denominator 6.",
+      "errorFeedback": "25/6 = 4 1/6."
+    },
+    {
+      "id": "rp04",
+      "outcomeId": "lo08",
+      "difficulty": "Core",
+      "context": "Market",
+      "prompt": "A stallholder sells 24 items at $3.50 each and is offering one and a half times the usual quantity. Work out 1.5 x 3.5 x 24 in your head.",
+      "answer": "Pair 1.5 with 24 to get 36, then 36 x 3.5 = 126. So $126. Pairing 24 x 3.5 = 84 first and then x 1.5 gives the same 126.",
+      "hint": "Which pair is easiest?",
+      "errorFeedback": "1.5 x 24 = 36."
+    },
+    {
+      "id": "rp05",
+      "outcomeId": "lo01",
+      "difficulty": "Extension",
+      "context": "Work",
+      "prompt": "A machine can only display decimals that terminate. Which of the measurements 7/40, 5/12, 9/20 and 3/14 of a metre can it show exactly?",
+      "answer": "7/40 and 9/20, because 40 = 2x2x2x5 and 20 = 2x2x5 contain only 2s and 5s - they are 0.175 and 0.45. It cannot show 5/12 or 3/14 exactly, because 12 contains a 3 and 14 contains a 7, so both recur for ever.",
+      "hint": "Factorise each denominator.",
+      "errorFeedback": "Only 2s and 5s terminate."
+    },
+    {
+      "id": "rp06",
+      "outcomeId": "lo07",
+      "difficulty": "Extension",
+      "context": "Home",
+      "prompt": "A tin holds 3 1/3 litres. A jug holds 1 1/4 litres. How many jugfuls fill the tin?",
+      "answer": "10/3 divided by 5/4 = 10/3 x 4/5 = 8/3 = 2 2/3 jugfuls. Estimating, 3.33 divided by 1.25 is about 2.7, which agrees.",
+      "hint": "Convert both, then use the reciprocal.",
+      "errorFeedback": "Cancel the 5 into the 10 before multiplying."
+    }
+  ],
+  "reasoningPrompts": [
+    {
+      "id": "reason01",
+      "outcomeId": "lo01",
+      "difficulty": "Core",
+      "responseMode": "text",
+      "prompt": "Why is it 2s and 5s in a denominator that make a decimal terminate?",
+      "keyIdeas": [
+        "A terminating decimal has a power of ten underneath",
+        "10 = 2 x 5",
+        "Multiplying cannot remove a prime factor"
+      ],
+      "modelAnswer": "A terminating decimal is exactly a fraction with a power of ten as its denominator: 0.175 is 175/1000. So a fraction terminates precisely when it can be rewritten that way. Since 10 = 2 x 5, every power of ten has only 2s and 5s among its prime factors, and multiplying the top and bottom of a fraction can only ADD factors, never remove them. A denominator containing a 3 therefore can never become a power of ten, so the decimal can never stop."
+    },
+    {
+      "id": "reason02",
+      "outcomeId": "lo02",
+      "difficulty": "Extension",
+      "responseMode": "text",
+      "prompt": "Someone insists 0.999... must be just slightly less than 1. What is wrong with that?",
+      "keyIdeas": [
+        "Any named gap is too big",
+        "The subtraction argument",
+        "No positive number is smaller than every positive number"
+      ],
+      "modelAnswer": "Ask them how big the gap is. Whatever they name - a thousandth, a millionth - 0.999... has more nines than that, so the real gap is smaller. A positive number smaller than every positive number does not exist, so the gap must be zero and the two are the same number. The subtraction argument makes it concrete: if x = 0.999... then 10x = 9.999..., and subtracting gives 9x = 9, so x = 1. The instinct comes from treating 0.999... as a process that never finishes rather than as a number, which is what it is."
+    },
+    {
+      "id": "reason03",
+      "outcomeId": "lo05",
+      "difficulty": "Core",
+      "responseMode": "text",
+      "prompt": "Why is multiplying fractions easier than adding them?",
+      "keyIdeas": [
+        "Multiplication needs no common denominator",
+        "Tops and bottoms multiply directly",
+        "Addition must rewrite both fractions first"
+      ],
+      "modelAnswer": "Multiplying acts on the tops and bottoms separately, so it needs nothing doing to the fractions first: 2/3 x 3/4 is 6/12 in one line. Adding cannot work that way, because a third and a quarter are different-sized pieces and you cannot count them together until they are the same size - so both fractions must be rewritten over a common denominator before anything is added. That is a whole extra stage, which is why addition takes more lines, and it surprises learners who expect multiplication to be the harder operation."
+    },
+    {
+      "id": "reason04",
+      "outcomeId": "lo06",
+      "difficulty": "Core",
+      "responseMode": "text",
+      "prompt": "Why does turning a fraction upside down and multiplying give the right answer for a division?",
+      "keyIdeas": [
+        "Dividing is multiplying by the multiplicative inverse",
+        "The inverse of 2/5 is 5/2 because their product is 1",
+        "One operation, two names"
+      ],
+      "modelAnswer": "Dividing by a number means multiplying by its multiplicative inverse - the thing that multiplies it to give 1. For 2/5 that inverse is 5/2, since 2/5 x 5/2 = 10/10 = 1. So 'divide by 2/5' and 'multiply by 5/2' are not two methods that happen to agree; they are the same operation described two ways. Understanding it this way also explains a fact that otherwise looks strange: dividing by a fraction less than 1 gives a bigger answer, because its reciprocal is greater than 1."
+    },
+    {
+      "id": "reason05",
+      "outcomeId": "lo07",
+      "difficulty": "Core",
+      "responseMode": "text",
+      "prompt": "Why can you not multiply mixed numbers by multiplying the whole parts and the fractions separately?",
+      "keyIdeas": [
+        "Two products are left out",
+        "Same as expanding two brackets",
+        "An estimate exposes it"
+      ],
+      "modelAnswer": "Because a mixed number is a sum, and multiplying two sums needs every term of one times every term of the other - four products, exactly as expanding two brackets in Unit 2. Multiplying 2 1/2 by 1 1/3 as separate parts gives 2 x 1 and 1/2 x 1/3 and leaves out 2 x 1/3 and 1 x 1/2 entirely, which is why it produces 2 1/6 instead of 3 1/3. An estimate catches it immediately: 2.5 x 1.33 is about 3.3, nowhere near 2.2."
+    },
+    {
+      "id": "reason06",
+      "outcomeId": "lo08",
+      "difficulty": "Extension",
+      "responseMode": "text",
+      "prompt": "Which laws of arithmetic let you reorder 1.5 x 3.5 x 24, and why is choosing the order worth the effort?",
+      "keyIdeas": [
+        "Commutative and associative laws",
+        "The answer cannot change",
+        "A good order removes the written working"
+      ],
+      "modelAnswer": "The commutative law says the order of a product does not matter and the associative law says the grouping does not either, so any arrangement of those three numbers gives the same answer. That guarantee is what makes choosing free: you cannot get it wrong by reordering. It is worth the effort because one arrangement, 1.5 x 24 = 36 followed by 36 x 3.5, can be done in your head, while 1.5 x 3.5 first needs written working - so a few seconds spent looking at all the numbers saves more than it costs."
+    }
+  ],
+  "assessment": {
+    "passPercent": 80,
+    "questions": [
+      {
+        "id": "q01",
+        "type": "Application",
+        "outcomeId": "lo01",
+        "difficulty": "Basic",
+        "question": "Which of these gives a recurring decimal?",
+        "options": [
+          "1/8",
+          "1/6",
+          "1/5",
+          "1/20"
+        ],
+        "answer": "1/6",
+        "hint": "Factorise each denominator.",
+        "explanation": "6 = 2 x 3, and the 3 means it recurs; the others contain only 2s and 5s."
+      },
+      {
+        "id": "q02",
+        "type": "Application",
+        "outcomeId": "lo01",
+        "difficulty": "Core",
+        "question": "Does 7/40 terminate?",
+        "options": [
+          "Yes, because 40 = 2x2x2x5",
+          "No, because 40 is even",
+          "No, because 7 is prime",
+          "Only to 3 decimal places"
+        ],
+        "answer": "Yes, because 40 = 2x2x2x5",
+        "hint": "Only 2s and 5s.",
+        "explanation": "The denominator has only 2s and 5s, so it terminates - at 0.175."
+      },
+      {
+        "id": "q03",
+        "type": "Application",
+        "outcomeId": "lo05",
+        "difficulty": "Core",
+        "question": "Work out 2/3 x 3/4.",
+        "options": [
+          "1/2",
+          "6/7",
+          "8/9",
+          "5/7"
+        ],
+        "answer": "1/2",
+        "hint": "Cancel the 3s.",
+        "explanation": "6/12 = 1/2, or cancel first to get there directly."
+      },
+      {
+        "id": "q04",
+        "type": "Application",
+        "outcomeId": "lo04",
+        "difficulty": "Core",
+        "question": "Work out 1/2 + 1/3 x 3/4.",
+        "options": [
+          "3/4",
+          "5/8",
+          "5/6",
+          "7/12"
+        ],
+        "answer": "3/4",
+        "hint": "Multiplication first.",
+        "explanation": "1/3 x 3/4 = 1/4, then 1/2 + 1/4 = 3/4. Left to right would give 5/8."
+      },
+      {
+        "id": "q05",
+        "type": "Application",
+        "outcomeId": "lo06",
+        "difficulty": "Core",
+        "question": "Work out 3/4 divided by 2/5.",
+        "options": [
+          "1 7/8",
+          "3/10",
+          "6/20",
+          "8/15"
+        ],
+        "answer": "1 7/8",
+        "hint": "Multiply by the reciprocal.",
+        "explanation": "3/4 x 5/2 = 15/8 = 1 7/8, bigger than 3/4 as it must be."
+      },
+      {
+        "id": "q06",
+        "type": "Application",
+        "outcomeId": "lo07",
+        "difficulty": "Core",
+        "question": "Work out 2 1/2 x 1 1/3.",
+        "options": [
+          "3 1/3",
+          "2 1/6",
+          "3 1/6",
+          "2 5/6"
+        ],
+        "answer": "3 1/3",
+        "hint": "Convert first.",
+        "explanation": "5/2 x 4/3 = 10/3 = 3 1/3. Multiplying the parts separately gives 2 1/6 and is wrong."
+      },
+      {
+        "id": "q07",
+        "type": "Reasoning",
+        "outcomeId": "lo02",
+        "difficulty": "Extension",
+        "question": "0.999... is:",
+        "options": [
+          "Slightly less than 1",
+          "Equal to 1",
+          "Undefined",
+          "Equal to 0.9"
+        ],
+        "answer": "Equal to 1",
+        "hint": "How big is the gap?",
+        "explanation": "If x = 0.999... then 10x - x = 9, so x = 1. Any gap you name is already too big."
+      },
+      {
+        "id": "q08",
+        "type": "Reasoning",
+        "outcomeId": "lo05",
+        "difficulty": "Extension",
+        "question": "Why is multiplying fractions easier than adding them?",
+        "options": [
+          "The numbers are smaller",
+          "No common denominator is needed",
+          "Multiplication is always easier",
+          "Because of cancelling"
+        ],
+        "answer": "No common denominator is needed",
+        "hint": "What must happen before an addition?",
+        "explanation": "Multiplication acts on tops and bottoms directly; addition must first rewrite both fractions over a common denominator."
+      }
+    ]
+  },
+  "games": {
+    "masteryScore": 3,
+    "games": [
+      {
+        "id": "u8-game-1",
+        "icon": "?",
+        "skill": "Decimals of fractions",
+        "title": "Quick Match: Terminate or Recur",
+        "description": "Four short challenges on deducing the decimal.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "1/8",
+            "choices": [
+              "Terminates",
+              "Recurs",
+              "Neither",
+              "Both"
+            ],
+            "answer": "Terminates",
+            "clue": "8 = 2x2x2."
+          },
+          {
+            "prompt": "1/9",
+            "choices": [
+              "Recurs",
+              "Terminates",
+              "Neither",
+              "Both"
+            ],
+            "answer": "Recurs",
+            "clue": "9 = 3x3."
+          },
+          {
+            "prompt": "7/40",
+            "choices": [
+              "Terminates",
+              "Recurs",
+              "Neither",
+              "Both"
+            ],
+            "answer": "Terminates",
+            "clue": "Only 2s and 5s."
+          },
+          {
+            "prompt": "3/14",
+            "choices": [
+              "Recurs",
+              "Terminates",
+              "Neither",
+              "Both"
+            ],
+            "answer": "Recurs",
+            "clue": "14 contains a 7."
+          }
+        ]
+      },
+      {
+        "id": "u8-game-2",
+        "icon": "?",
+        "skill": "Fraction arithmetic",
+        "title": "Quick Match: Fraction Arithmetic",
+        "description": "Four short challenges on multiplying, dividing and ordering.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "2/3 x 3/4",
+            "choices": [
+              "1/2",
+              "6/7",
+              "5/7",
+              "8/9"
+            ],
+            "answer": "1/2",
+            "clue": "Cancel the 3s."
+          },
+          {
+            "prompt": "3/4 divided by 2/5",
+            "choices": [
+              "1 7/8",
+              "3/10",
+              "8/15",
+              "6/20"
+            ],
+            "answer": "1 7/8",
+            "clue": "Turn it upside down."
+          },
+          {
+            "prompt": "2 1/2 x 1 1/3",
+            "choices": [
+              "3 1/3",
+              "2 1/6",
+              "3 1/6",
+              "2 5/6"
+            ],
+            "answer": "3 1/3",
+            "clue": "Convert first."
+          },
+          {
+            "prompt": "1.5 x 3.5 x 24",
+            "choices": [
+              "126",
+              "84",
+              "36",
+              "120"
+            ],
+            "answer": "126",
+            "clue": "1.5 x 24 = 36."
+          }
+        ]
+      }
+    ]
+  },
+  "selfAssessment": [
+    "I can deduce from a fraction's denominator whether its decimal terminates or recurs, without dividing it out.",
+    "I can explain why 0.999... and 1 are the same number.",
+    "I can estimate the answer to a fraction calculation before working it out.",
+    "I can add and subtract proper fractions, improper fractions and mixed numbers, obeying the order of operations.",
+    "I can multiply fractions, cancelling common factors before multiplying rather than after.",
+    "I can divide by a fraction by multiplying by its reciprocal, and explain why that works.",
+    "I can multiply and divide mixed numbers by converting them to improper fractions first.",
+    "I can use the laws of arithmetic to rearrange a calculation into an easier one."
+  ]
+}

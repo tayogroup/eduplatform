@@ -1,0 +1,524 @@
+// Build Mathematics Grade 9, Unit 1: Number and Calculation.
+//
+// Second Grade 9 unit. Same situation as unit 12: no content model for this
+// grade, so it is authored from the Stage 9 Learner's Book (pages 10-24) and
+// written as a builder so the content reads as prose and the file rebuilds.
+//
+// THE MAPPING NEEDED ONE DECISION AND IT WENT AGAINST THE OBVIOUS GROUPING.
+// The 9Ni and 9Np strands hold six objectives between them and it would be
+// tidy to put all six in the number unit. Five belong here:
+//
+//   1.1 Irrational numbers  -> 9Ni.01 (rational vs irrational), 9Ni.04 (surds)
+//   1.2 Standard form       -> 9Ni.03 (standard form), 9Np.01 (powers of 10)
+//   1.3 Indices             -> 9Ni.02 (positive, negative, zero indices)
+//
+// The sixth, 9Np.02 - "when a number is rounded there are upper and lower
+// limits for the original number" - does NOT. The Workbook puts it at 3.4,
+// "Understanding upper and lower bounds", inside unit 3 Decimals, percentages
+// and rounding, and the Learner's Book agrees. Claiming it here would put a
+// code on a unit that never teaches bounds, which is the failure this repo has
+// a worked example of. It is left for unit 3.
+//
+//   node tools/build-ehel-math-g9-unit1.mjs [--write]
+
+import fs from "node:fs";
+import path from "node:path";
+import url from "node:url";
+
+const HERE = path.dirname(url.fileURLToPath(import.meta.url));
+const OUT = path.resolve(HERE, "..", "src", "prototypes", "ehel-academy",
+  "mathematics", "grade-9", "data", "units", "unit-1.json");
+const WRITE = process.argv.includes("--write");
+
+const FW = path.resolve(HERE, "..", "src", "curriculum", "cambridge-mathematics-0862.json");
+const fw = {};
+(function walk(o) {
+  if (!o || typeof o !== "object") return;
+  if (Array.isArray(o)) return o.forEach(walk);
+  if (typeof o.code === "string" && /^9(Ni|Np)\.\d{2}$/.test(o.code)) fw[o.code] = o.text;
+  Object.values(o).forEach(walk);
+})(JSON.parse(fs.readFileSync(FW, "utf8")));
+
+const OBJ = ["9Ni.01", "9Ni.04", "9Ni.03", "9Np.01", "9Ni.02"];
+for (const c of OBJ) if (!fw[c]) throw new Error("0862 has no " + c);
+
+const outcomes = [
+  "Explain the difference between a rational and an irrational number, and decide which a given number is.",
+  "Recognise that a rational number's decimal either stops or repeats, and that an irrational number's does neither.",
+  "Identify a surd, and explain why the square root of a square number is not one.",
+  "Estimate the value of a surd by placing it between the two square or cube numbers it lies between.",
+  "Write a large or small number in standard form, and convert standard form back to an ordinary number.",
+  "Multiply and divide integers and decimals by any positive or negative power of 10.",
+  "Use positive, negative and zero indices, and explain why any number to the power zero is 1.",
+  "Apply the index laws for multiplication and division to simplify a calculation.",
+];
+
+const concepts = [
+  {
+    id: "concept-1-rational-and-irrational",
+    title: "Rational and Irrational Numbers",
+    explanation:
+      "A rational number is one you can write as a fraction with whole numbers on top and bottom. " +
+      "Every integer qualifies, because 13 is 13/1. So do all the ordinary decimals and every " +
+      "recurring decimal. An irrational number is one you cannot write that way, no matter how " +
+      "hard you try - the square root of 2 is the famous example. The two kinds together make up " +
+      "the real numbers, and the test that separates them is what the decimal does: a rational " +
+      "number's decimal either stops or settles into a repeating block, and an irrational " +
+      "number's does neither, forever.",
+    example:
+      "39/4 = 9.75 stops, so it is rational. 34/15 = 2.2666666... repeats the 6 forever, which is " +
+      "still a pattern, so it is rational too. The square root of 2 begins 1.414213562... and never " +
+      "stops or repeats. A calculator shows 1.414213562, and squaring that gives 1.9999999989... - " +
+      "close to 2 but not 2, because the calculator had to stop somewhere and the true number does " +
+      "not.",
+  },
+  {
+    id: "concept-2-surds",
+    title: "Surds",
+    explanation:
+      "A surd is a root that cannot be simplified to a rational number. The square root of 4 is 2, " +
+      "a whole number, so it is not a surd. The square root of 2, of 3 and of 5 are surds, because " +
+      "none of them is the root of a square number. Surds are written with the root sign and left " +
+      "that way on purpose: the root sign IS the exact value, and replacing it with a decimal is " +
+      "always a rounding, however many places you use.",
+    example:
+      "The square roots of 1, 4, 9, 16, 25, 36, 49, 64, 81 and 100 are the whole numbers 1 to 10, " +
+      "so none of those is a surd. Everything between them is: the square roots of 2, 3, 5, 6, 7, " +
+      "8, 10 and so on. The same applies to cube roots - the cube root of 27 is 3 and not a surd, " +
+      "while the cube root of 30 is.",
+  },
+  {
+    id: "concept-3-estimating-surds",
+    title: "Estimating a Surd",
+    explanation:
+      "You can pin a surd down without a calculator by trapping it between the two square numbers " +
+      "on either side. The square root of a number between 25 and 36 must be between 5 and 6, and " +
+      "where it sits between them tells you the first decimal place. Squaring your estimate checks " +
+      "it: too big means come down, too small means go up. The same works for cube roots with cube " +
+      "numbers.",
+    example:
+      "Estimate the square root of 30. It lies between 25 and 36, so the answer is between 5 and 6. " +
+      "Try 5.5: 5.5 x 5.5 = 30.25, slightly too big. Try 5.4: 5.4 x 5.4 = 29.16, slightly too small. " +
+      "So the square root of 30 is between 5.4 and 5.5, and nearer 5.5 because 30.25 misses by 0.25 " +
+      "while 29.16 misses by 0.84. The true value is 5.477 to 3 decimal places.",
+  },
+  {
+    id: "concept-4-standard-form",
+    title: "Standard Form",
+    explanation:
+      "Standard form writes a number as a single digit, then a decimal part, multiplied by a power " +
+      "of 10. The first part must be at least 1 and less than 10 - that rule is what makes the form " +
+      "standard, so two people writing the same number get the same answer. A positive power means " +
+      "a large number and a negative power a small one. It exists because 149600000 and 0.00000071 " +
+      "are hard to read, hard to compare and easy to mistype, and their standard forms are none of " +
+      "those things.",
+    example:
+      "The average distance to the Sun is 149600000 km. The first part must be between 1 and 10, so " +
+      "it is 1.496, and the point moved 8 places, so the number is 1.496 x 10^8 km. Going the other " +
+      "way, 4.5 x 10^-4 means the point moves 4 places the other way: 0.00045. Note 15 x 10^7 is " +
+      "NOT standard form, because 15 is not less than 10; it is 1.5 x 10^8.",
+  },
+  {
+    id: "concept-5-powers-of-ten",
+    title: "Multiplying and Dividing by Powers of 10",
+    explanation:
+      "Multiplying by 10 to a positive power moves every digit to the left; dividing moves them to " +
+      "the right. It is worth saying that the DIGITS move and the point stays, because thinking of " +
+      "it as 'adding a zero' breaks the moment there is a decimal. Dividing by 10^n is the same as " +
+      "multiplying by 10^-n, which is why the two operations are really one.",
+    example:
+      "3.2 x 10^5 = 320000: five places left, filling with zeros. 47 divided by 10^3 = 0.047: three " +
+      "places right. And 47 x 10^-3 gives the same 0.047, because dividing by a thousand and " +
+      "multiplying by a thousandth are the same instruction written two ways.",
+  },
+  {
+    id: "concept-6-indices",
+    title: "Indices, Including Zero and Negative",
+    explanation:
+      "Write out the powers of a number in a row and a pattern appears: each step right multiplies " +
+      "by the base, each step left divides by it. Follow that pattern past the first power and it " +
+      "tells you what the awkward cases must mean. Going left from 3^1 = 3, dividing by 3 gives " +
+      "3^0 = 1 - so any number to the power zero is 1, not because someone decided it but because " +
+      "nothing else keeps the pattern. Keep going and 3^-1 = 1/3, 3^-2 = 1/9: a negative index " +
+      "means the reciprocal.",
+    example:
+      "The powers of 3 run 3^1 = 3, 3^2 = 9, 3^3 = 27, 3^4 = 81, 3^5 = 243, 3^6 = 729. Each step " +
+      "right multiplies by 3: 9 x 3 = 27, 27 x 3 = 81. Each step left divides by 3, so from 3^1 = 3 " +
+      "we get 3^0 = 1, then 3^-1 = 1/3 and 3^-2 = 1/9. The index laws follow from counting the " +
+      "factors: 2^3 x 2^4 = 2^7 = 128 because three twos times four twos is seven twos, and " +
+      "5^4 divided by 5^2 = 5^2 = 25 because two of the fives cancel.",
+  },
+];
+
+const methods = [
+  { id: "method-1", outcomeId: "lo01", difficulty: "Core",
+    title: "How to decide whether a number is rational",
+    example: "Is 2.2666666... rational?",
+    steps: ["Try to write it as a fraction with whole numbers top and bottom.",
+      "If the decimal stops, it is rational - write it over a power of 10 and cancel.",
+      "If the decimal repeats a block forever, it is still rational.",
+      "Only if it neither stops nor repeats is it irrational. 2.2666... repeats the 6, so it is rational: it is 34/15."] },
+  { id: "method-2", outcomeId: "lo04", difficulty: "Core",
+    title: "How to estimate a surd",
+    example: "Estimate the square root of 30.",
+    steps: ["Find the square numbers either side: 25 and 36.",
+      "So the answer is between 5 and 6.",
+      "Try a value in between and square it: 5.5 x 5.5 = 30.25, a little too big.",
+      "Adjust down and try again: 5.4 x 5.4 = 29.16, a little too small.",
+      "Answer lies between 5.4 and 5.5, nearer 5.5."] },
+  { id: "method-3", outcomeId: "lo05", difficulty: "Core",
+    title: "How to write a number in standard form",
+    example: "Write 149600000 in standard form.",
+    steps: ["Place the decimal point so the first part is at least 1 and less than 10: 1.496.",
+      "Count how many places the point moved: 8.",
+      "The number was large, so the power is positive: 10^8.",
+      "Write it: 1.496 x 10^8.",
+      "Check by moving the point back 8 places."] },
+  { id: "method-4", outcomeId: "lo05", difficulty: "Core",
+    title: "How to write a small number in standard form",
+    example: "Write 0.00045 in standard form.",
+    steps: ["Move the point so the first part is between 1 and 10: 4.5.",
+      "Count the places moved: 4.",
+      "The number was small, so the power is negative: 10^-4.",
+      "Write it: 4.5 x 10^-4."] },
+  { id: "method-5", outcomeId: "lo06", difficulty: "Core",
+    title: "How to multiply or divide by a power of 10",
+    example: "Work out 47 divided by 10^3.",
+    steps: ["Decide the direction: dividing moves digits to the right.",
+      "Move them as many places as the index: 3.",
+      "Fill the gaps with zeros: 47 becomes 0.047.",
+      "Check: 47 x 10^-3 gives the same answer, because dividing by 10^3 is multiplying by 10^-3."] },
+  { id: "method-6", outcomeId: "lo08", difficulty: "Core",
+    title: "How to use the index laws",
+    example: "Simplify 2^3 x 2^4 and 5^4 divided by 5^2.",
+    steps: ["Check the bases are the same - the laws only work then.",
+      "For multiplication, add the indices: 2^3 x 2^4 = 2^7 = 128.",
+      "For division, subtract them: 5^4 divided by 5^2 = 5^2 = 25.",
+      "If the subtraction gives zero the answer is 1; if it gives a negative, write the reciprocal."] },
+];
+
+const workedExamples = [
+  { id: "we01", outcomeId: "lo01", difficulty: "Basic", title: "Rational or irrational",
+    prompt: "Say whether each is rational or irrational: 13, 39/4, the square root of 2.",
+    solution: "13 is rational: it is 13/1. 39/4 is rational by definition and equals 9.75, a decimal that stops. The square root of 2 is irrational: its decimal begins 1.414213562... and never stops or repeats, and it cannot be written as a fraction of whole numbers." },
+  { id: "we02", outcomeId: "lo02", difficulty: "Basic", title: "What the decimal tells you",
+    prompt: "34/15 = 2.2666666... Is it rational?",
+    solution: "Yes. The 6 repeats forever, and a repeating block is a pattern, so the number is rational - indeed it was given as a fraction, 34/15. Only a decimal that neither stops nor repeats belongs to an irrational number." },
+  { id: "we03", outcomeId: "lo03", difficulty: "Basic", title: "Which roots are surds",
+    prompt: "Which of these are surds: the square roots of 4, 5, 9 and 10?",
+    solution: "The square root of 4 is 2 and the square root of 9 is 3, both whole numbers, so neither is a surd. The square roots of 5 and 10 cannot be simplified to rational numbers, so both are surds." },
+  { id: "we04", outcomeId: "lo04", difficulty: "Core", title: "Estimating a square root",
+    prompt: "Estimate the square root of 30 to one decimal place.",
+    solution: "30 lies between the square numbers 25 and 36, so the root lies between 5 and 6. 5.5 x 5.5 = 30.25, just too big. 5.4 x 5.4 = 29.16, too small. So the root is between 5.4 and 5.5, and closer to 5.5 because 30.25 overshoots by only 0.25. To 1 decimal place it is 5.5." },
+  { id: "we05", outcomeId: "lo04", difficulty: "Core", title: "Estimating a cube root",
+    prompt: "Estimate the cube root of 30.",
+    solution: "30 lies between the cube numbers 27 and 64, so the cube root lies between 3 and 4, and much nearer 3 because 30 is only just above 27. Trying 3.1: 3.1 x 3.1 x 3.1 = 29.791, very slightly under 30. So the cube root of 30 is a little over 3.1." },
+  { id: "we06", outcomeId: "lo05", difficulty: "Core", title: "A large number in standard form",
+    prompt: "Write 149600000 in standard form.",
+    solution: "The first part must be between 1 and 10, so it is 1.496. Moving the point from after the final zero to between the 1 and the 4 is 8 places, and the number is large, so the power is positive: 1.496 x 10^8." },
+  { id: "we07", outcomeId: "lo05", difficulty: "Core", title: "A small number in standard form",
+    prompt: "Write 0.00000071 in standard form.",
+    solution: "Move the point to just after the 7: 7.1. That is 7 places, and the number is small, so the power is negative: 7.1 x 10^-7." },
+  { id: "we08", outcomeId: "lo05", difficulty: "Core", title: "Back to an ordinary number",
+    prompt: "Write 2.8 x 10^4 and 9.81 x 10^-3 as ordinary numbers.",
+    solution: "2.8 x 10^4 moves the point 4 places right: 28000. 9.81 x 10^-3 moves it 3 places left: 0.00981." },
+  { id: "we09", outcomeId: "lo05", difficulty: "Extension", title: "Spotting what is not standard form",
+    prompt: "Explain why 15 x 10^7 is not in standard form, and correct it.",
+    solution: "The first part must be at least 1 and less than 10, and 15 is not. Rewrite 15 as 1.5 x 10^1, so 15 x 10^7 = 1.5 x 10^1 x 10^7 = 1.5 x 10^8." },
+  { id: "we10", outcomeId: "lo06", difficulty: "Core", title: "Powers of ten",
+    prompt: "Work out 3.2 x 10^5 and 47 divided by 10^3.",
+    solution: "3.2 x 10^5 moves the digits 5 places left, filling with zeros: 320000. 47 divided by 10^3 moves them 3 places right: 0.047. The same answer comes from 47 x 10^-3, because dividing by 10^3 and multiplying by 10^-3 are the same instruction." },
+  { id: "we11", outcomeId: "lo07", difficulty: "Core", title: "Zero and negative indices",
+    prompt: "Work out 3^0, 3^-1 and 2^-3.",
+    solution: "Follow the pattern leftwards: 3^2 = 9, 3^1 = 3, and dividing by 3 again gives 3^0 = 1. Continuing, 3^-1 = 1/3. A negative index means the reciprocal, so 2^-3 = 1/2^3 = 1/8." },
+  { id: "we12", outcomeId: "lo08", difficulty: "Core", title: "The index laws",
+    prompt: "Simplify 2^3 x 2^4, 5^4 divided by 5^2, and 7^3 divided by 7^3.",
+    solution: "Multiplying adds the indices: 2^3 x 2^4 = 2^7 = 128. Dividing subtracts them: 5^4 divided by 5^2 = 5^2 = 25. And 7^3 divided by 7^3 = 7^0 = 1, which agrees with the obvious fact that any number divided by itself is 1." },
+];
+
+const practice = [
+  { id: "p01", level: "Warm-up", prompt: "Is 100004 rational or irrational?", answer: "Rational - it is an integer, so it is 100004/1.", hint: "Can you write it as a fraction?" },
+  { id: "p02", level: "Warm-up", prompt: "Is the square root of 9 a surd?", answer: "No. It equals 3, a whole number.", hint: "Is 9 a square number?" },
+  { id: "p03", level: "Warm-up", prompt: "Write 4.67 x 10^3 as an ordinary number.", answer: "4670", hint: "Move the point 3 places right." },
+  { id: "p04", level: "Core", prompt: "Write 320000 in standard form.", answer: "3.2 x 10^5", hint: "First part between 1 and 10." },
+  { id: "p05", level: "Core", prompt: "Write 0.00045 in standard form.", answer: "4.5 x 10^-4", hint: "Small number, so a negative power." },
+  { id: "p06", level: "Core", prompt: "Between which two whole numbers does the square root of 50 lie?", answer: "7 and 8, because 49 and 64 are the square numbers either side.", hint: "Find the square numbers around 50." },
+  { id: "p07", level: "Core", prompt: "Work out 2^0 + 5^0.", answer: "2", hint: "Anything to the power zero is 1." },
+  { id: "p08", level: "Core", prompt: "Work out 2^-3 as a fraction.", answer: "1/8", hint: "A negative index means the reciprocal." },
+  { id: "p09", level: "Core", prompt: "Simplify 3^5 x 3^2 and give the value.", answer: "3^7 = 2187", hint: "Add the indices." },
+  { id: "p10", level: "Challenge", prompt: "Simplify 6^5 divided by 6^3 and give the value.", answer: "6^2 = 36", hint: "Subtract the indices." },
+  { id: "p11", level: "Challenge", prompt: "Estimate the square root of 70 to one decimal place, showing your check.", answer: "Between 8 and 9 because 64 and 81 are either side. 8.4 x 8.4 = 70.56, slightly too big; 8.3 x 8.3 = 68.89, too small. So about 8.4.", hint: "Trap it, then square your guess." },
+  { id: "p12", level: "Challenge", prompt: "Arun writes 0.00062 as 6.2 x 10^-3. Is he right?", answer: "No. Moving the point to 6.2 takes 4 places, not 3, so it is 6.2 x 10^-4. Check: 6.2 x 10^-3 would be 0.0062, ten times too big.", hint: "Count the places carefully, then convert back to check." },
+];
+
+const fluency = [
+  { id: "fl01", outcomeId: "lo01", difficulty: "Round 1", prompt: "Is 7 rational? Answer yes or no.", answer: "yes", hint: "Every integer is a fraction over 1.", errorFeedback: "7 = 7/1, so it is rational." },
+  { id: "fl02", outcomeId: "lo03", difficulty: "Round 1", prompt: "Is the square root of 16 a surd? Answer yes or no.", answer: "no", hint: "Is 16 a square number?", errorFeedback: "The square root of 16 is 4, a whole number, so it is not a surd." },
+  { id: "fl03", outcomeId: "lo05", difficulty: "Round 1", prompt: "Write 4670 in standard form.", answer: "4.67 x 10^3", hint: "First part between 1 and 10.", errorFeedback: "The point moves 3 places, and the number is large." },
+  { id: "fl04", outcomeId: "lo05", difficulty: "Round 1", prompt: "Write 2.8 x 10^4 as an ordinary number.", answer: "28000", hint: "Move the point 4 places right.", errorFeedback: "2.8 becomes 28000 when the digits move 4 places left." },
+  { id: "fl05", outcomeId: "lo06", difficulty: "Round 2", prompt: "Work out 3.2 x 10^5.", answer: "320000", hint: "Five places.", errorFeedback: "Move the digits 5 places and fill with zeros." },
+  { id: "fl06", outcomeId: "lo06", difficulty: "Round 2", prompt: "Work out 47 divided by 10^3.", answer: "0.047", hint: "Dividing moves digits right.", errorFeedback: "Three places right gives 0.047." },
+  { id: "fl07", outcomeId: "lo07", difficulty: "Round 2", prompt: "What is 9^0?", answer: "1", hint: "Any number to the power zero.", errorFeedback: "Any non-zero number to the power zero is 1." },
+  { id: "fl08", outcomeId: "lo07", difficulty: "Round 2", prompt: "What is 2^-3, as a fraction?", answer: "1/8", hint: "Reciprocal of 2^3.", errorFeedback: "2^-3 = 1/2^3 = 1/8." },
+  { id: "fl09", outcomeId: "lo08", difficulty: "Round 3", prompt: "Simplify 2^3 x 2^4 and give the value.", answer: "128", hint: "Add the indices, then evaluate.", errorFeedback: "2^3 x 2^4 = 2^7 = 128." },
+  { id: "fl10", outcomeId: "lo08", difficulty: "Round 3", prompt: "Work out 5^4 divided by 5^2.", answer: "25", hint: "Subtract the indices.", errorFeedback: "5^4 divided by 5^2 = 5^2 = 25." },
+  { id: "fl11", outcomeId: "lo04", difficulty: "Round 3", prompt: "The square root of 30 lies between which two whole numbers? Give the lower one.", answer: "5", hint: "Square numbers either side.", errorFeedback: "25 and 36 are either side of 30, so the root is between 5 and 6." },
+  { id: "fl12", outcomeId: "lo08", difficulty: "Round 3", prompt: "Simplify 3^5 x 3^2 and give the value.", answer: "2187", hint: "3^7.", errorFeedback: "3^5 x 3^2 = 3^7 = 2187." },
+];
+
+const explorations = concepts.map((c, i) => ({
+  id: "explore-" + (i + 1),
+  outcomeId: "lo0" + [1, 3, 4, 5, 6, 7][i],
+  difficulty: ["Discover", "Discover", "Core", "Core", "Core", "Extension"][i],
+  title: c.title,
+  context: c.explanation,
+  prompt: [
+    "Write 39/4 and 34/15 as decimals. What is different about them, and is either irrational?",
+    "List the square roots of 1 to 12 and mark which are surds. What do the non-surds have in common?",
+    "Trap the square root of 30 between two whole numbers, then narrow it to one decimal place.",
+    "Write 149600000 and 0.00000071 in standard form. Which rule fixes the first part?",
+    "Work out 47 x 10^-3 and 47 divided by 10^3. Why are they the same?",
+    "Write the powers of 3 from 3^6 down to 3^-2. What must 3^0 be, and why can it be nothing else?",
+  ][i],
+  answer: [
+    "9.75 stops and 2.2666... repeats. Both are rational; neither is irrational.",
+    "1, 4, 9 give whole numbers and are not surds - they are the square numbers.",
+    "Between 5 and 6; 5.4 squared is 29.16 and 5.5 squared is 30.25, so about 5.5.",
+    "1.496 x 10^8 and 7.1 x 10^-7. The first part must be at least 1 and less than 10.",
+    "Both give 0.047, because dividing by a thousand is multiplying by a thousandth.",
+    "729, 243, 81, 27, 9, 3, then 1, 1/3, 1/9. 3^0 must be 1 to keep the divide-by-3 pattern.",
+  ][i],
+  modelType: "concept-model-" + (i + 1),
+  hint: [
+    "Divide it out and watch what the decimal does.",
+    "Which of 1 to 12 are square numbers?",
+    "Find the square numbers either side first.",
+    "Count the places the point moves.",
+    "Write both as a single operation.",
+    "Each step left divides by 3.",
+  ][i],
+  explanation: c.example,
+}));
+
+const visualModels = concepts.map((c, i) => ({
+  id: "model-" + (i + 1),
+  outcomeId: "lo0" + [1, 3, 4, 5, 6, 7][i],
+  title: c.title,
+  modelType: "concept-model-" + (i + 1),
+  purpose: c.explanation,
+  defaultNumber: [15, 12, 30, 8, 5, 3][i],
+}));
+
+const activities = [
+  { title: "Does it stop or repeat?", materials: "a calculator, paper.",
+    steps: ["Write down ten fractions with denominators from 2 to 20.", "Convert each to a decimal.", "Sort them into 'stops' and 'repeats'.", "Look at the denominators in each pile and write what you notice.", "Predict, before converting, whether 7/16 and 5/12 will stop or repeat, then check."] },
+  { title: "Trapping a surd", materials: "a calculator, paper.",
+    steps: ["Pick a number that is not a square number, between 10 and 100.", "Name the square numbers either side and so the two whole numbers your root lies between.", "Narrow it to one decimal place by squaring your guesses.", "Now narrow it to two decimal places.", "Check against the calculator and write how many guesses it took."] },
+  { title: "How big is the universe?", materials: "reference books or a set of given figures, paper.",
+    steps: ["Collect five very large distances and five very small measurements.", "Write each in standard form.", "Put all ten in order of size using only the powers of 10.", "Explain why ordering them was easier in standard form than as ordinary numbers."] },
+  { title: "The pattern that forces the answer", materials: "squared paper.",
+    steps: ["Draw a row of columns and write the powers of 2 from 2^6 down to 2^1.", "Write what you do to move one column left.", "Continue the pattern to fill 2^0, 2^-1 and 2^-2.", "Write one sentence saying why 2^0 could not be anything except 1.", "Repeat for base 5 and check you get the same rule."] },
+  { title: "Index law detective", materials: "paper.",
+    steps: ["Write 2^3 x 2^4 out in full as twos multiplied together, and count them.", "Write 5^4 divided by 5^2 out in full and cancel.", "State the rule you have just proved for each.", "Test both rules on base 10, then explain why the bases must match."] },
+  { title: "Standard form errors", materials: "paper.",
+    steps: ["Write down five numbers in incorrect standard form, such as 15 x 10^7 or 0.4 x 10^3.", "Swap with a partner and correct each other's.", "For each one, say which rule was broken.", "Agree a one-line check you could apply to any answer before writing it down."] },
+];
+
+const realProblems = [
+  { id: "rp01", outcomeId: "lo05", difficulty: "Core", context: "Science",
+    prompt: "The distance from Earth to the Sun is about 149600000 km and the diameter of a red blood cell is about 0.0000071 m. Write both in standard form.",
+    answer: "1.496 x 10^8 km and 7.1 x 10^-6 m.",
+    hint: "First part between 1 and 10; large numbers take a positive power.",
+    errorFeedback: "Count the places the point moves: 8 for the first, 6 for the second." },
+  { id: "rp02", outcomeId: "lo05", difficulty: "Core", context: "Science",
+    prompt: "Light travels about 3 x 10^8 metres each second. How far does it travel in 100 seconds? Give your answer in standard form.",
+    answer: "3 x 10^8 x 100 = 3 x 10^10 metres.",
+    hint: "100 is 10^2, so add the indices.",
+    errorFeedback: "Multiplying by 10^2 raises the power by 2, giving 10^10." },
+  { id: "rp03", outcomeId: "lo06", difficulty: "Core", context: "Market",
+    prompt: "A trader buys 10000 sweets for 4700 shillings. Find the cost of one sweet, using powers of 10.",
+    answer: "4700 divided by 10^4 = 0.47 shillings.",
+    hint: "10000 is 10^4, so move the digits 4 places right.",
+    errorFeedback: "Dividing by 10^4 moves the digits four places: 4700 becomes 0.47." },
+  { id: "rp04", outcomeId: "lo04", difficulty: "Extension", context: "Home",
+    prompt: "A square rug has an area of 30 square metres. Estimate the length of one side to one decimal place, and say whether your answer is exact.",
+    answer: "The side is the square root of 30, between 5 and 6 because 25 and 36 are either side. 5.5 x 5.5 = 30.25, so about 5.5 m. It is not exact: the square root of 30 is a surd, so any decimal is a rounding.",
+    hint: "Area of a square is side squared.",
+    errorFeedback: "Trap the root between square numbers, then square your estimate to check." },
+  { id: "rp05", outcomeId: "lo01", difficulty: "Extension", context: "School",
+    prompt: "Sofia measures a circle and says pi is exactly 22/7. Explain what is wrong.",
+    answer: "22/7 is a fraction of whole numbers, so it is rational, and pi is irrational - its decimal never stops or repeats. 22/7 = 3.142857... is a useful approximation, correct to two decimal places, but it cannot equal pi.",
+    hint: "What kind of number is any fraction?",
+    errorFeedback: "Any fraction of whole numbers is rational by definition, so it cannot equal an irrational number." },
+  { id: "rp06", outcomeId: "lo08", difficulty: "Extension", context: "Science",
+    prompt: "A bacterium divides every hour. Starting with 2^3 bacteria, how many are there after 4 more hours? Give the answer as a power of 2 and as a number.",
+    answer: "Each hour doubles the count, so after 4 hours it is 2^3 x 2^4 = 2^7 = 128.",
+    hint: "Four doublings is multiplying by 2^4.",
+    errorFeedback: "Add the indices: 3 + 4 = 7, so 2^7 = 128." },
+];
+
+const reasoningPrompts = [
+  { id: "reason01", outcomeId: "lo01", difficulty: "Core", responseMode: "text",
+    prompt: "Marcus says that because his calculator shows the square root of 2 as 1.414213562, it is rational. What would you say?",
+    keyIdeas: ["The calculator rounds", "Squaring it does not give exactly 2", "Irrational decimals never stop or repeat"],
+    modelAnswer: "The calculator has to stop somewhere, so what it shows is a rounding, not the number. Squaring 1.414213562 gives 1.999999998944, not 2, which shows the displayed value is not the true root. The real square root of 2 has a decimal that never stops and never repeats, so it cannot be written as a fraction and is irrational." },
+  { id: "reason02", outcomeId: "lo02", difficulty: "Core", responseMode: "text",
+    prompt: "Is every number with an infinite decimal irrational? Explain.",
+    keyIdeas: ["Recurring decimals are infinite but rational", "1/3 = 0.333...", "The test is whether a block repeats"],
+    modelAnswer: "No. 1/3 = 0.333... goes on forever and is plainly rational, because it was written as a fraction. The test is not whether the decimal is infinite but whether it settles into a repeating block. Stops or repeats means rational; neither means irrational." },
+  { id: "reason03", outcomeId: "lo07", difficulty: "Core", responseMode: "text",
+    prompt: "Why is any non-zero number to the power zero equal to 1? Answer using a pattern rather than a rule.",
+    keyIdeas: ["Each step left divides by the base", "3^1 = 3, so 3^0 = 3 divided by 3", "Any other value breaks the pattern"],
+    modelAnswer: "Write the powers in a row: 3^3 = 27, 3^2 = 9, 3^1 = 3. Moving one step left divides by 3 every time, so the next step must be 3 divided by 3 = 1. That is 3^0. Choosing any other value would break a pattern that holds everywhere else, and the same argument works for any base, which is why the rule is general rather than a special case." },
+  { id: "reason04", outcomeId: "lo08", difficulty: "Extension", responseMode: "text",
+    prompt: "The index laws require the bases to match. Show why 2^3 x 5^2 cannot be simplified by adding indices.",
+    keyIdeas: ["Adding indices counts repeated factors", "The factors here are different", "8 x 25 = 200, not a single power"],
+    modelAnswer: "Adding indices works because it counts how many copies of the SAME factor are multiplied: 2^3 x 2^4 is three twos times four twos, so seven twos. With 2^3 x 5^2 the factors differ - it is 8 x 25 = 200 - and 200 is not a power of 2 or of 5, so there is no single index to write. The law is really a counting argument, and it only counts when the things being counted are identical." },
+  { id: "reason05", outcomeId: "lo05", difficulty: "Extension", responseMode: "text",
+    prompt: "Why does standard form insist the first part is at least 1 and less than 10?",
+    keyIdeas: ["Without it a number has many forms", "Comparison by power only works if the rule holds", "15 x 10^7 and 1.5 x 10^8 are the same number"],
+    modelAnswer: "Without the rule the same number has endless forms: 1.5 x 10^8, 15 x 10^7 and 0.15 x 10^9 are all equal. The rule makes the form unique, so two people writing the same number agree, and it makes comparison quick - with the first part always between 1 and 10, the power alone tells you which of two numbers is bigger." },
+  { id: "reason06", outcomeId: "lo04", difficulty: "Extension", responseMode: "text",
+    prompt: "Zara estimates the square root of 30 as 5.5 and calls it exact. Where is she right and where is she wrong?",
+    keyIdeas: ["5.5 is a good estimate", "5.5 squared is 30.25, not 30", "The root is a surd"],
+    modelAnswer: "She is right that 5.5 is a good estimate and the best to one decimal place. She is wrong to call it exact: 5.5 x 5.5 = 30.25, which is not 30. The square root of 30 is a surd, so no decimal is ever exactly equal to it - the root sign is the only exact way to write it." },
+];
+
+const reference = {
+  rules: [
+    { title: "The Rational Test", text: "A number is rational if it can be written as a fraction of whole numbers. Its decimal then either stops or repeats a block. If the decimal does neither, the number is irrational." },
+    { title: "Surds Stay As Roots", text: "A surd is a root that is not rational. Leave it as a root: the root sign is the exact value and any decimal is a rounding." },
+    { title: "The Standard Form Rule", text: "In standard form a number is written as a x 10^n where a is at least 1 and less than 10. A positive n means a large number, a negative n a small one." },
+    { title: "Powers of Ten Move Digits", text: "Multiplying by 10^n moves the digits n places left, dividing moves them n places right. Dividing by 10^n is the same as multiplying by 10^-n." },
+    { title: "The Index Laws", text: "For the same base: a^m x a^n = a^(m+n), and a^m divided by a^n = a^(m-n). It follows that a^0 = 1 and a^-n is the reciprocal of a^n." },
+  ],
+  terms: [
+    ["Rational number", "A number that can be written as a fraction with whole numbers on top and bottom"],
+    ["Irrational number", "A number that cannot be written as such a fraction; its decimal never stops or repeats"],
+    ["Surd", "A root that is irrational, such as the square root of 2"],
+    ["Standard form", "A number written as a x 10^n with a at least 1 and less than 10"],
+    ["Index", "The small raised number saying how many times a base is multiplied by itself"],
+    ["Base", "The number being raised to a power"],
+    ["Reciprocal", "1 divided by a number; a negative index gives the reciprocal of the positive power"],
+    ["Recurring decimal", "A decimal with a block of digits that repeats forever"],
+  ],
+  commonMistakes: [
+    ["Calling every infinite decimal irrational", "A recurring decimal is infinite but rational, such as 0.333..."],
+    ["Writing 15 x 10^7 as standard form", "The first part must be less than 10; it is 1.5 x 10^8"],
+    ["Treating a^0 as 0", "Any non-zero number to the power zero is 1"],
+    ["Adding indices with different bases", "The laws need the same base; 2^3 x 5^2 is just 8 x 25"],
+    ["Adding a zero to multiply by 10", "The DIGITS move; adding a zero fails as soon as there is a decimal"],
+  ],
+};
+
+const assessment = {
+  passPercent: 80,
+  questions: [
+    { id: "q01", type: "Recall", outcomeId: "lo01", difficulty: "Basic", question: "Which of these is irrational?", options: ["39/4", "0.333...", "the square root of 2", "13"], answer: "the square root of 2", hint: "Which cannot be written as a fraction?", explanation: "Its decimal never stops or repeats, so it cannot be a fraction of whole numbers." },
+    { id: "q02", type: "Recall", outcomeId: "lo03", difficulty: "Basic", question: "Which of these is a surd?", options: ["the square root of 4", "the square root of 9", "the square root of 10", "the square root of 25"], answer: "the square root of 10", hint: "Which is not the root of a square number?", explanation: "4, 9 and 25 are square numbers with whole-number roots; 10 is not." },
+    { id: "q03", type: "Application", outcomeId: "lo05", difficulty: "Basic", question: "What is 0.00045 in standard form?", options: ["4.5 x 10^-4", "4.5 x 10^-3", "45 x 10^-5", "4.5 x 10^4"], answer: "4.5 x 10^-4", hint: "Count the places the point moves.", explanation: "The point moves 4 places and the number is small, so the power is -4." },
+    { id: "q04", type: "Application", outcomeId: "lo06", difficulty: "Core", question: "What is 47 divided by 10^3?", options: ["0.047", "0.47", "4.7", "47000"], answer: "0.047", hint: "Dividing moves digits right.", explanation: "Three places right turns 47 into 0.047." },
+    { id: "q05", type: "Application", outcomeId: "lo07", difficulty: "Core", question: "What is 2^-3?", options: ["-8", "1/8", "-6", "6"], answer: "1/8", hint: "A negative index means the reciprocal.", explanation: "2^-3 = 1/2^3 = 1/8. A negative index does not make the answer negative." },
+    { id: "q06", type: "Application", outcomeId: "lo08", difficulty: "Core", question: "Simplify 2^3 x 2^4.", options: ["2^7", "2^12", "4^7", "2^1"], answer: "2^7", hint: "Same base, so add the indices.", explanation: "3 + 4 = 7, so the answer is 2^7 = 128." },
+    { id: "q07", type: "Application", outcomeId: "lo04", difficulty: "Core", question: "Between which two whole numbers does the square root of 50 lie?", options: ["6 and 7", "7 and 8", "8 and 9", "24 and 26"], answer: "7 and 8", hint: "Find the square numbers either side.", explanation: "49 and 64 are either side of 50, so the root is between 7 and 8." },
+    { id: "q08", type: "Reasoning", outcomeId: "lo05", difficulty: "Extension", question: "Why is 15 x 10^7 not in standard form?", options: ["The power is too large", "The first part must be less than 10", "10 cannot be the base", "It should use a negative power"], answer: "The first part must be less than 10", hint: "What does the standard form rule require?", explanation: "The first part must be at least 1 and less than 10, so it should be written 1.5 x 10^8." },
+  ],
+};
+
+const games = {
+  masteryScore: 3,
+  games: [
+    { id: "u1-game-1", icon: "?", skill: "Standard form", title: "Quick Match: Standard Form", description: "Four short challenges on standard form.", type: "choice",
+      rounds: [
+        { prompt: "Write 4670 in standard form.", choices: ["4.67 x 10^2", "4.67 x 10^3", "46.7 x 10^2", "4.67 x 10^4"], answer: "4.67 x 10^3", clue: "Count the places the point moves." },
+        { prompt: "Write 2.8 x 10^4 as an ordinary number.", choices: ["280", "2800", "28000", "280000"], answer: "28000", clue: "Four places to the left." },
+        { prompt: "Write 0.00045 in standard form.", choices: ["4.5 x 10^-4", "4.5 x 10^-3", "4.5 x 10^4", "45 x 10^-5"], answer: "4.5 x 10^-4", clue: "Small number, negative power." },
+        { prompt: "Which is NOT in standard form?", choices: ["1.5 x 10^8", "9.99 x 10^-2", "15 x 10^7", "3 x 10^0"], answer: "15 x 10^7", clue: "The first part must be less than 10." },
+      ] },
+    { id: "u1-game-2", icon: "?", skill: "Indices", title: "Quick Match: Indices", description: "Four short challenges on index laws.", type: "choice",
+      rounds: [
+        { prompt: "What is 7^0?", choices: ["0", "1", "7", "undefined"], answer: "1", clue: "Follow the pattern leftwards." },
+        { prompt: "Simplify 5^4 divided by 5^2.", choices: ["5^2", "5^6", "5^8", "1^2"], answer: "5^2", clue: "Subtract the indices." },
+        { prompt: "What is 2^-3 as a fraction?", choices: ["1/6", "1/8", "-8", "8"], answer: "1/8", clue: "Reciprocal of 2^3." },
+        { prompt: "Simplify 3^5 x 3^2.", choices: ["3^7", "3^10", "9^7", "3^3"], answer: "3^7", clue: "Add the indices." },
+      ] },
+  ],
+};
+
+const unit = {
+  schemaVersion: "Ehel Mathematics Runtime v1.1",
+  generatedAt: new Date().toISOString(),
+  stage: { id: 9, label: "Stage 9" },
+  subject: "Mathematics",
+  term: { id: 1, label: "Term 1" },
+  unit: {
+    unitId: "math-g09-u01",
+    unitNo: 1,
+    unitTitle: "Number and Calculation",
+    unitOverview:
+      "Welcome to Stage 9. This unit opens the year by stretching what counts as a number. You " +
+      "already know integers, fractions and decimals; here you meet numbers that are none of " +
+      "those - the irrationals, whose decimals never stop and never repeat - and learn to handle " +
+      "them exactly rather than approximately. You also learn two pieces of notation that make " +
+      "very large and very small numbers workable: standard form, which is how science writes " +
+      "distances to the Sun and the size of a cell, and indices, including the negative and zero " +
+      "powers that look strange until you see the pattern that forces them.",
+    learningPath: "1.1 Irrational numbers, 1.2 Standard form, 1.3 Indices",
+    reviewStatus: "Authored 2026-09-26 from the Stage 9 Learner's Book, pages 10-24. Not yet curriculum-reviewed.",
+  },
+  cambridge: {
+    level: "Cambridge Lower Secondary Mathematics",
+    code: "0862",
+    stage: 9,
+    objectives: OBJ.map((c) => ({ code: c, text: fw[c] })),
+    objectiveMapping: {
+      status: "authored",
+      reviewed: false,
+      method:
+        "From the Learner's Book sections: 1.1 -> 9Ni.01 and 9Ni.04, 1.2 -> 9Ni.03 and 9Np.01, " +
+        "1.3 -> 9Ni.02. 9Np.02 (upper and lower limits after rounding) is deliberately NOT here: " +
+        "the Workbook places it at 3.4 inside unit 3, and this unit never teaches bounds. " +
+        "Objective texts are quoted verbatim from cambridge-mathematics-0862.json.",
+    },
+  },
+  provenance: {
+    contentPackage: null,
+    framework: "Cambridge Lower Secondary Mathematics 0862 - Stage 9",
+    sourceArchive: null,
+    sourceDocuments: ["Cambridge Lower Secondary Maths Learner's Book 9 (2ed, CUP), pages 10-24",
+                      "Cambridge Lower Secondary Mathematics Workbook 9, unit 1"],
+    sourceBlockCount: null,
+    transformation:
+      "Authored by hand from the Learner's Book. Grade 9 has no content package: " +
+      "outputs/math-content/math-content-model.json holds grades 1-8 only.",
+    reviewStatus: "Not curriculum-reviewed",
+  },
+  media: { lectureStatus: "Video pending", lectureVideo: null, poster: null },
+  outcomes,
+  concepts,
+  explorations,
+  visualModels,
+  methods,
+  workedExamples,
+  practice,
+  activities,
+  reference,
+  fluency,
+  realProblems,
+  reasoningPrompts,
+  assessment,
+  games,
+  selfAssessment: outcomes.map((o) => "I can " + o.charAt(0).toLowerCase() + o.slice(1)),
+};
+
+const json = JSON.stringify(unit, null, 2) + "\n";
+if (WRITE) {
+  fs.mkdirSync(path.dirname(OUT), { recursive: true });
+  fs.writeFileSync(OUT, json, "utf8");
+}
+console.log("  Grade 9 Unit 1: " + outcomes.length + " outcomes, " + concepts.length + " concepts, " +
+  workedExamples.length + " worked examples, " + practice.length + " practice, " + fluency.length +
+  " fluency, " + realProblems.length + " real problems, " + reasoningPrompts.length + " reasoning, " +
+  assessment.questions.length + " assessment, " + activities.length + " activities");
+console.log("  objectives: " + OBJ.join(", ") + "   (9Np.02 deliberately left for unit 3)");
+console.log("  " + json.length + " bytes " + (WRITE ? "written to " + path.relative(process.cwd(), OUT) : "(--write to save)"));

@@ -180,3 +180,104 @@ change would not be seen for a month.
 
 `tools/generate-adow-catalog.js` writes both, and Quraan Academy is the proof
 that this whole path works end to end.
+
+
+---
+
+## H. The custom domain, and why it is not cosmetic
+
+**Measured on 2026-09-26: every asset on `*.b-cdn.net` was refused by a browser
+content blocker** with `net::ERR_BLOCKED_BY_CLIENT`. Not the HTML — a learner
+navigates to that and it arrives — but every stylesheet and script it pulls.
+The result is not a degraded page, it is a dead one: `window.CARP` is never
+defined, the lecture step builds nothing, and the learner sees a lesson with no
+film, no demonstration clip, no controls and no styling. Opening the mp4 URL
+directly failed the same way while `curl` pulled the identical 2,910,859 bytes,
+so the block covers media as well as code.
+
+**This is not a Professor Adow problem.** The same browser, the same minute,
+loaded `ehelacademy.b-cdn.net` and got 0 scripts and the same error. Ehel
+Academy's live school is already exposed to it. `b-cdn.net` is a shared CDN
+hostname used by a great many sites, so it lands on blocklists on the strength
+of what other people serve from it, and nothing we put in the zone changes that.
+
+A custom domain is not on those lists, because it is ours alone.
+
+### H.1 What has to change — almost nothing
+
+This was checked rather than assumed:
+
+| thing | depends on the hostname? |
+| --- | --- |
+| every page, script and stylesheet | **No.** All paths are relative (`../lesson-kit/lib/kit.js`) |
+| `catalog.json` | **No.** Zero occurrences of the hostname |
+| `cdnHost` in `school.config.json` | only to PRINT the URL after an upload |
+| `appDomain` in `school.config.json` | nothing reads it; the guard exists so the decision is not forgotten |
+| the Moodle `catalog_source_url` line | yes — but the old line keeps working |
+
+**So the switch needs no re-upload and no rebuild.** The zone keeps its
+content; a second hostname simply starts serving it.
+
+### H.2 In the domain registrar
+
+1. Register a **Professor Adow** domain, or pick a subdomain of one you own.
+   It must not be an Ehel subdomain: this school is deliberately separate, which
+   is the whole reason it has its own zone, catalogue and consumer record.
+2. Add a **CNAME** record pointing the hostname you will serve from at the pull
+   zone:
+
+   ```
+   app.<your-domain>      CNAME   adowtvet.b-cdn.net
+   ```
+
+   Use a subdomain (`app.`, `learn.`, `school.`) rather than the bare domain:
+   a bare domain often cannot take a CNAME, and you will want the root for a
+   website later.
+
+### H.3 In the Bunny dashboard
+
+3. Pull zone `adowtvet` → **Hostnames** (may be "Custom Hostnames" or under
+   General) → **Add Hostname**, and enter the same name you pointed at it.
+   Bunny verifies the CNAME; if it complains, DNS has not propagated yet —
+   wait rather than retrying in a loop.
+4. On that hostname, switch on **Force SSL** and use **Bunny's free Let's
+   Encrypt certificate**. Do not skip this: the pages are served over https
+   today, and a mixed-content page is a second way to get a blank lesson.
+5. Leave `adowtvet.b-cdn.net` attached. Both hostnames serve the same zone, so
+   nothing that already points at the old name breaks while you move over.
+
+### H.4 In the repo
+
+6. `src/prototypes/professor-adow-tvet/school.config.json`:
+
+   ```json
+   "cdnHost":   "app.<your-domain>",
+   "appDomain": "app.<your-domain>",
+   ```
+
+   `appDomain` stops being a stand-in at this point, which is what the Phase 0
+   guard was holding the place for.
+7. Re-run `npm run deploy:adow` **only when content has actually changed**. The
+   hostname change alone does not require it — the next ordinary deploy will
+   print the new URL.
+
+### H.5 In Moodle
+
+8. Add the catalogue line under its NEW hostname in
+   `local_prequran/catalog_source_url` (the setting is on the **EduPlatform**
+   plugin page — `local_prequran` is its component name, not its label), and
+   remove the `b-cdn.net` line for this school only. One URL per line; never
+   touch Ehel's or Quraan's.
+
+### H.6 Prove it
+
+9. From a browser **with the blocker still switched on**, open a lesson on the
+   new hostname and check the console is clean and a film plays. That is the
+   whole point of the exercise, and testing with the blocker off proves
+   nothing.
+
+### H.7 The same argument applies to Ehel Academy
+
+Ehel is served from `ehelacademy.b-cdn.net` and was measured failing in exactly
+this way. Whatever is decided here should be decided there too, and it is the
+larger school. That is a separate lane and is not done from this one.

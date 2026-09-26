@@ -52,6 +52,10 @@
       {
         "code": "8Gg.03",
         "text": "Know that distances can be measured in miles or kilometres, and that a kilometre is approximately of a mile or a mile is 1.6 kilometres."
+      },
+      {
+        "code": "8Gg.04",
+        "text": "Use knowledge of rectangles, squares and triangles to derive the formulae for the area of parallelograms and trapezia. Use the formulae to calculate the area of parallelograms and trapezia."
       }
     ],
     "objectiveMapping": {
@@ -92,7 +96,8 @@
     "Use estimation to check that a measurement answer is reasonable.",
     "Draw and interpret the front, side and top views (elevations) of a 3D shape, drawn to scale.",
     "Calculate the surface area of a pyramid by adding the base area to the area of its triangular faces.",
-    "Convert between miles and kilometres using the approximation 5 miles ≈ 8 km."
+    "Convert between miles and kilometres using the approximation 5 miles ≈ 8 km.",
+    "Derive the area formula for a trapezium from a parallelogram or from a rectangle and two triangles, and explain why it works."
   ],
   "concepts": [
     {
@@ -154,6 +159,12 @@
       "title": "Converting Between Miles and Kilometres",
       "explanation": "Most of the world measures distance in kilometres, but some countries — including the United Kingdom and the United States — still use miles on road signs and in everyday speech. A simple, memorable conversion is that 5 miles is approximately equal to 8 kilometres, which gives the conversion factor 1 mile ≈ 1.6 km (since 8 ÷ 5 = 1.6), and 1 km ≈ 0.625 miles (since 5 ÷ 8 = 0.625). To convert miles to kilometres, multiply by 8/5 (or 1.6); to convert kilometres to miles, multiply by 5/8 (or 0.625). This conversion is an approximation, not an exact equality (the precise value is 1 mile = 1.60934 km), but 5 miles ≈ 8 km is accurate enough for road signs, running races and everyday estimates.",
       "example": "a) A road sign shows the next town is 40 miles away. About how many kilometres is that? b) A race is 42 km long. About how many miles is that? a) Using 5 miles ≈ 8 km, the scale factor from miles to km is 8/5. 40 × 8/5 = 40 ÷ 5 × 8 = 8 × 8 = 64 km. b) Using the reverse scale factor 5/8, 42 × 5/8 = 42 ÷ 8 × 5 = 5.25 × 5 = 26.25 miles."
+    },
+    {
+      "id": "concept-8-where-the-trapezium-formula-comes-from",
+      "title": "Where the Trapezium Formula Comes From",
+      "explanation": "A trapezium has one pair of parallel sides, of lengths a and b, and a perpendicular height h. The formula A = half of (a + b) times h can look like something to memorise, but it comes straight out of the parallelogram you have already done. Take two identical trapezia. Turn one of them upside down and push it against the other, long side to short side. The two together make a PARALLELOGRAM, and you can see its base is a + b and its height is still h. So the two trapezia have area (a + b) times h between them, and one trapezium is half of that. That is the formula, and nothing was memorised to get it.",
+      "example": "The other route uses a rectangle and two triangles, which is worth seeing because it explains the 'half the sum' in words. Drop a perpendicular from each end of the short parallel side. That cuts the trapezium into a rectangle of width a and two right-angled triangles whose bases together come to b - a. The rectangle has area a times h, and the two triangles together have area half of (b - a) times h. Add them: ah + half of (b - a)h, which tidies to half of (a + b) times h - the same formula. A trapezium with parallel sides 9 cm and 15 cm and height 6 cm therefore has area half of 24 times 6 = 72 cm², and you can check that against a 9 by 6 rectangle (54) plus two triangles totalling half of 6 times 6 (18)."
     }
   ],
   "explorations": [
@@ -632,6 +643,10 @@
       {
         "title": "Before You Move On: Prerequisite Check",
         "text": "In the next unit you will build on these measurement skills, often combining them with algebra and ratio. Before you move on, make sure the foundations here are firm. Prerequisite check: Can you find the area of a circle from its radius? Can you use the prism rule V = cross-section × length? Can you convert m² to cm² by squaring the factor? Can you tell surface area from volume by their units? If yes, you are ready. If any feel shaky, spend a little longer here and ask your AI tutor to review that skill with you."
+      },
+      {
+        "title": "Trapezium Area Rule",
+        "text": "A trapezium is half a parallelogram with base a + b, so its area is half of (a + b) multiplied by the perpendicular height. Add the parallel sides first, then halve, then multiply by the height."
       }
     ],
     "terms": [
@@ -674,6 +689,10 @@
       [
         "Capacity",
         "Amount a container holds (1 litre = 1000 cm³)"
+      ],
+      [
+        "Parallel sides",
+        "The two sides of a trapezium that never meet; their lengths are the a and b in the area formula"
       ]
     ],
     "commonMistakes": [

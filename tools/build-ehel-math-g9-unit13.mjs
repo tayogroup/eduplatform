@@ -1,0 +1,578 @@
+// Build Mathematics Grade 9, Unit 13: Position and Transformation.
+//
+// Thirteenth Grade 9 unit. Authored from the Stage 9 Learner's Book pages 270-301
+// and Workbook pages 156-172.
+//
+// FOUR SECTIONS, SEVEN OBJECTIVES - the largest single-unit mapping in the grade,
+// and the whole 9Gp strand:
+//
+//   13.1 Bearings and scale drawings -> 9Gp.01
+//   13.2 Points on a line segment    -> 9Gp.02
+//   13.3 Transformations             -> 9Gp.03, 9Gp.04, 9Gp.05
+//   13.4 Enlarging shapes            -> 9Gp.06, 9Gp.07
+//
+// 13.3 CARRIES THREE OBJECTIVES BECAUSE THEY ARE THREE DIFFERENT SKILLS on one
+// topic, not one skill counted three times: performing a combination of
+// transformations (.03), recognising and describing one you are shown (.04), and
+// knowing that the image is congruent to the original however many you apply
+// (.05). A section that only asked learners to perform transformations would
+// satisfy .03 and quietly fail the other two, which is the citation-without-
+// teaching failure this repo keeps finding.
+//
+// 9Gp.05 IS A FACT WORTH ARGUING RATHER THAN STATING. Reflections, translations
+// and rotations all preserve every length and every angle, so any sequence of them
+// does too - which is why the image is always congruent, and why an enlargement is
+// NOT in that list. Putting the two sections next to each other makes the contrast
+// available: 13.3 never changes size and 13.4 always does.
+//
+// WHAT IS NEW AT STAGE 9 in 13.4 is the centre of enlargement INSIDE the shape -
+// Stage 8 did outside and on. And 9Gp.07 adds the consequence for perimeter and
+// area: scale factor k multiplies every length by k, so the perimeter by k and the
+// area by k SQUARED. That factor of k squared is the same fact that made the
+// diameter-for-radius error a factor of four in unit 7, arriving from the other
+// direction.
+//
+// ONE CROSS-REFERENCE IS EXACT AND WORTH KEEPING. The Learner's Book has Jahia
+// walk 50 m on a bearing of 140 degrees and Rafiki 70 m on 230 degrees. Those
+// bearings differ by exactly 90 degrees, so the two paths are perpendicular and
+// the distance between them is a Pythagoras calculation from unit 5:
+// sqrt(50^2 + 70^2) = sqrt(7400) = 86 m to the nearest metre. The book asks the
+// learner to MEASURE it off a scale drawing; this unit does that and then checks
+// the measurement against the theorem, which is a better lesson than either alone.
+//
+//   node tools/build-ehel-math-g9-unit13.mjs [--write]
+
+import fs from "node:fs";
+import path from "node:path";
+import url from "node:url";
+
+const HERE = path.dirname(url.fileURLToPath(import.meta.url));
+const OUT = path.resolve(HERE, "..", "src", "prototypes", "ehel-academy",
+  "mathematics", "grade-9", "data", "units", "unit-13.json");
+const WRITE = process.argv.includes("--write");
+
+const FW = path.resolve(HERE, "..", "src", "curriculum", "cambridge-mathematics-0862.json");
+const fw = {};
+(function walk(o) {
+  if (!o || typeof o !== "object") return;
+  if (Array.isArray(o)) return o.forEach(walk);
+  if (typeof o.code === "string" && /^9Gp\.\d{2}$/.test(o.code)) fw[o.code] = o.text;
+  Object.values(o).forEach(walk);
+})(JSON.parse(fs.readFileSync(FW, "utf8")));
+
+const OBJ = ["9Gp.01", "9Gp.02", "9Gp.03", "9Gp.04", "9Gp.05", "9Gp.06", "9Gp.07"];
+for (const c of OBJ) if (!fw[c]) throw new Error("0862 has no " + c);
+
+const outcomes = [
+  "Write and read a three-figure bearing, measured clockwise from north.",
+  "Convert between a real distance and a distance on a scale drawing, in both directions.",
+  "Use a scale drawing to find a distance that was not given, and check it by calculation.",
+  "Find the coordinates of a point a given fraction of the way along a line segment.",
+  "Transform a shape by a combination of reflections, translations and rotations.",
+  "Identify and describe a transformation you are shown, giving everything needed to reproduce it.",
+  "Explain why the image of any combination of reflections, translations and rotations is congruent.",
+  "Enlarge a shape from a centre outside, on or inside it, and say what happens to its perimeter and area.",
+];
+
+const concepts = [
+  {
+    id: "concept-1-bearings",
+    title: "A Bearing Is Always Three Figures, Clockwise From North",
+    explanation:
+      "A bearing gives a direction as an angle measured clockwise from north, and it is always written " +
+      "with three figures - so fifty degrees is 050 and not 50. The three figures are not decoration: " +
+      "they make a bearing unambiguous at a glance and stop 50 being misread as part of a distance. " +
+      "Clockwise from north means east is 090, south is 180 and west is 270, and every direction has " +
+      "exactly one bearing between 000 and 360.",
+    example:
+      "A bearing of 050 points a little north of east. A bearing of 140 points south-east, and 230 points " +
+      "south-west. Note that 140 and 230 differ by 90, so those two directions are at right angles to " +
+      "each other - which is the kind of thing worth noticing before you start drawing, because it makes " +
+      "a calculation possible later.",
+  },
+  {
+    id: "concept-2-scale-drawings",
+    title: "A Scale Converts in Both Directions",
+    explanation:
+      "A scale such as '1 cm represents 100 m' is a conversion rule, and you will need it both ways. To " +
+      "get from a real distance to a drawing, DIVIDE by the number of metres one centimetre stands for. " +
+      "To get from a drawing back to real life, MULTIPLY. Writing the scale down as a division and a " +
+      "multiplication before you begin saves the commonest error, which is doing the right arithmetic in " +
+      "the wrong direction and producing a drawing a hundred times too big.",
+    example:
+      "With 1 cm representing 100 m, a real 800 m becomes 800 / 100 = 8 cm on the drawing. Going back, " +
+      "8.6 cm on the drawing means 8.6 x 100 = 860 m in real life. With a scale of 1 cm to 10 m, a 50 m " +
+      "walk is 5 cm and a 70 m walk is 7 cm.",
+  },
+  {
+    id: "concept-3-fractions-along-a-segment",
+    title: "A Fraction of the Way Along a Line",
+    explanation:
+      "In Stage 8 you found the midpoint of a line segment, which is the point half way along. Any other " +
+      "fraction works the same way and needs no new idea: take that fraction of the horizontal distance " +
+      "and the same fraction of the vertical distance, and add each to the starting point. Doing the two " +
+      "coordinates separately is what makes it easy - you are never dealing with a diagonal, only with " +
+      "two ordinary multiplications.",
+    example:
+      "L is (0, 5) and M is (6, 5). One third of the way along: the horizontal distance is 6, and a third " +
+      "of it is 2, so the x-coordinate is 0 + 2 = 2. The line is horizontal so y stays 5, giving (2, 5). " +
+      "P is (0, 0) and Q is (8, 4). One quarter along: a quarter of 8 is 2 and a quarter of 4 is 1, so " +
+      "the point is (2, 1). And two fifths of the way from (0, 0) to (10, 5) is (4, 2).",
+  },
+  {
+    id: "concept-4-combining-transformations",
+    title: "Combining Reflections, Translations and Rotations",
+    explanation:
+      "Each of the three transformations moves a shape without changing it: a reflection flips it across " +
+      "a mirror line, a translation slides it by a vector, and a rotation turns it about a centre through " +
+      "an angle. They can be applied one after another, and the order usually matters - reflecting then " +
+      "translating rarely lands in the same place as translating then reflecting. Work one step at a time, " +
+      "drawing the intermediate shape, rather than trying to do both at once.",
+    example:
+      "Reflect a triangle in the y-axis, then translate it 3 right and 2 up. A vertex at (2, 1) reflects " +
+      "to (-2, 1) and then translates to (1, 3). Doing it the other way round - translating first to " +
+      "(5, 3), then reflecting to (-5, 3) - gives a different answer, which is why the order has to be " +
+      "stated as part of the instruction.",
+  },
+  {
+    id: "concept-5-congruence",
+    title: "Why the Image Is Always Congruent",
+    explanation:
+      "Congruent means identical in shape and size - same lengths, same angles - though possibly in a " +
+      "different position or turned round or flipped. Every reflection, translation and rotation preserves " +
+      "all lengths and all angles, so applying one cannot change the shape's size. And if each step " +
+      "preserves them, so does any sequence of steps, however long. That is why the image of ANY " +
+      "combination of these three is congruent to the original - and it is also why enlargement is not " +
+      "one of them: an enlargement changes lengths on purpose.",
+    example:
+      "A triangle with sides 3, 4 and 5 that is reflected, then rotated, then translated still has sides " +
+      "3, 4 and 5 and the same three angles. Enlarge the same triangle by scale factor 2 and its sides " +
+      "become 6, 8 and 10: the angles are unchanged, so it is the same SHAPE, but it is no longer " +
+      "congruent because the size has changed. Same shape is similarity; same shape and size is " +
+      "congruence.",
+  },
+  {
+    id: "concept-6-enlargement-perimeter-and-area",
+    title: "Enlargement: Lengths by k, Perimeter by k, Area by k Squared",
+    explanation:
+      "To describe an enlargement completely you must give two things: the scale factor AND the position " +
+      "of the centre of enlargement. Either alone is not enough, because the same scale factor from a " +
+      "different centre puts the image somewhere else. The centre may be outside the shape, on it, or - " +
+      "new at this stage - inside it. A scale factor k multiplies every length by k, so the perimeter is " +
+      "multiplied by k as well. But the area is multiplied by k SQUARED, because an area is a length " +
+      "times a length and both have been scaled.",
+    example:
+      "A 3 cm by 4 cm rectangle has perimeter 14 cm and area 12 cm squared. Enlarged by scale factor 2 it " +
+      "becomes 6 cm by 8 cm, with perimeter 28 cm - doubled - and area 48 cm squared, which is four times " +
+      "12, not twice. With scale factor 3 the perimeter trebles to 42 cm while the area becomes nine " +
+      "times 12, which is 108 cm squared. The angles never change at all.",
+  },
+];
+
+const methods = [
+  { id: "method-1", outcomeId: "lo02", difficulty: "Core", title: "How to draw a bearing and distance to scale",
+    example: "Firash walks on a bearing of 050 for 800 m. Use 1 cm to represent 100 m.",
+    steps: ["Write the scale as a division: real metres divided by 100 gives centimetres.",
+      "Convert the distance: 800 / 100 = 8 cm.",
+      "Draw a north line at your starting point.",
+      "Measure the bearing CLOCKWISE from north with a protractor: 050 degrees.",
+      "Draw the line 8 cm long along that direction, and label it with both the bearing and the real distance."] },
+  { id: "method-2", outcomeId: "lo03", difficulty: "Extension", title: "How to find a distance from a scale drawing",
+    example: "Jahia walks 50 m on 140 degrees; Rafiki walks 70 m on 230 degrees. How far apart are they?",
+    steps: ["Convert both distances with the scale 1 cm to 10 m: 5 cm and 7 cm.",
+      "Draw both journeys from the same starting point, each at its own bearing from north.",
+      "Join the two end points and measure that line with a ruler.",
+      "Convert back to real life by multiplying: a measurement of 8.6 cm means 86 m.",
+      "Check it if you can: 230 - 140 = 90, so the paths are perpendicular and Pythagoras gives sqrt(50^2 + 70^2) = 86 m."] },
+  { id: "method-3", outcomeId: "lo04", difficulty: "Core", title: "How to find a fraction of the way along a segment",
+    example: "Find the point one quarter of the way from P(0, 0) to Q(8, 4).",
+    steps: ["Find the horizontal distance from the start to the end: 8 - 0 = 8.",
+      "Take the fraction of it: a quarter of 8 is 2.",
+      "Find the vertical distance: 4 - 0 = 4, and a quarter of it is 1.",
+      "Add each to the STARTING point's coordinates: (0 + 2, 0 + 1) = (2, 1).",
+      "Check it looks right on a sketch - a quarter of the way should be nearer P than Q."] },
+  { id: "method-4", outcomeId: "lo05", difficulty: "Core", title: "How to apply a combination of transformations",
+    example: "Reflect a triangle in the y-axis, then translate it 3 right and 2 up.",
+    steps: ["Do the FIRST transformation only, and draw the intermediate shape.",
+      "A vertex at (2, 1) reflects in the y-axis to (-2, 1) - the x-coordinate changes sign.",
+      "Now apply the second to the intermediate shape, not to the original.",
+      "Translating (-2, 1) by 3 right and 2 up gives (1, 3).",
+      "Repeat for every vertex, then check the final shape is the same size as the first."] },
+  { id: "method-5", outcomeId: "lo06", difficulty: "Core", title: "How to describe a transformation you are shown",
+    example: "Shape B is an image of shape A. Describe the transformation.",
+    steps: ["First check the SIZE. If it has changed, it is an enlargement; if not, it is one of the other three.",
+      "If it is flipped, it is a reflection - find and state the mirror line.",
+      "If it is turned, it is a rotation - state the centre, the angle and the direction.",
+      "If it has only slid, it is a translation - state the vector, how far right and how far up.",
+      "For an enlargement, state the scale factor AND the centre of enlargement. Ask whether someone could redraw it from your description alone."] },
+  { id: "method-6", outcomeId: "lo08", difficulty: "Core", title: "How to work out the effect on perimeter and area",
+    example: "A 3 cm by 4 cm rectangle is enlarged by scale factor 2.",
+    steps: ["Find the original perimeter and area: 2(3 + 4) = 14 cm and 3 x 4 = 12 cm squared.",
+      "Multiply each SIDE by the scale factor: 6 cm by 8 cm.",
+      "Work out the new perimeter: 2(6 + 8) = 28 cm, which is 2 times 14.",
+      "Work out the new area: 6 x 8 = 48 cm squared, which is 4 times 12.",
+      "State the rule: perimeter multiplies by k, area by k squared, and the angles do not change."] },
+];
+
+const workedExamples = [
+  { id: "we01", outcomeId: "lo01", difficulty: "Basic", twm: "characterising", title: "Reading and writing bearings",
+    prompt: "Write the bearings of east, south and west, and say why 50 degrees is written 050.",
+    solution: "Bearings are measured clockwise from north, so east is 090, south is 180 and west is 270. Fifty degrees is written 050 because a bearing always uses three figures - it makes the number unmistakably a bearing rather than a distance or an ordinary angle, and it keeps all bearings the same width when several are listed together." },
+  { id: "we02", outcomeId: "lo02", difficulty: "Core", twm: "characterising", title: "A real distance onto a drawing",
+    prompt: "Firash walks 800 m on a bearing of 050. Using 1 cm to represent 100 m, how long is the line on the drawing?",
+    solution: "The scale means each centimetre stands for 100 m, so divide: 800 / 100 = 8 cm. Draw a north line, measure 050 degrees clockwise from it, and draw 8 cm along that direction. Dividing rather than multiplying is the decision to get right - multiplying would have given 80 000 cm, which is 800 m of paper." },
+  { id: "we03", outcomeId: "lo02", difficulty: "Core", twm: "characterising", title: "A drawing back to real life",
+    prompt: "On a drawing with 1 cm to 100 m, a line measures 8.6 cm. What is the real distance?",
+    solution: "Going from the drawing back to real life, multiply: 8.6 x 100 = 860 m. The same scale is used both ways, and which operation you need depends only on which direction you are converting - write both down before starting." },
+  { id: "we04", outcomeId: "lo03", difficulty: "Extension", twm: "convincing", title: "Measuring, then checking by Pythagoras",
+    prompt: "Jahia walks 50 m on a bearing of 140 and Rafiki walks 70 m on 230, from the same tree. Find how far apart they end up, and check your measurement.",
+    solution: "With 1 cm to 10 m the journeys are 5 cm and 7 cm. Drawing both from the tree and joining the ends, the line measures about 8.6 cm, so they are about 86 m apart. Now check it without the ruler: 230 - 140 = 90, so the two paths are at right angles, and Pythagoras from Unit 5 gives the separation as the square root of 50 squared plus 70 squared, which is the square root of 7400, or 86.0 m to one decimal place. The measurement and the calculation agree, and the calculation is the exact one." },
+  { id: "we05", outcomeId: "lo04", difficulty: "Core", twm: "characterising", title: "One third along a horizontal line",
+    prompt: "L is (0, 5) and M is (6, 5). Find the point one third of the way from L to M.",
+    solution: "The horizontal distance is 6 - 0 = 6, and one third of 6 is 2, so the x-coordinate is 0 + 2 = 2. The line is horizontal, so every point on it has y = 5. The point is (2, 5). Treating the two coordinates separately means you never have to think about the diagonal." },
+  { id: "we06", outcomeId: "lo04", difficulty: "Core", twm: "specialising", title: "One quarter along a sloping line",
+    prompt: "P is (0, 0) and Q is (8, 4). Find the points one quarter and three quarters of the way from P to Q.",
+    solution: "The horizontal distance is 8 and the vertical distance is 4. One quarter: a quarter of 8 is 2 and a quarter of 4 is 1, giving (2, 1). Three quarters: three quarters of 8 is 6 and of 4 is 3, giving (6, 3). Both lie on PQ, and the second is nearer Q, which is the sanity check." },
+  { id: "we07", outcomeId: "lo04", difficulty: "Extension", twm: "improving", title: "Two methods for the same point",
+    prompt: "S is (0, 0) and T is (10, 5). Find the point two fifths of the way along ST, by taking fractions of the distances and by drawing. Which is more reliable?",
+    solution: "By calculation: two fifths of the horizontal 10 is 4, and two fifths of the vertical 5 is 2, so the point is (4, 2). By drawing you would divide ST into five equal parts and count two along, which gives the same point but depends on dividing the line accurately by eye. The calculation is exact and works for any fraction; the drawing is a useful check and a poor primary method." },
+  { id: "we08", outcomeId: "lo05", difficulty: "Core", twm: "characterising", title: "A reflection then a translation",
+    prompt: "A vertex is at (2, 1). Reflect it in the y-axis, then translate it 3 right and 2 up. Where does it end up?",
+    solution: "Reflecting in the y-axis changes the sign of the x-coordinate, so (2, 1) becomes (-2, 1). Translating 3 right and 2 up adds 3 to x and 2 to y, giving (1, 3). Do the first transformation completely before starting the second, and draw the intermediate position - trying to combine them in one step is where vertices get lost." },
+  { id: "we09", outcomeId: "lo05", difficulty: "Extension", twm: "critiquing", title: "Order matters",
+    prompt: "Take the vertex (2, 1) and do the same two transformations in the opposite order: translate 3 right and 2 up, then reflect in the y-axis. Compare.",
+    solution: "Translating first gives (5, 3), and reflecting that in the y-axis gives (-5, 3). The other order gave (1, 3). The two results are different, so the order is part of the instruction and not a detail - an answer that does not say which came first has not described the transformation. Some pairs of transformations do commute, but most do not, and you cannot assume it." },
+  { id: "we10", outcomeId: "lo07", difficulty: "Core", twm: "convincing", title: "Why any combination gives a congruent image",
+    prompt: "A triangle with sides 3, 4 and 5 is reflected, then rotated, then translated. What can you say about the result, and why?",
+    solution: "It still has sides 3, 4 and 5 and exactly the same three angles, so it is congruent to the original. The reason is that each of the three transformations preserves every length and every angle individually - a reflection flips without stretching, a rotation turns without stretching, a translation slides without stretching. If each step leaves lengths and angles alone, then so does any sequence of steps, no matter how long. The argument does not depend on how many transformations there are." },
+  { id: "we11", outcomeId: "lo06", difficulty: "Core", twm: "classifying", title: "Describing what you are shown",
+    prompt: "Shape B is the image of shape A. How do you decide which transformation it was, and what must you state?",
+    solution: "Check the size first: if B is a different size from A it is an enlargement, and if the same size it is a reflection, rotation or translation. Then a flip means a reflection, for which you state the mirror line; a turn means a rotation, for which you state the centre, angle and direction; a slide means a translation, for which you state the vector. For an enlargement you must give the scale factor AND the centre of enlargement. The test of a good description is that someone could redraw B from your words alone." },
+  { id: "we12", outcomeId: "lo08", difficulty: "Core", twm: "generalising", title: "Perimeter doubles, area quadruples",
+    prompt: "A 3 cm by 4 cm rectangle is enlarged by scale factor 2. Find the new perimeter and area, and compare each with the original.",
+    solution: "Each side doubles, giving 6 cm by 8 cm. The perimeter was 2(3 + 4) = 14 cm and is now 2(6 + 8) = 28 cm, which is twice as much. The area was 3 x 4 = 12 cm squared and is now 6 x 8 = 48 cm squared, which is FOUR times as much, not twice. The perimeter is a length so it scales by 2; the area is a length times a length, so both factors doubled and it scales by 2 squared." },
+  { id: "we13", outcomeId: "lo08", difficulty: "Extension", twm: "generalising", title: "The general rule for any scale factor",
+    prompt: "Enlarge the same 3 cm by 4 cm rectangle by scale factor 3, then by 5. What is the general rule?",
+    solution: "Scale factor 3 gives 9 cm by 12 cm: perimeter 42 cm, which is 3 times 14, and area 108 cm squared, which is 9 times 12. Scale factor 5 gives 15 cm by 20 cm: perimeter 70 cm, 5 times the original, and area 300 cm squared, 25 times the original. So for scale factor k, the perimeter multiplies by k and the area by k squared. It is the same fact that made using the diameter instead of the radius a factor of four out in Unit 7, met from the other side." },
+  { id: "we14", outcomeId: "lo08", difficulty: "Extension", twm: "critiquing", title: "Congruent, similar, or neither",
+    prompt: "A triangle is rotated. A second copy is enlarged by scale factor 2. Which images are congruent to the original, which are similar, and what is the difference?",
+    solution: "The rotated one is congruent: same shape AND same size. The enlarged one is similar but not congruent: the angles are identical so the shape is the same, but every length has doubled so the size is not. Congruence is the stronger condition - congruent shapes are always similar, but similar shapes are only congruent when the scale factor is 1. That is exactly why enlargement is not in the list of transformations that guarantee congruence." },
+];
+
+const practice = [
+  { id: "p01", level: "Warm-up", prompt: "What is the bearing of east?", answer: "090", hint: "Clockwise from north." },
+  { id: "p02", level: "Warm-up", prompt: "With 1 cm to 100 m, how long is 800 m on the drawing?", answer: "8 cm", hint: "Divide by 100." },
+  { id: "p03", level: "Warm-up", prompt: "L is (0,5) and M is (6,5). Find the point one third along LM.", answer: "(2, 5)", hint: "A third of 6." },
+  { id: "p04", level: "Core", prompt: "With 1 cm to 10 m, how long are walks of 50 m and 70 m on the drawing?", answer: "5 cm and 7 cm", hint: "Divide by 10." },
+  { id: "p05", level: "Core", prompt: "P is (0,0) and Q is (8,4). Find the point three quarters of the way along PQ.", answer: "(6, 3)", hint: "Three quarters of each distance." },
+  { id: "p06", level: "Core", prompt: "Reflect (2,1) in the y-axis, then translate 3 right and 2 up.", answer: "(1, 3)", hint: "Do the reflection first." },
+  { id: "p07", level: "Core", prompt: "A 3 cm by 4 cm rectangle is enlarged by scale factor 2. Find its new perimeter and area.", answer: "Perimeter 28 cm, area 48 cm squared", hint: "Double each side first." },
+  { id: "p08", level: "Core", prompt: "What two things must you give to describe an enlargement completely?", answer: "The scale factor and the position of the centre of enlargement", hint: "One alone is not enough." },
+  { id: "p09", level: "Core", prompt: "S is (0,0) and T is (10,5). Find the point two fifths of the way along ST.", answer: "(4, 2)", hint: "Two fifths of each distance." },
+  { id: "p10", level: "Challenge", prompt: "Jahia walks 50 m on bearing 140 and Rafiki 70 m on bearing 230 from the same point. How far apart are they, and how can you check without measuring?", answer: "About 86 m. The bearings differ by 90, so the paths are perpendicular and Pythagoras gives the square root of 50 squared plus 70 squared, which is the square root of 7400 = 86.0 m.", hint: "Subtract the bearings." },
+  { id: "p11", level: "Challenge", prompt: "A 3 cm by 4 cm rectangle is enlarged by scale factor 5. Find the perimeter and area, and state the general rule.", answer: "15 cm by 20 cm, perimeter 70 cm and area 300 cm squared - 5 times and 25 times the originals. In general the perimeter multiplies by k and the area by k squared.", hint: "Area involves two lengths." },
+  { id: "p12", level: "Challenge", prompt: "Explain why the image of any combination of reflections, translations and rotations is congruent to the original, and why an enlargement is not in that list.", answer: "Each of the three preserves every length and every angle, so any sequence of them does too - which is what congruence means. An enlargement deliberately multiplies every length by the scale factor, so unless the factor is 1 the image is similar but not congruent.", hint: "What does each transformation do to a length?" },
+];
+
+const fluency = [
+  { id: "fl01", outcomeId: "lo01", difficulty: "Round 1", prompt: "Bearing of south?", answer: "180", hint: "Clockwise from north.", errorFeedback: "North 000, east 090, south 180." },
+  { id: "fl02", outcomeId: "lo02", difficulty: "Round 1", prompt: "1 cm to 100 m. Drawing length for 800 m?", answer: "8 cm", hint: "Divide.", errorFeedback: "800 / 100 = 8." },
+  { id: "fl03", outcomeId: "lo04", difficulty: "Round 1", prompt: "One third along from (0,5) to (6,5)?", answer: "(2, 5)", hint: "A third of 6 is 2.", errorFeedback: "y stays 5 on a horizontal line." },
+  { id: "fl04", outcomeId: "lo01", difficulty: "Round 1", prompt: "How is 50 degrees written as a bearing?", answer: "050", hint: "Three figures.", errorFeedback: "Bearings always use three figures." },
+  { id: "fl05", outcomeId: "lo02", difficulty: "Round 2", prompt: "1 cm to 100 m. Real distance for 8.6 cm?", answer: "860 m", hint: "Multiply.", errorFeedback: "8.6 x 100 = 860." },
+  { id: "fl06", outcomeId: "lo04", difficulty: "Round 2", prompt: "One quarter along from (0,0) to (8,4)?", answer: "(2, 1)", hint: "A quarter of each.", errorFeedback: "8/4 = 2 and 4/4 = 1." },
+  { id: "fl07", outcomeId: "lo05", difficulty: "Round 2", prompt: "Reflect (2,1) in the y-axis.", answer: "(-2, 1)", hint: "The x sign changes.", errorFeedback: "Only x changes sign." },
+  { id: "fl08", outcomeId: "lo08", difficulty: "Round 2", prompt: "A 3 by 4 rectangle enlarged by 2. New area?", answer: "48 cm squared", hint: "6 x 8.", errorFeedback: "Four times the original 12." },
+  { id: "fl09", outcomeId: "lo03", difficulty: "Round 3", prompt: "Bearings 140 and 230 differ by how much?", answer: "90 degrees", hint: "Subtract.", errorFeedback: "So the paths are perpendicular." },
+  { id: "fl10", outcomeId: "lo03", difficulty: "Round 3", prompt: "Walks of 50 m and 70 m at right angles. Separation?", answer: "About 86 m", hint: "Pythagoras.", errorFeedback: "Square root of 7400." },
+  { id: "fl11", outcomeId: "lo08", difficulty: "Round 3", prompt: "Scale factor k. What happens to the area?", answer: "It is multiplied by k squared", hint: "Two lengths scale.", errorFeedback: "Area is a length times a length." },
+  { id: "fl12", outcomeId: "lo07", difficulty: "Round 3", prompt: "Is the image of a reflection then a rotation congruent to the original?", answer: "Yes", hint: "Do either change lengths?", errorFeedback: "Both preserve lengths and angles." },
+];
+
+const explorations = concepts.map((c, i) => ({
+  id: "explore-" + (i + 1),
+  outcomeId: "lo0" + [1, 2, 4, 5, 7, 8][i],
+  difficulty: ["Discover", "Core", "Core", "Core", "Extension", "Extension"][i],
+  title: c.title,
+  context: c.explanation,
+  prompt: [
+    "Write the bearings of north, east, south and west. Then subtract 140 from 230. What does the answer tell you about those two directions?",
+    "With 1 cm to 100 m, convert 800 m to a drawing length and 8.6 cm back to a real distance. Which operation did each need?",
+    "Find the points one third and two thirds of the way from (0,0) to (9,6). Do the two coordinates separately.",
+    "Reflect (2,1) in the y-axis then translate 3 right and 2 up. Now do it in the opposite order. Do you land in the same place?",
+    "Measure a triangle, then reflect, rotate and translate it. Measure again. What has changed, and what has not?",
+    "Enlarge a 3 by 4 rectangle by scale factors 2, 3 and 5. Tabulate the perimeter and area each time. What are the two patterns?",
+  ][i],
+  answer: [
+    "000, 090, 180, 270. The difference is 90, so bearings 140 and 230 are at right angles - which makes Pythagoras available.",
+    "800 / 100 = 8 cm needed a division; 8.6 x 100 = 860 m needed a multiplication. The same scale, used both ways.",
+    "(3, 2) and (6, 4). A third of 9 is 3 and a third of 6 is 2; two thirds give 6 and 4.",
+    "No - (1,3) one way and (-5,3) the other. The order is part of the instruction.",
+    "Its position and orientation have changed; every length and every angle is the same. That is congruence.",
+    "Perimeter 28, 42, 70 - multiplied by 2, 3 and 5. Area 48, 108, 300 - multiplied by 4, 9 and 25, which are the squares.",
+  ][i],
+  modelType: "concept-model-" + (i + 1),
+  hint: [
+    "Go clockwise from north.",
+    "Which direction are you converting?",
+    "Take the fraction of each distance.",
+    "Draw the intermediate shape both times.",
+    "Measure the sides and the angles.",
+    "Compare each figure with the original.",
+  ][i],
+  explanation: c.example,
+}));
+
+const visualModels = concepts.map((c, i) => ({
+  id: "model-" + (i + 1),
+  outcomeId: "lo0" + [1, 2, 4, 5, 7, 8][i],
+  title: c.title,
+  modelType: "concept-model-" + (i + 1),
+  purpose: c.explanation,
+  defaultNumber: [50, 100, 4, 3, 5, 2][i],
+}));
+
+const activities = [
+  { title: "Bearings around the room", materials: "a compass or protractor, paper.",
+    steps: ["Stand in the middle of the room and choose eight objects around you.",
+      "Estimate the bearing of each from where you stand, writing all of them with three figures.",
+      "Measure each with a protractor against a marked north line and compare.",
+      "Find two objects whose bearings differ by exactly 90 degrees, and check they really do look at right angles."] },
+  { title: "Scale drawing of a real journey", materials: "a tape measure or pacing, ruler, protractor.",
+    steps: ["Walk a two- or three-leg route outside, recording each distance and bearing.",
+      "Choose a scale that fits your route on one page, and write it as both a division and a multiplication.",
+      "Draw the route, then measure the straight-line distance from start to finish.",
+      "Convert that measurement back to real metres.",
+      "Walk the straight line back and compare with your answer."] },
+  { title: "Fractions along a line", materials: "squared paper, ruler.",
+    steps: ["Draw five line segments with whole-number end points, some horizontal, some sloping.",
+      "For each, calculate the points one quarter, one third, one half, two thirds and three quarters along.",
+      "Plot them and check they are evenly spread and in the right order.",
+      "Then divide one segment into five equal parts by eye and compare with your calculated fifths.",
+      "Say which method you would trust for an exam answer, and why."] },
+  { title: "Order matters", materials: "squared paper, tracing paper.",
+    steps: ["Draw a triangle and choose two transformations, such as a reflection and a rotation.",
+      "Apply them in one order using tracing paper, drawing the intermediate shape.",
+      "Start again and apply them in the other order.",
+      "Compare the two final positions.",
+      "Try to find a PAIR of transformations where the order makes no difference, and describe what is special about it."] },
+  { title: "Congruence audit", materials: "squared paper, ruler, protractor.",
+    steps: ["Draw a scalene triangle and measure all three sides and all three angles.",
+      "Apply a reflection, then a rotation, then a translation, drawing each stage.",
+      "Measure the final triangle's sides and angles.",
+      "Now enlarge the original by scale factor 2 and measure that.",
+      "Make a table of which measurements changed in each case, and label each image congruent, similar or neither."] },
+  { title: "Perimeter and area under enlargement", materials: "squared paper.",
+    steps: ["Draw a 3 by 4 rectangle and work out its perimeter and area.",
+      "Enlarge it by scale factors 2, 3, 4 and 5, drawing each one.",
+      "Tabulate the scale factor, perimeter and area.",
+      "Add two columns: perimeter divided by 14, and area divided by 12.",
+      "Describe the two patterns, then predict the area for scale factor 10 and check it."] },
+];
+
+const realProblems = [
+  { id: "rp01", outcomeId: "lo03", difficulty: "Extension", context: "Home",
+    prompt: "Two friends leave the same tree. One walks 50 m on a bearing of 140 and the other 70 m on a bearing of 230. How far apart are they, and how can you be sure without a ruler?",
+    answer: "About 86 m. The bearings differ by 230 - 140 = 90 degrees, so their paths are at right angles, and Pythagoras gives the separation as the square root of 50 squared plus 70 squared, which is the square root of 7400, or 86.0 m to 1 dp. A scale drawing at 1 cm to 10 m gives a line of about 8.6 cm, which agrees - but the calculation is the exact one and does not depend on how carefully you drew.",
+    hint: "Subtract the bearings first.", errorFeedback: "The difference is 90, so the triangle is right-angled." },
+  { id: "rp02", outcomeId: "lo02", difficulty: "Core", context: "Work",
+    prompt: "A surveyor's plan uses 1 cm to represent 100 m. A path measures 8.6 cm on the plan and a fence must be drawn for a real 1250 m. Convert each.",
+    answer: "The path is 8.6 x 100 = 860 m in real life. The fence is 1250 / 100 = 12.5 cm on the plan. One conversion multiplies and the other divides, which is why the scale is worth writing down both ways before starting.",
+    hint: "Which direction is each conversion?", errorFeedback: "Drawing to real multiplies; real to drawing divides." },
+  { id: "rp03", outcomeId: "lo08", difficulty: "Core", context: "Home",
+    prompt: "A 3 m by 4 m rug is replaced by one enlarged by scale factor 2. How much more edging tape and how much more carpet is needed?",
+    answer: "The new rug is 6 m by 8 m. The perimeter goes from 14 m to 28 m, so twice as much edging - an extra 14 m. The area goes from 12 to 48 square metres, so FOUR times as much carpet, an extra 36 square metres. Doubling the size doubles the edging but quadruples the material, which is why the cost rises much faster than the length.",
+    hint: "Perimeter and area do not scale the same way.", errorFeedback: "Area scales by the square of the scale factor." },
+  { id: "rp04", outcomeId: "lo04", difficulty: "Core", context: "Work",
+    prompt: "A straight water pipe runs from (0, 0) to (10, 5) on a site plan. A valve must go two fifths of the way along and an inspection point three quarters of the way. Give both coordinates.",
+    answer: "The horizontal distance is 10 and the vertical is 5. Two fifths: 4 and 2, so the valve is at (4, 2). Three quarters: 7.5 and 3.75, so the inspection point is at (7.5, 3.75). Fractional coordinates are perfectly acceptable here - the pipe does not have to meet grid lines.",
+    hint: "Take the fraction of each distance separately.", errorFeedback: "Three quarters of 10 is 7.5 and of 5 is 3.75." },
+  { id: "rp05", outcomeId: "lo06", difficulty: "Core", context: "Work",
+    prompt: "A designer emails a colleague: 'Enlarge the logo by scale factor 3.' The colleague sends back a logo in the wrong place. What was missing from the instruction?",
+    answer: "The centre of enlargement. A scale factor alone fixes the size but not the position, so the same factor from a different centre puts the image somewhere else entirely. A complete description of an enlargement needs both the scale factor AND the centre, and the test is whether the recipient could reproduce it exactly from the words alone.",
+    hint: "What two things describe an enlargement?", errorFeedback: "Scale factor and centre of enlargement." },
+  { id: "rp06", outcomeId: "lo07", difficulty: "Extension", context: "Work",
+    prompt: "A tiler claims that a tile pattern made only by reflecting, rotating and sliding one tile will always fit the same gaps. Is the claim sound?",
+    answer: "Yes, as far as the tile's size goes. Reflections, rotations and translations each preserve every length and angle, so every copy is congruent to the original however many are applied, and a congruent tile fits a gap the original fits. What the claim does not cover is orientation - a congruent tile may need turning to fit a particular gap - and it would fail at once if any enlargement were used, since an enlarged tile is similar but not congruent.",
+    hint: "What do those three transformations preserve?", errorFeedback: "All three preserve lengths and angles, so the copies are congruent." },
+];
+
+const reasoningPrompts = [
+  { id: "reason01", outcomeId: "lo01", difficulty: "Core", responseMode: "text",
+    prompt: "Why are bearings always written with three figures?",
+    keyIdeas: ["It removes ambiguity", "050 cannot be misread", "All bearings line up in a list"],
+    modelAnswer: "A bearing is a direction, and writing it with three figures marks it as one - 050 is unmistakably a bearing, while 50 on a diagram could be a distance, an ordinary angle or a label. It also keeps every bearing the same width, so a column of them can be compared at a glance and a missing digit is visible. The convention costs nothing and removes a class of misreading that matters when someone is navigating from your instruction." },
+  { id: "reason02", outcomeId: "lo02", difficulty: "Core", responseMode: "text",
+    prompt: "Why is it worth writing a scale down as both a division and a multiplication before you start?",
+    keyIdeas: ["The scale is used in both directions", "The wrong direction is wrong by a huge factor", "The error is not obvious in the arithmetic"],
+    modelAnswer: "The same scale converts real distances to drawing distances and drawing distances back to real ones, so you will need it both ways in almost any question. The two directions need opposite operations, and choosing the wrong one is wrong by a factor of a hundred rather than a little - 800 m becomes 8 cm or 80 000 cm, and nothing in the arithmetic itself looks wrong. Writing both down converts a judgement you might rush into a choice you have already made." },
+  { id: "reason03", outcomeId: "lo03", difficulty: "Extension", responseMode: "text",
+    prompt: "The book asks you to measure the distance between the two walkers. Why is calculating it better, and why is measuring still worth doing?",
+    keyIdeas: ["The bearings differ by 90, so Pythagoras applies", "A calculation is exact", "The measurement is an independent check"],
+    modelAnswer: "The bearings 140 and 230 differ by exactly 90 degrees, so the two paths are perpendicular and the separation is the hypotenuse of a right-angled triangle with legs 50 and 70. Pythagoras then gives 86.0 m exactly, while a ruler on a scale drawing gives about 86 m and depends on how accurately the angles and lengths were drawn. The measurement is still worth doing because it is an INDEPENDENT check - if the drawing and the calculation disagree badly, one of them contains a mistake, and neither alone would tell you." },
+  { id: "reason04", outcomeId: "lo05", difficulty: "Core", responseMode: "text",
+    prompt: "Why must a description of a combination of transformations say which one came first?",
+    keyIdeas: ["The order changes the result", "(1,3) against (-5,3)", "Most pairs do not commute"],
+    modelAnswer: "Because the two orders usually give different answers. Reflecting (2,1) in the y-axis and then translating 3 right and 2 up gives (1,3); translating first and then reflecting gives (-5,3). Those are different points, so an instruction that lists two transformations without saying which is applied first has not determined the image. Some pairs do happen to commute, but you cannot assume it of a particular pair without checking, so the order always belongs in the description." },
+  { id: "reason05", outcomeId: "lo07", difficulty: "Extension", responseMode: "text",
+    prompt: "Why does the congruence argument work for any number of transformations, not just two?",
+    keyIdeas: ["Each step preserves lengths and angles", "Preservation carries through a sequence", "No step can undo the preservation"],
+    modelAnswer: "The argument is about each individual step, not about the combination. A reflection, a rotation and a translation each leave every length and every angle exactly as they were. So after the first step the shape is congruent to the original; after the second it is congruent to the result of the first, and therefore to the original; and so on for as many steps as you like. Nothing in the chain can reintroduce a change in size, because none of the three transformations is capable of one. That is why the result holds for any combination however long - and why adding an enlargement to the sequence breaks it immediately." },
+  { id: "reason06", outcomeId: "lo08", difficulty: "Extension", responseMode: "text",
+    prompt: "Why does area scale by k squared when perimeter scales by k?",
+    keyIdeas: ["Perimeter is a sum of lengths", "Area is a length times a length", "Both factors are scaled"],
+    modelAnswer: "A perimeter is a sum of lengths, and multiplying every length by k multiplies their sum by k - the scaling factors out of the addition. An area is a length MULTIPLIED by a length, so when both are scaled by k the product is scaled by k times k. That is why doubling a rug's dimensions doubles the edging but quadruples the carpet. It is the same arithmetic that made using the diameter instead of the radius a factor-of-four error in Unit 7: whenever a quantity depends on two scaled lengths, the error or the growth is squared." },
+];
+
+const reference = {
+  rules: [
+    { title: "Bearings: Three Figures, Clockwise From North", text: "North 000, east 090, south 180, west 270. Always write three figures, so fifty degrees is 050." },
+    { title: "A Scale Works Both Ways", text: "Real to drawing divides; drawing to real multiplies. Write both down before you start." },
+    { title: "Fractions Along a Segment, Coordinate by Coordinate", text: "Take the fraction of the horizontal distance and of the vertical distance, and add each to the starting point." },
+    { title: "One Transformation at a Time", text: "Draw the intermediate shape. The order of a combination is part of the instruction, because it changes the result." },
+    { title: "Reflections, Rotations and Translations Preserve Everything", text: "Each keeps all lengths and angles, so any combination of them gives a congruent image." },
+    { title: "Describe an Enlargement With Two Things", text: "The scale factor AND the centre of enlargement. Either alone leaves the image undetermined." },
+    { title: "Perimeter by k, Area by k Squared", text: "A scale factor k multiplies lengths and the perimeter by k, and the area by k squared. Angles do not change." },
+  ],
+  terms: [
+    ["Bearing", "A direction as a three-figure angle measured clockwise from north"],
+    ["Scale", "A rule relating a drawing length to a real length"],
+    ["Line segment", "The part of a line between two end points"],
+    ["Translation", "A slide by a vector, with no turning or flipping"],
+    ["Reflection", "A flip across a mirror line"],
+    ["Rotation", "A turn about a centre, through an angle, in a stated direction"],
+    ["Congruent", "Identical in shape and size, possibly moved, turned or flipped"],
+    ["Similar", "The same shape, with all angles equal, but not necessarily the same size"],
+    ["Centre of enlargement", "The fixed point from which an enlargement is measured"],
+    ["Scale factor", "The number every length is multiplied by in an enlargement"],
+  ],
+  commonMistakes: [
+    ["Writing a bearing with fewer than three figures", "Fifty degrees is 050, not 50"],
+    ["Multiplying when converting a real distance to a drawing", "Divide by what one centimetre represents"],
+    ["Adding the fraction to the wrong point", "Add to the STARTING point's coordinates, not the end point's"],
+    ["Applying the second transformation to the original", "Apply it to the image of the first, and draw the intermediate shape"],
+    ["Describing an enlargement by its scale factor alone", "The centre of enlargement is needed too"],
+    ["Doubling the area when you double the lengths", "Area scales by k squared, so doubling gives four times"],
+  ],
+};
+
+const assessment = {
+  passPercent: 80,
+  questions: [
+    { id: "q01", type: "Application", outcomeId: "lo01", difficulty: "Basic", question: "The bearing of west is:", options: ["270", "090", "180", "360"], answer: "270", hint: "Clockwise from north.", explanation: "North 000, east 090, south 180, west 270." },
+    { id: "q02", type: "Application", outcomeId: "lo02", difficulty: "Basic", question: "With 1 cm representing 100 m, 800 m is drawn as:", options: ["8 cm", "80 cm", "0.8 cm", "800 cm"], answer: "8 cm", hint: "Divide by 100.", explanation: "800 / 100 = 8 cm." },
+    { id: "q03", type: "Application", outcomeId: "lo04", difficulty: "Core", question: "The point one quarter of the way from (0,0) to (8,4) is:", options: ["(2, 1)", "(4, 2)", "(6, 3)", "(2, 2)"], answer: "(2, 1)", hint: "A quarter of each distance.", explanation: "A quarter of 8 is 2 and of 4 is 1." },
+    { id: "q04", type: "Application", outcomeId: "lo05", difficulty: "Core", question: "Reflect (2,1) in the y-axis, then translate 3 right and 2 up. The image is:", options: ["(1, 3)", "(-5, 3)", "(5, 3)", "(-2, 1)"], answer: "(1, 3)", hint: "Reflection first.", explanation: "(2,1) reflects to (-2,1), then translates to (1,3)." },
+    { id: "q05", type: "Application", outcomeId: "lo08", difficulty: "Core", question: "A 3 cm by 4 cm rectangle is enlarged by scale factor 2. Its new area is:", options: ["48 cm squared", "24 cm squared", "14 cm squared", "28 cm squared"], answer: "48 cm squared", hint: "Double both sides.", explanation: "6 x 8 = 48, which is four times the original 12." },
+    { id: "q06", type: "Application", outcomeId: "lo06", difficulty: "Core", question: "To describe an enlargement you must give:", options: ["The scale factor and the centre of enlargement", "The scale factor only", "The centre only", "The scale factor and the direction"], answer: "The scale factor and the centre of enlargement", hint: "Could someone redraw it?", explanation: "A scale factor fixes the size but not the position." },
+    { id: "q07", type: "Reasoning", outcomeId: "lo07", difficulty: "Extension", question: "After any combination of reflections, translations and rotations, the image is:", options: ["Congruent to the original", "Similar but not congruent", "Larger than the original", "Impossible to predict"], answer: "Congruent to the original", hint: "What does each preserve?", explanation: "Each preserves all lengths and angles, so any sequence of them does too." },
+    { id: "q08", type: "Reasoning", outcomeId: "lo08", difficulty: "Extension", question: "Why does area scale by k squared?", options: ["Because areas are always squares", "Because an area is a length times a length, and both are scaled", "Because perimeters scale by k", "Because angles do not change"], answer: "Because an area is a length times a length, and both are scaled", hint: "How many lengths make an area?", explanation: "Scaling both factors by k multiplies the product by k times k." },
+  ],
+};
+
+const games = {
+  masteryScore: 3,
+  games: [
+    { id: "u13-game-1", icon: "?", skill: "Bearings and position", title: "Quick Match: Bearings and Position", description: "Four short challenges on bearings, scales and segments.", type: "choice",
+      rounds: [
+        { prompt: "Bearing of east", choices: ["090", "180", "270", "000"], answer: "090", clue: "Clockwise from north." },
+        { prompt: "1 cm to 100 m. Draw 800 m as", choices: ["8 cm", "80 cm", "0.8 cm", "800 cm"], answer: "8 cm", clue: "Divide." },
+        { prompt: "1 cm to 100 m. 8.6 cm means", choices: ["860 m", "86 m", "8600 m", "8.6 m"], answer: "860 m", clue: "Multiply." },
+        { prompt: "One quarter along from (0,0) to (8,4)", choices: ["(2, 1)", "(4, 2)", "(6, 3)", "(2, 2)"], answer: "(2, 1)", clue: "A quarter of each." },
+      ] },
+    { id: "u13-game-2", icon: "?", skill: "Transformation", title: "Quick Match: Transformation", description: "Four short challenges on transformations and enlargement.", type: "choice",
+      rounds: [
+        { prompt: "Reflect (2,1) in the y-axis", choices: ["(-2, 1)", "(2, -1)", "(-2, -1)", "(1, 2)"], answer: "(-2, 1)", clue: "The x sign changes." },
+        { prompt: "3 by 4 rectangle enlarged by 2. Perimeter?", choices: ["28 cm", "14 cm", "48 cm", "56 cm"], answer: "28 cm", clue: "Double the perimeter." },
+        { prompt: "3 by 4 rectangle enlarged by 3. Area?", choices: ["108 cm squared", "36 cm squared", "42 cm squared", "12 cm squared"], answer: "108 cm squared", clue: "Nine times." },
+        { prompt: "Image of a reflection then a rotation is", choices: ["Congruent", "Similar only", "Enlarged", "Unpredictable"], answer: "Congruent", clue: "Both preserve lengths." },
+      ] },
+  ],
+};
+
+const unit = {
+  schemaVersion: "Ehel Mathematics Runtime v1.1",
+  generatedAt: new Date().toISOString(),
+  stage: { id: 9, label: "Stage 9" },
+  subject: "Mathematics",
+  term: { id: 3, label: "Term 3" },
+  unit: {
+    unitId: "math-g09-u13",
+    unitNo: 13,
+    unitTitle: "Position and Transformation",
+    unitOverview:
+      "Welcome to Unit 13. This unit is about saying exactly where something is and exactly how it has " +
+      "moved. You learn bearings, always three figures and always clockwise from north, and how a scale " +
+      "converts between a drawing and the real world in both directions. You find points a given fraction " +
+      "of the way along a line, which needs no new idea beyond doing the two coordinates separately. Then " +
+      "you combine reflections, translations and rotations - where the order matters, because doing them " +
+      "the other way round usually lands somewhere else - and you learn why the result is always the same " +
+      "size as what you started with, however many you apply. Finally you enlarge shapes from a centre " +
+      "that may now be inside them, and discover that doubling a shape doubles its perimeter but " +
+      "quadruples its area.",
+    learningPath: "13.1 Bearings and scale drawings, 13.2 Points on a line segment, 13.3 Transformations, 13.4 Enlarging shapes",
+    reviewStatus: "Authored 2026-09-26 from the Stage 9 Learner's Book pages 270-301 and Workbook pages 156-172. Not yet curriculum-reviewed.",
+  },
+  cambridge: {
+    level: "Cambridge Lower Secondary Mathematics",
+    code: "0862",
+    stage: 9,
+    objectives: OBJ.map((c) => ({ code: c, text: fw[c] })),
+    objectiveMapping: {
+      status: "authored",
+      reviewed: false,
+      method:
+        "13.1 -> 9Gp.01, 13.2 -> 9Gp.02, 13.3 -> 9Gp.03, 9Gp.04 and 9Gp.05, 13.4 -> 9Gp.06 and 9Gp.07. " +
+        "This is the whole 9Gp strand in one unit, the largest single-unit mapping in Grade 9. 13.3 " +
+        "carries three objectives because they are three distinct skills on one topic rather than one " +
+        "skill counted three times: PERFORMING a combination (.03), DESCRIBING one you are shown (.04), " +
+        "and knowing the image is CONGRUENT however many are applied (.05). A section that only asked " +
+        "learners to perform transformations would satisfy .03 and quietly fail the other two. 9Gp.05 is " +
+        "argued rather than stated - each of the three preserves every length and angle, so any sequence " +
+        "does - which also explains why enlargement is not among them. 9Gp.06 names a centre inside the " +
+        "shape, which is what is new at this stage, and 9Gp.07 adds the perimeter and area consequences. " +
+        "Objective texts are quoted verbatim from cambridge-mathematics-0862.json.",
+    },
+  },
+  provenance: {
+    contentPackage: null,
+    framework: "Cambridge Lower Secondary Mathematics 0862 - Stage 9",
+    sourceArchive: null,
+    sourceDocuments: ["Cambridge Lower Secondary Maths Learner's Book 9 (2ed, CUP), pages 270-301",
+                      "Cambridge Lower Secondary Mathematics Workbook 9, pages 156-172"],
+    sourceBlockCount: null,
+    transformation:
+      "Authored by hand from the Learner's Book and Workbook. Grade 9 has no content package: " +
+      "outputs/math-content/math-content-model.json holds grades 1-8 only.",
+    reviewStatus: "Not curriculum-reviewed",
+  },
+  media: { lectureStatus: "Video pending", lectureVideo: null, poster: null },
+  outcomes,
+  concepts,
+  explorations,
+  visualModels,
+  methods,
+  workedExamples,
+  practice,
+  activities,
+  reference,
+  fluency,
+  realProblems,
+  reasoningPrompts,
+  assessment,
+  games,
+  selfAssessment: outcomes.map((o) => "I can " + o.charAt(0).toLowerCase() + o.slice(1)),
+};
+
+const json = JSON.stringify(unit, null, 2) + "\n";
+if (WRITE) {
+  fs.mkdirSync(path.dirname(OUT), { recursive: true });
+  fs.writeFileSync(OUT, json, "utf8");
+}
+console.log("  Grade 9 Unit 13: " + outcomes.length + " outcomes, " + concepts.length + " concepts, " +
+  workedExamples.length + " worked examples, " + practice.length + " practice, " + fluency.length +
+  " fluency, " + realProblems.length + " real problems, " + reasoningPrompts.length + " reasoning, " +
+  assessment.questions.length + " assessment, " + activities.length + " activities");
+console.log("  objectives: " + OBJ.join(", "));
+console.log("  the whole 9Gp strand in one unit - 13.3 carries three, 13.4 carries two");
+console.log("  " + json.length + " bytes " + (WRITE ? "written to " + path.relative(process.cwd(), OUT) : "(--write to save)"));

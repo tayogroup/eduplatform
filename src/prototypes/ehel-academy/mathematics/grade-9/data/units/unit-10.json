@@ -1,0 +1,1201 @@
+{
+  "schemaVersion": "Ehel Mathematics Runtime v1.1",
+  "generatedAt": "2026-09-26T17:49:42.262Z",
+  "stage": {
+    "id": 9,
+    "label": "Stage 9"
+  },
+  "subject": "Mathematics",
+  "term": {
+    "id": 3,
+    "label": "Term 3"
+  },
+  "unit": {
+    "unitId": "math-g09-u10",
+    "unitNo": 10,
+    "unitTitle": "Graphs",
+    "unitOverview": "Welcome to Unit 10. The functions here are a different shape from Unit 9's. 'Pencils cost $2, pens cost $6, and Fatima spent $30' gives 2c + 6k = 30 - two unknowns, neither of them an input, and many possible answers rather than one. You learn to write situations in that form, to test whether a particular pair is possible, and to explain why some values are ruled out by the situation even when the algebra permits them. Then you draw these functions as graphs, find where they cross the axes, and rearrange them into y = mx + c to read the gradient and intercept - once with numbers, and then once with letters, which answers the question for every line of the form at a stroke. Finally the gradient stops being a number and becomes a fact about the world: on a distance-time graph, it is the speed.",
+    "learningPath": "10.1 Functions, 10.2 Plotting graphs, 10.3 Gradient and intercept, 10.4 Interpreting graphs",
+    "reviewStatus": "Authored 2026-09-26 from the Stage 9 Learner's Book pages 214-233 and Workbook pages 127-136. Not yet curriculum-reviewed."
+  },
+  "cambridge": {
+    "level": "Cambridge Lower Secondary Mathematics",
+    "code": "0862",
+    "stage": 9,
+    "objectives": [
+      {
+        "code": "9As.04",
+        "text": "Understand that a situation can be represented either in words or as a linear function in two variables (of the form y = mx + c or ax + by = c), and move between the two representations."
+      },
+      {
+        "code": "9As.05",
+        "text": "Use knowledge of coordinate pairs to construct tables of values and plot the graphs of linear functions, including where y is given implicitly in terms of x (ax + by = c), and quadratic functions of the form y = x 2 ± a."
+      },
+      {
+        "code": "9As.06",
+        "text": "Understand that straight-line graphs can be represented by equations. Find the equation in the form y = mx + c or where y is given implicitly in terms of x (fractional, positive and negative gradients)."
+      },
+      {
+        "code": "9As.07",
+        "text": "Read, draw and interpret graphs and use compound measures to compare graphs."
+      }
+    ],
+    "objectiveMapping": {
+      "status": "authored",
+      "reviewed": false,
+      "method": "Section by section: 10.1 -> 9As.04, 10.2 -> 9As.05, 10.3 -> 9As.06, 10.4 -> 9As.07. 9As.04 is NOT unit 9's notion of a function: it names the form ax + by = c, two variables with neither as the input, which is why the two units are separate rather than continuous. 9As.06 asks for the equation in the form y = mx + c, and the Learner's Book asks outright for a general statement about the gradient and intercept of ax + by = c - so the unit derives -a/b and c/b with letters and states the consequence that a and b both positive forces a negative gradient. 9As.07 requires compound measures, so speed is taught as the gradient of a distance-time graph with its units read off the axes. With this unit the whole 9As strand is placed across units 9 and 10. Objective texts are quoted verbatim from cambridge-mathematics-0862.json."
+    }
+  },
+  "provenance": {
+    "contentPackage": null,
+    "framework": "Cambridge Lower Secondary Mathematics 0862 - Stage 9",
+    "sourceArchive": null,
+    "sourceDocuments": [
+      "Cambridge Lower Secondary Maths Learner's Book 9 (2ed, CUP), pages 214-233",
+      "Cambridge Lower Secondary Mathematics Workbook 9, pages 127-136"
+    ],
+    "sourceBlockCount": null,
+    "transformation": "Authored by hand from the Learner's Book and Workbook. Grade 9 has no content package: outputs/math-content/math-content-model.json holds grades 1-8 only.",
+    "reviewStatus": "Not curriculum-reviewed"
+  },
+  "media": {
+    "lectureStatus": "Video pending",
+    "lectureVideo": null,
+    "poster": null
+  },
+  "outcomes": [
+    "Write a situation described in words as a linear function in two variables, in the form ax + by = c.",
+    "Use a two-variable function to test whether a particular pair of values is possible.",
+    "Explain why some values are impossible in a context where only whole numbers make sense.",
+    "Construct a table of values for a linear function and plot its graph.",
+    "Find where a graph crosses each axis, by setting the other variable to zero.",
+    "Rearrange ax + by = c into the form y = mx + c to read off the gradient and the y-intercept.",
+    "State the gradient and y-intercept of ax + by = c in general, and say why the gradient is negative when a and b are positive.",
+    "Read a compound measure such as speed from the gradient of a graph, and use the equation to find values not plotted."
+  ],
+  "concepts": [
+    {
+      "id": "concept-1-two-variable-functions",
+      "title": "Two Variables, Neither of Them the Input",
+      "explanation": "Unit 9's functions were machines: put a number in, get a number out, written y = something. This unit's functions are different in shape. 'Pencils cost $2, pens cost $6, and Fatima spent $30' gives 2c + 6k = 30, where c and k are both unknown and neither is obviously the input. A relationship like this does not have one answer - it has a set of pairs that work - and writing the situation down in this form is the skill, before any of those pairs is found.",
+      "example": "Ali has a dollars and Bella has b dollars, and together they have $37: a + b = 37. Fatima's pens and pencils: 2c + 6k = 30. Kasia's $5 and $10 notes totalling $90: 5f + 10t = 90. In each case the numbers in the words become the coefficients, and the total becomes the right-hand side."
+    },
+    {
+      "id": "concept-2-testing-a-pair",
+      "title": "Testing Whether a Pair Is Possible",
+      "explanation": "Because a two-variable function has many solutions, the useful question is often not 'what is the answer' but 'is this particular pair one of them?' Substitute both values and see whether the equation holds. This also lets you find one variable when the other is fixed, which turns the two-variable function into an ordinary one-variable equation of the kind Unit 4 solved.",
+      "example": "Could Fatima have bought 9 pencils and 2 pens? Substituting into 2c + 6k = 30 gives 9 x 2 + 2 x 6 = 18 + 12 = 30. Yes. Could Kasia have 6 notes of each kind? 5 x 6 + 10 x 6 = 30 + 60 = 90. Yes. And if Ali has $25, then 25 + b = 37 so Bella has $12 - a two-variable function with one value supplied becomes a one-variable equation."
+    },
+    {
+      "id": "concept-3-whole-number-constraints",
+      "title": "When Only Whole Numbers Will Do",
+      "explanation": "In many real situations the variables count things - notes, tables, seats, coins - and a fraction of one is meaningless. That extra condition rules out values the algebra alone would allow, and being able to say WHY a value is impossible is part of understanding the function. The test is to substitute the value and see whether the other variable comes out whole.",
+      "example": "Sofas seat 3 or 2 people and there are 50 seats: 3x + 2y = 50. Can x be 7? Then 21 + 2y = 50, so 2y = 29 and y = 14.5 - half a sofa, so no. Can x be 8? Then 24 + 2y = 50, 2y = 26 and y = 13, which is fine. The algebra permits 7; the situation does not."
+    },
+    {
+      "id": "concept-4-tables-and-intercepts",
+      "title": "A Table of Values, and Where the Line Crosses",
+      "explanation": "To draw a graph, choose some values of x, work out the matching y for each, and plot the pairs. Two points determine a straight line, but plot three so that a mistake shows up as a point off the line. The two easiest points to find are the intercepts: set y = 0 to find where the line crosses the x-axis, and set x = 0 to find where it crosses the y-axis. Those two points alone are often enough to draw the whole line.",
+      "example": "For 2x + 4y = 32: putting y = 0 gives 2x = 32 and x = 16, so the line crosses the x-axis at (16, 0). Putting x = 0 gives 4y = 32 and y = 8, so it crosses the y-axis at (0, 8). For 3x + 2y = 18 the intercepts are (6, 0) and (0, 9). Joining the two intercepts draws the line, and a third point checks it."
+    },
+    {
+      "id": "concept-5-gradient-and-intercept",
+      "title": "Rearranging to Read the Gradient",
+      "explanation": "A straight-line graph can always be written y = mx + c, where m is the gradient - how much y changes for each 1 that x increases - and c is the y-intercept, the value of y where the line crosses the vertical axis. The form ax + by = c hides both, so to read them you make y the subject, exactly as you changed the subject of a formula in Unit 2. Then m and c can simply be read off.",
+      "example": "3x + y = 15 becomes y = -3x + 15, so the gradient is -3 and the y-intercept is 15. x + 2y = 10 becomes y = -x/2 + 5, so the gradient is -0.5 and the intercept is 5. And 3x + 4y = 24 becomes y = -3x/4 + 6: gradient -0.75, intercept 6. Note that a negative gradient means the line slopes downwards from left to right."
+    },
+    {
+      "id": "concept-6-the-general-statement",
+      "title": "The Gradient of ax + by = c, in General",
+      "explanation": "Rather than rearranging every time, you can do it once with letters. Starting from ax + by = c and making y the subject gives by = -ax + c, so y = (-a/b)x + c/b. The gradient is therefore -a/b and the y-intercept is c/b. One consequence is worth stating: when a and b are both POSITIVE, the gradient -a/b is negative, so every such line slopes downwards. That is why the graphs in this section all fall from left to right - it is a consequence of the form, not a coincidence.",
+      "example": "For 2x + y = 18, a = 2 and b = 1, so the gradient is -2 and the intercept 18. For 3x + 6y = 18, a = 3 and b = 6, so the gradient is -1/2 and the intercept 3. Both check against rearranging by hand. And a line that RISES needs a or b negative: y - 4x + 2 = 10 rearranges to y = 4x + 8, gradient +4, because the x term was already on the other side."
+    }
+  ],
+  "explorations": [
+    {
+      "id": "explore-1",
+      "outcomeId": "lo01",
+      "difficulty": "Discover",
+      "title": "Two Variables, Neither of Them the Input",
+      "context": "Unit 9's functions were machines: put a number in, get a number out, written y = something. This unit's functions are different in shape. 'Pencils cost $2, pens cost $6, and Fatima spent $30' gives 2c + 6k = 30, where c and k are both unknown and neither is obviously the input. A relationship like this does not have one answer - it has a set of pairs that work - and writing the situation down in this form is the skill, before any of those pairs is found.",
+      "prompt": "Write 'pencils cost $2, pens cost $6, Fatima spent $30' as a function. How is it different in shape from y = 5x - 1?",
+      "answer": "2c + 6k = 30. It has two unknowns and no single input, so it describes a SET of possible pairs rather than a rule to evaluate.",
+      "modelType": "concept-model-1",
+      "hint": "How many unknowns are there?",
+      "explanation": "Ali has a dollars and Bella has b dollars, and together they have $37: a + b = 37. Fatima's pens and pencils: 2c + 6k = 30. Kasia's $5 and $10 notes totalling $90: 5f + 10t = 90. In each case the numbers in the words become the coefficients, and the total becomes the right-hand side."
+    },
+    {
+      "id": "explore-2",
+      "outcomeId": "lo02",
+      "difficulty": "Core",
+      "title": "Testing Whether a Pair Is Possible",
+      "context": "Because a two-variable function has many solutions, the useful question is often not 'what is the answer' but 'is this particular pair one of them?' Substitute both values and see whether the equation holds. This also lets you find one variable when the other is fixed, which turns the two-variable function into an ordinary one-variable equation of the kind Unit 4 solved.",
+      "prompt": "Using a + b = 37, find Bella's money when Ali has $25, then when he has $30. How many answers does the function have altogether?",
+      "answer": "$12, then $7. Infinitely many if a can be any number, and 38 whole-dollar pairs from a = 0 to a = 37.",
+      "modelType": "concept-model-2",
+      "hint": "Substitute one value at a time.",
+      "explanation": "Could Fatima have bought 9 pencils and 2 pens? Substituting into 2c + 6k = 30 gives 9 x 2 + 2 x 6 = 18 + 12 = 30. Yes. Could Kasia have 6 notes of each kind? 5 x 6 + 10 x 6 = 30 + 60 = 90. Yes. And if Ali has $25, then 25 + b = 37 so Bella has $12 - a two-variable function with one value supplied becomes a one-variable equation."
+    },
+    {
+      "id": "explore-3",
+      "outcomeId": "lo03",
+      "difficulty": "Core",
+      "title": "When Only Whole Numbers Will Do",
+      "context": "In many real situations the variables count things - notes, tables, seats, coins - and a fraction of one is meaningless. That extra condition rules out values the algebra alone would allow, and being able to say WHY a value is impossible is part of understanding the function. The test is to substitute the value and see whether the other variable comes out whole.",
+      "prompt": "In 3x + 2y = 50, test x = 7 and x = 8. Why does one fail?",
+      "answer": "x = 7 gives y = 14.5, half a sofa. x = 8 gives y = 13. The algebra allows 7; counting whole sofas does not.",
+      "modelType": "concept-model-3",
+      "hint": "Does the other variable come out whole?",
+      "explanation": "Sofas seat 3 or 2 people and there are 50 seats: 3x + 2y = 50. Can x be 7? Then 21 + 2y = 50, so 2y = 29 and y = 14.5 - half a sofa, so no. Can x be 8? Then 24 + 2y = 50, 2y = 26 and y = 13, which is fine. The algebra permits 7; the situation does not."
+    },
+    {
+      "id": "explore-4",
+      "outcomeId": "lo05",
+      "difficulty": "Core",
+      "title": "A Table of Values, and Where the Line Crosses",
+      "context": "To draw a graph, choose some values of x, work out the matching y for each, and plot the pairs. Two points determine a straight line, but plot three so that a mistake shows up as a point off the line. The two easiest points to find are the intercepts: set y = 0 to find where the line crosses the x-axis, and set x = 0 to find where it crosses the y-axis. Those two points alone are often enough to draw the whole line.",
+      "prompt": "Find where 2x + 4y = 32 and 3x + 2y = 18 cross both axes. Which two points are easiest to find, and why?",
+      "answer": "(16,0) and (0,8); (6,0) and (0,9). The intercepts, because setting one variable to zero removes a term entirely.",
+      "modelType": "concept-model-4",
+      "hint": "What happens when you set a variable to zero?",
+      "explanation": "For 2x + 4y = 32: putting y = 0 gives 2x = 32 and x = 16, so the line crosses the x-axis at (16, 0). Putting x = 0 gives 4y = 32 and y = 8, so it crosses the y-axis at (0, 8). For 3x + 2y = 18 the intercepts are (6, 0) and (0, 9). Joining the two intercepts draws the line, and a third point checks it."
+    },
+    {
+      "id": "explore-5",
+      "outcomeId": "lo06",
+      "difficulty": "Core",
+      "title": "Rearranging to Read the Gradient",
+      "context": "A straight-line graph can always be written y = mx + c, where m is the gradient - how much y changes for each 1 that x increases - and c is the y-intercept, the value of y where the line crosses the vertical axis. The form ax + by = c hides both, so to read them you make y the subject, exactly as you changed the subject of a formula in Unit 2. Then m and c can simply be read off.",
+      "prompt": "Rearrange 3x + y = 15, x + 2y = 10 and 3x + 4y = 24 into y = mx + c. What do all three gradients have in common?",
+      "answer": "y = -3x + 15, y = -x/2 + 5, y = -3x/4 + 6. All the gradients are negative, so all three lines slope downwards.",
+      "modelType": "concept-model-5",
+      "hint": "Get y alone, then divide.",
+      "explanation": "3x + y = 15 becomes y = -3x + 15, so the gradient is -3 and the y-intercept is 15. x + 2y = 10 becomes y = -x/2 + 5, so the gradient is -0.5 and the intercept is 5. And 3x + 4y = 24 becomes y = -3x/4 + 6: gradient -0.75, intercept 6. Note that a negative gradient means the line slopes downwards from left to right."
+    },
+    {
+      "id": "explore-6",
+      "outcomeId": "lo07",
+      "difficulty": "Extension",
+      "title": "The Gradient of ax + by = c, in General",
+      "context": "Rather than rearranging every time, you can do it once with letters. Starting from ax + by = c and making y the subject gives by = -ax + c, so y = (-a/b)x + c/b. The gradient is therefore -a/b and the y-intercept is c/b. One consequence is worth stating: when a and b are both POSITIVE, the gradient -a/b is negative, so every such line slopes downwards. That is why the graphs in this section all fall from left to right - it is a consequence of the form, not a coincidence.",
+      "prompt": "Rearrange ax + by = c using letters only. What does the answer tell you about every line of that form with a and b positive?",
+      "answer": "y = (-a/b)x + c/b, so the gradient is -a/b and the intercept c/b. With a and b positive the gradient must be negative.",
+      "modelType": "concept-model-6",
+      "hint": "Do the rearrangement once, with letters.",
+      "explanation": "For 2x + y = 18, a = 2 and b = 1, so the gradient is -2 and the intercept 18. For 3x + 6y = 18, a = 3 and b = 6, so the gradient is -1/2 and the intercept 3. Both check against rearranging by hand. And a line that RISES needs a or b negative: y - 4x + 2 = 10 rearranges to y = 4x + 8, gradient +4, because the x term was already on the other side."
+    }
+  ],
+  "visualModels": [
+    {
+      "id": "model-1",
+      "outcomeId": "lo01",
+      "title": "Two Variables, Neither of Them the Input",
+      "modelType": "concept-model-1",
+      "purpose": "Unit 9's functions were machines: put a number in, get a number out, written y = something. This unit's functions are different in shape. 'Pencils cost $2, pens cost $6, and Fatima spent $30' gives 2c + 6k = 30, where c and k are both unknown and neither is obviously the input. A relationship like this does not have one answer - it has a set of pairs that work - and writing the situation down in this form is the skill, before any of those pairs is found.",
+      "defaultNumber": 30
+    },
+    {
+      "id": "model-2",
+      "outcomeId": "lo02",
+      "title": "Testing Whether a Pair Is Possible",
+      "modelType": "concept-model-2",
+      "purpose": "Because a two-variable function has many solutions, the useful question is often not 'what is the answer' but 'is this particular pair one of them?' Substitute both values and see whether the equation holds. This also lets you find one variable when the other is fixed, which turns the two-variable function into an ordinary one-variable equation of the kind Unit 4 solved.",
+      "defaultNumber": 37
+    },
+    {
+      "id": "model-3",
+      "outcomeId": "lo03",
+      "title": "When Only Whole Numbers Will Do",
+      "modelType": "concept-model-3",
+      "purpose": "In many real situations the variables count things - notes, tables, seats, coins - and a fraction of one is meaningless. That extra condition rules out values the algebra alone would allow, and being able to say WHY a value is impossible is part of understanding the function. The test is to substitute the value and see whether the other variable comes out whole.",
+      "defaultNumber": 50
+    },
+    {
+      "id": "model-4",
+      "outcomeId": "lo05",
+      "title": "A Table of Values, and Where the Line Crosses",
+      "modelType": "concept-model-4",
+      "purpose": "To draw a graph, choose some values of x, work out the matching y for each, and plot the pairs. Two points determine a straight line, but plot three so that a mistake shows up as a point off the line. The two easiest points to find are the intercepts: set y = 0 to find where the line crosses the x-axis, and set x = 0 to find where it crosses the y-axis. Those two points alone are often enough to draw the whole line.",
+      "defaultNumber": 32
+    },
+    {
+      "id": "model-5",
+      "outcomeId": "lo06",
+      "title": "Rearranging to Read the Gradient",
+      "modelType": "concept-model-5",
+      "purpose": "A straight-line graph can always be written y = mx + c, where m is the gradient - how much y changes for each 1 that x increases - and c is the y-intercept, the value of y where the line crosses the vertical axis. The form ax + by = c hides both, so to read them you make y the subject, exactly as you changed the subject of a formula in Unit 2. Then m and c can simply be read off.",
+      "defaultNumber": 15
+    },
+    {
+      "id": "model-6",
+      "outcomeId": "lo07",
+      "title": "The Gradient of ax + by = c, in General",
+      "modelType": "concept-model-6",
+      "purpose": "Rather than rearranging every time, you can do it once with letters. Starting from ax + by = c and making y the subject gives by = -ax + c, so y = (-a/b)x + c/b. The gradient is therefore -a/b and the y-intercept is c/b. One consequence is worth stating: when a and b are both POSITIVE, the gradient -a/b is negative, so every such line slopes downwards. That is why the graphs in this section all fall from left to right - it is a consequence of the form, not a coincidence.",
+      "defaultNumber": 18
+    }
+  ],
+  "methods": [
+    {
+      "id": "method-1",
+      "outcomeId": "lo01",
+      "difficulty": "Core",
+      "title": "How to write a situation as ax + by = c",
+      "example": "Pencils cost $2 and pens cost $6. Fatima spends $30 on c pencils and k pens.",
+      "steps": [
+        "Name each unknown quantity with a letter - here c pencils and k pens.",
+        "Write what each group costs: c pencils cost 2c dollars, k pens cost 6k dollars.",
+        "Find the sentence that gives a total: 'Fatima spends $30'.",
+        "Write the equation: 2c + 6k = 30.",
+        "Check the coefficients are the prices and the right-hand side is the total."
+      ]
+    },
+    {
+      "id": "method-2",
+      "outcomeId": "lo03",
+      "difficulty": "Core",
+      "title": "How to show a value is impossible",
+      "example": "3x + 2y = 50 counts seats on 3-seat and 2-seat sofas. Show x cannot be 7.",
+      "steps": [
+        "Substitute the value you are testing: 3 x 7 + 2y = 50.",
+        "Simplify: 21 + 2y = 50, so 2y = 29.",
+        "Solve for the other variable: y = 14.5.",
+        "Ask whether that makes sense in the situation. Half a sofa does not exist.",
+        "State the conclusion with its reason: x cannot be 7 because y would not be a whole number."
+      ]
+    },
+    {
+      "id": "method-3",
+      "outcomeId": "lo05",
+      "difficulty": "Core",
+      "title": "How to find where a graph crosses the axes",
+      "example": "Find the intercepts of 2x + 4y = 32.",
+      "steps": [
+        "For the x-axis, y is zero. Put y = 0: 2x = 32, so x = 16.",
+        "Write it as a coordinate pair: (16, 0).",
+        "For the y-axis, x is zero. Put x = 0: 4y = 32, so y = 8.",
+        "Write it as a coordinate pair: (0, 8).",
+        "Plot both and join them; add a third point to check the line is right."
+      ]
+    },
+    {
+      "id": "method-4",
+      "outcomeId": "lo04",
+      "difficulty": "Core",
+      "title": "How to make a table of values",
+      "example": "Make a table for 3x + 2y = 18.",
+      "steps": [
+        "Choose values of x that make the arithmetic easy - here 0, 2, 4 and 6.",
+        "For each, substitute and solve for y: at x = 0, 2y = 18 so y = 9.",
+        "At x = 2, 6 + 2y = 18 so y = 6. At x = 4, y = 3. At x = 6, y = 0.",
+        "Write the pairs: (0, 9), (2, 6), (4, 3), (6, 0).",
+        "Plot all four - a point off the line means an arithmetic slip, which two points could never reveal."
+      ]
+    },
+    {
+      "id": "method-5",
+      "outcomeId": "lo06",
+      "difficulty": "Core",
+      "title": "How to find the gradient and intercept",
+      "example": "Find the gradient and y-intercept of 3x + 4y = 24.",
+      "steps": [
+        "Get the y term alone on one side: 4y = -3x + 24.",
+        "Divide every term by the coefficient of y: y = -3x/4 + 6.",
+        "Now it is in the form y = mx + c, so read them off.",
+        "The gradient m is -3/4, or -0.75; the y-intercept c is 6.",
+        "Check the intercept against the graph: at x = 0 the equation gives y = 6."
+      ]
+    },
+    {
+      "id": "method-6",
+      "outcomeId": "lo08",
+      "difficulty": "Core",
+      "title": "How to read a speed off a graph",
+      "example": "A distance-time graph passes through (100, 240). Find the speed and the equation.",
+      "steps": [
+        "Read one point on the line: 240 metres in 100 seconds.",
+        "The gradient is the change in distance divided by the change in time: 240 / 100 = 2.4.",
+        "Attach the units: metres per second, so the speed is 2.4 m/s.",
+        "Write the equation with the gradient as the coefficient: d = 2.4t.",
+        "Use it for values not plotted: in 15 minutes, t = 900 s, so d = 2.4 x 900 = 2160 m."
+      ]
+    }
+  ],
+  "workedExamples": [
+    {
+      "id": "we01",
+      "outcomeId": "lo01",
+      "difficulty": "Core",
+      "twm": "characterising",
+      "title": "Words into a two-variable function",
+      "prompt": "Pencils cost $2 and pens cost $6. Fatima spends $30. Show she could buy 9 pencils and 2 pens, then write a function for c pencils and k pens.",
+      "solution": "Nine pencils cost 9 x 2 = $18 and two pens cost 2 x 6 = $12, and 18 + 12 = 30, so yes. In general c pencils cost 2c dollars and k pens cost 6k dollars, so the function is 2c + 6k = 30. Notice this has many solutions rather than one - it describes every combination she could have bought."
+    },
+    {
+      "id": "we02",
+      "outcomeId": "lo02",
+      "difficulty": "Basic",
+      "twm": "characterising",
+      "title": "One value supplied makes it solvable",
+      "prompt": "Ali has a dollars and Bella has b dollars, totalling $37. If Ali has $25, how much has Bella?",
+      "solution": "The function is a + b = 37. Substituting a = 25 gives 25 + b = 37, so b = 12. Bella has $12. A two-variable function with one value fixed becomes an ordinary one-variable equation, which is exactly what Unit 4 taught you to solve."
+    },
+    {
+      "id": "we03",
+      "outcomeId": "lo01",
+      "difficulty": "Core",
+      "twm": "characterising",
+      "title": "A fixed charge plus a rate",
+      "prompt": "Hiring a ladder costs a fixed $10 plus $3 per day. Find the cost for one week, and explain why y = 3x + 10.",
+      "solution": "One week is 7 days, so the cost is 10 + 3 x 7 = $31. In general, x days cost 3x dollars for the daily charge plus the fixed $10 whatever x is, so the total y = 3x + 10. The fixed charge is the constant and the daily rate is the coefficient of x - which means the fixed charge is the y-intercept and the rate is the gradient."
+    },
+    {
+      "id": "we04",
+      "outcomeId": "lo02",
+      "difficulty": "Core",
+      "twm": "specialising",
+      "title": "Working backwards from a total cost",
+      "prompt": "Hiring a chainsaw costs a fixed $15 plus $10 per day. Aran pays $45. For how many days?",
+      "solution": "The function is r = 10n + 15. Setting r = 45 gives 10n + 15 = 45, so 10n = 30 and n = 3 days. In general the cost of n days is r = 10n + 15, and checking: 10 x 3 + 15 = 45."
+    },
+    {
+      "id": "we05",
+      "outcomeId": "lo03",
+      "difficulty": "Extension",
+      "twm": "critiquing",
+      "title": "Why a value can be impossible",
+      "prompt": "Sofas seat 3 or 2 people, with x of the first kind and y of the second, and there are 50 seats. Write the function and explain why x cannot be 7.",
+      "solution": "The function is 3x + 2y = 50. Putting x = 7 gives 21 + 2y = 50, so 2y = 29 and y = 14.5. Since y counts sofas, half a sofa is meaningless, so x = 7 is impossible. The algebra allows it; the situation does not. Putting x = 8 gives y = 13, which is fine - so it is not that odd values fail, but that 50 - 3x must be even."
+    },
+    {
+      "id": "we06",
+      "outcomeId": "lo03",
+      "difficulty": "Extension",
+      "twm": "generalising",
+      "title": "Which values of x are possible",
+      "prompt": "For 3x + 2y = 50 with x and y whole numbers that are not negative, which values of x work?",
+      "solution": "y = (50 - 3x)/2, so 50 - 3x must be even and not negative. Since 50 is even, 3x must be even, which means x must be even. And 3x must not exceed 50, so x is at most 16. So x can be 0, 2, 4, 6, 8, 10, 12, 14 or 16 - nine possibilities. Testing x = 16: y = (50 - 48)/2 = 1."
+    },
+    {
+      "id": "we07",
+      "outcomeId": "lo05",
+      "difficulty": "Core",
+      "twm": "characterising",
+      "title": "Where a line crosses the axes",
+      "prompt": "Find where 2x + 4y = 32 crosses each axis, and do the same for 3x + 2y = 18.",
+      "solution": "On the x-axis, y = 0: 2x = 32 gives x = 16, so the point is (16, 0). On the y-axis, x = 0: 4y = 32 gives y = 8, so (0, 8). For 3x + 2y = 18: y = 0 gives x = 6, so (6, 0); x = 0 gives y = 9, so (0, 9). Two points are enough to draw a straight line, and the intercepts are usually the two easiest to find."
+    },
+    {
+      "id": "we08",
+      "outcomeId": "lo04",
+      "difficulty": "Core",
+      "twm": "improving",
+      "title": "Three points, not two",
+      "prompt": "Make a table of values for 3x + 2y = 18 using x = 0, 2, 4 and 6. Why plot four points when two would do?",
+      "solution": "At x = 0, y = 9; at x = 2, 6 + 2y = 18 so y = 6; at x = 4, y = 3; at x = 6, y = 0. The pairs are (0, 9), (2, 6), (4, 3), (6, 0). Two points do determine the line, but they cannot reveal a mistake - any two points lie on some line. A third or fourth point that misses the line tells you an arithmetic slip has happened, which is the only reason to plot more than the minimum."
+    },
+    {
+      "id": "we09",
+      "outcomeId": "lo06",
+      "difficulty": "Core",
+      "twm": "characterising",
+      "title": "Rearranging to y = mx + c",
+      "prompt": "Find the gradient and y-intercept of 3x + y = 15, x + 2y = 10 and 3x + 4y = 24.",
+      "solution": "3x + y = 15 gives y = -3x + 15: gradient -3, intercept 15. x + 2y = 10 gives 2y = -x + 10, so y = -x/2 + 5: gradient -0.5, intercept 5. 3x + 4y = 24 gives 4y = -3x + 24, so y = -3x/4 + 6: gradient -0.75, intercept 6. In each case dividing by the coefficient of y is what finishes the job."
+    },
+    {
+      "id": "we10",
+      "outcomeId": "lo07",
+      "difficulty": "Extension",
+      "twm": "generalising",
+      "title": "The general statement",
+      "prompt": "Rearrange ax + by = c with letters, and say what the gradient and y-intercept always are. What follows when a and b are both positive?",
+      "solution": "From ax + by = c, subtract ax to get by = -ax + c, then divide by b: y = (-a/b)x + c/b. So the gradient is always -a/b and the y-intercept always c/b. If a and b are both positive then -a/b is negative, so EVERY such line slopes downwards from left to right. That is why all the graphs in this section fall - it is forced by the form, not a coincidence, and doing the rearrangement once with letters saves doing it with numbers every time."
+    },
+    {
+      "id": "we11",
+      "outcomeId": "lo07",
+      "difficulty": "Core",
+      "twm": "specialising",
+      "title": "Checking the general rule against four lines",
+      "prompt": "Use the general rule to find the gradient and intercept of 2x + y = 18, x + 2y = 18, 4x + 2y = 18 and 3x + 6y = 18, then confirm one by rearranging.",
+      "solution": "Using -a/b and 18/b: gradients -2, -1/2, -2 and -1/2; intercepts 18, 9, 9 and 3. Confirming the last by hand: 3x + 6y = 18 gives 6y = -3x + 18, so y = -x/2 + 3 - gradient -1/2 and intercept 3, as the rule said. Notice 2x + y = 18 and 4x + 2y = 18 share a gradient but not an intercept: they are parallel, different lines."
+    },
+    {
+      "id": "we12",
+      "outcomeId": "lo06",
+      "difficulty": "Extension",
+      "twm": "critiquing",
+      "title": "A line that rises",
+      "prompt": "Rearrange y - 4x + 2 = 10 to make y the subject, and describe the line. Why is its gradient positive when the others were negative?",
+      "solution": "Add 4x and subtract 2 from both sides: y = 4x + 8. The gradient is +4 and the y-intercept is 8, so the line rises steeply and crosses the vertical axis at 8. Its gradient is positive because the x term began on the same side as y with a minus sign, so moving it across made it positive - the form ax + by = c with positive a and b was never present here."
+    },
+    {
+      "id": "we13",
+      "outcomeId": "lo08",
+      "difficulty": "Core",
+      "twm": "characterising",
+      "title": "Speed is the gradient",
+      "prompt": "A runner's distance-time graph is a straight line through (100, 240). Find the speed, write the equation, and find the distance run in 15 minutes.",
+      "solution": "The runner covers 240 m in 100 s, so the gradient is 240 / 100 = 2.4, and with the units that is a speed of 2.4 m/s. The equation is d = 2.4t. For 15 minutes, convert first: 15 x 60 = 900 s, so d = 2.4 x 900 = 2160 m. The graph only went to 100 seconds, but the equation reaches any time you like - which is the advantage of having the equation as well as the picture."
+    },
+    {
+      "id": "we14",
+      "outcomeId": "lo08",
+      "difficulty": "Extension",
+      "twm": "critiquing",
+      "title": "Comparing two graphs by their gradients",
+      "prompt": "One runner's graph passes through (100, 240) and another's through (50, 145). Which is faster, and why is comparing the graphs' steepness only safe if the axes match?",
+      "solution": "The first runs at 240/100 = 2.4 m/s; the second at 145/50 = 2.9 m/s, so the second is faster. Comparing how steep the two lines LOOK is only valid when both graphs use the same scales on both axes - a graph drawn with a stretched time axis makes the same speed look gentler. The gradient as a number is scale-independent; the appearance is not."
+    }
+  ],
+  "practice": [
+    {
+      "id": "p01",
+      "level": "Warm-up",
+      "prompt": "Ali has a dollars and Bella b dollars, totalling $37. Write the function.",
+      "answer": "a + b = 37",
+      "hint": "The total is the right-hand side."
+    },
+    {
+      "id": "p02",
+      "level": "Warm-up",
+      "prompt": "Hiring a ladder costs $10 plus $3 a day. What is the cost for 7 days?",
+      "answer": "$31",
+      "hint": "10 + 3 x 7."
+    },
+    {
+      "id": "p03",
+      "level": "Warm-up",
+      "prompt": "Where does 2x + 4y = 32 cross the y-axis?",
+      "answer": "(0, 8)",
+      "hint": "Put x = 0."
+    },
+    {
+      "id": "p04",
+      "level": "Core",
+      "prompt": "Pencils cost $2, pens $6, and Fatima spends $30. Write the function and check 9 pencils and 2 pens.",
+      "answer": "2c + 6k = 30; 18 + 12 = 30, so yes",
+      "hint": "Prices become coefficients."
+    },
+    {
+      "id": "p05",
+      "level": "Core",
+      "prompt": "A chainsaw costs $15 plus $10 a day. Aran pays $45. How many days?",
+      "answer": "3 days",
+      "hint": "10n + 15 = 45."
+    },
+    {
+      "id": "p06",
+      "level": "Core",
+      "prompt": "Make a table of values for 3x + 2y = 18 at x = 0, 2, 4, 6.",
+      "answer": "(0,9), (2,6), (4,3), (6,0)",
+      "hint": "Solve for y each time."
+    },
+    {
+      "id": "p07",
+      "level": "Core",
+      "prompt": "Find the gradient and y-intercept of 3x + y = 15.",
+      "answer": "Gradient -3, intercept 15",
+      "hint": "Make y the subject."
+    },
+    {
+      "id": "p08",
+      "level": "Core",
+      "prompt": "Find the gradient and y-intercept of 3x + 4y = 24.",
+      "answer": "Gradient -0.75, intercept 6",
+      "hint": "Divide by 4."
+    },
+    {
+      "id": "p09",
+      "level": "Core",
+      "prompt": "A distance-time graph passes through (100, 240). What is the speed?",
+      "answer": "2.4 m/s",
+      "hint": "The gradient is the speed."
+    },
+    {
+      "id": "p10",
+      "level": "Challenge",
+      "prompt": "State the gradient and y-intercept of ax + by = c in general, and say what follows when a and b are positive.",
+      "answer": "Gradient -a/b and intercept c/b. With a and b both positive the gradient is negative, so the line always slopes downwards.",
+      "hint": "Rearrange with letters, not numbers."
+    },
+    {
+      "id": "p11",
+      "level": "Challenge",
+      "prompt": "For 3x + 2y = 50 with whole non-negative x and y, which values of x are possible?",
+      "answer": "x must be even and at most 16, so 0, 2, 4, 6, 8, 10, 12, 14 or 16 - nine values. At x = 7, y would be 14.5.",
+      "hint": "50 - 3x must be even."
+    },
+    {
+      "id": "p12",
+      "level": "Challenge",
+      "prompt": "A runner's graph goes through (100, 240) and another's through (50, 145). Which is faster, and why is 'which looks steeper' not a safe test?",
+      "answer": "2.4 m/s against 2.9 m/s, so the second. Appearance depends on the scales chosen for the axes, while the gradient as a number does not - a stretched time axis makes the same speed look gentler.",
+      "hint": "Work out both gradients."
+    }
+  ],
+  "activities": [
+    {
+      "title": "Situations into functions",
+      "materials": "cards, paper.",
+      "steps": [
+        "Write six shopping or seating situations, each with two kinds of item and a total.",
+        "Swap and write each as a function in the form ax + by = c.",
+        "For each, find three pairs of values that work.",
+        "Swap back and check that every pair really satisfies the equation."
+      ]
+    },
+    {
+      "title": "Possible and impossible",
+      "materials": "paper.",
+      "steps": [
+        "Take 3x + 2y = 50 and test every whole value of x from 0 to 17.",
+        "Record which give a whole y and which do not.",
+        "Describe the pattern in one sentence and explain why it holds.",
+        "Now do the same for 5x + 2y = 40 and compare the patterns.",
+        "Say what property of the numbers decides which values of x work."
+      ]
+    },
+    {
+      "title": "Two points or four",
+      "materials": "graph paper.",
+      "steps": [
+        "Choose four equations of the form ax + by = c.",
+        "For each, plot just the two intercepts and draw the line.",
+        "Now work out two more points for each and plot them.",
+        "Deliberately make one arithmetic error in a table and see whether the extra points reveal it.",
+        "Write why plotting more than two points is worth the time."
+      ]
+    },
+    {
+      "title": "From ax + by = c to y = mx + c",
+      "materials": "paper.",
+      "steps": [
+        "Write eight equations in the form ax + by = c with various a and b.",
+        "Rearrange each into y = mx + c and record the gradient and intercept.",
+        "Now predict the gradient and intercept of four more using -a/b and c/b.",
+        "Check your predictions by rearranging.",
+        "Find two equations with the same gradient and different intercepts, and say what that means about the lines."
+      ]
+    },
+    {
+      "title": "Gradient as a real quantity",
+      "materials": "graph paper, a stopwatch, a measured distance.",
+      "steps": [
+        "Time several people walking a measured distance, recording distance against time.",
+        "Plot each person's graph on the SAME axes.",
+        "Work out each gradient and attach the units.",
+        "Rank the walkers by gradient and check it matches who was fastest.",
+        "Then redraw one graph with a stretched time axis and see how the same speed looks different."
+      ]
+    },
+    {
+      "title": "Read beyond the graph",
+      "materials": "graph paper.",
+      "steps": [
+        "Draw a distance-time graph up to 100 seconds for a constant speed.",
+        "Find its equation from the gradient.",
+        "Use the equation to predict the distance at 5, 10 and 15 minutes.",
+        "Discuss whether the prediction is safe - would the runner really hold that pace?",
+        "Write one sentence on the difference between what the equation says and what the situation allows."
+      ]
+    }
+  ],
+  "reference": {
+    "rules": [
+      {
+        "title": "Words to ax + by = c",
+        "text": "The quantities in the words become the coefficients and the total becomes the right-hand side. Two unknowns means many solutions."
+      },
+      {
+        "title": "Test a Pair by Substituting",
+        "text": "Put both values in and see whether the equation holds. Fixing one variable turns it into a one-variable equation."
+      },
+      {
+        "title": "Whole Numbers Are an Extra Condition",
+        "text": "If the letters count things, a fractional answer means that value is impossible, even though the algebra allows it."
+      },
+      {
+        "title": "Intercepts Are the Easiest Points",
+        "text": "Set y = 0 for the x-axis crossing and x = 0 for the y-axis crossing."
+      },
+      {
+        "title": "Rearrange to Read m and c",
+        "text": "Make y the subject: y = mx + c gives the gradient m and the y-intercept c directly."
+      },
+      {
+        "title": "In General, -a/b and c/b",
+        "text": "ax + by = c has gradient -a/b and y-intercept c/b. With a and b positive the gradient is negative, so the line falls."
+      },
+      {
+        "title": "The Gradient Is the Compound Measure",
+        "text": "On a distance-time graph the gradient is the speed, with units read from the axes."
+      }
+    ],
+    "terms": [
+      [
+        "Linear function in two variables",
+        "A relationship of the form ax + by = c"
+      ],
+      [
+        "Coefficient",
+        "The number multiplying a variable"
+      ],
+      [
+        "Table of values",
+        "Matching inputs and outputs used to plot a graph"
+      ],
+      [
+        "Intercept",
+        "Where a graph crosses an axis"
+      ],
+      [
+        "Gradient",
+        "How much y changes for each increase of 1 in x"
+      ],
+      [
+        "y = mx + c",
+        "The form that shows the gradient m and the y-intercept c"
+      ],
+      [
+        "Compound measure",
+        "A quantity defined as one thing per another, such as metres per second"
+      ],
+      [
+        "Constant speed",
+        "A speed that does not change, giving a straight-line distance-time graph"
+      ]
+    ],
+    "commonMistakes": [
+      [
+        "Looking for one answer to ax + by = c",
+        "It has many solutions; the question is which pairs are possible"
+      ],
+      [
+        "Accepting a fractional answer when the letters count things",
+        "Half a sofa is impossible, so that value of x is ruled out"
+      ],
+      [
+        "Plotting only two points",
+        "Any two points lie on a line, so a mistake cannot show up"
+      ],
+      [
+        "Reading the gradient off ax + by = c directly",
+        "Rearrange first - the gradient is -a/b, not a"
+      ],
+      [
+        "Comparing graphs by how steep they look",
+        "Appearance depends on the scales; compute the gradients"
+      ]
+    ]
+  },
+  "fluency": [
+    {
+      "id": "fl01",
+      "outcomeId": "lo01",
+      "difficulty": "Round 1",
+      "prompt": "Ali has a, Bella has b, total $37. Function?",
+      "answer": "a + b = 37",
+      "hint": "Add them.",
+      "errorFeedback": "The total goes on the right."
+    },
+    {
+      "id": "fl02",
+      "outcomeId": "lo05",
+      "difficulty": "Round 1",
+      "prompt": "Where does 2x + 4y = 32 cross the x-axis?",
+      "answer": "(16, 0)",
+      "hint": "Put y = 0.",
+      "errorFeedback": "2x = 32, so x = 16."
+    },
+    {
+      "id": "fl03",
+      "outcomeId": "lo05",
+      "difficulty": "Round 1",
+      "prompt": "Where does 3x + 2y = 18 cross the y-axis?",
+      "answer": "(0, 9)",
+      "hint": "Put x = 0.",
+      "errorFeedback": "2y = 18, so y = 9."
+    },
+    {
+      "id": "fl04",
+      "outcomeId": "lo01",
+      "difficulty": "Round 1",
+      "prompt": "Ladder: $10 fixed plus $3 a day. Cost for 7 days?",
+      "answer": "$31",
+      "hint": "10 + 21.",
+      "errorFeedback": "3 x 7 = 21, plus the fixed 10."
+    },
+    {
+      "id": "fl05",
+      "outcomeId": "lo06",
+      "difficulty": "Round 2",
+      "prompt": "Gradient of 3x + y = 15?",
+      "answer": "-3",
+      "hint": "Make y the subject.",
+      "errorFeedback": "y = -3x + 15."
+    },
+    {
+      "id": "fl06",
+      "outcomeId": "lo06",
+      "difficulty": "Round 2",
+      "prompt": "Gradient of x + 2y = 10?",
+      "answer": "-0.5",
+      "hint": "Divide by 2.",
+      "errorFeedback": "y = -x/2 + 5."
+    },
+    {
+      "id": "fl07",
+      "outcomeId": "lo06",
+      "difficulty": "Round 2",
+      "prompt": "y-intercept of 3x + 4y = 24?",
+      "answer": "6",
+      "hint": "24 divided by 4.",
+      "errorFeedback": "y = -3x/4 + 6."
+    },
+    {
+      "id": "fl08",
+      "outcomeId": "lo02",
+      "difficulty": "Round 2",
+      "prompt": "Chainsaw $15 plus $10 a day. Aran pays $45. Days?",
+      "answer": "3",
+      "hint": "10n + 15 = 45.",
+      "errorFeedback": "10n = 30."
+    },
+    {
+      "id": "fl09",
+      "outcomeId": "lo07",
+      "difficulty": "Round 3",
+      "prompt": "Gradient of ax + by = c in general?",
+      "answer": "-a/b",
+      "hint": "Rearrange with letters.",
+      "errorFeedback": "by = -ax + c, then divide by b."
+    },
+    {
+      "id": "fl10",
+      "outcomeId": "lo07",
+      "difficulty": "Round 3",
+      "prompt": "y-intercept of ax + by = c in general?",
+      "answer": "c/b",
+      "hint": "Put x = 0.",
+      "errorFeedback": "by = c, so y = c/b."
+    },
+    {
+      "id": "fl11",
+      "outcomeId": "lo08",
+      "difficulty": "Round 3",
+      "prompt": "A distance-time graph through (100, 240). Speed?",
+      "answer": "2.4 m/s",
+      "hint": "Distance over time.",
+      "errorFeedback": "240 / 100 = 2.4."
+    },
+    {
+      "id": "fl12",
+      "outcomeId": "lo08",
+      "difficulty": "Round 3",
+      "prompt": "Using d = 2.4t, how far in 15 minutes?",
+      "answer": "2160 m",
+      "hint": "Convert to seconds first.",
+      "errorFeedback": "900 s, so 2.4 x 900."
+    }
+  ],
+  "realProblems": [
+    {
+      "id": "rp01",
+      "outcomeId": "lo01",
+      "difficulty": "Core",
+      "context": "Market",
+      "prompt": "Kasia has f five-dollar notes and t ten-dollar notes, totalling $90. Write the function, show that 6 of each works, and find the largest number of ten-dollar notes she could have if she holds at least one of each.",
+      "answer": "5f + 10t = 90. With 6 of each: 30 + 60 = 90, so yes. If she must hold at least one five, then 5 + 10t is at most 90, so 10t is at most 85 and t is at most 8. Checking t = 8: 80, leaving 10, so f = 2. The largest is 8 ten-dollar notes.",
+      "hint": "The note values are the coefficients.",
+      "errorFeedback": "5 x 6 + 10 x 6 = 90."
+    },
+    {
+      "id": "rp02",
+      "outcomeId": "lo03",
+      "difficulty": "Extension",
+      "context": "Work",
+      "prompt": "A restaurant has large tables seating 6 and small tables seating 4, with 120 seats in total. Show that 12 of each works, and find out whether the number of small tables can be double the number of large ones.",
+      "answer": "6L + 4S = 120, and 12 of each gives 72 + 48 = 120. If S = 2L then 6L + 8L = 120, so 14L = 120 and L = 60/7, which is not a whole number. So no - the small tables cannot be exactly double the large ones with 120 seats.",
+      "hint": "Substitute S = 2L into the function.",
+      "errorFeedback": "14L = 120 does not give a whole L."
+    },
+    {
+      "id": "rp03",
+      "outcomeId": "lo02",
+      "difficulty": "Core",
+      "context": "Money",
+      "prompt": "Erin has a two-cent coins and b five-cent coins and writes 2a + 5b = 80. She is then given more five-cent coins and writes 2a + 5b = 100. How many coins was she given?",
+      "answer": "The total rose by 20 cents and all of it came in five-cent coins, so she was given 20 / 5 = 4 coins. The number of two-cent coins is unchanged, which is what lets you attribute the whole increase to the fives.",
+      "hint": "How much did the total change by?",
+      "errorFeedback": "20 cents in five-cent coins is 4 coins."
+    },
+    {
+      "id": "rp04",
+      "outcomeId": "lo08",
+      "difficulty": "Core",
+      "context": "Science",
+      "prompt": "A runner's distance-time graph is a straight line through (100, 240). Find the speed and how far the runner goes in 15 minutes.",
+      "answer": "The gradient is 240 / 100 = 2.4, so the speed is 2.4 m/s and the equation is d = 2.4t. Fifteen minutes is 15 x 60 = 900 seconds, so d = 2.4 x 900 = 2160 m, which is a little over 2 km.",
+      "hint": "Convert minutes to seconds before substituting.",
+      "errorFeedback": "2.4 x 900 = 2160."
+    },
+    {
+      "id": "rp05",
+      "outcomeId": "lo01",
+      "difficulty": "Core",
+      "context": "Home",
+      "prompt": "Shen is s years old and his father is f, and their ages total 50. Write a function for now, for one year's time, and for five years' time.",
+      "answer": "Now: s + f = 50. In one year each is a year older, so (s + 1) + (f + 1) = 52. In five years, (s + 5) + (f + 5) = 60. The total rises by 2 each year because BOTH ages increase, which is the step most people miss.",
+      "hint": "How many people get a year older?",
+      "errorFeedback": "Two people, so the total rises by 2 each year."
+    },
+    {
+      "id": "rp06",
+      "outcomeId": "lo06",
+      "difficulty": "Extension",
+      "context": "Work",
+      "prompt": "A taxi firm's charge is given by 3x + 4y = 24, where x is kilometres and y is a discount in dollars. Find the gradient and intercept, and say what each means.",
+      "answer": "Rearranging, 4y = -3x + 24 so y = -3x/4 + 6. The intercept 6 means the discount is $6 when no distance is travelled, and the gradient -0.75 means the discount falls by 75 cents for every extra kilometre. A negative gradient here describes something shrinking, which is what makes the sign meaningful rather than decorative.",
+      "hint": "Divide every term by 4.",
+      "errorFeedback": "y = -0.75x + 6."
+    }
+  ],
+  "reasoningPrompts": [
+    {
+      "id": "reason01",
+      "outcomeId": "lo01",
+      "difficulty": "Core",
+      "responseMode": "text",
+      "prompt": "How is a function like 2c + 6k = 30 different from a function like y = 5x - 1?",
+      "keyIdeas": [
+        "Two unknowns rather than an input and an output",
+        "It describes a set of pairs",
+        "Neither variable is obviously the input"
+      ],
+      "modelAnswer": "y = 5x - 1 is a rule: you supply x and it returns one y, so it behaves like a machine. 2c + 6k = 30 supplies nothing - it states a relationship that c and k must satisfy together, and many pairs do. Neither letter is the input, and asking 'what is the answer' has no single reply; the honest question is which pairs are possible. That is why this form is used for situations where two quantities are traded off against each other, like pencils against pens on a fixed budget."
+    },
+    {
+      "id": "reason02",
+      "outcomeId": "lo03",
+      "difficulty": "Core",
+      "responseMode": "text",
+      "prompt": "Why can the algebra allow a value that the situation forbids?",
+      "keyIdeas": [
+        "The equation does not know what the letters count",
+        "Whole numbers are an extra condition",
+        "y = 14.5 sofas is meaningless"
+      ],
+      "modelAnswer": "An equation is only about numbers; it carries no information about what those numbers stand for. 3x + 2y = 50 is perfectly happy with y = 14.5, because 21 + 29 really is 50. The requirement that y be a whole number comes from the situation - you cannot have half a sofa - and is an extra condition imposed on top of the equation. So solving the algebra is only the first half of the work, and checking that the answer makes sense in the context is the second."
+    },
+    {
+      "id": "reason03",
+      "outcomeId": "lo04",
+      "difficulty": "Core",
+      "responseMode": "text",
+      "prompt": "Two points determine a straight line, so why plot more?",
+      "keyIdeas": [
+        "Any two points lie on some line",
+        "A mistake cannot show up",
+        "A third point is the only check"
+      ],
+      "modelAnswer": "Two points always lie on exactly one line, so whatever two you plot will look perfectly consistent - even if one of them is wrong. The line you draw will simply be the wrong line, and nothing about the picture will say so. A third point is the first piece of independent evidence: if it falls off the line, one of the three is miscalculated. This is the same reason a solution is checked in the original equation rather than in a line derived from it."
+    },
+    {
+      "id": "reason04",
+      "outcomeId": "lo07",
+      "difficulty": "Extension",
+      "responseMode": "text",
+      "prompt": "Why is the gradient of ax + by = c always negative when a and b are positive?",
+      "keyIdeas": [
+        "Rearranging gives y = (-a/b)x + c/b",
+        "A positive divided by a positive is positive",
+        "The minus sign is in the form itself"
+      ],
+      "modelAnswer": "Rearranging with letters gives y = (-a/b)x + c/b, so the gradient is -a/b. If a and b are both positive then a/b is positive, and the minus sign in front makes the gradient negative. The minus is not a property of any particular numbers - it comes from moving the ax term across the equals sign, which is part of the form itself. That is why every graph in this section slopes downwards, and why making one rise requires a or b to be negative, or the x term to have started on the other side."
+    },
+    {
+      "id": "reason05",
+      "outcomeId": "lo08",
+      "difficulty": "Core",
+      "responseMode": "text",
+      "prompt": "Why is the gradient of a distance-time graph a speed, rather than just a number?",
+      "keyIdeas": [
+        "Gradient is change in distance over change in time",
+        "That is the definition of speed",
+        "The units come from the axes"
+      ],
+      "modelAnswer": "A gradient is the change in the vertical quantity divided by the change in the horizontal one. When the vertical axis is distance in metres and the horizontal is time in seconds, that division is metres divided by seconds - which is exactly what speed means. So the gradient is not a bare number that happens to equal the speed; it IS the speed, and its units are read off the axes. This is what a compound measure is: a quantity defined as one thing per another."
+    },
+    {
+      "id": "reason06",
+      "outcomeId": "lo08",
+      "difficulty": "Extension",
+      "responseMode": "text",
+      "prompt": "Why is 'which line looks steeper' an unsafe way to compare two graphs?",
+      "keyIdeas": [
+        "Appearance depends on the scales",
+        "The gradient as a number does not",
+        "Only comparable if both axes match"
+      ],
+      "modelAnswer": "How steep a line looks depends on the scales chosen for the two axes, which are a decision by whoever drew the graph. Stretching the time axis makes any speed look gentler and squashing it makes the same speed look violent, without a single plotted value changing. The gradient computed as a change divided by a change is unaffected, because it uses the values rather than the picture. So comparing appearances is only valid when both graphs use identical scales on both axes - and when they do not, the numbers are the only honest comparison."
+    }
+  ],
+  "assessment": {
+    "passPercent": 80,
+    "questions": [
+      {
+        "id": "q01",
+        "type": "Application",
+        "outcomeId": "lo01",
+        "difficulty": "Basic",
+        "question": "Pencils cost $2, pens $6, and Fatima spends $30 on c pencils and k pens. The function is:",
+        "options": [
+          "2c + 6k = 30",
+          "c + k = 30",
+          "6c + 2k = 30",
+          "2c = 6k"
+        ],
+        "answer": "2c + 6k = 30",
+        "hint": "Prices become coefficients.",
+        "explanation": "c pencils cost 2c and k pens cost 6k, totalling 30."
+      },
+      {
+        "id": "q02",
+        "type": "Application",
+        "outcomeId": "lo05",
+        "difficulty": "Basic",
+        "question": "Where does 2x + 4y = 32 cross the x-axis?",
+        "options": [
+          "(16, 0)",
+          "(0, 8)",
+          "(8, 0)",
+          "(0, 16)"
+        ],
+        "answer": "(16, 0)",
+        "hint": "Put y = 0.",
+        "explanation": "2x = 32 gives x = 16."
+      },
+      {
+        "id": "q03",
+        "type": "Application",
+        "outcomeId": "lo06",
+        "difficulty": "Core",
+        "question": "The gradient of 3x + y = 15 is:",
+        "options": [
+          "-3",
+          "3",
+          "15",
+          "-15"
+        ],
+        "answer": "-3",
+        "hint": "Make y the subject.",
+        "explanation": "y = -3x + 15, so the gradient is -3."
+      },
+      {
+        "id": "q04",
+        "type": "Application",
+        "outcomeId": "lo06",
+        "difficulty": "Core",
+        "question": "The y-intercept of 3x + 4y = 24 is:",
+        "options": [
+          "6",
+          "8",
+          "24",
+          "-0.75"
+        ],
+        "answer": "6",
+        "hint": "Divide by 4.",
+        "explanation": "y = -3x/4 + 6, so the intercept is 6."
+      },
+      {
+        "id": "q05",
+        "type": "Application",
+        "outcomeId": "lo07",
+        "difficulty": "Core",
+        "question": "In general, the gradient of ax + by = c is:",
+        "options": [
+          "-a/b",
+          "a/b",
+          "c/b",
+          "-b/a"
+        ],
+        "answer": "-a/b",
+        "hint": "Rearrange with letters.",
+        "explanation": "by = -ax + c, so y = (-a/b)x + c/b."
+      },
+      {
+        "id": "q06",
+        "type": "Application",
+        "outcomeId": "lo08",
+        "difficulty": "Core",
+        "question": "A distance-time graph passes through (100, 240). The speed is:",
+        "options": [
+          "2.4 m/s",
+          "240 m/s",
+          "100 m/s",
+          "0.42 m/s"
+        ],
+        "answer": "2.4 m/s",
+        "hint": "Distance over time.",
+        "explanation": "240 / 100 = 2.4 metres per second."
+      },
+      {
+        "id": "q07",
+        "type": "Reasoning",
+        "outcomeId": "lo03",
+        "difficulty": "Extension",
+        "question": "For 3x + 2y = 50 counting sofas, why can x not be 7?",
+        "options": [
+          "7 is odd",
+          "y would be 14.5, and half a sofa is impossible",
+          "3 x 7 is more than 50",
+          "x must be less than 7"
+        ],
+        "answer": "y would be 14.5, and half a sofa is impossible",
+        "hint": "Substitute and solve for y.",
+        "explanation": "21 + 2y = 50 gives y = 14.5, which the situation forbids even though the algebra allows it."
+      },
+      {
+        "id": "q08",
+        "type": "Reasoning",
+        "outcomeId": "lo04",
+        "difficulty": "Extension",
+        "question": "Why plot more than two points for a straight line?",
+        "options": [
+          "Two points are not enough to draw a line",
+          "A third point can reveal a mistake",
+          "It makes the line straighter",
+          "Graphs need at least four points"
+        ],
+        "answer": "A third point can reveal a mistake",
+        "hint": "Could two points ever disagree?",
+        "explanation": "Any two points lie on exactly one line, so an error in one is invisible; a third point is the first independent check."
+      }
+    ]
+  },
+  "games": {
+    "masteryScore": 3,
+    "games": [
+      {
+        "id": "u10-game-1",
+        "icon": "?",
+        "skill": "Functions and intercepts",
+        "title": "Quick Match: Functions and Intercepts",
+        "description": "Four short challenges on two-variable functions and axis crossings.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "Ali a, Bella b, total $37",
+            "choices": [
+              "a + b = 37",
+              "ab = 37",
+              "a - b = 37",
+              "37a = b"
+            ],
+            "answer": "a + b = 37",
+            "clue": "Add them."
+          },
+          {
+            "prompt": "2x + 4y = 32 crosses the x-axis at",
+            "choices": [
+              "(16, 0)",
+              "(0, 8)",
+              "(8, 0)",
+              "(0, 16)"
+            ],
+            "answer": "(16, 0)",
+            "clue": "Put y = 0."
+          },
+          {
+            "prompt": "3x + 2y = 18 crosses the y-axis at",
+            "choices": [
+              "(0, 9)",
+              "(6, 0)",
+              "(0, 6)",
+              "(9, 0)"
+            ],
+            "answer": "(0, 9)",
+            "clue": "Put x = 0."
+          },
+          {
+            "prompt": "x + 5y = 15 crosses the x-axis at",
+            "choices": [
+              "(15, 0)",
+              "(0, 3)",
+              "(3, 0)",
+              "(0, 15)"
+            ],
+            "answer": "(15, 0)",
+            "clue": "Put y = 0."
+          }
+        ]
+      },
+      {
+        "id": "u10-game-2",
+        "icon": "?",
+        "skill": "Gradient and intercept",
+        "title": "Quick Match: Gradient and Intercept",
+        "description": "Four short challenges on y = mx + c and compound measures.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "Gradient of 3x + y = 15",
+            "choices": [
+              "-3",
+              "3",
+              "15",
+              "-15"
+            ],
+            "answer": "-3",
+            "clue": "y = -3x + 15."
+          },
+          {
+            "prompt": "Gradient of x + 2y = 10",
+            "choices": [
+              "-0.5",
+              "0.5",
+              "5",
+              "-2"
+            ],
+            "answer": "-0.5",
+            "clue": "Divide by 2."
+          },
+          {
+            "prompt": "Gradient of ax + by = c",
+            "choices": [
+              "-a/b",
+              "a/b",
+              "c/b",
+              "-b/a"
+            ],
+            "answer": "-a/b",
+            "clue": "Rearrange with letters."
+          },
+          {
+            "prompt": "Speed from (100, 240) on a distance-time graph",
+            "choices": [
+              "2.4 m/s",
+              "240 m/s",
+              "100 m/s",
+              "0.42 m/s"
+            ],
+            "answer": "2.4 m/s",
+            "clue": "Distance over time."
+          }
+        ]
+      }
+    ]
+  },
+  "selfAssessment": [
+    "I can write a situation described in words as a linear function in two variables, in the form ax + by = c.",
+    "I can use a two-variable function to test whether a particular pair of values is possible.",
+    "I can explain why some values are impossible in a context where only whole numbers make sense.",
+    "I can construct a table of values for a linear function and plot its graph.",
+    "I can find where a graph crosses each axis, by setting the other variable to zero.",
+    "I can rearrange ax + by = c into the form y = mx + c to read off the gradient and the y-intercept.",
+    "I can state the gradient and y-intercept of ax + by = c in general, and say why the gradient is negative when a and b are positive.",
+    "I can read a compound measure such as speed from the gradient of a graph, and use the equation to find values not plotted."
+  ]
+}

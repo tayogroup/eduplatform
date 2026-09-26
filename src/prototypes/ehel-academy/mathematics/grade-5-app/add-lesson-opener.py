@@ -86,6 +86,28 @@ MARK = "ehel-g5-lesson-opener"
 #   words: [(word, pic, meaning, [use, ...])]  "Math words" - full interactive tap-card + quiz
 # }
 WORK = {
+ "time-and-how-we-write-it": {
+  "about": [
+   "Understand time intervals less than one second.",
+   "Compare times between time zones in digital notation (12- and 24-hour) and on analogue clock faces.",
+   "Find time intervals in seconds, minutes and hours that bridge through 60.",
+   "Recognise that a time interval can be expressed as a decimal, or in mixed units.",
+  ],
+  "parts": [
+   ("Sixty, not ten", "Time is the one measure that does not carry at ten or at a hundred. Minutes carry at sixty and hours at twenty-four, which is why an interval across the hour is worked in two hops rather than subtracted like ordinary numbers."),
+   ("The same moment, written differently", "A 24-hour clock needs no am or pm because it never repeats itself; after midday you add twelve to the hour. The same length of time can also be written in mixed units or as a decimal, and 0.5 hours is thirty minutes rather than fifty."),
+   ("Smaller than a second, and further than a country", "A race is timed to hundredths, so the gap between two runners is often a fraction of one second. At the other end of the scale, the same moment is a different clock time in another time zone, sometimes on another day."),
+  ],
+  "words": [
+   ("interval", "\u23F1\uFE0F", "The length of time between a start and an end.", ["Find the interval between 09:50 and 10:20."]),
+   ("duration", "\u231B", "How long something lasts, from beginning to end.", ["Estimate the duration of this activity."]),
+   ("24-hour clock", "\U0001F553", "A way of writing time from 00:00 to 23:59, with no am or pm because no time repeats.", ["Write quarter to five in the afternoon on the 24-hour clock."]),
+   ("am and pm", "\U0001F305", "am is before midday and pm is after it; the 12-hour clock needs them because it repeats.", ["Say whether 07:30 is am or pm."]),
+   ("time zone", "\U0001F30D", "A region where clocks are set to the same hour; different zones show different times at the same moment.", ["Work out the time in London when it is 09:00 in Mogadishu."]),
+   ("decimal time", "\U0001F4AF", "A length of time written as a decimal part of an hour, where 0.5 hours means thirty minutes.", ["Write 45 minutes as a decimal number of hours."]),
+   ("hundredth", "\U0001F3C1", "One of a hundred equal parts; race times are often measured to hundredths of a second.", ["Which runner was faster, by how many hundredths?"]),
+  ],
+ },
  "where-things-are": {
   "about": [
    "Compare the relative position of coordinates, with or without the aid of a grid.",

@@ -66,6 +66,16 @@ SCALE = [("yes", "I can do this"),
 
 # lesson -> [(statement, source)]   W = Stage 5 Workbook, G = Teacher's Guide
 WORK = {
+ "time-and-how-we-write-it": [
+  ("I can understand time that is written in decimals", "W p26"),
+  ("I can estimate how long an event takes", "W p26"),
+  ("I can solve problems using 12-hour and 24-hour times", "W p26"),
+  ("I can calculate the difference between two times", "W p26"),
+  ("I can work out times in different time zones", "W p98"),
+  ("I can find start and end times for different durations", "W p98"),
+  ("I can write time in 12-hour and 24-hour clocks", "W p98"),
+  ("I can compare times shorter than one second, such as race results", "G p63"),
+ ],
  "where-things-are": [
   ("I can use coordinates to give the vertices of 2D shapes", "W p59"),
   ("I can find coordinates on grids without gridlines", "W p59"),

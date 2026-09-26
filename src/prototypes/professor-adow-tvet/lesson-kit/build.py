@@ -194,9 +194,38 @@ PAGE = """<!doctype html>
   <a class="eh-round back" href="{hub}" aria-label="Back to the lesson list">←</a>
   <button type="button" class="eh-round" id="ehMenu" aria-expanded="false" aria-controls="ehSteps">☰ Menu</button>
   <span class="eh-section">{h1}</span>
-  <span class="eh-b2right"><button type="button" class="eh-pill" id="ehFull">⛶ Full screen</button></span>
+  <span class="eh-b2right top-actions"><button type="button" class="eh-pill" id="ehFull">⛶ Full screen</button></span>
 </nav>
 <div class="eh-steps" id="ehSteps" hidden></div>
+
+<!-- CLASS CHAT, RAISE HAND AND THE CLASS pill, as the Ehel lessons carry them.
+     A module beside the classic scripts: the control is an ES module and the
+     kit is not, and the two load happily side by side.
+
+     THESE DO NOT APPEAR YET, and that is the design rather than a fault. The
+     control mounts only when the page was opened from Moodle with a signed
+     launch (?pwsToken plus a cross-origin ?pwsEndpoint) AND the server says a
+     teacher is watching. Professor Adow TVET has no consumer record, no synced
+     courses and no enrolments today, so a learner working alone sees the topbar
+     exactly as before. A button that cannot reach a teacher is worse than no
+     button.
+
+     The import failing is not an error worth showing a learner: an older
+     browser, or a page opened from the file system, simply gets the lesson
+     without the controls. -->
+<script type="module">
+  import("{lib}/learner-controls.js")
+    .then(({{ mountLearnerControls }}) => {{
+      const q = new URLSearchParams(location.search);
+      mountLearnerControls({{
+        token: q.get("pwsToken") || "",
+        launchToken: (q.get("pwsToken") || "").replace(/[^A-Za-z0-9._-]/g, ""),
+        launchEndpoint: (q.get("pwsEndpoint") || "").trim(),
+        progressUnit: "{slug}",
+      }});
+    }})
+    .catch(() => {{}});
+</script>
 <div class="eh-found" id="ehFound" hidden></div>
 
 <div class="wrap">
@@ -502,6 +531,7 @@ def build_lesson(lesson, cfg, criteria, out_dir, lib, renderers, siblings):
         endnote_spoken=esc(cfg.get("endNote", "")),
         hub=esc(cfg["hub"]),
         lib=esc(lib),
+        slug=esc(lesson["slug"]),
         picker="".join(
             '<option value="%s.html"%s>%s</option>'
             % (esc(other["slug"]), " selected" if other["slug"] == lesson["slug"] else "", esc(other["title"]))

@@ -66,6 +66,17 @@ SCALE = [("yes", "I can do this"),
 
 # lesson -> [(statement, source)]   W = Stage 5 Workbook, G = Teacher's Guide
 WORK = {
+ "data-and-chance": [
+  ("I can draw and read frequency tables", "W p32"),
+  ("I can read and use bar charts", "W p32"),
+  ("I can read and use dot plots", "W p32"),
+  ("I can interpret trends and patterns in data shown on dot plots and other graphs", "W p32"),
+  ("I can find the mode of a set of data", "W p89"),
+  ("I can find the median of a set of data", "W p89"),
+  ("I can recognise when outcomes are equally likely, more likely or less likely", "W p47"),
+  ("I can explain why certain outcomes are more or less likely than others", "W p47"),
+  ("I can perform probability experiments, make predictions and interpret the results", "W p47"),
+ ],
  "time-and-how-we-write-it": [
   ("I can understand time that is written in decimals", "W p26"),
   ("I can estimate how long an event takes", "W p26"),

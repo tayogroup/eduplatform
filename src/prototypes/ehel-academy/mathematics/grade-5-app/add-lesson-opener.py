@@ -86,6 +86,33 @@ MARK = "ehel-g5-lesson-opener"
 #   words: [(word, pic, meaning, [use, ...])]  "Math words" - full interactive tap-card + quiz
 # }
 WORK = {
+ "data-and-chance": {
+  "about": [
+   "Plan and conduct an investigation to answer a set of related statistical questions.",
+   "Record, organise and represent categorical, discrete and continuous data.",
+   "Understand that the mode and median are ways to describe and summarise data sets.",
+   "Interpret data, identifying patterns, within and between data sets, to answer statistical questions.",
+   "Use the language associated with likelihood to describe and compare likelihood and risk.",
+   "Recognise that some outcomes are equally likely to happen and some outcomes are more or less likely.",
+   "Conduct chance experiments or simulations, using small and large numbers of trials.",
+  ],
+  "parts": [
+   ("A question that varies", "A statistical question is one where you expect the answers to differ. If everyone would answer the same, it is a fact to look up rather than data to collect - and a question nobody can check is an opinion, however much it varies."),
+   ("Two ways to say what a set is like", "The mode is the value that turns up most often and the median is the one in the middle once the values are in order. Putting them in order is the step people skip, and with an even number of values the median can be a number that is not in the set at all."),
+   ("What the data can and cannot tell you", "A chart can show that two things happened in the same week. It cannot show that one caused the other. Reading data well is partly about noticing the pattern and partly about not claiming more than the numbers support."),
+  ],
+  "words": [
+   ("frequency", "\U0001F5C2\uFE0F", "How many times a value or category appears in a set of data.", ["Fill in the frequency column of the table."]),
+   ("tally", "\u270F\uFE0F", "A quick way of counting as you collect, grouping marks in fives.", ["Keep a tally as you ask each pupil."]),
+   ("bar chart", "\U0001F4CA", "A chart with a bar for each category, where the height shows the frequency.", ["Draw a bar chart of how the class travels to school."]),
+   ("dot plot", "\U0001F535", "A chart with one dot per item placed above its value, showing where the data bunches.", ["Use a dot plot to show the shoe sizes."]),
+   ("mode", "\U0001F51D", "The value that appears most often in a set of data; a set can have more than one, or none.", ["Find the mode of this set."]),
+   ("median", "\u2696\uFE0F", "The middle value once the data is put in order.", ["Put the numbers in order, then find the median."]),
+   ("likely", "\U0001F3B2", "Describes an outcome with a better than even chance of happening.", ["Say whether drawing a red counter is likely or unlikely."]),
+   ("equally likely", "\u2696\uFE0F", "Two outcomes with the same number of ways of happening.", ["Explain why these two outcomes are equally likely."]),
+   ("trial", "\U0001F504", "One go of a chance experiment, such as a single throw of a coin.", ["Record the result of each trial."]),
+  ],
+ },
  "time-and-how-we-write-it": {
   "about": [
    "Understand time intervals less than one second.",

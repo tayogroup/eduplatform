@@ -51,6 +51,40 @@ one 📚 = 2 books, row shows 4 symbols"), so the glyphs printed on the page are
 key, not the quantity. And count code points, not `.length` — an emoji is a
 surrogate pair, so seven buttons measure as fourteen.
 
+### Grade 5's shell content is RETIRED FROM THE CDN (2026-09-26), and the repo still holds it
+
+Owner decision. `content/mathematics/g05/**` — all 26 files, the 18 units, capstone,
+topic-index, placement-exam, course-manifest and 4 tutor-lessons — was deleted from
+Bunny storage, and 2,336 of its 2,430 narration clips with it. Grade 5's live product
+is the standalone app (`app/mathematics/grade-5-v2/`), which shares none of it.
+
+**94 clips were deliberately kept**: 77 Wehel stock tutor phrases plus 17 from
+grade-5's tutor-lessons. `hashesForGrade` claims the Wehel phrases for EVERY grade
+regardless of content, which is the trap that once reported all 77 as dead.
+
+**Tutoring now skips Stage 5 maths, gracefully and by design.** `get-help.js` says a
+missing `topic-index.json` "404s and is skipped without comment: the index not
+existing IS the statement that the stage is not offered" — the same mechanism as
+Global Perspectives' withdrawn Stage 5. Nothing is broken; a capability was removed
+on purpose.
+
+**THE LOCAL FILES STAY, AND THAT IS NOT AN OVERSIGHT.** `grade-5/data/` keeps
+`topic-index.json`, `tutor-lessons/`, `placement-exam.json` and `course-manifest.json`;
+only `units/` and `grade-capstone.json` live in `_archive-grade-5-shell-course/`.
+`ehel-topic-index.js :: CONTENT_DIR_OVERRIDE["mathematics:5"]` points the DERIVATION
+at the archive precisely so the still-local index can be re-verified rather than
+"READ but never RE-VERIFIED". Moving those files into the archive was tried on
+2026-09-26 and reverted: it drops mathematics to 3,630 topics against a floor of
+4,191 and adds a "stage 5 topic-index.json missing" failure. Read that comment before
+touching it again.
+
+**So the retirement is NOT durable.** `node tools/upload-content-to-bunny.js mathematics`
+will re-deploy all of it from those local files and put Stage 5 back into tutoring
+search, silently. The repo has no way to say "retired from the CDN, kept locally" —
+`withdrawn-courses.json` would assert the COURSE is withdrawn, which is false, since
+`ehel-math-g05` is live via the app. If the retirement must survive a content upload,
+that needs a deliberate change to the uploader, not a file move.
+
 ### The Cambridge Mathematics frameworks: 0096 and 0862 are both here
 
 Both are extracted from Cambridge's published PDFs by

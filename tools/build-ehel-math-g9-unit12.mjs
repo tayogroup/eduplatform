@@ -1,0 +1,556 @@
+// Build Mathematics Grade 9, Unit 12: Probability.
+//
+// Grade 9 has no content model. build:math reads
+// outputs/math-content/math-content-model.json, which holds grades 1-8 only,
+// so every other grade was generated and this one is authored. The unit is
+// written here rather than hand-edited as JSON so the content is reviewable as
+// prose and the file is reproducible.
+//
+// SOURCED FROM THE STAGE 9 LEARNER'S BOOK, pages 252-269, recovered by
+// tools/ocr-embedded-images.py after ocrmypdf produced 71% blank pages on that
+// PDF. The book's own section order is kept:
+//
+//   12.1 Mutually exclusive events   -> 9Sp.01
+//   12.2 Independent events          -> 9Sp.02
+//   12.3 Combined events             -> 9Sp.03
+//   12.4 Chance experiments          -> 9Sp.04
+//
+// That is a one-to-one map onto the four Stage 9 probability objectives, which
+// is why this unit was built first: the mapping needs no judgement, so the
+// template can be judged on its own.
+//
+// SCHEMA COPIED FROM grade-8/data/units/unit-13.json, the Stage 8 probability
+// unit, field for field. A unit the runtime cannot read is worth nothing, and
+// the schema is not documented anywhere but in the data.
+//
+// Every number in here is checked by check-g9-unit12.mjs, which recomputes the
+// answers rather than trusting them.
+//
+//   node tools/build-ehel-math-g9-unit12.mjs [--write]
+
+import fs from "node:fs";
+import path from "node:path";
+import url from "node:url";
+
+const HERE = path.dirname(url.fileURLToPath(import.meta.url));
+const OUT = path.resolve(HERE, "..", "src", "prototypes", "ehel-academy",
+  "mathematics", "grade-9", "data", "units", "unit-12.json");
+const WRITE = process.argv.includes("--write");
+
+const FW = path.resolve(HERE, "..", "src", "curriculum", "cambridge-mathematics-0862.json");
+const fw = {};
+(function walk(o) {
+  if (!o || typeof o !== "object") return;
+  if (Array.isArray(o)) return o.forEach(walk);
+  if (typeof o.code === "string" && /^9Sp\.\d{2}$/.test(o.code)) fw[o.code] = o.text;
+  Object.values(o).forEach(walk);
+})(JSON.parse(fs.readFileSync(FW, "utf8")));
+
+const OBJ = ["9Sp.01", "9Sp.02", "9Sp.03", "9Sp.04"];
+for (const c of OBJ) if (!fw[c]) throw new Error("0862 has no " + c);
+
+const outcomes = [
+  "Recognise when two events are mutually exclusive, and explain why their probabilities may be added.",
+  "Use the fact that the probabilities of all mutually exclusive outcomes add to 1 to find a missing probability.",
+  "Decide whether two successive events are independent, and justify the decision.",
+  "Find the probability that two independent events both happen by multiplying their probabilities.",
+  "Draw a tree diagram for two successive events and read probabilities from its branches.",
+  "Find the probability of a combined event, including 'at least one', by adding the outcomes that satisfy it.",
+  "Calculate relative frequency from the results of a chance experiment.",
+  "Compare expected frequency with observed frequency, and explain why they differ.",
+];
+
+const concepts = [
+  {
+    id: "concept-1-mutually-exclusive-events",
+    title: "Mutually Exclusive Events",
+    explanation:
+      "Two events are mutually exclusive when they cannot both happen at the same time. Roll one " +
+      "dice: 'the score is 2' and 'the score is 5' cannot both be true, so they are mutually " +
+      "exclusive. 'The score is even' and 'the score is 2' CAN both be true, because 2 is even, so " +
+      "those are not. The distinction decides whether you are allowed to add. For mutually " +
+      "exclusive events, P(A or B) = P(A) + P(B). For events that overlap, adding counts the " +
+      "overlap twice and gives an answer that is too big.",
+    example:
+      "A spinner has red, blue and gold sectors. P(red) = 0.35 and P(blue) = 0.2. The two cannot " +
+      "happen on one spin, so P(red or blue) = 0.35 + 0.2 = 0.55. Now take a different question: " +
+      "P(even) and P(more than 4) on a dice. Even is {2, 4, 6} and more than 4 is {5, 6}. The 6 is " +
+      "in both, so adding 3/6 and 2/6 would count it twice; the correct answer is 4/6, because the " +
+      "outcomes that satisfy 'even or more than 4' are {2, 4, 5, 6}.",
+  },
+  {
+    id: "concept-2-probabilities-that-add-to-one",
+    title: "Probabilities That Add to 1",
+    explanation:
+      "When you list every outcome that can happen, and no two of them can happen together, one of " +
+      "them is certain to happen. Certainty is a probability of 1, so the whole list adds to 1. " +
+      "That gives you a way of finding a probability nobody told you: add up the ones you know and " +
+      "subtract from 1. It also gives you a check, because a set of probabilities that adds to more " +
+      "than 1 is wrong however carefully each one was worked out.",
+    example:
+      "The spinner above has red 0.35, blue 0.2 and gold. Those three are the only outcomes, so " +
+      "0.35 + 0.2 + P(gold) = 1, which gives P(gold) = 1 - 0.55 = 0.45. The same idea handles 'not': " +
+      "if the probability of rain tomorrow is 0.15, then rain and no rain are the only two " +
+      "possibilities, so P(no rain) = 1 - 0.15 = 0.85.",
+  },
+  {
+    id: "concept-3-independent-events",
+    title: "Independent Events",
+    explanation:
+      "Two events are independent when whether the first happens makes no difference to how likely " +
+      "the second is. A coin does not remember its last flip, so two flips are independent. Drawing " +
+      "two beads from a bag WITHOUT putting the first back is not independent: taking a red one out " +
+      "leaves fewer reds, so the second draw has changed. The test is to ask the question twice - " +
+      "what is P(second) if the first happened, and what is P(second) if it did not. Same answer " +
+      "means independent.",
+    example:
+      "Roll a dice. Let X be 'the score is even' and Y be 'the score is more than 2'. If X happens " +
+      "the score is 2, 4 or 6, and two of those three are more than 2, so P(Y) = 2/3. If X does not " +
+      "happen the score is 1, 3 or 5, and two of those three are more than 2, so P(Y) = 2/3 again. " +
+      "The answers agree, so X and Y are independent - even though they are about the same roll.",
+  },
+  {
+    id: "concept-4-multiplying-for-both",
+    title: "When Both Must Happen, Multiply",
+    explanation:
+      "For independent events, the probability that both happen is the product of the two " +
+      "probabilities. The reason is that the first event cuts the possibilities down to its own " +
+      "share, and the second then takes its share OF THAT. Half of a third is a sixth, which is " +
+      "why one half times one third is one sixth. The word that signals it is 'and', where " +
+      "mutually exclusive events used 'or'.",
+    example:
+      "Flip a coin and roll a dice. P(head) = 1/2 and P(more than 2) = 4/6 = 2/3. The coin cannot " +
+      "affect the dice, so P(head and more than 2) = 1/2 x 2/3 = 2/6 = 1/3. Check it by listing: " +
+      "there are 12 equally likely outcomes and four of them are a head with 3, 4, 5 or 6, and " +
+      "4/12 = 1/3.",
+  },
+  {
+    id: "concept-5-tree-diagrams",
+    title: "Tree Diagrams for Two Events",
+    explanation:
+      "A tree diagram lays out two successive events so that every path from left to right is one " +
+      "possible outcome. Multiply along a path to get the probability of that outcome, because both " +
+      "things on the path have to happen. Add the paths that satisfy your question, because those " +
+      "paths are mutually exclusive - you travel exactly one of them. The probabilities on any set " +
+      "of branches leaving one point add to 1, and so do the probabilities of all the complete " +
+      "paths, which is the check that you have not lost one.",
+    example:
+      "Two spinners: the first is odd or even with P(odd) = 1/2, the second shows A or B with " +
+      "P(A) = 1/4. The four paths are odd-A = 1/2 x 1/4 = 1/8, odd-B = 1/2 x 3/4 = 3/8, even-A = 1/8 " +
+      "and even-B = 3/8. Those add to 8/8 = 1. So P(odd and A) = 1/8, and P(neither odd nor A) is " +
+      "the even-B path, 3/8.",
+  },
+  {
+    id: "concept-6-relative-and-expected-frequency",
+    title: "Relative Frequency, and What More Trials Buys",
+    explanation:
+      "Relative frequency is what actually happened: the number of times an outcome occurred " +
+      "divided by the number of trials. Expected frequency is what theory predicts: the probability " +
+      "multiplied by the number of trials. They rarely match exactly, and they are not supposed to. " +
+      "What more trials buys is not equal counts but a relative frequency that settles closer to " +
+      "the theoretical probability - the gap in the COUNT can grow while the gap in the " +
+      "PROPORTION shrinks.",
+    example:
+      "Zara rolls a dice 50 times looking for sixes. In the first 10 rolls she gets 2, a relative " +
+      "frequency of 2/10 = 0.2 against a theoretical 1/6 = 0.167. Over all 50 she gets 12, giving " +
+      "12/50 = 0.24. The expected frequency for 50 rolls is 1/6 x 50 = 8.3, so she is about four " +
+      "sixes above expectation. Neither number is wrong: the dice is fair and 50 rolls is a small " +
+      "experiment.",
+  },
+];
+
+const methods = [
+  {
+    id: "method-1", outcomeId: "lo01", difficulty: "Core",
+    title: "How to decide whether you may add",
+    example: "A spinner has P(red) = 0.35 and P(blue) = 0.2. Find P(red or blue).",
+    steps: [
+      "Ask whether both events could happen on the same go.",
+      "If they cannot, they are mutually exclusive and you may add.",
+      "If they can, list the outcomes instead and count the ones that satisfy either event, so the overlap is counted once.",
+      "Add: 0.35 + 0.2 = 0.55.",
+    ],
+  },
+  {
+    id: "method-2", outcomeId: "lo02", difficulty: "Core",
+    title: "How to find a missing probability",
+    example: "A spinner shows red 0.35, blue 0.2 and gold only. Find P(gold).",
+    steps: [
+      "Check the outcomes listed are all of them, and that no two can happen together.",
+      "Add the probabilities you know: 0.35 + 0.2 = 0.55.",
+      "Subtract from 1, because something must happen: 1 - 0.55 = 0.45.",
+      "Check the full set adds to 1: 0.35 + 0.2 + 0.45 = 1.",
+    ],
+  },
+  {
+    id: "method-3", outcomeId: "lo03", difficulty: "Core",
+    title: "How to test whether two events are independent",
+    example: "Roll a dice. X is 'even', Y is 'more than 2'. Are they independent?",
+    steps: [
+      "Work out P(Y) assuming X happened.",
+      "Work out P(Y) assuming X did not happen.",
+      "If the two answers are the same, the events are independent.",
+      "Here both give 2/3, so X and Y are independent.",
+    ],
+  },
+  {
+    id: "method-4", outcomeId: "lo04", difficulty: "Core",
+    title: "How to find the probability that both happen",
+    example: "Flip a coin and roll a dice. Find P(head and more than 2).",
+    steps: [
+      "Confirm the two events are independent.",
+      "Write each probability: P(head) = 1/2, P(more than 2) = 4/6 = 2/3.",
+      "Multiply them: 1/2 x 2/3 = 2/6.",
+      "Simplify: 2/6 = 1/3.",
+    ],
+  },
+  {
+    id: "method-5", outcomeId: "lo05", difficulty: "Core",
+    title: "How to use a tree diagram",
+    example: "Spinner 1 is odd or even, P(odd) = 1/2. Spinner 2 is A or B, P(A) = 1/4. Find P(odd and A).",
+    steps: [
+      "Draw one set of branches for the first event and, from each, a set for the second.",
+      "Write a probability on every branch; each set must add to 1.",
+      "Multiply along the path you want: 1/2 x 1/4 = 1/8.",
+      "If more than one path fits the question, add those paths.",
+      "Check every path adds to 1: 1/8 + 3/8 + 1/8 + 3/8 = 1.",
+    ],
+  },
+  {
+    id: "method-6", outcomeId: "lo07", difficulty: "Core",
+    title: "How to compare an experiment with theory",
+    example: "Zara rolls a dice 50 times and gets 12 sixes. Compare with theory.",
+    steps: [
+      "Relative frequency = successes divided by trials: 12/50 = 0.24.",
+      "Theoretical probability of a six = 1/6 = 0.167 to 3 decimal places.",
+      "Expected frequency = probability x trials = 1/6 x 50 = 8.3.",
+      "Compare, and say how many trials were run - a gap over 50 rolls means little.",
+    ],
+  },
+];
+
+const workedExamples = [
+  { id: "we01", outcomeId: "lo01", difficulty: "Basic", title: "Adding mutually exclusive probabilities",
+    prompt: "A spinner has P(red) = 0.35 and P(blue) = 0.2. Find P(red or blue).",
+    solution: "One spin cannot be both red and blue, so the events are mutually exclusive and the probabilities may be added. P(red or blue) = 0.35 + 0.2 = 0.55." },
+  { id: "we02", outcomeId: "lo01", difficulty: "Basic", title: "When adding would be wrong",
+    prompt: "Roll a dice. Find P(even or more than 4).",
+    solution: "Even is {2, 4, 6} and more than 4 is {5, 6}. The 6 is in both, so these are NOT mutually exclusive and adding 3/6 + 2/6 = 5/6 would count the 6 twice. List instead: 'even or more than 4' is satisfied by {2, 4, 5, 6}, which is 4 outcomes, so the probability is 4/6 = 2/3." },
+  { id: "we03", outcomeId: "lo02", difficulty: "Basic", title: "Finding a missing probability",
+    prompt: "A spinner shows only red, blue and gold, with P(red) = 0.35 and P(blue) = 0.2. Find P(gold).",
+    solution: "The three outcomes are all that can happen and no two can happen together, so they add to 1. P(gold) = 1 - (0.35 + 0.2) = 1 - 0.55 = 0.45." },
+  { id: "we04", outcomeId: "lo02", difficulty: "Core", title: "The probability of 'not'",
+    prompt: "The probability that it rains tomorrow is 0.15. Find the probability that it does not rain.",
+    solution: "Rain and no rain are the only possibilities and cannot both happen, so they add to 1. P(no rain) = 1 - 0.15 = 0.85." },
+  { id: "we05", outcomeId: "lo03", difficulty: "Core", title: "Testing for independence",
+    prompt: "Roll a dice. X is 'the score is even', Y is 'the score is more than 2'. Are X and Y independent?",
+    solution: "If X happens the score is 2, 4 or 6; two of those are more than 2, so P(Y) = 2/3. If X does not happen the score is 1, 3 or 5; two of those are more than 2, so P(Y) = 2/3. The value of P(Y) does not change, so X and Y are independent." },
+  { id: "we06", outcomeId: "lo03", difficulty: "Core", title: "Events that are not independent",
+    prompt: "A bag holds 6 red and 4 blue beads. Two are taken without replacement. Is the colour of the second bead independent of the first?",
+    solution: "No. If the first bead is red, 5 reds remain out of 9, so P(red) = 5/9. If the first is blue, 6 reds remain out of 9, so P(red) = 6/9. The probability changes, so the events are not independent. Taking the bead out changed what was left." },
+  { id: "we07", outcomeId: "lo04", difficulty: "Core", title: "Multiplying for 'and'",
+    prompt: "Flip a coin and roll a dice. Find P(head and more than 2).",
+    solution: "The coin cannot affect the dice, so the events are independent. P(head) = 1/2 and P(more than 2) = 4/6 = 2/3. P(both) = 1/2 x 2/3 = 2/6 = 1/3. Checking by listing: of 12 equally likely outcomes, 4 are a head with 3, 4, 5 or 6, and 4/12 = 1/3." },
+  { id: "we08", outcomeId: "lo05", difficulty: "Core", title: "Reading a tree diagram",
+    prompt: "Spinner 1 gives an odd number with probability 1/2. Spinner 2 gives A with probability 1/4. Find P(odd and A) and P(neither odd nor A).",
+    solution: "The four paths are odd-A = 1/2 x 1/4 = 1/8, odd-B = 1/2 x 3/4 = 3/8, even-A = 1/2 x 1/4 = 1/8 and even-B = 1/2 x 3/4 = 3/8. So P(odd and A) = 1/8. 'Neither odd nor A' is the even-B path, 3/8. The four paths add to 8/8 = 1." },
+  { id: "we09", outcomeId: "lo06", difficulty: "Extension", title: "At least one",
+    prompt: "A coin is flipped twice. Find the probability of at least one head.",
+    solution: "The four outcomes HH, HT, TH, TT are equally likely, each 1/4. 'At least one head' is satisfied by HH, HT and TH, so the probability is 3/4. The quicker route is the opposite event: the only way to fail is TT, with probability 1/2 x 1/2 = 1/4, so at least one head has probability 1 - 1/4 = 3/4." },
+  { id: "we10", outcomeId: "lo06", difficulty: "Extension", title: "Combined events with a tree",
+    prompt: "A bag holds 6 red and 4 blue beads. One bead is taken, its colour noted, and it is put back before a second is taken. Find P(both the same colour).",
+    solution: "Because the bead is replaced the draws are independent, with P(red) = 6/10 = 3/5 and P(blue) = 4/10 = 2/5. P(both red) = 3/5 x 3/5 = 9/25 and P(both blue) = 2/5 x 2/5 = 4/25. Those two cannot both happen, so add: 9/25 + 4/25 = 13/25." },
+  { id: "we11", outcomeId: "lo07", difficulty: "Core", title: "Relative frequency",
+    prompt: "Zara rolls a dice 50 times and gets 12 sixes. Find the relative frequency of a six and compare it with the theoretical probability.",
+    solution: "Relative frequency = 12/50 = 0.24. The theoretical probability is 1/6 = 0.167 to 3 decimal places. The experiment gave more sixes than theory predicts, but 50 rolls is a small experiment and a gap of this size is ordinary." },
+  { id: "we12", outcomeId: "lo08", difficulty: "Core", title: "Expected frequency",
+    prompt: "A fair coin is flipped 80 times. Find the expected frequency of heads, and say what it means if 46 heads are observed.",
+    solution: "Expected frequency = probability x trials = 1/2 x 80 = 40 heads. Observing 46 is 6 above expectation, a relative frequency of 46/80 = 0.575 against a theoretical 0.5. This does not show the coin is biased: an expected value is the long-run average, not a promise about any one run of 80." },
+];
+
+const practice = [
+  { id: "p01", level: "Warm-up", prompt: "A spinner has P(green) = 0.4 and P(yellow) = 0.25, and green and yellow cannot both happen. Find P(green or yellow).", answer: "0.65", hint: "Mutually exclusive means you may add." },
+  { id: "p02", level: "Warm-up", prompt: "The only outcomes of a spinner are A, B and C, with P(A) = 0.5 and P(B) = 0.3. Find P(C).", answer: "0.2", hint: "Everything that can happen adds to 1." },
+  { id: "p03", level: "Warm-up", prompt: "The probability a bus is late is 0.12. Find the probability it is not late.", answer: "0.88", hint: "Subtract from 1." },
+  { id: "p04", level: "Core", prompt: "Roll a dice. Are 'the score is odd' and 'the score is 4' mutually exclusive? Explain.", answer: "Yes. 4 is not odd, so the two cannot both happen on one roll.", hint: "Could both be true at the same time?" },
+  { id: "p05", level: "Core", prompt: "Roll a dice. Are 'the score is odd' and 'the score is more than 2' mutually exclusive? Explain.", answer: "No. A score of 3 or 5 is both odd and more than 2, so they can happen together.", hint: "Look for a score that satisfies both." },
+  { id: "p06", level: "Core", prompt: "A coin is flipped and a dice rolled. Find P(tail and an odd number).", answer: "1/4", hint: "Independent, so multiply: 1/2 x 3/6." },
+  { id: "p07", level: "Core", prompt: "Two fair coins are flipped. Find P(two heads).", answer: "1/4", hint: "1/2 x 1/2." },
+  { id: "p08", level: "Core", prompt: "A bag holds 6 red and 4 blue beads. One is taken and replaced, then another is taken. Find P(both red).", answer: "9/25", hint: "Replaced means independent: 3/5 x 3/5." },
+  { id: "p09", level: "Core", prompt: "A bag holds 6 red and 4 blue beads. Two are taken WITHOUT replacement. Explain why the draws are not independent.", answer: "Removing the first bead changes what is left, so the probability for the second draw depends on the first: after a red, P(red) = 5/9; after a blue, P(red) = 6/9.", hint: "Work out P(second is red) both ways." },
+  { id: "p10", level: "Challenge", prompt: "A coin is flipped twice. Find the probability of at least one tail.", answer: "3/4", hint: "Use 1 minus P(no tails)." },
+  { id: "p11", level: "Challenge", prompt: "A dice is rolled 60 times and a 3 comes up 14 times. Find the relative frequency of a 3 and the expected frequency.", answer: "Relative frequency 14/60 = 0.233 to 3 d.p.; expected frequency 1/6 x 60 = 10.", hint: "Relative frequency uses what happened; expected uses the probability." },
+  { id: "p12", level: "Challenge", prompt: "Sofia says a fair coin flipped 100 times must give 50 heads. Explain why she is wrong.", answer: "50 is the expected frequency, the long-run average, not a guarantee. Any number of heads is possible in 100 flips; more trials make the PROPORTION settle near 0.5, not the count land exactly on half.", hint: "What does 'expected' actually promise?" },
+];
+
+const fluency = [
+  { id: "fl01", outcomeId: "lo01", difficulty: "Round 1", prompt: "P(A) = 0.3 and P(B) = 0.5, and A and B are mutually exclusive. What is P(A or B)?", answer: "0.8", hint: "Add them.", errorFeedback: "Mutually exclusive events are added, not multiplied." },
+  { id: "fl02", outcomeId: "lo02", difficulty: "Round 1", prompt: "The only outcomes are X and Y. P(X) = 0.7. What is P(Y)?", answer: "0.3", hint: "They add to 1.", errorFeedback: "Everything that can happen adds to 1, so subtract from 1." },
+  { id: "fl03", outcomeId: "lo02", difficulty: "Round 1", prompt: "P(rain) = 0.25. What is P(no rain)?", answer: "0.75", hint: "Subtract from 1.", errorFeedback: "1 - 0.25 = 0.75." },
+  { id: "fl04", outcomeId: "lo04", difficulty: "Round 1", prompt: "Two fair coins are flipped. What is P(two heads), as a fraction?", answer: "1/4", hint: "Multiply 1/2 by 1/2.", errorFeedback: "For 'and' with independent events, multiply." },
+  { id: "fl05", outcomeId: "lo04", difficulty: "Round 2", prompt: "P(A) = 1/2 and P(B) = 1/3 and they are independent. What is P(A and B), as a fraction?", answer: "1/6", hint: "Multiply.", errorFeedback: "1/2 x 1/3 = 1/6." },
+  { id: "fl06", outcomeId: "lo04", difficulty: "Round 2", prompt: "A coin is flipped and a dice rolled. What is P(head and a 6), as a fraction?", answer: "1/12", hint: "1/2 x 1/6.", errorFeedback: "Multiply the two independent probabilities." },
+  { id: "fl07", outcomeId: "lo05", difficulty: "Round 2", prompt: "On a tree diagram, two branches leave one point. One is 0.4. What is the other?", answer: "0.6", hint: "Branches from one point add to 1.", errorFeedback: "Any set of branches leaving one point adds to 1." },
+  { id: "fl08", outcomeId: "lo05", difficulty: "Round 2", prompt: "A path on a tree has branches 1/2 then 1/4. What is the probability of that path, as a fraction?", answer: "1/8", hint: "Multiply along the path.", errorFeedback: "Multiply along a path, add between paths." },
+  { id: "fl09", outcomeId: "lo06", difficulty: "Round 3", prompt: "A coin is flipped twice. What is P(at least one head), as a fraction?", answer: "3/4", hint: "1 minus P(no heads).", errorFeedback: "The only failure is TT, which is 1/4, so the answer is 3/4." },
+  { id: "fl10", outcomeId: "lo07", difficulty: "Round 3", prompt: "An outcome happened 12 times in 50 trials. What is the relative frequency, as a decimal?", answer: "0.24", hint: "Successes divided by trials.", errorFeedback: "12 divided by 50 is 0.24." },
+  { id: "fl11", outcomeId: "lo08", difficulty: "Round 3", prompt: "A fair coin is flipped 80 times. What is the expected frequency of heads?", answer: "40", hint: "Probability times trials.", errorFeedback: "1/2 of 80 is 40." },
+  { id: "fl12", outcomeId: "lo08", difficulty: "Round 3", prompt: "A dice is rolled 60 times. What is the expected frequency of a six?", answer: "10", hint: "1/6 of 60.", errorFeedback: "1/6 x 60 = 10." },
+];
+
+const explorations = concepts.slice(0, 6).map((c, i) => ({
+  id: "explore-" + (i + 1),
+  outcomeId: "lo0" + [1, 2, 3, 4, 5, 7][i],
+  difficulty: ["Discover", "Discover", "Core", "Core", "Core", "Extension"][i],
+  title: c.title,
+  context: c.explanation,
+  prompt: [
+    "Roll one dice. Name two events that are mutually exclusive, and two that are not.",
+    "A spinner shows only red 0.35, blue 0.2 and gold. What must P(gold) be, and why?",
+    "Roll a dice. Is 'even' independent of 'more than 2'? Test it both ways.",
+    "Flip a coin and roll a dice. Work out P(head and more than 2) by multiplying, then check by listing all 12 outcomes.",
+    "Draw the tree for two spinners with P(odd) = 1/2 and P(A) = 1/4. Do the four paths add to 1?",
+    "Roll a dice 10 times, then 50. Which relative frequency is closer to 1/6?",
+  ][i],
+  answer: [
+    "Mutually exclusive: 'a 2' and 'a 5'. Not mutually exclusive: 'even' and 'a 2', because 2 is both.",
+    "0.45, because the three outcomes are all that can happen so they add to 1.",
+    "Yes. P(more than 2) is 2/3 whether the score is even or odd.",
+    "1/2 x 2/3 = 1/3, and 4 of the 12 listed outcomes fit, which is also 1/3.",
+    "1/8 + 3/8 + 1/8 + 3/8 = 1, yes.",
+    "Usually the 50-roll one, though not always - that is the point of running it more than once.",
+  ][i],
+  modelType: "concept-model-" + (i + 1),
+  hint: [
+    "Ask whether both could be true on one roll.",
+    "Add what you know and subtract from 1.",
+    "Work out P(Y) assuming X, then assuming not X.",
+    "Independent events multiply.",
+    "Multiply along a path, then add the paths.",
+    "Compare each relative frequency with 0.167.",
+  ][i],
+  explanation: c.example,
+}));
+
+const visualModels = concepts.slice(0, 6).map((c, i) => ({
+  id: "model-" + (i + 1),
+  outcomeId: "lo0" + [1, 2, 3, 4, 5, 7][i],
+  title: c.title,
+  modelType: "concept-model-" + (i + 1),
+  purpose: c.explanation,
+  defaultNumber: [6, 100, 6, 12, 8, 50][i],
+}));
+
+const activities = [
+  { title: "Does the dice remember?", materials: "one dice, paper and a pencil.",
+    steps: ["Roll the dice once and write the score.", "Before rolling again, write down what you think P(six) is for the next roll.", "Roll 20 times, writing each score.", "Count how often a six followed another six, and how often a six followed a non-six.", "Decide whether the dice remembered, and write one sentence saying why."] },
+  { title: "Ten rolls, then fifty", materials: "one dice, squared paper.",
+    steps: ["Roll 10 times and record the number of sixes. Work out the relative frequency.", "Keep going to 50 rolls and work out the relative frequency again.", "Draw a graph with trials along the bottom and relative frequency up the side.", "Draw a horizontal line at 1/6 = 0.167.", "Write what happens to the distance between your line and that one as the trials increase."] },
+  { title: "The bag that changes", materials: "an opaque bag, 6 red and 4 blue counters.",
+    steps: ["Take one counter, note the colour and put it BACK. Do this 20 times and record.", "Now take one, note it, and KEEP it out. Take a second and note it. Put both back and repeat 20 times.", "Work out the relative frequency of two reds for each method.", "Explain which method gives independent draws, and why the other does not."] },
+  { title: "Build the tree", materials: "paper, a coin and a dice.",
+    steps: ["Draw a tree for flipping a coin and then rolling a dice, with branches for head/tail and six/not six.", "Write a probability on every branch and check each set adds to 1.", "Multiply along each of the four paths.", "Check the four path probabilities add to 1.", "Use the tree to find P(tail and not a six)."] },
+  { title: "Expected against observed", materials: "two coins, paper.",
+    steps: ["Write down the expected frequency of two heads in 40 double-flips.", "Run the 40 double-flips and record the actual number.", "Work out the difference, and the difference as a proportion of 40.", "Pool your result with three classmates to make 160 trials and work both out again.", "Say which got closer to theory: the count or the proportion."] },
+  { title: "Is this spinner fair?", materials: "a home-made spinner with four equal sectors, paper.",
+    steps: ["State the theoretical probability of each sector.", "Spin 40 times and record the results in a frequency table.", "Work out the expected frequency for each sector.", "Compare expected with observed for each one.", "Decide whether you have enough evidence to call the spinner unfair, and say what would convince you."] },
+];
+
+const realProblems = [
+  { id: "rp01", outcomeId: "lo01", difficulty: "Core", context: "School",
+    prompt: "In a Kismaayo class, the probability a pupil chose football is 0.45 and swimming is 0.3. Each pupil chose exactly one sport. Find the probability a pupil chose football or swimming, and the probability they chose neither.",
+    answer: "P(football or swimming) = 0.45 + 0.3 = 0.75. P(neither) = 1 - 0.75 = 0.25.",
+    hint: "One choice each means the options are mutually exclusive.",
+    errorFeedback: "Because each pupil chose exactly one sport, the two events cannot both happen, so add." },
+  { id: "rp02", outcomeId: "lo02", difficulty: "Core", context: "Home",
+    prompt: "A weather service says the probability of rain is 0.15, of cloud without rain 0.35, and of clear sky the rest. Find the probability of a clear sky.",
+    answer: "1 - (0.15 + 0.35) = 0.5",
+    hint: "The three cover everything, so they add to 1.",
+    errorFeedback: "Add what you are given, then subtract from 1." },
+  { id: "rp03", outcomeId: "lo04", difficulty: "Core", context: "Market",
+    prompt: "A stall has a bucket of 10 mangoes of which 3 are unripe. A customer takes one, puts it back, and takes another. Find the probability both are unripe.",
+    answer: "3/10 x 3/10 = 9/100",
+    hint: "Putting it back makes the draws independent.",
+    errorFeedback: "Replacement keeps the probability the same each time, so multiply 3/10 by 3/10." },
+  { id: "rp04", outcomeId: "lo03", difficulty: "Extension", context: "Market",
+    prompt: "The same stall, but the customer does NOT put the first mango back. Find the probability both are unripe, and say why the answer differs from the replaced case.",
+    answer: "3/10 x 2/9 = 6/90 = 1/15. It is smaller because taking an unripe mango out leaves fewer unripe ones, so the second draw is less likely - the draws are not independent.",
+    hint: "After one unripe mango is removed, what is left?",
+    errorFeedback: "Without replacement the second probability changes: 2 unripe out of 9 remaining." },
+  { id: "rp05", outcomeId: "lo08", difficulty: "Core", context: "School",
+    prompt: "A school raffle sells 200 tickets and you buy 4. Find the probability you win the single prize, and the expected number of wins if the raffle ran 50 times on the same terms.",
+    answer: "P(win) = 4/200 = 1/50 = 0.02. Expected wins over 50 raffles = 0.02 x 50 = 1.",
+    hint: "Expected frequency is probability times the number of trials.",
+    errorFeedback: "An expectation of 1 does not promise a win; it is the long-run average." },
+  { id: "rp06", outcomeId: "lo07", difficulty: "Extension", context: "Health",
+    prompt: "A clinic finds that 18 of 120 patients tested carried a particular marker. Find the relative frequency, and explain what would make it a better estimate of the true probability.",
+    answer: "18/120 = 0.15. Testing more patients would make it better, because relative frequency settles closer to the true probability as the number of trials grows - provided the patients tested are representative.",
+    hint: "Relative frequency is successes over trials.",
+    errorFeedback: "More trials narrow the gap in proportion; who is tested matters as much as how many." },
+];
+
+const reasoningPrompts = [
+  { id: "reason01", outcomeId: "lo01", difficulty: "Core", responseMode: "text",
+    prompt: "Marcus says that because P(even) = 1/2 and P(more than 4) = 1/3 on a dice, P(even or more than 4) = 1/2 + 1/3 = 5/6. Is he right?",
+    keyIdeas: ["The two events overlap at 6", "Adding counts 6 twice", "List the outcomes: 2, 4, 5, 6"],
+    modelAnswer: "No. Even is {2, 4, 6} and more than 4 is {5, 6}, so the 6 is in both and adding counts it twice. The outcomes satisfying 'even or more than 4' are {2, 4, 5, 6}, so the probability is 4/6 = 2/3, not 5/6. Adding is only allowed when the events are mutually exclusive." },
+  { id: "reason02", outcomeId: "lo03", difficulty: "Core", responseMode: "text",
+    prompt: "Zara flips a coin five times and gets five heads. She says the next flip is more likely to be a tail. Is she right?",
+    keyIdeas: ["Flips are independent", "The coin has no memory", "P(tail) is still 1/2"],
+    modelAnswer: "No. Each flip is independent, so the coin has no memory of the previous five. P(tail) on the next flip is still 1/2. What is true is that a long run of heads is unusual - but that is a statement about the run already seen, not about the flip still to come." },
+  { id: "reason03", outcomeId: "lo04", difficulty: "Core", responseMode: "text",
+    prompt: "Explain why the probability of two independent events both happening is never larger than either probability on its own.",
+    keyIdeas: ["Multiplying by a number below 1", "Both conditions must be met", "The outcome set gets smaller"],
+    modelAnswer: "Multiplying by a probability means multiplying by a number between 0 and 1, which cannot increase what you started with. It makes sense: requiring both things to happen is a stricter demand than requiring one, so fewer outcomes qualify and the probability must fall or, if the other probability is 1, stay the same." },
+  { id: "reason04", outcomeId: "lo05", difficulty: "Extension", responseMode: "text",
+    prompt: "On a tree diagram you multiply along a path but add between paths. Explain why the two operations are different.",
+    keyIdeas: ["A path needs both events", "Different paths are mutually exclusive", "'and' multiplies, 'or' adds"],
+    modelAnswer: "Travelling one path means both of its events happen, and 'and' for independent events multiplies. Choosing between paths is different: you travel exactly one path, so the paths are mutually exclusive, and 'or' for mutually exclusive events adds. The tree shows both relationships at once, which is why it is worth drawing." },
+  { id: "reason05", outcomeId: "lo08", difficulty: "Extension", responseMode: "text",
+    prompt: "Arun flips a coin 100 times and gets 58 heads. He concludes the coin is biased. What would you say to him?",
+    keyIdeas: ["58 is within ordinary variation", "Expected 50 is an average", "More trials, or a comparison, would settle it"],
+    modelAnswer: "58 heads in 100 is 8 above the expected 50, which is well within what a fair coin produces. An expected frequency is a long-run average, not a prediction for one run. To decide, he could flip many more times and watch whether the relative frequency settles near 0.5 or somewhere else - a proportion that stays near 0.58 over a thousand flips would be far better evidence than 100." },
+  { id: "reason06", outcomeId: "lo07", difficulty: "Extension", responseMode: "text",
+    prompt: "Sofia says relative frequency and theoretical probability are the same thing. Where is she wrong, and where is she nearly right?",
+    keyIdeas: ["One is measured, one is predicted", "They converge with more trials", "They need not ever be equal"],
+    modelAnswer: "Wrong because they come from different places: relative frequency is counted from an experiment that actually happened, while theoretical probability is worked out from the structure of the situation. Nearly right because as the number of trials grows the relative frequency tends to settle close to the theoretical probability - close, not equal, and there is no number of trials after which they must agree." },
+];
+
+const reference = {
+  rules: [
+    { title: "The Mutually Exclusive Rule", text: "Two events are mutually exclusive when they cannot both happen at the same time. Only then may their probabilities be added: P(A or B) = P(A) + P(B)." },
+    { title: "The Total is 1", text: "The probabilities of all the mutually exclusive outcomes of a situation add to 1, because one of them is certain to happen. So P(not A) = 1 - P(A)." },
+    { title: "The Independence Test", text: "Two events are independent when P(B) is the same whether A happened or not. Work out P(B) both ways; if the answers agree, they are independent." },
+    { title: "And Multiplies", text: "For independent events, P(A and B) = P(A) x P(B). On a tree diagram this is multiplying along a path." },
+    { title: "Expected Frequency", text: "Expected frequency = probability x number of trials. It is a long-run average, not a promise about any one run." },
+  ],
+  terms: [
+    ["Mutually exclusive", "Describes two events that cannot both happen at the same time"],
+    ["Independent", "Describes events where one happening does not change how likely the other is"],
+    ["Tree diagram", "A diagram whose paths show every outcome of two or more successive events"],
+    ["Relative frequency", "The number of times an outcome happened divided by the number of trials"],
+    ["Expected frequency", "The probability multiplied by the number of trials"],
+    ["Trial", "One go of a chance experiment, such as a single roll of a dice"],
+    ["Combined event", "An event made of two or more simpler events happening together"],
+    ["Without replacement", "Describes draws where what is taken is not put back, so later probabilities change"],
+  ],
+  commonMistakes: [
+    ["Adding for 'and'", "Multiply independent 'and' events; add only mutually exclusive 'or' events"],
+    ["Adding overlapping events", "If the events share an outcome, list them instead so the overlap is counted once"],
+    ["Expecting the count to even out", "More trials settle the PROPORTION, not the counts"],
+    ["Treating without-replacement as independent", "Removing an item changes what is left, so recompute the second probability"],
+    ["Reading a run as a prediction", "A coin has no memory; past flips do not change the next one"],
+  ],
+};
+
+const assessment = {
+  passPercent: 80,
+  questions: [
+    { id: "q01", type: "Recall", outcomeId: "lo01", difficulty: "Basic", question: "Which pair of events, on one roll of a dice, is mutually exclusive?", options: ["'even' and 'a 2'", "'a 3' and 'a 5'", "'odd' and 'more than 2'", "'more than 1' and 'even'"], answer: "'a 3' and 'a 5'", hint: "Can both be true on one roll?", explanation: "One roll cannot be both a 3 and a 5. Each other pair shares at least one score." },
+    { id: "q02", type: "Application", outcomeId: "lo02", difficulty: "Basic", question: "A spinner shows only P, Q and R. P(P) = 0.4 and P(Q) = 0.35. What is P(R)?", options: ["0.25", "0.35", "0.75", "1.15"], answer: "0.25", hint: "They add to 1.", explanation: "1 - (0.4 + 0.35) = 0.25." },
+    { id: "q03", type: "Application", outcomeId: "lo04", difficulty: "Core", question: "A coin is flipped and a dice rolled. What is P(head and a 6)?", options: ["1/12", "1/8", "2/3", "7/12"], answer: "1/12", hint: "Independent events multiply.", explanation: "1/2 x 1/6 = 1/12." },
+    { id: "q04", type: "Reasoning", outcomeId: "lo03", difficulty: "Core", question: "Two beads are taken from a bag WITHOUT replacement. Why are the draws not independent?", options: ["Because the bag is opaque", "Because removing the first changes what is left", "Because the beads are different colours", "Because two events are never independent"], answer: "Because removing the first changes what is left", hint: "What is in the bag for the second draw?", explanation: "The second probability depends on what the first draw removed, so the events are dependent." },
+    { id: "q05", type: "Application", outcomeId: "lo05", difficulty: "Core", question: "A tree path has branches 1/3 then 1/2. What is the probability of that path?", options: ["1/6", "5/6", "2/3", "1/5"], answer: "1/6", hint: "Multiply along the path.", explanation: "1/3 x 1/2 = 1/6." },
+    { id: "q06", type: "Application", outcomeId: "lo06", difficulty: "Extension", question: "A coin is flipped twice. What is P(at least one head)?", options: ["1/4", "1/2", "3/4", "1"], answer: "3/4", hint: "Use the opposite event.", explanation: "The only failure is TT with probability 1/4, so 1 - 1/4 = 3/4." },
+    { id: "q07", type: "Application", outcomeId: "lo07", difficulty: "Core", question: "An outcome occurred 15 times in 60 trials. What is the relative frequency?", options: ["0.25", "0.15", "4", "0.6"], answer: "0.25", hint: "Successes over trials.", explanation: "15 divided by 60 is 0.25." },
+    { id: "q08", type: "Reasoning", outcomeId: "lo08", difficulty: "Extension", question: "A fair dice is rolled 60 times and a six comes up 14 times. What does this show?", options: ["The dice is certainly biased", "The expected frequency was 14", "The result is above the expected 10, which is ordinary for 60 rolls", "Relative frequency must equal 1/6"], answer: "The result is above the expected 10, which is ordinary for 60 rolls", hint: "Work out the expected frequency first.", explanation: "Expected frequency is 1/6 x 60 = 10. Getting 14 is above that, but 60 rolls is a small experiment and this gap is unremarkable." },
+  ],
+};
+
+const games = {
+  masteryScore: 3,
+  games: [
+    { id: "u12-game-1", icon: "?", skill: "Add or multiply", title: "Quick Match: Add or Multiply", description: "Four short challenges on choosing the operation.", type: "choice",
+      rounds: [
+        { prompt: "P(A) = 0.2, P(B) = 0.5, mutually exclusive. P(A or B)?", choices: ["0.1", "0.7", "0.3", "1.0"], answer: "0.7", clue: "Mutually exclusive 'or' events add." },
+        { prompt: "P(A) = 1/2, P(B) = 1/4, independent. P(A and B)?", choices: ["3/4", "1/8", "1/6", "1/2"], answer: "1/8", clue: "Independent 'and' events multiply." },
+        { prompt: "The only outcomes are A and B. P(A) = 0.45. P(B)?", choices: ["0.45", "0.55", "0.9", "1.45"], answer: "0.55", clue: "They add to 1." },
+        { prompt: "Two fair coins. P(two tails)?", choices: ["1/2", "1/4", "3/4", "1/3"], answer: "1/4", clue: "1/2 x 1/2." },
+      ] },
+    { id: "u12-game-2", icon: "?", skill: "Frequency", title: "Quick Match: Frequency", description: "Four short challenges on expected and relative frequency.", type: "choice",
+      rounds: [
+        { prompt: "A fair coin flipped 60 times. Expected heads?", choices: ["30", "60", "6", "15"], answer: "30", clue: "Probability times trials." },
+        { prompt: "A dice rolled 120 times. Expected number of sixes?", choices: ["20", "60", "12", "6"], answer: "20", clue: "1/6 of 120." },
+        { prompt: "9 successes in 36 trials. Relative frequency?", choices: ["0.25", "0.36", "4", "0.09"], answer: "0.25", clue: "9 divided by 36." },
+        { prompt: "What does running more trials make settle?", choices: ["The counts", "The proportion", "The theoretical probability", "Nothing"], answer: "The proportion", clue: "More trials narrow the gap in proportion, not in count." },
+      ] },
+  ],
+};
+
+const unit = {
+  schemaVersion: "Ehel Mathematics Runtime v1.1",
+  generatedAt: new Date().toISOString(),
+  stage: { id: 9, label: "Stage 9" },
+  subject: "Mathematics",
+  term: { id: 3, label: "Term 3" },
+  unit: {
+    unitId: "math-g09-u12",
+    unitNo: 12,
+    unitTitle: "Probability",
+    unitOverview:
+      "Welcome to Unit 12. In Stage 8 you found the probability of a single event and of simple " +
+      "combined events. Here you go further in two directions. First, you learn exactly when " +
+      "probabilities may be added and when they must be multiplied - the difference turns on " +
+      "whether two events can happen together, and whether one affects the other. Second, you put " +
+      "theory against evidence: you run chance experiments, work out what the theory expects, and " +
+      "compare it with what actually happened. The second part is where probability meets the real " +
+      "world, because a prediction that is never checked is only an opinion with numbers on it.",
+    learningPath: "12.1 Mutually exclusive events, 12.2 Independent events, 12.3 Combined events, 12.4 Chance experiments",
+    reviewStatus: "Authored 2026-09-26 from the Stage 9 Learner's Book, pages 252-269. Not yet curriculum-reviewed.",
+  },
+  cambridge: {
+    level: "Cambridge Lower Secondary Mathematics",
+    code: "0862",
+    stage: 9,
+    objectives: OBJ.map((c) => ({ code: c, text: fw[c] })),
+    objectiveMapping: {
+      status: "authored",
+      reviewed: false,
+      method:
+        "One-to-one with the Learner's Book sections: 12.1 -> 9Sp.01, 12.2 -> 9Sp.02, " +
+        "12.3 -> 9Sp.03, 12.4 -> 9Sp.04. Objective texts are quoted verbatim from " +
+        "cambridge-mathematics-0862.json rather than paraphrased.",
+    },
+  },
+  provenance: {
+    contentPackage: null,
+    framework: "Cambridge Lower Secondary Mathematics 0862 - Stage 9",
+    sourceArchive: null,
+    sourceDocuments: ["Cambridge Lower Secondary Maths Learner's Book 9 (2ed, CUP), pages 252-269",
+                      "Cambridge Lower Secondary Mathematics Workbook 9, unit 12"],
+    sourceBlockCount: null,
+    transformation:
+      "Authored by hand from the Learner's Book. Grade 9 has no content package: " +
+      "outputs/math-content/math-content-model.json holds grades 1-8 only, so build:math " +
+      "cannot produce this grade.",
+    reviewStatus: "Not curriculum-reviewed",
+  },
+  media: { lectureStatus: "Video pending", lectureVideo: null, poster: null },
+  outcomes,
+  concepts,
+  explorations,
+  visualModels,
+  methods,
+  workedExamples,
+  practice,
+  activities,
+  reference,
+  fluency,
+  realProblems,
+  reasoningPrompts,
+  assessment,
+  games,
+  selfAssessment: outcomes.map((o) => "I can " + o.charAt(0).toLowerCase() + o.slice(1)),
+};
+
+const json = JSON.stringify(unit, null, 2) + "\n";
+if (WRITE) {
+  fs.mkdirSync(path.dirname(OUT), { recursive: true });
+  fs.writeFileSync(OUT, json, "utf8");
+}
+console.log("  Grade 9 Unit 12: " + outcomes.length + " outcomes, " + concepts.length + " concepts, " +
+  workedExamples.length + " worked examples, " + practice.length + " practice, " + fluency.length +
+  " fluency, " + realProblems.length + " real problems, " + reasoningPrompts.length + " reasoning, " +
+  assessment.questions.length + " assessment, " + activities.length + " activities");
+console.log("  objectives: " + OBJ.join(", "));
+console.log("  " + json.length + " bytes " + (WRITE ? "written to " + path.relative(process.cwd(), OUT) : "(--write to save)"));

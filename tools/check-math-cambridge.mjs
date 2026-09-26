@@ -57,7 +57,12 @@ let unmapped = 0;
 let codesChecked = 0;
 const missingFrameworks = new Set();
 
-for (let grade = 1; grade <= 8; grade += 1) {
+// 1 to 9. This read 1 to 8 until 2026-09-26, which was right while Stage 9 did
+// not exist and silently wrong the moment it did: grade-9/data/units would have
+// been walked past without a word, and a unit nothing validates looks exactly
+// like a unit that passed. 0862 has carried Stage 9 all along, so the framework
+// side needed no change - only the loop bound that decided what to ask about.
+for (let grade = 1; grade <= 9; grade += 1) {
   const dir = path.join(MATH, `grade-${grade}`, "data", "units");
   if (!fs.existsSync(dir)) continue;
   for (const file of fs.readdirSync(dir).filter((name) => name.endsWith(".json")).sort()) {

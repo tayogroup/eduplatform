@@ -66,6 +66,17 @@ SCALE = [("yes", "I can do this"),
 
 # lesson -> [(statement, source)]   W = Stage 5 Workbook, G = Teacher's Guide
 WORK = {
+ "calculating-wholes-and-parts": [
+  ("I can use the laws of arithmetic to help me simplify calculations", "W p54"),
+  ("I can compose, decompose and regroup numbers, including decimals, to make calculations easier", "W p54"),
+  ("I can estimate and multiply whole numbers up to 1000 by 1-digit or 2-digit whole numbers", "W p85"),
+  ("I can estimate and divide whole numbers up to 1000 by 1-digit whole numbers", "W p85"),
+  ("I can convert remainders into fractions of the divisor", "W p85"),
+  ("I can estimate and add or subtract fractions with denominators that are multiples of each other", "W p94"),
+  ("I can estimate, multiply and divide unit fractions by a whole number", "W p94"),
+  ("I can add or subtract numbers with one or two decimal places", "W p85"),
+  ("I can estimate and multiply numbers with one decimal place by 1-digit whole numbers", "W p85"),
+ ],
  "data-and-chance": [
   ("I can draw and read frequency tables", "W p32"),
   ("I can read and use bar charts", "W p32"),

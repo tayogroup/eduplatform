@@ -86,6 +86,32 @@ MARK = "ehel-g5-lesson-opener"
 #   words: [(word, pic, meaning, [use, ...])]  "Math words" - full interactive tap-card + quiz
 # }
 WORK = {
+ "calculating-wholes-and-parts": {
+  "about": [
+   "Understand which law of arithmetic to apply to simplify calculations.",
+   "Estimate and multiply whole numbers up to 1000 by 1-digit or 2-digit whole numbers.",
+   "Estimate and divide whole numbers up to 1000 by 1-digit whole numbers.",
+   "Estimate, add and subtract fractions with the same denominator and denominators that are multiples of each other.",
+   "Estimate, multiply and divide unit fractions by a whole number.",
+   "Estimate, add and subtract numbers with the same number of decimal places.",
+   "Estimate and multiply numbers with one decimal place by 1-digit whole numbers.",
+  ],
+  "parts": [
+   ("Rearrange before you calculate", "Addition and multiplication can be reordered and regrouped freely, so you can pick the easy pair first - 4 times 25 before the 17. Subtraction and division cannot, which is the limit worth knowing as well as the law."),
+   ("Break the number into parts", "A three-digit multiplication is several easy ones added together, and a division is chunks of the divisor taken away until what is left is smaller than it. Both work because a number can be split into its hundreds, tens and ones."),
+   ("Make the pieces agree", "Fractions can only be added once the pieces are the same size, and decimals can only be added once the points are under each other. Both are the same idea: line up what the digits or the pieces are worth before you start."),
+  ],
+  "words": [
+   ("commutative", "\U0001F501", "A law saying the order does not matter: 4 x 25 is the same as 25 x 4. True for adding and multiplying only.", ["Use the commutative law to do the easy pair first."]),
+   ("associative", "\U0001F517", "A law saying the grouping does not matter: (8 + 7) + 3 is the same as 8 + (7 + 3).", ["Regroup this calculation to make it easier."]),
+   ("distributive", "\u2702\uFE0F", "A law that lets you split a number, multiply each part and add: 6 x 103 is 6 x 100 plus 6 x 3.", ["Use the distributive law to work out 6 x 103."]),
+   ("remainder", "\U0001F9E9", "What is left over after dividing, always smaller than the divisor.", ["Divide 487 by 6 and say what the remainder means."]),
+   ("denominator", "\u2193", "The bottom number of a fraction; it says how many equal pieces the whole is cut into.", ["Change the denominators so the pieces are the same size."]),
+   ("unit fraction", "\u2460", "A fraction with 1 on top, such as one half or one fifth.", ["Work out one quarter of 12."]),
+   ("decimal place", "\U0001F4CD", "A digit position after the point: tenths, then hundredths.", ["Give both numbers the same number of decimal places."]),
+   ("estimate", "\U0001F3AF", "A rough answer worked out first, used to check the real one is sensible.", ["Estimate before multiplying, then check the point is in the right place."]),
+  ],
+ },
  "data-and-chance": {
   "about": [
    "Plan and conduct an investigation to answer a set of related statistical questions.",

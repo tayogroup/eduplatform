@@ -1,0 +1,1200 @@
+{
+  "schemaVersion": "Ehel Mathematics Runtime v1.1",
+  "generatedAt": "2026-09-26T15:40:16.800Z",
+  "stage": {
+    "id": 9,
+    "label": "Stage 9"
+  },
+  "subject": "Mathematics",
+  "term": {
+    "id": 1,
+    "label": "Term 1"
+  },
+  "unit": {
+    "unitId": "math-g09-u04",
+    "unitNo": 4,
+    "unitTitle": "Equations and Inequalities",
+    "unitOverview": "Welcome to Unit 4. Unit 2 taught you to write and reshape expressions; this unit makes statements out of them and then finds the values that make those statements true. You build equations from situations described in words, by hunting for the phrase that means 'equals'; you solve equations with brackets by two different routes and decide which you prefer; you learn to prove someone else's answer wrong in one step before looking for their mistake; you solve pairs of equations three ways - substitution, elimination, and reading where two lines cross; and you meet inequalities, where everything works as it did for equations except for one rule that changes the answer completely if you forget it.",
+    "learningPath": "4.1 Constructing and solving equations, 4.2 Simultaneous equations, 4.3 Inequalities",
+    "reviewStatus": "Authored 2026-09-26 from the Stage 9 Learner's Book and Workbook, unit 4. Not yet curriculum-reviewed."
+  },
+  "cambridge": {
+    "level": "Cambridge Lower Secondary Mathematics",
+    "code": "0862",
+    "stage": 9,
+    "objectives": [
+      {
+        "code": "9Ae.05",
+        "text": "Understand that a situation can be represented either in words or as an equation. Move between the two representations and solve the equation (including those with an unknown in the denominator)."
+      },
+      {
+        "code": "9Ae.06",
+        "text": "Understand that the solution of simultaneous linear equations: is the pair of values that satisfy both equations can be found algebraically (eliminating one variable) can be found graphically (point of intersection)."
+      },
+      {
+        "code": "9Ae.07",
+        "text": "Understand that a situation can be represented either in words or as an inequality. Move between the two representations and solve linear inequalities."
+      }
+    ],
+    "objectiveMapping": {
+      "status": "authored",
+      "reviewed": false,
+      "method": "Section by section: 4.1 -> 9Ae.05, 4.2 -> 9Ae.06, 4.3 -> 9Ae.07. These are the three objectives unit 2 deliberately declined and whose absence its checker asserts - unit 2 never solves an equation. With this unit the whole 9Ae strand is placed across exactly two units, 9Ae.01-.04 there and .05-.07 here. 9Ae.06 names substitution, elimination and the graphical route, so all three are taught and one worked example solves the same pair two ways. Objective texts are quoted verbatim from cambridge-mathematics-0862.json."
+    }
+  },
+  "provenance": {
+    "contentPackage": null,
+    "framework": "Cambridge Lower Secondary Mathematics 0862 - Stage 9",
+    "sourceArchive": null,
+    "sourceDocuments": [
+      "Cambridge Lower Secondary Maths Learner's Book 9 (2ed, CUP), unit 4",
+      "Cambridge Lower Secondary Mathematics Workbook 9, pages 55-65"
+    ],
+    "sourceBlockCount": null,
+    "transformation": "Authored by hand from the Learner's Book and Workbook. Grade 9 has no content package: outputs/math-content/math-content-model.json holds grades 1-8 only.",
+    "reviewStatus": "Not curriculum-reviewed"
+  },
+  "media": {
+    "lectureStatus": "Video pending",
+    "lectureVideo": null,
+    "poster": null
+  },
+  "outcomes": [
+    "Construct an equation from a situation described in words.",
+    "Solve an equation with brackets, by expanding or by dividing first, and check the answer by substitution.",
+    "Find and explain the mistakes in someone else's solution to an equation.",
+    "Solve a pair of simultaneous equations by substitution.",
+    "Solve a pair of simultaneous equations by elimination, adding or subtracting as the signs require.",
+    "Solve a pair of simultaneous equations graphically, and explain why the intersection is the solution.",
+    "Show a solution set on a number line, using open and closed circles correctly.",
+    "Solve an inequality, reversing the sign when multiplying or dividing by a negative number."
+  ],
+  "concepts": [
+    {
+      "id": "concept-1-constructing-equations",
+      "title": "From a Situation to an Equation",
+      "explanation": "An equation says that two things are equal. Building one from a description means naming the unknown with a letter, writing each quantity in terms of it, and then finding the sentence in the problem that says two of them are the same - 'the sum is 90', 'you get the same answer', 'the perimeter is 1 metre'. That sentence is the equals sign. If you cannot find it, you do not yet have an equation, only expressions.",
+      "example": "Two numbers are n and 2(n + 3), and their sum is 90. The sum gives the equals sign: n + 2(n + 3) = 90. Expanding, n + 2n + 6 = 90, so 3n = 84 and n = 28. The two numbers are 28 and 2 x 31 = 62, and 28 + 62 = 90, which checks."
+    },
+    {
+      "id": "concept-2-two-routes-through-brackets",
+      "title": "Two Routes Through a Bracket",
+      "explanation": "An equation with a bracket can be solved by expanding it, or by dividing the whole equation by a common factor first. Both are correct and they give the same answer, which is worth seeing rather than being told: one is more familiar, the other is often less work. Choosing between them is a real decision, and being able to say why you chose is part of the mathematics.",
+      "example": "5(x + 3) = 10x - 20. Expanding gives 5x + 15 = 10x - 20, so 35 = 5x and x = 7. Dividing both sides by 5 first gives x + 3 = 2x - 4, so 7 = x - the same answer in one step fewer. Dividing works here because every term on both sides is a multiple of 5."
+    },
+    {
+      "id": "concept-3-checking-and-critiquing",
+      "title": "Checking, and Finding Someone Else's Mistake",
+      "explanation": "Substituting your answer back is not politeness, it is the check that an equation can always give you: if the two sides come out equal, the answer is right. That makes wrong answers findable - including in other people's work. The skill is to substitute first to establish that something IS wrong, and only then hunt for where, because knowing there is an error tells you to look.",
+      "example": "Someone solves 4(x + 3) = 2(x + 11) and gets x = 8. Substituting: the left is 4 x 11 = 44 and the right is 2 x 19 = 38, which are not equal, so x = 8 is wrong. Working it properly: 4x + 12 = 2x + 22, so 2x = 10 and x = 5. Checking, 4 x 8 = 32 and 2 x 16 = 32. Equal, so x = 5."
+    },
+    {
+      "id": "concept-4-simultaneous-by-substitution-and-elimination",
+      "title": "Two Equations, Two Unknowns",
+      "explanation": "One equation with two unknowns has endlessly many solutions. Two equations pin them down to a single pair, and there are two algebraic ways to get there. Substitution suits a pair already written as y = something: set the two expressions for y equal to each other. Elimination suits a pair written with both letters on one side: add or subtract the equations so that one letter cancels. Which you choose is decided by the shape of the equations in front of you.",
+      "example": "By substitution, y = 2x - 1 and y = x + 5 give 2x - 1 = x + 5, so x = 6 and y = 11. By elimination, x + y = 10 and x - y = 4 have opposite y terms, so ADDING removes y: 2x = 14, x = 7, y = 3. Where the y terms match instead - x + 5y = 28 and x + 3y = 18 - you SUBTRACT: 2y = 10, y = 5, x = 3."
+    },
+    {
+      "id": "concept-5-the-graphical-meaning",
+      "title": "Where the Lines Cross",
+      "explanation": "Each of two linear equations describes a line, and every point on a line is a pair of values that satisfies its equation. So a point on BOTH lines satisfies both equations - which is exactly what a solution to a simultaneous pair is. The lines cross once, so there is one solution. This is not a different answer from the algebra; it is the same answer seen from the side, and it explains what the algebra is doing.",
+      "example": "y = 2x + 1 and y = x + 4 cross at (3, 7). Algebraically, 2x + 1 = x + 4 gives x = 3, and then y = 7. Same pair. Reading a graph is quick but limited by how finely you can draw; the algebra is exact, which is why both are worth having."
+    },
+    {
+      "id": "concept-6-inequalities-and-the-sign",
+      "title": "Inequalities, and the One Rule That Is New",
+      "explanation": "An inequality is solved almost exactly like an equation: whatever you do to one side you do to the other, and you work towards the letter on its own. The difference is one rule and it is the whole difficulty of the section. Multiplying or dividing both sides by a NEGATIVE number reverses the inequality sign, because multiplying by a negative flips the order of the number line. An answer is a solution SET, not a single value, so it is drawn on a number line - a closed circle where the end is included, an open one where it is not.",
+      "example": "6x > 18 gives x > 3 with no drama. But 3x > 4x + 12 gives -x > 12, and dividing by -1 turns it into x < -12, not x > -12. Test it: at x = -13, the left is -39 and the right is -40, and -39 > -40 is true. At x = -11 the left is -33 and the right is -32, and -33 > -32 is false. So the answers really are the numbers BELOW -12."
+    }
+  ],
+  "explorations": [
+    {
+      "id": "explore-1",
+      "outcomeId": "lo01",
+      "difficulty": "Discover",
+      "title": "From a Situation to an Equation",
+      "context": "An equation says that two things are equal. Building one from a description means naming the unknown with a letter, writing each quantity in terms of it, and then finding the sentence in the problem that says two of them are the same - 'the sum is 90', 'you get the same answer', 'the perimeter is 1 metre'. That sentence is the equals sign. If you cannot find it, you do not yet have an equation, only expressions.",
+      "prompt": "Two numbers are n and 2(n + 3) and their sum is 90. Which words in that sentence become the equals sign?",
+      "answer": "'Their sum is 90' - it is the only phrase claiming two things are equal, giving n + 2(n + 3) = 90 and n = 28.",
+      "modelType": "concept-model-1",
+      "hint": "Look for the phrase that claims a total.",
+      "explanation": "Two numbers are n and 2(n + 3), and their sum is 90. The sum gives the equals sign: n + 2(n + 3) = 90. Expanding, n + 2n + 6 = 90, so 3n = 84 and n = 28. The two numbers are 28 and 2 x 31 = 62, and 28 + 62 = 90, which checks."
+    },
+    {
+      "id": "explore-2",
+      "outcomeId": "lo02",
+      "difficulty": "Core",
+      "title": "Two Routes Through a Bracket",
+      "context": "An equation with a bracket can be solved by expanding it, or by dividing the whole equation by a common factor first. Both are correct and they give the same answer, which is worth seeing rather than being told: one is more familiar, the other is often less work. Choosing between them is a real decision, and being able to say why you chose is part of the mathematics.",
+      "prompt": "Solve 5(x + 3) = 10x - 20 by expanding and by dividing by 5. Which was less work, and why was dividing allowed?",
+      "answer": "Dividing was one step shorter, and it was allowed because every term on both sides is a multiple of 5. Both give x = 7.",
+      "modelType": "concept-model-2",
+      "hint": "Is every term a multiple of 5?",
+      "explanation": "5(x + 3) = 10x - 20. Expanding gives 5x + 15 = 10x - 20, so 35 = 5x and x = 7. Dividing both sides by 5 first gives x + 3 = 2x - 4, so 7 = x - the same answer in one step fewer. Dividing works here because every term on both sides is a multiple of 5."
+    },
+    {
+      "id": "explore-3",
+      "outcomeId": "lo03",
+      "difficulty": "Core",
+      "title": "Checking, and Finding Someone Else's Mistake",
+      "context": "Substituting your answer back is not politeness, it is the check that an equation can always give you: if the two sides come out equal, the answer is right. That makes wrong answers findable - including in other people's work. The skill is to substitute first to establish that something IS wrong, and only then hunt for where, because knowing there is an error tells you to look.",
+      "prompt": "Someone gets x = 8 for 4(x + 3) = 2(x + 11). Substitute it. What does the result tell you before you read their working?",
+      "answer": "The sides come to 44 and 38, which are unequal, so the answer is wrong - established without reading a single line of their work.",
+      "modelType": "concept-model-3",
+      "hint": "Work out each side separately.",
+      "explanation": "Someone solves 4(x + 3) = 2(x + 11) and gets x = 8. Substituting: the left is 4 x 11 = 44 and the right is 2 x 19 = 38, which are not equal, so x = 8 is wrong. Working it properly: 4x + 12 = 2x + 22, so 2x = 10 and x = 5. Checking, 4 x 8 = 32 and 2 x 16 = 32. Equal, so x = 5."
+    },
+    {
+      "id": "explore-4",
+      "outcomeId": "lo04",
+      "difficulty": "Core",
+      "title": "Two Equations, Two Unknowns",
+      "context": "One equation with two unknowns has endlessly many solutions. Two equations pin them down to a single pair, and there are two algebraic ways to get there. Substitution suits a pair already written as y = something: set the two expressions for y equal to each other. Elimination suits a pair written with both letters on one side: add or subtract the equations so that one letter cancels. Which you choose is decided by the shape of the equations in front of you.",
+      "prompt": "Solve x + y = 10 and x - y = 4, then x + 5y = 28 and x + 3y = 18. Why do you add one pair and subtract the other?",
+      "answer": "Because the y terms are opposite in the first pair and the x terms identical in the second. The signs decide, not a rule.",
+      "modelType": "concept-model-4",
+      "hint": "Compare the signs of the terms you want to remove.",
+      "explanation": "By substitution, y = 2x - 1 and y = x + 5 give 2x - 1 = x + 5, so x = 6 and y = 11. By elimination, x + y = 10 and x - y = 4 have opposite y terms, so ADDING removes y: 2x = 14, x = 7, y = 3. Where the y terms match instead - x + 5y = 28 and x + 3y = 18 - you SUBTRACT: 2y = 10, y = 5, x = 3."
+    },
+    {
+      "id": "explore-5",
+      "outcomeId": "lo06",
+      "difficulty": "Core",
+      "title": "Where the Lines Cross",
+      "context": "Each of two linear equations describes a line, and every point on a line is a pair of values that satisfies its equation. So a point on BOTH lines satisfies both equations - which is exactly what a solution to a simultaneous pair is. The lines cross once, so there is one solution. This is not a different answer from the algebra; it is the same answer seen from the side, and it explains what the algebra is doing.",
+      "prompt": "Draw y = 2x + 1 and y = x + 4, and solve them algebraically. Why must the crossing point be the answer?",
+      "answer": "They cross at (3, 7), which the algebra also gives. A point on both lines satisfies both equations, and that is the definition of the solution.",
+      "modelType": "concept-model-5",
+      "hint": "What does a point on a line mean?",
+      "explanation": "y = 2x + 1 and y = x + 4 cross at (3, 7). Algebraically, 2x + 1 = x + 4 gives x = 3, and then y = 7. Same pair. Reading a graph is quick but limited by how finely you can draw; the algebra is exact, which is why both are worth having."
+    },
+    {
+      "id": "explore-6",
+      "outcomeId": "lo08",
+      "difficulty": "Extension",
+      "title": "Inequalities, and the One Rule That Is New",
+      "context": "An inequality is solved almost exactly like an equation: whatever you do to one side you do to the other, and you work towards the letter on its own. The difference is one rule and it is the whole difficulty of the section. Multiplying or dividing both sides by a NEGATIVE number reverses the inequality sign, because multiplying by a negative flips the order of the number line. An answer is a solution SET, not a single value, so it is drawn on a number line - a closed circle where the end is included, an open one where it is not.",
+      "prompt": "Solve 3x > 4x + 12, then test x = -13 and x = -11 in the original. Which half of the line is the solution?",
+      "answer": "x < -12. At -13 the statement is true and at -11 it is false, so the answers lie below -12, which is why the sign reversed.",
+      "modelType": "concept-model-6",
+      "hint": "Try a number from each side of -12.",
+      "explanation": "6x > 18 gives x > 3 with no drama. But 3x > 4x + 12 gives -x > 12, and dividing by -1 turns it into x < -12, not x > -12. Test it: at x = -13, the left is -39 and the right is -40, and -39 > -40 is true. At x = -11 the left is -33 and the right is -32, and -33 > -32 is false. So the answers really are the numbers BELOW -12."
+    }
+  ],
+  "visualModels": [
+    {
+      "id": "model-1",
+      "outcomeId": "lo01",
+      "title": "From a Situation to an Equation",
+      "modelType": "concept-model-1",
+      "purpose": "An equation says that two things are equal. Building one from a description means naming the unknown with a letter, writing each quantity in terms of it, and then finding the sentence in the problem that says two of them are the same - 'the sum is 90', 'you get the same answer', 'the perimeter is 1 metre'. That sentence is the equals sign. If you cannot find it, you do not yet have an equation, only expressions.",
+      "defaultNumber": 90
+    },
+    {
+      "id": "model-2",
+      "outcomeId": "lo02",
+      "title": "Two Routes Through a Bracket",
+      "modelType": "concept-model-2",
+      "purpose": "An equation with a bracket can be solved by expanding it, or by dividing the whole equation by a common factor first. Both are correct and they give the same answer, which is worth seeing rather than being told: one is more familiar, the other is often less work. Choosing between them is a real decision, and being able to say why you chose is part of the mathematics.",
+      "defaultNumber": 7
+    },
+    {
+      "id": "model-3",
+      "outcomeId": "lo03",
+      "title": "Checking, and Finding Someone Else's Mistake",
+      "modelType": "concept-model-3",
+      "purpose": "Substituting your answer back is not politeness, it is the check that an equation can always give you: if the two sides come out equal, the answer is right. That makes wrong answers findable - including in other people's work. The skill is to substitute first to establish that something IS wrong, and only then hunt for where, because knowing there is an error tells you to look.",
+      "defaultNumber": 5
+    },
+    {
+      "id": "model-4",
+      "outcomeId": "lo04",
+      "title": "Two Equations, Two Unknowns",
+      "modelType": "concept-model-4",
+      "purpose": "One equation with two unknowns has endlessly many solutions. Two equations pin them down to a single pair, and there are two algebraic ways to get there. Substitution suits a pair already written as y = something: set the two expressions for y equal to each other. Elimination suits a pair written with both letters on one side: add or subtract the equations so that one letter cancels. Which you choose is decided by the shape of the equations in front of you.",
+      "defaultNumber": 6
+    },
+    {
+      "id": "model-5",
+      "outcomeId": "lo06",
+      "title": "Where the Lines Cross",
+      "modelType": "concept-model-5",
+      "purpose": "Each of two linear equations describes a line, and every point on a line is a pair of values that satisfies its equation. So a point on BOTH lines satisfies both equations - which is exactly what a solution to a simultaneous pair is. The lines cross once, so there is one solution. This is not a different answer from the algebra; it is the same answer seen from the side, and it explains what the algebra is doing.",
+      "defaultNumber": 3
+    },
+    {
+      "id": "model-6",
+      "outcomeId": "lo08",
+      "title": "Inequalities, and the One Rule That Is New",
+      "modelType": "concept-model-6",
+      "purpose": "An inequality is solved almost exactly like an equation: whatever you do to one side you do to the other, and you work towards the letter on its own. The difference is one rule and it is the whole difficulty of the section. Multiplying or dividing both sides by a NEGATIVE number reverses the inequality sign, because multiplying by a negative flips the order of the number line. An answer is a solution SET, not a single value, so it is drawn on a number line - a closed circle where the end is included, an open one where it is not.",
+      "defaultNumber": -12
+    }
+  ],
+  "methods": [
+    {
+      "id": "method-1",
+      "outcomeId": "lo01",
+      "difficulty": "Core",
+      "title": "How to construct an equation",
+      "example": "Two numbers are n and 2(n + 3). Their sum is 90. Find them.",
+      "steps": [
+        "Name the unknown - it is already named here as n.",
+        "Write each quantity in terms of it: n and 2(n + 3).",
+        "Find the sentence that says two things are equal: 'their sum is 90'.",
+        "Write it: n + 2(n + 3) = 90.",
+        "Solve: 3n + 6 = 90, so n = 28, and the numbers are 28 and 62."
+      ]
+    },
+    {
+      "id": "method-2",
+      "outcomeId": "lo02",
+      "difficulty": "Core",
+      "title": "How to solve an equation with brackets",
+      "example": "Solve 5(x + 3) = 10x - 20 two ways.",
+      "steps": [
+        "Look for a common factor of every term on both sides - here, 5.",
+        "Route A: expand. 5x + 15 = 10x - 20, so 35 = 5x and x = 7.",
+        "Route B: divide by 5 first. x + 3 = 2x - 4, so 7 = x.",
+        "Check by substituting: 5 x 10 = 50 and 10 x 7 - 20 = 50. Equal.",
+        "Say which route you preferred and why."
+      ]
+    },
+    {
+      "id": "method-3",
+      "outcomeId": "lo03",
+      "difficulty": "Core",
+      "title": "How to find someone's mistake",
+      "example": "Someone solves 4(x + 3) = 2(x + 11) and gets x = 8.",
+      "steps": [
+        "Substitute their answer into the ORIGINAL equation, both sides separately.",
+        "Left: 4(8 + 3) = 44. Right: 2(8 + 11) = 38. Not equal, so the answer is wrong.",
+        "Now work through their lines looking for the first one that stops being true.",
+        "Solve it correctly: 4x + 12 = 2x + 22, so 2x = 10 and x = 5.",
+        "Check the correct answer: 4 x 8 = 32 and 2 x 16 = 32. Equal."
+      ]
+    },
+    {
+      "id": "method-4",
+      "outcomeId": "lo04",
+      "difficulty": "Core",
+      "title": "How to solve by substitution",
+      "example": "Solve y = 2x - 1 and y = x + 5.",
+      "steps": [
+        "Both equations give y, so the two expressions for y must be equal.",
+        "Write 2x - 1 = x + 5.",
+        "Solve for x: x = 6.",
+        "Put x back into either equation: y = 2 x 6 - 1 = 11.",
+        "Check in the OTHER equation: 6 + 5 = 11. Correct, so x = 6 and y = 11."
+      ]
+    },
+    {
+      "id": "method-5",
+      "outcomeId": "lo05",
+      "difficulty": "Core",
+      "title": "How to solve by elimination",
+      "example": "Solve x + 5y = 28 and x + 3y = 18.",
+      "steps": [
+        "Compare the terms in the letter you want to remove.",
+        "If they are the SAME, subtract the equations; if OPPOSITE, add them. Here the x terms match, so subtract.",
+        "Subtracting: 2y = 10, so y = 5.",
+        "Substitute into the first equation: x + 25 = 28, so x = 3.",
+        "Check in the second: 3 + 15 = 18. Correct."
+      ]
+    },
+    {
+      "id": "method-6",
+      "outcomeId": "lo08",
+      "difficulty": "Core",
+      "title": "How to solve an inequality",
+      "example": "Solve 3x > 4x + 12.",
+      "steps": [
+        "Collect the letter on one side as you would in an equation: 3x - 4x > 12.",
+        "Simplify: -x > 12.",
+        "You must divide by -1, so REVERSE the sign: x < -12.",
+        "Test a value inside your answer: at x = -13, -39 > -40 is true.",
+        "Test one outside: at x = -11, -33 > -32 is false. The solution set is confirmed."
+      ]
+    }
+  ],
+  "workedExamples": [
+    {
+      "id": "we01",
+      "outcomeId": "lo01",
+      "difficulty": "Basic",
+      "twm": "characterising",
+      "title": "Finding the equals sign in the words",
+      "prompt": "Two numbers are n and 2(n + 3). Their sum is 90. Construct and solve an equation.",
+      "solution": "The phrase 'their sum is 90' is the equality. So n + 2(n + 3) = 90, which expands to 3n + 6 = 90, giving 3n = 84 and n = 28. The numbers are 28 and 2 x 31 = 62, and 28 + 62 = 90."
+    },
+    {
+      "id": "we02",
+      "outcomeId": "lo02",
+      "difficulty": "Core",
+      "twm": "critiquing",
+      "title": "Expand, or divide first",
+      "prompt": "Solve 5(x + 3) = 10x - 20 by expanding, and again by dividing by 5 first. Which do you prefer?",
+      "solution": "Expanding: 5x + 15 = 10x - 20, so 15 + 20 = 10x - 5x, 35 = 5x and x = 7. Dividing by 5 first: x + 3 = 2x - 4, so 7 = x. Both give 7. Dividing first is one step shorter and works because every term is a multiple of 5; expanding always works and needs no such check. A fair answer names the trade-off rather than declaring one route correct."
+    },
+    {
+      "id": "we03",
+      "outcomeId": "lo02",
+      "difficulty": "Core",
+      "twm": "specialising",
+      "title": "Two brackets and a zero",
+      "prompt": "Solve 8(x - 4) + 4(5 - x) = 0.",
+      "solution": "Expanding: 8x - 32 + 20 - 4x = 0, so 4x - 12 = 0 and x = 3. Dividing by 4 first gives 2(x - 4) + (5 - x) = 0, so 2x - 8 + 5 - x = 0, x - 3 = 0 and x = 3. Checking: 8(-1) + 4(2) = -8 + 8 = 0."
+    },
+    {
+      "id": "we04",
+      "outcomeId": "lo03",
+      "difficulty": "Core",
+      "twm": "critiquing",
+      "title": "Showing an answer is wrong before finding out why",
+      "prompt": "Someone solves 4(x + 3) = 2(x + 11) and gets x = 8. Show that this is wrong, then solve it correctly.",
+      "solution": "Substitute 8: the left is 4(11) = 44 and the right is 2(19) = 38. They are not equal, so x = 8 cannot be the solution - and that is established before looking at any of the working. Correctly: 4x + 12 = 2x + 22, so 2x = 10 and x = 5. Check: 4(8) = 32 and 2(16) = 32. Equal."
+    },
+    {
+      "id": "we05",
+      "outcomeId": "lo01",
+      "difficulty": "Extension",
+      "twm": "characterising",
+      "title": "A number puzzle in words",
+      "prompt": "Marcus says: 'If you subtract 8 from my number and multiply by 5, you get the same answer as adding 10 to my number and multiplying by 2.' Find the number.",
+      "solution": "Call it N. The two instructions give 5(N - 8) and 2(N + 10), and 'the same answer' is the equals sign: 5(N - 8) = 2(N + 10). Expanding, 5N - 40 = 2N + 20, so 3N = 60 and N = 20. Check: 5(12) = 60 and 2(30) = 60."
+    },
+    {
+      "id": "we06",
+      "outcomeId": "lo01",
+      "difficulty": "Extension",
+      "twm": "specialising",
+      "title": "A triangle's perimeter",
+      "prompt": "A triangle's first side is s cm, its second is twice the first, and its third is 5 cm more than the second. The perimeter is 1 metre. Find the longest side.",
+      "solution": "The sides are s, 2s and 2s + 5, and 1 metre is 100 cm, so s + 2s + 2s + 5 = 100. That gives 5s = 95 and s = 19. The sides are 19, 38 and 43 cm, which sum to 100. The longest is 43 cm."
+    },
+    {
+      "id": "we07",
+      "outcomeId": "lo04",
+      "difficulty": "Core",
+      "twm": "characterising",
+      "title": "Simultaneous by substitution",
+      "prompt": "Solve y = 2x - 1 and y = x + 5.",
+      "solution": "Both expressions equal y, so they equal each other: 2x - 1 = x + 5, giving x = 6. Then y = 2(6) - 1 = 11. Check in the other equation: 6 + 5 = 11. So x = 6 and y = 11."
+    },
+    {
+      "id": "we08",
+      "outcomeId": "lo04",
+      "difficulty": "Core",
+      "twm": "specialising",
+      "title": "Substitution with a negative answer",
+      "prompt": "Solve y = 6x + 3 and y = 2x - 9.",
+      "solution": "6x + 3 = 2x - 9, so 4x = -12 and x = -3. Then y = 6(-3) + 3 = -15. Check: 2(-3) - 9 = -15. So x = -3 and y = -15. A negative solution is not a warning sign; it simply means the crossing point is left of the axis."
+    },
+    {
+      "id": "we09",
+      "outcomeId": "lo05",
+      "difficulty": "Core",
+      "twm": "classifying",
+      "title": "Add or subtract? The signs decide",
+      "prompt": "Solve x + y = 10 and x - y = 4, then x + 5y = 28 and x + 3y = 18.",
+      "solution": "In the first pair the y terms are opposite, so ADDING removes y: 2x = 14, x = 7, and then y = 3. In the second pair the x terms are identical, so SUBTRACTING removes x: 2y = 10, y = 5, and then x = 28 - 25 = 3. Deciding which to do is a matter of looking at the signs, not of remembering a rule."
+    },
+    {
+      "id": "we10",
+      "outcomeId": "lo05",
+      "difficulty": "Extension",
+      "twm": "specialising",
+      "title": "Elimination with different coefficients",
+      "prompt": "Solve 3x + 2y = 34 and x - 2y = 6.",
+      "solution": "The y terms are +2y and -2y, which are opposite, so add: 4x = 40 and x = 10. Substituting into the first, 30 + 2y = 34, so 2y = 4 and y = 2. Check in the second: 10 - 4 = 6."
+    },
+    {
+      "id": "we11",
+      "outcomeId": "lo06",
+      "difficulty": "Core",
+      "twm": "convincing",
+      "title": "The same pair, graphically and algebraically",
+      "prompt": "Solve y = 2x + 1 and y = x + 4 by drawing both lines, and again by algebra. Why must the answers agree?",
+      "solution": "The lines cross at (3, 7). Algebraically, 2x + 1 = x + 4 gives x = 3 and y = 7. They must agree because a point on a line IS a pair of values satisfying that line's equation, so a point on both lines satisfies both equations - which is what a simultaneous solution means. The graph shows why there is exactly one answer: two straight lines that are not parallel cross once."
+    },
+    {
+      "id": "we12",
+      "outcomeId": "lo07",
+      "difficulty": "Core",
+      "twm": "characterising",
+      "title": "Solution sets on a number line",
+      "prompt": "Show x >= -2, x < 5 and 1 < x <= 6 on number lines, and say when each circle is open or closed.",
+      "solution": "For x >= -2, a CLOSED circle at -2 with the line going right, because -2 is included. For x < 5, an OPEN circle at 5 going left, because 5 is not. For 1 < x <= 6, an open circle at 1 and a closed one at 6 with the segment between them. The circle records whether the endpoint itself is one of the answers."
+    },
+    {
+      "id": "we13",
+      "outcomeId": "lo08",
+      "difficulty": "Core",
+      "twm": "characterising",
+      "title": "Solving inequalities, no sign change needed",
+      "prompt": "Solve 6x > 18, 2x - 3 < 19 and 5(x - 7) >= 30.",
+      "solution": "6x > 18 gives x > 3. For 2x - 3 < 19, add 3 to get 2x < 22, so x < 11. For 5(x - 7) >= 30, divide by 5 to get x - 7 >= 6, so x >= 13. None of these divides by a negative, so no sign changes."
+    },
+    {
+      "id": "we14",
+      "outcomeId": "lo08",
+      "difficulty": "Extension",
+      "twm": "convincing",
+      "title": "Why dividing by a negative reverses the sign",
+      "prompt": "Solve 3x > 4x + 12, then test your answer on both sides of the boundary.",
+      "solution": "Collecting: 3x - 4x > 12, so -x > 12. Dividing by -1 reverses the sign: x < -12. Test inside the set, at x = -13: the left is -39, the right is -40, and -39 > -40 is TRUE. Test outside, at x = -11: the left is -33, the right is -32, and -33 > -32 is FALSE. Keeping the sign as x > -12 would have claimed exactly the wrong half of the line."
+    },
+    {
+      "id": "we15",
+      "outcomeId": "lo08",
+      "difficulty": "Extension",
+      "twm": "improving",
+      "title": "Avoiding the negative altogether",
+      "prompt": "Solve 3x - 3 < 5x - 17 twice: once by collecting on the left, once by collecting on the right. Which avoids the sign change?",
+      "solution": "Collecting on the left: 3x - 5x < -17 + 3, so -2x < -14, and dividing by -2 reverses it to x > 7. Collecting on the right instead: -3 + 17 < 5x - 3x, so 14 < 2x, giving 7 < x, which is the same thing written the other way round and needed no reversal. Moving the letter to whichever side keeps its coefficient positive is a way to sidestep the rule rather than risk it."
+    }
+  ],
+  "practice": [
+    {
+      "id": "p01",
+      "level": "Warm-up",
+      "prompt": "Solve 6x > 18.",
+      "answer": "x > 3",
+      "hint": "Divide by 6."
+    },
+    {
+      "id": "p02",
+      "level": "Warm-up",
+      "prompt": "Solve 2x - 3 < 19.",
+      "answer": "x < 11",
+      "hint": "Add 3, then halve."
+    },
+    {
+      "id": "p03",
+      "level": "Warm-up",
+      "prompt": "Solve y = 3x and y = x + 12.",
+      "answer": "x = 6, y = 18",
+      "hint": "Set 3x equal to x + 12."
+    },
+    {
+      "id": "p04",
+      "level": "Core",
+      "prompt": "Solve 5(x + 3) = 10x - 20.",
+      "answer": "x = 7",
+      "hint": "Expand, or divide by 5 first."
+    },
+    {
+      "id": "p05",
+      "level": "Core",
+      "prompt": "Solve 4x - 5 >= 2x + 15.",
+      "answer": "x >= 10",
+      "hint": "Collect on the left; no sign change."
+    },
+    {
+      "id": "p06",
+      "level": "Core",
+      "prompt": "Solve x + y = 20 and x - y = 16 by elimination.",
+      "answer": "x = 18, y = 2",
+      "hint": "The y terms are opposite, so add."
+    },
+    {
+      "id": "p07",
+      "level": "Core",
+      "prompt": "Solve y = 2x + 1 and y = -2x + 9.",
+      "answer": "x = 2, y = 5",
+      "hint": "Set the two expressions equal."
+    },
+    {
+      "id": "p08",
+      "level": "Core",
+      "prompt": "Solve 5(x - 7) >= 30.",
+      "answer": "x >= 13",
+      "hint": "Divide by 5 first."
+    },
+    {
+      "id": "p09",
+      "level": "Core",
+      "prompt": "N is an integer and N >= 8.2. What is the smallest N can be?",
+      "answer": "9",
+      "hint": "The smallest integer at or above 8.2."
+    },
+    {
+      "id": "p10",
+      "level": "Challenge",
+      "prompt": "Solve 3x > 4x + 12.",
+      "answer": "x < -12",
+      "hint": "You will divide by a negative."
+    },
+    {
+      "id": "p11",
+      "level": "Challenge",
+      "prompt": "Den buys 2 cakes and 3 coffees for $9. Ang buys 2 cakes and 1 coffee for $5. Find the cost of each.",
+      "answer": "Cake $1.50, coffee $2.00. From 2x + 3y = 9 and 2x + y = 5, subtracting gives 2y = 4.",
+      "hint": "The cake terms match, so subtract."
+    },
+    {
+      "id": "p12",
+      "level": "Challenge",
+      "prompt": "Three angles of a quadrilateral are x, 2x and 3(x - 10) degrees. Write and solve an inequality for x, then say whether 2x and 3(x - 10) could be equal.",
+      "answer": "x + 2x + 3(x - 10) < 360, so 6x - 30 < 360 and x < 65. Setting 2x = 3(x - 10) gives x = 30, which satisfies x < 65 - so yes, they could both be 60 degrees.",
+      "hint": "The three named angles must total less than 360."
+    }
+  ],
+  "activities": [
+    {
+      "title": "Words into equations",
+      "materials": "cards, paper.",
+      "steps": [
+        "Write five situations in words, each containing a phrase that means 'equals'.",
+        "Swap with a partner and underline that phrase in each.",
+        "Turn each situation into an equation and solve it.",
+        "Check every answer by substituting back into the words, not just the algebra."
+      ]
+    },
+    {
+      "title": "Two routes, one answer",
+      "materials": "paper.",
+      "steps": [
+        "Write four equations with brackets whose terms share a common factor.",
+        "Solve each one twice: by expanding, and by dividing first.",
+        "Record how many lines each route took.",
+        "Find one equation where dividing first is NOT possible, and explain what is different about it."
+      ]
+    },
+    {
+      "title": "Mark the homework",
+      "materials": "paper.",
+      "steps": [
+        "Solve three equations correctly, then rewrite each with exactly one deliberate error.",
+        "Swap with a partner.",
+        "For each, substitute the given answer FIRST to decide whether it is wrong.",
+        "Only then find the line where the error is, and name the error.",
+        "Discuss which errors were hardest to spot, and why."
+      ]
+    },
+    {
+      "title": "Add or subtract?",
+      "materials": "cards.",
+      "steps": [
+        "Write six pairs of simultaneous equations with both letters on one side.",
+        "Sort them into two piles: pairs you would add, and pairs you would subtract.",
+        "Write the reason for each pile on a card.",
+        "Solve two from each pile and check both answers in both equations."
+      ]
+    },
+    {
+      "title": "Graph it and solve it",
+      "materials": "graph paper.",
+      "steps": [
+        "Choose three pairs of simultaneous equations written as y = ...",
+        "Plot both lines of each pair from a table of values.",
+        "Read off the crossing point.",
+        "Solve each pair algebraically and compare.",
+        "Where they disagreed slightly, explain which method is exact and why."
+      ]
+    },
+    {
+      "title": "The negative sign hunt",
+      "materials": "paper, a number line.",
+      "steps": [
+        "Write six inequalities, three needing a sign reversal and three not.",
+        "Solve them all, marking which needed the reversal.",
+        "For each reversal, test one value inside your answer and one outside.",
+        "For one of them, re-solve by collecting the letter on the other side instead.",
+        "Write a sentence on when that trick avoids the rule altogether."
+      ]
+    }
+  ],
+  "reference": {
+    "rules": [
+      {
+        "title": "Find the Equals Sign in the Words",
+        "text": "A phrase like 'the sum is', 'the perimeter is' or 'you get the same answer' is what turns expressions into an equation."
+      },
+      {
+        "title": "Divide First Only If Everything Divides",
+        "text": "An equation may be divided by a number when every term on both sides is a multiple of it."
+      },
+      {
+        "title": "Substitute to Check",
+        "text": "Put the answer back into the original equation. Equal sides mean the answer is right; unequal sides prove it is wrong."
+      },
+      {
+        "title": "The Signs Choose Add or Subtract",
+        "text": "Opposite terms cancel by adding; identical terms cancel by subtracting."
+      },
+      {
+        "title": "The Crossing Point Is the Solution",
+        "text": "A point on both lines satisfies both equations, which is what solving a pair means."
+      },
+      {
+        "title": "Negative Divisor, Reversed Sign",
+        "text": "Multiplying or dividing an inequality by a negative number reverses the inequality sign. Equations are unaffected."
+      }
+    ],
+    "terms": [
+      [
+        "Equation",
+        "A statement that two expressions are equal"
+      ],
+      [
+        "Solve",
+        "To find the value or values that make a statement true"
+      ],
+      [
+        "Simultaneous equations",
+        "Two or more equations that must hold at the same time"
+      ],
+      [
+        "Method of substitution",
+        "Replacing one letter using one equation, then solving the other"
+      ],
+      [
+        "Method of elimination",
+        "Adding or subtracting equations so that one letter cancels"
+      ],
+      [
+        "Inequality",
+        "A statement that one expression is greater or less than another"
+      ],
+      [
+        "Solution set",
+        "All the values that satisfy an inequality"
+      ],
+      [
+        "Integer",
+        "A whole number, positive, negative or zero"
+      ]
+    ],
+    "commonMistakes": [
+      [
+        "Expanding only the first term of a bracket",
+        "4(x + 3) is 4x + 12, not 4x + 3"
+      ],
+      [
+        "Losing a sign when moving a term",
+        "5x + 20 = 60 - 2x gives 7x = 40, not 7x = 80"
+      ],
+      [
+        "Adding when you should subtract",
+        "Identical terms cancel by subtracting; opposite terms by adding"
+      ],
+      [
+        "Forgetting to reverse the inequality sign",
+        "-x > 12 becomes x < -12"
+      ],
+      [
+        "Using a closed circle for a strict inequality",
+        "x < 5 needs an open circle at 5"
+      ]
+    ]
+  },
+  "fluency": [
+    {
+      "id": "fl01",
+      "outcomeId": "lo08",
+      "difficulty": "Round 1",
+      "prompt": "Solve 6x > 18.",
+      "answer": "x > 3",
+      "hint": "Divide by 6.",
+      "errorFeedback": "18 divided by 6 is 3, and the sign does not change."
+    },
+    {
+      "id": "fl02",
+      "outcomeId": "lo08",
+      "difficulty": "Round 1",
+      "prompt": "Solve 4x + 10 < 22.",
+      "answer": "x < 3",
+      "hint": "Subtract 10 first.",
+      "errorFeedback": "4x < 12, so x < 3."
+    },
+    {
+      "id": "fl03",
+      "outcomeId": "lo02",
+      "difficulty": "Round 1",
+      "prompt": "Solve 5(x + 3) = 10x - 20.",
+      "answer": "x = 7",
+      "hint": "Divide by 5 first if you like.",
+      "errorFeedback": "x + 3 = 2x - 4 gives x = 7."
+    },
+    {
+      "id": "fl04",
+      "outcomeId": "lo04",
+      "difficulty": "Round 1",
+      "prompt": "Solve y = 3x and y = x + 12.",
+      "answer": "x = 6, y = 18",
+      "hint": "3x = x + 12.",
+      "errorFeedback": "2x = 12, so x = 6 and y = 18."
+    },
+    {
+      "id": "fl05",
+      "outcomeId": "lo04",
+      "difficulty": "Round 2",
+      "prompt": "Solve y = 2x - 1 and y = x + 5.",
+      "answer": "x = 6, y = 11",
+      "hint": "Set them equal.",
+      "errorFeedback": "2x - 1 = x + 5 gives x = 6."
+    },
+    {
+      "id": "fl06",
+      "outcomeId": "lo05",
+      "difficulty": "Round 2",
+      "prompt": "Solve x + y = 10 and x - y = 4.",
+      "answer": "x = 7, y = 3",
+      "hint": "Add the equations.",
+      "errorFeedback": "Adding removes y: 2x = 14."
+    },
+    {
+      "id": "fl07",
+      "outcomeId": "lo05",
+      "difficulty": "Round 2",
+      "prompt": "Solve x + 5y = 28 and x + 3y = 18.",
+      "answer": "x = 3, y = 5",
+      "hint": "Subtract the equations.",
+      "errorFeedback": "The x terms match, so subtracting gives 2y = 10."
+    },
+    {
+      "id": "fl08",
+      "outcomeId": "lo03",
+      "difficulty": "Round 2",
+      "prompt": "Solve 4(x + 3) = 2(x + 11).",
+      "answer": "x = 5",
+      "hint": "Expand both brackets.",
+      "errorFeedback": "4x + 12 = 2x + 22 gives 2x = 10."
+    },
+    {
+      "id": "fl09",
+      "outcomeId": "lo08",
+      "difficulty": "Round 3",
+      "prompt": "Solve 3x > 4x + 12.",
+      "answer": "x < -12",
+      "hint": "Dividing by a negative reverses the sign.",
+      "errorFeedback": "-x > 12 becomes x < -12."
+    },
+    {
+      "id": "fl10",
+      "outcomeId": "lo08",
+      "difficulty": "Round 3",
+      "prompt": "Solve 3x - 3 < 5x - 17.",
+      "answer": "x > 7",
+      "hint": "Either collect on the right, or reverse the sign.",
+      "errorFeedback": "-2x < -14 becomes x > 7."
+    },
+    {
+      "id": "fl11",
+      "outcomeId": "lo05",
+      "difficulty": "Round 3",
+      "prompt": "Solve 3x + 2y = 34 and x - 2y = 6.",
+      "answer": "x = 10, y = 2",
+      "hint": "The y terms are opposite.",
+      "errorFeedback": "Adding gives 4x = 40."
+    },
+    {
+      "id": "fl12",
+      "outcomeId": "lo06",
+      "difficulty": "Round 3",
+      "prompt": "Where do y = 2x + 1 and y = x + 4 cross?",
+      "answer": "(3, 7)",
+      "hint": "Solve them together.",
+      "errorFeedback": "2x + 1 = x + 4 gives x = 3, then y = 7."
+    }
+  ],
+  "realProblems": [
+    {
+      "id": "rp01",
+      "outcomeId": "lo05",
+      "difficulty": "Core",
+      "context": "Market",
+      "prompt": "Den buys 2 cakes and 3 coffees for $9. Ang buys 2 cakes and 1 coffee for $5. Find the price of a cake and of a coffee.",
+      "answer": "With x for a cake and y for a coffee, 2x + 3y = 9 and 2x + y = 5. The cake terms match, so subtracting gives 2y = 4 and y = 2. Then 2x = 5 - 2 = 3, so x = 1.50. A cake is $1.50 and a coffee $2.00.",
+      "hint": "Both orders contain 2 cakes.",
+      "errorFeedback": "Subtract the equations to remove the cakes."
+    },
+    {
+      "id": "rp02",
+      "outcomeId": "lo01",
+      "difficulty": "Core",
+      "context": "Home",
+      "prompt": "A triangle's second side is twice its first, and its third is 5 cm longer than its second. The perimeter is 1 metre. How long is the longest side?",
+      "answer": "s + 2s + (2s + 5) = 100 gives 5s = 95 and s = 19. The sides are 19, 38 and 43 cm, and the longest is 43 cm.",
+      "hint": "Convert the metre to centimetres first.",
+      "errorFeedback": "1 metre is 100 cm, so 5s + 5 = 100."
+    },
+    {
+      "id": "rp03",
+      "outcomeId": "lo08",
+      "difficulty": "Extension",
+      "context": "Money",
+      "prompt": "Xavier has $100. He gives his brother b dollars, his sister $5 more than that, and his friend twice what he gives his sister. He still has money left. Write and solve an inequality for b, then say whether the friend can receive $55.",
+      "answer": "b + (b + 5) + 2(b + 5) < 100, so 4b + 15 < 100, 4b < 85 and b < 21.25. The friend gets 2(b + 5); for that to be 55, b would be 22.5, which breaks b < 21.25. So no - the friend cannot receive $55.",
+      "hint": "'Still has money left' means the total given is less than 100.",
+      "errorFeedback": "The three gifts are b, b + 5 and 2(b + 5)."
+    },
+    {
+      "id": "rp04",
+      "outcomeId": "lo01",
+      "difficulty": "Extension",
+      "context": "Home",
+      "prompt": "In an algebra wall each cell is the sum of the two below it. The bottom row is 30, x, 50. The top cell is 144. Find x.",
+      "answer": "The middle row is 30 + x and x + 50, so the top is (30 + x) + (x + 50) = 2x + 80. Setting that to 144 gives 2x = 64 and x = 32. Checking: the middle row is 62 and 82, and 62 + 82 = 144.",
+      "hint": "Write the middle row before the top.",
+      "errorFeedback": "The top is 2x + 80, not x + 80."
+    },
+    {
+      "id": "rp05",
+      "outcomeId": "lo05",
+      "difficulty": "Extension",
+      "context": "Money",
+      "prompt": "Xavier buys two items and gets $2.26 change from $40. The difference between their prices is $9.24. Find each price.",
+      "answer": "The items cost 40 - 2.26 = $37.74 together, so x + y = 37.74 and x - y = 9.24. Adding gives 2x = 46.98, so x = 23.49, and then y = 14.25. Checking: 23.49 + 14.25 = 37.74 and 23.49 - 14.25 = 9.24.",
+      "hint": "Work out the total spent before writing the equations.",
+      "errorFeedback": "The total is $37.74, not $40."
+    },
+    {
+      "id": "rp06",
+      "outcomeId": "lo06",
+      "difficulty": "Core",
+      "context": "Work",
+      "prompt": "Two taxi firms charge y dollars for x kilometres: firm A charges y = 2x + 1 and firm B charges y = x + 4. At what distance do they cost the same, and which is cheaper for a short trip?",
+      "answer": "They cost the same where the lines cross: 2x + 1 = x + 4 gives x = 3 km, at $7 with either firm. Test a short trip: at 1 km firm A charges 2(1) + 1 = $3 and firm B charges 1 + 4 = $5, so A is cheaper. Test a long one: at 5 km A charges $11 and B charges $9, so B is cheaper. A wins below 3 km and B above it.",
+      "hint": "Solve the two together, then test a distance on each side of the crossing point.",
+      "errorFeedback": "Put x = 1 into both formulas and compare."
+    }
+  ],
+  "reasoningPrompts": [
+    {
+      "id": "reason01",
+      "outcomeId": "lo08",
+      "difficulty": "Extension",
+      "responseMode": "text",
+      "prompt": "Why must you reverse the inequality sign when you divide both sides by a negative number, when you never do that for an equation?",
+      "keyIdeas": [
+        "Multiplying by a negative flips the order",
+        "An equation has no order to flip",
+        "Test a value to confirm"
+      ],
+      "modelAnswer": "An equation claims two things are the same size, and that stays true whatever you multiply both sides by. An inequality claims one is BIGGER, and multiplying by a negative reverses order on the number line: 3 < 5 but -3 > -5. So the claim about which is bigger has to be rewritten. Testing shows it: for 3x > 4x + 12 the answer x < -12 is true at -13 and false at -11, so the solutions really are below -12 and keeping the sign would name the wrong half of the line."
+    },
+    {
+      "id": "reason02",
+      "outcomeId": "lo05",
+      "difficulty": "Core",
+      "responseMode": "text",
+      "prompt": "How do you decide whether to add or subtract a pair of simultaneous equations?",
+      "keyIdeas": [
+        "Look at the terms you want to remove",
+        "Opposite signs: add",
+        "Same signs: subtract"
+      ],
+      "modelAnswer": "Look at the terms in the letter you want gone. If they are opposite, like +y and -y, adding cancels them. If they are identical, like x and x, subtracting cancels them. It is a decision made by looking at the two equations rather than by recalling a rule, which is why the same method handles 3x + 2y = 34 and x - 2y = 6 - the y terms there are opposite, so they add."
+    },
+    {
+      "id": "reason03",
+      "outcomeId": "lo06",
+      "difficulty": "Extension",
+      "responseMode": "text",
+      "prompt": "Why is the point where two lines cross the solution to the pair of equations?",
+      "keyIdeas": [
+        "A point on a line satisfies its equation",
+        "The crossing point is on both",
+        "So it satisfies both"
+      ],
+      "modelAnswer": "Every point on a line is a pair of values that makes that line's equation true - that is what drawing the line from a table of values does. The crossing point lies on both lines, so it makes both equations true at once, which is exactly what a simultaneous solution is. It also explains why there is normally one solution: two straight lines that are not parallel meet exactly once."
+    },
+    {
+      "id": "reason04",
+      "outcomeId": "lo03",
+      "difficulty": "Core",
+      "responseMode": "text",
+      "prompt": "Why is it worth substituting someone's answer before reading their working?",
+      "keyIdeas": [
+        "It settles whether there IS an error",
+        "It takes one step",
+        "Knowing an error exists changes how you read"
+      ],
+      "modelAnswer": "Substituting settles the question the working cannot: whether the answer is wrong at all. It takes one step and needs no understanding of their method. And knowing an error is definitely there changes how you read - you are looking for the first line that stops being true, rather than hoping to notice something. Reading first and substituting later means you may talk yourself into accepting a wrong answer because the working looked reasonable."
+    },
+    {
+      "id": "reason05",
+      "outcomeId": "lo02",
+      "difficulty": "Core",
+      "responseMode": "text",
+      "prompt": "When can you divide an equation by a number before expanding the brackets, and when can you not?",
+      "keyIdeas": [
+        "Every term on both sides must be a multiple",
+        "It is a whole-equation operation",
+        "Otherwise expand"
+      ],
+      "modelAnswer": "You can divide when EVERY term on both sides is a multiple of that number, because dividing an equation means dividing all of it. In 5(x + 3) = 10x - 20 the terms are 5(x + 3), 10x and 20, all multiples of 5, so dividing gives x + 3 = 2x - 4. If one term were not - say the right side were 10x - 21 - dividing would produce a fraction and gain nothing, so expanding is the safer default."
+    },
+    {
+      "id": "reason06",
+      "outcomeId": "lo07",
+      "difficulty": "Core",
+      "responseMode": "text",
+      "prompt": "What does an open circle on a number line mean, and why is one needed at all?",
+      "keyIdeas": [
+        "The endpoint is not included",
+        "Strict versus non-strict signs",
+        "x < 5 excludes 5"
+      ],
+      "modelAnswer": "An open circle says the endpoint is not one of the answers. It is needed because a strict sign and a non-strict one describe different sets: x < 5 contains every number below 5 but not 5 itself, while x <= 5 does contain it. Without two kinds of circle the drawing could not tell those apart, and the drawing is supposed to be a complete picture of the solution set."
+    }
+  ],
+  "assessment": {
+    "passPercent": 80,
+    "questions": [
+      {
+        "id": "q01",
+        "type": "Application",
+        "outcomeId": "lo02",
+        "difficulty": "Basic",
+        "question": "Solve 5(x + 3) = 10x - 20.",
+        "options": [
+          "x = 7",
+          "x = 1",
+          "x = -7",
+          "x = 35"
+        ],
+        "answer": "x = 7",
+        "hint": "Expand or divide by 5.",
+        "explanation": "5x + 15 = 10x - 20 gives 35 = 5x, so x = 7."
+      },
+      {
+        "id": "q02",
+        "type": "Application",
+        "outcomeId": "lo01",
+        "difficulty": "Core",
+        "question": "Two numbers are n and 2(n + 3), and they add to 90. What is n?",
+        "options": [
+          "28",
+          "29",
+          "42",
+          "30"
+        ],
+        "answer": "28",
+        "hint": "Write the sum as an equation.",
+        "explanation": "3n + 6 = 90, so n = 28 and the numbers are 28 and 62."
+      },
+      {
+        "id": "q03",
+        "type": "Application",
+        "outcomeId": "lo04",
+        "difficulty": "Core",
+        "question": "Solve y = 2x - 1 and y = x + 5.",
+        "options": [
+          "x = 6, y = 11",
+          "x = 4, y = 7",
+          "x = 6, y = 13",
+          "x = 2, y = 3"
+        ],
+        "answer": "x = 6, y = 11",
+        "hint": "Set the expressions equal.",
+        "explanation": "2x - 1 = x + 5 gives x = 6, then y = 11."
+      },
+      {
+        "id": "q04",
+        "type": "Application",
+        "outcomeId": "lo05",
+        "difficulty": "Core",
+        "question": "Solve x + 5y = 28 and x + 3y = 18.",
+        "options": [
+          "x = 3, y = 5",
+          "x = 5, y = 3",
+          "x = 13, y = 3",
+          "x = 8, y = 4"
+        ],
+        "answer": "x = 3, y = 5",
+        "hint": "The x terms match.",
+        "explanation": "Subtracting gives 2y = 10, so y = 5 and x = 3."
+      },
+      {
+        "id": "q05",
+        "type": "Application",
+        "outcomeId": "lo08",
+        "difficulty": "Core",
+        "question": "Solve 4x - 5 >= 2x + 15.",
+        "options": [
+          "x >= 10",
+          "x <= 10",
+          "x >= 5",
+          "x >= 20"
+        ],
+        "answer": "x >= 10",
+        "hint": "No negative division here.",
+        "explanation": "2x >= 20, so x >= 10 and the sign does not change."
+      },
+      {
+        "id": "q06",
+        "type": "Application",
+        "outcomeId": "lo08",
+        "difficulty": "Extension",
+        "question": "Solve 3x > 4x + 12.",
+        "options": [
+          "x > -12",
+          "x < -12",
+          "x > 12",
+          "x < 12"
+        ],
+        "answer": "x < -12",
+        "hint": "You divide by a negative.",
+        "explanation": "-x > 12 becomes x < -12, which tests true at -13 and false at -11."
+      },
+      {
+        "id": "q07",
+        "type": "Application",
+        "outcomeId": "lo06",
+        "difficulty": "Core",
+        "question": "Where do y = 2x + 1 and y = x + 4 cross?",
+        "options": [
+          "(3, 7)",
+          "(7, 3)",
+          "(1, 4)",
+          "(2, 5)"
+        ],
+        "answer": "(3, 7)",
+        "hint": "Solve them together.",
+        "explanation": "2x + 1 = x + 4 gives x = 3 and y = 7."
+      },
+      {
+        "id": "q08",
+        "type": "Reasoning",
+        "outcomeId": "lo07",
+        "difficulty": "Extension",
+        "question": "Why does x < 5 need an open circle at 5?",
+        "options": [
+          "5 is not a whole number",
+          "5 is not one of the solutions",
+          "Open circles are used for all inequalities",
+          "The line stops there"
+        ],
+        "answer": "5 is not one of the solutions",
+        "hint": "Is 5 < 5 true?",
+        "explanation": "x < 5 is strict, so 5 itself does not satisfy it; a closed circle would wrongly include it."
+      }
+    ]
+  },
+  "games": {
+    "masteryScore": 3,
+    "games": [
+      {
+        "id": "u4-game-1",
+        "icon": "?",
+        "skill": "Equations",
+        "title": "Quick Match: Equations",
+        "description": "Four short challenges on solving and constructing.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "Solve 5(x + 3) = 10x - 20",
+            "choices": [
+              "x = 7",
+              "x = 1",
+              "x = 5",
+              "x = 35"
+            ],
+            "answer": "x = 7",
+            "clue": "Divide by 5 first."
+          },
+          {
+            "prompt": "Solve 4(x + 3) = 2(x + 11)",
+            "choices": [
+              "x = 5",
+              "x = 8",
+              "x = 4",
+              "x = 10"
+            ],
+            "answer": "x = 5",
+            "clue": "4x + 12 = 2x + 22."
+          },
+          {
+            "prompt": "Solve 8(x - 4) + 4(5 - x) = 0",
+            "choices": [
+              "x = 3",
+              "x = 4",
+              "x = 0",
+              "x = 12"
+            ],
+            "answer": "x = 3",
+            "clue": "4x - 12 = 0."
+          },
+          {
+            "prompt": "Two numbers n and 2(n + 3) add to 90. n = ?",
+            "choices": [
+              "28",
+              "30",
+              "42",
+              "29"
+            ],
+            "answer": "28",
+            "clue": "3n + 6 = 90."
+          }
+        ]
+      },
+      {
+        "id": "u4-game-2",
+        "icon": "?",
+        "skill": "Pairs and sets",
+        "title": "Quick Match: Pairs and Sets",
+        "description": "Four short challenges on simultaneous equations and inequalities.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "y = 2x - 1 and y = x + 5",
+            "choices": [
+              "x = 6, y = 11",
+              "x = 4, y = 7",
+              "x = 6, y = 13",
+              "x = 2, y = 3"
+            ],
+            "answer": "x = 6, y = 11",
+            "clue": "Set them equal."
+          },
+          {
+            "prompt": "x + y = 10 and x - y = 4",
+            "choices": [
+              "x = 7, y = 3",
+              "x = 3, y = 7",
+              "x = 14, y = 4",
+              "x = 6, y = 4"
+            ],
+            "answer": "x = 7, y = 3",
+            "clue": "Add them."
+          },
+          {
+            "prompt": "Solve 2x - 3 < 19",
+            "choices": [
+              "x < 11",
+              "x > 11",
+              "x < 8",
+              "x < 22"
+            ],
+            "answer": "x < 11",
+            "clue": "Add 3, then halve."
+          },
+          {
+            "prompt": "Solve 3x > 4x + 12",
+            "choices": [
+              "x < -12",
+              "x > -12",
+              "x < 12",
+              "x > 12"
+            ],
+            "answer": "x < -12",
+            "clue": "Dividing by a negative reverses it."
+          }
+        ]
+      }
+    ]
+  },
+  "selfAssessment": [
+    "I can construct an equation from a situation described in words.",
+    "I can solve an equation with brackets, by expanding or by dividing first, and check the answer by substitution.",
+    "I can find and explain the mistakes in someone else's solution to an equation.",
+    "I can solve a pair of simultaneous equations by substitution.",
+    "I can solve a pair of simultaneous equations by elimination, adding or subtracting as the signs require.",
+    "I can solve a pair of simultaneous equations graphically, and explain why the intersection is the solution.",
+    "I can show a solution set on a number line, using open and closed circles correctly.",
+    "I can solve an inequality, reversing the sign when multiplying or dividing by a negative number."
+  ]
+}

@@ -1075,6 +1075,23 @@
       </div>
     </section>
     <!-- 17 check -->
+    <!-- 12  Support and Challenge  (Stage 3 Teacher's Guide) -->
+    <section class="slide" data-twm="specialising" data-say="Answer this one. Where it takes you next depends on how it goes." data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>This step meets you where you are.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>Answer the question as it is asked.</s><s>If it does not come out, the next one hands you something to think with.</s><s>If it does, the next one is harder.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="empathetic" styledegree="1.3"><prosody rate="-6%"><s>Taking the easier route costs you nothing.</s><s>The step is finished either way.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>Have a go, and see which way it takes you.</s></mstts:express-as>'>
+      <div class="slide-head"><span class="n">12</span><h2>Try this one</h2></div>
+      <div class="say"><button type="button" class="speak" aria-label="Read it to me">&#128266;</button><span id="sayT"></span></div>
+      <div id="tierT"></div>
+      <div class="choices" id="chT"></div>
+      <p class="fb" id="fbT" role="status" aria-live="polite"></p>
+      <p class="score" id="scT"></p>
+    </section>
+    <!-- 13  Story problems  (Cambridge Stage 3 word-problem shape) -->
+    <section class="slide" data-twm="specialising" data-say="Read the story, then work out the answer." data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>This one is a story.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>Read it carefully, and work out what it is asking.</s><s>The maths is the same maths you have just been using.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>Have a go.</s></mstts:express-as>'>
+      <div class="slide-head"><span class="n">13</span><h2>Story problems</h2></div>
+      <div class="say"><button type="button" class="speak" aria-label="Read it to me">&#128266;</button><span id="sayWpG3"></span></div>
+      <div id="wpG3"></div>
+      <div class="choices" id="chWpG3"></div>
+      <p class="fb" id="fbWpG3" role="status" aria-live="polite"></p>
+    </section>
     <section class="slide" data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>Nothing new here.</s><s>Every question uses something from this lesson.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>If it is a shape, count the sides.</s><s>If it is a measurement, check the unit first.</s><s>If it is a time, count on.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>Read it, think, then tap.</s></mstts:express-as>' data-say="Time to show what you know. Tap the answer.">
       <div class="slide-head"><span class="n">✓</span><h2>Show what you know</h2></div>
       <div class="say"><button type="button" class="speak" aria-label="Read it to me">🔊</button><span id="say17">Tap the answer.</span></div>
@@ -2560,7 +2577,7 @@
       $("q17").textContent = ""; $("ch17").innerHTML = "";
       $("fb17").className = "fb good"; $("fb17").textContent = "Finished! " + got17 + " out of " + order17.length + ".";
       $("sc17").textContent = "";
-      if (got17 >= 6) finish(11, "You have finished the check.");
+      if (got17 >= 6) finish(13, "You have finished the check.");
       else retryCheck($("fb17"), $("ch17"), got17, order17.length, 6, function () { qi = 0; got17 = 0; order17 = shuffle(QS); round17(); });
       return;
     }
@@ -2584,17 +2601,11 @@
   round17();
 
   /* ---- 18: stickers ---- */
-  const STICKERS = [["🔎", "What this lesson is about"], ["🎥", "Unit lecture"], ["🗣️", "Math words"], 
-    ["🔺", "Naming flat shapes"],
-    ["⬡", "Regular or irregular"],
-    ["🦋", "Lines of symmetry"],
-    ["↔️", "Mirror it"],
-    ["📦", "Solid shapes"],
-    ["🚧", "Perimeter"],
-    ["🔲", "Area"],
-    ["✏️", "Draw it yourself"],
-    ["✅", "Show what I know"],
-    ["\ud83e\udd14", "How do you know"]
+  const STICKERS = [
+    ["🔎", "What this lesson is about"], ["🎥", "Unit lecture"], ["🗣️", "Math words"], ["🔺", "Naming flat shapes"],
+    ["⬡", "Regular or irregular"], ["🦋", "Lines of symmetry"], ["↔️", "Mirror it"], ["📦", "Solid shapes"],
+    ["🚧", "Perimeter"], ["🔲", "Area"], ["✏️", "Draw it yourself"], ["📝", "Try this one"],
+    ["📖", "Story problems"], ["✅", "Show what I know"], ["\ud83e\udd14", "How do you know"]
   ];
 
   function paintStickers() {
@@ -2862,6 +2873,98 @@
   lessonAbout({ stage: 'stageOvw', about: ["Name flat shapes, including quadrilaterals.", "Say whether a shape is regular or irregular.", "Find a line of symmetry on a shape.", "Reflect a shape over a mirror line.", "Measure the perimeter of a shape.", "Work out the area of a shape."], finish: 0, done: "Let's begin." });
   lessonLecture({ stage: 'stageLec', parts: [{ title: "Regular and irregular shapes", say: "A quadrilateral is any flat shape with exactly four straight sides. A shape is regular when every side and every corner is the same - otherwise it is irregular." }, { title: "Symmetry and reflection", say: "A shape has a line of symmetry if folding it along that line makes both halves land exactly on top of each other. A reflection flips a shape over a mirror line the same way." }, { title: "Perimeter and area", say: "Perimeter is the whole distance all the way round the outside edge of a shape. Area is how much flat space is covered inside it." }], video: { src: "lecture-video/shapes-and-symmetry.0d98fd10.mp4", poster: "lecture-video/shapes-and-symmetry.89f75889.jpg", vtt: "lecture-video/shapes-and-symmetry.f6583d21.vtt", note: "The whole lesson in about 2 and a half minutes. When the film ends, this step is done." }, finish: 1, done: "You have heard the whole lesson. Now do it yourself." });
   lessonWords({ stage: 'stageMw', words: [{ w: "quadrilateral", pic: "🔷", meaning: "Any flat shape with exactly four straight sides, such as a square, rectangle or trapezium.", uses: ["Name a quadrilateral you can see in the room."] }, { w: "regular", pic: "⬡", meaning: "A shape where every side is the same length and every corner is the same - an irregular shape is not.", uses: ["Say whether this hexagon is regular."] }, { w: "symmetry", pic: "🦋", meaning: "A shape has a line of symmetry when it can be folded along that line so the two halves land exactly on top of each other.", uses: ["Fold the shape to check for symmetry."] }, { w: "reflection", pic: "↔️", meaning: "A flip of a shape over a mirror line, so every point ends up the same distance from the line, on the other side.", uses: ["Draw the reflection of the triangle."] }, { w: "perimeter", pic: "🚧", meaning: "The whole distance all the way round the outside edge of a shape.", uses: ["Measure the perimeter of the book."] }, { w: "area", pic: "🔲", meaning: "How much flat space is covered inside a shape's edge, measured in square units.", uses: ["Work out the area of the rectangle."] }], finish: 2, done: "You know the math words of this lesson." });
+  /* ==== ehel-g3-tiers: Stage 3's Support and Challenge ====
+     Written in this page's own idiom and deriving its slot the way the
+     reasoning step does, so nothing later needs renumbering.
+
+     THE CORE QUESTION ALONE FINISHES THE STEP. A wrong answer brings the
+     support route, whose question names the apparatus a Stage 3 support note
+     would hand over; a right one offers the challenge AFTER the step is
+     already done. Neither tier scores, because a child who needs the aid must
+     not be marked down for using it and one who takes the challenge must not
+     be punished for trying. */
+  (function () {
+    const host = document.getElementById("tierT");
+    if (!host) return;
+    const SLOT = [...document.querySelectorAll(".slide")].indexOf(host.closest(".slide"));
+    const esc = (t) => String(t).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/"/g, "&quot;");
+    const TIERS = {
+      core: { q: "How many lines of symmetry has a rectangle?", why: "A rectangle folds onto itself across the middle both ways, but not corner to corner.", opts: [{ t: "2", ok: true }, { t: "1", ok: false }, { t: "4", ok: false }] },
+      support: { q: "Trace a rectangle on squared paper and fold it every way you can. How many folds match exactly?", why: "Fold across the middle one way, then the other. Only those two match exactly - check the diagonals too before you decide.", opts: [{ t: "2", ok: true }, { t: "1", ok: false }, { t: "3", ok: false }] },
+      extension: { q: "Regular shapes go triangle, square, pentagon, hexagon, then octagon. Which shape comes between the hexagon and the octagon?", why: "A heptagon has seven sides, one more than a hexagon and one fewer than an octagon.  (Teacher's Guide p49)", opts: [{ t: "heptagon", ok: true }, { t: "pentagon", ok: false }, { t: "decagon", ok: false }] }
+    };
+    let stage = "core", live = false;
+    function paint() {
+      const it = TIERS[stage];
+      document.getElementById("sayT").textContent = it.q;
+      document.getElementById("chT").innerHTML = shuffle(it.opts.slice())
+        .map((o) => '<button type="button" class="choice word" data-ok="' + (o.ok ? 1 : 0)
+          + '">' + esc(o.t) + "</button>").join("");
+      document.getElementById("fbT").className = "fb";
+      document.getElementById("fbT").textContent = "";
+      document.getElementById("scT").textContent =
+        stage === "core" ? "" : (stage === "support" ? "A little help" : "A harder one");
+      live = true;
+    }
+    document.getElementById("chT").addEventListener("click", (e) => {
+      const b = e.target.closest(".choice");
+      if (!b || !live) return;
+      live = false;
+      const it = TIERS[stage], ok = b.dataset.ok === "1";
+      [...document.getElementById("chT").querySelectorAll(".choice")].forEach((x) => {
+        x.disabled = true;
+        if (x.dataset.ok === "1") x.classList.add("right");
+      });
+      if (!ok) b.classList.add("wrong");
+      const fb = document.getElementById("fbT");
+      fb.className = "fb " + (ok ? "good" : "");
+      fb.textContent = (ok ? cheer() + " " : "Not quite. ") + it.why;
+      say(ok ? cheer() : it.why);
+      if (stage === "core") {
+        /* the step is finished by the core question either way: the tiers are
+           a route through it, not a second hurdle */
+        finish(SLOT, "You can do this one, and you have seen a harder one.");
+        stage = ok ? "extension" : "support";
+        later(paint, 3600);
+      }
+    });
+    paint();
+  })();
+
+  /* ==== ehel-g3-story: a story problem, one per lesson ====
+     Written in the same idiom as add-differentiation.py's tiered step, so
+     nothing later needs renumbering: the slot is read from the DOM, not
+     hardcoded. ONE question, no tiers - Grade 1 and 2's own word-problem
+     banks are single questions too. */
+  (function () {
+    const host = document.getElementById("wpG3");
+    if (!host) return;
+    const SLOT = [...document.querySelectorAll(".slide")].indexOf(host.closest(".slide"));
+    const esc = (t) => String(t).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/"/g, "&quot;");
+    const IT = { q: "Zara draws 3 triangles, 2 squares and 1 hexagon on her paper. How many shapes does Zara draw in total?", why: "3 add 2 add 1 is 6 shapes altogether.", opts: [{ t: "6", ok: true }, { t: "5", ok: false }, { t: "3", ok: false }] };
+    let live = true;
+    document.getElementById("sayWpG3").textContent = IT.q;
+    document.getElementById("chWpG3").innerHTML = shuffle(IT.opts.slice())
+      .map((o) => '<button type="button" class="choice word" data-ok="' + (o.ok ? 1 : 0)
+        + '">' + esc(o.t) + "</button>").join("");
+    document.getElementById("chWpG3").addEventListener("click", (e) => {
+      const b = e.target.closest(".choice");
+      if (!b || !live) return;
+      live = false;
+      const ok = b.dataset.ok === "1";
+      [...document.getElementById("chWpG3").querySelectorAll(".choice")].forEach((x) => {
+        x.disabled = true;
+        if (x.dataset.ok === "1") x.classList.add("right");
+      });
+      if (!ok) b.classList.add("wrong");
+      const fb = document.getElementById("fbWpG3");
+      fb.className = "fb " + (ok ? "good" : "");
+      fb.textContent = (ok ? cheer() + " " : "Not quite. ") + IT.why;
+      say(ok ? cheer() : IT.why);
+      finish(SLOT, "Story problems teach the same maths in a real situation.");
+    });
+  })();
+
   show(0, false);
   quiet -= 1;   /* the first draw is over: say() speaks from here on */
 
@@ -3683,4 +3786,11 @@
     .eh-find input { width: 96px; }
     .eh-found { top: var(--eh-found-top-narrow, 100px); }
   }
+</style>
+<style>/* ehel-g3-tiers - see add-differentiation.py */
+  #scT { font-size: 12px; letter-spacing: .05em; text-transform: uppercase;
+    color: var(--muted, #666); }
+</style>
+<style>/* ehel-g3-story - see add-story-problems.py */
+  #fbWpG3 { margin-top: 4px; }
 </style>

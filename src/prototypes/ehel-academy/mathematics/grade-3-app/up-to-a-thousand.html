@@ -1109,6 +1109,32 @@
       </div>
     </section>
     <!-- 18 check -->
+    <!-- 15  Spot the mistake  (Stage 3 Teacher's Guide) -->
+    <section class="slide" data-twm="critiquing improving" data-say="Read what the child says. Work it out yourself. Then tap what went wrong." data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>Finding a mistake somebody else made is its own skill.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>Kiki rounds 150 to the nearest 100 and says 100.</s><s>But 150 sits exactly between 100 and 200.</s><s>When a number is exactly in the middle, we round to the bigger one.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="empathetic" styledegree="1.3"><prosody rate="-6%"><s>A mistake usually starts from a sensible idea.</s><s>Kiki looked at the hundreds digit, which works every other time.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>Read what the child says. Work it out yourself before you choose.</s></mstts:express-as>'>
+      <div class="slide-head"><span class="n">15</span><h2>Spot the mistake</h2></div>
+      <div class="say"><button type="button" class="speak" aria-label="Read it to me">&#128266;</button><span id="sayM">Read what the child says, work it out yourself, then tap what went wrong.</span></div>
+      <div id="smM"><div id="clM"></div></div>
+      <div class="choices" id="chM"></div>
+      <p class="fb" id="fbM" role="status" aria-live="polite"></p>
+      <p class="score" id="scM"></p>
+    </section>
+    <!-- 16  Support and Challenge  (Stage 3 Teacher's Guide) -->
+    <section class="slide" data-twm="specialising" data-say="Answer this one. Where it takes you next depends on how it goes." data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>This step meets you where you are.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>Answer the question as it is asked.</s><s>If it does not come out, the next one hands you something to think with.</s><s>If it does, the next one is harder.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="empathetic" styledegree="1.3"><prosody rate="-6%"><s>Taking the easier route costs you nothing.</s><s>The step is finished either way.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>Have a go, and see which way it takes you.</s></mstts:express-as>'>
+      <div class="slide-head"><span class="n">16</span><h2>Try this one</h2></div>
+      <div class="say"><button type="button" class="speak" aria-label="Read it to me">&#128266;</button><span id="sayT"></span></div>
+      <div id="tierT"></div>
+      <div class="choices" id="chT"></div>
+      <p class="fb" id="fbT" role="status" aria-live="polite"></p>
+      <p class="score" id="scT"></p>
+    </section>
+    <!-- 17  Story problems  (Cambridge Stage 3 word-problem shape) -->
+    <section class="slide" data-twm="specialising" data-say="Read the story, then work out the answer." data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>This one is a story.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>Read it carefully, and work out what it is asking.</s><s>The maths is the same maths you have just been using.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>Have a go.</s></mstts:express-as>'>
+      <div class="slide-head"><span class="n">17</span><h2>Story problems</h2></div>
+      <div class="say"><button type="button" class="speak" aria-label="Read it to me">&#128266;</button><span id="sayWpG3"></span></div>
+      <div id="wpG3"></div>
+      <div class="choices" id="chWpG3"></div>
+      <p class="fb" id="fbWpG3" role="status" aria-live="polite"></p>
+    </section>
     <section class="slide" data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>Nothing new here.</s><s>Every question uses something you have already done in this lesson.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>If it asks what a digit is worth, look at its column.</s><s>If it asks you to round, find the two neighbours first.</s><s>If it is a sum, work from the right.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>Take your time.</s><s>Read it, think, then tap.</s></mstts:express-as>' data-say="Time to show what you know. Tap the answer.">
       <div class="slide-head"><span class="n">✓</span><h2>Show what you know</h2></div>
       <div class="say"><button type="button" class="speak" aria-label="Read it to me">🔊</button><span id="say18">Tap the answer.</span></div>
@@ -2641,7 +2667,7 @@
       $("fb18").className = "fb good";
       $("fb18").textContent = "Finished! " + got18 + " out of " + order18.length + ".";
       $("sc18").textContent = "";
-      if (got18 >= 6) finish(14, "You have finished the check. Well done.");
+      if (got18 >= 6) finish(17, "You have finished the check. Well done.");
       else retryCheck($("fb18"), $("ch18"), got18, order18.length, 6, function () { qi = 0; got18 = 0; order18 = shuffle(QS); round18(); });
       return;
     }
@@ -2666,20 +2692,12 @@
   round18();
 
   /* ---- 19: stickers ---- */
-  const STICKERS = [["🔎", "What this lesson is about"], ["🎥", "Unit lecture"], ["🗣️", "Math words"], 
-    ["🏗️", "Three digits"],
-    ["🔤", "Read it and write it"],
-    ["✂️", "Break it apart"],
-    ["🔄", "Regrouping"],
-    ["✖️", "Ten times bigger"],
-    ["👣", "Count in steps"],
-    ["⚖️", "Odd or even"],
-    ["📏", "Which is bigger"],
-    ["🔢", "Put them in order"],
-    ["🎯", "Rounding"],
-    ["👀", "Estimating"],
-    ["✅", "Show what I know"],
-    ["\ud83e\udd14", "How do you know"]
+  const STICKERS = [
+    ["🔎", "What this lesson is about"], ["🎥", "Unit lecture"], ["🗣️", "Math words"], ["🏗️", "Three digits"],
+    ["🔤", "Read it and write it"], ["✂️", "Break it apart"], ["🔄", "Regrouping"], ["✖️", "Ten times bigger"],
+    ["👣", "Count in steps"], ["⚖️", "Odd or even"], ["📏", "Which is bigger"], ["🔢", "Put them in order"],
+    ["🎯", "Rounding"], ["👀", "Estimating"], ["🔍", "Spot the mistake"], ["📝", "Try this one"],
+    ["📖", "Story problems"], ["✅", "Show what I know"], ["\ud83e\udd14", "How do you know"]
   ];
 
   function paintStickers() {
@@ -2947,6 +2965,155 @@
   lessonAbout({ stage: 'stageOvw', about: ["Say what a digit is worth by which column it sits in, up to a thousand.", "Break a 3-digit number apart into hundreds, tens and ones.", "Regroup a number into a different mix of hundreds and tens.", "Multiply a number by 10 and see every digit move one place.", "Round a number to the nearest 10 or 100.", "Make a good estimate of how many things are in a group."], finish: 0, done: "Let's begin." });
   lessonLecture({ stage: 'stageLec', parts: [{ title: "Place value to a thousand", say: "A digit is worth a different amount depending on which column it sits in - the 3 in 348 is worth three hundred, not just three." }, { title: "Regrouping", say: "The same number can be written as a different mix of hundreds and tens - trading one hundred for ten tens never changes what the number is worth." }, { title: "Rounding and estimating", say: "Rounding replaces a number with a nearby one that is easier to work with. Estimating is a sensible guess made before you count everything exactly." }], video: { src: "lecture-video/up-to-a-thousand.c4ba032a.mp4", poster: "lecture-video/up-to-a-thousand.74e4ca05.jpg", vtt: "lecture-video/up-to-a-thousand.5a801c05.vtt", note: "The whole lesson in about 2 and a half minutes. When the film ends, this step is done." }, finish: 1, done: "You have heard the whole lesson. Now do it yourself." });
   lessonWords({ stage: 'stageMw', words: [{ w: "digit", pic: "🔢", meaning: "One of the ten symbols 0-9 used to write a number - 348 has three digits.", uses: ["Point to the digit in the hundreds column of 348."] }, { w: "place value", pic: "🏷️", meaning: "What a digit is worth because of the column it stands in, not just the symbol itself.", uses: ["The place value of the 3 in 348 is three hundred."] }, { w: "decompose", pic: "✂️", meaning: "Break a number apart into its hundreds, tens and ones, such as 348 into 300, 40 and 8.", uses: ["Decompose 348 into hundreds, tens and ones."] }, { w: "regroup", pic: "🔄", meaning: "Rewrite the same number using a different mix of hundreds and tens, such as trading one hundred for ten tens - the value never changes.", uses: ["Regroup 348 to show 2 hundreds and 14 tens."] }, { w: "round", pic: "🎯", meaning: "Replace a number with a nearby one that is easier to work with, such as the nearest 10 or 100.", uses: ["Round 348 to the nearest hundred."] }, { w: "estimate", pic: "🎲", meaning: "A sensible guess at an amount, made by picturing part of it rather than counting every single one.", uses: ["Estimate how many beans are in the jar."] }], finish: 2, done: "You know the math words of this lesson." });
+  /* ==== ehel-g3-spot-the-mistake: spot the mistake ====
+     Written in this page's own idiom - the reasoning step's shape, its class
+     names and its derived slot - rather than imported from Grade 2, whose
+     pages carry a different generation of runner.
+
+     SLOT is derived from DOM position exactly as the reasoning step derives
+     its own, so this step's finish() needs no hardcoded index and nothing
+     later has to be renumbered when it moves. */
+  (function () {
+    const host = document.getElementById("smM");
+    if (!host) return;
+    const SLOT = [...document.querySelectorAll(".slide")].indexOf(host.closest(".slide"));
+    const esc = (t) => String(t).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/"/g, "&quot;");
+    const ITEMS = [
+      { who: "Kiki", claim: "150 to the nearest 100 is 100.", ask: "Kiki rounds 150 to the nearest 100 and says 100. What went wrong?", why: "150 sits exactly between 100 and 200, so neither one is nearer. When a number is exactly in the middle we round to the bigger one, so 150 goes to 200.",
+        opts: [{ t: "150 is exactly halfway, so it rounds up to 200", ok: true }, { t: "150 rounds down to 0", ok: false }, { t: "Kiki is right", ok: false }] },
+      { who: "Musa", claim: "I count in 1s from 0 to find 700 on the line.", ask: "Musa counts in 1s from 0 along a 0 to 1000 number line to find 700. What went wrong?", why: "Counting in 1s squashes every number into the last bit of the line. Find the 100s marks first, then count on: 100, 200, 300 and so on to 700.",
+        opts: [{ t: "The line is marked in 100s, so count in 100s", ok: true }, { t: "He should count backwards from 1000", ok: false }, { t: "Counting in 1s is the only way", ok: false }] }
+    ];
+    let got = 0, asked = 0, order = shuffle(ITEMS.slice()), qi = 0, live = false;
+    function paint() {
+      if (qi >= order.length) { order = shuffle(ITEMS.slice()); qi = 0; }
+      const it = order[qi];
+      document.getElementById("clM").innerHTML =
+        '<span class="who">' + esc(it.who) + '</span><q>' + esc(it.claim) + '</q>';
+      document.getElementById("sayM").textContent = it.ask;
+      document.getElementById("chM").innerHTML = shuffle(it.opts.slice())
+        .map((o) => '<button type="button" class="choice word" data-ok="' + (o.ok ? 1 : 0)
+          + '">' + esc(o.t) + "</button>").join("");
+      document.getElementById("fbM").className = "fb";
+      document.getElementById("fbM").textContent = "";
+      live = true;
+    }
+    document.getElementById("chM").addEventListener("click", (e) => {
+      const b = e.target.closest(".choice");
+      if (!b || !live) return;
+      live = false;
+      const it = order[qi], ok = b.dataset.ok === "1";
+      [...document.getElementById("chM").querySelectorAll(".choice")].forEach((x) => {
+        x.disabled = true;
+        if (x.dataset.ok === "1") x.classList.add("right");
+      });
+      if (!ok) b.classList.add("wrong");
+      asked++; if (ok) got++;
+      const fb = document.getElementById("fbM");
+      fb.className = "fb " + (ok ? "good" : "");
+      fb.textContent = (ok ? cheer() + " " : "Not that one. ") + it.why;
+      say(ok ? cheer() : it.why);
+      document.getElementById("scM").textContent =
+        got + " right out of " + asked + (got >= ITEMS.length ? " - sticker earned!" : "");
+      if (got >= ITEMS.length) finish(SLOT, "You can find the mistake and say what went wrong.");
+      qi++;
+      later(paint, 3400);
+    });
+    paint();
+  })();
+
+  /* ==== ehel-g3-tiers: Stage 3's Support and Challenge ====
+     Written in this page's own idiom and deriving its slot the way the
+     reasoning step does, so nothing later needs renumbering.
+
+     THE CORE QUESTION ALONE FINISHES THE STEP. A wrong answer brings the
+     support route, whose question names the apparatus a Stage 3 support note
+     would hand over; a right one offers the challenge AFTER the step is
+     already done. Neither tier scores, because a child who needs the aid must
+     not be marked down for using it and one who takes the challenge must not
+     be punished for trying. */
+  (function () {
+    const host = document.getElementById("tierT");
+    if (!host) return;
+    const SLOT = [...document.querySelectorAll(".slide")].indexOf(host.closest(".slide"));
+    const esc = (t) => String(t).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/"/g, "&quot;");
+    const TIERS = {
+      core: { q: "Which is bigger, 408 or 480?", why: "Both have 4 hundreds, so look at the tens: 8 tens beats 0 tens.", opts: [{ t: "480", ok: true }, { t: "408", ok: false }, { t: "They are the same", ok: false }] },
+      support: { q: "Use a place value chart. In 408 the tens digit is 0 and in 480 it is 8. Which is bigger?", why: "Write each number into a place value chart, hundreds then tens then ones, and compare one column at a time from the left.", opts: [{ t: "480", ok: true }, { t: "408", ok: false }, { t: "You cannot tell", ok: false }] },
+      extension: { q: "Think of a number that rounds to 300 to the nearest 100 AND to the nearest 10. Which of these works?", why: "298 rounds to 300 both ways. 340 rounds to 300 to the nearest 100 but to 340 to the nearest 10.  (Teacher's Guide p134)", opts: [{ t: "298", ok: true }, { t: "340", ok: false }, { t: "351", ok: false }] }
+    };
+    let stage = "core", live = false;
+    function paint() {
+      const it = TIERS[stage];
+      document.getElementById("sayT").textContent = it.q;
+      document.getElementById("chT").innerHTML = shuffle(it.opts.slice())
+        .map((o) => '<button type="button" class="choice word" data-ok="' + (o.ok ? 1 : 0)
+          + '">' + esc(o.t) + "</button>").join("");
+      document.getElementById("fbT").className = "fb";
+      document.getElementById("fbT").textContent = "";
+      document.getElementById("scT").textContent =
+        stage === "core" ? "" : (stage === "support" ? "A little help" : "A harder one");
+      live = true;
+    }
+    document.getElementById("chT").addEventListener("click", (e) => {
+      const b = e.target.closest(".choice");
+      if (!b || !live) return;
+      live = false;
+      const it = TIERS[stage], ok = b.dataset.ok === "1";
+      [...document.getElementById("chT").querySelectorAll(".choice")].forEach((x) => {
+        x.disabled = true;
+        if (x.dataset.ok === "1") x.classList.add("right");
+      });
+      if (!ok) b.classList.add("wrong");
+      const fb = document.getElementById("fbT");
+      fb.className = "fb " + (ok ? "good" : "");
+      fb.textContent = (ok ? cheer() + " " : "Not quite. ") + it.why;
+      say(ok ? cheer() : it.why);
+      if (stage === "core") {
+        /* the step is finished by the core question either way: the tiers are
+           a route through it, not a second hurdle */
+        finish(SLOT, "You can do this one, and you have seen a harder one.");
+        stage = ok ? "extension" : "support";
+        later(paint, 3600);
+      }
+    });
+    paint();
+  })();
+
+  /* ==== ehel-g3-story: a story problem, one per lesson ====
+     Written in the same idiom as add-differentiation.py's tiered step, so
+     nothing later needs renumbering: the slot is read from the DOM, not
+     hardcoded. ONE question, no tiers - Grade 1 and 2's own word-problem
+     banks are single questions too. */
+  (function () {
+    const host = document.getElementById("wpG3");
+    if (!host) return;
+    const SLOT = [...document.querySelectorAll(".slide")].indexOf(host.closest(".slide"));
+    const esc = (t) => String(t).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/"/g, "&quot;");
+    const IT = { q: "David has 348 stickers. Zara has 384 stickers. How many more stickers does Zara have than David?", why: "384 take away 348 is 36, so Zara has 36 more stickers.", opts: [{ t: "36", ok: true }, { t: "732", ok: false }, { t: "44", ok: false }] };
+    let live = true;
+    document.getElementById("sayWpG3").textContent = IT.q;
+    document.getElementById("chWpG3").innerHTML = shuffle(IT.opts.slice())
+      .map((o) => '<button type="button" class="choice word" data-ok="' + (o.ok ? 1 : 0)
+        + '">' + esc(o.t) + "</button>").join("");
+    document.getElementById("chWpG3").addEventListener("click", (e) => {
+      const b = e.target.closest(".choice");
+      if (!b || !live) return;
+      live = false;
+      const ok = b.dataset.ok === "1";
+      [...document.getElementById("chWpG3").querySelectorAll(".choice")].forEach((x) => {
+        x.disabled = true;
+        if (x.dataset.ok === "1") x.classList.add("right");
+      });
+      if (!ok) b.classList.add("wrong");
+      const fb = document.getElementById("fbWpG3");
+      fb.className = "fb " + (ok ? "good" : "");
+      fb.textContent = (ok ? cheer() + " " : "Not quite. ") + IT.why;
+      say(ok ? cheer() : IT.why);
+      finish(SLOT, "Story problems teach the same maths in a real situation.");
+    });
+  })();
+
   show(0, false);
   quiet -= 1;   /* the first draw is over: say() speaks from here on */
 
@@ -3768,4 +3935,19 @@
     .eh-find input { width: 96px; }
     .eh-found { top: var(--eh-found-top-narrow, 100px); }
   }
+</style>
+<style>/* ehel-g3-spot-the-mistake - see add-spot-the-mistake.py */
+  #clM { text-align: center; margin: 6px 0 10px; }
+  #clM .who { display: block; font-size: 13px; letter-spacing: .04em;
+    text-transform: uppercase; color: var(--muted, #666); margin: 0 0 4px; }
+  #clM q { display: block; font-size: 20px; line-height: 1.4; max-width: 30ch;
+    margin: 0 auto; padding: 10px 14px; border-radius: 10px;
+    background: var(--cell, var(--card, #fff)); border: 1px solid var(--line, #ddd); }
+</style>
+<style>/* ehel-g3-tiers - see add-differentiation.py */
+  #scT { font-size: 12px; letter-spacing: .05em; text-transform: uppercase;
+    color: var(--muted, #666); }
+</style>
+<style>/* ehel-g3-story - see add-story-problems.py */
+  #fbWpG3 { margin-top: 4px; }
 </style>

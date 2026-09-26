@@ -1075,6 +1075,23 @@
       </div>
     </section>
     <!-- 18 check -->
+    <!-- 12  Support and Challenge  (Stage 3 Teacher's Guide) -->
+    <section class="slide" data-twm="specialising" data-say="Answer this one. Where it takes you next depends on how it goes." data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>This step meets you where you are.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>Answer the question as it is asked.</s><s>If it does not come out, the next one hands you something to think with.</s><s>If it does, the next one is harder.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="empathetic" styledegree="1.3"><prosody rate="-6%"><s>Taking the easier route costs you nothing.</s><s>The step is finished either way.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>Have a go, and see which way it takes you.</s></mstts:express-as>'>
+      <div class="slide-head"><span class="n">12</span><h2>Try this one</h2></div>
+      <div class="say"><button type="button" class="speak" aria-label="Read it to me">&#128266;</button><span id="sayT"></span></div>
+      <div id="tierT"></div>
+      <div class="choices" id="chT"></div>
+      <p class="fb" id="fbT" role="status" aria-live="polite"></p>
+      <p class="score" id="scT"></p>
+    </section>
+    <!-- 13  Story problems  (Cambridge Stage 3 word-problem shape) -->
+    <section class="slide" data-twm="specialising" data-say="Read the story, then work out the answer." data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>This one is a story.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>Read it carefully, and work out what it is asking.</s><s>The maths is the same maths you have just been using.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>Have a go.</s></mstts:express-as>'>
+      <div class="slide-head"><span class="n">13</span><h2>Story problems</h2></div>
+      <div class="say"><button type="button" class="speak" aria-label="Read it to me">&#128266;</button><span id="sayWpG3"></span></div>
+      <div id="wpG3"></div>
+      <div class="choices" id="chWpG3"></div>
+      <p class="fb" id="fbWpG3" role="status" aria-live="polite"></p>
+    </section>
     <section class="slide" data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>Nothing new here.</s><s>Every question uses something you have already done in this lesson.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>If it asks what a digit is worth, look at its column.</s><s>If it asks you to round, find the two neighbours first.</s><s>If it is a sum, work from the right.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>Take your time.</s><s>Read it, think, then tap.</s></mstts:express-as>' data-say="Time to show what you know. Tap the answer.">
       <div class="slide-head"><span class="n">✓</span><h2>Show what you know</h2></div>
       <div class="say"><button type="button" class="speak" aria-label="Read it to me">🔊</button><span id="say18">Tap the answer.</span></div>
@@ -2562,7 +2579,7 @@
       $("fb18").className = "fb good";
       $("fb18").textContent = "Finished! " + got18 + " out of " + order18.length + ".";
       $("sc18").textContent = "";
-      if (got18 >= 6) finish(11, "You have finished the check. Well done.");
+      if (got18 >= 6) finish(13, "You have finished the check. Well done.");
       else retryCheck($("fb18"), $("ch18"), got18, order18.length, 6, function () { qi = 0; got18 = 0; order18 = shuffle(QS); round18(); });
       return;
     }
@@ -2587,17 +2604,11 @@
   round18();
 
   /* ---- 19: stickers ---- */
-  const STICKERS = [["🔎", "What this lesson is about"], ["🎥", "Unit lecture"], ["🗣️", "Math words"], 
-    ["💯", "Make 100"],
-    ["🔀", "Add in any order"],
-    ["➕", "Adding with regrouping"],
-    ["➖", "Taking away with regrouping"],
-    ["💵", "Money and the dot"],
-    ["🛒", "Giving change"],
-    ["🎯", "Estimate first"],
-    ["🛍️", "Shopping with cents"],
-    ["✅", "Show what I know"],
-    ["\ud83e\udd14", "How do you know"]
+  const STICKERS = [
+    ["🔎", "What this lesson is about"], ["🎥", "Unit lecture"], ["🗣️", "Math words"], ["💯", "Make 100"],
+    ["🔀", "Add in any order"], ["➕", "Adding with regrouping"], ["➖", "Taking away with regrouping"], ["💵", "Money and the dot"],
+    ["🛒", "Giving change"], ["🎯", "Estimate first"], ["🛍️", "Shopping with cents"], ["📝", "Try this one"],
+    ["📖", "Story problems"], ["✅", "Show what I know"], ["\ud83e\udd14", "How do you know"]
   ];
 
   function paintStickers() {
@@ -2865,6 +2876,98 @@
   lessonAbout({ stage: 'stageOvw', about: ["Find the complement of a number to 100.", "Add pairs of numbers in any order without changing the total.", "Add and take away with regrouping.", "Use money notation with a decimal point.", "Estimate an answer before adding or taking away exactly.", "Work out change from a shopping total."], finish: 0, done: "Let's begin." });
   lessonLecture({ stage: 'stageLec', parts: [{ title: "Complements and adding in any order", say: "A complement to 100 is the amount still needed to reach it - 62 and 38 are complements. Numbers can be added in any order without changing the total." }, { title: "Regrouping to add and take away", say: "When a column adds up to more than 9, a ten moves into the next column - that is regrouping, or carrying." }, { title: "Money and change", say: "Money is written with a decimal point - the two figures after it are always cents. Giving change means working out the gap between the price and what was paid." }], video: { src: "lecture-video/adding-and-money.97516ff4.mp4", poster: "lecture-video/adding-and-money.396c4d31.jpg", vtt: "lecture-video/adding-and-money.7ded6806.vtt", note: "The whole lesson in about 2 and a half minutes. When the film ends, this step is done." }, finish: 1, done: "You have heard the whole lesson. Now do it yourself." });
   lessonWords({ stage: 'stageMw', words: [{ w: "complement", pic: "💯", meaning: "The amount still needed to reach a round number, such as a multiple of 10 or 100 - 62 and its complement to 100 is 38.", uses: ["Find the complement of 62 to 100."] }, { w: "regroup", pic: "🔄", meaning: "Move a group of ten from one column into the next, such as moving 100 out of the hundreds to make 10 more tens.", uses: ["Regroup to take away 48 from 300."] }, { w: "carry", pic: "➡️", meaning: "A ten (or a hundred) that moves from one column into the next when adding, because that column added up to more than 9.", uses: ["Carry the ten into the tens column."] }, { w: "exchange", pic: "🔁", meaning: "Trade one from the column to the left for ten in the column you are working on, so you have enough to take away.", uses: ["Exchange a hundred for ten tens."] }, { w: "estimate", pic: "🎲", meaning: "A sensible rough answer worked out before the exact calculation, by rounding the numbers first.", uses: ["Estimate the total before adding exactly."] }], finish: 2, done: "You know the math words of this lesson." });
+  /* ==== ehel-g3-tiers: Stage 3's Support and Challenge ====
+     Written in this page's own idiom and deriving its slot the way the
+     reasoning step does, so nothing later needs renumbering.
+
+     THE CORE QUESTION ALONE FINISHES THE STEP. A wrong answer brings the
+     support route, whose question names the apparatus a Stage 3 support note
+     would hand over; a right one offers the challenge AFTER the step is
+     already done. Neither tier scores, because a child who needs the aid must
+     not be marked down for using it and one who takes the challenge must not
+     be punished for trying. */
+  (function () {
+    const host = document.getElementById("tierT");
+    if (!host) return;
+    const SLOT = [...document.querySelectorAll(".slide")].indexOf(host.closest(".slide"));
+    const esc = (t) => String(t).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/"/g, "&quot;");
+    const TIERS = {
+      core: { q: "What is 70 + 30?", why: "7 tens and 3 tens make 10 tens, which is 100.", opts: [{ t: "100", ok: true }, { t: "90", ok: false }, { t: "110", ok: false }] },
+      support: { q: "Use a number line marked in 10s. Start at 70 and count on 3 tens. Where do you land?", why: "Counting on in tens along a number line: 70, 80, 90, 100. Three jumps of ten.", opts: [{ t: "100", ok: true }, { t: "90", ok: false }, { t: "73", ok: false }] },
+      extension: { q: "How many cents make up 10 shillings?", why: "Each shilling is 100 cents, so 10 shillings is 10 lots of 100, which is 1000.  (Teacher's Guide p139)", opts: [{ t: "1000", ok: true }, { t: "100", ok: false }, { t: "10", ok: false }] }
+    };
+    let stage = "core", live = false;
+    function paint() {
+      const it = TIERS[stage];
+      document.getElementById("sayT").textContent = it.q;
+      document.getElementById("chT").innerHTML = shuffle(it.opts.slice())
+        .map((o) => '<button type="button" class="choice word" data-ok="' + (o.ok ? 1 : 0)
+          + '">' + esc(o.t) + "</button>").join("");
+      document.getElementById("fbT").className = "fb";
+      document.getElementById("fbT").textContent = "";
+      document.getElementById("scT").textContent =
+        stage === "core" ? "" : (stage === "support" ? "A little help" : "A harder one");
+      live = true;
+    }
+    document.getElementById("chT").addEventListener("click", (e) => {
+      const b = e.target.closest(".choice");
+      if (!b || !live) return;
+      live = false;
+      const it = TIERS[stage], ok = b.dataset.ok === "1";
+      [...document.getElementById("chT").querySelectorAll(".choice")].forEach((x) => {
+        x.disabled = true;
+        if (x.dataset.ok === "1") x.classList.add("right");
+      });
+      if (!ok) b.classList.add("wrong");
+      const fb = document.getElementById("fbT");
+      fb.className = "fb " + (ok ? "good" : "");
+      fb.textContent = (ok ? cheer() + " " : "Not quite. ") + it.why;
+      say(ok ? cheer() : it.why);
+      if (stage === "core") {
+        /* the step is finished by the core question either way: the tiers are
+           a route through it, not a second hurdle */
+        finish(SLOT, "You can do this one, and you have seen a harder one.");
+        stage = ok ? "extension" : "support";
+        later(paint, 3600);
+      }
+    });
+    paint();
+  })();
+
+  /* ==== ehel-g3-story: a story problem, one per lesson ====
+     Written in the same idiom as add-differentiation.py's tiered step, so
+     nothing later needs renumbering: the slot is read from the DOM, not
+     hardcoded. ONE question, no tiers - Grade 1 and 2's own word-problem
+     banks are single questions too. */
+  (function () {
+    const host = document.getElementById("wpG3");
+    if (!host) return;
+    const SLOT = [...document.querySelectorAll(".slide")].indexOf(host.closest(".slide"));
+    const esc = (t) => String(t).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/"/g, "&quot;");
+    const IT = { q: "Maris has 350 shillings. She buys a pen for 120 shillings. How many shillings does Maris have left?", why: "350 take away 120 is 230 shillings left.", opts: [{ t: "230", ok: true }, { t: "470", ok: false }, { t: "130", ok: false }] };
+    let live = true;
+    document.getElementById("sayWpG3").textContent = IT.q;
+    document.getElementById("chWpG3").innerHTML = shuffle(IT.opts.slice())
+      .map((o) => '<button type="button" class="choice word" data-ok="' + (o.ok ? 1 : 0)
+        + '">' + esc(o.t) + "</button>").join("");
+    document.getElementById("chWpG3").addEventListener("click", (e) => {
+      const b = e.target.closest(".choice");
+      if (!b || !live) return;
+      live = false;
+      const ok = b.dataset.ok === "1";
+      [...document.getElementById("chWpG3").querySelectorAll(".choice")].forEach((x) => {
+        x.disabled = true;
+        if (x.dataset.ok === "1") x.classList.add("right");
+      });
+      if (!ok) b.classList.add("wrong");
+      const fb = document.getElementById("fbWpG3");
+      fb.className = "fb " + (ok ? "good" : "");
+      fb.textContent = (ok ? cheer() + " " : "Not quite. ") + IT.why;
+      say(ok ? cheer() : IT.why);
+      finish(SLOT, "Story problems teach the same maths in a real situation.");
+    });
+  })();
+
   show(0, false);
   quiet -= 1;   /* the first draw is over: say() speaks from here on */
 
@@ -3686,4 +3789,11 @@
     .eh-find input { width: 96px; }
     .eh-found { top: var(--eh-found-top-narrow, 100px); }
   }
+</style>
+<style>/* ehel-g3-tiers - see add-differentiation.py */
+  #scT { font-size: 12px; letter-spacing: .05em; text-transform: uppercase;
+    color: var(--muted, #666); }
+</style>
+<style>/* ehel-g3-story - see add-story-problems.py */
+  #fbWpG3 { margin-top: 4px; }
 </style>

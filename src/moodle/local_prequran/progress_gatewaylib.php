@@ -563,6 +563,90 @@ function pqpg_tutoring_subjects(int $userid): ?array {
 }
 
 /**
+ * Sign a Bunny CDN app URL so the edge refuses it without a Moodle launch.
+ *
+ * Returns $url UNCHANGED when no security key is configured, which is the
+ * deploy shape: this file reaches the server first and does nothing, the key is
+ * set second, and the zone's Token Authentication is turned on third. Any other
+ * order 403s live learners.
+ *
+ * Bunny's V2 ("advanced") scheme, ported from BunnyWay/BunnyCDN.TokenAuthentication
+ * php/url_signing.php and verified against that repo's own published test
+ * vectors, 15 of 15, before this was written. Do not re-derive it from prose:
+ * there is also a V1 scheme that is a bare sha256 of key+path+expires, and the
+ * two produce different tokens for the same inputs.
+ *
+ *   message = signature_path . expires . ip_bytes . signing_data
+ *   token   = "HS256-" . flags . base64url(hmac_sha256(message, key))
+ *
+ * Three choices here are load-bearing, and each one is a lesson breaking if it
+ * is changed without reading this:
+ *
+ * - token_path (DIRECTORY scope), not a per-file token. A lesson page pulls
+ *   ./course-shell.js, ./learner-controls.js, ./seb-session.js, ./wehel.js and
+ *   its lecture-video/*.mp4 + .vtt + .jpg, all relative to its own directory.
+ *   A per-file token authorises the HTML and 403s everything it needs.
+ * - is_directory is deliberately NOT used. That is Bunny's OTHER url SHAPE —
+ *   host/bcdn_token=.../path — which moves the directory the browser resolves
+ *   "./course-shell.js" against, so every relative reference on the page breaks.
+ *   token_path gives directory SCOPE with an ordinary URL. Scope and shape are
+ *   separate things in that library and only one of them is wanted.
+ * - token_ignore_params=true, because the signature otherwise covers the sorted
+ *   query string and ours does not survive one click: unit changes on
+ *   navigation, ?from=comp4 is added, and the audio path appends
+ *   location.search. Signing the params would mint a token valid for exactly
+ *   the page the learner landed on.
+ *
+ * NO IP LOCKING, on purpose. A phone changing cells or a school leaving one NAT
+ * would 403 a child mid-lesson, and the edge cannot explain itself — the page
+ * would simply stop. The token is already short-lived and names a directory.
+ *
+ * The TTL is PQPG_TOKEN_TTL so the CDN token and the learner's launch token die
+ * together. Splitting them gives a lesson that renders and cannot report, or
+ * reports and cannot render, and neither says why.
+ */
+function pqpg_cdn_sign_dir_url(string $url, int $ttl = PQPG_TOKEN_TTL): string {
+    if (!function_exists('get_config')) {
+        return $url;
+    }
+    $key = trim((string)get_config('local_prequran', 'ehel_cdn_token_key'));
+    if ($key === '') {
+        return $url;
+    }
+
+    $parsed = parse_url($url);
+    if (!is_array($parsed) || empty($parsed['scheme']) || empty($parsed['host']) || empty($parsed['path'])) {
+        return $url;
+    }
+
+    // The directory the page lives in, still percent-encoded, because that is
+    // what the edge compares against the request line. parse_url does not
+    // decode, so "/Ehel%20Primary/..." survives as written; decoding it here
+    // would sign a path no request ever carries.
+    $dir = substr($parsed['path'], 0, strrpos($parsed['path'], '/') + 1);
+    if ($dir === '' || $dir === false) {
+        return $url;
+    }
+
+    $expires = time() + $ttl;
+    $params = ['token_ignore_params' => 'true', 'token_path' => $dir];
+    ksort($params);
+
+    $signing = [];
+    $query = [];
+    foreach ($params as $k => $v) {
+        $signing[] = $k . '=' . $v;
+        $query[] = $k . '=' . rawurlencode($v);
+    }
+
+    $digest = hash_hmac('sha256', $dir . $expires . implode('&', $signing), $key, true);
+    $token = 'HS256-' . rtrim(strtr(base64_encode($digest), '+/', '-_'), '=');
+
+    $sep = (isset($parsed['query']) && $parsed['query'] !== '') ? '&' : '?';
+    return $url . $sep . 'token=' . $token . '&' . implode('&', $query) . '&expires=' . $expires;
+}
+
+/**
  * Full grade-aware Bunny launch URL for an EHEL course, with a freshly minted
  * progress token bound to $userid appended, or '' if $coursekey is not EHEL.
  *
@@ -591,8 +675,8 @@ function pqpg_ehel_launch_url(int $userid, string $coursekey, string $env, strin
         }
         $token = pqpg_mint_token($userid, $coursekey, $env);
         $endpoint = rtrim($wwwroot, '/') . '/local/prequran/progress_gateway.php';
-        return $base['appurl'] . '?' . $base['levelparam'] . '=' . $base['stage'] . '&unit=' . $unit
-            . '&pwsEndpoint=' . urlencode($endpoint) . '&pwsToken=' . urlencode($token) . '&studentid=' . $userid;
+        return pqpg_cdn_sign_dir_url($base['appurl'] . '?' . $base['levelparam'] . '=' . $base['stage'] . '&unit=' . $unit
+            . '&pwsEndpoint=' . urlencode($endpoint) . '&pwsToken=' . urlencode($token) . '&studentid=' . $userid);
     }
     $base = pqpg_ehel_app_base($coursekey);
     if ($base === null) {
@@ -601,8 +685,8 @@ function pqpg_ehel_launch_url(int $userid, string $coursekey, string $env, strin
     $token = pqpg_mint_token($userid, $coursekey, $env);
     $endpoint = rtrim($wwwroot, '/') . '/local/prequran/progress_gateway.php';
     $launchparams = 'pwsEndpoint=' . urlencode($endpoint) . '&pwsToken=' . urlencode($token) . '&studentid=' . $userid;
-    return $base['appurl'] . '?' . $base['levelparam'] . '=' . $base['stage']
-        . '&unit=' . $unit . '&' . $launchparams;
+    return pqpg_cdn_sign_dir_url($base['appurl'] . '?' . $base['levelparam'] . '=' . $base['stage']
+        . '&unit=' . $unit . '&' . $launchparams);
 }
 
 /** Revoke every unexpired token minted for a user. Returns the count revoked. */

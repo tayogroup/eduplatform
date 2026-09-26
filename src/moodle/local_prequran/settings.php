@@ -1058,6 +1058,19 @@ if ($hassiteconfig) {
         PARAM_RAW_TRIMMED
     ));
 
+    $settings->add(new admin_setting_configpasswordunmask(
+        'local_prequran/ehel_cdn_token_key',
+        'Ehel CDN token authentication key',
+        'The pull zone\'s Token Authentication key, copied from Bunny (Pull Zone > Security > Token Authentication). '
+        . 'Set this and every course launch emits a signed, time-limited URL, so a lesson opened without a Moodle launch is refused at the edge before any bytes are served. '
+        . 'BLANK IS THE OFF SWITCH and is safe: launches are emitted unsigned exactly as before. '
+        . 'Turn it on in this order, or live learners get a 403 - (1) set this key, (2) confirm a real launch still plays a lesson, (3) only then enable Token Authentication on the zone, scoped by an edge rule to the app directories. '
+        . 'Reverse that order to turn it off: disable the zone setting first, blank this second. '
+        . 'The token is a DIRECTORY token covering the launched app folder, lasts as long as the launch token (12 hours) and carries no IP lock, so a learner changing mobile cells is not cut off mid-lesson.',
+        '',
+        PARAM_RAW_TRIMMED
+    ));
+
     $settings->add(new admin_setting_heading(
         'local_prequran/gating_heading',
         'Sequential locking (Ehel English)',

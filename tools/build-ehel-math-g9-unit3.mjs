@@ -1,0 +1,541 @@
+// Build Mathematics Grade 9, Unit 3: Decimals, Percentages and Rounding.
+//
+// Fourth Grade 9 unit. Authored from the Stage 9 Learner's Book and Workbook,
+// unit 3 (Workbook pages 37-54).
+//
+// FOUR SECTIONS, FOUR OBJECTIVES, and one of them is a SECOND claim:
+//
+//   3.1 Multiplying and dividing by powers of 10  -> 9Np.01
+//   3.2 Multiplying and dividing decimals         -> 9Nf.06
+//   3.3 Understanding compound percentages        -> 9Nf.05
+//   3.4 Understanding upper and lower bounds      -> 9Np.02
+//
+// 9Np.01 IS ALSO CLAIMED BY UNIT 1, and that is deliberate rather than a
+// duplicate. Unit 1 uses powers of ten in the service of standard form (1.2) and
+// the index laws (1.3) - it needs the skill and teaches it there. Unit 3 section
+// 3.1 is the skill's own dedicated section, at greater length and with negative
+// powers throughout. Grade 7 already has this shape: 9Gg.11 is mapped to unit 8,
+// which derives it, and unit 5, which uses it. Two units teaching one objective
+// is honest; two units each teaching a third of it and both claiming the whole
+// would not be.
+//
+// 9Np.02 is the one Unit 1 deliberately did NOT claim. Its builder says so and
+// its checker asserts the absence, which is what makes this unit the place the
+// claim is finally paid for: bounds are 3.4's whole subject.
+//
+// THE MULTIPLIER IS THE BOOK'S METHOD for 3.3 and the unit follows it: +15% is
+// x1.15, -15% is x0.85, and compound interest is the multiplier applied once per
+// period. That is what makes compound different from simple, and doing it as
+// repeated multiplication rather than repeated addition is the whole point.
+//
+//   node tools/build-ehel-math-g9-unit3.mjs [--write]
+
+import fs from "node:fs";
+import path from "node:path";
+import url from "node:url";
+
+const HERE = path.dirname(url.fileURLToPath(import.meta.url));
+const OUT = path.resolve(HERE, "..", "src", "prototypes", "ehel-academy",
+  "mathematics", "grade-9", "data", "units", "unit-3.json");
+const WRITE = process.argv.includes("--write");
+
+const FW = path.resolve(HERE, "..", "src", "curriculum", "cambridge-mathematics-0862.json");
+const fw = {};
+(function walk(o) {
+  if (!o || typeof o !== "object") return;
+  if (Array.isArray(o)) return o.forEach(walk);
+  if (typeof o.code === "string" && /^9(Np|Nf)\.\d{2}$/.test(o.code)) fw[o.code] = o.text;
+  Object.values(o).forEach(walk);
+})(JSON.parse(fs.readFileSync(FW, "utf8")));
+
+const OBJ = ["9Np.01", "9Nf.06", "9Nf.05", "9Np.02"];
+for (const c of OBJ) if (!fw[c]) throw new Error("0862 has no " + c);
+
+const outcomes = [
+  "Multiply and divide integers and decimals by any positive power of 10, explaining which way the digits move.",
+  "Multiply and divide by a negative power of 10, and explain why multiplying by 10^-n is the same as dividing by 10^n.",
+  "Estimate the answer to a decimal multiplication or division before working it out.",
+  "Multiply and divide decimals by integers and by decimals, and check the answer against the estimate.",
+  "Write a percentage increase or decrease as a single multiplier.",
+  "Work out a compound percentage change by applying the multiplier once for each period.",
+  "Find the upper and lower bounds of a number that has been rounded.",
+  "Write the range of possible values of a rounded number as an inequality.",
+];
+
+const concepts = [
+  {
+    id: "concept-1-powers-of-ten",
+    title: "The Digits Move, the Point Stays",
+    explanation:
+      "Multiplying or dividing by a power of 10 does not change any digit - it changes where each digit " +
+      "sits. Multiplying by 10^3 moves every digit three places towards the larger columns; dividing by " +
+      "10^3 moves them three places the other way. Saying 'the decimal point moves' is a shortcut for the " +
+      "same thing and it is safe as long as you remember that the number of places is the index, and you " +
+      "fill any empty column with a zero.",
+    example:
+      "2.8 x 10^3 = 2800: the digits move three places, and the two empty columns are filled with zeros. " +
+      "34 divided by 10^2 = 0.34: the digits move two places the other way. And 'add a zero' is not the " +
+      "rule - it works for 28 x 10 = 280 and fails immediately for 2.8 x 10 = 28.",
+  },
+  {
+    id: "concept-2-negative-powers",
+    title: "A Negative Power Is a Division",
+    explanation:
+      "10^-n means 1/10^n, so multiplying by 10^-n is exactly the same instruction as dividing by 10^n. " +
+      "That is one fact, not two, and it is why a single rule covers the whole range of powers: the index " +
+      "tells you how many places, and its sign tells you which direction. Once you see that, dividing by " +
+      "a negative power stops being a special case - it moves the digits the other way again.",
+    example:
+      "2.8 x 10^-2 = 0.028, which is the same as 2.8 divided by 10^2. Going the other way, " +
+      "0.03 divided by 10^-2 = 0.03 x 10^2 = 3: dividing by a negative power makes the number bigger, " +
+      "because you are dividing by something smaller than 1.",
+  },
+  {
+    id: "concept-3-estimating-decimals",
+    title: "Estimate First, Then Calculate",
+    explanation:
+      "The digits in a decimal multiplication are the easy part; the position of the point is where the " +
+      "answer goes wrong. An estimate fixes the position before you start. Round each number to something " +
+      "you can do in your head, work that out, and you then know roughly how big the answer must be - so " +
+      "an answer ten times too large announces itself. This is not an optional extra step; it is the check " +
+      "that makes the calculation trustworthy.",
+    example:
+      "For 0.68 x 4.2, estimate 0.7 x 4 = 2.8. Now do the digits: 68 x 42 = 2856. The estimate says the " +
+      "answer is near 2.8, so it is 2.856 rather than 28.56 or 0.2856. For 7.2 divided by 0.9, estimate " +
+      "7 divided by 1 = 7, so the answer is near 8 - and 8 is right.",
+  },
+  {
+    id: "concept-4-dividing-by-decimals",
+    title: "Dividing by a Decimal: Change the Question",
+    explanation:
+      "A division is a fraction, and multiplying the top and bottom of a fraction by the same number does " +
+      "not change its value. So a division by a decimal can be turned into a division by a whole number " +
+      "before you start, which is always easier. Multiply both numbers by whatever power of 10 makes the " +
+      "divisor whole. Note what this means: dividing by a number smaller than 1 makes the answer BIGGER " +
+      "than what you started with, which surprises learners every time.",
+    example:
+      "7.2 divided by 0.9: multiply both by 10 to get 72 divided by 9 = 8. The answer 8 is larger than " +
+      "7.2, and it should be - you are asking how many nine-tenths fit into 7.2, and nine-tenths is less " +
+      "than one. For 1.44 divided by 0.12, multiply both by 100: 144 divided by 12 = 12.",
+  },
+  {
+    id: "concept-5-the-multiplier",
+    title: "One Multiplier for an Increase or a Decrease",
+    explanation:
+      "A percentage change can be done in one multiplication rather than two steps. An increase of 15% " +
+      "leaves you with 115% of what you had, so the multiplier is 1.15. A decrease of 15% leaves 85%, so " +
+      "the multiplier is 0.85. Finding the change and then adding it gives the same answer, but the " +
+      "multiplier is one operation instead of two - and, crucially, it is the form you can repeat.",
+    example:
+      "$300 increased by 15%: 100% + 15% = 115%, multiplier 1.15, so $300 x 1.15 = $345. $300 decreased " +
+      "by 15%: 100% - 15% = 85%, multiplier 0.85, so $300 x 0.85 = $255. Notice the two do not cancel: " +
+      "increasing by 15% and then decreasing by 15% gives $345 x 0.85 = $293.25, not $300.",
+  },
+  {
+    id: "concept-6-bounds",
+    title: "A Rounded Number Names a Range",
+    explanation:
+      "When a number has been rounded, the value you are given is not the original - it is a label for " +
+      "every number that would round to it. Those numbers fill an interval, and its ends are the lower " +
+      "and upper bounds: half a unit of rounding below and above. The lower bound is included, because it " +
+      "rounds up to the value; the upper bound is not, because it rounds up to the NEXT value. That is " +
+      "why the inequality has one 'or equal to' and one strict sign.",
+    example:
+      "A number rounded to the nearest whole number gives 25. Any number from 24.5 up to but not " +
+      "including 25.5 would do that, so the lower bound is 24.5, the upper bound is 25.5, and the range " +
+      "is 24.5 <= x < 25.5. Rounded to the nearest 10 and giving 90, the half-unit is 5: 85 <= x < 95.",
+  },
+];
+
+const methods = [
+  { id: "method-1", outcomeId: "lo01", difficulty: "Core", title: "How to multiply or divide by a power of 10",
+    example: "Work out 2.8 x 10^3 and 34 divided by 10^2.",
+    steps: ["Read the index - that is how many places the digits move.",
+      "Read the sign and the operation to decide the direction: multiplying by a positive power makes the number bigger.",
+      "Move every digit that many places: 2.8 x 10^3 = 2800.",
+      "Fill any empty column with a zero, and check the size is sensible.",
+      "For 34 divided by 10^2 the digits move two places the other way: 0.34."] },
+  { id: "method-2", outcomeId: "lo02", difficulty: "Core", title: "How to handle a negative power of 10",
+    example: "Work out 2.8 x 10^-2 and 0.03 divided by 10^-2.",
+    steps: ["Rewrite the negative power as a division: 10^-2 means divided by 10^2.",
+      "So 2.8 x 10^-2 is 2.8 divided by 100 = 0.028.",
+      "Dividing BY a negative power reverses it again: 0.03 divided by 10^-2 = 0.03 x 100.",
+      "That gives 3. Check the direction: dividing by something less than 1 must make the number bigger."] },
+  { id: "method-3", outcomeId: "lo03", difficulty: "Core", title: "How to estimate before you calculate",
+    example: "Estimate 0.68 x 4.2.",
+    steps: ["Round each number to one easy figure: 0.7 and 4.",
+      "Work out the easy product: 0.7 x 4 = 2.8.",
+      "Keep that number - it decides where the point goes in the real answer.",
+      "Do the digits: 68 x 42 = 2856.",
+      "Place the point so the answer is near your estimate: 2.856."] },
+  { id: "method-4", outcomeId: "lo04", difficulty: "Core", title: "How to divide by a decimal",
+    example: "Work out 7.2 divided by 0.9.",
+    steps: ["Decide what makes the DIVISOR a whole number: 0.9 needs x10.",
+      "Multiply both numbers by it: 72 divided by 9.",
+      "Do the easier division: 72 divided by 9 = 8.",
+      "Check against an estimate: 7 divided by 1 is about 7, and 8 is close.",
+      "Check the direction: dividing by less than 1 gave a bigger answer, as it must."] },
+  { id: "method-5", outcomeId: "lo06", difficulty: "Core", title: "How to work out a compound change",
+    example: "$500 grows by 10% a year for 3 years. What is it worth?",
+    steps: ["Turn the percentage into one multiplier: 100% + 10% = 110%, so 1.1.",
+      "Apply it once for each period, using the new amount each time.",
+      "Year 1: 500 x 1.1 = 550. Year 2: 550 x 1.1 = 605. Year 3: 605 x 1.1 = 665.50.",
+      "Or do it in one step: 500 x 1.1^3 = 665.50.",
+      "Compare with simple interest - 3 x 10% of 500 = 150, giving 650 - and say why compound is more."] },
+  { id: "method-6", outcomeId: "lo07", difficulty: "Core", title: "How to find upper and lower bounds",
+    example: "A length is 47 cm to the nearest centimetre. What are its bounds?",
+    steps: ["Find the unit of rounding: here it is 1 cm.",
+      "Halve it: 0.5 cm.",
+      "Subtract for the lower bound: 46.5 cm.",
+      "Add for the upper bound: 47.5 cm.",
+      "Write the range with the correct signs: 46.5 <= length < 47.5."] },
+];
+
+const workedExamples = [
+  { id: "we01", outcomeId: "lo01", difficulty: "Basic", twm: "characterising", title: "Multiplying by a power of ten",
+    prompt: "Work out 2.8 x 10^3 and 0.02 x 10^1.",
+    solution: "2.8 x 10^3 moves the digits three places towards the bigger columns: 2800, with two zeros filling the empty columns. 0.02 x 10^1 moves them one place: 0.2. Nothing about the digits changed - only where they sit." },
+  { id: "we02", outcomeId: "lo01", difficulty: "Basic", twm: "critiquing", title: "Why 'add a zero' fails",
+    prompt: "Does 'add a zero' work as a rule for multiplying by 10? Test it on 28 and on 2.8.",
+    solution: "For 28 it appears to work: 28 x 10 = 280. For 2.8 it breaks at once - 'adding a zero' gives 2.80, which is still 2.8, while the right answer is 28. The rule that works for both is that the DIGITS move one place, because that is what multiplying by 10 actually does." },
+  { id: "we03", outcomeId: "lo01", difficulty: "Core", twm: "characterising", title: "Dividing by a power of ten",
+    prompt: "Work out 34 divided by 10^2 and 3400 divided by 10^3.",
+    solution: "34 divided by 10^2 moves the digits two places the other way: 0.34. 3400 divided by 10^3 moves them three places: 3.4. The index is the number of places every time." },
+  { id: "we04", outcomeId: "lo02", difficulty: "Core", twm: "generalising", title: "A negative power is a division",
+    prompt: "Show that 2.8 x 10^-2 and 2.8 divided by 10^2 give the same answer.",
+    solution: "10^-2 means 1/10^2, so multiplying by it IS dividing by 10^2. Both give 0.028. This is one rule rather than two: the index says how many places and its sign says which direction." },
+  { id: "we05", outcomeId: "lo02", difficulty: "Extension", twm: "convincing", title: "Dividing by a negative power",
+    prompt: "Work out 0.03 divided by 10^-2, and explain why the answer is bigger than 0.03.",
+    solution: "Dividing by 10^-2 is dividing by 1/100, which is the same as multiplying by 100: 0.03 x 100 = 3. The answer is bigger because the divisor is smaller than 1. Read it as a question: how many hundredths fit into 0.03? Three of them, since 0.03 is 3 x 0.01 - and three is larger than 0.03. Dividing by anything less than 1 always makes a number larger." },
+  { id: "we06", outcomeId: "lo03", difficulty: "Core", twm: "specialising", title: "Estimating places the point",
+    prompt: "Estimate 0.68 x 4.2, then use the estimate to place the decimal point in the exact answer.",
+    solution: "Estimate 0.7 x 4 = 2.8. The digits give 68 x 42 = 2856. Only 2.856 is anywhere near 2.8 - 28.56 is ten times too big and 0.2856 ten times too small. So the answer is 2.856." },
+  { id: "we07", outcomeId: "lo04", difficulty: "Core", twm: "characterising", title: "Dividing by a decimal",
+    prompt: "Work out 7.2 divided by 0.9.",
+    solution: "Multiply both numbers by 10 so the divisor becomes whole: 72 divided by 9 = 8. The value of the division is unchanged because a division is a fraction, and scaling top and bottom equally leaves a fraction alone. Note the answer, 8, is bigger than 7.2 - dividing by nine-tenths must do that." },
+  { id: "we08", outcomeId: "lo04", difficulty: "Extension", twm: "specialising", title: "A two-decimal divisor",
+    prompt: "Work out 1.44 divided by 0.12.",
+    solution: "The divisor needs two places, so multiply both by 100: 144 divided by 12 = 12. Check by estimating: 1.4 divided by 0.1 is about 14, and 12 is close enough to confirm the position of the point." },
+  { id: "we09", outcomeId: "lo05", difficulty: "Core", twm: "characterising", title: "One multiplier for a change",
+    prompt: "Write the single multiplier for an increase of 15%, a decrease of 15%, and an increase of 32%. Then increase $300 by 15%.",
+    solution: "An increase of 15% leaves 115%, so 1.15. A decrease of 15% leaves 85%, so 0.85. An increase of 32% leaves 132%, so 1.32. So $300 increased by 15% is $300 x 1.15 = $345." },
+  { id: "we10", outcomeId: "lo06", difficulty: "Core", twm: "generalising", title: "Compound interest over three years",
+    prompt: "$500 is invested at 10% a year compound interest. What is it worth after 3 years, and how does that compare with simple interest?",
+    solution: "The multiplier is 1.1, applied once per year: 500 x 1.1 = 550, then 605, then 665.50. In one step, 500 x 1.1^3 = 665.50. Simple interest would give 3 lots of $50, so $650. Compound earns $15.50 more, because in later years the interest is calculated on interest already earned." },
+  { id: "we11", outcomeId: "lo06", difficulty: "Extension", twm: "critiquing", title: "Up 15% then down 15% is not back where you started",
+    prompt: "A price of $300 rises by 15% and then falls by 15%. Is it $300 again?",
+    solution: "No. 300 x 1.15 = 345, and 345 x 0.85 = 293.25 - $6.75 short. The two percentages are taken of different amounts: the rise is 15% of 300, the fall is 15% of 345, which is more. The combined multiplier is 1.15 x 0.85 = 0.9775, which is less than 1 whatever the starting price." },
+  { id: "we12", outcomeId: "lo07", difficulty: "Core", twm: "characterising", title: "Bounds of a rounded number",
+    prompt: "A number with one decimal place rounds to 25 to the nearest whole number. What are its bounds, and which values qualify?",
+    solution: "Half of the rounding unit is 0.5, so the lower bound is 24.5 and the upper bound is 25.5. The one-decimal-place values that qualify are 24.5, 24.6, 24.7, 24.8, 24.9, 25.0, 25.1, 25.2, 25.3 and 25.4 - ten of them. 25.5 is excluded because it rounds to 26." },
+  { id: "we13", outcomeId: "lo08", difficulty: "Extension", twm: "convincing", title: "Why one sign is strict and the other is not",
+    prompt: "A length is 47 cm to the nearest centimetre. Write the range as an inequality and explain the two different signs.",
+    solution: "46.5 <= length < 47.5. The lower bound is included because 46.5 rounds UP to 47, so it is one of the possible values. The upper bound is excluded because 47.5 rounds up to 48, not 47 - it belongs to the next interval. If both were included, 47.5 would round to two different answers at once." },
+];
+
+const practice = [
+  { id: "p01", level: "Warm-up", prompt: "Work out 2.8 x 10^2.", answer: "280", hint: "The digits move two places." },
+  { id: "p02", level: "Warm-up", prompt: "Work out 34 divided by 10.", answer: "3.4", hint: "One place the other way." },
+  { id: "p03", level: "Warm-up", prompt: "Write the multiplier for an increase of 20%.", answer: "1.2", hint: "100% + 20% = 120%." },
+  { id: "p04", level: "Core", prompt: "Work out 2.8 x 10^-2.", answer: "0.028", hint: "A negative power is a division by 10^2." },
+  { id: "p05", level: "Core", prompt: "Work out 0.34 divided by 10^-1.", answer: "3.4", hint: "Dividing by a negative power multiplies." },
+  { id: "p06", level: "Core", prompt: "Estimate, then work out, 0.68 x 4.2.", answer: "Estimate 0.7 x 4 = 2.8; exact 2.856", hint: "Use the estimate to place the point." },
+  { id: "p07", level: "Core", prompt: "Work out 1.44 divided by 0.12.", answer: "12", hint: "Multiply both numbers by 100." },
+  { id: "p08", level: "Core", prompt: "Decrease $400 by 32%.", answer: "$272", hint: "The multiplier is 0.68." },
+  { id: "p09", level: "Core", prompt: "$200 grows by 5% a year for 2 years. What is it worth?", answer: "$220.50", hint: "Apply 1.05 twice." },
+  { id: "p10", level: "Challenge", prompt: "A mass is 6.4 kg to one decimal place. Write its bounds as an inequality.", answer: "6.35 <= mass < 6.45", hint: "Half the rounding unit is 0.05." },
+  { id: "p11", level: "Challenge", prompt: "A number rounds to 90 to the nearest 10. What is the smallest it could be, and the largest value it cannot reach?", answer: "Smallest 85; it cannot reach 95. So 85 <= x < 95.", hint: "Half of 10 is 5." },
+  { id: "p12", level: "Challenge", prompt: "A shirt costs $80 after a 20% reduction. What was the original price? Show why $96 is wrong.", answer: "The sale price is 80% of the original, so original = 80 / 0.8 = $100. Adding 20% to $80 gives $96, which takes 20% of the WRONG amount - 20% of 100 is 20, not 16.", hint: "Divide by the multiplier to undo it." },
+];
+
+const fluency = [
+  { id: "fl01", outcomeId: "lo01", difficulty: "Round 1", prompt: "Work out 2.8 x 10^3.", answer: "2800", hint: "Three places.", errorFeedback: "The digits move three places and zeros fill the gaps." },
+  { id: "fl02", outcomeId: "lo01", difficulty: "Round 1", prompt: "Work out 34 divided by 10^2.", answer: "0.34", hint: "Two places the other way.", errorFeedback: "Dividing by 100 moves the digits two places down." },
+  { id: "fl03", outcomeId: "lo05", difficulty: "Round 1", prompt: "Write the multiplier for a decrease of 15%.", answer: "0.85", hint: "100% - 15%.", errorFeedback: "85% left, so 0.85." },
+  { id: "fl04", outcomeId: "lo01", difficulty: "Round 1", prompt: "Work out 0.02 x 10^1.", answer: "0.2", hint: "One place up.", errorFeedback: "0.02 x 10 = 0.2." },
+  { id: "fl05", outcomeId: "lo02", difficulty: "Round 2", prompt: "Work out 2.8 x 10^-2.", answer: "0.028", hint: "Divide by 100.", errorFeedback: "10^-2 means divided by 100." },
+  { id: "fl06", outcomeId: "lo02", difficulty: "Round 2", prompt: "Work out 0.03 divided by 10^-2.", answer: "3", hint: "Dividing by a negative power multiplies.", errorFeedback: "0.03 x 100 = 3." },
+  { id: "fl07", outcomeId: "lo04", difficulty: "Round 2", prompt: "Work out 7.2 divided by 0.9.", answer: "8", hint: "Make the divisor whole.", errorFeedback: "72 divided by 9 = 8." },
+  { id: "fl08", outcomeId: "lo05", difficulty: "Round 2", prompt: "Increase $300 by 15%.", answer: "$345", hint: "x 1.15.", errorFeedback: "300 x 1.15 = 345." },
+  { id: "fl09", outcomeId: "lo06", difficulty: "Round 3", prompt: "$500 at 10% compound for 3 years.", answer: "$665.50", hint: "1.1 three times.", errorFeedback: "500 x 1.1^3 = 665.50." },
+  { id: "fl10", outcomeId: "lo07", difficulty: "Round 3", prompt: "A number rounds to 25 to the nearest whole number. Lower bound?", answer: "24.5", hint: "Half a unit below.", errorFeedback: "25 - 0.5 = 24.5." },
+  { id: "fl11", outcomeId: "lo07", difficulty: "Round 3", prompt: "A number rounds to 90 to the nearest 10. Upper bound?", answer: "95", hint: "Half of 10 is 5.", errorFeedback: "90 + 5 = 95." },
+  { id: "fl12", outcomeId: "lo08", difficulty: "Round 3", prompt: "Write the range for a length of 47 cm to the nearest cm.", answer: "46.5 <= length < 47.5", hint: "One sign is strict.", errorFeedback: "The upper bound is excluded because 47.5 rounds to 48." },
+];
+
+const explorations = concepts.map((c, i) => ({
+  id: "explore-" + (i + 1),
+  outcomeId: "lo0" + [1, 2, 3, 4, 5, 7][i],
+  difficulty: ["Discover", "Core", "Core", "Core", "Core", "Extension"][i],
+  title: c.title,
+  context: c.explanation,
+  prompt: [
+    "Work out 28 x 10 and 2.8 x 10 by 'adding a zero'. Which one does the rule get right, and what rule works for both?",
+    "Work out 2.8 x 10^-2 and 2.8 divided by 10^2. Why are they the same?",
+    "Estimate 0.68 x 4.2. Then work out 68 x 42. How does the estimate tell you where the point goes?",
+    "Work out 7.2 divided by 0.9. Is the answer bigger or smaller than 7.2, and why should it be?",
+    "Increase $300 by 15%, then decrease the result by 15%. Do you get $300 back?",
+    "A number rounds to 25. List every one-decimal-place value that would. Why is 25.5 not one of them?",
+  ][i],
+  answer: [
+    "It gets 28 x 10 = 280 right and 2.8 x 10 wrong. The rule that works for both is that the digits move one place.",
+    "Because 10^-2 means 1/10^2, so multiplying by it is dividing by 10^2. Both give 0.028.",
+    "68 x 42 = 2856, and the estimate 2.8 says the answer is 2.856.",
+    "8, which is bigger. Dividing by a number less than 1 always gives a bigger answer.",
+    "No - $293.25. The two changes are percentages of different amounts, and 1.15 x 0.85 = 0.9775.",
+    "24.5 up to 25.4, ten values. 25.5 rounds up to 26, so it belongs to the next interval.",
+  ][i],
+  modelType: "concept-model-" + (i + 1),
+  hint: [
+    "Try it on a number that already has a decimal.",
+    "What does a negative index mean?",
+    "There are only three sensible places for the point.",
+    "How many nine-tenths fit into 7.2?",
+    "15% of what?",
+    "What does 25.5 round to?",
+  ][i],
+  explanation: c.example,
+}));
+
+const visualModels = concepts.map((c, i) => ({
+  id: "model-" + (i + 1),
+  outcomeId: "lo0" + [1, 2, 3, 4, 5, 7][i],
+  title: c.title,
+  modelType: "concept-model-" + (i + 1),
+  purpose: c.explanation,
+  defaultNumber: [2.8, 2.8, 4.2, 0.9, 15, 25][i],
+}));
+
+const activities = [
+  { title: "Place-value slide", materials: "a strip of paper with digit columns, a movable digit card.",
+    steps: ["Write the columns from thousands down to thousandths on a strip.",
+      "Put the digits 2, 8 on the strip to make 2.8.",
+      "Slide them three places up and read the number; that is 2.8 x 10^3.",
+      "Slide them back and then two places down; that is 2.8 divided by 10^2.",
+      "Write a sentence saying what stayed the same during every slide."] },
+  { title: "Estimate, then check", materials: "paper, a calculator for checking only.",
+    steps: ["Write six decimal multiplications such as 0.68 x 4.2 and 3.1 x 0.25.",
+      "For each, write your estimate FIRST and circle it.",
+      "Work out the digits without the point.",
+      "Place the point using your estimate, then check on a calculator.",
+      "Count how many times the estimate saved you from a wrong position."] },
+  { title: "Multiplier match", materials: "cards.",
+    steps: ["Make cards for increases and decreases: +15%, -15%, +20%, -20%, +32%, -32%.",
+      "Make cards for multipliers: 1.15, 0.85, 1.2, 0.8, 1.32, 0.68.",
+      "Match them and explain each pairing in one sentence.",
+      "Then find any two multipliers whose product is closest to 1, and say why no pair reaches it exactly."] },
+  { title: "Compound versus simple", materials: "paper, a table.",
+    steps: ["Start with $1000 at 10% a year.",
+      "Fill in a five-year table for simple interest and for compound interest side by side.",
+      "Work out the gap each year and describe how it grows.",
+      "Predict the gap in year 10, then check it.",
+      "Write one sentence explaining what compound interest does that simple interest does not."] },
+  { title: "Bounds on a number line", materials: "a ruler, paper.",
+    steps: ["Draw a number line from 24 to 26 marked in tenths.",
+      "Shade every value that rounds to 25 to the nearest whole number.",
+      "Mark the two ends and label them lower and upper bound.",
+      "Put a filled circle on one end and an open circle on the other, and say which is which and why.",
+      "Repeat for a number that rounds to 90 to the nearest 10."] },
+  { title: "Measure and bound it", materials: "a ruler, five objects.",
+    steps: ["Measure five objects to the nearest centimetre.",
+      "For each, write the bounds and the inequality.",
+      "Now measure the same objects to the nearest millimetre.",
+      "Write the new bounds, and describe what finer rounding did to the size of each interval.",
+      "Say what this means for a builder cutting wood to a measurement."] },
+];
+
+const realProblems = [
+  { id: "rp01", outcomeId: "lo06", difficulty: "Core", context: "Money",
+    prompt: "Amina puts $500 in an account paying 10% a year compound interest. How much is there after 3 years, and how much of that is interest?",
+    answer: "500 x 1.1^3 = $665.50, so the interest is $165.50.",
+    hint: "Apply the multiplier once per year.", errorFeedback: "500 x 1.1 = 550, then 605, then 665.50." },
+  { id: "rp02", outcomeId: "lo05", difficulty: "Core", context: "Market",
+    prompt: "A trader buys goods for $400 and marks them up by 32%. A week later she takes 32% off the marked price. What does a customer pay, and has she broken even?",
+    answer: "Marked price 400 x 1.32 = $528. After the reduction, 528 x 0.68 = $359.04. She is $40.96 below her cost, because the two percentages apply to different amounts.",
+    hint: "The combined multiplier is 1.32 x 0.68.", errorFeedback: "1.32 x 0.68 = 0.8976, which is less than 1." },
+  { id: "rp03", outcomeId: "lo04", difficulty: "Core", context: "Home",
+    prompt: "A 7.2 litre container is filled using a 0.9 litre jug. How many jugfuls does it take?",
+    answer: "7.2 divided by 0.9 = 8 jugfuls.",
+    hint: "Multiply both by 10 first.", errorFeedback: "72 divided by 9 = 8." },
+  { id: "rp04", outcomeId: "lo08", difficulty: "Extension", context: "Work",
+    prompt: "A plank is 240 cm to the nearest centimetre and must be cut into 8 equal pieces. What are the bounds for the length of one piece?",
+    answer: "The plank is between 239.5 and 240.5 cm, so one piece is between 239.5/8 = 29.9375 cm and 240.5/8 = 30.0625 cm. The nominal answer 30 cm sits inside that range.",
+    hint: "Find the plank's bounds first, then divide each by 8.", errorFeedback: "Divide both bounds, not just the rounded value." },
+  { id: "rp05", outcomeId: "lo01", difficulty: "Core", context: "Science",
+    prompt: "A cell is 0.02 mm across. Write this in millimetres after multiplying by 10^3 to convert to micrometres, and say what the answer means.",
+    answer: "0.02 x 10^3 = 20, so the cell is 20 micrometres across. The digits did not change - only which unit they are counted in.",
+    hint: "Three places up.", errorFeedback: "0.02 x 1000 = 20." },
+  { id: "rp06", outcomeId: "lo03", difficulty: "Extension", context: "Market",
+    prompt: "Rice costs $4.20 per kilogram. Estimate, then work out exactly, the cost of 0.68 kg.",
+    answer: "Estimate 0.7 x 4 = $2.80. Exactly, 4.2 x 0.68 = $2.856, which rounds to $2.86.",
+    hint: "Estimate first so you can place the point.", errorFeedback: "68 x 42 = 2856, and the estimate puts it at 2.856." },
+];
+
+const reasoningPrompts = [
+  { id: "reason01", outcomeId: "lo01", difficulty: "Core", responseMode: "text",
+    prompt: "Marcus says 'to multiply by 10, add a zero'. When does his rule work, and when does it fail?",
+    keyIdeas: ["It works for whole numbers", "It fails for decimals", "The digits move one place"],
+    modelAnswer: "It works for whole numbers - 28 x 10 = 280 - which is why it survives so long. It fails the moment there is a decimal: 2.8 x 10 is 28, but 'adding a zero' gives 2.80, which is the same number he started with. The rule that covers both is that every digit moves one place towards the larger columns, and a zero is written only where a column would otherwise be empty." },
+  { id: "reason02", outcomeId: "lo04", difficulty: "Core", responseMode: "text",
+    prompt: "Sofia is surprised that 7.2 divided by 0.9 is 8, which is bigger than 7.2. Explain why division can make a number larger.",
+    keyIdeas: ["Division asks how many fit", "0.9 is less than 1", "More than 7 of them fit into 7.2"],
+    modelAnswer: "Division asks how many of the divisor fit into the number. Because 0.9 is less than 1, more than 7.2 of them fit - eight, exactly. Division only makes a number smaller when you divide by something bigger than 1. The rule 'dividing makes things smaller' is really a rule about dividing by whole numbers, and it does not survive the move to decimals." },
+  { id: "reason03", outcomeId: "lo06", difficulty: "Extension", responseMode: "text",
+    prompt: "Why does a 15% rise followed by a 15% fall not return a price to where it started?",
+    keyIdeas: ["The percentages are of different amounts", "The fall is of a larger amount", "1.15 x 0.85 = 0.9775"],
+    modelAnswer: "The rise is 15% of the original price and the fall is 15% of the raised price, which is larger - so more comes off than went on. The combined multiplier is 1.15 x 0.85 = 0.9775, so whatever the starting price, you end with 97.75% of it. The same argument works the other way round, and gives the same 0.9775, because multiplication does not care about order." },
+  { id: "reason04", outcomeId: "lo08", difficulty: "Extension", responseMode: "text",
+    prompt: "Why is the lower bound of a rounded number included in its range but the upper bound is not?",
+    keyIdeas: ["24.5 rounds up to 25", "25.5 rounds up to 26", "A value cannot round to two answers"],
+    modelAnswer: "Rounding a half goes up, so 24.5 rounds to 25 and belongs to the range, while 25.5 rounds to 26 and belongs to the NEXT range. If both ends were included, 25.5 would have to round to 25 and to 26 at the same time, and every interval would overlap its neighbour. Writing 24.5 <= x < 25.5 keeps each value in exactly one interval." },
+  { id: "reason05", outcomeId: "lo02", difficulty: "Core", responseMode: "text",
+    prompt: "Explain why multiplying by 10^-3 and dividing by 10^3 are the same instruction.",
+    keyIdeas: ["10^-3 means 1/10^3", "Multiplying by a reciprocal is dividing", "One rule covers both signs"],
+    modelAnswer: "A negative index means the reciprocal, so 10^-3 is 1/1000. Multiplying by 1/1000 is the same as dividing by 1000 - that is what a reciprocal does. This matters because it means there is one rule for the whole range of powers rather than a separate case for negatives: the index gives the number of places and its sign gives the direction." },
+  { id: "reason06", outcomeId: "lo03", difficulty: "Core", responseMode: "text",
+    prompt: "Why is an estimate more useful than a careful re-check when you multiply decimals?",
+    keyIdeas: ["The digits are usually right", "The point is what goes wrong", "An estimate fixes the size"],
+    modelAnswer: "The digits in a decimal multiplication come out of ordinary multiplication and are usually correct; what goes wrong is where the point lands, and re-checking the digits does not test that at all. An estimate tests exactly the thing that fails: it tells you how big the answer should be, so 28.56 instead of 2.856 is caught immediately. The two checks look similar and only one of them is aimed at the actual failure." },
+];
+
+const reference = {
+  rules: [
+    { title: "The Index Is the Number of Places", text: "Multiplying or dividing by 10^n moves every digit n places. The sign of the index and the operation together decide the direction." },
+    { title: "A Negative Power Is a Reciprocal", text: "10^-n means 1/10^n, so multiplying by 10^-n is dividing by 10^n, and dividing by 10^-n is multiplying by 10^n." },
+    { title: "Estimate Before You Multiply Decimals", text: "The digits are rarely the problem; the position of the point is. An estimate fixes the position." },
+    { title: "Make the Divisor Whole", text: "Multiply both numbers by the same power of 10. A division is a fraction, and scaling top and bottom equally does not change it." },
+    { title: "One Multiplier per Change", text: "An increase of p% has multiplier 1 + p/100; a decrease has 1 - p/100. Compound means applying it once per period." },
+    { title: "Bounds Are Half a Unit Each Way", text: "A value rounded to the nearest u lies in [value - u/2, value + u/2), with the lower end included and the upper excluded." },
+  ],
+  terms: [
+    ["Power of 10", "10 raised to an index, such as 10^3 = 1000"],
+    ["Negative index", "An index meaning the reciprocal, so 10^-2 = 1/100"],
+    ["Estimate", "A rough answer from easier numbers, used to check size and place the point"],
+    ["Divisor", "The number you are dividing by"],
+    ["Multiplier", "The single number that carries out a percentage change"],
+    ["Compound percentage", "A percentage change applied repeatedly, each time to the new amount"],
+    ["Lower bound", "The smallest value that would round to the given number"],
+    ["Upper bound", "The value the original cannot reach, because it would round to the next number"],
+  ],
+  commonMistakes: [
+    ["Adding a zero to multiply by 10", "The DIGITS move; adding a zero fails as soon as there is a decimal point"],
+    ["Losing the point in a decimal product", "Estimate first; 0.68 x 4.2 is near 2.8, so 2.856 and not 28.56"],
+    ["Thinking division always makes a number smaller", "Dividing by less than 1 makes it bigger: 7.2 / 0.9 = 8"],
+    ["Expecting +15% then -15% to cancel", "The combined multiplier is 0.9775, because the two percentages are of different amounts"],
+    ["Including the upper bound", "47.5 rounds to 48, so the range is 46.5 <= x < 47.5"],
+  ],
+};
+
+const assessment = {
+  passPercent: 80,
+  questions: [
+    { id: "q01", type: "Application", outcomeId: "lo01", difficulty: "Basic", question: "Work out 2.8 x 10^3.", options: ["280", "2800", "28000", "0.0028"], answer: "2800", hint: "Three places.", explanation: "The digits move three places and zeros fill the empty columns." },
+    { id: "q02", type: "Application", outcomeId: "lo01", difficulty: "Basic", question: "Work out 34 divided by 10^2.", options: ["3.4", "0.34", "0.034", "3400"], answer: "0.34", hint: "Two places the other way.", explanation: "Dividing by 100 moves the digits two places down." },
+    { id: "q03", type: "Application", outcomeId: "lo02", difficulty: "Core", question: "Work out 2.8 x 10^-2.", options: ["0.28", "0.028", "280", "0.0028"], answer: "0.028", hint: "A negative power is a division.", explanation: "10^-2 means divided by 100, giving 0.028." },
+    { id: "q04", type: "Application", outcomeId: "lo04", difficulty: "Core", question: "Work out 7.2 divided by 0.9.", options: ["0.8", "8", "6.48", "80"], answer: "8", hint: "Make the divisor whole.", explanation: "72 divided by 9 = 8, and the answer is bigger than 7.2 because 0.9 is less than 1." },
+    { id: "q05", type: "Application", outcomeId: "lo05", difficulty: "Core", question: "What is the single multiplier for a decrease of 32%?", options: ["0.32", "0.68", "1.32", "0.78"], answer: "0.68", hint: "100% - 32%.", explanation: "68% is left, so the multiplier is 0.68." },
+    { id: "q06", type: "Application", outcomeId: "lo06", difficulty: "Core", question: "$500 at 10% a year compound interest for 3 years is worth:", options: ["$650.00", "$665.50", "$1500.00", "$605.00"], answer: "$665.50", hint: "1.1 applied three times.", explanation: "500 x 1.1^3 = 665.50, which is $15.50 more than simple interest." },
+    { id: "q07", type: "Application", outcomeId: "lo07", difficulty: "Core", question: "A number rounds to 90 to the nearest 10. Its bounds are:", options: ["89.5 and 90.5", "85 and 95", "80 and 100", "89 and 91"], answer: "85 and 95", hint: "Half of the rounding unit.", explanation: "Half of 10 is 5, so 85 <= x < 95." },
+    { id: "q08", type: "Reasoning", outcomeId: "lo08", difficulty: "Extension", question: "Why is the upper bound excluded from the range?", options: ["It is too large to measure", "It would round to the next number", "Bounds are always estimates", "It is not a decimal"], answer: "It would round to the next number", hint: "What does 47.5 round to?", explanation: "47.5 rounds up to 48, so it belongs to the next interval; including it would let one value round to two answers." },
+  ],
+};
+
+const games = {
+  masteryScore: 3,
+  games: [
+    { id: "u3-game-1", icon: "?", skill: "Powers of ten", title: "Quick Match: Powers of Ten", description: "Four short challenges on moving the digits.", type: "choice",
+      rounds: [
+        { prompt: "2.8 x 10^2", choices: ["280", "28", "2800", "0.028"], answer: "280", clue: "Two places up." },
+        { prompt: "34 divided by 10^2", choices: ["3.4", "0.34", "340", "0.034"], answer: "0.34", clue: "Two places down." },
+        { prompt: "2.8 x 10^-2", choices: ["0.028", "0.28", "280", "28"], answer: "0.028", clue: "A negative power divides." },
+        { prompt: "0.03 divided by 10^-2", choices: ["3", "0.3", "0.0003", "300"], answer: "3", clue: "Dividing by a negative power multiplies." },
+      ] },
+    { id: "u3-game-2", icon: "?", skill: "Percentages and bounds", title: "Quick Match: Change and Bounds", description: "Four short challenges on multipliers and rounding.", type: "choice",
+      rounds: [
+        { prompt: "Multiplier for +15%", choices: ["1.15", "0.85", "1.5", "0.15"], answer: "1.15", clue: "115% is left." },
+        { prompt: "Multiplier for -20%", choices: ["0.8", "1.2", "0.2", "0.98"], answer: "0.8", clue: "80% is left." },
+        { prompt: "$300 increased by 15%", choices: ["$345", "$315", "$255", "$450"], answer: "$345", clue: "x 1.15." },
+        { prompt: "Lower bound when a number rounds to 25", choices: ["24.5", "24.9", "25.5", "24"], answer: "24.5", clue: "Half a unit below." },
+      ] },
+  ],
+};
+
+const unit = {
+  schemaVersion: "Ehel Mathematics Runtime v1.1",
+  generatedAt: new Date().toISOString(),
+  stage: { id: 9, label: "Stage 9" },
+  subject: "Mathematics",
+  term: { id: 1, label: "Term 1" },
+  unit: {
+    unitId: "math-g09-u03",
+    unitNo: 3,
+    unitTitle: "Decimals, Percentages and Rounding",
+    unitOverview:
+      "Welcome to Unit 3. This unit is about being exact with numbers that are not whole. You move " +
+      "digits by powers of ten in both directions, including the negative powers where most of the " +
+      "confusion lives; you learn to estimate a decimal calculation before doing it, because the digits " +
+      "are rarely what goes wrong and the decimal point often is; you do a percentage change in one " +
+      "multiplication rather than two steps, which is what lets you repeat it for compound interest; and " +
+      "you learn that a rounded number is not a value at all but a label for a whole range of values, " +
+      "with a lower bound you can reach and an upper bound you cannot.",
+    learningPath: "3.1 Multiplying and dividing by powers of 10, 3.2 Multiplying and dividing decimals, 3.3 Understanding compound percentages, 3.4 Understanding upper and lower bounds",
+    reviewStatus: "Authored 2026-09-26 from the Stage 9 Learner's Book and Workbook, unit 3. Not yet curriculum-reviewed.",
+  },
+  cambridge: {
+    level: "Cambridge Lower Secondary Mathematics",
+    code: "0862",
+    stage: 9,
+    objectives: OBJ.map((c) => ({ code: c, text: fw[c] })),
+    objectiveMapping: {
+      status: "authored",
+      reviewed: false,
+      method:
+        "Section by section: 3.1 -> 9Np.01, 3.2 -> 9Nf.06, 3.3 -> 9Nf.05, 3.4 -> 9Np.02. " +
+        "9Np.01 IS ALSO CLAIMED BY UNIT 1, deliberately: unit 1 uses powers of ten for standard form " +
+        "and the index laws, while 3.1 is the skill's own dedicated section and carries the negative " +
+        "powers at length. Grade 7 has the same shape with 9Gg.11 in units 8 and 5. 9Np.02 is the " +
+        "objective unit 1 deliberately declined, and this unit is where it is paid for. Objective " +
+        "texts are quoted verbatim from cambridge-mathematics-0862.json.",
+    },
+  },
+  provenance: {
+    contentPackage: null,
+    framework: "Cambridge Lower Secondary Mathematics 0862 - Stage 9",
+    sourceArchive: null,
+    sourceDocuments: ["Cambridge Lower Secondary Maths Learner's Book 9 (2ed, CUP), unit 3",
+                      "Cambridge Lower Secondary Mathematics Workbook 9, pages 37-54"],
+    sourceBlockCount: null,
+    transformation:
+      "Authored by hand from the Learner's Book and Workbook. Grade 9 has no content package: " +
+      "outputs/math-content/math-content-model.json holds grades 1-8 only.",
+    reviewStatus: "Not curriculum-reviewed",
+  },
+  media: { lectureStatus: "Video pending", lectureVideo: null, poster: null },
+  outcomes,
+  concepts,
+  explorations,
+  visualModels,
+  methods,
+  workedExamples,
+  practice,
+  activities,
+  reference,
+  fluency,
+  realProblems,
+  reasoningPrompts,
+  assessment,
+  games,
+  selfAssessment: outcomes.map((o) => "I can " + o.charAt(0).toLowerCase() + o.slice(1)),
+};
+
+const json = JSON.stringify(unit, null, 2) + "\n";
+if (WRITE) {
+  fs.mkdirSync(path.dirname(OUT), { recursive: true });
+  fs.writeFileSync(OUT, json, "utf8");
+}
+console.log("  Grade 9 Unit 3: " + outcomes.length + " outcomes, " + concepts.length + " concepts, " +
+  workedExamples.length + " worked examples, " + practice.length + " practice, " + fluency.length +
+  " fluency, " + realProblems.length + " real problems, " + reasoningPrompts.length + " reasoning, " +
+  assessment.questions.length + " assessment, " + activities.length + " activities");
+console.log("  objectives: " + OBJ.join(", ") + "   (9Np.01 also in unit 1, deliberately)");
+console.log("  " + json.length + " bytes " + (WRITE ? "written to " + path.relative(process.cwd(), OUT) : "(--write to save)"));

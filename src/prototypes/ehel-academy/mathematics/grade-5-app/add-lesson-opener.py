@@ -86,6 +86,28 @@ MARK = "ehel-g5-lesson-opener"
 #   words: [(word, pic, meaning, [use, ...])]  "Math words" - full interactive tap-card + quiz
 # }
 WORK = {
+ "where-things-are": {
+  "about": [
+   "Compare the relative position of coordinates, with or without the aid of a grid.",
+   "Use knowledge of 2D shapes and coordinates to plot points to form lines and shapes in the first quadrant.",
+   "Translate 2D shapes, identifying the corresponding points between the original and the translated shape.",
+   "Reflect 2D shapes in both horizontal and vertical mirror lines to create patterns on square grids.",
+  ],
+  "parts": [
+   ("Along first, then up", "A coordinate pair names one place only because the order is fixed - the first number is how far along and the second is how far up. Swap them and both numbers are still right while the point is somewhere else entirely."),
+   ("A slide keeps the shape facing the same way", "Translating a shape moves every vertex by the same amount in the same direction. Nothing turns and nothing changes size, so if one corner goes three right and two up, all of them do."),
+   ("A reflection turns it to face the mirror", "Reflecting flips the shape across a line. Each point lands the same distance on the other side, so a vertex close to the mirror stays close and a far one stays far."),
+  ],
+  "words": [
+   ("coordinates", "\U0001F4CD", "A pair of numbers that fixes one point on a grid: how far along, then how far up.", ["Give the coordinates of each vertex of this rectangle."]),
+   ("vertex", "\U0001F53C", "A corner of a shape, where two sides meet. More than one are called vertices.", ["Plot the four vertices, then join them."]),
+   ("translate", "\u27A1\uFE0F", "To slide a shape, moving every point the same distance in the same direction, without turning it.", ["Translate the triangle four right and three up."]),
+   ("translation", "\U0001F503", "The slide itself, described by how far the shape moved along and how far up.", ["Describe the translation that took the shape from here to there."]),
+   ("reflect", "\U0001FA9E", "To flip a shape across a mirror line, so each point lands the same distance on the other side.", ["Reflect the shape in the vertical mirror line."]),
+   ("mirror line", "\u2194\uFE0F", "The line a shape is reflected in; it can run across the grid or up it.", ["Draw the mirror line, then reflect the pattern in it."]),
+   ("grid", "\U0001F4C8", "A set of squares with numbered axes along the bottom and up the side, used to fix positions.", ["Find the point on the grid without using the gridlines."]),
+  ],
+ },
  "shapes-and-angles": {
   "about": [
    "Identify, describe, classify and sketch isosceles, equilateral or scalene triangles.",

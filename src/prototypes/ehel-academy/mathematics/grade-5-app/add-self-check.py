@@ -66,6 +66,13 @@ SCALE = [("yes", "I can do this"),
 
 # lesson -> [(statement, source)]   W = Stage 5 Workbook, G = Teacher's Guide
 WORK = {
+ "where-things-are": [
+  ("I can use coordinates to give the vertices of 2D shapes", "W p59"),
+  ("I can find coordinates on grids without gridlines", "W p59"),
+  ("I can translate shapes on a square grid", "W p59"),
+  ("I can describe translations on a square grid", "W p59"),
+  ("I can reflect shapes and patterns in two lines of symmetry", "W p78"),
+ ],
  "shapes-and-angles": [
   ("I can identify lines of symmetry in designs and patterns", "W p16"),
   ("I can complete symmetrical designs and patterns", "W p16"),

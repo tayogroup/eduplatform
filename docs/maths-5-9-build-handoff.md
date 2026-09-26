@@ -14,7 +14,7 @@ anything.
 
 | Grade | Framework | Objectives in stage | Claimed now | Coverage | What exists today |
 | --- | --- | --- | --- | --- | --- |
-| 5 | 0096 Primary | 51 | 21 | **41%** | Standalone app, 6 lessons. No shell units at all — the manifest claims 18 and `data/units/` does not exist |
+| 5 | 0096 Primary | 51 | 51 | **100%** | Standalone app, 10 lessons + check. **Done and deployed 2026-09-26.** Still no shell units — the manifest claims 18 and `data/units/` does not exist |
 | 6 | 0096 Primary | 54 | 49 | 91% | 17 shell units, mapped. No standalone app |
 | 7 | 0862 Lower Sec | 63 | 57 | 90% | 16 shell units, mapped. No standalone app |
 | 8 | 0862 Lower Sec | 61 | 55 | 90% | 16 shell units, mapped. No standalone app |
@@ -22,14 +22,21 @@ anything.
 
 The work splits three ways.
 
-**Grade 5 is a content hole, not a polish job.** Five whole strands are absent:
-Geometry (all 8), Position and transformation (all 4), Time (all 4), Statistics
-(all 4), Probability (all 3), plus 7 from number and fractions. The six existing
-lessons are all number. Nothing sits behind the app to carry the rest, and it is
-published in the catalogue as a Grade 5 course.
+**Grade 5 is finished.** It was at 41% — five whole strands absent — and is now
+51/51, live on the CDN and routed. Five lessons and 32 interactive steps were
+added on 2026-09-26: Shapes and Angles (`5Gg`), Where Things Are and How They
+Move (`5Gp`), Time and How We Write It (`5Gt`), Data and Chance (`5Ss`/`5Sp`)
+and Calculating with Wholes and Parts (the remaining `5Ni`/`5Nf`). What it
+taught the tooling is in **Building a lesson in grade-5-app** below, and the
+second machine should read that before starting Grade 9, which is the same
+shape of job.
+
+The 18-unit shell course question is still open and unchanged: a manifest
+claiming 18 units over an empty `data/units/` is a live inconsistency that
+should be decided rather than left.
 
 **Grades 6, 7 and 8 need the last five or six objectives each**, plus the
-curriculum sign-off their mapping has never had.
+curriculum sign-off their mapping has never had. This is now the first work.
 
 **Grade 9 is net new** — 55 objectives, no scaffolding, no catalogue entry.
 
@@ -176,11 +183,14 @@ from the owner; none of it can be obtained from the second machine.
 Items 7, 8 and 9 are the ones that gate real work. Items 1 to 6 are an afternoon;
 item 8 is 1,801 pages of OCR; item 9 may be a purchase.
 
-**The first task to give them** is not Grade 9 and not Grade 5. It is Grades 6, 7
-and 8 — five or six objectives each, against books that are already usable for 6
-and need OCR for 7 and 8. That is a real, finishable first piece of work that
-teaches the repo's conventions before anyone touches the 35-step Grade 5 build or
-the blank page of Grade 9.
+**The first task to give them is Grades 6, 7 and 8** — five or six objectives
+each, against books that are already usable for 6 and need OCR for 7 and 8.
+That is a real, finishable piece of work that teaches the repo's conventions
+before anyone meets the blank page of Grade 9.
+
+Grade 5 is no longer on that list: it was built out to 51/51 on 2026-09-26 and
+is live. Its build is the worked example for Grade 9 and is written up under
+**Building a lesson in grade-5-app**.
 
 ## Phase 1 — the books, and OCR for Stages 7 to 9
 
@@ -258,25 +268,20 @@ npm run validate:frameworks && npm run validate:curriculum-units -- --strict-cam
 
 ## Phase 3 — the build, grade by grade
 
-### Grade 5 — close a 30-objective hole (largest job)
+### Grade 5 — DONE, and the worked example for Grade 9
 
-The app is at `mathematics/grade-5-app/`, six lessons, routed and live. It teaches
-only number.
+Finished on 2026-09-26: 51/51, deployed, and already routed so it reached
+learners on upload. Nothing here is outstanding except the shell-course
+decision noted in Scope.
 
-1. Author roughly **four to six new lessons** covering the five absent strands:
-   geometry, position and transformation, time, statistics and probability.
-   Source them from the Stage 5 Learner's Book and Workbook, already OCR'd.
-2. Add each new lesson to `grade-5-app/app.config.json` (`lessons` array, and
-   `support`/`challenge` entries).
-3. Decide with the owner whether the 18-unit shell course is built at all, or
-   whether the manifest's claim of 18 units is corrected to match the app. **A
-   manifest claiming 18 units over an empty `data/units/` is a live
-   inconsistency** and should not be left either way by accident.
-4. Grade 5 keeps the upper-stage page design. No deck, no scoring, no sticker
-   shelf — that is the documented rule for Stages 5 and above, not a gap to fill.
+Read this section anyway before building Grade 9. It is the only standalone
+maths app anyone has extended, and the two traps below cost real time.
+
+Grade 5 keeps the upper-stage page design — no deck, no scoring, no sticker
+shelf. That is the documented rule for Stages 5 and above, not a gap to fill.
 
 **The source pages are already located** — done on the primary machine on
-2026-09-25, so do not repeat this. In
+2026-09-25. In
 `Cambridge_Primary_Mathematics_5_Learners_Book_Hodder_OCR.pdf` (205 pages, text
 layer good):
 
@@ -293,17 +298,76 @@ layer good):
 Unit 2 of the book is "Angles and shapes" and carries the Maths words the lesson
 should teach: symmetry, horizontal, vertical, diagonal, symmetrical.
 
-**Know the real size before promising a date.** Grade 5's lessons are NOT
-templated. Each step is a bespoke interactive widget with its own hand-written
-JavaScript — a dot grid that rearranges, a chip picker, a live working panel.
-Measured across the existing five: 90–128 KB per lesson, of which about 20–35 KB
-is genuinely custom; the rest is shared CSS and tool-injected platform wiring.
-Five new lessons at roughly seven steps each is about **35 bespoke interactive
-steps**. This is the single largest item in this document and it is a
-multi-session build.
+**The lessons are NOT templated.** Each step is a bespoke interactive widget
+with its own hand-written JavaScript — a dot grid that rearranges, a chip
+picker, a live working panel. Measured: 85–128 KB per lesson, of which about
+20–35 KB is genuinely custom; the rest is shared CSS and tool-injected platform
+wiring. The five new lessons came to 32 steps and took a full working session
+each. Budget the same for Grade 9.
 
-Suggested order, because it front-loads coverage: Shapes and Angles first — it
-closes 8 of the 30 objectives alone and takes Grade 5 from 41% to 57%.
+## Building a lesson in grade-5-app
+
+The mechanics, in the order that works. Both traps below were hit on the real
+build and neither is documented anywhere in the repo.
+
+1. Write the page: take lines 1–427 of an existing lesson (the `<head>` and the
+   shared `<style>`), swap the `<title>`, then author your own `<div class="wrap">`
+   with a hero, a `<nav class="steps-nav">` listing only YOUR steps, the
+   `<section class="step" id="sN">` blocks, and one `<script>`. Step ids are
+   **global across the app**, so continue from the highest one in use.
+2. Register it in `app.config.json` with `title`, `blurb`, `materials`,
+   `support` and `challenge`. The last three are what the materials-note and
+   differentiation tools read; a lesson without them is silently skipped.
+3. Add the data the tools need: a `WORK` entry in `add-self-check.py`, a `WORK`
+   entry in `add-lesson-opener.py`, and rows in the `STAGES` table inside
+   `check-what-you-know.html`.
+4. Run the chain **in this order**, from `grade-5-app/`:
+
+```bash
+python add-self-check.py --write && python add-lesson-opener.py --write && python add-materials-note.py --write && python add-differentiation.py --write && python add-twm-stamps.py --write && python wire-platform.py --write && python add-lesson-search.py --write
+```
+
+5. Add a card to the hub by hand. See the second trap.
+
+### Trap 1 — add-self-check MUST run before add-lesson-opener
+
+`add-self-check.py` asserts that the nav entry count equals the step count, and
+it counts nav entries with `<a href="#s`. The opener adds three steps whose
+links are `#opener-about`, `#opener-lecture` and `#opener-words`, which do not
+match that pattern — so once the opener has run, self-check refuses with
+"nav has N entries for M steps before this runs". Run it first and both pass.
+
+This cost two rebuilds on the real build. The page is deterministic from its
+parts, so recovering is just re-concatenating the head and the body and running
+the chain again, but it is an hour if you do not know why it is refusing.
+
+### Trap 2 — the hub is NOT generated from app.config.json
+
+`grade-5-app/index.html` lists the lessons as hand-written
+`<a class="lesson …" href="…?from=g5">` cards. `split-into-lessons.py` built it
+once as a one-time migration and it has been hand-maintained since, so the
+whole tool chain above wires a lesson **completely** and still leaves it
+unreachable: no card, and (after the first one) not even in the "Jump to a
+lesson" picker.
+
+All five new lessons shipped into this state before it was noticed. **What
+caught it was the deploy plan**: `index.html` came back byte-identical, same
+hash, after four lessons had been added. A hub that does not change when the
+course grows by four lessons is the tell.
+
+So: after adding a lesson, add its card, add its picker entry, and correct any
+count in the lede. Then diff the hub before deploying — if its hash has not
+moved, the lesson is not reachable.
+
+### One thing that looks like a bug and is not
+
+`check-what-you-know.html` carries `id="s29"`, and so does
+`shapes-and-angles.html`, because the new numbering started at s29 without
+checking the check page. It is not a duplicate "Step 29": the check page renders
+that section as `<span class="step-num">Check</span>`, not a number, and the
+search index is keyed by file as well as anchor. Renumbering would touch a
+working page including its `$("s29").scrollIntoView()` retry handler, for no
+learner-visible gain. Left alone deliberately.
 
 ### Grades 6, 7 and 8 — finish the last five or six objectives each
 

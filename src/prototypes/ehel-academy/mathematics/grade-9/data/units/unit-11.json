@@ -1,0 +1,1193 @@
+{
+  "schemaVersion": "Ehel Mathematics Runtime v1.1",
+  "generatedAt": "2026-09-26T17:56:59.371Z",
+  "stage": {
+    "id": 9,
+    "label": "Stage 9"
+  },
+  "subject": "Mathematics",
+  "term": {
+    "id": 3,
+    "label": "Term 3"
+  },
+  "unit": {
+    "unitId": "math-g09-u11",
+    "unitNo": 11,
+    "unitTitle": "Ratio and Proportion",
+    "unitOverview": "Welcome to Unit 11. Ratios are about parts, and the whole of the first section rests on one habit: find what ONE part is worth before working out anything else. Everything after that is multiplication, and the total number of parts gives you a free check on every answer. Then you meet the two kinds of proportion and how to tell them apart - in direct proportion the ratio of two quantities stays the same, and in inverse proportion their product does. You will also learn that 'neither' is a real answer, because quantities can be related without being in proportion at all. The unit ends with a ratio of a different kind: a child-to-staff limit, where the arithmetic and the situation come apart, and where rounding the total instead of each room leaves a real kindergarten short of an adult.",
+    "learningPath": "11.1 Using ratios, 11.2 Direct and inverse proportion",
+    "reviewStatus": "Authored 2026-09-26 from the Stage 9 Learner's Book pages 236-249 and Workbook pages 137-144. Not yet curriculum-reviewed."
+  },
+  "cambridge": {
+    "level": "Cambridge Lower Secondary Mathematics",
+    "code": "0862",
+    "stage": 9,
+    "objectives": [
+      {
+        "code": "9Nf.08",
+        "text": "Use knowledge of ratios and equivalence for a range of contexts."
+      },
+      {
+        "code": "9Nf.07",
+        "text": "Understand the relationship between two quantities when they are in direct or inverse proportion."
+      }
+    ],
+    "objectiveMapping": {
+      "status": "authored",
+      "reviewed": false,
+      "method": "11.1 -> 9Nf.08, 11.2 -> 9Nf.07. With these two the whole 9Nf strand is placed: .01 to .04 in unit 8, .05 and .06 in unit 3, .07 and .08 here. 9Nf.08 says 'for a range of contexts', so the unit works two-, three- and four-part ratios across food, money, building materials and angles, and includes building a ratio from indirect information rather than only using one given. 9Nf.07 asks for the RELATIONSHIP between quantities in proportion, so the unit teaches the two tests - constant ratio and constant product - and requires 'neither' to be available as an answer, since forcing a proportional model on quantities that are merely related produces confident wrong arithmetic. Objective texts are quoted verbatim from cambridge-mathematics-0862.json."
+    }
+  },
+  "provenance": {
+    "contentPackage": null,
+    "framework": "Cambridge Lower Secondary Mathematics 0862 - Stage 9",
+    "sourceArchive": null,
+    "sourceDocuments": [
+      "Cambridge Lower Secondary Maths Learner's Book 9 (2ed, CUP), pages 236-249",
+      "Cambridge Lower Secondary Mathematics Workbook 9, pages 137-144"
+    ],
+    "sourceBlockCount": null,
+    "transformation": "Authored by hand from the Learner's Book and Workbook. Grade 9 has no content package: outputs/math-content/math-content-model.json holds grades 1-8 only.",
+    "reviewStatus": "Not curriculum-reviewed"
+  },
+  "media": {
+    "lectureStatus": "Video pending",
+    "lectureVideo": null,
+    "poster": null
+  },
+  "outcomes": [
+    "Find the value of one part of a ratio from a quantity given for one of its shares.",
+    "Use the value of one part to find every other share and the total.",
+    "Work with a ratio of three or four parts, keeping track of which share is which.",
+    "Simplify a ratio to its lowest terms, and build a ratio from information given indirectly.",
+    "Decide whether two quantities are in direct proportion, inverse proportion or neither.",
+    "Solve a direct proportion problem by scaling, and say why the scaling is valid.",
+    "Solve an inverse proportion problem, recognising that one quantity falls as the other rises.",
+    "Recognise when a ratio states a maximum, and round each part up rather than rounding a total."
+  ],
+  "concepts": [
+    {
+      "id": "concept-1-one-part-first",
+      "title": "Find One Part Before Anything Else",
+      "explanation": "A ratio tells you how many parts each share has, not how big a part is. So when you are given the quantity for one share, the first move is always the same: divide it by that share's number of parts to find what ONE part is worth. Everything else is then a multiplication. Writing that division down as its own line is what keeps a three- or four-part ratio straight, because every later step uses it.",
+      "example": "Sultanas and cherries are in the ratio 5:2, and there are 80 g of cherries. Cherries are 2 parts, so one part is 80 / 2 = 40 g. Sultanas are 5 parts, so 5 x 40 = 200 g. The total is 200 + 80 = 280 g. Note that the 80 belongs to the 2, not to the 5 - matching the quantity to the right number of parts is where most errors start."
+    },
+    {
+      "id": "concept-2-three-and-four-parts",
+      "title": "Longer Ratios Work the Same Way",
+      "explanation": "A ratio with three or four parts needs no new method - one part is still found by dividing, and every share is still a multiplication. What changes is the bookkeeping: with more shares there are more places to attach a number to the wrong part. Labelling each share as you go, in the same order as the ratio, costs nothing and prevents the one mistake that matters.",
+      "example": "Concrete uses cement, sand and gravel in the ratio 1:2:4, and Jerry uses 15 kg of sand. Sand is 2 parts, so one part is 15 / 2 = 7.5 kg. Cement is 1 part, so 7.5 kg. Gravel is 4 parts, so 4 x 7.5 = 30 kg. The total is 7.5 + 15 + 30 = 52.5 kg. Checking against the parts: there are 1 + 2 + 4 = 7 parts altogether, and 7 x 7.5 = 52.5, which agrees."
+    },
+    {
+      "id": "concept-3-building-and-simplifying",
+      "title": "Building a Ratio From Indirect Information",
+      "explanation": "Sometimes the ratio is not given and must be worked out from facts about the quantities. Find each quantity first, then write them in order and simplify by dividing every part by their common factor. A ratio in its lowest terms is the useful form, because two situations with the same ratio behave identically however large the actual numbers are.",
+      "example": "A triangle's largest angle is 75 degrees and the other two differ by 15. The three angles total 180, so the other two total 105; being 15 apart, they are (105 + 15) / 2 = 60 and (105 - 15) / 2 = 45. So the angles are 45, 60 and 75, and the ratio smallest to largest is 45:60:75. Dividing every part by 15 gives 3:4:5."
+    },
+    {
+      "id": "concept-4-direct-proportion",
+      "title": "Direct Proportion: Both Move the Same Way",
+      "explanation": "Two quantities are in direct proportion when their ratio stays the same as they change - double one and the other doubles, halve one and the other halves. The test is whether one quantity divided by the other is always the same number. Because of that, a direct proportion problem is solved by scaling: find the multiplier between the two situations and apply it.",
+      "example": "One tin of tomatoes costs $0.65, so five tins cost 5 x 0.65 = $3.25. The number of tins was multiplied by 5 and so was the cost, and the cost per tin stayed at $0.65 throughout - which is what makes it direct proportion. Buying more bottles of milk works the same way: more bottles, proportionally more money."
+    },
+    {
+      "id": "concept-5-inverse-proportion",
+      "title": "Inverse Proportion: One Rises as the Other Falls",
+      "explanation": "Two quantities are in inverse proportion when one increases in the same ratio as the other decreases - double one and the other halves. The test here is whether the PRODUCT of the two is always the same number, rather than their ratio. Many everyday situations are like this: more people sharing a job means less time each, and a faster speed means a shorter journey.",
+      "example": "It takes two people 20 minutes to wash a car. Four people is twice as many, so it takes half as long: 10 minutes. The product is the check - 2 x 20 = 40 and 4 x 10 = 40, the same. Five people would take 40 / 5 = 8 minutes. Note what the model ignores: it assumes everyone works at the same rate and never gets in each other's way."
+    },
+    {
+      "id": "concept-6-maximum-ratios",
+      "title": "When a Ratio Is a Maximum, Round Each Part Up",
+      "explanation": "Some ratios state a limit rather than a mixture. A child-to-staff ratio of 3:1 means at most three children per adult, so 10 children need 10 / 3 = 3.33 adults - which really means 4, because you cannot employ a third of a person and 3 adults would breach the limit. Two things follow, and both matter. You must round UP, not to the nearest. And you must round EACH GROUP separately, because staff in one room cannot look after children in another, so rounding a total instead leaves a real room short.",
+      "example": "Four rooms have ratios 3:1, 4:1, 8:1 and 14:1 with 10, 18, 15 and 24 children. Dividing gives 3.33, 4.5, 1.875 and 1.71, which add to 11.4 - so rounding the total suggests 12 staff. But each room needs a whole number of adults present: 4, 5, 2 and 2, which is 13. The extra adult is not an arithmetic detail; without them one room is over its legal limit all day."
+    }
+  ],
+  "explorations": [
+    {
+      "id": "explore-1",
+      "outcomeId": "lo01",
+      "difficulty": "Discover",
+      "title": "Find One Part Before Anything Else",
+      "context": "A ratio tells you how many parts each share has, not how big a part is. So when you are given the quantity for one share, the first move is always the same: divide it by that share's number of parts to find what ONE part is worth. Everything else is then a multiplication. Writing that division down as its own line is what keeps a three- or four-part ratio straight, because every later step uses it.",
+      "prompt": "Sultanas and cherries are 5:2 with 80 g of cherries. What happens if you multiply 80 by 5 instead of finding one part first?",
+      "answer": "You get 400 g, which is wrong - it treats the 80 g as one part when it is two. One part is 40 g and the sultanas are 200 g.",
+      "modelType": "concept-model-1",
+      "hint": "How many parts does the 80 g represent?",
+      "explanation": "Sultanas and cherries are in the ratio 5:2, and there are 80 g of cherries. Cherries are 2 parts, so one part is 80 / 2 = 40 g. Sultanas are 5 parts, so 5 x 40 = 200 g. The total is 200 + 80 = 280 g. Note that the 80 belongs to the 2, not to the 5 - matching the quantity to the right number of parts is where most errors start."
+    },
+    {
+      "id": "explore-2",
+      "outcomeId": "lo03",
+      "difficulty": "Core",
+      "title": "Longer Ratios Work the Same Way",
+      "context": "A ratio with three or four parts needs no new method - one part is still found by dividing, and every share is still a multiplication. What changes is the bookkeeping: with more shares there are more places to attach a number to the wrong part. Labelling each share as you go, in the same order as the ratio, costs nothing and prevents the one mistake that matters.",
+      "prompt": "Cement, sand and gravel are 1:2:4 with 15 kg of sand. Find the total two ways: by adding the shares, and by multiplying one part by 7.",
+      "answer": "7.5 + 15 + 30 = 52.5 kg, and 7 parts x 7.5 = 52.5 kg. Both agree, which is why the parts check is worth doing.",
+      "modelType": "concept-model-2",
+      "hint": "Count the total number of parts.",
+      "explanation": "Concrete uses cement, sand and gravel in the ratio 1:2:4, and Jerry uses 15 kg of sand. Sand is 2 parts, so one part is 15 / 2 = 7.5 kg. Cement is 1 part, so 7.5 kg. Gravel is 4 parts, so 4 x 7.5 = 30 kg. The total is 7.5 + 15 + 30 = 52.5 kg. Checking against the parts: there are 1 + 2 + 4 = 7 parts altogether, and 7 x 7.5 = 52.5, which agrees."
+    },
+    {
+      "id": "explore-3",
+      "outcomeId": "lo04",
+      "difficulty": "Extension",
+      "title": "Building a Ratio From Indirect Information",
+      "context": "Sometimes the ratio is not given and must be worked out from facts about the quantities. Find each quantity first, then write them in order and simplify by dividing every part by their common factor. A ratio in its lowest terms is the useful form, because two situations with the same ratio behave identically however large the actual numbers are.",
+      "prompt": "A triangle's largest angle is 75 and the other two differ by 15. Find all three, then write and simplify the ratio.",
+      "answer": "The other two total 105 and differ by 15, so 60 and 45. The angles are 45, 60, 75, so 45:60:75 = 3:4:5.",
+      "modelType": "concept-model-3",
+      "hint": "What do the three angles add to?",
+      "explanation": "A triangle's largest angle is 75 degrees and the other two differ by 15. The three angles total 180, so the other two total 105; being 15 apart, they are (105 + 15) / 2 = 60 and (105 - 15) / 2 = 45. So the angles are 45, 60 and 75, and the ratio smallest to largest is 45:60:75. Dividing every part by 15 gives 3:4:5."
+    },
+    {
+      "id": "explore-4",
+      "outcomeId": "lo06",
+      "difficulty": "Core",
+      "title": "Direct Proportion: Both Move the Same Way",
+      "context": "Two quantities are in direct proportion when their ratio stays the same as they change - double one and the other doubles, halve one and the other halves. The test is whether one quantity divided by the other is always the same number. Because of that, a direct proportion problem is solved by scaling: find the multiplier between the two situations and apply it.",
+      "prompt": "One tin costs $0.65. Work out the cost of 5 tins, then the cost per tin. What stayed the same?",
+      "answer": "5 tins cost $3.25, and the cost per tin is still $0.65. The RATIO stayed the same, which is what direct proportion means.",
+      "modelType": "concept-model-4",
+      "hint": "Divide the total cost by the number of tins.",
+      "explanation": "One tin of tomatoes costs $0.65, so five tins cost 5 x 0.65 = $3.25. The number of tins was multiplied by 5 and so was the cost, and the cost per tin stayed at $0.65 throughout - which is what makes it direct proportion. Buying more bottles of milk works the same way: more bottles, proportionally more money."
+    },
+    {
+      "id": "explore-5",
+      "outcomeId": "lo07",
+      "difficulty": "Core",
+      "title": "Inverse Proportion: One Rises as the Other Falls",
+      "context": "Two quantities are in inverse proportion when one increases in the same ratio as the other decreases - double one and the other halves. The test here is whether the PRODUCT of the two is always the same number, rather than their ratio. Many everyday situations are like this: more people sharing a job means less time each, and a faster speed means a shorter journey.",
+      "prompt": "Two people take 20 minutes to wash a car. Work out the time for 4, 5 and 8 people. What stays the same each time?",
+      "answer": "10, 8 and 5 minutes. The PRODUCT stays at 40, which is what inverse proportion means.",
+      "modelType": "concept-model-5",
+      "hint": "Multiply the people by the minutes each time.",
+      "explanation": "It takes two people 20 minutes to wash a car. Four people is twice as many, so it takes half as long: 10 minutes. The product is the check - 2 x 20 = 40 and 4 x 10 = 40, the same. Five people would take 40 / 5 = 8 minutes. Note what the model ignores: it assumes everyone works at the same rate and never gets in each other's way."
+    },
+    {
+      "id": "explore-6",
+      "outcomeId": "lo08",
+      "difficulty": "Extension",
+      "title": "When a Ratio Is a Maximum, Round Each Part Up",
+      "context": "Some ratios state a limit rather than a mixture. A child-to-staff ratio of 3:1 means at most three children per adult, so 10 children need 10 / 3 = 3.33 adults - which really means 4, because you cannot employ a third of a person and 3 adults would breach the limit. Two things follow, and both matter. You must round UP, not to the nearest. And you must round EACH GROUP separately, because staff in one room cannot look after children in another, so rounding a total instead leaves a real room short.",
+      "prompt": "Four rooms need 3.33, 4.5, 1.875 and 1.71 staff. Add them and round. Now round each and add. Which answer would you want to be true if you were a parent?",
+      "answer": "Adding then rounding gives 12; rounding each then adding gives 13. A parent wants 13, because 12 leaves one room over its limit.",
+      "modelType": "concept-model-6",
+      "hint": "Can staff move between rooms?",
+      "explanation": "Four rooms have ratios 3:1, 4:1, 8:1 and 14:1 with 10, 18, 15 and 24 children. Dividing gives 3.33, 4.5, 1.875 and 1.71, which add to 11.4 - so rounding the total suggests 12 staff. But each room needs a whole number of adults present: 4, 5, 2 and 2, which is 13. The extra adult is not an arithmetic detail; without them one room is over its legal limit all day."
+    }
+  ],
+  "visualModels": [
+    {
+      "id": "model-1",
+      "outcomeId": "lo01",
+      "title": "Find One Part Before Anything Else",
+      "modelType": "concept-model-1",
+      "purpose": "A ratio tells you how many parts each share has, not how big a part is. So when you are given the quantity for one share, the first move is always the same: divide it by that share's number of parts to find what ONE part is worth. Everything else is then a multiplication. Writing that division down as its own line is what keeps a three- or four-part ratio straight, because every later step uses it.",
+      "defaultNumber": 40
+    },
+    {
+      "id": "model-2",
+      "outcomeId": "lo03",
+      "title": "Longer Ratios Work the Same Way",
+      "modelType": "concept-model-2",
+      "purpose": "A ratio with three or four parts needs no new method - one part is still found by dividing, and every share is still a multiplication. What changes is the bookkeeping: with more shares there are more places to attach a number to the wrong part. Labelling each share as you go, in the same order as the ratio, costs nothing and prevents the one mistake that matters.",
+      "defaultNumber": 7.5
+    },
+    {
+      "id": "model-3",
+      "outcomeId": "lo04",
+      "title": "Building a Ratio From Indirect Information",
+      "modelType": "concept-model-3",
+      "purpose": "Sometimes the ratio is not given and must be worked out from facts about the quantities. Find each quantity first, then write them in order and simplify by dividing every part by their common factor. A ratio in its lowest terms is the useful form, because two situations with the same ratio behave identically however large the actual numbers are.",
+      "defaultNumber": 15
+    },
+    {
+      "id": "model-4",
+      "outcomeId": "lo06",
+      "title": "Direct Proportion: Both Move the Same Way",
+      "modelType": "concept-model-4",
+      "purpose": "Two quantities are in direct proportion when their ratio stays the same as they change - double one and the other doubles, halve one and the other halves. The test is whether one quantity divided by the other is always the same number. Because of that, a direct proportion problem is solved by scaling: find the multiplier between the two situations and apply it.",
+      "defaultNumber": 0.65
+    },
+    {
+      "id": "model-5",
+      "outcomeId": "lo07",
+      "title": "Inverse Proportion: One Rises as the Other Falls",
+      "modelType": "concept-model-5",
+      "purpose": "Two quantities are in inverse proportion when one increases in the same ratio as the other decreases - double one and the other halves. The test here is whether the PRODUCT of the two is always the same number, rather than their ratio. Many everyday situations are like this: more people sharing a job means less time each, and a faster speed means a shorter journey.",
+      "defaultNumber": 40
+    },
+    {
+      "id": "model-6",
+      "outcomeId": "lo08",
+      "title": "When a Ratio Is a Maximum, Round Each Part Up",
+      "modelType": "concept-model-6",
+      "purpose": "Some ratios state a limit rather than a mixture. A child-to-staff ratio of 3:1 means at most three children per adult, so 10 children need 10 / 3 = 3.33 adults - which really means 4, because you cannot employ a third of a person and 3 adults would breach the limit. Two things follow, and both matter. You must round UP, not to the nearest. And you must round EACH GROUP separately, because staff in one room cannot look after children in another, so rounding a total instead leaves a real room short.",
+      "defaultNumber": 13
+    }
+  ],
+  "methods": [
+    {
+      "id": "method-1",
+      "outcomeId": "lo01",
+      "difficulty": "Core",
+      "title": "How to use a ratio from one known share",
+      "example": "Sultanas and cherries are in the ratio 5:2. There are 80 g of cherries.",
+      "steps": [
+        "Identify which share you were given, and how many parts it has: cherries, 2 parts.",
+        "Divide to find one part: 80 / 2 = 40 g. Write this on its own line.",
+        "Multiply for the other share: sultanas are 5 parts, so 5 x 40 = 200 g.",
+        "Add for the total: 200 + 80 = 280 g.",
+        "Check: 7 parts altogether, and 7 x 40 = 280. It agrees."
+      ]
+    },
+    {
+      "id": "method-2",
+      "outcomeId": "lo03",
+      "difficulty": "Core",
+      "title": "How to handle a three-part ratio",
+      "example": "Cement, sand and gravel in the ratio 1:2:4, with 15 kg of sand.",
+      "steps": [
+        "Write the three labels in the ratio's order, with their parts underneath.",
+        "Find the given share's parts: sand is the middle one, 2 parts.",
+        "One part is 15 / 2 = 7.5 kg.",
+        "Work out each share in turn: cement 1 x 7.5 = 7.5, sand 15, gravel 4 x 7.5 = 30 kg.",
+        "Total by adding, then check against the parts: 7 parts x 7.5 = 52.5 kg."
+      ]
+    },
+    {
+      "id": "method-3",
+      "outcomeId": "lo04",
+      "difficulty": "Extension",
+      "title": "How to build and simplify a ratio",
+      "example": "A triangle's largest angle is 75 degrees and the other two differ by 15.",
+      "steps": [
+        "Use what you know to find the quantities: the three angles total 180, so the other two total 105.",
+        "Two numbers with a sum of 105 and a difference of 15 are (105 + 15) / 2 = 60 and (105 - 15) / 2 = 45.",
+        "Write the ratio in the order asked for - smallest to largest: 45:60:75.",
+        "Find the highest common factor of all three parts: 15.",
+        "Divide every part by it: 3:4:5."
+      ]
+    },
+    {
+      "id": "method-4",
+      "outcomeId": "lo05",
+      "difficulty": "Core",
+      "title": "How to tell direct from inverse",
+      "example": "Is the time to run a fixed distance in proportion with the runner's speed?",
+      "steps": [
+        "Ask what happens to the second quantity when the first doubles.",
+        "If it also doubles, the quantities are in DIRECT proportion - their ratio is constant.",
+        "If it halves, they are in INVERSE proportion - their product is constant.",
+        "If neither, they are simply not in proportion.",
+        "Here, doubling the speed halves the time, so it is inverse - and speed x time is the fixed distance."
+      ]
+    },
+    {
+      "id": "method-5",
+      "outcomeId": "lo07",
+      "difficulty": "Core",
+      "title": "How to solve an inverse proportion problem",
+      "example": "Two people take 20 minutes to wash a car. How long for four? For five?",
+      "steps": [
+        "Work out the constant product: 2 x 20 = 40 person-minutes.",
+        "Divide by the new number to get the new time: 40 / 4 = 10 minutes.",
+        "For five people: 40 / 5 = 8 minutes.",
+        "Check the direction - more people must give less time, and 10 and 8 are both under 20.",
+        "State the assumption: everyone works at the same rate and does not obstruct the others."
+      ]
+    },
+    {
+      "id": "method-6",
+      "outcomeId": "lo08",
+      "difficulty": "Extension",
+      "title": "How to handle a ratio that is a maximum",
+      "example": "A room with a 4:1 child-to-staff limit has 18 children.",
+      "steps": [
+        "Divide to find the staff the ratio implies: 18 / 4 = 4.5.",
+        "Round UP, never to the nearest - 4 adults would breach the limit.",
+        "So this room needs 5 adults.",
+        "Do the same for every room SEPARATELY, because staff cannot be shared between rooms.",
+        "Add the rounded numbers at the end, not before: rounding the total would understate the need."
+      ]
+    }
+  ],
+  "workedExamples": [
+    {
+      "id": "we01",
+      "outcomeId": "lo01",
+      "difficulty": "Basic",
+      "twm": "characterising",
+      "title": "One part first",
+      "prompt": "Sultanas and cherries are in the ratio 5:2. Marco uses 80 g of cherries. Find the mass of sultanas and the total.",
+      "solution": "Cherries are 2 parts, so one part is 80 / 2 = 40 g. Sultanas are 5 parts, so 5 x 40 = 200 g. The total is 200 + 80 = 280 g. Checking against the parts: 5 + 2 = 7 parts, and 7 x 40 = 280 g."
+    },
+    {
+      "id": "we02",
+      "outcomeId": "lo01",
+      "difficulty": "Basic",
+      "twm": "specialising",
+      "title": "A ratio with a 1 in it",
+      "prompt": "A dessert has raspberries and strawberries in the ratio 1:2, with 400 g of strawberries. Find the raspberries and the total.",
+      "solution": "Strawberries are 2 parts, so one part is 400 / 2 = 200 g. Raspberries are 1 part, so 200 g. The total is 400 + 200 = 600 g. When a share is 1 part, its quantity IS one part - but it is still worth writing the division down, because the habit is what protects you in longer ratios."
+    },
+    {
+      "id": "we03",
+      "outcomeId": "lo02",
+      "difficulty": "Core",
+      "twm": "characterising",
+      "title": "Sharing money",
+      "prompt": "Xavier and Alicia share money in the ratio 3:5. Xavier gets $75. How much does Alicia get, and what is the total?",
+      "solution": "Xavier is 3 parts, so one part is 75 / 3 = $25. Alicia is 5 parts, so 5 x 25 = $125. The total is 75 + 125 = $200, which checks against 8 parts x 25 = 200. Note the given amount belonged to the 3, not the 5 - reading which share you have been given is the first decision."
+    },
+    {
+      "id": "we04",
+      "outcomeId": "lo02",
+      "difficulty": "Core",
+      "twm": "specialising",
+      "title": "Sharing a bill",
+      "prompt": "Kaya and Akiko share bills in the ratio 3:4. Akiko pays $24. How much does Kaya pay, and what is the total bill?",
+      "solution": "Akiko is 4 parts, so one part is 24 / 4 = $6. Kaya is 3 parts, so 3 x 6 = $18. The total is 24 + 18 = $42, agreeing with 7 parts x 6 = 42. Kaya pays less than Akiko, which is right because 3 is less than 4."
+    },
+    {
+      "id": "we05",
+      "outcomeId": "lo03",
+      "difficulty": "Core",
+      "twm": "characterising",
+      "title": "A three-part ratio",
+      "prompt": "Concrete uses cement, sand and gravel in the ratio 1:2:4. Jerry uses 15 kg of sand. Find the other masses and the total.",
+      "solution": "Sand is 2 parts, so one part is 15 / 2 = 7.5 kg. Cement is 1 part, so 7.5 kg; gravel is 4 parts, so 4 x 7.5 = 30 kg. The total is 7.5 + 15 + 30 = 52.5 kg. Checking: 1 + 2 + 4 = 7 parts, and 7 x 7.5 = 52.5 kg. A non-whole value for one part is perfectly normal and not a sign of an error."
+    },
+    {
+      "id": "we06",
+      "outcomeId": "lo03",
+      "difficulty": "Core",
+      "twm": "specialising",
+      "title": "A drink in two parts",
+      "prompt": "A drink mixes orange and mango juice in the ratio 2:3, using 500 mL of orange. Find the mango and the total in litres.",
+      "solution": "Orange is 2 parts, so one part is 500 / 2 = 250 mL. Mango is 3 parts, so 3 x 250 = 750 mL. The total is 500 + 750 = 1250 mL, which is 1.25 litres. Converting at the end rather than partway through keeps the arithmetic in one unit."
+    },
+    {
+      "id": "we07",
+      "outcomeId": "lo04",
+      "difficulty": "Extension",
+      "twm": "characterising",
+      "title": "Building a ratio from angles",
+      "prompt": "A triangle's largest angle is 75 degrees and the other two differ by 15 degrees. Write the ratio of the angles from smallest to largest, in its simplest form.",
+      "solution": "The angles total 180, so the other two total 180 - 75 = 105. Two numbers summing to 105 with a difference of 15 are (105 + 15) / 2 = 60 and (105 - 15) / 2 = 45. So the angles are 45, 60 and 75, which sum to 180 as they must. The ratio smallest to largest is 45:60:75, and dividing each part by 15 gives 3:4:5."
+    },
+    {
+      "id": "we08",
+      "outcomeId": "lo04",
+      "difficulty": "Core",
+      "twm": "classifying",
+      "title": "Simplifying ratios",
+      "prompt": "Simplify 45:60:75, 12:18 and 0.5:2.",
+      "solution": "For 45:60:75 the highest common factor is 15, giving 3:4:5. For 12:18 it is 6, giving 2:3. For 0.5:2, multiply both by 2 first to clear the decimal, giving 1:4 - a ratio should be written in whole numbers, so scaling up comes before dividing down."
+    },
+    {
+      "id": "we09",
+      "outcomeId": "lo06",
+      "difficulty": "Core",
+      "twm": "characterising",
+      "title": "Direct proportion by scaling",
+      "prompt": "One tin of tomatoes costs $0.65. How much do 5 tins cost, and how do you know this is direct proportion?",
+      "solution": "Five tins cost 5 x 0.65 = $3.25. It is direct proportion because the number of tins was multiplied by 5 and the cost was multiplied by 5 too, so the cost per tin is unchanged at $0.65. The test for direct proportion is that one quantity divided by the other stays constant, and 3.25 / 5 = 0.65 confirms it."
+    },
+    {
+      "id": "we10",
+      "outcomeId": "lo07",
+      "difficulty": "Core",
+      "twm": "characterising",
+      "title": "Inverse proportion by the constant product",
+      "prompt": "Two people take 20 minutes to wash a car. How long will four people take? And five?",
+      "solution": "More people means less time, so this is inverse proportion. The product is constant: 2 x 20 = 40. For four people, 40 / 4 = 10 minutes - half the time for twice the people. For five, 40 / 5 = 8 minutes. The check is that the product returns 40 each time, and the assumption is that all the people work at the same rate without obstructing one another."
+    },
+    {
+      "id": "we11",
+      "outcomeId": "lo05",
+      "difficulty": "Core",
+      "twm": "classifying",
+      "title": "Direct, inverse or neither",
+      "prompt": "Classify each pair: (a) the cost of packets of crisps and the number bought; (b) the value of a house and its age; (c) the time to run a fixed distance and the runner's speed.",
+      "solution": "(a) DIRECT - twice as many packets cost twice as much, so the cost per packet is constant. (b) NEITHER - an older house may be worth more or less, and nothing fixed connects them, so no constant ratio or product exists. (c) INVERSE - doubling the speed halves the time, and speed x time is the fixed distance, which is the constant product. Being able to answer 'neither' matters: not every pair of related quantities is in proportion."
+    },
+    {
+      "id": "we12",
+      "outcomeId": "lo08",
+      "difficulty": "Extension",
+      "twm": "critiquing",
+      "title": "Erin's kindergarten answer",
+      "prompt": "Four rooms have child-to-staff ratios 3:1, 4:1, 8:1 and 14:1 with 10, 18, 15 and 24 children. Erin says 12 staff are needed. Is she right?",
+      "solution": "Dividing each room gives 10/3 = 3.33, 18/4 = 4.5, 15/8 = 1.875 and 24/14 = 1.71, and those add to 11.4 - which is where 12 comes from. But the ratio is a MAXIMUM and staff cannot be shared between rooms, so each room needs its own whole number, rounded UP: 4, 5, 2 and 2. That is 13, not 12. Erin rounded the total when she needed to round each part, and the consequence is a real room over its limit all day."
+    },
+    {
+      "id": "we13",
+      "outcomeId": "lo08",
+      "difficulty": "Extension",
+      "twm": "convincing",
+      "title": "Why round up rather than to the nearest",
+      "prompt": "A room with a 3:1 limit has 10 children, so 3.33 adults. Why is the answer 4 rather than 3?",
+      "solution": "The ratio 3:1 means at most three children per adult, so three adults can lawfully supervise at most nine children and the tenth child would be unsupervised. Rounding to the nearest would give 3 and break the limit; rounding up gives 4, under which the limit is comfortably met. Whenever a ratio sets a maximum, any fractional requirement must be rounded up, because the fraction represents a real need that cannot be left out."
+    },
+    {
+      "id": "we14",
+      "outcomeId": "lo08",
+      "difficulty": "Extension",
+      "twm": "improving",
+      "title": "Rounding parts against rounding totals",
+      "prompt": "Unit 6 warned that rounding each part of a sample separately can miss the total. Here rounding the total misses what the parts need. Are these the same lesson?",
+      "solution": "They are the same lesson seen from opposite sides: rounding is not something you can do wherever it is convenient, because where you do it changes the answer. In a representative sample the TOTAL is fixed at 40 people, so the parts must be adjusted to fit it. In the kindergarten each ROOM's requirement is fixed by law, so the parts must each be satisfied and the total is whatever they add to. Decide which quantity is the constraint, and round to protect that one."
+    }
+  ],
+  "practice": [
+    {
+      "id": "p01",
+      "level": "Warm-up",
+      "prompt": "Sultanas and cherries are 5:2, with 80 g of cherries. How much sultana?",
+      "answer": "200 g",
+      "hint": "One part is 40 g."
+    },
+    {
+      "id": "p02",
+      "level": "Warm-up",
+      "prompt": "Raspberries and strawberries are 1:2, with 400 g of strawberries. Find the total fruit.",
+      "answer": "600 g",
+      "hint": "One part is 200 g."
+    },
+    {
+      "id": "p03",
+      "level": "Warm-up",
+      "prompt": "One tin of tomatoes costs $0.65. What do 5 tins cost?",
+      "answer": "$3.25",
+      "hint": "Multiply by 5."
+    },
+    {
+      "id": "p04",
+      "level": "Core",
+      "prompt": "Xavier and Alicia share in the ratio 3:5. Xavier gets $75. Find Alicia's share and the total.",
+      "answer": "Alicia $125; total $200",
+      "hint": "One part is $25."
+    },
+    {
+      "id": "p05",
+      "level": "Core",
+      "prompt": "Cement, sand and gravel are 1:2:4, with 15 kg of sand. Find the total mass.",
+      "answer": "52.5 kg",
+      "hint": "One part is 7.5 kg."
+    },
+    {
+      "id": "p06",
+      "level": "Core",
+      "prompt": "Two people take 20 minutes to wash a car. How long for four people?",
+      "answer": "10 minutes",
+      "hint": "The product stays at 40."
+    },
+    {
+      "id": "p07",
+      "level": "Core",
+      "prompt": "Simplify 45:60:75.",
+      "answer": "3:4:5",
+      "hint": "Divide by 15."
+    },
+    {
+      "id": "p08",
+      "level": "Core",
+      "prompt": "Kaya and Akiko share bills 3:4. Akiko pays $24. What is the total bill?",
+      "answer": "$42",
+      "hint": "One part is $6."
+    },
+    {
+      "id": "p09",
+      "level": "Core",
+      "prompt": "Classify: the time to run a fixed distance, and the runner's speed.",
+      "answer": "Inverse proportion - speed x time is the fixed distance",
+      "hint": "What happens if the speed doubles?"
+    },
+    {
+      "id": "p10",
+      "level": "Challenge",
+      "prompt": "A triangle's largest angle is 75 degrees and the other two differ by 15. Write the ratio smallest to largest in its simplest form.",
+      "answer": "The other two total 105 and differ by 15, so they are 60 and 45. The angles are 45, 60, 75, giving 45:60:75 = 3:4:5.",
+      "hint": "The three angles total 180."
+    },
+    {
+      "id": "p11",
+      "level": "Challenge",
+      "prompt": "Four kindergarten rooms have ratios 3:1, 4:1, 8:1 and 14:1 with 10, 18, 15 and 24 children. How many staff are needed?",
+      "answer": "13. Each room separately: 10/3 = 3.33 rounds up to 4; 18/4 = 4.5 to 5; 15/8 = 1.875 to 2; 24/14 = 1.71 to 2. Adding the rounded figures gives 13, not the 12 you get by rounding the total of 11.4.",
+      "hint": "Round each room up before adding."
+    },
+    {
+      "id": "p12",
+      "level": "Challenge",
+      "prompt": "Five people wash a car in 8 minutes. How long would three take, and what does the model assume?",
+      "answer": "The product is 5 x 8 = 40, so three people take 40 / 3 = 13.3 minutes, about 13 minutes 20 seconds. The model assumes everyone works at the same rate and nobody gets in anyone else's way, which is why it would break down for twenty people round one car.",
+      "hint": "Find the constant product first."
+    }
+  ],
+  "activities": [
+    {
+      "title": "One part, every time",
+      "materials": "cards, paper.",
+      "steps": [
+        "Write eight ratio problems, each giving the quantity for one share.",
+        "Solve them all, writing the value of one part on its own line before anything else.",
+        "Swap with a partner and check that every solution has that line.",
+        "Find the problem where forgetting it would have done the most damage, and say why."
+      ]
+    },
+    {
+      "title": "Mix the concrete",
+      "materials": "scales, sand, rice or another dry substitute, containers.",
+      "steps": [
+        "Use the ratio 1:2:4 for cement, sand and gravel with substitutes.",
+        "Measure out a batch starting from 15 units of the middle ingredient.",
+        "Weigh the total and compare with 7 parts x one part.",
+        "Now start from a different ingredient and check you get the same mixture.",
+        "Write what would happen on a real building site if the ratio were applied to the wrong ingredient."
+      ]
+    },
+    {
+      "title": "Build the ratio",
+      "materials": "paper, protractor.",
+      "steps": [
+        "Draw five triangles and measure all their angles.",
+        "For each, write the ratio of the angles smallest to largest and simplify it.",
+        "Find two different-sized triangles with the same simplified ratio.",
+        "Explain what those two triangles have in common.",
+        "Then work backwards: given the ratio 3:4:5, find the actual angles."
+      ]
+    },
+    {
+      "title": "Direct, inverse or neither",
+      "materials": "cards.",
+      "steps": [
+        "Write twelve pairs of everyday quantities on cards.",
+        "Include at least three that are NEITHER, such as a person's age and their height.",
+        "Sort them into three piles, testing each by doubling one quantity.",
+        "For every direct pair state the constant ratio; for every inverse pair the constant product.",
+        "Discuss the ones you disagreed about, and say what extra information would settle it."
+      ]
+    },
+    {
+      "title": "How long with more people?",
+      "materials": "a timer, a repeatable task.",
+      "steps": [
+        "Choose a task such as sorting a box of objects, and time one person doing it.",
+        "Time two people, then three, then four.",
+        "Predict each time first using the constant product, and record the prediction beside the real time.",
+        "Find where the model starts to break down.",
+        "Write one sentence on why - people getting in each other's way is real and the model ignores it."
+      ]
+    },
+    {
+      "title": "Round up or round the total",
+      "materials": "paper.",
+      "steps": [
+        "Take the four kindergarten rooms and work out the staff needed each way.",
+        "Do the same for a school with six classes of your own choosing.",
+        "Find a case where the two methods happen to agree, and say why they did.",
+        "Then find the case where they differ by the most.",
+        "Write a rule for when a ratio must be rounded up, and test it on a hospital or a bus company."
+      ]
+    }
+  ],
+  "reference": {
+    "rules": [
+      {
+        "title": "One Part First",
+        "text": "Divide the known quantity by its number of parts. Every other share is then a multiplication."
+      },
+      {
+        "title": "Check Against the Total Parts",
+        "text": "The total equals one part times the sum of all the parts. It is a free check on every ratio answer."
+      },
+      {
+        "title": "Simplify With the Highest Common Factor",
+        "text": "Divide every part by their common factor. Clear any decimals by scaling up first."
+      },
+      {
+        "title": "Direct Proportion: Constant Ratio",
+        "text": "One quantity divided by the other is always the same. Double one and the other doubles."
+      },
+      {
+        "title": "Inverse Proportion: Constant Product",
+        "text": "One quantity times the other is always the same. Double one and the other halves."
+      },
+      {
+        "title": "Neither Is a Real Answer",
+        "text": "Quantities can be related without being in proportion. Check for a constant ratio and a constant product before assuming either."
+      },
+      {
+        "title": "A Maximum Ratio Rounds Up, Part by Part",
+        "text": "Round each group up separately, then add. Rounding the total assumes fractions can be pooled, and they often cannot."
+      }
+    ],
+    "terms": [
+      [
+        "Ratio",
+        "A comparison of quantities in parts"
+      ],
+      [
+        "Part",
+        "One unit of a ratio; all parts are the same size"
+      ],
+      [
+        "Simplest form",
+        "A ratio whose parts share no common factor"
+      ],
+      [
+        "Direct proportion",
+        "A relationship in which the ratio of two quantities is constant"
+      ],
+      [
+        "Inverse proportion",
+        "A relationship in which the product of two quantities is constant"
+      ],
+      [
+        "Unitary method",
+        "Finding the value of one unit, then scaling"
+      ],
+      [
+        "Child-to-staff ratio",
+        "A maximum number of children per adult"
+      ],
+      [
+        "Constraint",
+        "The quantity a situation fixes, which decides where rounding must happen"
+      ]
+    ],
+    "commonMistakes": [
+      [
+        "Multiplying the given quantity by the wrong part",
+        "80 g of cherries at 2 parts gives 40 g per part, not 80"
+      ],
+      [
+        "Forgetting to find one part first",
+        "A ratio gives parts, not sizes; nothing can be scaled until one part is known"
+      ],
+      [
+        "Using the direct method on an inverse problem",
+        "More people means less time; check whether the product or the ratio is constant"
+      ],
+      [
+        "Assuming every related pair is in proportion",
+        "A house's age and value are related and in neither kind of proportion"
+      ],
+      [
+        "Rounding a total instead of each part",
+        "11.4 rounds to 12, but the four rooms need 13"
+      ]
+    ]
+  },
+  "fluency": [
+    {
+      "id": "fl01",
+      "outcomeId": "lo01",
+      "difficulty": "Round 1",
+      "prompt": "Ratio 5:2, the 2 part is 80 g. What is one part?",
+      "answer": "40 g",
+      "hint": "Divide by 2.",
+      "errorFeedback": "80 / 2 = 40."
+    },
+    {
+      "id": "fl02",
+      "outcomeId": "lo01",
+      "difficulty": "Round 1",
+      "prompt": "Ratio 5:2, one part 40 g. What is the 5 part?",
+      "answer": "200 g",
+      "hint": "Multiply by 5.",
+      "errorFeedback": "5 x 40 = 200."
+    },
+    {
+      "id": "fl03",
+      "outcomeId": "lo06",
+      "difficulty": "Round 1",
+      "prompt": "One tin costs $0.65. Cost of 5 tins?",
+      "answer": "$3.25",
+      "hint": "Scale up by 5.",
+      "errorFeedback": "5 x 0.65 = 3.25."
+    },
+    {
+      "id": "fl04",
+      "outcomeId": "lo04",
+      "difficulty": "Round 1",
+      "prompt": "Simplify 12:18.",
+      "answer": "2:3",
+      "hint": "Divide by 6.",
+      "errorFeedback": "The common factor is 6."
+    },
+    {
+      "id": "fl05",
+      "outcomeId": "lo02",
+      "difficulty": "Round 2",
+      "prompt": "Ratio 3:5, the 3 part is $75. What is the 5 part?",
+      "answer": "$125",
+      "hint": "One part is 25.",
+      "errorFeedback": "5 x 25 = 125."
+    },
+    {
+      "id": "fl06",
+      "outcomeId": "lo03",
+      "difficulty": "Round 2",
+      "prompt": "Ratio 1:2:4, the 2 part is 15 kg. What is the 4 part?",
+      "answer": "30 kg",
+      "hint": "One part is 7.5 kg.",
+      "errorFeedback": "4 x 7.5 = 30."
+    },
+    {
+      "id": "fl07",
+      "outcomeId": "lo07",
+      "difficulty": "Round 2",
+      "prompt": "2 people take 20 min. How long for 4?",
+      "answer": "10 minutes",
+      "hint": "Product 40.",
+      "errorFeedback": "40 / 4 = 10."
+    },
+    {
+      "id": "fl08",
+      "outcomeId": "lo04",
+      "difficulty": "Round 2",
+      "prompt": "Simplify 45:60:75.",
+      "answer": "3:4:5",
+      "hint": "Divide by 15.",
+      "errorFeedback": "45/15, 60/15, 75/15."
+    },
+    {
+      "id": "fl09",
+      "outcomeId": "lo07",
+      "difficulty": "Round 3",
+      "prompt": "2 people take 20 min. How long for 5?",
+      "answer": "8 minutes",
+      "hint": "40 / 5.",
+      "errorFeedback": "The product is 40."
+    },
+    {
+      "id": "fl10",
+      "outcomeId": "lo05",
+      "difficulty": "Round 3",
+      "prompt": "Speed and time for a fixed distance: which proportion?",
+      "answer": "Inverse",
+      "hint": "Double one, halve the other.",
+      "errorFeedback": "Their product is the distance."
+    },
+    {
+      "id": "fl11",
+      "outcomeId": "lo08",
+      "difficulty": "Round 3",
+      "prompt": "A 4:1 limit room has 18 children. Staff needed?",
+      "answer": "5",
+      "hint": "Round up.",
+      "errorFeedback": "18 / 4 = 4.5, so 5."
+    },
+    {
+      "id": "fl12",
+      "outcomeId": "lo08",
+      "difficulty": "Round 3",
+      "prompt": "Rooms needing 3.33, 4.5, 1.875 and 1.71 staff. Total?",
+      "answer": "13",
+      "hint": "Round each up, then add.",
+      "errorFeedback": "4 + 5 + 2 + 2 = 13, not 12."
+    }
+  ],
+  "realProblems": [
+    {
+      "id": "rp01",
+      "outcomeId": "lo08",
+      "difficulty": "Extension",
+      "context": "Work",
+      "prompt": "A kindergarten has four rooms with child-to-staff ratios 3:1, 4:1, 8:1 and 14:1, holding 10, 18, 15 and 24 children. A manager says 12 staff will do. How many are really needed, and what goes wrong with 12?",
+      "answer": "Each room separately: 10/3 = 3.33 rounds up to 4; 18/4 = 4.5 to 5; 15/8 = 1.875 to 2; 24/14 = 1.71 to 2. That is 13 staff. The manager added the fractions to 11.4 and rounded the TOTAL to 12, but staff cannot be shared between rooms and the ratio is a maximum, so each room must be satisfied on its own. With 12, one room spends the whole day above its legal limit.",
+      "hint": "Round each room up before adding.",
+      "errorFeedback": "4 + 5 + 2 + 2 = 13."
+    },
+    {
+      "id": "rp02",
+      "outcomeId": "lo03",
+      "difficulty": "Core",
+      "context": "Work",
+      "prompt": "Jerry mixes concrete with cement, sand and gravel in the ratio 1:2:4 and uses 15 kg of sand. What mass of concrete does he make?",
+      "answer": "Sand is 2 parts, so one part is 7.5 kg. Cement is 7.5 kg and gravel is 30 kg, so the total is 7.5 + 15 + 30 = 52.5 kg. Checking against 7 parts: 7 x 7.5 = 52.5 kg.",
+      "hint": "Find one part from the sand.",
+      "errorFeedback": "15 / 2 = 7.5 kg per part."
+    },
+    {
+      "id": "rp03",
+      "outcomeId": "lo07",
+      "difficulty": "Core",
+      "context": "Home",
+      "prompt": "Two people take 20 minutes to wash a car. A family of five decides to do it together. How long should it take, and why might the real time be longer?",
+      "answer": "The constant product is 2 x 20 = 40, so five people should take 40 / 5 = 8 minutes. The real time may be longer because the model assumes everyone works at the same rate and has room to work - five people round one small car will get in each other's way, and there may only be two buckets.",
+      "hint": "Find the product, then divide.",
+      "errorFeedback": "40 / 5 = 8."
+    },
+    {
+      "id": "rp04",
+      "outcomeId": "lo02",
+      "difficulty": "Core",
+      "context": "Money",
+      "prompt": "Kaya and Akiko share their electricity bill in the ratio 3:4. In January Akiko pays $24. What was the whole bill, and what would Kaya pay if the bill doubled?",
+      "answer": "Akiko is 4 parts, so one part is $6 and Kaya pays 3 x 6 = $18. The bill is 24 + 18 = $42. If the bill doubled to $84, one part would be $12 and Kaya would pay $36 - double, because the ratio is unchanged and the shares are in direct proportion to the total.",
+      "hint": "One part is 24 / 4.",
+      "errorFeedback": "One part is $6, so Kaya pays $18."
+    },
+    {
+      "id": "rp05",
+      "outcomeId": "lo06",
+      "difficulty": "Core",
+      "context": "Market",
+      "prompt": "A shop sells tins of tomatoes at $0.65 each. Work out the cost of 5 tins and of 12 tins, and explain how you know this is direct proportion.",
+      "answer": "Five tins cost 5 x 0.65 = $3.25 and twelve cost 12 x 0.65 = $7.80. It is direct proportion because the cost divided by the number of tins is always 0.65 - the ratio is constant, so scaling the tins scales the cost by the same factor.",
+      "hint": "Multiply by the number of tins.",
+      "errorFeedback": "12 x 0.65 = 7.80."
+    },
+    {
+      "id": "rp06",
+      "outcomeId": "lo05",
+      "difficulty": "Extension",
+      "context": "Science",
+      "prompt": "For a fixed journey, is the time taken in direct proportion, inverse proportion or neither with the speed? Justify it with numbers.",
+      "answer": "Inverse proportion. For a 60 km journey, 30 km/h takes 2 hours, 60 km/h takes 1 hour and 120 km/h takes half an hour - doubling the speed halves the time. The product speed x time is 60 every time, and that constant product is the distance, which is what defines inverse proportion here.",
+      "hint": "Pick a distance and try three speeds.",
+      "errorFeedback": "Speed x time gives the same distance each time."
+    }
+  ],
+  "reasoningPrompts": [
+    {
+      "id": "reason01",
+      "outcomeId": "lo01",
+      "difficulty": "Core",
+      "responseMode": "text",
+      "prompt": "Why must you find the value of one part before working out any other share?",
+      "keyIdeas": [
+        "A ratio gives parts, not sizes",
+        "One part converts parts into quantities",
+        "Every later step uses it"
+      ],
+      "modelAnswer": "A ratio only tells you how many parts each share has; it says nothing about how big a part is, and the same ratio 5:2 describes 50 g and 20 g as readily as 200 g and 80 g. The value of one part is what converts parts into actual quantities, so nothing else can be worked out until you have it. Writing it on its own line also makes the step visible, which matters in a three- or four-part ratio where the commonest error is attaching a given quantity to the wrong number of parts."
+    },
+    {
+      "id": "reason02",
+      "outcomeId": "lo05",
+      "difficulty": "Core",
+      "responseMode": "text",
+      "prompt": "What is the difference between the test for direct proportion and the test for inverse proportion?",
+      "keyIdeas": [
+        "Direct: the ratio is constant",
+        "Inverse: the product is constant",
+        "Both are checkable with two pairs of values"
+      ],
+      "modelAnswer": "In direct proportion one quantity divided by the other is always the same number, so doubling one doubles the other - the cost per tin stays at $0.65 however many you buy. In inverse proportion it is the PRODUCT that is always the same, so doubling one halves the other - two people for twenty minutes and four for ten both give forty person-minutes. Both tests need only two pairs of values, and applying the wrong one is how a problem gets solved backwards."
+    },
+    {
+      "id": "reason03",
+      "outcomeId": "lo05",
+      "difficulty": "Core",
+      "responseMode": "text",
+      "prompt": "Why does it matter that 'neither' is an available answer?",
+      "keyIdeas": [
+        "Not all related quantities are in proportion",
+        "A house's value and age are related but not proportional",
+        "Forcing a model gives confident wrong answers"
+      ],
+      "modelAnswer": "Two quantities can be genuinely connected without being in proportion at all. A house's value and its age are related - age affects value - but neither their ratio nor their product is constant, because an old house may be worth more or less than a new one depending on much else. If 'neither' were not available, you would be forced to pick direct or inverse and would then calculate confidently from a model that does not apply. Recognising that no proportional model fits is a real answer, not a failure to decide."
+    },
+    {
+      "id": "reason04",
+      "outcomeId": "lo08",
+      "difficulty": "Extension",
+      "responseMode": "text",
+      "prompt": "Why must each kindergarten room be rounded up separately rather than rounding the total?",
+      "keyIdeas": [
+        "Staff cannot be shared between rooms",
+        "The ratio is a maximum",
+        "11.4 rounds to 12, but the rooms need 13"
+      ],
+      "modelAnswer": "The fractions cannot be pooled because a member of staff in one room is not supervising children in another - the constraint applies room by room. Adding 3.33, 4.5, 1.875 and 1.71 to 11.4 and rounding gives 12, but that answer quietly assumes the leftover fractions can combine into whole people who work in several rooms at once. Rounding each room up gives 4, 5, 2 and 2, which is 13. And it must be rounding UP rather than to the nearest, because the ratio states a maximum: three adults may supervise at most nine children, so the tenth child requires a fourth."
+    },
+    {
+      "id": "reason05",
+      "outcomeId": "lo08",
+      "difficulty": "Extension",
+      "responseMode": "text",
+      "prompt": "Unit 6 said rounding each part separately can miss a total. This unit says rounding a total misses what the parts need. How can both be right?",
+      "keyIdeas": [
+        "Different quantities are fixed in the two situations",
+        "The sample total is the constraint",
+        "Each room's limit is the constraint"
+      ],
+      "modelAnswer": "They are the same principle applied to situations where different things are fixed. In a representative sample of 40 people the TOTAL is the constraint - you must end up with exactly 40 - so the parts have to be adjusted to fit, and rounding them independently can overshoot. In the kindergarten each ROOM's ratio is the constraint, fixed by law and unpoolable, so every part must be satisfied and the total is simply whatever they sum to. The lesson in both is that rounding is not a neutral tidying step: you round to protect whichever quantity the situation actually constrains."
+    },
+    {
+      "id": "reason06",
+      "outcomeId": "lo07",
+      "difficulty": "Core",
+      "responseMode": "text",
+      "prompt": "The car-washing model says twenty people would take two minutes. Why should you not believe it?",
+      "keyIdeas": [
+        "The model assumes equal rates and no obstruction",
+        "A car has limited working space",
+        "A model has a range of validity"
+      ],
+      "modelAnswer": "The constant product of forty person-minutes assumes every person works at the same rate and that adding people never reduces anyone's efficiency. Around a single car both assumptions fail well before twenty people: there is not room to stand, there are not twenty buckets, and people obstruct each other. The arithmetic is correct and the conclusion is still wrong, because the model has a range over which it applies and twenty people is outside it. Saying where a model stops working is part of using it properly."
+    }
+  ],
+  "assessment": {
+    "passPercent": 80,
+    "questions": [
+      {
+        "id": "q01",
+        "type": "Application",
+        "outcomeId": "lo01",
+        "difficulty": "Basic",
+        "question": "Sultanas and cherries are in the ratio 5:2 with 80 g of cherries. The mass of sultanas is:",
+        "options": [
+          "200 g",
+          "400 g",
+          "160 g",
+          "40 g"
+        ],
+        "answer": "200 g",
+        "hint": "Find one part first.",
+        "explanation": "One part is 80 / 2 = 40 g, so 5 parts is 200 g."
+      },
+      {
+        "id": "q02",
+        "type": "Application",
+        "outcomeId": "lo02",
+        "difficulty": "Core",
+        "question": "Xavier and Alicia share in the ratio 3:5 and Xavier gets $75. The total is:",
+        "options": [
+          "$200",
+          "$120",
+          "$125",
+          "$375"
+        ],
+        "answer": "$200",
+        "hint": "One part is $25.",
+        "explanation": "8 parts x $25 = $200."
+      },
+      {
+        "id": "q03",
+        "type": "Application",
+        "outcomeId": "lo03",
+        "difficulty": "Core",
+        "question": "Cement, sand and gravel are 1:2:4 with 15 kg of sand. The total mass is:",
+        "options": [
+          "52.5 kg",
+          "105 kg",
+          "45 kg",
+          "30 kg"
+        ],
+        "answer": "52.5 kg",
+        "hint": "7 parts of 7.5 kg.",
+        "explanation": "One part is 7.5 kg and there are 7 parts."
+      },
+      {
+        "id": "q04",
+        "type": "Application",
+        "outcomeId": "lo04",
+        "difficulty": "Core",
+        "question": "45:60:75 in its simplest form is:",
+        "options": [
+          "3:4:5",
+          "9:12:15",
+          "5:6:7",
+          "1:2:3"
+        ],
+        "answer": "3:4:5",
+        "hint": "Divide by 15.",
+        "explanation": "15 is the highest common factor of all three parts."
+      },
+      {
+        "id": "q05",
+        "type": "Application",
+        "outcomeId": "lo07",
+        "difficulty": "Core",
+        "question": "Two people take 20 minutes to wash a car. Four people take:",
+        "options": [
+          "10 minutes",
+          "40 minutes",
+          "5 minutes",
+          "20 minutes"
+        ],
+        "answer": "10 minutes",
+        "hint": "The product is constant.",
+        "explanation": "2 x 20 = 40, and 40 / 4 = 10."
+      },
+      {
+        "id": "q06",
+        "type": "Reasoning",
+        "outcomeId": "lo05",
+        "difficulty": "Core",
+        "question": "The value of a house and its age are in:",
+        "options": [
+          "Direct proportion",
+          "Inverse proportion",
+          "Neither",
+          "Both"
+        ],
+        "answer": "Neither",
+        "hint": "Is either the ratio or the product constant?",
+        "explanation": "They are related but neither their ratio nor their product is constant."
+      },
+      {
+        "id": "q07",
+        "type": "Application",
+        "outcomeId": "lo08",
+        "difficulty": "Extension",
+        "question": "A room with a 4:1 child-to-staff limit has 18 children. The staff needed is:",
+        "options": [
+          "5",
+          "4",
+          "4.5",
+          "72"
+        ],
+        "answer": "5",
+        "hint": "Round up, not to the nearest.",
+        "explanation": "18 / 4 = 4.5, and the ratio is a maximum, so 5 adults are needed."
+      },
+      {
+        "id": "q08",
+        "type": "Reasoning",
+        "outcomeId": "lo08",
+        "difficulty": "Extension",
+        "question": "Rooms needing 3.33, 4.5, 1.875 and 1.71 staff require:",
+        "options": [
+          "13, by rounding each up then adding",
+          "12, by adding then rounding",
+          "11, by rounding down",
+          "12, by rounding to the nearest"
+        ],
+        "answer": "13, by rounding each up then adding",
+        "hint": "Can staff be shared between rooms?",
+        "explanation": "Staff cannot be pooled, so each room rounds up on its own: 4 + 5 + 2 + 2 = 13."
+      }
+    ]
+  },
+  "games": {
+    "masteryScore": 3,
+    "games": [
+      {
+        "id": "u11-game-1",
+        "icon": "?",
+        "skill": "Using ratios",
+        "title": "Quick Match: Using Ratios",
+        "description": "Four short challenges on parts and shares.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "5:2, the 2 part is 80 g. One part?",
+            "choices": [
+              "40 g",
+              "80 g",
+              "16 g",
+              "160 g"
+            ],
+            "answer": "40 g",
+            "clue": "Divide by 2."
+          },
+          {
+            "prompt": "3:5, the 3 part is $75. The 5 part?",
+            "choices": [
+              "$125",
+              "$45",
+              "$75",
+              "$200"
+            ],
+            "answer": "$125",
+            "clue": "One part is $25."
+          },
+          {
+            "prompt": "1:2:4, the 2 part is 15 kg. Total?",
+            "choices": [
+              "52.5 kg",
+              "45 kg",
+              "105 kg",
+              "30 kg"
+            ],
+            "answer": "52.5 kg",
+            "clue": "7 parts."
+          },
+          {
+            "prompt": "Simplify 45:60:75",
+            "choices": [
+              "3:4:5",
+              "9:12:15",
+              "5:6:7",
+              "1:2:3"
+            ],
+            "answer": "3:4:5",
+            "clue": "Divide by 15."
+          }
+        ]
+      },
+      {
+        "id": "u11-game-2",
+        "icon": "?",
+        "skill": "Proportion",
+        "title": "Quick Match: Direct, Inverse or Neither",
+        "description": "Four short challenges on proportion and maximum ratios.",
+        "type": "choice",
+        "rounds": [
+          {
+            "prompt": "Tins bought and total cost",
+            "choices": [
+              "Direct",
+              "Inverse",
+              "Neither",
+              "Both"
+            ],
+            "answer": "Direct",
+            "clue": "The ratio is constant."
+          },
+          {
+            "prompt": "Speed and time for a fixed journey",
+            "choices": [
+              "Inverse",
+              "Direct",
+              "Neither",
+              "Both"
+            ],
+            "answer": "Inverse",
+            "clue": "The product is the distance."
+          },
+          {
+            "prompt": "A house's age and its value",
+            "choices": [
+              "Neither",
+              "Direct",
+              "Inverse",
+              "Both"
+            ],
+            "answer": "Neither",
+            "clue": "No constant ratio or product."
+          },
+          {
+            "prompt": "A 4:1 limit room with 18 children needs",
+            "choices": [
+              "5 staff",
+              "4 staff",
+              "4.5 staff",
+              "72 staff"
+            ],
+            "answer": "5 staff",
+            "clue": "Round up."
+          }
+        ]
+      }
+    ]
+  },
+  "selfAssessment": [
+    "I can find the value of one part of a ratio from a quantity given for one of its shares.",
+    "I can use the value of one part to find every other share and the total.",
+    "I can work with a ratio of three or four parts, keeping track of which share is which.",
+    "I can simplify a ratio to its lowest terms, and build a ratio from information given indirectly.",
+    "I can decide whether two quantities are in direct proportion, inverse proportion or neither.",
+    "I can solve a direct proportion problem by scaling, and say why the scaling is valid.",
+    "I can solve an inverse proportion problem, recognising that one quantity falls as the other rises.",
+    "I can recognise when a ratio states a maximum, and round each part up rather than rounding a total."
+  ]
+}

@@ -52,6 +52,10 @@
       {
         "code": "6Ni.04",
         "text": "Estimate and multiply whole numbers up to 10 000 by 1-digit or 2-digit whole numbers."
+      },
+      {
+        "code": "6Ss.04",
+        "text": "Interpret data, identifying patterns, within and between data sets, to answer statistical questions. Discuss conclusions, considering the sources of variation, and check predictions."
       }
     ],
     "objectiveMapping": {
@@ -89,7 +93,9 @@
     "Draw and interpret line graphs for data that changes over time.",
     "Calculate the sector angles for and interpret a pie chart.",
     "Find the mean, median, mode and range of a set of numbers.",
-    "Organise numerical data into grouped frequency tables using class intervals, represent grouped data in a bar chart, and use a ready-reckoner graph or table to look up converted values quickly."
+    "Organise numerical data into grouped frequency tables using class intervals, represent grouped data in a bar chart, and use a ready-reckoner graph or table to look up converted values quickly.",
+    "Compare two data sets, describe a pattern within each and between them, and say what could explain the difference.",
+    "Check a prediction against the data actually collected, and explain why they differ."
   ],
   "concepts": [
     {
@@ -133,6 +139,12 @@
       "title": "Grouped Data and Ready-Reckoner Graphs",
       "explanation": "So far you have organised data where every possible value gets its own row or bar, such as counting exactly how many students scored 0, 1, 2 or 3 goals. But when numerical data covers a wide range of values, listing every single value separately would make a frequency table far too long and hard to read. Instead, we group the data into class intervals — equal-sized ranges of values — and count how many results fall into each range. For example, the ages of 30 people might be grouped into the class intervals 0–9, 10–19, 20–29, 30–39 and so on, with a tally and frequency recorded for each group rather than for every individual age. Grouped frequency tables can be shown as bar charts too, but each bar represents a whole range (class interval) instead of a single value, and the bars are usually drawn touching each other since the data being grouped is continuous or closely spaced. A ready-reckoner is a different kind of tool: it is a ready-made graph or table that lets you look up a converted value quickly, without doing the calculation yourself each time. For example, a ready-reckoner graph might let you find how many kilometres correspond to a given number of miles, or how much a certain number of items costs, just by finding your starting value on one axis, tracing across or up to the line, and reading off the matching value on the other axis or column.",
       "example": "Thirty students' running times (in seconds) are grouped into class intervals: 10-14 seconds (6 students), 15-19 seconds (14 students), 20-24 seconds (8 students), and 25-29 seconds (2 students). This grouped frequency table could be drawn as a bar chart with four bars, one for each class interval, with heights 6, 14, 8 and 2. Now use a ready-reckoner: a currency conversion graph shows that 10 units of currency A trace up to 6 units of currency B. To convert 25 units of currency A without recalculating, find 25 on the currency A axis, trace up to the line, then read across to currency B, giving an instant converted value without needing to apply the exact exchange rate calculation."
+    },
+    {
+      "id": "concept-7-comparing-data-sets",
+      "title": "Patterns Within and Between Data Sets",
+      "explanation": "One data set tells you about one group. Two let you compare, and comparison is where most real statistical questions live: did the taller plants get more water, is Tuesday busier than Saturday, do Class A and Class B travel to school differently. Look for a pattern inside each set first - where the values bunch, where they spread - and only then look across them. And when the two differ, the honest next question is WHY they might, which means thinking about the sources of variation: how the data was collected, how many people were asked, when it was measured, and what else was different between the groups.",
+      "example": "Class A and Class B both record their journey times. Class A's median is 12 minutes and Class B's is 20. That is a pattern between the sets. Before concluding that Class B lives further away, ask what else could produce it: Class B may have been asked on a day when the bus was late, or one class may include several pupils who live on the school site and pull the median down. A difference in the data is a question to investigate, not an answer on its own."
     }
   ],
   "explorations": [
@@ -592,6 +604,10 @@
       {
         "title": "Choosing the Right Average",
         "text": "So which average should you use? It depends on the data. Use the mode for categorical data, or when you want the most common choice. Use the mean when the data is fairly evenly spread and you want to take every value into account. Use the median when there are outliers – unusually high or low values that would drag the mean away from what is typical. Imagine a small neighbourhood where most families earn about 400 shillings a week but one trader earns 5000. The mean is pulled far above almost everyone, so the median describes the ‘typical’ family far more fairly. Choosing the right average is a genuine mathematical judgement, not a fixed rule."
+      },
+      {
+        "title": "Check The Prediction",
+        "text": "After collecting data, compare what happened with what you predicted. If they disagree, say so and suggest why - the prediction being wrong is a finding, not a mistake."
       }
     ],
     "terms": [
@@ -626,6 +642,10 @@
       [
         "Sector",
         "A wedge-shaped slice of a pie chart"
+      ],
+      [
+        "Sources of variation",
+        "The things that could make two data sets differ apart from the one you are studying: who was asked, how many, and when"
       ]
     ],
     "commonMistakes": [

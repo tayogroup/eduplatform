@@ -48,6 +48,14 @@
       {
         "code": "6Ni.04",
         "text": "Estimate and multiply whole numbers up to 10 000 by 1-digit or 2-digit whole numbers."
+      },
+      {
+        "code": "6Nc.03",
+        "text": "Use the relationship between repeated addition of a constant and multiplication to find and use a position-to-term rule."
+      },
+      {
+        "code": "6Nc.01",
+        "text": "Count on and count back in steps of constant size, including fractions and decimals, and extend beyond zero to include negative numbers."
       }
     ],
     "objectiveMapping": {
@@ -88,7 +96,8 @@
     "Investigate special patterns: triangular numbers, hexagonal numbers, consecutive square sums, and consecutive odd sums.",
     "Solve real-world problems using sequences, multiples and factors, and justify your reasoning.",
     "Count on and back in steps of a fraction or a decimal, including sequences that cross through zero.",
-    "Recognise multiples of 5, 10, 25, 50 and 100 up to 1000, make and test general statements about odd and even numbers, and recall the prime numbers up to 100."
+    "Recognise multiples of 5, 10, 25, 50 and 100 up to 1000, make and test general statements about odd and even numbers, and recall the prime numbers up to 100.",
+    "Count on and back in constant steps that cross zero, and say which term of a sequence first becomes negative."
   ],
   "concepts": [
     {
@@ -132,6 +141,12 @@
       "title": "Multiples, Factors and Prime Number Patterns",
       "explanation": "Multiples and factors describe how numbers relate to each other through multiplication. A multiple of a number is what you get by multiplying it by a whole number: the multiples of 5 are 5, 10, 15, 20, 25, 30 … and the multiples of 10 are 10, 20, 30, 40 …. Multiples of 25, 50 and 100 follow the same idea: 25, 50, 75, 100, 125 …; 50, 100, 150, 200 …; and 100, 200, 300, 400 …. Notice a useful shortcut: every multiple of 10 is also a multiple of 5, and every multiple of 100 is also a multiple of 25 and of 50, because 10, 25 and 50 all divide evenly into 100. This lets you spot multiples quickly by checking the last one or two digits of a number. Numbers also split neatly into odd and even, and this leads to general statements you can test and prove using examples: the sum of two even numbers is always even (2 + 4 = 6), the sum of two odd numbers is always even (3 + 5 = 8), and the sum of an odd number and an even number is always odd (3 + 4 = 7). This works because an even number is always made of complete pairs with nothing left over, and adding two things that are each made of complete pairs keeps everything paired up, while adding one unpaired unit from an odd number always leaves exactly one left over. Prime numbers are a completely different kind of special number: a number with exactly two factors, 1 and itself. The number 1 is not prime, because it has only one factor. The number 2 is prime and is also the only even prime number, because every other even number has at least three factors (1, 2 and itself). All the prime numbers up to 100 are: 2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37, 41, 43, 47, 53, 59, 61, 67, 71, 73, 79, 83, 89, 97. Of these, the primes below 20 are 2, 3, 5, 7, 11, 13, 17 and 19 — worth memorising first, since you will use them constantly when finding factors, simplifying fractions and testing divisibility.",
       "example": "Is the general statement 'the sum of two odd numbers is always even' actually true? Test it with several pairs: 3 + 7 = 10 (even), 9 + 15 = 24 (even), 21 + 33 = 54 (even) — every pair of odd numbers gives an even total. Now check multiples: is 375 a multiple of 25? Yes, because 375 ÷ 25 = 15 exactly, with no remainder. Is 375 a multiple of 50? No, because 375 ÷ 50 = 7.5, which is not a whole number."
+    },
+    {
+      "id": "concept-7-counting-through-zero",
+      "title": "Counting Back Through Zero",
+      "explanation": "A constant step does not stop at zero. Take 12, 9, 6, 3, 0 … the term-to-term rule is subtract 3, and there is no reason for it to halt: the next terms are -3, -6, -9. The rule is doing the same thing on both sides of zero, and the number line is the picture that makes that obvious - each step is the same distance to the left, whether it lands on a positive number, on zero, or past it. A temperature falling 3 degrees an hour from 12 degrees behaves exactly this way, which is why the winter forecast can read -6.",
+      "example": "Start at 7 and count back in steps of 4: 7, 3, -1, -5, -9. The third term is the first negative one. To find which term first goes below zero without listing them all, ask how many whole steps of 4 fit into 7: one step reaches 3, two steps reach -1, so it is the third term. The same works with decimals. Start at 1.2 and count back in steps of 0.5: 1.2, 0.7, 0.2, -0.3, -0.8. And with fractions: start at 1 and count back in steps of one third and you get 1, two thirds, one third, 0, minus one third."
     }
   ],
   "explorations": [
@@ -613,6 +628,10 @@
       {
         "title": "Different Step Sizes in Sequences",
         "text": "Sequences can step up by different amounts. Counting in 4s gives 4, 8, 12, 16, 20 …, where the term-to-term rule is add 4. Sequences can also involve decimals. The sequence 0.25, 0.5, 0.75, 1.0, 1.25 … has the rule add 0.25 — exactly the pattern you meet when counting quarters of a shilling, or quarter-litres of camel milk."
+      },
+      {
+        "title": "Steps Do Not Stop At Zero",
+        "text": "A term-to-term rule keeps working past zero. Counting back in steps of 3 from 6 gives 6, 3, 0, -3, -6: the step is the same size every time, and zero is just another term."
       }
     ],
     "terms": [
@@ -647,6 +666,10 @@
       [
         "Triangular number",
         "Dots forming a triangle: 1, 3, 6, 10 …"
+      ],
+      [
+        "Negative term",
+        "A term of a sequence that is less than zero, reached by counting back past zero"
       ]
     ],
     "commonMistakes": [

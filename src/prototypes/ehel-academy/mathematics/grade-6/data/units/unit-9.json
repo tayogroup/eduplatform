@@ -48,6 +48,10 @@
       {
         "code": "6Sp.03",
         "text": "Recognise that some probabilities can only be modelled through experiments using a large number of trials."
+      },
+      {
+        "code": "6Sp.02",
+        "text": "Identify when two events can happen at the same time and when they cannot, and know that the latter are called 'mutually exclusive'."
       }
     ],
     "objectiveMapping": {
@@ -84,7 +88,8 @@
     "Express any probability as a fraction, a decimal and a percentage, and convert between them.",
     "List all the possible outcomes of a situation in an organised way.",
     "Use the idea of complementary events – that P(event) + P(not event) = 1.",
-    "Run probability experiments, record results in tally and frequency tables, and find experimental probability."
+    "Run probability experiments, record results in tally and frequency tables, and find experimental probability.",
+    "Identify when two events can happen at the same time and when they cannot, and use the term 'mutually exclusive' for the second kind."
   ],
   "concepts": [
     {
@@ -122,6 +127,12 @@
       "title": "Fairness, Games and Real-World Probability",
       "explanation": "A game is fair when every player has an equal chance of winning. Probability lets us test fairness with mathematics instead of arguing about it. If Farah and Idris play a game where Farah wins by rolling an even number and Idris wins by rolling an odd number, the game is fair, because P(even) = 3/6 = 1/2 and P(odd) = 3/6 = 1/2 – both have an equal chance. But if Farah won on 'a number greater than 2' (that is 3, 4, 5 or 6, a probability of 4/6) while Idris won on '1 or 2' (a probability of only 2/6), the game would be unfair in Farah's favour. To make it fair again, we would change the rules until each player's probability is equal.\n\nProbability guides important decisions far beyond games. Consider quality control in a factory. Suppose a workshop tests 100 water pumps and finds that 3 are faulty. The probability that a pump is faulty is 3/100 = 3%, and the probability it works is 97/100 = 97%. If that faulty rate climbs above an agreed limit, the manager knows to stop and investigate. In the same way, a shop that receives 500 solar lamps, knowing 3 in every 100 are usually faulty, can expect about 500 × 3/100 = 15 faulty lamps, and can plan for that.\n\nProbability also shapes sport. If a footballer scores from 7 of her last 10 penalty kicks, her experimental probability of scoring is 7/10 = 70%, and we might predict she will score about 70% of her future penalties. It shapes weather planning, where a 20% chance of rain over the next few days helps a farmer near Kismaayo decide when to harvest. And it lies behind insurance and medicine, where experts weigh the probability of events to keep people safe. In every case, the same simple idea is at work: count the favourable outcomes, divide by the total, and reason carefully about what the number means.\n\nYou have now met six big ideas: the language of likelihood, the probability scale from 0 to 1, calculating probability with the formula, listing outcomes and using complements, the difference between theoretical and experimental probability, and applying all of this to fairness and the real world. These ideas are not separate – they weave together. When you judge whether a game is fair, you list the outcomes, calculate each player's probability as a fraction, perhaps convert it to a percentage to compare, and reason about the complement to check your total comes to 1.",
       "example": "The best way to lock these ideas into memory is to use them with real objects around your home. Flip a bottle cap fifty times and tally the results. Draw beans of two colours from a cup and predict, then test, the probability of each. Estimate the chance of rain before you set out, then see what actually happens. Every time you reason about chance, your understanding grows stronger, and the statistics you will meet in later years will feel familiar and friendly. Now let us practise together with some fully worked examples."
+    },
+    {
+      "id": "concept-7-mutually-exclusive-events",
+      "title": "Events That Cannot Both Happen",
+      "explanation": "Some pairs of events can happen together and some cannot. Roll one die: 'the score is even' and 'the score is 6' can both be true at once, because 6 is even. But 'the score is even' and 'the score is 5' cannot both be true on the same roll - one outcome cannot be two things at once. A pair of events that cannot both happen is called MUTUALLY EXCLUSIVE. The name is worth knowing because it tells you when you are allowed to add probabilities: for mutually exclusive events you may add them, and for events that can overlap you may not, because anything counted in both would be counted twice.",
+      "example": "Drawing one card from a bag of red, blue and green counters: 'it is red' and 'it is blue' are mutually exclusive, so P(red or blue) = P(red) + P(blue). Now take a class survey where pupils may choose more than one hobby: 'plays football' and 'plays chess' are NOT mutually exclusive, because somebody can do both, and adding the two fractions would count those pupils twice. Ask first whether one thing can be both, then decide whether to add."
     }
   ],
   "explorations": [
@@ -593,6 +604,10 @@
       {
         "title": "Three Forms Rule",
         "text": "The same probability can be a fraction, a decimal or a percentage. Fraction to decimal: divide top by bottom. Decimal to percentage: multiply by 100."
+      },
+      {
+        "title": "Mutually Exclusive Rule",
+        "text": "Two events are mutually exclusive when they cannot both happen at the same time. Only then may their probabilities be added."
       }
     ],
     "terms": [
@@ -631,6 +646,10 @@
       [
         "Fair",
         "Every player has an equal chance of winning"
+      ],
+      [
+        "Mutually exclusive",
+        "Describes two events that cannot both happen at the same time, such as rolling a 5 and rolling an even number"
       ]
     ],
     "commonMistakes": [

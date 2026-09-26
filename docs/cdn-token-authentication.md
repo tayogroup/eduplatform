@@ -13,6 +13,28 @@ own voice and nothing is requested."
 So the gate has to be at the edge, before bytes are served. Client-side checks
 are not a gate: the content is already in the browser by the time they run.
 
+## DO NOT ENABLE "Token Authentication" ON THE ZONE
+
+`ZoneSecurityEnabled` must stay **False**. Nothing in this design ever needs it on.
+One edge rule with the *Enable Token Authentication* action does the whole job.
+
+It was switched on by mistake on 2026-09-26 and took the **entire platform** down
+for as long as it was on: measured unsigned, all six shell subject apps, every
+standalone build, `app/shell/course-app.js` and `content/` returned **403**. Not a
+partial outage — everything.
+
+The trap is that the dashboard control is called "Token Authentication", which is
+exactly what somebody setting this up would expect to turn on. It is the wrong
+switch. The right one is an edge rule.
+
+**If you find the zone showing `ZoneSecurityEnabled: True`, that is an outage.**
+Set it back to False; service returns within seconds. Then check the one-year cache
+tiers for stored denials — `media/**` and `app/*/v*/**` — by confirming a file
+exists on storage with the access key and only then fetching that exact path from
+the edge. A 403 cached on those paths cannot be purged with the key in `.env`.
+(Checked after the 2026-09-26 incident: no cached denials. Token-auth denials
+appear not to be stored, but do not rely on that.)
+
 ## What this is
 
 Bunny **Token Authentication V2**. Moodle signs the launch URL; the edge verifies

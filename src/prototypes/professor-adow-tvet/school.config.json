@@ -5,19 +5,39 @@
   "catalogContract": "1.0",
   "categoryRoot": "Professor Adow TVET",
   "idPrefix": "adow",
-
   "_storage": "Phase 0. The zone is created in the Bunny dashboard; the key is that zone's own password and goes in .env as BUNNY_TVET_KEY — never Ehel's BUNNY_KEY and never Quraan's generic BUNNY_STORAGE_ACCESS_KEY.",
   "storageZone": "adowtvet",
   "cdnHost": "adowtvet.b-cdn.net",
   "appDomain": "adowtvet.b-cdn.net",
-
-  "_departments": "Order here is the order departments appear in the catalogue. A department earns a Moodle category only when it has at least one course whose course-manifest.json exists.",
+  "_departments": "Order here is the order departments appear in the catalogue. A department earns a Moodle category only when it has at least one course whose course-manifest.json exists. CORE is not a trade department: it is the category the two cross-trade modules live in, because Shapes and Measurements and Digital Skills serve all six and filing them under any one trade would say something false to a learner browsing the catalogue. The owner's six departments are unchanged below it.",
   "departments": [
-    { "key": "construction", "name": "Construction & Building Trades" },
-    { "key": "mechanical", "name": "Mechanical & Automotive Engineering" },
-    { "key": "electronics", "name": "Electronics & Renewable Energy" },
-    { "key": "agriculture", "name": "Agriculture & Crop Production" },
-    { "key": "livestock", "name": "Livestock & Animal Sciences" },
-    { "key": "agroprocessing", "name": "Food & Agro-Processing" }
+    {
+      "key": "core",
+      "name": "Core Skills (all departments)"
+    },
+    {
+      "key": "construction",
+      "name": "Construction & Building Trades"
+    },
+    {
+      "key": "mechanical",
+      "name": "Mechanical & Automotive Engineering"
+    },
+    {
+      "key": "electronics",
+      "name": "Electronics & Renewable Energy"
+    },
+    {
+      "key": "agriculture",
+      "name": "Agriculture & Crop Production"
+    },
+    {
+      "key": "livestock",
+      "name": "Livestock & Animal Sciences"
+    },
+    {
+      "key": "agroprocessing",
+      "name": "Food & Agro-Processing"
+    }
   ]
 }

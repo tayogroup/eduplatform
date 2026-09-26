@@ -1,0 +1,29 @@
+{
+  "_comment": "A REAL course, not a placeholder: catalog_sync is get-or-create with no reconciliation pass, so anything this creates keeps its enrolments in Moodle forever. Every unit below is taught today — the coverage gate reads the criteria back off the built pages — so this course arrives with its grade items already meaning something.",
+  "courseKey": "adow-home-repair",
+  "title": "Home Repair",
+  "department": "construction",
+  "_level": "TVET has levels, not grades. levelKind is carried end to end so nothing downstream reads levelNumber as a school year.",
+  "levelKind": "tvet",
+  "levelNumber": 3,
+  "levelLabel": "Trade",
+  "summary": "Repairs in a finished building, done without making the damage worse. Taking a broken tile out of a grouted wall and setting a new one flush; and reading which of a tap's two leaks you have before a spanner touches it.",
+  "_progressPartition": "The catalogue's units — and therefore the Moodle grade items — are UNITS OF COMPETENCY, not lessons. A lesson may teach parts of two units and a unit may span two lessons, and it is the unit a certificate names.",
+  "progressPartition": "unitOfCompetency",
+  "curriculumFramework": "Professor Adow TVET — Home Repair",
+  "_units": "`data` is relative to this file. A unit joins the catalogue on the day its JSON ships. assessmentMode is the DOMINANT mode of the unit's criteria; the per-criterion split is in the unit file. NOT trade-reviewed.",
+  "units": [
+    {
+      "number": 1,
+      "title": "Replace a broken wall tile",
+      "data": "units/unit-1.json",
+      "assessmentMode": "both"
+    },
+    {
+      "number": 2,
+      "title": "Repair a dripping tap",
+      "data": "units/unit-2.json",
+      "assessmentMode": "both"
+    }
+  ]
+}
